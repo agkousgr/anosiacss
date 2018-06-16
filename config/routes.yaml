@@ -1,0 +1,42 @@
+index:
+    path: /
+    controller: App\Controller\DefaultController::index
+
+# Products
+products_list:
+    path: /products/{id}
+    controller: App\Controller\ProductController::listProducts
+    requirements:
+        id: \d+
+
+product_view:
+    path: /product/{id}
+    controller: App\Controller\ProductController::viewProduct
+    requirements:
+        id: \d+
+
+product_quick_view:
+    path: /product/quick/{id}
+    controller: App\Controller\ProductController::quickviewProduct
+    requirements:
+        id: \d+
+
+# Orders
+add_to_cart:
+    path: /cart/
+    controller: App\Controller\OrderController::addToCart
+    methods: [GET,POST]
+    options:
+        expose: true
+
+# Blog
+
+
+# User Account
+user_account:
+    path: /user-account
+    controller: App\Controller\UserAccountController::index
+
+user_registration:
+    path: /user-registration
+    controller: App\Controller\UserAccountController::register

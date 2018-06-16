@@ -1,0 +1,40 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<doctrine-mapping xmlns="http://doctrine-project.org/schemas/orm/doctrine-mapping"
+                  xmlns:gedmo="http://gediminasm.org/schemas/orm/doctrine-extensions-mapping">
+
+    <entity name="App\Entity\Category" repository-class="App\Repository\CategoryRepository">
+        <id name="id" type="integer" />
+        <field name="name" length="50" />
+        <field name="slug" length="50" />
+        <field name="description" type="text"/>
+        <field name="isVisible" type="boolean"/>
+        <field name="priority" type="decimal" precision="4"/>
+        <field name="lft" type="integer">
+            <gedmo:tree-left/>
+        </field>
+        <field name="rgt" type="integer">
+            <gedmo:tree-right/>
+        </field>
+        <field name="lvl" type="integer">
+            <gedmo:tree-level/>
+        </field>
+        <many-to-one field="root" target-entity="Category">
+            <join-column name="tree_root" referenced-column-name="id" on-delete="CASCADE"/>
+            <gedmo:tree-root/>
+        </many-to-one>
+
+        <many-to-one field="parent" target-entity="Category" inversed-by="children">
+            <join-column name="parent_id" referenced-column-name="id" on-delete="CASCADE"/>
+            <gedmo:tree-parent/>
+        </many-to-one>
+
+        <one-to-many field="children" target-entity="Category" mapped-by="parent">
+            <order-by>
+                <order-by-field name="lft" direction="ASC" />
+            </order-by>
+        </one-to-many>
+
+        <gedmo:tree type="nested"/>
+    </entity>
+
+</doctrine-mapping>
