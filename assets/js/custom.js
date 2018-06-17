@@ -238,3 +238,5 @@ $(document).ready(function () {
         $('#products .item').addClass('grid-group-item');
     });
 });
+
+$("#blue-mobile-menu").blueMobileMenu();

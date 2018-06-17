@@ -2,8 +2,8 @@
     <div class="container">
         <div class="section-heading section-heading-white row wow flipInX" data-wow-delay="0.4s">
             <div class="col-sm-8 col-sm-offset-2">
-                <h3>Exciting Offrs</h3>
-                <h2>Get the Letest Offers</h2>
+                <h3>Συναρπαστικές Προσφορές</h3>
+                <h2>Αγοράστε τις τελευταίες μας προσφορές</h2>
                 <p>Nam in docendi reprimique, laoreet honestatis eu mel. Id qui aperiri admodum intellegat, ea
                     illum
                     populo qui. An modo eleifend vituperatoribus his, id has oporteat honestatis, has quas
@@ -12,129 +12,42 @@
         </div>
 
         <div class="owl-carousel owl-theme OfferCarousel">
-            <div class="item">
-                <div class="offer-box">
-                    <div class="row">
-                        <div class="col-sm-4 col-md-5 col-lg-4 offer-img"><img src="{{ asset('images/product-1-h.jpg') }}"
-                                                                               alt="">
-                        </div>
-                        <div class="col-sm-8 col-md-7 col-lg-8">
-                            <div class="offer-name">Provouge Woman Top</div>
-                            <div class="star"><i class="fa fa-star"></i><i class="fa fa-star"></i><i
-                                        class="fa fa-star"></i><i class="fa fa-star"></i><i
-                                        class="fa fa-star"></i><i
-                                        class="fa fa-star-o"></i></div>
-                            <div class="product-price">$28.40
-                                <del>$35.50</del>
+            {% for pr in featured %}
+                <div class="item">
+                    <div class="offer-box">
+                        <div class="row">
+                            <div class="col-sm-4 col-md-5 col-lg-4 offer-img">
+                                <img src="{{ asset('images/product-1-h.jpg') }}"
+                                        alt="{{ pr.name }}">
                             </div>
-                            <div>
-                                <button type="button"><i class="fa fa-cart-plus"></i><span>Add to Cart</span>
-                                </button>
+                            <div class="col-sm-8 col-md-7 col-lg-8">
+                                <div class="offer-name">{{ pr.name }}</div>
+                                {#<div class="star"><i class="fa fa-star"></i><i class="fa fa-star"></i><i#}
+                                            {#class="fa fa-star"></i><i class="fa fa-star"></i><i#}
+                                            {#class="fa fa-star"></i><i#}
+                                            {#class="fa fa-star-o"></i></div>#}
+                                <div class="product-price-span">{{  pr.webPrice }}€
+                                    <del>{{ pr.retailPrice }}€</del>
+                                </div>
+                                <div>
+                                    <button type="button">
+                                        <i class="fa fa-cart-plus"></i>
+                                        <span>Καλάθι</span>
+                                    </button>
+                                </div>
+                                <h6>Η προσφορά λήγει σε:</h6>
+                                <ul>
+                                    <li>5ώρες</li>
+                                    <li>15 Λεπτά</li>
+                                    {#<li>25 Mins</li>#}
+                                </ul>
                             </div>
-                            <h6>Deals Ends within:</h6>
-                            <ul>
-                                <li>5hrs</li>
-                                <li>15 Mins</li>
-                                <li>25 Mins</li>
-                            </ul>
-                        </div>
-                    </div>
-                </div>
-                <div class="shadow-sm"></div>
-            </div>
-            <div class="item">
-                <div class="offer-box">
-                    <div class="row">
-                        <div class="col-sm-4 col-md-5 col-lg-4 offer-img"><img src="{{ asset('images/product-2-h.jpg') }}"
-                                                                               alt="">
-                        </div>
-                        <div class="col-sm-8 col-md-7 col-lg-8">
-                            <div class="offer-name">Provouge Men T-Shirt</div>
-                            <div class="star"><i class="fa fa-star"></i><i class="fa fa-star"></i><i
-                                        class="fa fa-star"></i><i class="fa fa-star"></i><i
-                                        class="fa fa-star"></i><i
-                                        class="fa fa-star-o"></i></div>
-                            <div class="product-price">$28.40
-                                <del>$35.50</del>
-                            </div>
-                            <div>
-                                <button type="button"><i class="fa fa-cart-plus"></i><span>Add to Cart</span>
-                                </button>
-                            </div>
-                            <h6>Deals Ends within:</h6>
-                            <ul>
-                                <li>5hrs</li>
-                                <li>15 Mins</li>
-                                <li>25 Mins</li>
-                            </ul>
                         </div>
                     </div>
+                    <div class="shadow-sm"></div>
                 </div>
-                <div class="shadow-sm"></div>
-            </div>
-
-            <div class="item">
-                <div class="offer-box">
-                    <div class="row">
-                        <div class="col-sm-4 col-md-5 col-lg-4 offer-img"><img src="{{ asset('images/product-1-h.jpg') }}"
-                                                                               alt="">
-                        </div>
-                        <div class="col-sm-8 col-md-7 col-lg-8">
-                            <div class="offer-name">Provouge Woman Top</div>
-                            <div class="star"><i class="fa fa-star"></i><i class="fa fa-star"></i><i
-                                        class="fa fa-star"></i><i class="fa fa-star"></i><i
-                                        class="fa fa-star"></i><i
-                                        class="fa fa-star-o"></i></div>
-                            <div class="product-price">$28.40
-                                <del>$35.50</del>
-                            </div>
-                            <div>
-                                <button type="button"><i class="fa fa-cart-plus"></i><span>Add to Cart</span>
-                                </button>
-                            </div>
-                            <h6>Deals Ends within:</h6>
-                            <ul>
-                                <li>5hrs</li>
-                                <li>15 Mins</li>
-                                <li>25 Mins</li>
-                            </ul>
-                        </div>
-                    </div>
-                </div>
-                <div class="shadow-sm"></div>
-            </div>
-            <div class="item">
-                <div class="offer-box">
-                    <div class="row">
-                        <div class="col-sm-4 col-md-5 col-lg-4 offer-img"><img src="{{ asset('images/product-2-h.jpg') }}"
-                                                                               alt="">
-                        </div>
-                        <div class="col-sm-8 col-md-7 col-lg-8">
-                            <div class="offer-name">Provouge Men T-Shirt</div>
-                            <div class="star"><i class="fa fa-star"></i><i class="fa fa-star"></i><i
-                                        class="fa fa-star"></i><i class="fa fa-star"></i><i
-                                        class="fa fa-star"></i><i
-                                        class="fa fa-star-o"></i></div>
-                            <div class="product-price">$28.40
-                                <del>$35.50</del>
-                            </div>
-                            <div>
-                                <button type="button"><i class="fa fa-cart-plus"></i><span>Add to Cart</span>
-                                </button>
-                            </div>
-                            <h6>Deals Ends within:</h6>
-                            <ul>
-                                <li>5hrs</li>
-                                <li>15 Mins</li>
-                                <li>25 Mins</li>
-                            </ul>
-                        </div>
-                    </div>
-                </div>
-                <div class="shadow-sm"></div>
-            </div>
+            {% endfor %}
         </div>
-
 
     </div>
 </div>

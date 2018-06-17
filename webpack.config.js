@@ -30,6 +30,7 @@ Encore
     .addEntry('js/wow', './assets/js/wow.js')
     .addEntry('js/jquery-ui', './assets/js/jquery-ui.js')
     .addEntry('js/configuration', './assets/js/configuration.js')
+    .addEntry('js/home-page', './assets/js/home-page.js')
 
 
     .addStyleEntry('css/style', './assets/css/style.css')

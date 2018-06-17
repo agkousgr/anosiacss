@@ -23,11 +23,13 @@ class ProductController extends AbstractController
             $softoneLogin->login();
             $categories = $categoryService->getCategories();
             array_multisort(array_column($categories, "priority"), $categories);
-            $products = $productService->getProducts($id, $session->get("authID"));
+            $products = $productService->getCategoryItems($id, $session->get("authID"));
+            $popular = $productService->getCategoryItems(1022, $session->get("authID"));
             dump($products);
             return $this->render('products/list.html.twig', [
                 'categories' => $categories,
                 'products' => $products,
+                'popular' => $popular,
             ]);
         } catch (\Exception $e) {
             $logger->error(__METHOD__ . ' -> {message}', ['message' => $e->getMessage()]);

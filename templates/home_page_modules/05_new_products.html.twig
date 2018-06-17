@@ -2,317 +2,54 @@
     <div class="container">
         <div class="section-heading row wow flipInX" data-wow-delay="0.4s">
             <div class="col-sm-8 col-sm-offset-2">
-                <h3>Get ready for our</h3>
-                <h2>New Collections</h2>
-                <p>Nam in docendi reprimique, laoreet honestatis eu mel. Id qui aperiri admodum intellegat, ea
-                    illum
-                    populo qui. An modo eleifend vituperatoribus his, id has oporteat honestatis, has quas
-                    efficiendi eu. </p>
+                {#<h3>Get ready for our</h3>#}
+                <h2>Νέες αφίξεις</h2>
+                <p>Δείτε τα νέα μας προϊόντα. </p>
             </div>
         </div>
 
         <div class="owl-carousel owl-theme ProductScroll">
-            <div class="item">
-                <div class="product-case">
-                    <div class="tag tag-green"><span>new</span></div>
-                    <div class="product-img">
-                        <div class="hover-img"><img src="{{ asset('images/brands/bepanthol.jpg') }}" alt=""></div>
-                        <a href="#"><img src="{{ asset('images/brands/bepanthol.jpg') }}" alt=""></a>
-                    </div>
-                    <div class="hover-info">
-                        <div class="product-short-info">
-                            <div class="product-name"><a href="#">Provouge Woman Top</a></div>
-                            <div class="star"><i class="fa fa-star"></i><i class="fa fa-star"></i><i
-                                        class="fa fa-star"></i><i class="fa fa-star"></i><i
-                                        class="fa fa-star"></i><i
-                                        class="fa fa-star-o"></i></div>
-                            <div class="product-price">
-                                <div class="product-price-span">$28.40
-                                    <del>$35.50</del>
-                                </div>
-                            </div>
-                            <button type="button"><i class="fa fa-cart-plus"></i><span>Add to Cart</span>
-                            </button>
+            {% for pr in featured %}
+                <div class="item">
+                    <div class="product-case">
+                        <div class="tag tag-green"><span>new</span></div>
+                        <div class="product-img">
+                            <div class="hover-img"><img src="{{ asset('images/brands/bepanthol.jpg') }}" alt="{{ pr.name }}"></div>
+                            <a href="#"><img src="{{ asset('images/brands/bepanthol.jpg') }}" alt="{{ pr.name }}"></a>
                         </div>
-                    </div>
-                    <div class="product-short-info">
-                        <div class="product-name"><a href="#">Provouge Woman Top</a></div>
-                        <div class="star"><i class="fa fa-star"></i><i class="fa fa-star"></i><i
-                                    class="fa fa-star"></i><i class="fa fa-star"></i><i
-                                    class="fa fa-star"></i><i
-                                    class="fa fa-star-o"></i></div>
-                        <div class="product-price">
-                            <div class="product-price-span">$28.40
-                                <del>$35.50</del>
+                        <div class="hover-info">
+                            <div class="product-short-info">
+                                <div class="product-name"><a href="#">{{ pr.name }}</a></div>
+                                {#<div class="star"><i class="fa fa-star"></i><i class="fa fa-star"></i><i#}
+                                            {#class="fa fa-star"></i><i class="fa fa-star"></i><i#}
+                                            {#class="fa fa-star"></i><i#}
+                                            {#class="fa fa-star-o"></i></div>#}
+                                <div class="product-price">
+                                    <div class="product-price-span">{{ pr.webPrice }}€
+                                        <del>{{ pr.retailPrice }}€</del>
+                                    </div>
+                                </div>
+                                <button type="button" class="add-to-cart">
+                                    <i class="fa fa-cart-plus"></i>
+                                    <span>Καλάθι</span>
+                                </button>
+                            </div>
+                        </div>
+                        <div class="product-short-info">
+                            <div class="product-name"><a href="#">{{ pr.name }}</a></div>
+                            {#<div class="star"><i class="fa fa-star"></i><i class="fa fa-star"></i><i#}
+                                        {#class="fa fa-star"></i><i class="fa fa-star"></i><i#}
+                                        {#class="fa fa-star"></i><i#}
+                                        {#class="fa fa-star-o"></i></div>#}
+                            <div class="product-price">
+                                <div class="product-price-span">{{  pr.webPrice }}€
+                                    <del>{{ pr.retailPrice }}€</del>
+                                </div>
                             </div>
                         </div>
                     </div>
                 </div>
-            </div>
-            <div class="item">
-                <div class="product-case">
-                    <div class="tag tag-red"><span>Sale</span></div>
-                    <div class="product-img">
-                        <div class="hover-img"><img src="{{ asset('images/brands/5454-h.jpg') }}" alt=""></div>
-                        <a href="#"><img src="{{ asset('images/brands/5454.jpg') }}" alt=""></a>
-                    </div>
-                    <div class="hover-info">
-                        <div class="product-short-info">
-                            <div class="product-name"><a href="#">Provouge Men T-Shirt</a></div>
-                            <div class="star"><i class="fa fa-star"></i><i class="fa fa-star"></i><i
-                                        class="fa fa-star"></i><i class="fa fa-star"></i><i
-                                        class="fa fa-star"></i><i
-                                        class="fa fa-star-o"></i></div>
-                            <div class="product-price">
-                                <div class="product-price-span">$28.40
-                                    <del>$35.50</del>
-                                </div>
-                            </div>
-                            <button type="button"><i class="fa fa-cart-plus"></i><span>Add to Cart</span>
-                            </button>
-                        </div>
-                    </div>
-                    <div class="product-short-info">
-                        <div class="product-name"><a href="#">Provouge Men T-Shirt</a></div>
-                        <div class="star"><i class="fa fa-star"></i><i class="fa fa-star"></i><i
-                                    class="fa fa-star"></i><i class="fa fa-star"></i><i
-                                    class="fa fa-star"></i><i
-                                    class="fa fa-star-o"></i></div>
-                        <div class="product-price">
-                            <div class="product-price-span">$28.40
-                                <del>$35.50</del>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-            </div>
-
-            <div class="item">
-                <div class="product-case">
-                    <div class="tag tag-orange"><span>20% OFF</span></div>
-                    <div class="product-img">
-                        <div class="hover-img"><img src="{{ asset('images/brands/product-3-h.jpg') }}" alt=""></div>
-                        <a href="#"><img src="{{ asset('images/brands/product-3.jpg') }}" alt=""></a>
-                    </div>
-                    <div class="hover-info">
-                        <div class="product-short-info">
-                            <div class="product-name"><a href="#">Gucci Red Backpack</a></div>
-                            <div class="star"><i class="fa fa-star"></i><i class="fa fa-star"></i><i
-                                        class="fa fa-star"></i><i class="fa fa-star"></i><i
-                                        class="fa fa-star"></i><i
-                                        class="fa fa-star-o"></i></div>
-                            <div class="product-price">
-                                <div class="product-price-span">$28.40
-                                    <del>$35.50</del>
-                                </div>
-                            </div>
-                            <button type="button"><i class="fa fa-cart-plus"></i><span>Add to Cart</span>
-                            </button>
-                        </div>
-                    </div>
-                    <div class="product-short-info">
-                        <div class="product-name"><a href="#">Gucci Red Backpack</a></div>
-                        <div class="star"><i class="fa fa-star"></i><i class="fa fa-star"></i><i
-                                    class="fa fa-star"></i><i class="fa fa-star"></i><i
-                                    class="fa fa-star"></i><i
-                                    class="fa fa-star-o"></i></div>
-                        <div class="product-price">
-                            <div class="product-price-span">$28.40
-                                <del>$35.50</del>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-            </div>
-
-            <div class="item">
-                <div class="product-case">
-                    <div class="tag tag-green"><span>new</span></div>
-                    <div class="product-img">
-                        <div class="hover-img"><img src="images/brands/5454.jpg" alt=""></div>
-                        <a href="#"><img src="images/brands/5454.jpg" alt=""></a>
-                    </div>
-                    <div class="hover-info">
-                        <div class="product-short-info">
-                            <div class="product-name"><a href="#">Killer Jeans for Men</a></div>
-                            <div class="star"><i class="fa fa-star"></i><i class="fa fa-star"></i><i
-                                        class="fa fa-star"></i><i class="fa fa-star"></i><i
-                                        class="fa fa-star"></i><i
-                                        class="fa fa-star-o"></i></div>
-                            <div class="product-price">
-                                <div class="product-price-span">$28.40
-                                    <del>$35.50</del>
-                                </div>
-                            </div>
-                            <button type="button"><i class="fa fa-cart-plus"></i><span>Add to Cart</span>
-                            </button>
-                        </div>
-                    </div>
-                    <div class="product-short-info">
-                        <div class="product-name"><a href="#">Killer Jeans for Men</a></div>
-                        <div class="star"><i class="fa fa-star"></i><i class="fa fa-star"></i><i
-                                    class="fa fa-star"></i><i class="fa fa-star"></i><i
-                                    class="fa fa-star"></i><i
-                                    class="fa fa-star-o"></i></div>
-                        <div class="product-price">
-                            <div class="product-price-span">$28.40
-                                <del>$35.50</del>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-            </div>
-
-            <div class="item">
-                <div class="product-case">
-                    <div class="tag tag-green"><span>new</span></div>
-                    <div class="product-img">
-                        <div class="hover-img"><img src="images/brands/frezyderm-1.jpg" alt=""></div>
-                        <a href="#"><img src="images/brands/frezyderm-1.jpg" alt=""></a>
-                    </div>
-                    <div class="hover-info">
-                        <div class="product-short-info">
-                            <div class="product-name"><a href="#">Provouge Woman Top</a></div>
-                            <div class="star"><i class="fa fa-star"></i><i class="fa fa-star"></i><i
-                                        class="fa fa-star"></i><i class="fa fa-star"></i><i
-                                        class="fa fa-star"></i><i
-                                        class="fa fa-star-o"></i></div>
-                            <div class="product-price">
-                                <div class="product-price-span">$28.40
-                                    <del>$35.50</del>
-                                </div>
-                            </div>
-                            <button type="button"><i class="fa fa-cart-plus"></i><span>Add to Cart</span>
-                            </button>
-                        </div>
-                    </div>
-                    <div class="product-short-info">
-                        <div class="product-name"><a href="#">Provouge Woman Top</a></div>
-                        <div class="star"><i class="fa fa-star"></i><i class="fa fa-star"></i><i
-                                    class="fa fa-star"></i><i class="fa fa-star"></i><i
-                                    class="fa fa-star"></i><i
-                                    class="fa fa-star-o"></i></div>
-                        <div class="product-price">
-                            <div class="product-price-span">$28.40
-                                <del>$35.50</del>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-            </div>
-            <div class="item">
-                <div class="product-case">
-                    <div class="tag tag-red"><span>Sale</span></div>
-                    <div class="product-img">
-                        <div class="hover-img"><img src="images/brands/product-2-h.jpg" alt=""></div>
-                        <a href="#"><img src="images/brands/product-2.jpg" alt=""></a>
-                    </div>
-                    <div class="hover-info">
-                        <div class="product-short-info">
-                            <div class="product-name"><a href="#">Provouge Men T-Shirt</a></div>
-                            <div class="star"><i class="fa fa-star"></i><i class="fa fa-star"></i><i
-                                        class="fa fa-star"></i><i class="fa fa-star"></i><i
-                                        class="fa fa-star"></i><i
-                                        class="fa fa-star-o"></i></div>
-                            <div class="product-price">
-                                <div class="product-price-span">$28.40
-                                    <del>$35.50</del>
-                                </div>
-                            </div>
-                            <button type="button"><i class="fa fa-cart-plus"></i><span>Add to Cart</span>
-                            </button>
-                        </div>
-                    </div>
-                    <div class="product-short-info">
-                        <div class="product-name"><a href="#">Provouge Men T-Shirt</a></div>
-                        <div class="star"><i class="fa fa-star"></i><i class="fa fa-star"></i><i
-                                    class="fa fa-star"></i><i class="fa fa-star"></i><i
-                                    class="fa fa-star"></i><i
-                                    class="fa fa-star-o"></i></div>
-                        <div class="product-price">
-                            <div class="product-price-span">$28.40
-                                <del>$35.50</del>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-            </div>
-
-            <div class="item">
-                <div class="product-case">
-                    <div class="tag tag-orange"><span>20% OFF</span></div>
-                    <div class="product-img">
-                        <div class="hover-img"><img src="images/brands/product-3-h.jpg" alt=""></div>
-                        <a href="#"><img src="images/brands/product-3.jpg" alt=""></a>
-                    </div>
-                    <div class="hover-info">
-                        <div class="product-short-info">
-                            <div class="product-name"><a href="#">Gucci Red Backpack</a></div>
-                            <div class="star"><i class="fa fa-star"></i><i class="fa fa-star"></i><i
-                                        class="fa fa-star"></i><i class="fa fa-star"></i><i
-                                        class="fa fa-star"></i><i
-                                        class="fa fa-star-o"></i></div>
-                            <div class="product-price">
-                                <div class="product-price-span">$28.40
-                                    <del>$35.50</del>
-                                </div>
-                            </div>
-                            <button type="button"><i class="fa fa-cart-plus"></i><span>Add to Cart</span>
-                            </button>
-                        </div>
-                    </div>
-                    <div class="product-short-info">
-                        <div class="product-name"><a href="#">Gucci Red Backpack</a></div>
-                        <div class="star"><i class="fa fa-star"></i><i class="fa fa-star"></i><i
-                                    class="fa fa-star"></i><i class="fa fa-star"></i><i
-                                    class="fa fa-star"></i><i
-                                    class="fa fa-star-o"></i></div>
-                        <div class="product-price">
-                            <div class="product-price-span">$28.40
-                                <del>$35.50</del>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-            </div>
-
-            <div class="item">
-                <div class="product-case">
-                    <div class="tag tag-green"><span>new</span></div>
-                    <div class="product-img">
-                        <div class="hover-img"><img src="images/brands/product-4-h.jpg" alt=""></div>
-                        <a href="#"><img src="images/brands/product-4.jpg" alt=""></a>
-                    </div>
-                    <div class="hover-info">
-                        <div class="product-short-info">
-                            <div class="product-name"><a href="#">Killer Jeans for Men</a></div>
-                            <div class="star"><i class="fa fa-star"></i><i class="fa fa-star"></i><i
-                                        class="fa fa-star"></i><i class="fa fa-star"></i><i
-                                        class="fa fa-star"></i><i
-                                        class="fa fa-star-o"></i></div>
-                            <div class="product-price">
-                                <div class="product-price-span">$28.40
-                                    <del>$35.50</del>
-                                </div>
-                            </div>
-                            <button type="button"><i class="fa fa-cart-plus"></i><span>Add to Cart</span>
-                            </button>
-                        </div>
-                    </div>
-                    <div class="product-short-info">
-                        <div class="product-name"><a href="#">Killer Jeans for Men</a></div>
-                        <div class="star"><i class="fa fa-star"></i><i class="fa fa-star"></i><i
-                                    class="fa fa-star"></i><i class="fa fa-star"></i><i
-                                    class="fa fa-star"></i><i
-                                    class="fa fa-star-o"></i></div>
-                        <div class="product-price">
-                            <div class="product-price-span">$28.40
-                                <del>$35.50</del>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-            </div>
+            {% endfor %}
         </div>
     </div>
 </div>

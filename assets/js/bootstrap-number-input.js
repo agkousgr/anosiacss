@@ -84,3 +84,5 @@
 	};
 } ( jQuery ));
 
+$('.stepper').bootstrapNumber();
+

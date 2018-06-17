@@ -25,29 +25,36 @@ class ProductService
      * @return array
      * @throws \Exception
      */
-    public function getProducts($ctgId, $authId)
+    public function getCategoryItems($ctgId, $authId)
     {
         $client = new \SoapClient('http://caron.cloudsystems.gr/FOeshopWS/ForeignOffice.FOeshop.API.FOeshopSvc.svc?singleWsdl', ['trace' => true, 'exceptions' => true,]);
 
         $message = <<<EOF
 <?xml version="1.0" encoding="utf-16"?>
 <ClientGetCategoryItemsRequest>
-    <AppID>157</AppID>
-    <CompanyID>1000</CompanyID>
     <Type>1011</Type>
     <Kind>1</Kind>
     <Domain>pharmacyone</Domain>
     <AuthID>$authId</AuthID>
+    <AppID>157</AppID>
+    <CompanyID>1000</CompanyID>
+    <pagesize>10</pagesize>
+    <pagenumber>0</pagenumber>
     <CategoryID>$ctgId</CategoryID>
+    <SearchToken>null</SearchToken>
+    <IncludeChildCategories>0</IncludeChildCategories>
 </ClientGetCategoryItemsRequest>
 EOF;
         try {
+            $itemsArr = array();
             $result = $client->SendMessage(['Message' => $message]);
 //            return $result->SendMessageResult;
 //            return str_replace("utf-16", "utf-8", $result->SendMessageResult);
             $items = simplexml_load_string(str_replace("utf-16", "utf-8", $result->SendMessageResult));
-            dump($result);
-            $itemsArr = $this->initializeProducts($items->GetDataRows->GetCategoryItemsRow);
+            dump($items);
+            if ($items !== false) {
+                $itemsArr = $this->initializeProducts($items->GetDataRows->GetCategoryItemsRow);
+            }
             return $itemsArr;
         } catch (\SoapFault $sf) {
             echo $sf->faultstring;
@@ -85,13 +92,14 @@ EOF;
         }
     }
 
+
     /**
      * @param $id
      * @param $authId
      * @return array
      * @throws \Exception
      */
-    public function getProduct($id, $authId)
+    public function getItems($id, $authId)
     {
         $client = new \SoapClient('http://caron.cloudsystems.gr/FOeshopWS/ForeignOffice.FOeshop.API.FOeshopSvc.svc?singleWsdl', ['trace' => true, 'exceptions' => true,]);
 
@@ -108,16 +116,21 @@ EOF;
     <pagenumber>0</pagenumber>
     <ItemID>$id</ItemID>
     <ItemCode>null</ItemCode>
+    <SearchToken>null</SearchToken>
 </ClientGetItemsRequest>
 EOF;
         try {
+            $itemsArr = array();
+            dump($message);
             $result = $client->SendMessage(['Message' => $message]);
 //            return $result->SendMessageResult;
 //            return str_replace("utf-16", "utf-8", $result->SendMessageResult);
-            $item = simplexml_load_string(str_replace("utf-16", "utf-8", $result->SendMessageResult));
-            dump($item);
-            $itemArr = $this->initializeProduct($item->GetDataRows->GetItemsRow);
-            return $itemArr;
+            $items = simplexml_load_string(str_replace("utf-16", "utf-8", $result->SendMessageResult));
+            dump($items);
+            if ($items !== false) {
+                $itemsArr = $this->initializeProduct($items->GetDataRows->GetItemsRow);
+            }
+            return $itemsArr;
         } catch (\SoapFault $sf) {
             echo $sf->faultstring;
         }

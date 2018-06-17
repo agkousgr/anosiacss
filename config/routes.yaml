@@ -21,7 +21,7 @@ product_quick_view:
     requirements:
         id: \d+
 
-# Orders
+# Orders / Cart
 add_to_cart:
     path: /cart/
     controller: App\Controller\OrderController::addToCart

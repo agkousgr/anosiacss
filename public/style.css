@@ -11290,7 +11290,7 @@ html {
 }
 
 body {
-    font-family: 'Roboto-Condensed', sans-serif;
+    font-family: 'Open Sans', sans-serif;
     font-size: 14px;
     line-height: 1.42857143;
     font-weight: 300
@@ -11400,7 +11400,7 @@ h4,
 h5,
 h6 {
     /*font-family: UniversLTStd-BoldCn;*/
-    font-family: Roboto-Condensed;
+    font-family: Open Sans;
     font-weight: 400;
     line-height: 1.1;
     color: inherit
@@ -18585,7 +18585,7 @@ figure.effect-apollo:hover figcaption::before {
 }
 
 .pre-header-right ul li a:hover {
-    color: #fd9c3a
+    color: #36cb6b
 }
 
 .pre-header-right ul li a.cart-link {
@@ -18683,7 +18683,7 @@ figure.effect-apollo:hover figcaption::before {
     margin: 0 0 2px;
     padding-right: 30px;
     font-size: 15px;
-    font-family: "Roboto-Condensed", sans-serif
+    font-family: "Open Sans", sans-serif
 }
 
 .cart-list .media .remove-item {
@@ -18990,7 +18990,7 @@ figure.effect-apollo:hover figcaption::before {
 }
 
 .menu-product-list .media .details-btn {
-    width: 65px;
+    width: 95px;
     position: absolute;
     bottom: 0;
     right: 0;
@@ -19027,7 +19027,7 @@ figure.effect-apollo:hover figcaption::before {
 .menu-product-list .media h5 {
     margin: 0 0 2px;
     font-size: 15px;
-    font-family: "Roboto-Condensed", sans-serif
+    font-family: "Open Sans", sans-serif
 }
 
 .menu-product-list .media button {
@@ -19165,7 +19165,7 @@ figure.effect-apollo:hover figcaption::before {
     padding-left: 25px;
     line-height: 45px;
     font-size: 18px;
-    font-family: "Roboto-Condensed", sans-serif
+    font-family: "Open Sans", sans-serif
 }
 
 .blueMobileMenu li ul li:hover,
@@ -19476,7 +19476,7 @@ body.modal-open {
     font-size: 14px;
     color: #171717;
     font-weight: 700;
-    font-family: "Roboto-Condensed", sans-serif
+    font-family: "Open Sans", sans-serif
 }
 
 .search-collapse {
@@ -19691,7 +19691,7 @@ body.modal-open {
 
 .sidebar-product-list .media h5,
 .social li small {
-    font-family: "Roboto-Condensed", sans-serif
+    font-family: "Open Sans", sans-serif
 }
 
 .sidebar-product-list h3 span {
@@ -20753,7 +20753,7 @@ body.modal-open {
 }
 
 .four-column-wrap ul li:nth-child(odd) {
-    background: #fd9c3a
+    background: #36cb6b
 }
 
 .four-column-wrap ul li:nth-child(even) {
@@ -20854,7 +20854,7 @@ body.modal-open {
 }
 
 .news-post h3 {
-    font-family: 'Roboto-Condensed', sans-serif;
+    font-family: 'Open Sans', sans-serif;
     font-size: 18px
 }
 
@@ -20973,7 +20973,7 @@ h3.resp-accordion {
     margin: 10px 0;
     text-align: center;
     /*font-size: 36px;*/
-    font-size: 24px;
+    font-size: 22px;
     font-weight: 600;
     text-transform: uppercase
 }
@@ -20998,7 +20998,7 @@ h3.resp-accordion {
 }
 
 .category-scroll .owl-item:nth-child(even) .category-case {
-    background: #fd9c3a
+    background: #36cb6b
 }
 
 .section-top h2 {
@@ -21421,7 +21421,7 @@ h3.resp-accordion:first-child {
 .product-box .media h5 {
     margin: 0 0 2px;
     font-size: 15px;
-    font-family: "Roboto-Condensed", sans-serif
+    font-family: "Open Sans", sans-serif
 }
 
 .category-banner .banner-img .overlay,
@@ -21487,6 +21487,7 @@ h3.resp-accordion:first-child {
     border-bottom: 1px solid #fff;
     border-right: 1px solid #fff;
     width: 50%;
+    min-height: 220px;
     float: left
 }
 
@@ -21497,7 +21498,8 @@ h3.resp-accordion:first-child {
 }
 
 .service-content ul li p {
-    margin: 0
+    margin: 3px
+    /*margin: 0*/
 }
 
 .service-content ul i {
@@ -22118,7 +22120,7 @@ h3.resp-accordion:first-child {
 }
 
 .product-list h2 span {
-    font-family: 'Roboto-Condensed', sans-serif;
+    font-family: 'Open Sans', sans-serif;
     float: right;
     font-size: 14px
 }
@@ -23552,7 +23554,7 @@ h3#reply-title {
 }
 
 .post-author h3 {
-    font-family: 'Roboto-Condensed', sans-serif;
+    font-family: 'Open Sans', sans-serif;
     font-size: 24px;
     font-weight: 400;
     margin: 12px 0
@@ -23682,10 +23684,10 @@ h3#reply-title {
         line-height: 20px
     }
     .four-column-wrap ul li h5 {
-        font-size: 30px
+        font-size: 20px
     }
     .four-column-wrap ul li h4 {
-        font-size: 55px
+        font-size: 26px
     }
 }
 
@@ -23709,10 +23711,10 @@ h3#reply-title {
         font-size: 26px
     }
     .four-column-wrap ul li h4 {
-        font-size: 48px
+        font-size: 26px
     }
     .category-banner .banner-img .overlay {
-        font-size: 40px
+        font-size: 26px
     }
 }
 
@@ -23754,7 +23756,7 @@ h3#reply-title {
         font-size: 24px
     }
     .four-column-wrap ul li h4 {
-        font-size: 40px
+        font-size: 24px
     }
     .four-column-wrap ul li .icon img {
         width: 120px
@@ -23882,7 +23884,7 @@ h3#reply-title {
         font-size: 20px
     }
     .four-column-wrap ul li h4 {
-        font-size: 30px
+        font-size: 24px
     }
     .four-column-wrap ul li .icon img {
         width: 100px
