@@ -314,28 +314,7 @@
 
 
                     <div class="col-md-3 column">
-                        <div class="filter-widget">
-                            <h3>FILTER</h3>
-                            <div class="content">
-                                <h4>Shop By</h4>
-                                <div class="custom-cr"><label><input type="checkbox"
-                                                                     class="checkbox"><span>Accessories</span></label>
-                                </div>
-                                <div class="custom-cr"><label><input type="checkbox"
-                                                                     class="checkbox"><span>Glasses</span></label></div>
-                                <div class="custom-cr"><label><input type="checkbox"
-                                                                     class="checkbox"><span>Men's</span></label></div>
-                                <div class="custom-cr"><label><input type="checkbox"
-                                                                     class="checkbox"><span>Women's</span></label></div>
-                                <div class="custom-cr"><label><input type="checkbox"
-                                                                     class="checkbox"><span>Kid's</span></label></div>
-                                <div class="custom-cr"><label><input type="checkbox"
-                                                                     class="checkbox"><span>Juniors</span></label></div>
-                                <div class="text-right">
-                                    <button type="button" class="btn btn-xs btn-default">APPLY</button>
-                                </div>
-                            </div>
-                        </div>
+
 
                         <div class="filter-widget">
                             <h3>Shop By Price</h3>
@@ -352,109 +331,9 @@
 
                         {% include 'products/aside_shop_by_brand.html.twig' %}
 
+                        {#{% include 'products/aside_color_filter.html.twig' %}#}
 
-                        <div class="filter-widget">
-                            <h3>SHOP BY BRAND</h3>
-                            <div class="content">
-                                <div class="color-list">
-                                    <div class="btn-group clearfix" data-toggle="buttons">
-                                        <label class="btn btn-primary"><input type="checkbox" autocomplete="off">
-                                            <div class="color-btn">
-                                                <div class="color-box" style="background-color:#0c0a18;"></div>
-                                            </div>
-                                        </label>
-                                        <label class="btn btn-primary"><input type="checkbox" autocomplete="off">
-                                            <div class="color-btn">
-                                                <div class="color-box" style="background-color:#de332c;"></div>
-                                            </div>
-                                        </label>
-                                        <label class="btn btn-primary"><input type="checkbox" autocomplete="off">
-                                            <div class="color-btn">
-                                                <div class="color-box" style="background-color:#00aeef;"></div>
-                                            </div>
-                                        </label>
-                                        <label class="btn btn-primary"><input type="checkbox" autocomplete="off">
-                                            <div class="color-btn">
-                                                <div class="color-box" style="background-color:#3cb878;"></div>
-                                            </div>
-                                        </label>
-                                        <label class="btn btn-primary"><input type="checkbox" autocomplete="off">
-                                            <div class="color-btn">
-                                                <div class="color-box" style="background-color:#f7941d;"></div>
-                                            </div>
-                                        </label>
-                                        <label class="btn btn-primary"><input type="checkbox" autocomplete="off">
-                                            <div class="color-btn">
-                                                <div class="color-box" style="background-color:#b16c4f;"></div>
-                                            </div>
-                                        </label>
-                                        <label class="btn btn-primary"><input type="checkbox" autocomplete="off">
-                                            <div class="color-btn">
-                                                <div class="color-box" style="background-color:#f26d7d;"></div>
-                                            </div>
-                                        </label>
-                                        <label class="btn btn-primary"><input type="checkbox" autocomplete="off">
-                                            <div class="color-btn">
-                                                <div class="color-box" style="background-color:#662d91;"></div>
-                                            </div>
-                                        </label>
-                                        <label class="btn btn-primary"><input type="checkbox" autocomplete="off">
-                                            <div class="color-btn">
-                                                <div class="color-box" style="background-color:#898989;"></div>
-                                            </div>
-                                        </label>
-                                        <label class="btn btn-primary"><input type="checkbox" autocomplete="off">
-                                            <div class="color-btn">
-                                                <div class="color-box" style="background-color:#ec008c;"></div>
-                                            </div>
-                                        </label>
-                                    </div>
-                                </div>
-                                <div class="text-right">
-                                    <button type="button" class="btn btn-xs btn-default">APPLY</button>
-                                </div>
-                            </div>
-                        </div>
-
-
-                        <div class="filter-widget">
-                            <div class="panel-group" id="accordion" role="tablist" aria-multiselectable="true">
-                                <div class="panel panel-default">
-                                    <div class="panel-heading" role="tab" id="headingOne">
-                                        <div class="panel-title"><a role="button" data-toggle="collapse"
-                                                                    data-parent="#accordion" href="#collapseSize"
-                                                                    aria-expanded="true"
-                                                                    aria-controls="collapseSize">Size</a></div>
-                                    </div>
-                                    <div id="collapseSize" class="panel-collapse collapse in" role="tabpanel"
-                                         aria-labelledby="headingSize">
-                                        <div class="panel-body">
-                                            <div class="custom-cr"><label><input type="checkbox"
-                                                                                 class="checkbox"><span>XXS</span></label>
-                                            </div>
-                                            <div class="custom-cr"><label><input type="checkbox"
-                                                                                 class="checkbox"><span>3XS</span></label>
-                                            </div>
-                                            <div class="custom-cr"><label><input type="checkbox"
-                                                                                 class="checkbox"><span>2XS</span></label>
-                                            </div>
-                                            <div class="custom-cr"><label><input type="checkbox"
-                                                                                 class="checkbox"><span>XS</span></label>
-                                            </div>
-                                            <div class="custom-cr"><label><input type="checkbox"
-                                                                                 class="checkbox"><span>S</span></label>
-                                            </div>
-                                            <div class="custom-cr"><label><input type="checkbox"
-                                                                                 class="checkbox"><span>M</span></label>
-                                            </div>
-                                            <div class="text-right">
-                                                <button type="button" class="btn btn-xs btn-default">APPLY</button>
-                                            </div>
-                                        </div>
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
+                        {#{% include 'products/aside_size.html.twig' %}#}
 
                         {% include 'products/aside_discount.html.twig' %}
 
@@ -1221,4 +1100,9 @@
 
     </div>
 
+{% endblock %}
+
+{% block javascripts %}
+    {{ parent() }}
+    <script src="{{ asset('build/js/product-list.js') }}"></script>
 {% endblock %}

@@ -31,6 +31,7 @@ Encore
     .addEntry('js/jquery-ui', './assets/js/jquery-ui.js')
     .addEntry('js/configuration', './assets/js/configuration.js')
     .addEntry('js/home-page', './assets/js/home-page.js')
+    .addEntry('js/product-list', './assets/js/product-list.js')
 
 
     .addStyleEntry('css/style', './assets/css/style.css')

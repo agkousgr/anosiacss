@@ -20998,7 +20998,8 @@ h3.resp-accordion {
 }
 
 .category-scroll .owl-item:nth-child(even) .category-case {
-    background: #36cb6b
+    background: #000
+    /*background: #36cb6b*/
 }
 
 .section-top h2 {

@@ -62,6 +62,42 @@ class CategoryService
 
     /**
      * @param $authId
+     * @param $ctg
+     *
+     * @return object
+     */
+    public function getCategoryInfo($ctg, $authId)
+    {
+        $client = new \SoapClient('http://caron.cloudsystems.gr/FOeshopWS/ForeignOffice.FOeshop.API.FOeshopSvc.svc?singleWsdl', ['trace' => true, 'exceptions' => true,]);
+
+        $message = <<<EOF
+<?xml version="1.0" encoding="utf-16"?>
+<ClientGetCategoriesRequest>
+    <Type>1007</Type>
+    <Kind>1</Kind>
+    <Domain>pharmacyone</Domain>
+    <AuthID>$authId</AuthID>
+    <AppID>157</AppID>
+    <CompanyID>1000</CompanyID>
+    <IsTopLevel>-1</IsTopLevel>
+    <IsVisible>1</IsVisible>
+    <CategoryID>$ctg</CategoryID>
+</ClientGetCategoriesRequest>
+EOF;
+        try {
+            $result = $client->SendMessage(['Message' => $message]);
+            $resultXML = simplexml_load_string(str_replace("utf-16", "utf-8", $result->SendMessageResult));
+//            dump($ctg);
+            $category = $this->initializeCategories($resultXML->GetDataRows->GetCategoriesRow, $authId);
+
+            return $category;
+        } catch (\SoapFault $sf) {
+            echo $sf->faultstring;
+        }
+    }
+
+    /**
+     * @param $authId
      *
      * @return object
      */

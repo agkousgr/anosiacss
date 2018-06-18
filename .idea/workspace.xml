@@ -2,56 +2,20 @@
 <project version="4">
   <component name="ChangeListManager">
     <list default="true" id="f090d68f-069b-47a1-b355-5aaaeb113e28" name="Default" comment="">
-      <change beforePath="$PROJECT_DIR$/.idea/anosia.iml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/anosia.iml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/deployment.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/deployment.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/assets/js/bootstrap-number-input.js" beforeDir="false" afterPath="$PROJECT_DIR$/assets/js/bootstrap-number-input.js" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/assets/js/configuration.js" beforeDir="false" afterPath="$PROJECT_DIR$/assets/js/configuration.js" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/assets/js/custom.js" beforeDir="false" afterPath="$PROJECT_DIR$/assets/js/custom.js" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/assets/js/jquery-scrolltofixed-min.js" beforeDir="false" afterPath="$PROJECT_DIR$/assets/js/jquery-scrolltofixed-min.js" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/assets/js/jquery.matchHeight-min.js" beforeDir="false" afterPath="$PROJECT_DIR$/assets/js/jquery.matchHeight-min.js" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/assets/js/jquery.touchSwipe.min.js" beforeDir="false" afterPath="$PROJECT_DIR$/assets/js/jquery.touchSwipe.min.js" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/assets/js/wow.js" beforeDir="false" afterPath="$PROJECT_DIR$/assets/js/wow.js" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/config/routes.yaml" beforeDir="false" afterPath="$PROJECT_DIR$/config/routes.yaml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/public/images/brands/5454.jpg" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/public/images/brands/bepanthol.jpg" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/public/images/brands/bioderma.jpg" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/public/images/brands/frezyderm-1.jpg" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/public/images/brands/froika.jpg" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/public/images/brands/healthaid.jpg" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/public/images/brands/korres.jpg" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/public/images/brands/lgactive.jpg" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/public/images/brands/nuxe.jpg" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/public/images/brands/solgar.jpg" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/public/images/brands/tolvelvet.jpg" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/public/images/brands/uriage.jpg" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/public/images/img-1.jpg" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/public/images/img-10.jpg" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/public/images/img-2.jpg" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/public/images/img-3.jpg" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/public/images/img-4.jpg" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/public/images/img-5.jpg" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/public/images/img-6.jpg" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/public/images/img-7.jpg" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/public/images/img-8.jpg" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/public/images/img-9.jpg" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/assets/js/home-page.js" beforeDir="false" afterPath="$PROJECT_DIR$/assets/js/home-page.js" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/public/style.css" beforeDir="false" afterPath="$PROJECT_DIR$/public/style.css" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/Controller/DefaultController.php" beforeDir="false" afterPath="$PROJECT_DIR$/src/Controller/DefaultController.php" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/Controller/ProductController.php" beforeDir="false" afterPath="$PROJECT_DIR$/src/Controller/ProductController.php" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/Service/CategoryService.php" beforeDir="false" afterPath="$PROJECT_DIR$/src/Service/CategoryService.php" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/Service/ProductService.php" beforeDir="false" afterPath="$PROJECT_DIR$/src/Service/ProductService.php" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/symfony.lock" beforeDir="false" afterPath="$PROJECT_DIR$/symfony.lock" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/templates/home_page_modules/03_portfolio.html.twig" beforeDir="false" afterPath="$PROJECT_DIR$/templates/home_page_modules/03_portfolio.html.twig" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/templates/home_page_modules/05_new_products.html.twig" beforeDir="false" afterPath="$PROJECT_DIR$/templates/home_page_modules/05_new_products.html.twig" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/templates/home_page_modules/07_featured_products.html.twig" beforeDir="false" afterPath="$PROJECT_DIR$/templates/home_page_modules/07_featured_products.html.twig" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/templates/home_page_modules/09_motos.html.twig" beforeDir="false" afterPath="$PROJECT_DIR$/templates/home_page_modules/09_motos.html.twig" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/templates/home_page_modules/10_latest_offers.html.twig" beforeDir="false" afterPath="$PROJECT_DIR$/templates/home_page_modules/10_latest_offers.html.twig" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/templates/home_page_modules/14_newsletter.html.twig" beforeDir="false" afterPath="$PROJECT_DIR$/templates/home_page_modules/14_newsletter.html.twig" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/templates/home_page_modules/16_best_sellers.html.twig" beforeDir="false" afterPath="$PROJECT_DIR$/templates/home_page_modules/16_best_sellers.html.twig" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/templates/partials/footer.html.twig" beforeDir="false" afterPath="$PROJECT_DIR$/templates/partials/footer.html.twig" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/templates/partials/javascripts.html.twig" beforeDir="false" afterPath="$PROJECT_DIR$/templates/partials/javascripts.html.twig" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/templates/partials/stylesheets.html.twig" beforeDir="false" afterPath="$PROJECT_DIR$/templates/partials/stylesheets.html.twig" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/templates/home_page_modules/01_blog.html.twig" beforeDir="false" afterPath="$PROJECT_DIR$/templates/home_page_modules/01_blog.html.twig" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/templates/home_page_modules/06_categories.html.twig" beforeDir="false" afterPath="$PROJECT_DIR$/templates/home_page_modules/06_categories.html.twig" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/templates/home_page_modules/slider.html.twig" beforeDir="false" afterPath="$PROJECT_DIR$/templates/home_page_modules/slider.html.twig" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/templates/layout.html.twig" beforeDir="false" afterPath="$PROJECT_DIR$/templates/layout.html.twig" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/templates/partials/top_header.html.twig" beforeDir="false" afterPath="$PROJECT_DIR$/templates/partials/top_header.html.twig" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/templates/partials/top_menu.html.twig" beforeDir="false" afterPath="$PROJECT_DIR$/templates/partials/top_menu.html.twig" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/templates/products/aside_discount.html.twig" beforeDir="false" afterPath="$PROJECT_DIR$/templates/products/aside_discount.html.twig" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/templates/products/aside_shop_by_brand.html.twig" beforeDir="false" afterPath="$PROJECT_DIR$/templates/products/aside_shop_by_brand.html.twig" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/templates/products/list.html.twig" beforeDir="false" afterPath="$PROJECT_DIR$/templates/products/list.html.twig" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/webpack.config.js" beforeDir="false" afterPath="$PROJECT_DIR$/webpack.config.js" afterDir="false" />
     </list>
     <option name="EXCLUDED_CONVERTED_TO_IGNORED" value="true" />
@@ -69,51 +33,44 @@
       <file leaf-file-name="top_menu.html.twig" pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/templates/partials/top_menu.html.twig">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="234">
-              <caret line="16" column="96" selection-start-line="16" selection-start-column="96" selection-end-line="16" selection-end-column="96" />
+            <state relative-caret-position="352">
+              <caret line="123" column="16" lean-forward="true" selection-start-line="123" selection-start-column="16" selection-end-line="123" selection-end-column="16" />
             </state>
           </provider>
         </entry>
       </file>
-      <file leaf-file-name="list.html.twig" pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/templates/products/list.html.twig">
+      <file leaf-file-name="home-page.js" pinned="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/assets/js/home-page.js">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="180">
-              <caret line="461" lean-forward="true" selection-start-line="461" selection-end-line="461" />
-              <folding>
-                <element signature="e#5928#5974#0#HTML" expanded="true" />
-                <element signature="e#9823#9869#0#HTML" expanded="true" />
-                <element signature="e#72667#72674#1#HTML" expanded="true" />
-                <element signature="e#73240#73247#1#HTML" expanded="true" />
-                <element signature="e#79285#79318#0#HTML" expanded="true" />
-                <element signature="e#79659#79692#0#HTML" expanded="true" />
-                <element signature="e#80033#80066#0#HTML" expanded="true" />
-                <element signature="e#80407#80440#0#HTML" expanded="true" />
-                <element signature="e#80781#80814#0#HTML" expanded="true" />
-                <element signature="e#81155#81188#0#HTML" expanded="true" />
-                <element signature="e#81529#81562#0#HTML" expanded="true" />
-                <element signature="e#81903#81936#0#HTML" expanded="true" />
-                <element signature="e#82277#82310#0#HTML" expanded="true" />
-                <element signature="e#82651#82684#0#HTML" expanded="true" />
-              </folding>
+            <state relative-caret-position="108">
+              <caret line="6" column="38" lean-forward="true" selection-start-line="6" selection-start-column="38" selection-end-line="6" selection-end-column="38" />
             </state>
           </provider>
         </entry>
       </file>
-      <file leaf-file-name="footer.html.twig" pinned="false" current-in-tab="true">
-        <entry file="file://$PROJECT_DIR$/templates/partials/footer.html.twig">
+      <file leaf-file-name="06_categories.html.twig" pinned="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/templates/home_page_modules/06_categories.html.twig">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="398">
-              <caret line="160" column="64" selection-start-line="160" selection-start-column="64" selection-end-line="160" selection-end-column="64" />
+            <state relative-caret-position="402">
+              <caret line="76" column="47" lean-forward="true" selection-start-line="76" selection-start-column="47" selection-end-line="76" selection-end-column="47" />
             </state>
           </provider>
         </entry>
       </file>
-      <file leaf-file-name="05_new_products.html.twig" pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/templates/home_page_modules/05_new_products.html.twig">
+      <file leaf-file-name="routes.yaml" pinned="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/config/routes.yaml">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="270">
-              <caret line="29" column="42" lean-forward="true" selection-start-line="27" selection-start-column="36" selection-end-line="29" selection-end-column="42" />
+            <state>
+              <caret column="5" selection-end-column="5" />
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file leaf-file-name="aside_discount.html.twig" pinned="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/templates/products/aside_discount.html.twig">
+          <provider selected="true" editor-type-id="text-editor">
+            <state relative-caret-position="294">
+              <caret line="17" column="12" selection-start-line="17" selection-start-column="12" selection-end-line="17" selection-end-column="12" />
             </state>
           </provider>
         </entry>
@@ -121,35 +78,23 @@
       <file leaf-file-name="layout.html.twig" pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/templates/layout.html.twig">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="450">
-              <caret line="136" column="10" selection-start-line="11" selection-start-column="4" selection-end-line="136" selection-end-column="10" />
+            <state relative-caret-position="208">
+              <caret line="87" column="78" selection-start-line="87" selection-start-column="78" selection-end-line="87" selection-end-column="78" />
+              <folding>
+                <element signature="e#5515#5550#0#Twig" expanded="true" />
+              </folding>
             </state>
           </provider>
         </entry>
       </file>
-      <file leaf-file-name="DefaultController.php" pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/src/Controller/DefaultController.php">
+      <file leaf-file-name="top_header.html.twig" pinned="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/templates/partials/top_header.html.twig">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="452">
-              <caret line="28" column="34" selection-start-line="28" selection-start-column="12" selection-end-line="28" selection-end-column="34" />
-            </state>
-          </provider>
-        </entry>
-      </file>
-      <file leaf-file-name="ProductController.php" pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/src/Controller/ProductController.php">
-          <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="270">
-              <caret line="23" column="49" selection-start-line="23" selection-start-column="49" selection-end-line="23" selection-end-column="49" />
-            </state>
-          </provider>
-        </entry>
-      </file>
-      <file leaf-file-name="CategoryService.php" pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/src/Service/CategoryService.php">
-          <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="126">
-              <caret line="174" column="20" selection-start-line="174" selection-start-column="20" selection-end-line="174" selection-end-column="20" />
+            <state relative-caret-position="72">
+              <caret line="46" column="54" lean-forward="true" selection-start-line="46" selection-start-column="54" selection-end-line="46" selection-end-column="54" />
+              <folding>
+                <element signature="e#2654#2681#0#Twig" expanded="true" />
+              </folding>
             </state>
           </provider>
         </entry>
@@ -157,8 +102,23 @@
       <file leaf-file-name="style.css" pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/public/style.css">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="168">
-              <caret line="18992" column="13" selection-start-line="18992" selection-start-column="13" selection-end-line="18992" selection-end-column="13" />
+            <state relative-caret-position="216">
+              <caret line="21000" column="20" selection-start-line="21000" selection-start-column="20" selection-end-line="21000" selection-end-column="20" />
+              <folding>
+                <element signature="e#41290#41373#2" expanded="true" />
+                <element signature="e#51748#54095#2" expanded="true" />
+                <element signature="e#207740#207915#2" expanded="true" />
+                <element signature="e#208705#208868#2" expanded="true" />
+              </folding>
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file leaf-file-name="slider.html.twig" pinned="false" current-in-tab="true">
+        <entry file="file://$PROJECT_DIR$/templates/home_page_modules/slider.html.twig">
+          <provider selected="true" editor-type-id="text-editor">
+            <state relative-caret-position="240">
+              <caret line="78" column="22" selection-start-line="78" selection-start-column="22" selection-end-line="78" selection-end-column="22" />
             </state>
           </provider>
         </entry>
@@ -175,9 +135,6 @@
   </component>
   <component name="FindInProjectRecents">
     <findStrings>
-      <find>to</find>
-      <find>f87d00</find>
-      <find>favicon</find>
       <find>.sidebar-toogle</find>
       <find>const autoprefixer</find>
       <find>clothi</find>
@@ -191,9 +148,7 @@
       <find>apex</find>
       <find>acti</find>
       <find>owl-dots</find>
-      <find>images/</find>
       <find>PT Sans</find>
-      <find>logo</find>
       <find>Possim eruditi docendi</find>
       <find>Roboto-Condensed</find>
       <find>cssEase</find>
@@ -205,12 +160,20 @@
       <find>configuration.js</find>
       <find>slider</find>
       <find>discount</find>
+      <find>images/</find>
+      <find>filter</find>
+      <find>logo</find>
+      <find>READ MORE</find>
+      <find>UniversLTStd-BoldCn</find>
     </findStrings>
     <replaceStrings>
       <replace>src=&quot;build/images</replace>
       <replace>009836</replace>
       <replace>images/brands/</replace>
       <replace>Roboto-Condensed</replace>
+      <replace>images/brands</replace>
+      <replace>'Open Sans'</replace>
+      <replace>ΠΕΡΙΣΣΟΤΕΡΑ</replace>
       <replace>Open Sans</replace>
     </replaceStrings>
     <dirStrings>
@@ -225,20 +188,12 @@
   <component name="IdeDocumentHistory">
     <option name="CHANGED_PATHS">
       <list>
-        <option value="$PROJECT_DIR$/templates/home_page_modules/08_section_news.html.twig" />
-        <option value="$PROJECT_DIR$/templates/home_page_modules/09_section_motos.html.twig" />
-        <option value="$PROJECT_DIR$/templates/home_page_modules/10_section_latest_offers.html.twig" />
-        <option value="$PROJECT_DIR$/templates/home_page_modules/11_section_pricing_table.html.twig" />
-        <option value="$PROJECT_DIR$/templates/home_page_modules/13_section_testimonials.htnl.twig" />
-        <option value="$PROJECT_DIR$/templates/home_page_modules/13_section_info.html.twig" />
-        <option value="$PROJECT_DIR$/templates/home_page_modules/14_section_newsletter.html.twig" />
         <option value="$PROJECT_DIR$/templates/home_page_modules/15_social.html.twig" />
         <option value="$PROJECT_DIR$/assets/js/jquery.apex-slider.js" />
         <option value="$PROJECT_DIR$/public/jquery.apex-slider.js" />
         <option value="$PROJECT_DIR$/public/js/jquery.apex-slider.js" />
         <option value="$PROJECT_DIR$/assets/js/jquery.flashblue-plugins.js" />
         <option value="$PROJECT_DIR$/assets/css/style.css" />
-        <option value="$PROJECT_DIR$/templates/home_page_modules/slider.html.twig" />
         <option value="$PROJECT_DIR$/templates/home_page_modules/02_four_column_wrap.html.twig" />
         <option value="$PROJECT_DIR$/templates/home_page_modules/04_big_slider.html.twig" />
         <option value="$PROJECT_DIR$/templates/home_page_modules/03_portfolio.html.twig" />
@@ -252,30 +207,38 @@
         <option value="$PROJECT_DIR$/src/Service/CartService.php" />
         <option value="$PROJECT_DIR$/templates/partials/top_cart.html.twig" />
         <option value="$PROJECT_DIR$/config/routes.yaml" />
-        <option value="$PROJECT_DIR$/webpack.config.js" />
-        <option value="$PROJECT_DIR$/templates/partials/top_header.html.twig" />
-        <option value="$PROJECT_DIR$/templates/layout.html.twig" />
         <option value="$PROJECT_DIR$/templates/partials/javascripts.html.twig" />
         <option value="$PROJECT_DIR$/assets/js/bootstrap-number-input.js" />
         <option value="$PROJECT_DIR$/assets/js/jquery-scrolltofixed-min.js" />
         <option value="$PROJECT_DIR$/assets/js/jquery.matchHeight-min.js" />
         <option value="$PROJECT_DIR$/assets/js/custom.js" />
         <option value="$PROJECT_DIR$/assets/js/jquery.touchSwipe.min.js" />
-        <option value="$PROJECT_DIR$/assets/js/home-page.js" />
         <option value="$PROJECT_DIR$/assets/js/configuration.js" />
-        <option value="$PROJECT_DIR$/src/Service/ProductService.php" />
         <option value="$PROJECT_DIR$/assets/js/wow.js" />
         <option value="$PROJECT_DIR$/templates/home_page_modules/05_new_products.html.twig" />
-        <option value="$PROJECT_DIR$/public/style.css" />
         <option value="$PROJECT_DIR$/src/Controller/DefaultController.php" />
-        <option value="$PROJECT_DIR$/templates/partials/top_menu.html.twig" />
         <option value="$PROJECT_DIR$/templates/product/list.html.twig" />
-        <option value="$PROJECT_DIR$/src/Controller/ProductController.php" />
-        <option value="$PROJECT_DIR$/templates/products/aside_shop_by_brand.html.twig" />
-        <option value="$PROJECT_DIR$/templates/products/aside_discount.html.twig" />
         <option value="$PROJECT_DIR$/templates/products/aside_category.html.twig" />
-        <option value="$PROJECT_DIR$/templates/products/list.html.twig" />
         <option value="$PROJECT_DIR$/templates/partials/footer.html.twig" />
+        <option value="$PROJECT_DIR$/templates/partials/top_header.html.twig" />
+        <option value="$PROJECT_DIR$/src/Service/ProductService.php" />
+        <option value="$PROJECT_DIR$/src/Service/CategoryService.php" />
+        <option value="$PROJECT_DIR$/src/Controller/ProductController.php" />
+        <option value="$PROJECT_DIR$/templates/products/aside_filter.html.twig" />
+        <option value="$PROJECT_DIR$/templates/products/aside_shop_by_brand.html.twig" />
+        <option value="$PROJECT_DIR$/templates/products/aside_color_filter.html.twig" />
+        <option value="$PROJECT_DIR$/assets/js/product-list.js" />
+        <option value="$PROJECT_DIR$/webpack.config.js" />
+        <option value="$PROJECT_DIR$/templates/products/aside_size.html.twig" />
+        <option value="$PROJECT_DIR$/templates/products/list.html.twig" />
+        <option value="$PROJECT_DIR$/templates/products/aside_discount.html.twig" />
+        <option value="$PROJECT_DIR$/templates/layout.html.twig" />
+        <option value="$PROJECT_DIR$/templates/partials/top_menu.html.twig" />
+        <option value="$PROJECT_DIR$/assets/js/home-page.js" />
+        <option value="$PROJECT_DIR$/templates/home_page_modules/01_blog.html.twig" />
+        <option value="$PROJECT_DIR$/templates/home_page_modules/06_categories.html.twig" />
+        <option value="$PROJECT_DIR$/public/style.css" />
+        <option value="$PROJECT_DIR$/templates/home_page_modules/slider.html.twig" />
       </list>
     </option>
   </component>
@@ -395,10 +358,10 @@
     </include_path>
   </component>
   <component name="ProjectFrameBounds" extendedState="6">
-    <option name="x" value="47" />
-    <option name="y" value="27" />
-    <option name="width" value="1633" />
-    <option name="height" value="1023" />
+    <option name="x" value="1331" />
+    <option name="y" value="25" />
+    <option name="width" value="1869" />
+    <option name="height" value="1055" />
   </component>
   <component name="ProjectLevelVcsManager" settingsEditedManually="true">
     <ConfirmationsSetting value="1" id="Add" />
@@ -408,7 +371,6 @@
       <foldersAlwaysOnTop value="true" />
     </navigator>
     <panes>
-      <pane id="Scope" />
       <pane id="ProjectPane">
         <subPane>
           <expand>
@@ -511,6 +473,7 @@
           <select />
         </subPane>
       </pane>
+      <pane id="Scope" />
     </panes>
   </component>
   <component name="PropertiesComponent">
@@ -518,7 +481,7 @@
     <property name="last_opened_file_path" value="$PROJECT_DIR$/../ergacis_app" />
     <property name="list.type.of.created.stylesheet" value="CSS" />
     <property name="nodejs_package_manager_path" value="npm" />
-    <property name="settings.editor.selected.configurable" value="web-ide.project.structure" />
+    <property name="settings.editor.selected.configurable" value="web.server" />
   </component>
   <component name="RecentsManager">
     <key name="MoveFile.RECENT_KEYS">
@@ -564,24 +527,24 @@
       <workItem from="1529261956193" duration="5407000" />
       <workItem from="1529267730659" duration="2490000" />
       <workItem from="1529270427963" duration="7154000" />
+      <workItem from="1529339183370" duration="8119000" />
     </task>
     <servers />
   </component>
   <component name="TimeTrackingManager">
-    <option name="totallyTimeSpent" value="65791000" />
+    <option name="totallyTimeSpent" value="73910000" />
   </component>
   <component name="ToolWindowManager">
-    <frame x="47" y="27" width="1633" height="1023" extended-state="6" />
-    <editor active="true" />
+    <frame x="1331" y="25" width="1869" height="1055" extended-state="6" />
     <layout>
       <window_info anchor="bottom" id="TODO" order="6" />
       <window_info anchor="bottom" id="Event Log" order="7" sideWeight="0.5002675" side_tool="true" weight="0.24444444" />
       <window_info anchor="bottom" id="Database Changes" order="7" show_stripe_button="false" />
-      <window_info anchor="bottom" id="File Transfer" order="8" weight="0.32896176" />
+      <window_info anchor="bottom" id="File Transfer" order="8" weight="0.32804233" />
       <window_info anchor="bottom" id="Version Control" order="7" />
       <window_info anchor="bottom" id="Run" order="2" />
-      <window_info anchor="bottom" id="Terminal" order="7" sideWeight="0.49973246" visible="true" weight="0.25245902" />
-      <window_info active="true" content_ui="combo" id="Project" order="0" visible="true" weight="0.28413963" />
+      <window_info anchor="bottom" id="Terminal" order="7" sideWeight="0.49973246" visible="true" weight="0.25291005" />
+      <window_info active="true" content_ui="combo" id="Project" order="0" visible="true" weight="0.28410915" />
       <window_info anchor="bottom" id="Docker" order="7" show_stripe_button="false" />
       <window_info anchor="right" id="Database" order="3" />
       <window_info id="Structure" order="1" side_tool="true" weight="0.25" />
@@ -604,37 +567,6 @@
     <option name="myLimit" value="2678400000" />
   </component>
   <component name="editorHistoryManager">
-    <entry file="file://$PROJECT_DIR$/templates/home_page_modules/13_info.html.twig">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="320">
-          <caret line="194" column="101" selection-start-line="194" selection-start-column="101" selection-end-line="194" selection-end-column="101" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/templates/home_page_modules/15_social.html.twig">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="1760">
-          <caret line="191" column="5" selection-start-line="191" selection-start-column="5" selection-end-line="191" selection-end-column="5" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/public/apex-slider.css" />
-    <entry file="file:///run/user/1000/gvfs/afp-volume:host=NasDisk.local,user=anonymous,volume=Public/TemplateMonster/template_68094_XF5W77C7226WWfHppb8s/yoda_html/html/index.html" />
-    <entry file="file://$PROJECT_DIR$/assets/css/style.css">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="445">
-          <caret line="11402" column="34" lean-forward="true" selection-start-line="11402" selection-start-column="4" selection-end-line="11402" selection-end-column="34" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/templates/home_page_modules/slider.html.twig">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="547">
-          <caret line="98" column="22" selection-start-line="98" selection-start-column="22" selection-end-line="98" selection-end-column="22" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/node_modules/owl.carousel/dist/assets/owl.carousel.min.css" />
     <entry file="file://$PROJECT_DIR$/templates/home_page_modules/02_four_column_wrap.html.twig">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="540">
@@ -697,24 +629,10 @@
     <entry file="file://$PROJECT_DIR$/config/packages/routing.yaml">
       <provider selected="true" editor-type-id="text-editor" />
     </entry>
-    <entry file="file://$PROJECT_DIR$/templates/home_page_modules/03_portfolio.html.twig">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="1385">
-          <caret line="213" column="12" lean-forward="true" selection-start-line="213" selection-start-column="12" selection-end-line="213" selection-end-column="12" />
-        </state>
-      </provider>
-    </entry>
     <entry file="file://$PROJECT_DIR$/src/Controller/OrderController.php">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="162">
           <caret line="16" column="1" selection-start-line="16" selection-start-column="1" selection-end-line="16" selection-end-column="1" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/config/routes.yaml">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="218">
-          <caret line="24" column="11" selection-start-line="24" selection-end-line="24" selection-end-column="11" />
         </state>
       </provider>
     </entry>
@@ -725,20 +643,7 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/templates/partials/top_header.html.twig">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="972">
-          <caret line="54" column="41" selection-start-line="54" selection-start-column="41" selection-end-line="54" selection-end-column="41" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/templates/partials/top_cart.html.twig">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="234">
-          <caret line="13" column="38" selection-start-line="13" selection-start-column="38" selection-end-line="13" selection-end-column="38" />
-        </state>
-      </provider>
-    </entry>
+    <entry file="file://$PROJECT_DIR$/templates/partials/top_cart.html.twig" />
     <entry file="file://$PROJECT_DIR$/public/js/jquery.apex-slider.js">
       <provider selected="true" editor-type-id="text-editor">
         <state>
@@ -795,13 +700,6 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/webpack.config.js">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="576">
-          <caret line="32" column="21" selection-start-line="32" selection-start-column="21" selection-end-line="32" selection-end-column="21" />
-        </state>
-      </provider>
-    </entry>
     <entry file="file://$PROJECT_DIR$/assets/js/jquery.apex-slider.js">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="4788">
@@ -809,42 +707,8 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/assets/js/home-page.js">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="18">
-          <caret line="1" selection-start-line="1" selection-end-line="1" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/templates/partials/javascripts.html.twig">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="342">
-          <caret line="19" column="42" selection-start-line="19" selection-start-column="42" selection-end-line="19" selection-end-column="42" />
-        </state>
-      </provider>
-    </entry>
     <entry file="file://$PROJECT_DIR$/assets/js/jquery.bxslider.js">
-      <provider selected="true" editor-type-id="text-editor">
-        <state>
-          <folding>
-            <element signature="n#!!doc" expanded="true" />
-          </folding>
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/assets/js/configuration.js">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="306">
-          <caret line="22" selection-start-line="22" selection-end-line="22" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/src/Service/ProductService.php">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="594">
-          <caret line="38" column="22" selection-start-line="38" selection-start-column="22" selection-end-line="38" selection-end-column="22" />
-        </state>
-      </provider>
+      <provider selected="true" editor-type-id="text-editor" />
     </entry>
     <entry file="file://$PROJECT_DIR$/assets/js/wow.js">
       <provider selected="true" editor-type-id="text-editor">
@@ -853,66 +717,17 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/public/style.css">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="168">
-          <caret line="18992" column="13" selection-start-line="18992" selection-start-column="13" selection-end-line="18992" selection-end-column="13" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/templates/partials/top_menu.html.twig">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="234">
-          <caret line="16" column="96" selection-start-line="16" selection-start-column="96" selection-end-line="16" selection-end-column="96" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/src/Service/CategoryService.php">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="126">
-          <caret line="174" column="20" selection-start-line="174" selection-start-column="20" selection-end-line="174" selection-end-column="20" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/src/Controller/ProductController.php">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="270">
-          <caret line="23" column="49" selection-start-line="23" selection-start-column="49" selection-end-line="23" selection-end-column="49" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/templates/layout.html.twig">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="450">
-          <caret line="136" column="10" selection-start-line="11" selection-start-column="4" selection-end-line="136" selection-end-column="10" />
-        </state>
-      </provider>
-    </entry>
     <entry file="file://$PROJECT_DIR$/templates/home_page_modules/05_new_products.html.twig">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="270">
-          <caret line="29" column="42" lean-forward="true" selection-start-line="27" selection-start-column="36" selection-end-line="29" selection-end-column="42" />
+        <state relative-caret-position="522">
+          <caret line="29" column="42" selection-start-line="27" selection-start-column="36" selection-end-line="29" selection-end-column="42" />
         </state>
       </provider>
     </entry>
     <entry file="file://$PROJECT_DIR$/src/Controller/DefaultController.php">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="452">
+        <state relative-caret-position="450">
           <caret line="28" column="34" selection-start-line="28" selection-start-column="12" selection-end-line="28" selection-end-column="34" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/templates/products/aside_shop_by_brand.html.twig">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="18">
-          <caret line="1" column="8" lean-forward="true" selection-start-line="1" selection-start-column="8" selection-end-line="1" selection-end-column="8" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/templates/products/aside_discount.html.twig">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="576">
-          <caret line="32" column="6" selection-start-line="32" selection-start-column="6" selection-end-line="32" selection-end-column="6" />
         </state>
       </provider>
     </entry>
@@ -923,33 +738,189 @@
         </state>
       </provider>
     </entry>
+    <entry file="file://$PROJECT_DIR$/templates/partials/footer.html.twig">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="746">
+          <caret line="160" column="64" selection-start-line="160" selection-start-column="64" selection-end-line="160" selection-end-column="64" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/Service/ProductService.php">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="396">
+          <caret line="54" column="18" selection-start-line="54" selection-start-column="18" selection-end-line="54" selection-end-column="18" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/Controller/ProductController.php">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="-180">
+          <caret line="26" column="45" selection-start-line="26" selection-start-column="45" selection-end-line="26" selection-end-column="45" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/Service/CategoryService.php">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="536">
+          <caret line="90" column="42" selection-start-line="90" selection-start-column="42" selection-end-line="90" selection-end-column="42" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/templates/products/aside_filter.html.twig">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="126">
+          <caret line="7" column="8" selection-start-line="7" selection-start-column="8" selection-end-line="7" selection-end-column="8" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/templates/products/aside_shop_by_brand.html.twig">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="576">
+          <caret line="32" column="73" selection-start-line="32" selection-start-column="73" selection-end-line="32" selection-end-column="73" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/templates/products/aside_color_filter.html.twig">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="618">
+          <caret line="61" column="6" selection-start-line="61" selection-start-column="6" selection-end-line="61" selection-end-column="6" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/assets/js/configuration.js">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="252">
+          <caret line="19" column="42" lean-forward="true" selection-start-line="19" selection-start-column="42" selection-end-line="19" selection-end-column="42" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/assets/js/product-list.js">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="216">
+          <caret line="12" column="3" lean-forward="true" selection-start-line="12" selection-start-column="3" selection-end-line="12" selection-end-column="3" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/webpack.config.js">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="594">
+          <caret line="33" column="58" selection-start-line="33" selection-start-column="58" selection-end-line="33" selection-end-column="58" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/templates/partials/javascripts.html.twig">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="342">
+          <caret line="19" selection-start-line="19" selection-end-line="19" selection-end-column="60" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/templates/products/aside_size.html.twig">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="666">
+          <caret line="37" column="6" selection-start-line="37" selection-start-column="6" selection-end-line="37" selection-end-column="6" />
+        </state>
+      </provider>
+    </entry>
     <entry file="file://$PROJECT_DIR$/templates/products/list.html.twig">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="180">
-          <caret line="461" lean-forward="true" selection-start-line="461" selection-end-line="461" />
+        <state relative-caret-position="144">
+          <caret line="337" column="57" lean-forward="true" selection-start-line="337" selection-start-column="57" selection-end-line="337" selection-end-column="57" />
           <folding>
-            <element signature="e#5928#5974#0#HTML" expanded="true" />
-            <element signature="e#9823#9869#0#HTML" expanded="true" />
-            <element signature="e#72667#72674#1#HTML" expanded="true" />
-            <element signature="e#73240#73247#1#HTML" expanded="true" />
-            <element signature="e#79285#79318#0#HTML" expanded="true" />
-            <element signature="e#79659#79692#0#HTML" expanded="true" />
-            <element signature="e#80033#80066#0#HTML" expanded="true" />
-            <element signature="e#80407#80440#0#HTML" expanded="true" />
-            <element signature="e#80781#80814#0#HTML" expanded="true" />
-            <element signature="e#81155#81188#0#HTML" expanded="true" />
-            <element signature="e#81529#81562#0#HTML" expanded="true" />
-            <element signature="e#81903#81936#0#HTML" expanded="true" />
-            <element signature="e#82277#82310#0#HTML" expanded="true" />
-            <element signature="e#82651#82684#0#HTML" expanded="true" />
+            <element signature="e#20491#20529#0#Twig" expanded="true" />
           </folding>
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/templates/partials/footer.html.twig">
+    <entry file="file://$PROJECT_DIR$/templates/products/aside_discount.html.twig">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="398">
-          <caret line="160" column="64" selection-start-line="160" selection-start-column="64" selection-end-line="160" selection-end-column="64" />
+        <state relative-caret-position="294">
+          <caret line="17" column="12" selection-start-line="17" selection-start-column="12" selection-end-line="17" selection-end-column="12" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/templates/partials/top_header.html.twig">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="72">
+          <caret line="46" column="54" lean-forward="true" selection-start-line="46" selection-start-column="54" selection-end-line="46" selection-end-column="54" />
+          <folding>
+            <element signature="e#2654#2681#0#Twig" expanded="true" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/config/routes.yaml">
+      <provider selected="true" editor-type-id="text-editor">
+        <state>
+          <caret column="5" selection-end-column="5" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/templates/partials/top_menu.html.twig">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="352">
+          <caret line="123" column="16" lean-forward="true" selection-start-line="123" selection-start-column="16" selection-end-line="123" selection-end-column="16" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/assets/js/home-page.js">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="108">
+          <caret line="6" column="38" lean-forward="true" selection-start-line="6" selection-start-column="38" selection-end-line="6" selection-end-column="38" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/templates/home_page_modules/03_portfolio.html.twig">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="643">
+          <caret line="213" column="12" lean-forward="true" selection-start-line="213" selection-start-column="12" selection-end-line="213" selection-end-column="12" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/templates/layout.html.twig">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="208">
+          <caret line="87" column="78" selection-start-line="87" selection-start-column="78" selection-end-line="87" selection-end-column="78" />
+          <folding>
+            <element signature="e#5515#5550#0#Twig" expanded="true" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/templates/home_page_modules/01_blog.html.twig">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="252">
+          <caret line="14" column="26" selection-start-line="14" selection-start-column="26" selection-end-line="14" selection-end-column="26" />
+          <folding>
+            <element signature="n#style#0;n#div#0;n#!!top" expanded="true" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/templates/home_page_modules/06_categories.html.twig">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="402">
+          <caret line="76" column="47" lean-forward="true" selection-start-line="76" selection-start-column="47" selection-end-line="76" selection-end-column="47" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/public/style.css">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="216">
+          <caret line="21000" column="20" selection-start-line="21000" selection-start-column="20" selection-end-line="21000" selection-end-column="20" />
+          <folding>
+            <element signature="e#41290#41373#2" expanded="true" />
+            <element signature="e#51748#54095#2" expanded="true" />
+            <element signature="e#207740#207915#2" expanded="true" />
+            <element signature="e#208705#208868#2" expanded="true" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/templates/home_page_modules/slider.html.twig">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="240">
+          <caret line="78" column="22" selection-start-line="78" selection-start-column="22" selection-end-line="78" selection-end-column="22" />
         </state>
       </provider>
     </entry>
