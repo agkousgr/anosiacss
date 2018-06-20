@@ -9,12 +9,20 @@
 namespace App\Entity;
 
 use App\Traits\{
-    BasicDbFieldsTrait, TimestampableTrait
+    TimestampableTrait
 };
 
+/**
+ * Class Cart
+ */
 class Cart
 {
-    use BasicDbFieldsTrait, TimestampableTrait;
+    use TimestampableTrait;
+
+    /**
+     * @var int|null
+     */
+    protected $id;
 
     /**
      * @var string
@@ -98,6 +106,14 @@ class Cart
     public function setQuantity(int $quantity): void
     {
         $this->quantity = $quantity;
+    }
+
+    /**
+     * @return int|null
+     */
+    public function getId(): ?int
+    {
+        return $this->id;
     }
 
 

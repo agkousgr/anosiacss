@@ -23,11 +23,21 @@ product_quick_view:
 
 # Orders / Cart
 add_to_cart:
-    path: /cart/
+    path: /cart/{id}
     controller: App\Controller\OrderController::addToCart
     methods: [GET,POST]
     options:
         expose: true
+    requirements:
+        id: \d+
+
+load_top_cart:
+    path: /top-cart
+    controller: App\Controller\OrderController::loadTopCart
+    methods: [GET,POST]
+    options:
+        expose: true
+
 
 # Blog
 

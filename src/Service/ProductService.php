@@ -80,9 +80,12 @@ EOF;
                     'webPrice' => $pr->WebPrice,
                     'outOfStock' => $pr->OutOfStock,
                     'remainNotReserved' => $pr->Remain,
-                    'webFree' => $pr->WebFree
+                    'webFree' => $pr->WebFree,
+                    'hasMainImage' => $pr->HasMainPhoto,
+                    'imageUrl' => ($pr->HasMainPhoto) ? str_replace('[Serial]', '01102459200617', str_replace('&amp;', '&', $pr->MainPhotoUrl)) : ''
                 );
             }
+            dump($prArr);
 //            array_multisort(array_column($prArr, "priority"), $prArr);
 //            return new Response(dump(print_r($this->prCategories)));
             return $prArr;
