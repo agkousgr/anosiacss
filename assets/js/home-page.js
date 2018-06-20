@@ -1,11 +1,14 @@
 // $('body').startComponents();
 
 $('.add-to-cart').on('click', function () {
-    alert('add to cart');
+    // alert($(this).data('id') + ' | ' + $(this).data('quantity'));
+    $('#collapseCart').load(Routing.generate('add_to_cart', {'id': $(this).data('id')}));
 });
 
 $('.owl-dots').css('display', 'none');
 
 // collapseCart
 
-// $('#tech-lib-container').load(Routing.generate('tech_lib_model_info', {'modelId': $(this).val()}));
+$(document).ready(function () {
+    $('#collapseCart').load(Routing.generate('load_top_cart'));
+});

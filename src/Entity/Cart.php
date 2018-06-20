@@ -9,12 +9,17 @@
 namespace App\Entity;
 
 use App\Traits\{
-    BasicDbFieldsTrait, TimestampableTrait
+    TimestampableTrait
 };
 
 class Cart
 {
-    use BasicDbFieldsTrait, TimestampableTrait;
+    use TimestampableTrait;
+
+    /**
+     * @var int|null
+     */
+    protected $id;
 
     /**
      * @var string
