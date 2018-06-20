@@ -30,10 +30,12 @@ class OrderController extends AbstractController
                 if (null !== $session->get('username')) ($cart->setUsername($session->get('username')));
 
                 if (null !== $prId) {
-                    return $this->render('orders/add_to_cart.html.twig', [
-                        'id' => $prId
-                    ]);
+                    $em->persist($cart);
+                    $em->flush();
+
+                    return($this->render('partials/top_cart.html.twig'));
                 }
+                return $this->json(['success' => false]);
             } catch (\Exception $e) {
                 throw $e;
                 //throw $this->createNotFoundException('The resource you are looking for could not be found.');
@@ -41,7 +43,10 @@ class OrderController extends AbstractController
         } else {
             throw $this->createNotFoundException('The resource you are looking for could not be found.');
         }
+    }
 
-
+    public function loadTopCart()
+    {
+        return($this->render('partials/top_cart.html.twig'));
     }
 }
