@@ -10,11 +10,13 @@
                     {% endif %}
                     <div class="product-box">
                         <div class="media">
-                            <div class="media-left"><a href="#">
-                                    <img class="media-object" src="images/product-1.jpg" alt="{{ pr.name }}"></a>
+                            <div class="media-left">
+                                <a href="{{ path('product_view', {'id':pr.id}) }}">
+                                    <img class="media-object" src="{{ pr.imageUrl }}" alt="{{ pr.name }}">
+                                </a>
                             </div>
                             <div class="media-body">
-                                <h5><a href="#">{{ pr.name }}</a></h5>
+                                <h5><a href="{{ path('product_view', {'id':pr.id}) }}">{{ pr.name }}</a></h5>
                                 <div class="star-rating"><i class="fa fa-star"></i><i
                                             class="fa fa-star"></i><i class="fa fa-star"></i><i
                                             class="fa fa-star"></i><i class="fa fa-star-o"></i></div>

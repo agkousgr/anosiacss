@@ -1,0 +1,26 @@
+<div class="product-media-scroll">
+    <h3>Best <span>Sellers</span></h3>
+    {% for pr in popular|slice(0,3) %}
+    <div class="product-box">
+        <div class="media">
+            <div class="media-left">
+                <a href="#">
+                    <img class="media-object" src="{{ pr.imageUrl }}" alt="{{ pr.name }}">
+                </a>
+            </div>
+            <div class="media-body">
+                <h5><a href="{{ path('product_view', {'id':pr.id}) }}">{{ pr.name }}</a></h5>
+                {#<div class="star-rating"><i class="fa fa-star"></i><i#}
+                            {#class="fa fa-star"></i><i#}
+                            {#class="fa fa-star"></i><i#}
+                            {#class="fa fa-star"></i><i#}
+                            {#class="fa fa-star-o"></i></div>#}
+                <div class="product-price-span">{{  pr.webPrice }}€
+                    <del>{{ pr.retailPrice }}€</del>
+                </div>
+                <button type="button" class="btn btn-primary btn-xs">ΚΑΛΑΘΙ</button>
+            </div>
+        </div>
+    </div>
+    {% endfor %}
+</div>

@@ -1,0 +1,22 @@
+<div class="section" style="background-image:url({{ asset('images/bg-9.jpg') }});">
+    <div class="container">
+        <div class="category-scroller">
+            <h2>Επιλεξτε κατηγορια</h2>
+            <div class="owl-carousel owl-theme CatCarousel">
+                {% for ctg in categories %}
+                    {% if ctg.id|number_format == ctgInfo.id|number_format %}
+                        {% for subctg in ctg.children %}
+                            <div class="item  wow fadeIn" data-wow-delay="0.4s">
+                                <div class="category-image">
+                                    <a href="{{ path('products_list', {'id':subctg.id}) }}">
+                                        <p>{{ subctg.name }}</p>
+                                        <img src="{{ subctg.imageUrl }}" alt=""></a>
+                                </div>
+                            </div>
+                        {% endfor %}
+                    {% endif %}
+                {% endfor %}
+            </div>
+        </div>
+    </div>
+</div>

@@ -1,0 +1,24 @@
+<header class="site-header">
+
+    {% include 'partials/top_header.html.twig' %}
+
+    <div class="post-header" id="header">
+        <div class="container">
+            <div class="post-header-wrap">
+                <a href="#" class="sidebar-toogle" id="menu-toggle">Sidebar Toogle</a>
+                <a role="button" href="#menuModal" data-toggle="modal"
+                   class="menu-toggle visible-xs visible-sm">MENU
+                    TOGGLE</a>
+                <div class="row">
+                    <div class="col-md-4">
+                        <div class="logo"><a href="{{ path('index') }}"><img src="{{ asset('images/logo.png') }}" alt=""></a>
+                        </div>
+                    </div>
+                    <div class="col-md-8 visible-lg visible-md">
+                        {% include 'partials/top_menu.html.twig' %}
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</header>

@@ -4,10 +4,12 @@ index:
 
 # Products
 products_list:
-    path: /products/{id}
+    path: /products/{id}/{page}
     controller: App\Controller\ProductController::listProducts
+    defaults: { page: 1 }
     requirements:
         id: \d+
+        page: \d+
 
 product_view:
     path: /product/{id}

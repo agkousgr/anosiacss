@@ -68,7 +68,7 @@ class CategoryService
      */
     public function getCategoryInfo($ctg, $authId)
     {
-        $client = new \SoapClient('http://caron.cloudsystems.gr/FOeshopWS/ForeignOffice.FOeshop.API.FOeshopSvc.svc?singleWsdl', ['trace' => true, 'exceptions' => true,]);
+        $client = new \SoapClient('https://caron.cloudsystems.gr/FOeshopWS/ForeignOffice.FOeshop.API.FOeshopSvc.svc?singleWsdl', ['trace' => true, 'exceptions' => true,]);
 
         $message = <<<EOF
 <?xml version="1.0" encoding="utf-16"?>
@@ -82,15 +82,27 @@ class CategoryService
     <IsTopLevel>-1</IsTopLevel>
     <IsVisible>1</IsVisible>
     <CategoryID>$ctg</CategoryID>
+    <Slug></Slug>
 </ClientGetCategoriesRequest>
 EOF;
         try {
             $result = $client->SendMessage(['Message' => $message]);
             $resultXML = simplexml_load_string(str_replace("utf-16", "utf-8", $result->SendMessageResult));
-//            dump($ctg);
-            $category = $this->initializeCategories($resultXML->GetDataRows->GetCategoriesRow, $authId);
+            $category = $resultXML->GetDataRows->GetCategoriesRow;
+            $categoryInfo = array(
+                'id' => $category->ID,
+                'name' => $category->Name,
+                'description' => $category->Description,
+                'priority' => (int)$category->Priority,
+                'children' => $category->ChildIDs,
+                'isVisible' => $category->IsVisible,
+                'slug' => $category->Slug,
+                'hasMainImage' => $category->HasMainPhoto,
+                'imageUrl' => ($category->HasMainPhoto) ? 'https://caron.cloudsystems.gr/FOeshopAPIWeb/DF.aspx?' . str_replace('[Serial]', '01102459200617', str_replace('&amp;', '&', $category->MainPhotoUrl)) : ''
+            );
+            dump($categoryInfo);
 
-            return $category;
+            return $categoryInfo;
         } catch (\SoapFault $sf) {
             echo $sf->faultstring;
         }
@@ -103,7 +115,7 @@ EOF;
      */
     public function getCategoriesFromS1($authId)
     {
-        $client = new \SoapClient('http://caron.cloudsystems.gr/FOeshopWS/ForeignOffice.FOeshop.API.FOeshopSvc.svc?singleWsdl', ['trace' => true, 'exceptions' => true,]);
+        $client = new \SoapClient('https://caron.cloudsystems.gr/FOeshopWS/ForeignOffice.FOeshop.API.FOeshopSvc.svc?singleWsdl', ['trace' => true, 'exceptions' => true,]);
 
         $message = <<<EOF
 <?xml version="1.0" encoding="utf-16"?>
@@ -159,21 +171,29 @@ EOF;
             foreach ($rootCategories as $category) {
 //                if ((int)$category->IsVisible === 1) {
                     $this->prCategories[] = array(
-                        'name' => $category->Name,
                         'id' => $category->ID,
+                        'name' => $category->Name,
+                        'description' => $category->Description,
                         'priority' => (int)$category->Priority,
                         'children' => '',
-                        'isVisible' => $category->IsVisible
+                        'isVisible' => $category->IsVisible,
+                        'slug' => $category->Slug,
+                        'hasMainImage' => $category->HasMainPhoto,
+                        'imageUrl' => ($category->HasMainPhoto) ? 'https://caron.cloudsystems.gr/FOeshopAPIWeb/DF.aspx?' . str_replace('[Serial]', '01102459200617', str_replace('&amp;', '&', $category->MainPhotoUrl)) : ''
                     );
                     $subCtgs = $this->getSubCategories($category->ID, $authId);
 
                     $childArr = array();
                     foreach ($subCtgs->GetDataRows->GetCategoryChildrenRow as $child) {
                         $childArr[] = array(
-                            'name' => $child->Name,
                             'id' => $child->ID,
+                            'name' => $child->Name,
+                            'description' => $child->Description,
                             'priority' => (int)$child->Priority,
-                            'isVisible' => $category->IsVisible
+                            'isVisible' => $child->IsVisible,
+                            'slug' => $child->Slug,
+                            'hasMainImage' => $child->HasMainPhoto,
+                            'imageUrl' => ($child->HasMainPhoto) ? 'https://caron.cloudsystems.gr/FOeshopAPIWeb/DF.aspx?' . str_replace('[Serial]', '01102459200617', str_replace('&amp;', '&', $child->MainPhotoUrl)) : ''
                         );
                         array_multisort(array_column($childArr, "priority"), $childArr);
                         $this->prCategories[$i]['children'] = $childArr;
@@ -227,7 +247,7 @@ EOF;
 
     public function getSubCategories($ctgId, $authId)
     {
-        $client = new \SoapClient('http://caron.cloudsystems.gr/FOeshopWS/ForeignOffice.FOeshop.API.FOeshopSvc.svc?singleWsdl', ['trace' => true, 'exceptions' => true,]);
+        $client = new \SoapClient('https://caron.cloudsystems.gr/FOeshopWS/ForeignOffice.FOeshop.API.FOeshopSvc.svc?singleWsdl', ['trace' => true, 'exceptions' => true,]);
 
         $message = <<<EOF
 <?xml version="1.0" encoding="utf-16"?>

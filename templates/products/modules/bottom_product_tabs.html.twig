@@ -1,0 +1,166 @@
+<div class="ProductTab">
+    <ul class="resp-tabs-list hor_1">
+        <li>ΑΝΔΡΑΣ</li>
+        <li>ΓΥΝΑΙΚΑ</li>
+        <li>ΠΑΙΔΙ</li>
+    </ul>
+    <div class="resp-tabs-container hor_1">
+        <div id="men_id">
+            <div class="owl-carousel owl-theme ProductScrollTab">
+                {% for pr in popular %}
+                    <div class="item">
+                        <div class="product-case">
+                            <div class="tag tag-green"><span>new</span></div>
+                            <div class="product-img">
+                                <div class="hover-img">
+                                    <img src="images/product-1-h.jpg" alt="{{ pr.name }}">
+                                </div>
+                                <a href="#"><img src="images/product-1.jpg" alt="{{ pr.name }}"></a>
+                            </div>
+                            <div class="hover-info">
+                                <div class="product-short-info">
+                                    <div class="product-name">
+                                        <a href="#">{{ pr.name }}</a>
+                                    </div>
+                                    {#<div class="star"><i class="fa fa-star"></i><i#}
+                                    {#class="fa fa-star"></i><i class="fa fa-star"></i><i#}
+                                    {#class="fa fa-star"></i><i class="fa fa-star"></i><i#}
+                                    {#class="fa fa-star-o"></i></div>#}
+                                    <div class="product-price">
+                                        <div class="product-price-span">{{ pr.webPrice }}€
+                                            <del>{{ pr.retailPrice }}€</del>
+                                        </div>
+                                    </div>
+                                    <button type="button"><i class="fa fa-cart-plus"></i>
+                                        <span>Καλάθι</span>
+                                    </button>
+                                </div>
+                            </div>
+                            <div class="product-short-info">
+                                <div class="product-name">
+                                    <a href="#">{{ pr.name }}</a>
+                                </div>
+                                {#<div class="star"><i class="fa fa-star"></i><i#}
+                                {#class="fa fa-star"></i><i#}
+                                {#class="fa fa-star"></i><i class="fa fa-star"></i><i#}
+                                {#class="fa fa-star"></i><i class="fa fa-star-o"></i>#}
+                                {#</div>#}
+                                <div class="product-price">
+                                    <div class="product-price-span">{{ pr.webPrice }}€
+                                        <del>{{ pr.retailPrice }}€</del>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                {% endfor %}
+            </div>
+        </div>
+
+
+        <div id="women_id">
+            <div class="owl-carousel owl-theme ProductScrollTab">
+                {% for pr in popular %}
+                    <div class="item">
+                        <div class="product-case">
+                            <div class="tag tag-green"><span>new</span></div>
+                            <div class="product-img">
+                                <div class="hover-img">
+                                    <img src="images/product-1-h.jpg" alt="{{ pr.name }}">
+                                </div>
+                                <a href="#"><img src="images/product-1.jpg" alt="{{ pr.name }}"></a>
+                            </div>
+                            <div class="hover-info">
+                                <div class="product-short-info">
+                                    <div class="product-name">
+                                        <a href="#">{{ pr.name }}</a>
+                                    </div>
+                                    {#<div class="star"><i class="fa fa-star"></i><i#}
+                                    {#class="fa fa-star"></i><i class="fa fa-star"></i><i#}
+                                    {#class="fa fa-star"></i><i class="fa fa-star"></i><i#}
+                                    {#class="fa fa-star-o"></i></div>#}
+                                    <div class="product-price">
+                                        <div class="product-price-span">{{ pr.webPrice }}€
+                                            <del>{{ pr.retailPrice }}€</del>
+                                        </div>
+                                    </div>
+                                    <button type="button"><i class="fa fa-cart-plus"></i>
+                                        <span>Καλάθι</span>
+                                    </button>
+                                </div>
+                            </div>
+                            <div class="product-short-info">
+                                <div class="product-name">
+                                    <a href="#">{{ pr.name }}</a>
+                                </div>
+                                {#<div class="star"><i class="fa fa-star"></i><i#}
+                                {#class="fa fa-star"></i><i#}
+                                {#class="fa fa-star"></i><i class="fa fa-star"></i><i#}
+                                {#class="fa fa-star"></i><i class="fa fa-star-o"></i>#}
+                                {#</div>#}
+                                <div class="product-price">
+                                    <div class="product-price-span">{{ pr.webPrice }}€
+                                        <del>{{ pr.retailPrice }}€</del>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                {% endfor %}
+            </div>
+        </div>
+
+
+        <div id="acce_id">
+            <div class="owl-carousel owl-theme ProductScrollTab">
+                {% for pr in popular %}
+                    <div class="item">
+                        <div class="product-case">
+                            <div class="tag tag-green"><span>new</span></div>
+                            <div class="product-img">
+                                <div class="hover-img">
+                                    <img src="images/product-1-h.jpg" alt="{{ pr.name }}">
+                                </div>
+                                <a href="#"><img src="images/product-1.jpg" alt="{{ pr.name }}"></a>
+                            </div>
+                            <div class="hover-info">
+                                <div class="product-short-info">
+                                    <div class="product-name">
+                                        <a href="#">{{ pr.name }}</a>
+                                    </div>
+                                    {#<div class="star"><i class="fa fa-star"></i><i#}
+                                    {#class="fa fa-star"></i><i class="fa fa-star"></i><i#}
+                                    {#class="fa fa-star"></i><i class="fa fa-star"></i><i#}
+                                    {#class="fa fa-star-o"></i></div>#}
+                                    <div class="product-price">
+                                        <div class="product-price-span">{{ pr.webPrice }}€
+                                            <del>{{ pr.retailPrice }}€</del>
+                                        </div>
+                                    </div>
+                                    <button type="button"><i class="fa fa-cart-plus"></i>
+                                        <span>Καλάθι</span>
+                                    </button>
+                                </div>
+                            </div>
+                            <div class="product-short-info">
+                                <div class="product-name">
+                                    <a href="#">{{ pr.name }}</a>
+                                </div>
+                                {#<div class="star"><i class="fa fa-star"></i><i#}
+                                {#class="fa fa-star"></i><i#}
+                                {#class="fa fa-star"></i><i class="fa fa-star"></i><i#}
+                                {#class="fa fa-star"></i><i class="fa fa-star-o"></i>#}
+                                {#</div>#}
+                                <div class="product-price">
+                                    <div class="product-price-span">{{ pr.webPrice }}€
+                                        <del>{{ pr.retailPrice }}€</del>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                {% endfor %}
+            </div>
+        </div>
+    </div>
+</div>

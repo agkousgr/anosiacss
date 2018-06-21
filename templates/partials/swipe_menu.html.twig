@@ -1,0 +1,30 @@
+<div class="large-modal modal fade" id="menuModal" tabindex="-1" role="dialog" aria-hidden="true">
+    <div class="modal-content">
+        <div class="close-modal" data-dismiss="modal">
+            <div class="lr">
+                <div class="rl"></div>
+            </div>
+        </div>
+        <div class="container">
+            <ul id="blue-mobile-menu">
+                <li><a href="#">Home</a></li>
+                {% for ctg in categories %}
+                    {% if ctg.isVisible == "1" %}
+                        <li><a href="#">{{ ctg.name }}</a></li>
+                        {% if ctg.children %}
+                            <ul>
+                                {% for subctg in ctg.children %}
+                                    {% if subctg.isVisible == "1" %}
+                                        <li>
+                                            <a href="{{ path('products_list', {'id':subctg.id}) }}">{{ subctg.name }}</a>
+                                        </li>
+                                    {% endif %}
+                                {% endfor %}
+                            </ul>
+                        {% endif %}
+                    {% endif %}
+                {% endfor %}
+            </ul>
+        </div>
+    </div>
+</div>

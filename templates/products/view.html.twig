@@ -1,0 +1,167 @@
+{% extends 'layout.html.twig' %}
+
+{% block bodyId %}category{% endblock %}
+{% block title %}Products List{% endblock %}
+{% block slider %}{% endblock %}
+{% block breadcrumb %}
+
+{% endblock %}
+
+{% block body %}
+    <div id="mainWrapper">
+        {% include 'partials/sidebar_login.html.twig' %}
+        {% include 'partials/swipe_menu.html.twig' %}
+        {% include 'partials/site_header.html.twig' %}
+        <div class="page-header">
+            <div class="container">
+                <div class="row">
+                    <div class="col-md-12"><h1>{{ pr.name }}</h1></div>
+                </div>
+            </div>
+        </div>
+        <div class="section" style="background-image:url(images/bg-5.jpg);">
+            <div class="container">
+                <div class="row">
+                    <div class="col-md-9 single-product">
+                        <div class="row">
+                            <div class="col-sm-6">
+                                <div class="product-main-slider">
+                                    <div class="slider">
+                                        <div class="main-image">
+                                            <ul class="bxslider">
+                                                <li><img src="{{ pr.imageUrl }}" alt=""/></li>
+                                                {#<li><img src="images/img-18.jpg" alt="" /></li>#}
+                                                {#<li><img src="images/img-17.jpg" alt="" /></li>#}
+                                                {#<li><img src="images/img-18.jpg" alt="" /></li>#}
+                                                {#<li><img src="images/img-17.jpg" alt="" /></li>#}
+                                                {#<li><img src="images/img-18.jpg" alt="" /></li>#}
+                                            </ul>
+                                        </div>
+                                        <div class="owl-carousel owl-theme" id="bx-pager">
+                                            <div class="item"><a data-slide-index="0" href="">
+                                                    <img src="{{ pr.imageUrl }}" alt=""/></a></div>
+                                            {#<div class="item"><a data-slide-index="1" href=""><img src="images/img-18.jpg" alt="" /></a></div>#}
+                                            {#<div class="item"><a data-slide-index="2" href=""><img src="images/img-17.jpg" alt="" /></a></div>#}
+                                            {#<div class="item"><a data-slide-index="3" href=""><img src="images/img-18.jpg" alt="" /></a></div>#}
+                                            {#<div class="item"><a data-slide-index="4" href=""><img src="images/img-17.jpg" alt="" /></a></div>#}
+                                            {#<div class="item"><a data-slide-index="5" href=""><img src="images/img-18.jpg" alt="" /></a></div>#}
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+
+                            <div class="col-sm-6 wow fadeIn" data-wow-delay="0.3s">
+                                <h2>{{ pr.name }}</h2>
+                                <p> RB3025I 002/3F Size:58 Black Blue Gradient Aviator Men's
+                                    Sunglasses</p>
+                                {#<ul class="rating">#}
+                                {#<li><i class="fa fa-star"></i><i class="fa fa-star"></i>#}
+                                {#<i class="fa fa-star"></i><i class="fa fa-star"></i><i class="fa fa-star"></i></li>#}
+                                {#<li><a href="#">(1 customer review)</a></li>#}
+                                {#<li><a href="#">Write a Review </a></li>#}
+                                {#</ul>#}
+
+                                <div class="product-id">SKU : <span>{{ pr.mainBarcode }}</span>
+                                </div>
+                                <div class="product-price">{{ pr.webPrice }}€
+                                    <del>{{ pr.retailPrice }}€</del>
+                                </div>
+                                {#<div class="features">#}
+                                {#<h4>Features: </h4>#}
+                                {#<ul>#}
+                                {#<li>Black metal body</li>#}
+                                {#<li>Suitable for medium faces</li>#}
+                                {#<li>Gradient blue lenses</li>#}
+                                {#<li>100% UV protection</li>#}
+                                {#</ul>#}
+                                {#</div>#}
+
+                                {#<div class="color-opt">#}
+                                {#<h4>Available colors : </h4>#}
+                                {#<button type="button" class="btn btn-primary" data-toggle="button" aria-pressed="false"><span style="background-color:#ffd700"></span></button>#}
+                                {#<button type="button" class="btn btn-primary" data-toggle="button" aria-pressed="false"><span style="background-color:#a52a2a"></span></button>#}
+                                {#<button type="button" class="btn btn-primary" data-toggle="button" aria-pressed="false"><span style="background-color:#808080"></span></button>#}
+                                {#<button type="button" class="btn btn-primary" data-toggle="button" aria-pressed="false"><span style="background-color:#b87332"></span></button>#}
+                                {#<button type="button" class="btn btn-primary" data-toggle="button" aria-pressed="false"><span style="background-color:#0000ff"></span></button>#}
+                                {#</div>#}
+
+                                {#<div class="variations_button">#}
+                                {#<div class="row">#}
+                                {#<div class="col-sm-6">#}
+                                {#<div class="form-group">#}
+                                {#<input class="form-control stepper" type="number" value="1" min="1" max="10" />#}
+                                {#</div>#}
+                                {#</div>#}
+                                {#<div class="col-sm-6">#}
+                                {#<ul>#}
+                                {#<li><button type="button"><i class="fa fa-heart-o"></i></button></li>#}
+                                {#<li><button type="button"><i class="fa fa-bell-o"></i></button></li>#}
+                                {#</ul>#}
+                                {#</div>#}
+                                {#</div>#}
+                                {#</div>#}
+
+                                <div class="option_button form-group">
+                                    <div class="row">
+                                        <div class="col-xs-6">
+                                            <a href="#" class="btn btn-primary btn-block">ΣΤΟ
+                                                ΚΑΛΑΘΙ</a>
+                                        </div>
+                                        <div class="col-xs-6">
+                                            <a href="#" class="btn btn-default btn-block">ΑΓΟΡΑΣΕ
+                                                ΤΩΡΑ</a>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="share"><img src="images/share.jpg" alt=""></div>
+
+                                <div class="pin-widget visible-sm">
+                                    <h5>Delivery</h5>
+                                    <div class="content">
+                                        <div class="pin-form">
+                                            <form action="#">
+                                                <div class="row no-margin">
+                                                    <div class="col-xs-8 no-padding"><input
+                                                                type="text" class="form-control"
+                                                                placeholder="Enter Pin Code"></div>
+                                                    <div class="col-xs-4 no-padding"><input
+                                                                type="submit"
+                                                                class="btn btn-primary btn-block"
+                                                                value="CHECK"></div>
+                                                </div>
+                                            </form>
+                                            <p class="text-center">
+                                                <strong>Generally delivered by 5
+                                                    days</strong></p>
+                                        </div>
+                                    </div>
+                                </div>
+
+                            </div>
+                        </div>
+                        {{ include('products/modules/product_view_tabs.html.twig') }}
+                    </div>
+
+                    <div class="col-md-3 sidebar visible-lg visible-md">
+                        {% include 'products/modules/bside_delivery.html.twig' %}
+                        {% include 'products/modules/bside_special_products.html.twig' %}
+                        {% include 'products/modules/bside_clearance_sale.html.twig' %}
+                        {% include 'products/modules/bside_other_info.html.twig' %}
+                    </div>
+                </div>
+                {% include 'products/modules/product_view_related.html.twig' %}
+                {% include 'products/modules/bottom_banners.html.twig' %}
+
+
+            </div>
+        </div>
+        {% include 'home_page_modules/14_newsletter.html.twig' %}
+        {% include 'home_page_modules/15_social.html.twig' %}
+        {% include 'partials/footer.html.twig' %}
+    </div>
+{% endblock %}
+
+{% block javascripts %}
+    {{ parent() }}
+    <script src="{{ asset('build/js/product-list.js') }}"></script>
+{% endblock %}

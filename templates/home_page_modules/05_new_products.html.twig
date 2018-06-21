@@ -14,12 +14,12 @@
                     <div class="product-case">
                         <div class="tag tag-green"><span>new</span></div>
                         <div class="product-img">
-                            <div class="hover-img"><img src="{{ asset('images/brands/bepanthol.jpg') }}" alt="{{ pr.name }}"></div>
-                            <a href="#"><img src="{{ asset('images/brands/bepanthol.jpg') }}" alt="{{ pr.name }}"></a>
+                            <div class="hover-img"><img src="{{ pr.imageUrl }}" alt="{{ pr.name }}"></div>
+                            <a href="{{ path('product_view', {'id':pr.id}) }}"><img src="{{ pr.imageUrl }}" alt="{{ pr.name }}"></a>
                         </div>
                         <div class="hover-info">
                             <div class="product-short-info">
-                                <div class="product-name"><a href="#">{{ pr.name }}</a></div>
+                                <div class="product-name"><a href="{{ path('product_view', {'id':pr.id}) }}">{{ pr.name }}</a></div>
                                 {#<div class="star"><i class="fa fa-star"></i><i class="fa fa-star"></i><i#}
                                             {#class="fa fa-star"></i><i class="fa fa-star"></i><i#}
                                             {#class="fa fa-star"></i><i#}

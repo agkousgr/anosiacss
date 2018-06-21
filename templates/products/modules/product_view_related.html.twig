@@ -1,0 +1,57 @@
+<div class="related-product">
+    <h2>Related Produts</h2>
+    <div class="owl-carousel owl-theme ProductScroll">
+        {% for pr in popular %}
+            <div class="item">
+                <div class="product-case">
+                    <div class="tag tag-green"><span>new</span></div>
+                    <div class="product-img">
+                        <div class="hover-img">
+                            <img src="{{ pr.imageUrl }}" alt="">
+                        </div>
+                        <a href="#">
+                            <img src="{{ pr.imageUrl }}" alt="">
+                        </a>
+                    </div>
+                    <div class="hover-info">
+                        <div class="product-short-info">
+                            <div class="product-name">
+                                <a href="#">{{ pr.name }}</a>
+                            </div>
+                            {#<div class="star"><i class="fa fa-star"></i><i#}
+                            {#class="fa fa-star"></i><i#}
+                            {#class="fa fa-star"></i><i#}
+                            {#class="fa fa-star"></i><i#}
+                            {#class="fa fa-star"></i><i#}
+                            {#class="fa fa-star-o"></i></div>#}
+                            <div class="product-price">
+                                <div class="product-price-span">{{ pr.webPrice }}
+                                    €
+                                    <del>{{ pr.retailPrice }}€</del>
+                                </div>
+                            </div>
+                            <button type="button"><i
+                                        class="fa fa-cart-plus"></i><span>Add to Cart</span>
+                            </button>
+                        </div>
+                    </div>
+                    <div class="product-short-info">
+                        <div class="product-name"><a href="#">{{ pr.name }}</a>
+                        </div>
+                        {#<div class="star"><i class="fa fa-star"></i><i#}
+                                    {#class="fa fa-star"></i><i class="fa fa-star"></i><i#}
+                                    {#class="fa fa-star"></i><i class="fa fa-star"></i><i#}
+                                    {#class="fa fa-star-o"></i></div>#}
+                        <div class="product-price">
+                            <div class="product-price-span">{{ pr.webPrice }}€
+                                <del>{{ pr.retailPrice }}€</del>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        {% endfor %}
+
+
+    </div>
+</div>

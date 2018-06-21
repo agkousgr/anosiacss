@@ -11,18 +11,20 @@
             <div id="collapseCategory" class="panel-collapse collapse in" role="tabpanel"
                  aria-labelledby="headingCategory">
                 <div class="panel-body">
-                    <div class="custom-cr"><label><input type="checkbox" class="checkbox"><span>Ethnic
-                                Wear</span></label></div>
-                    <div class="custom-cr"><label><input type="checkbox" class="checkbox"><span>Western
-                                Wear</span></label></div>
-                    <div class="custom-cr"><label><input type="checkbox" class="checkbox"><span>Lingerie</span></label>
-                    </div>
-                    <div class="custom-cr"><label><input type="checkbox" class="checkbox"><span>Fusion
-                                Wear</span></label></div>
-                    <div class="custom-cr"><label><input type="checkbox" class="checkbox"><span>Combo
-                                Sets</span></label></div>
+                    {% for ctg in categories %}
+                        {% if ctg.id|number_format == ctgInfo.id|number_format %}
+                            {% for subctg in ctg.children %}
+                                <div class="custom-cr">
+                                    <label>
+                                        <input type="checkbox" class="checkbox">
+                                        <span>{{ subctg.name }}</span>
+                                    </label>
+                                </div>
+                            {% endfor %}
+                        {% endif %}
+                    {% endfor %}
                     <div class="text-right">
-                        <button type="button" class="btn btn-xs btn-default">APPLY</button>
+                        <button type="button" class="btn btn-xs btn-default">ΕΦΑΡΜΟΓΗ</button>
                     </div>
                 </div>
             </div>

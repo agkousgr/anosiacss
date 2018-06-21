@@ -27,7 +27,7 @@ class ProductService
      */
     public function getCategoryItems($ctgId, $authId)
     {
-        $client = new \SoapClient('http://caron.cloudsystems.gr/FOeshopWS/ForeignOffice.FOeshop.API.FOeshopSvc.svc?singleWsdl', ['trace' => true, 'exceptions' => true,]);
+        $client = new \SoapClient('https://caron.cloudsystems.gr/FOeshopWS/ForeignOffice.FOeshop.API.FOeshopSvc.svc?singleWsdl', ['trace' => true, 'exceptions' => true,]);
 
         $message = <<<EOF
 <?xml version="1.0" encoding="utf-16"?>
@@ -42,7 +42,7 @@ class ProductService
     <pagenumber>0</pagenumber>
     <CategoryID>$ctgId</CategoryID>
     <SearchToken>null</SearchToken>
-    <IncludeChildCategories>0</IncludeChildCategories>
+    <IncludeChildCategories>1</IncludeChildCategories>
 </ClientGetCategoryItemsRequest>
 EOF;
         try {
@@ -82,12 +82,10 @@ EOF;
                     'remainNotReserved' => $pr->Remain,
                     'webFree' => $pr->WebFree,
                     'hasMainImage' => $pr->HasMainPhoto,
-                    'imageUrl' => ($pr->HasMainPhoto) ? str_replace('[Serial]', '01102459200617', str_replace('&amp;', '&', $pr->MainPhotoUrl)) : ''
+                    'imageUrl' => ($pr->HasMainPhoto) ? 'https://caron.cloudsystems.gr/FOeshopAPIWeb/DF.aspx?' . str_replace('[Serial]', '01102459200617', str_replace('&amp;', '&', $pr->MainPhotoUrl)) : ''
                 );
             }
-            dump($prArr);
-//            array_multisort(array_column($prArr, "priority"), $prArr);
-//            return new Response(dump(print_r($this->prCategories)));
+//            dump($prArr);
             return $prArr;
         } catch (\Exception $e) {
             $this->logger->error(__METHOD__ . ' -> {message}', ['message' => $e->getMessage()]);
@@ -104,7 +102,7 @@ EOF;
      */
     public function getItems($id, $authId)
     {
-        $client = new \SoapClient('http://caron.cloudsystems.gr/FOeshopWS/ForeignOffice.FOeshop.API.FOeshopSvc.svc?singleWsdl', ['trace' => true, 'exceptions' => true,]);
+        $client = new \SoapClient('https://caron.cloudsystems.gr/FOeshopWS/ForeignOffice.FOeshop.API.FOeshopSvc.svc?singleWsdl', ['trace' => true, 'exceptions' => true,]);
 
         $message = <<<EOF
 <?xml version="1.0" encoding="utf-16"?>
@@ -124,10 +122,7 @@ EOF;
 EOF;
         try {
             $itemsArr = array();
-            dump($message);
             $result = $client->SendMessage(['Message' => $message]);
-//            return $result->SendMessageResult;
-//            return str_replace("utf-16", "utf-8", $result->SendMessageResult);
             $items = simplexml_load_string(str_replace("utf-16", "utf-8", $result->SendMessageResult));
             dump($items);
             if ($items !== false) {
@@ -152,11 +147,14 @@ EOF;
                 'name' => $pr->Name2,
                 'retailPrice' => $pr->RetailPrice,
                 'discount' => $pr->WebDiscountPerc,
+                'mainBarcode' => $pr->MainBarcode,
                 'isVisible' => $pr->WebVisible,
                 'webPrice' => $pr->WebPrice,
                 'outOfStock' => $pr->OutOfStock,
                 'remainNotReserved' => $pr->Remain,
-                'webFree' => $pr->WebFree
+                'webFree' => $pr->WebFree,
+                'hasMainImage' => $pr->HasMainPhoto,
+                'imageUrl' => ($pr->HasMainPhoto) ? 'https://caron.cloudsystems.gr/FOeshopAPIWeb/DF.aspx?' . str_replace('[Serial]', '01102459200617', str_replace('&amp;', '&', $pr->MainPhotoUrl)) : ''
             );
 //            'manufacturer' => $pr->ManufactorName
 //            return new Response(dump(print_r($this->prCategories)));

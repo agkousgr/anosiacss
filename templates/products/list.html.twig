@@ -8,207 +8,29 @@
 {% endblock %}
 
 {% block body %}
-
     <div id="mainWrapper">
         {% include 'partials/sidebar_login.html.twig' %}
-
-        <div class="large-modal modal fade" id="menuModal" tabindex="-1" role="dialog" aria-hidden="true">
-            <div class="modal-content">
-                <div class="close-modal" data-dismiss="modal">
-                    <div class="lr">
-                        <div class="rl"></div>
-                    </div>
-                </div>
-                <div class="container">
-                    <ul id="blue-mobile-menu">
-                        <li><a href="#">Home</a></li>
-                        <li><a href="#">Shop</a></li>
-                        <li><a href="#">Women</a>
-                            <ul>
-                                <li><a href="#">Sarees</a></li>
-                                <li><a href="#">Kurtas & Kurtis</a></li>
-                                <li><a href="#">Dress Material</a></li>
-                                <li><a href="#">Lehenga Choli</a></li>
-                                <li><a href="#">Salwar Suits</a></li>
-                                <li><a href="#">Blouse</a></li>
-                                <li><a href="#">Salwars & Churidars</a></li>
-                                <li><a href="#">Lingerie & Sleepwear</a></li>
-                                <li><a href="#">Bras</a></li>
-                                <li><a href="#">Panties</a></li>
-                                <li><a href="#">Nightsuits & Nightdresses</a></li>
-                                <li><a href="#">New in Clothing</a></li>
-                            </ul>
-                        </li>
-                        <li><a href="#">Men</a>
-                            <ul>
-                                <li><a href="#">Boys' Clothing</a></li>
-                                <li><a href="#">Polos & T-Shirts</a></li>
-                                <li><a href="#">Ethnic Wear</a></li>
-                                <li><a href="#">Winter Wear</a></li>
-                                <li><a href="#">Girls' Clothing</a></li>
-                                <li><a href="#">Dresses & Skirts</a></li>
-                                <li><a href="#">Winter Wear</a></li>
-                                <li><a href="#">Baby Boy Clothing</a></li>
-                                <li><a href="#">Body Suits</a></li>
-                                <li><a href="#">Polos & T-Shirts</a></li>
-                                <li><a href="#">Baby Girl Clothing</a></li>
-                                <li><a href="#">Body Suits</a></li>
-                                <li><a href="#">Dresses</a></li>
-                            </ul>
-                        </li>
-                        <li><a href="#">Accessories</a>
-                            <ul>
-                                <li><a href="#">Backpacks</a></li>
-                                <li><a href="#">Wallets</a></li>
-                                <li><a href="#">Belts</a></li>
-                                <li><a href="#">Sunglasses & Frames</a></li>
-                                <li><a href="#">Luggage & Travel</a></li>
-                                <li><a href="#">Jewellery</a></li>
-                            </ul>
-                        </li>
-                    </ul>
-                </div>
-            </div>
-        </div>
-
-
-        <header class="site-header">
-
-            {% include 'partials/top_header.html.twig' %}
-
-            <div class="post-header" id="header">
-                <div class="container">
-                    <div class="post-header-wrap">
-                        <a href="#" class="sidebar-toogle" id="menu-toggle">Sidebar Toogle</a>
-                        <a role="button" href="#menuModal" data-toggle="modal"
-                           class="menu-toggle visible-xs visible-sm">MENU
-                            TOGGLE</a>
-                        <div class="row">
-                            <div class="col-md-4">
-                                <div class="logo"><a href="#"><img src="{{ asset('images/logo.png') }}" alt=""></a>
-                                </div>
-                            </div>
-                            <div class="col-md-8 visible-lg visible-md">
-                                {% include 'partials/top_menu.html.twig' %}
-                            </div>
-                        </div>
-                    </div>
-                </div>
-            </div>
-        </header>
-
+        {% include 'partials/swipe_menu.html.twig' %}
+        {% include 'partials/site_header.html.twig' %}
         <div class="page-header">
             <div class="container">
                 <div class="row">
-                    <div class="col-md-6"><h1>Page Title</h1></div>
+                    <div class="col-md-6"><h1>{{ ctgInfo.name }}</h1></div>
                 </div>
             </div>
         </div>
-
-
-        <div class="top-banner">
-            <div class="container">
-                <div class="custom-slider">
-                    <div id="carousel-slideBigTop" class="carousel carousel-fade slide" data-ride="carousel">
-                        <!-- Wrapper for slides -->
-                        <div class="carousel-inner" role="listbox">
-                            <div class="item active"><a href="#"><img src="pr.imageUrl" alt=""></a>
-                            </div>
-                            <div class="item"><a href="#"><img src="{{ asset('images/banner-5.jpg') }}" alt=""></a>
-                            </div>
-                        </div>
-                        <!-- Controls -->
-                        <a class="left carousel-control" href="#carousel-slideBigTop" role="button" data-slide="prev"><i
-                                    class="fa fa-angle-left"></i></a>
-                        <a class="right carousel-control" href="#carousel-slideBigTop" role="button"
-                           data-slide="next"><i
-                                    class="fa fa-angle-right"></i></a>
-                    </div>
-                </div>
-            </div>
-        </div>
-
-
-        <div class="section" style="background-image:url({{ asset('images/bg-9.jpg') }});">
-            <div class="container">
-
-                <div class="category-scroller">
-                    <h2>Choose Category</h2>
-                    <div class="owl-carousel owl-theme CatCarousel">
-                        <div class="item  wow fadeIn" data-wow-delay="0.4s">
-                            <div class="category-image"><a href="#"><p>Sunglasses</p>
-                                    <img src="{{ asset('images/cat-img-1.jpg') }}" alt=""></a>
-                            </div>
-                        </div>
-                        <div class="item  wow fadeIn" data-wow-delay="0.4s">
-                            <div class="category-image"><a href="#"><p>Woman Clothing</p>
-                                    <img src="{{ asset('images/cat-img-2.jpg') }}" alt=""></a></div>
-                        </div>
-                        <div class="item  wow fadeIn" data-wow-delay="0.4s">
-                            <div class="category-image"><a href="#"><p>Men Clothing</p>
-                                    <img src="{{ asset('images/cat-img-3.jpg') }}" alt=""></a></div>
-                        </div>
-                        <div class="item  wow fadeIn" data-wow-delay="0.4s">
-                            <div class="category-image"><a href="#"><p>Accessories</p><img
-                                            src="{{ asset('images/cat-img-4.jpg') }}"
-                                            alt=""></a></div>
-                        </div>
-                        <div class="item  wow fadeIn" data-wow-delay="0.4s">
-                            <div class="category-image"><a href="#"><p>Shoes</p><img
-                                            src="{{ asset('images/cat-img-5.jpg') }}" alt=""></a>
-                            </div>
-                        </div>
-                        <div class="item  wow fadeIn" data-wow-delay="0.4s">
-                            <div class="category-image"><a href="#"><p>Jewllery</p><img
-                                            src="{{ asset('images/cat-img-6.jpg') }}"
-                                            alt=""></a></div>
-                        </div>
-                        <div class="item  wow fadeIn" data-wow-delay="0.4s">
-                            <div class="category-image"><a href="#"><p>Sunglasses</p><img
-                                            src="{{ asset('images/cat-img-1.jpg') }}"
-                                            alt=""></a>
-                            </div>
-                        </div>
-                        <div class="item  wow fadeIn" data-wow-delay="0.4s">
-                            <div class="category-image"><a href="#"><p>Woman Clothing</p>
-                                    <img src="{{ asset('images/cat-img-2.jpg') }}"
-                                         alt=""></a></div>
-                        </div>
-                        <div class="item  wow fadeIn" data-wow-delay="0.4s">
-                            <div class="category-image"><a href="#"><p>Men Clothing</p><img
-                                            src="{{ asset('images/cat-img-3.jpg') }}"
-                                            alt=""></a></div>
-                        </div>
-                        <div class="item  wow fadeIn" data-wow-delay="0.4s">
-                            <div class="category-image"><a href="#"><p>Accessories</p><img
-                                            src="{{ asset('images/cat-img-4.jpg') }}"
-                                            alt=""></a></div>
-                        </div>
-                        <div class="item  wow fadeIn" data-wow-delay="0.4s">
-                            <div class="category-image"><a href="#"><p>Shoes</p><img
-                                            src="{{ asset('images/cat-img-5.jpg') }}" alt=""></a>
-                            </div>
-                        </div>
-                        <div class="item  wow fadeIn" data-wow-delay="0.4s">
-                            <div class="category-image"><a href="#"><p>Jewllery</p><img
-                                            src="{{ asset('images/cat-img-6.jpg') }}"
-                                            alt=""></a></div>
-                        </div>
-                    </div>
-                </div>
-            </div>
-        </div>
-
+        {% include 'products/modules/category_slider.html.twig' %}
+        {% if (ctgInfo.children) %}
+            {% include 'products/modules/top_categories.html.twig' %}
+        {% endif %}
         <div class="section" style="background-image:url({{ asset('images/bg-5.jpg') }});">
             <div class="container">
-
                 <div class="row reverse-row">
                     <div class="col-md-9 column">
                         <div class="product-list">
-                            <h2>Όνομα κατηγορίας
+                            <h2>{{ ctgInfo.name }}
                                 <span>(Showing 1 – 60 products of 1,070 products)</span>
                             </h2>
-
                             <div class="sorting-head clearfix">
                                 <div class="row">
                                     <div class="col-sm-6 col-md-7 visible-lg visible-md  visible-sm">
@@ -240,55 +62,62 @@
                                     </div>
                                 </div>
                             </div>
-
                             <div id="products" class="row list-group list-products">
                                 {% for pr in products %}
-                                    <div class="item col-lg-4 col-md-6 col-sm-6 wow fadeIn" data-wow-delay="0.4s">
+                                    <div class="item col-lg-4 col-md-6 col-sm-6 wow fadeIn"
+                                         data-wow-delay="0.4s">
                                         <div class="product-case">
                                             <div class="tag tag-green"><span>new</span></div>
                                             <div class="product-img">
-                                                <div class="hover-img"><img src="{{ asset('images/product-1-h.jpg') }}"
-                                                                            alt="{{ pr.name }}"></div>
-                                                <a href="#"><img src="{{ asset('images/product-1.jpg') }}"
-                                                                 alt="{{ pr.name }}"></a>
+                                                <div class="hover-img"><img src="{{ pr.imageUrl }}"
+                                                                            alt="{{ pr.name }}">
+                                                </div>
+                                                <a href="{{ path('product_view', {'id':pr.id}) }}"><img
+                                                            src="{{ pr.imageUrl }}"
+                                                            alt="{{ pr.name }}"></a>
                                             </div>
                                             <div class="hover-info">
                                                 <div class="product-short-info">
-                                                    <div class="product-name"><a href="#">{{ pr.name }}</a></div>
+                                                    <div class="product-name"><a
+                                                                href="{{ path('product_view', {'id':pr.id}) }}">{{ pr.name }}</a></div>
                                                     {#<div class="star"><i class="fa fa-star"></i><i#}
                                                     {#class="fa fa-star"></i><i#}
                                                     {#class="fa fa-star"></i><i class="fa fa-star"></i><i#}
                                                     {#class="fa fa-star"></i><i class="fa fa-star-o"></i>#}
                                                     {#</div>#}
                                                     <div class="product-price">
-                                                        <div class="product-price-span">{{ pr.webPrice }}€
+                                                        <div class="product-price-span">{{ pr.webPrice }}
+                                                            €
                                                             <del>{{ pr.retailPrice }}€</del>
                                                         </div>
                                                     </div>
                                                     <button type="button"><i
-                                                                class="fa fa-cart-plus"></i><span>καλαθι</span></button>
+                                                                class="fa fa-cart-plus"></i><span>καλαθι</span>
+                                                    </button>
                                                 </div>
                                             </div>
                                             <div class="product-short-info">
-                                                <div class="product-name"><a href="#">{{ pr.name }}</a></div>
+                                                <div class="product-name"><a
+                                                            href="{{ path('product_view', {'id':pr.id}) }}">{{ pr.name }}</a>
+                                                </div>
                                                 {#<div class="star"><i class="fa fa-star"></i><i class="fa fa-star"></i><i#}
                                                 {#class="fa fa-star"></i><i class="fa fa-star"></i><i#}
                                                 {#class="fa fa-star"></i><i class="fa fa-star-o"></i></div>#}
                                                 <div class="product-price">
-                                                    <div class="product-price-span">{{ pr.webPrice }}€
+                                                    <div class="product-price-span">{{ pr.webPrice }}
+                                                        €
                                                         <del>{{ pr.retailPrice }}€</del>
                                                     </div>
                                                 </div>
-                                                <button type="button"><i class="fa fa-cart-plus"></i><span>Add to
+                                                <button type="button"><i
+                                                            class="fa fa-cart-plus"></i><span>Add to
                                                         Cart</span>
                                                 </button>
                                             </div>
                                         </div>
                                     </div>
                                 {% endfor %}
-
                             </div>
-
                             <nav aria-label="Page navigation">
                                 <ul class="pagination">
                                     <li>
@@ -308,798 +137,31 @@
                                     </li>
                                 </ul>
                             </nav>
-
                         </div>
                     </div>
-
-
                     <div class="col-md-3 column">
-
-
-                        <div class="filter-widget">
-                            <h3>Shop By Price</h3>
-                            <div class="content">
-                                <div class="price-range">
-                                    <input type="text" id="amount">
-                                    <div id="slider-range"></div>
-                                </div>
-                                <div class="text-right">
-                                    <button type="button" class="btn btn-xs btn-default">APPLY</button>
-                                </div>
-                            </div>
-                        </div>
-
-                        {% include 'products/aside_shop_by_brand.html.twig' %}
-
-                        {#{% include 'products/aside_color_filter.html.twig' %}#}
-
-                        {#{% include 'products/aside_size.html.twig' %}#}
-
-                        {% include 'products/aside_discount.html.twig' %}
-
-                        {% include 'products/aside_category.html.twig' %}
-
-                        <div class="filter-widget">
-                            <div class="panel-group" id="accordion" role="tablist" aria-multiselectable="true">
-                                <div class="panel panel-default">
-                                    <div class="panel-heading" role="tab" id="headingOne">
-                                        <div class="panel-title"><a role="button" data-toggle="collapse"
-                                                                    data-parent="#accordion" href="#collapseOcassion"
-                                                                    aria-expanded="true"
-                                                                    aria-controls="collapseOcassion">Ocassion</a>
-                                        </div>
-                                    </div>
-                                    <div id="collapseOcassion" class="panel-collapse collapse in" role="tabpanel"
-                                         aria-labelledby="headingOcassion">
-                                        <div class="panel-body">
-                                            <div class="custom-cr"><label><input type="checkbox" class="checkbox"><span>Casual</span></label>
-                                            </div>
-                                            <div class="custom-cr"><label><input type="checkbox" class="checkbox"><span>Ethnic</span></label>
-                                            </div>
-                                            <div class="custom-cr"><label><input type="checkbox" class="checkbox"><span>Formal</span></label>
-                                            </div>
-                                            <div class="custom-cr"><label><input type="checkbox" class="checkbox"><span>Party</span></label>
-                                            </div>
-                                            <div class="custom-cr"><label><input type="checkbox" class="checkbox"><span>Riding</span></label>
-                                            </div>
-                                            <div class="custom-cr"><label><input type="checkbox" class="checkbox"><span>Sports</span></label>
-                                            </div>
-                                            <div class="custom-cr"><label><input type="checkbox" class="checkbox"><span>Wedding</span></label>
-                                            </div>
-                                            <div class="text-right">
-                                                <button type="button" class="btn btn-xs btn-default">APPLY</button>
-                                            </div>
-                                        </div>
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
-
-
-                        <div class="filter-widget">
-                            <h3>Clearence Sale</h3>
-                            <div class="custom-slider">
-                                <div id="carousel-slider" class="carousel slide" data-ride="carousel">
-                                    <!-- Wrapper for slides -->
-                                    <div class="carousel-inner" role="listbox">
-                                        <div class="item active"><a href="#"><img src="images/banner-3.jpg"
-                                                                                  alt="..."></a>
-                                        </div>
-                                        <div class="item"><a href="#"><img src="images/banner-4.jpg" alt="..."></a>
-                                        </div>
-                                    </div>
-                                    <a class="left carousel-control" href="#carousel-slider" role="button"
-                                       data-slide="prev"><i class="fa fa-angle-left"></i></a>
-                                    <a class="right carousel-control" href="#carousel-slider" role="button"
-                                       data-slide="next"><i class="fa fa-angle-right"></i></a>
-                                </div>
-                            </div>
-                        </div>
-
-
-                        <div class="product-media-scroll">
-                            <h3>Best <span>Sellers</span></h3>
-                            <div class="product-box">
-                                <div class="media">
-                                    <div class="media-left"><a href="#"><img class="media-object"
-                                                                             src="images/product-1.jpg"
-                                                                             alt="..."></a></div>
-                                    <div class="media-body">
-                                        <h5><a href="#">Provouge Woman Top</a></h5>
-                                        <div class="star-rating"><i class="fa fa-star"></i><i class="fa fa-star"></i><i
-                                                    class="fa fa-star"></i><i class="fa fa-star"></i><i
-                                                    class="fa fa-star-o"></i></div>
-                                        <div class="price">$28.40
-                                            <del>$35.50</del>
-                                        </div>
-                                        <button type="button" class="btn btn-primary btn-xs">ADD TO CART</button>
-                                    </div>
-                                </div>
-                            </div>
-                            <div class="product-box">
-                                <div class="media">
-                                    <div class="media-left"><a href="#"><img class="media-object"
-                                                                             src="images/product-2.jpg"
-                                                                             alt="..."></a></div>
-                                    <div class="media-body">
-                                        <h5><a href="#">Provouge Men T-Shirt</a></h5>
-                                        <div class="star-rating"><i class="fa fa-star"></i><i class="fa fa-star"></i><i
-                                                    class="fa fa-star"></i><i class="fa fa-star"></i><i
-                                                    class="fa fa-star-o"></i></div>
-                                        <div class="price">$28.40
-                                            <del>$35.50</del>
-                                        </div>
-                                        <button type="button" class="btn btn-primary btn-xs">ADD TO CART</button>
-                                    </div>
-                                </div>
-                            </div>
-                            <div class="product-box">
-                                <div class="media">
-                                    <div class="media-left"><a href="#"><img class="media-object"
-                                                                             src="images/product-3.jpg"
-                                                                             alt="..."></a></div>
-                                    <div class="media-body">
-                                        <h5><a href="#">Gucci Red Backpack</a></h5>
-                                        <div class="star-rating"><i class="fa fa-star"></i><i class="fa fa-star"></i><i
-                                                    class="fa fa-star"></i><i class="fa fa-star"></i><i
-                                                    class="fa fa-star-o"></i></div>
-                                        <div class="price">$28.40
-                                            <del>$35.50</del>
-                                        </div>
-                                        <button type="button" class="btn btn-primary btn-xs">ADD TO CART</button>
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
-
-                    </div>
-
-
-                </div>
-
-
-                <div class="ProductTab">
-                    <ul class="resp-tabs-list hor_1">
-                        <li>MEN</li>
-                        <li>WOMEN</li>
-                        <li>ACCESSORIES</li>
-                    </ul>
-                    <div class="resp-tabs-container hor_1">
-                        <div id="men_id">
-                            <div class="row">
-                                <div class="col-sm-6 col-md-3 wow fadeIn" data-wow-delay="0.4s">
-                                    <div class="product-case">
-                                        <div class="tag tag-green"><span>new</span></div>
-                                        <div class="product-img">
-                                            <div class="hover-img"><img src="images/product-1-h.jpg" alt=""></div>
-                                            <a href="#"><img src="images/product-1.jpg" alt=""></a>
-                                        </div>
-                                        <div class="hover-info">
-                                            <div class="product-short-info">
-                                                <div class="product-name"><a href="#">Provouge Woman Top</a></div>
-                                                <div class="star"><i class="fa fa-star"></i><i class="fa fa-star"></i><i
-                                                            class="fa fa-star"></i><i class="fa fa-star"></i><i
-                                                            class="fa fa-star"></i><i class="fa fa-star-o"></i></div>
-                                                <div class="product-price">
-                                                    <div class="product-price-span">$28.40
-                                                        <del>$35.50</del>
-                                                    </div>
-                                                </div>
-                                                <button type="button"><i class="fa fa-cart-plus"></i><span>Add to
-                                                        Cart</span></button>
-                                            </div>
-                                        </div>
-                                        <div class="product-short-info">
-                                            <div class="product-name"><a href="#">Provouge Woman Top</a></div>
-                                            <div class="star"><i class="fa fa-star"></i><i class="fa fa-star"></i><i
-                                                        class="fa fa-star"></i><i class="fa fa-star"></i><i
-                                                        class="fa fa-star"></i><i class="fa fa-star-o"></i></div>
-                                            <div class="product-price">
-                                                <div class="product-price-span">$28.40
-                                                    <del>$35.50</del>
-                                                </div>
-                                            </div>
-                                        </div>
-                                    </div>
-                                </div>
-                                <div class="col-sm-6 col-md-3 wow fadeIn" data-wow-delay="0.4s">
-                                    <div class="product-case">
-                                        <div class="tag tag-green"><span>new</span></div>
-                                        <div class="product-img">
-                                            <div class="hover-img"><img src="images/product-2-h.jpg" alt=""></div>
-                                            <a href="#"><img src="images/product-2.jpg" alt=""></a>
-                                        </div>
-                                        <div class="hover-info">
-                                            <div class="product-short-info">
-                                                <div class="product-name"><a href="#">Provouge Woman Top</a></div>
-                                                <div class="star"><i class="fa fa-star"></i><i class="fa fa-star"></i><i
-                                                            class="fa fa-star"></i><i class="fa fa-star"></i><i
-                                                            class="fa fa-star"></i><i class="fa fa-star-o"></i></div>
-                                                <div class="product-price">
-                                                    <div class="product-price-span">$28.40
-                                                        <del>$35.50</del>
-                                                    </div>
-                                                </div>
-                                                <button type="button"><i class="fa fa-cart-plus"></i><span>Add to
-                                                        Cart</span></button>
-                                            </div>
-                                        </div>
-                                        <div class="product-short-info">
-                                            <div class="product-name"><a href="#">Provouge Woman Top</a></div>
-                                            <div class="star"><i class="fa fa-star"></i><i class="fa fa-star"></i><i
-                                                        class="fa fa-star"></i><i class="fa fa-star"></i><i
-                                                        class="fa fa-star"></i><i class="fa fa-star-o"></i></div>
-                                            <div class="product-price">
-                                                <div class="product-price-span">$28.40
-                                                    <del>$35.50</del>
-                                                </div>
-                                            </div>
-                                        </div>
-                                    </div>
-                                </div>
-                                <div class="col-sm-6 col-md-3 wow fadeIn" data-wow-delay="0.4s">
-                                    <div class="product-case">
-                                        <div class="tag tag-green"><span>new</span></div>
-                                        <div class="product-img">
-                                            <div class="hover-img"><img src="images/product-3-h.jpg" alt=""></div>
-                                            <a href="#"><img src="images/product-3.jpg" alt=""></a>
-                                        </div>
-                                        <div class="hover-info">
-                                            <div class="product-short-info">
-                                                <div class="product-name"><a href="#">Provouge Woman Top</a></div>
-                                                <div class="star"><i class="fa fa-star"></i><i class="fa fa-star"></i><i
-                                                            class="fa fa-star"></i><i class="fa fa-star"></i><i
-                                                            class="fa fa-star"></i><i class="fa fa-star-o"></i></div>
-                                                <div class="product-price">
-                                                    <div class="product-price-span">$28.40
-                                                        <del>$35.50</del>
-                                                    </div>
-                                                </div>
-                                                <button type="button"><i class="fa fa-cart-plus"></i><span>Add to
-                                                        Cart</span></button>
-                                            </div>
-                                        </div>
-                                        <div class="product-short-info">
-                                            <div class="product-name"><a href="#">Provouge Woman Top</a></div>
-                                            <div class="star"><i class="fa fa-star"></i><i class="fa fa-star"></i><i
-                                                        class="fa fa-star"></i><i class="fa fa-star"></i><i
-                                                        class="fa fa-star"></i><i class="fa fa-star-o"></i></div>
-                                            <div class="product-price">
-                                                <div class="product-price-span">$28.40
-                                                    <del>$35.50</del>
-                                                </div>
-                                            </div>
-                                        </div>
-                                    </div>
-                                </div>
-                                <div class="col-sm-6 col-md-3 wow fadeIn" data-wow-delay="0.4s">
-                                    <div class="product-case">
-                                        <div class="tag tag-green"><span>new</span></div>
-                                        <div class="product-img">
-                                            <div class="hover-img"><img src="images/product-4-h.jpg" alt=""></div>
-                                            <a href="#"><img src="images/product-4.jpg" alt=""></a>
-                                        </div>
-                                        <div class="hover-info">
-                                            <div class="product-short-info">
-                                                <div class="product-name"><a href="#">Provouge Woman Top</a></div>
-                                                <div class="star"><i class="fa fa-star"></i><i class="fa fa-star"></i><i
-                                                            class="fa fa-star"></i><i class="fa fa-star"></i><i
-                                                            class="fa fa-star"></i><i class="fa fa-star-o"></i></div>
-                                                <div class="product-price">
-                                                    <div class="product-price-span">$28.40
-                                                        <del>$35.50</del>
-                                                    </div>
-                                                </div>
-                                                <button type="button"><i class="fa fa-cart-plus"></i><span>Add to
-                                                        Cart</span></button>
-                                            </div>
-                                        </div>
-                                        <div class="product-short-info">
-                                            <div class="product-name"><a href="#">Provouge Woman Top</a></div>
-                                            <div class="star"><i class="fa fa-star"></i><i class="fa fa-star"></i><i
-                                                        class="fa fa-star"></i><i class="fa fa-star"></i><i
-                                                        class="fa fa-star"></i><i class="fa fa-star-o"></i></div>
-                                            <div class="product-price">
-                                                <div class="product-price-span">$28.40
-                                                    <del>$35.50</del>
-                                                </div>
-                                            </div>
-                                        </div>
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
-
-
-                        <div id="women_id">
-                            <div class="row">
-                                <div class="col-sm-6 col-md-3 wow fadeIn" data-wow-delay="0.4s">
-                                    <div class="product-case">
-                                        <div class="tag tag-green"><span>new</span></div>
-                                        <div class="product-img">
-                                            <div class="hover-img"><img src="images/product-1-h.jpg" alt=""></div>
-                                            <a href="#"><img src="images/product-1.jpg" alt=""></a>
-                                        </div>
-                                        <div class="hover-info">
-                                            <div class="product-short-info">
-                                                <div class="product-name"><a href="#">Provouge Woman Top</a></div>
-                                                <div class="star"><i class="fa fa-star"></i><i class="fa fa-star"></i><i
-                                                            class="fa fa-star"></i><i class="fa fa-star"></i><i
-                                                            class="fa fa-star"></i><i class="fa fa-star-o"></i></div>
-                                                <div class="product-price">
-                                                    <div class="product-price-span">$28.40
-                                                        <del>$35.50</del>
-                                                    </div>
-                                                </div>
-                                                <button type="button"><i class="fa fa-cart-plus"></i><span>Add to
-                                                        Cart</span></button>
-                                            </div>
-                                        </div>
-                                        <div class="product-short-info">
-                                            <div class="product-name"><a href="#">Provouge Woman Top</a></div>
-                                            <div class="star"><i class="fa fa-star"></i><i class="fa fa-star"></i><i
-                                                        class="fa fa-star"></i><i class="fa fa-star"></i><i
-                                                        class="fa fa-star"></i><i class="fa fa-star-o"></i></div>
-                                            <div class="product-price">
-                                                <div class="product-price-span">$28.40
-                                                    <del>$35.50</del>
-                                                </div>
-                                            </div>
-                                        </div>
-                                    </div>
-                                </div>
-                                <div class="col-sm-6 col-md-3 wow fadeIn" data-wow-delay="0.4s">
-                                    <div class="product-case">
-                                        <div class="tag tag-green"><span>new</span></div>
-                                        <div class="product-img">
-                                            <div class="hover-img"><img src="images/product-2-h.jpg" alt=""></div>
-                                            <a href="#"><img src="images/product-2.jpg" alt=""></a>
-                                        </div>
-                                        <div class="hover-info">
-                                            <div class="product-short-info">
-                                                <div class="product-name"><a href="#">Provouge Woman Top</a></div>
-                                                <div class="star"><i class="fa fa-star"></i><i class="fa fa-star"></i><i
-                                                            class="fa fa-star"></i><i class="fa fa-star"></i><i
-                                                            class="fa fa-star"></i><i class="fa fa-star-o"></i></div>
-                                                <div class="product-price">
-                                                    <div class="product-price-span">$28.40
-                                                        <del>$35.50</del>
-                                                    </div>
-                                                </div>
-                                                <button type="button"><i class="fa fa-cart-plus"></i><span>Add to
-                                                        Cart</span></button>
-                                            </div>
-                                        </div>
-                                        <div class="product-short-info">
-                                            <div class="product-name"><a href="#">Provouge Woman Top</a></div>
-                                            <div class="star"><i class="fa fa-star"></i><i class="fa fa-star"></i><i
-                                                        class="fa fa-star"></i><i class="fa fa-star"></i><i
-                                                        class="fa fa-star"></i><i class="fa fa-star-o"></i></div>
-                                            <div class="product-price">
-                                                <div class="product-price-span">$28.40
-                                                    <del>$35.50</del>
-                                                </div>
-                                            </div>
-                                        </div>
-                                    </div>
-                                </div>
-                                <div class="col-sm-6 col-md-3 wow fadeIn" data-wow-delay="0.4s">
-                                    <div class="product-case">
-                                        <div class="tag tag-green"><span>new</span></div>
-                                        <div class="product-img">
-                                            <div class="hover-img"><img src="images/product-3-h.jpg" alt=""></div>
-                                            <a href="#"><img src="images/product-3.jpg" alt=""></a>
-                                        </div>
-                                        <div class="hover-info">
-                                            <div class="product-short-info">
-                                                <div class="product-name"><a href="#">Provouge Woman Top</a></div>
-                                                <div class="star"><i class="fa fa-star"></i><i class="fa fa-star"></i><i
-                                                            class="fa fa-star"></i><i class="fa fa-star"></i><i
-                                                            class="fa fa-star"></i><i class="fa fa-star-o"></i></div>
-                                                <div class="product-price">
-                                                    <div class="product-price-span">$28.40
-                                                        <del>$35.50</del>
-                                                    </div>
-                                                </div>
-                                                <button type="button"><i class="fa fa-cart-plus"></i><span>Add to
-                                                        Cart</span></button>
-                                            </div>
-                                        </div>
-                                        <div class="product-short-info">
-                                            <div class="product-name"><a href="#">Provouge Woman Top</a></div>
-                                            <div class="star"><i class="fa fa-star"></i><i class="fa fa-star"></i><i
-                                                        class="fa fa-star"></i><i class="fa fa-star"></i><i
-                                                        class="fa fa-star"></i><i class="fa fa-star-o"></i></div>
-                                            <div class="product-price">
-                                                <div class="product-price-span">$28.40
-                                                    <del>$35.50</del>
-                                                </div>
-                                            </div>
-                                        </div>
-                                    </div>
-                                </div>
-                                <div class="col-sm-6 col-md-3 wow fadeIn" data-wow-delay="0.4s">
-                                    <div class="product-case">
-                                        <div class="tag tag-green"><span>new</span></div>
-                                        <div class="product-img">
-                                            <div class="hover-img"><img src="images/product-4-h.jpg" alt=""></div>
-                                            <a href="#"><img src="images/product-4.jpg" alt=""></a>
-                                        </div>
-                                        <div class="hover-info">
-                                            <div class="product-short-info">
-                                                <div class="product-name"><a href="#">Provouge Woman Top</a></div>
-                                                <div class="star"><i class="fa fa-star"></i><i class="fa fa-star"></i><i
-                                                            class="fa fa-star"></i><i class="fa fa-star"></i><i
-                                                            class="fa fa-star"></i><i class="fa fa-star-o"></i></div>
-                                                <div class="product-price">
-                                                    <div class="product-price-span">$28.40
-                                                        <del>$35.50</del>
-                                                    </div>
-                                                </div>
-                                                <button type="button"><i class="fa fa-cart-plus"></i><span>Add to
-                                                        Cart</span></button>
-                                            </div>
-                                        </div>
-                                        <div class="product-short-info">
-                                            <div class="product-name"><a href="#">Provouge Woman Top</a></div>
-                                            <div class="star"><i class="fa fa-star"></i><i class="fa fa-star"></i><i
-                                                        class="fa fa-star"></i><i class="fa fa-star"></i><i
-                                                        class="fa fa-star"></i><i class="fa fa-star-o"></i></div>
-                                            <div class="product-price">
-                                                <div class="product-price-span">$28.40
-                                                    <del>$35.50</del>
-                                                </div>
-                                            </div>
-                                        </div>
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
-
-
-                        <div id="acce_id">
-                            <div class="row">
-                                <div class="col-sm-6 col-md-3 wow fadeIn" data-wow-delay="0.4s">
-                                    <div class="product-case">
-                                        <div class="tag tag-green"><span>new</span></div>
-                                        <div class="product-img">
-                                            <div class="hover-img"><img src="images/product-1-h.jpg" alt=""></div>
-                                            <a href="#"><img src="images/product-1.jpg" alt=""></a>
-                                        </div>
-                                        <div class="hover-info">
-                                            <div class="product-short-info">
-                                                <div class="product-name"><a href="#">Provouge Woman Top</a></div>
-                                                <div class="star"><i class="fa fa-star"></i><i class="fa fa-star"></i><i
-                                                            class="fa fa-star"></i><i class="fa fa-star"></i><i
-                                                            class="fa fa-star"></i><i class="fa fa-star-o"></i></div>
-                                                <div class="product-price">
-                                                    <div class="product-price-span">$28.40
-                                                        <del>$35.50</del>
-                                                    </div>
-                                                </div>
-                                                <button type="button"><i class="fa fa-cart-plus"></i><span>Add to
-                                                        Cart</span></button>
-                                            </div>
-                                        </div>
-                                        <div class="product-short-info">
-                                            <div class="product-name"><a href="#">Provouge Woman Top</a></div>
-                                            <div class="star"><i class="fa fa-star"></i><i class="fa fa-star"></i><i
-                                                        class="fa fa-star"></i><i class="fa fa-star"></i><i
-                                                        class="fa fa-star"></i><i class="fa fa-star-o"></i></div>
-                                            <div class="product-price">
-                                                <div class="product-price-span">$28.40
-                                                    <del>$35.50</del>
-                                                </div>
-                                            </div>
-                                        </div>
-                                    </div>
-                                </div>
-                                <div class="col-sm-6 col-md-3 wow fadeIn" data-wow-delay="0.4s">
-                                    <div class="product-case">
-                                        <div class="tag tag-green"><span>new</span></div>
-                                        <div class="product-img">
-                                            <div class="hover-img"><img src="images/product-2-h.jpg" alt=""></div>
-                                            <a href="#"><img src="images/product-2.jpg" alt=""></a>
-                                        </div>
-                                        <div class="hover-info">
-                                            <div class="product-short-info">
-                                                <div class="product-name"><a href="#">Provouge Woman Top</a></div>
-                                                <div class="star"><i class="fa fa-star"></i><i class="fa fa-star"></i><i
-                                                            class="fa fa-star"></i><i class="fa fa-star"></i><i
-                                                            class="fa fa-star"></i><i class="fa fa-star-o"></i></div>
-                                                <div class="product-price">
-                                                    <div class="product-price-span">$28.40
-                                                        <del>$35.50</del>
-                                                    </div>
-                                                </div>
-                                                <button type="button"><i class="fa fa-cart-plus"></i><span>Add to
-                                                        Cart</span></button>
-                                            </div>
-                                        </div>
-                                        <div class="product-short-info">
-                                            <div class="product-name"><a href="#">Provouge Woman Top</a></div>
-                                            <div class="star"><i class="fa fa-star"></i><i class="fa fa-star"></i><i
-                                                        class="fa fa-star"></i><i class="fa fa-star"></i><i
-                                                        class="fa fa-star"></i><i class="fa fa-star-o"></i></div>
-                                            <div class="product-price">
-                                                <div class="product-price-span">$28.40
-                                                    <del>$35.50</del>
-                                                </div>
-                                            </div>
-                                        </div>
-                                    </div>
-                                </div>
-                                <div class="col-sm-6 col-md-3 wow fadeIn" data-wow-delay="0.4s">
-                                    <div class="product-case">
-                                        <div class="tag tag-green"><span>new</span></div>
-                                        <div class="product-img">
-                                            <div class="hover-img"><img src="images/product-3-h.jpg" alt=""></div>
-                                            <a href="#"><img src="images/product-3.jpg" alt=""></a>
-                                        </div>
-                                        <div class="hover-info">
-                                            <div class="product-short-info">
-                                                <div class="product-name"><a href="#">Provouge Woman Top</a></div>
-                                                <div class="star"><i class="fa fa-star"></i><i class="fa fa-star"></i><i
-                                                            class="fa fa-star"></i><i class="fa fa-star"></i><i
-                                                            class="fa fa-star"></i><i class="fa fa-star-o"></i></div>
-                                                <div class="product-price">
-                                                    <div class="product-price-span">$28.40
-                                                        <del>$35.50</del>
-                                                    </div>
-                                                </div>
-                                                <button type="button"><i class="fa fa-cart-plus"></i><span>Add to
-                                                        Cart</span></button>
-                                            </div>
-                                        </div>
-                                        <div class="product-short-info">
-                                            <div class="product-name"><a href="#">Provouge Woman Top</a></div>
-                                            <div class="star"><i class="fa fa-star"></i><i class="fa fa-star"></i><i
-                                                        class="fa fa-star"></i><i class="fa fa-star"></i><i
-                                                        class="fa fa-star"></i><i class="fa fa-star-o"></i></div>
-                                            <div class="product-price">
-                                                <div class="product-price-span">$28.40
-                                                    <del>$35.50</del>
-                                                </div>
-                                            </div>
-                                        </div>
-                                    </div>
-                                </div>
-                                <div class="col-sm-6 col-md-3 wow fadeIn" data-wow-delay="0.4s">
-                                    <div class="product-case">
-                                        <div class="tag tag-green"><span>new</span></div>
-                                        <div class="product-img">
-                                            <div class="hover-img"><img src="images/product-4-h.jpg" alt=""></div>
-                                            <a href="#"><img src="images/product-4.jpg" alt=""></a>
-                                        </div>
-                                        <div class="hover-info">
-                                            <div class="product-short-info">
-                                                <div class="product-name"><a href="#">Provouge Woman Top</a></div>
-                                                <div class="star"><i class="fa fa-star"></i><i class="fa fa-star"></i><i
-                                                            class="fa fa-star"></i><i class="fa fa-star"></i><i
-                                                            class="fa fa-star"></i><i class="fa fa-star-o"></i></div>
-                                                <div class="product-price">
-                                                    <div class="product-price-span">$28.40
-                                                        <del>$35.50</del>
-                                                    </div>
-                                                </div>
-                                                <button type="button"><i class="fa fa-cart-plus"></i><span>Add to
-                                                        Cart</span></button>
-                                            </div>
-                                        </div>
-                                        <div class="product-short-info">
-                                            <div class="product-name"><a href="#">Provouge Woman Top</a></div>
-                                            <div class="star"><i class="fa fa-star"></i><i class="fa fa-star"></i><i
-                                                        class="fa fa-star"></i><i class="fa fa-star"></i><i
-                                                        class="fa fa-star"></i><i class="fa fa-star-o"></i></div>
-                                            <div class="product-price">
-                                                <div class="product-price-span">$28.40
-                                                    <del>$35.50</del>
-                                                </div>
-                                            </div>
-                                        </div>
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
-
-
+                        {% include 'products/modules/aside_price_filter.html.twig' %}
+                        {% include 'products/modules/aside_shop_by_brand.html.twig' %}
+                        {#{% include 'products/modules/aside_color_filter.html.twig' %}#}
+                        {#{% include 'products/modules/aside_size.html.twig' %}#}
+                        {% include 'products/modules/aside_discount.html.twig' %}
+                        {% if (ctgInfo.children) %}
+                            {#{% include 'products/modules/aside_category.html.twig' %}#}
+                        {% endif %}
+                        {% include 'products/modules/aside_clearance_sale.html.twig' %}
+                        {% include 'products/modules/aside_best_sellers.html.twig' %}
                     </div>
                 </div>
-
-
-                <div class="custom-slider slide-big">
-                    <div id="carousel-slideBig" class="carousel slide" data-ride="carousel">
-                        <!-- Wrapper for slides -->
-                        <div class="carousel-inner" role="listbox">
-                            <div class="item active"><a href="#"><img src="images/banner-5.jpg" alt=""></a></div>
-                            <div class="item"><a href="#"><img src="images/banner-5.jpg" alt=""></a></div>
-                        </div>
-                        <!-- Controls -->
-                        <a class="left carousel-control" href="#carousel-slideBig" role="button" data-slide="prev"><i
-                                    class="fa fa-angle-left"></i></a>
-                        <a class="right carousel-control" href="#carousel-slideBig" role="button" data-slide="next"><i
-                                    class="fa fa-angle-right"></i></a>
-                    </div>
-                </div>
-
-
-                <div class="row three-column-row">
-                    <div class="col-sm-12 col-md-3">
-                        <div class="gallery-list">
-                            <h3>Gallery</h3>
-                            <div class="gallery-thumb coleql_height">
-                                <div class="row">
-                                    <div class="col-sm-4 col-md-6 col-xs-6">
-                                        <div class="grid">
-                                            <figure class="effect-apollo"><a href="#"><img src="images/img-1.jpg"
-                                                                                           alt=""></a>
-                                                <figcaption></figcaption>
-                                            </figure>
-                                        </div>
-                                    </div>
-                                    <div class="col-sm-4 col-md-6 col-xs-6">
-                                        <div class="grid">
-                                            <figure class="effect-apollo"><a href="#"><img src="images/img-2.jpg"
-                                                                                           alt=""></a>
-                                                <figcaption></figcaption>
-                                            </figure>
-                                        </div>
-                                    </div>
-                                    <div class="col-sm-4 col-md-6 col-xs-6">
-                                        <div class="grid">
-                                            <figure class="effect-apollo"><a href="#"><img src="images/img-3.jpg"
-                                                                                           alt=""></a>
-                                                <figcaption></figcaption>
-                                            </figure>
-                                        </div>
-                                    </div>
-                                    <div class="col-sm-4 col-md-6 col-xs-6">
-                                        <div class="grid">
-                                            <figure class="effect-apollo"><a href="#"><img src="images/img-4.jpg"
-                                                                                           alt=""></a>
-                                                <figcaption></figcaption>
-                                            </figure>
-                                        </div>
-                                    </div>
-                                    <div class="col-sm-4 col-md-6 col-xs-6">
-                                        <div class="grid">
-                                            <figure class="effect-apollo"><a href="#"><img src="images/img-5.jpg"
-                                                                                           alt=""></a>
-                                                <figcaption></figcaption>
-                                            </figure>
-                                        </div>
-                                    </div>
-                                    <div class="col-sm-4 col-md-6 col-xs-6">
-                                        <div class="grid">
-                                            <figure class="effect-apollo"><a href="#"><img src="images/img-6.jpg"
-                                                                                           alt=""></a>
-                                                <figcaption></figcaption>
-                                            </figure>
-                                        </div>
-                                    </div>
-                                </div>
-                            </div>
-
-                        </div>
-                    </div>
-
-                    <div class="col-sm-6 col-md-3 visible-lg visible-md">
-                        <div class="grid coleql_height">
-                            <figure class="effect-apollo"><a href="#"><img src="images/banner-4.jpg" alt=""></a>
-                                <figcaption></figcaption>
-                            </figure>
-                        </div>
-                    </div>
-
-
-                    <div class="col-sm-12 col-md-6">
-                        <h3>Out let Brands</h3>
-                        <div class="brand-listing coleql_height">
-                            <div class="row">
-                                <div class="col-sm-3 col-md-3 col-xs-6">
-                                    <div class="brand-logo"><a href="#"><img src="images/brand-1.jpg" alt=""></a></div>
-                                </div>
-                                <div class="col-sm-3 col-md-3 col-xs-6">
-                                    <div class="brand-logo"><a href="#"><img src="images/brand-2.jpg" alt=""></a></div>
-                                </div>
-                                <div class="col-sm-3 col-md-3 col-xs-6">
-                                    <div class="brand-logo"><a href="#"><img src="images/brand-3.jpg" alt=""></a></div>
-                                </div>
-                                <div class="col-sm-3 col-md-3 col-xs-6">
-                                    <div class="brand-logo"><a href="#"><img src="images/brand-4.jpg" alt=""></a></div>
-                                </div>
-                                <div class="col-sm-3 col-md-3 col-xs-6">
-                                    <div class="brand-logo"><a href="#"><img src="images/brand-5.jpg" alt=""></a></div>
-                                </div>
-                                <div class="col-sm-3 col-md-3 col-xs-6">
-                                    <div class="brand-logo"><a href="#"><img src="images/brand-6.jpg" alt=""></a></div>
-                                </div>
-                                <div class="col-sm-3 col-md-3 col-xs-6">
-                                    <div class="brand-logo"><a href="#"><img src="images/brand-1.jpg" alt=""></a></div>
-                                </div>
-                                <div class="col-sm-3 col-md-3 col-xs-6">
-                                    <div class="brand-logo"><a href="#"><img src="images/brand-2.jpg" alt=""></a></div>
-                                </div>
-                                <div class="col-sm-3 col-md-3 col-xs-6">
-                                    <div class="brand-logo"><a href="#"><img src="images/brand-3.jpg" alt=""></a></div>
-                                </div>
-                                <div class="col-sm-3 col-md-3 col-xs-6">
-                                    <div class="brand-logo"><a href="#"><img src="images/brand-4.jpg" alt=""></a></div>
-                                </div>
-                                <div class="col-sm-3 col-md-3 col-xs-6">
-                                    <div class="brand-logo"><a href="#"><img src="images/brand-5.jpg" alt=""></a></div>
-                                </div>
-                                <div class="col-sm-3 col-md-3 col-xs-6">
-                                    <div class="brand-logo"><a href="#"><img src="images/brand-6.jpg" alt=""></a></div>
-                                </div>
-                                <div class="col-sm-3 col-md-3 col-xs-6">
-                                    <div class="brand-logo"><a href="#"><img src="images/brand-1.jpg" alt=""></a></div>
-                                </div>
-                                <div class="col-sm-3 col-md-3 col-xs-6">
-                                    <div class="brand-logo"><a href="#"><img src="images/brand-2.jpg" alt=""></a></div>
-                                </div>
-                                <div class="col-sm-3 col-md-3 col-xs-6">
-                                    <div class="brand-logo"><a href="#"><img src="images/brand-3.jpg" alt=""></a></div>
-                                </div>
-                                <div class="col-sm-3 col-md-3 col-xs-6">
-                                    <div class="brand-logo"><a href="#"><img src="images/brand-4.jpg" alt=""></a></div>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-
-
-                <div class="row bottom-banners">
-                    <div class="col-sm-6">
-                        <div class="side-banner wow flipInX" data-wow-delay="0.3s"><a href="#">
-                                <div class="grid">
-                                    <figure class="effect-apollo"><img src="images/banner-6.jpg" alt="">
-                                        <figcaption></figcaption>
-                                    </figure>
-                                </div>
-                            </a></div>
-                    </div>
-                    <div class="col-sm-6">
-                        <div class="side-banner wow flipInX" data-wow-delay="0.3s"><a href="#">
-                                <div class="grid">
-                                    <figure class="effect-apollo"><img src="images/banner-7.jpg" alt="">
-                                        <figcaption></figcaption>
-                                    </figure>
-                                </div>
-                            </a></div>
-                    </div>
-                    <div class="col-sm-6">
-                        <div class="side-banner wow flipInX" data-wow-delay="0.3s"><a href="#">
-                                <div class="grid">
-                                    <figure class="effect-apollo"><img src="images/banner-8.jpg" alt="">
-                                        <figcaption></figcaption>
-                                    </figure>
-                                </div>
-                            </a></div>
-                    </div>
-                    <div class="col-sm-6">
-                        <div class="side-banner wow flipInX" data-wow-delay="0.3s"><a href="#">
-                                <div class="grid">
-                                    <figure class="effect-apollo"><img src="images/banner-9.jpg" alt="">
-                                        <figcaption></figcaption>
-                                    </figure>
-                                </div>
-                            </a></div>
-                    </div>
-                </div>
-
+                {% include 'products/modules/bottom_product_tabs.html.twig' %}
+                {% include 'products/modules/bottom_category_slider.html.twig' %}
+                {#{% include 'products/modules/bottom_gallery_and_brands.html.twig' %}#}
+                {% include 'products/modules/bottom_banners.html.twig' %}
             </div>
         </div>
-
         {% include 'home_page_modules/14_newsletter.html.twig' %}
-
         {% include 'home_page_modules/15_social.html.twig' %}
-
         {% include 'partials/footer.html.twig' %}
-
     </div>
-
 {% endblock %}
 
 {% block javascripts %}
