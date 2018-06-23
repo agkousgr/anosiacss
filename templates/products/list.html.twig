@@ -79,7 +79,8 @@
                                             <div class="hover-info">
                                                 <div class="product-short-info">
                                                     <div class="product-name"><a
-                                                                href="{{ path('product_view', {'id':pr.id}) }}">{{ pr.name }}</a></div>
+                                                                href="{{ path('product_view', {'id':pr.id}) }}">{{ pr.name }}</a>
+                                                    </div>
                                                     {#<div class="star"><i class="fa fa-star"></i><i#}
                                                     {#class="fa fa-star"></i><i#}
                                                     {#class="fa fa-star"></i><i class="fa fa-star"></i><i#}
@@ -91,14 +92,16 @@
                                                             <del>{{ pr.retailPrice }}€</del>
                                                         </div>
                                                     </div>
-                                                    <button type="button"><i
-                                                                class="fa fa-cart-plus"></i><span>καλαθι</span>
-                                                    </button>
+                                                    {% if pr.outOfStock == "false" %}
+                                                        <button type="button" class="add-to-cart" data-id="{{ pr.id }}">
+                                                            <i class="fa fa-cart-plus"></i><span>καλαθι</span>
+                                                        </button>
+                                                    {% endif %}
                                                 </div>
                                             </div>
                                             <div class="product-short-info">
-                                                <div class="product-name"><a
-                                                            href="{{ path('product_view', {'id':pr.id}) }}">{{ pr.name }}</a>
+                                                <div class="product-name">
+                                                    <a href="{{ path('product_view', {'id':pr.id}) }}">{{ pr.name }}</a>
                                                 </div>
                                                 {#<div class="star"><i class="fa fa-star"></i><i class="fa fa-star"></i><i#}
                                                 {#class="fa fa-star"></i><i class="fa fa-star"></i><i#}
@@ -109,9 +112,28 @@
                                                         <del>{{ pr.retailPrice }}€</del>
                                                     </div>
                                                 </div>
-                                                <button type="button"><i
-                                                            class="fa fa-cart-plus"></i><span>Add to
-                                                        Cart</span>
+                                                <div>
+                                                    <span itemprop="offers" itemscope=""
+                                                          itemtype="https://schema.org/Offer"
+                                                          class="availability">
+                                                        {% if (pr.remainNotReserved > "0" or pr.webFree == "true") and pr.outOfStock == "false" %}
+                                                            <span class="available-now">
+                                                                <link itemprop="availability"
+                                                                      href="https://schema.org/InStock">
+                                                                In Stock
+                                                            </span>
+                                                        {% else %}
+                                                            <span class="out-of-stock">
+                                                                <link itemprop="availability"
+                                                                      href="https://schema.org/InStock">
+                                                                Out of Stock
+                                                            </span>
+                                                        {% endif %}
+                                                    </span>
+                                                </div>
+                                                <button type="button">
+                                                    <i class="fa fa-cart-plus"></i>
+                                                    <span>Add to Cart</span>
                                                 </button>
                                             </div>
                                         </div>

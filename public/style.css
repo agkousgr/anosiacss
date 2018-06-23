@@ -16687,8 +16687,8 @@ button.list-group-item-danger.active:hover {
 
 .well {
     min-height: 20px;
-    padding: 19px;
-    margin-bottom: 20px;
+    padding: 10px;
+    /*margin-bottom: 20px;*/
     background-color: #f5f5f5;
     border: 1px solid #e3e3e3;
     border-radius: 4px;
@@ -18601,7 +18601,8 @@ figure.effect-apollo:hover figcaption::before {
 }
 
 .pre-header-right ul li a.account-link {
-    background: url(../assets/images/profile-icon.png) right no-repeat
+    background: url(../assets/images/profile-icon.png) right no-repeat;
+    max-height:60px;
 }
 
 .pre-header-right span.count-baloon {
@@ -19582,7 +19583,7 @@ body.modal-open {
 }
 
 .search-wrap .close-btn {
-    background: url(../assets/images/close-search.png);
+    /*background: url(../assets/images/close-search.png);*/
     height: 32px;
     width: 32px;
     position: absolute;
@@ -20818,7 +20819,8 @@ body.modal-open {
 }
 
 .news-post {
-    overflow: hidden
+    overflow: hidden;
+    text-align: center;
 }
 
 .news-post a {
@@ -24275,4 +24277,45 @@ h3#reply-title {
     .category-banner .banner-img .overlay {
         font-size: 28px
     }
+}
+
+.availability span {
+    border: 1px solid #171717;
+    border-radius: 40px;
+    display: inline-block;
+    color: white;
+    font-weight: bold;
+    padding: 3px 8px 4px 8px;
+    margin-top: 5px;
+}
+
+.availability span.available-now {
+    background: #46a74e;
+    border: 1px solid #36943e;
+}
+
+.availability span.out-of-stock {
+    background: #ff7430;
+    border: 1px solid #ea5e1a;
+}
+
+ul.product_list .availability span {
+    display: inline-block;
+    color: white;
+    font-weight: bold;
+    padding: 3px 8px 4px 8px;
+    margin-bottom: 20px;
+}
+
+ul.product_list .availability span.available-now {
+    background: #46a74e;
+    border: 1px solid #36943e;
+}
+
+ul.product_list .availability span.out-of-stock {
+    background: #ff7430;
+    border: 1px solid #ea5e1a;
+}
+.product_attributes {
+    padding-bottom: 25px;
 }

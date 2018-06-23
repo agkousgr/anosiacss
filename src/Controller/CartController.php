@@ -15,20 +15,27 @@ use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Session\SessionInterface;
 
-class OrderController extends AbstractController
+class CartController extends AbstractController
 {
     public function addToCart(Request $request, EntityManagerInterface $em, SessionInterface $session)
     {
         if ($request->isXmlHttpRequest()) {
             try {
-                $prId = $request->query->getInt('id') ?: $request->request->getInt('id');
-                $quantity = $request->query->getInt('quantity') ?: 1;
+                dump($request);
+                $prId = $request->query->getInt('id');
+                dump($prId);
+                $quantity = $request->request->getInt('quantity') ?: 1;
                 $cart = new Cart;
                 $cart->setQuantity($quantity);
-                $cart->setProductId($prId);
+                $cart->setProductId(29076);
                 $cart->setSessionId($session->getId());
-                if (null !== $session->get('username')) ($cart->setUsername($session->get('username')));
-
+                $date = new \DateTime("now");
+                $cart->setCreatedAt($date);
+                $cart->setUpdatedAt($date);
+                if (null !== $session->get('username')) {
+                    $cart->setUsername($session->get('username'));
+                }
+                dump($cart);
                 if (null !== $prId) {
                     $em->persist($cart);
                     $em->flush();

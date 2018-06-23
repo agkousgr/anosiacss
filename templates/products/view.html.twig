@@ -66,46 +66,47 @@
                                 <div class="product-price">{{ pr.webPrice }}€
                                     <del>{{ pr.retailPrice }}€</del>
                                 </div>
-                                {#<div class="features">#}
-                                {#<h4>Features: </h4>#}
-                                {#<ul>#}
-                                {#<li>Black metal body</li>#}
-                                {#<li>Suitable for medium faces</li>#}
-                                {#<li>Gradient blue lenses</li>#}
-                                {#<li>100% UV protection</li>#}
-                                {#</ul>#}
-                                {#</div>#}
 
-                                {#<div class="color-opt">#}
-                                {#<h4>Available colors : </h4>#}
-                                {#<button type="button" class="btn btn-primary" data-toggle="button" aria-pressed="false"><span style="background-color:#ffd700"></span></button>#}
-                                {#<button type="button" class="btn btn-primary" data-toggle="button" aria-pressed="false"><span style="background-color:#a52a2a"></span></button>#}
-                                {#<button type="button" class="btn btn-primary" data-toggle="button" aria-pressed="false"><span style="background-color:#808080"></span></button>#}
-                                {#<button type="button" class="btn btn-primary" data-toggle="button" aria-pressed="false"><span style="background-color:#b87332"></span></button>#}
-                                {#<button type="button" class="btn btn-primary" data-toggle="button" aria-pressed="false"><span style="background-color:#0000ff"></span></button>#}
-                                {#</div>#}
+                                <!-- content availability -->
+                                <div class="product_attributes clearfix">
+                                    <label>Διαθεσιμότητα:</label>
+                                    <span itemprop="offers" itemscope="" itemtype="https://schema.org/Offer"
+                                          class="availability">
+                                        {% if (pr.remainNotReserved > "0" or pr.webFree == "true") and pr.outOfStock == "false" %}
+                                        <span class="available-now">
+                                            <link itemprop="availability" href="https://schema.org/InStock">
+                                            In Stock
+                                        </span>
+                                        {% else %}
+                                        <span class="out-of-stock">
+                                            <link itemprop="availability" href="https://schema.org/InStock">
+                                            Out of Stock
+                                            {% endif %}
+                                        </span>
+                                    </span>
+                                </div>
+                                <!-- end content availabity -->
 
-                                {#<div class="variations_button">#}
-                                {#<div class="row">#}
-                                {#<div class="col-sm-6">#}
-                                {#<div class="form-group">#}
-                                {#<input class="form-control stepper" type="number" value="1" min="1" max="10" />#}
-                                {#</div>#}
-                                {#</div>#}
-                                {#<div class="col-sm-6">#}
-                                {#<ul>#}
-                                {#<li><button type="button"><i class="fa fa-heart-o"></i></button></li>#}
-                                {#<li><button type="button"><i class="fa fa-bell-o"></i></button></li>#}
-                                {#</ul>#}
-                                {#</div>#}
-                                {#</div>#}
-                                {#</div>#}
+                                <div class="variations_button">
+                                    <div class="row">
+                                        <div class="col-sm-6">
+                                            <div class="form-group">
+                                                <input id="add-quantity" class="form-control stepper" type="number" value="1" min="1" max="{{ pr.remainNotReserved }}" />
+                                            </div>
+                                        </div>
+                                        <div class="col-sm-6">
+                                            <ul>
+                                                <li><button type="button"><i class="fa fa-heart-o"></i></button></li>
+                                                {#<li><button type="button"><i class="fa fa-bell-o"></i></button></li>#}
+                                            </ul>
+                                        </div>
+                                    </div>
+                                </div>
 
                                 <div class="option_button form-group">
                                     <div class="row">
                                         <div class="col-xs-6">
-                                            <a href="#" class="btn btn-primary btn-block">ΣΤΟ
-                                                ΚΑΛΑΘΙ</a>
+                                            <a href="" class="btn btn-primary btn-block add-to-cart-view" data-id="{{ pr.id }}">ΣΤΟ ΚΑΛΑΘΙ</a>
                                         </div>
                                         <div class="col-xs-6">
                                             <a href="#" class="btn btn-default btn-block">ΑΓΟΡΑΣΕ
@@ -113,13 +114,13 @@
                                         </div>
                                     </div>
                                 </div>
-                                <div class="share"><img src="images/share.jpg" alt=""></div>
+                                <div class="share"><img src="{{ asset('images/share.jpg') }}" alt=""></div>
 
                                 <div class="pin-widget visible-sm">
                                     <h5>Delivery</h5>
                                     <div class="content">
                                         <div class="pin-form">
-                                            <form action="#">
+                                            {#<form action="#">#}
                                                 <div class="row no-margin">
                                                     <div class="col-xs-8 no-padding"><input
                                                                 type="text" class="form-control"
@@ -129,7 +130,7 @@
                                                                 class="btn btn-primary btn-block"
                                                                 value="CHECK"></div>
                                                 </div>
-                                            </form>
+                                            {#</form>#}
                                             <p class="text-center">
                                                 <strong>Generally delivered by 5
                                                     days</strong></p>

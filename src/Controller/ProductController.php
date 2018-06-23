@@ -72,7 +72,7 @@ class ProductController extends AbstractController
         try {
             $softoneLogin->login();
             $product = $productService->getProduct($id, $session->get("authID"));
-            dump($product);
+//            dump($product);
             return $this->render('products/quick_view.html.twig', [
                 'pr' => $product,
             ]);

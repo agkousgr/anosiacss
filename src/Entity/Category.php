@@ -2,11 +2,11 @@
 
 namespace App\Entity;
 
-use Doctrine\ORM\Mapping as ORM;
 use App\Traits\BasicDbFieldsTrait;
 
 /**
- * @ORM\Entity(repositoryClass="App\Repository\CategoryRepository")
+ * Class Category
+ * @package App\Entity
  */
 class Category
 {

@@ -26,7 +26,7 @@ product_quick_view:
 # Orders / Cart
 add_to_cart:
     path: /cart/{id}
-    controller: App\Controller\OrderController::addToCart
+    controller: App\Controller\CartController::addToCart
     methods: [GET,POST]
     options:
         expose: true
@@ -35,7 +35,7 @@ add_to_cart:
 
 load_top_cart:
     path: /top-cart
-    controller: App\Controller\OrderController::loadTopCart
+    controller: App\Controller\CartController::loadTopCart
     methods: [GET,POST]
     options:
         expose: true
