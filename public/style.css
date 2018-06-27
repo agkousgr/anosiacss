@@ -50,6 +50,21 @@ fieldset[disabled] a.btn {
 }
 
 @font-face {
+    font-family: 'Aka-AcidGR-QuicksandLite';
+    src: url('../assets/fonts/AC-QuicksandLite.ttf');
+}
+
+@font-face {
+    font-family: 'Aka-AcidGR-Quicksandbold';
+    src: url('../assets/fonts/AC-QuicksandBold.ttf');
+}
+
+@font-face {
+    font-family: 'Aka-AcidGR-Quicksandregular';
+    src: url('../assets/fonts/AC-QuicksandRegular.ttf');
+}
+
+@font-face {
     font-family: UniversLTStd-BoldCn;
     src: url(../assets/fonts/universltstdboldcn.eot);
     src: url(../assets/fonts/universltstdboldcn.eot?#iefix) format('embedded-opentype'), url(../assets/fonts/universltstdboldcn.svg#universltstdboldcn) format('svg'), url(../assets/fonts/universltstdboldcn.ttf) format('truetype'), url(../assets/fonts/universltstdboldcn.woff) format('woff'), url(../assets/fonts/universltstdboldcn.woff2) format('woff2');
@@ -8715,7 +8730,7 @@ a.ui-button:active {
 
 .custom-apex-slider .description h4 {
     margin: 0;
-    font-family: 'Open Sans', sans
+    font-family: 'Aka-AcidGR-QuicksandLite', sans
 }
 
 .custom-apex-slider .description p {
@@ -11290,7 +11305,7 @@ html {
 }
 
 body {
-    font-family: 'Open Sans', sans-serif;
+    font-family: 'Aka-AcidGR-QuicksandLite', sans-serif;
     font-size: 14px;
     line-height: 1.42857143;
     font-weight: 300
@@ -11400,8 +11415,8 @@ h4,
 h5,
 h6 {
     /*font-family: UniversLTStd-BoldCn;*/
-    font-family: Open Sans;
-    font-weight: 400;
+    font-family: Aka-AcidGR-QuicksandLite;
+    /*font-weight: 400;*/
     line-height: 1.1;
     color: inherit
 }
@@ -18684,7 +18699,7 @@ figure.effect-apollo:hover figcaption::before {
     margin: 0 0 2px;
     padding-right: 30px;
     font-size: 15px;
-    font-family: "Open Sans", sans-serif
+    font-family: "Aka-AcidGR-QuicksandLite", sans-serif
 }
 
 .cart-list .media .remove-item {
@@ -19028,7 +19043,7 @@ figure.effect-apollo:hover figcaption::before {
 .menu-product-list .media h5 {
     margin: 0 0 2px;
     font-size: 15px;
-    font-family: "Open Sans", sans-serif
+    font-family: "Aka-AcidGR-QuicksandLite", sans-serif
 }
 
 .menu-product-list .media button {
@@ -19166,7 +19181,7 @@ figure.effect-apollo:hover figcaption::before {
     padding-left: 25px;
     line-height: 45px;
     font-size: 18px;
-    font-family: "Open Sans", sans-serif
+    font-family: "Aka-AcidGR-QuicksandLite", sans-serif
 }
 
 .blueMobileMenu li ul li:hover,
@@ -19477,7 +19492,7 @@ body.modal-open {
     font-size: 14px;
     color: #171717;
     font-weight: 700;
-    font-family: "Open Sans", sans-serif
+    font-family: "Aka-AcidGR-QuicksandLite", sans-serif
 }
 
 .search-collapse {
@@ -19692,7 +19707,7 @@ body.modal-open {
 
 .sidebar-product-list .media h5,
 .social li small {
-    font-family: "Open Sans", sans-serif
+    font-family: "Aka-AcidGR-QuicksandLite", sans-serif
 }
 
 .sidebar-product-list h3 span {
@@ -20856,7 +20871,7 @@ body.modal-open {
 }
 
 .news-post h3 {
-    font-family: 'Open Sans', sans-serif;
+    font-family: 'Aka-AcidGR-QuicksandLite', sans-serif;
     font-size: 18px
 }
 
@@ -21424,14 +21439,14 @@ h3.resp-accordion:first-child {
 .product-box .media h5 {
     margin: 0 0 2px;
     font-size: 15px;
-    font-family: "Open Sans", sans-serif
+    font-family: "Aka-AcidGR-QuicksandLite", sans-serif
 }
 
 .category-banner .banner-img .overlay,
 .category-image a p,
 .offer-box button span,
 .offer-box ul li {
-    font-family: UniversLTStd-BoldCn
+    font-family: 'Aka-AcidGR-Quicksandbold'
 }
 
 .product-box .media .price {
@@ -21472,7 +21487,8 @@ h3.resp-accordion:first-child {
 
 .service-content p {
     font-size: 16px;
-    line-height: 24px
+    line-height: 24px;
+    font-weight: 600;
 }
 
 .service-content ul {
@@ -21664,7 +21680,7 @@ h3.resp-accordion:first-child {
     top: 0;
     background: rgba(0, 0, 0, .5);
     color: #fff;
-    font-size: 48px;
+    font-size: 38px;
     text-transform: uppercase
 }
 
@@ -22123,7 +22139,7 @@ h3.resp-accordion:first-child {
 }
 
 .product-list h2 span {
-    font-family: 'Open Sans', sans-serif;
+    font-family: 'Aka-AcidGR-QuicksandLite', sans-serif;
     float: right;
     font-size: 14px
 }
@@ -23557,7 +23573,7 @@ h3#reply-title {
 }
 
 .post-author h3 {
-    font-family: 'Open Sans', sans-serif;
+    font-family: 'Aka-AcidGR-QuicksandLite', sans-serif;
     font-size: 24px;
     font-weight: 400;
     margin: 12px 0
