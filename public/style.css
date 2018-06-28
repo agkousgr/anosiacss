@@ -19605,7 +19605,7 @@ body.modal-open {
 .site-banner .banner {
     position: relative;
     max-width: 1160px;
-    height: 893px;
+    height: 500px;
     overflow: hidden
 }
 
@@ -19613,14 +19613,14 @@ body.modal-open {
     position: relative;
     width: 100%!important;
     padding: 0;
-    max-height: 893px!important;
+    max-height: 500px!important;
     overflow: hidden
 }
 
 .site-banner .fullwidthbanner-container .fullwidthbanner {
     position: relative;
     width: 100%!important;
-    max-height: 893px!important
+    max-height: 500px!important
 }
 
 .site-banner .fullscreenbanner-container {
