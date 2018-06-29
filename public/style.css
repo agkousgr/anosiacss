@@ -21007,11 +21007,13 @@ h3.resp-accordion {
 
 .category-scroll .category-case a:hover {
     background: #fff;
-    color: #009836
+    color: #000
+    /*color: #009836*/
 }
 
 .category-scroll .owl-item:nth-child(odd) .category-case {
-    background: #009836
+    background: #000
+    /*background: #009836*/
 }
 
 .category-scroll .owl-item:nth-child(even) .category-case {

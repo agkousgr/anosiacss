@@ -105,8 +105,8 @@ $(document).ready(function () {
     var owl = $('.categoryCarousel');
     owl.owlCarousel({
         margin: 0,
-        nav: true,
-        loop: true,
+        nav: false,
+        loop: false,
         responsive: {
             0: {items: 1},
             480: {items: 2},
@@ -154,7 +154,7 @@ $(document).ready(function () {
     var owl = $('.ProductScrollMedia');
     owl.owlCarousel({
         margin: 30,
-        nav: true,
+        nav: false,
         loop: true,
         responsive: {
             0: {items: 1},
