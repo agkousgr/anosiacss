@@ -3873,8 +3873,8 @@
     var api;
     $(document).ready(function() {
         api = $(".fullwidthbanner").apexSlider({
-            startWidth:1170,
-            startHeight:893,
+            startWidth:1280,
+            startHeight:400,
             transition:"random",
             thumbWidth:100,
             thumbHeight:47,
