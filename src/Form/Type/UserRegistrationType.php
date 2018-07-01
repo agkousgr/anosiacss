@@ -21,13 +21,13 @@ class UserRegistrationType extends AbstractType
     public function buildForm(FormBuilderInterface $builder, array $options)
     {
         $builder
+            ->add('firstname', TextType::class)
+            ->add('lastname', TextType::class)
             ->add('username', TextType::class, array(
                 'required' => true,
                 'label' => 'Όνομα Χρήστη (email)'
             ))
             ->add('password', PasswordType::class)
-            ->add('firstname', TextType::class)
-            ->add('lastname', TextType::class)
             ->add('newsletter', ChoiceType::class, array(
                 'expanded' => true,
                 'multiple' => true
@@ -40,6 +40,6 @@ class UserRegistrationType extends AbstractType
 
     public function configureOptions(OptionsResolver $resolver)
     {
-        $resolver->setRequired('username');
+//        $resolver->setRequired('username');
     }
 }

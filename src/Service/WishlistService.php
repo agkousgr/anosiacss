@@ -11,7 +11,7 @@ namespace App\Service;
 use Psr\Log\LoggerInterface;
 use Symfony\Component\HttpFoundation\Session\SessionInterface;
 
-class CartService
+class WishlistService
 {
     /**
      * @var SessionInterface
@@ -48,7 +48,7 @@ class CartService
      * @return array
      * @throws \Exception
      */
-    public function getCartItems($ids)
+    public function getWishlistItems($ids)
     {
         $client = new \SoapClient('https://caron.cloudsystems.gr/FOeshopWS/ForeignOffice.FOeshop.API.FOeshopSvc.svc?singleWsdl', ['trace' => true, 'exceptions' => true,]);
 

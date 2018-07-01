@@ -1,7 +1,7 @@
 {% extends 'layout.html.twig' %}
 
 {% block bodyId %}category{% endblock %}
-{% block title %}Products List{% endblock %}
+{% block title %} | {{ pr.name }}{% endblock %}
 {% block slider %}{% endblock %}
 {% block breadcrumb %}
 
@@ -65,8 +65,10 @@
                                 </div>
                                 <div class="product-price">{{ pr.webPrice }}€
                                     <del>{{ pr.retailPrice }}€</del>
+                                    {% if pr.discount %}
+                                        <div class="discount">-{{ pr.discount }}%</div>
+                                    {% endif %}
                                 </div>
-
                                 <!-- content availability -->
                                 <div class="product_attributes clearfix">
                                     <label>Διαθεσιμότητα:</label>
@@ -91,12 +93,17 @@
                                     <div class="row">
                                         <div class="col-sm-6">
                                             <div class="form-group">
-                                                <input id="add-quantity" class="form-control stepper" type="number" value="1" min="1" max="{{ pr.remainNotReserved }}" />
+                                                <input id="add-quantity" class="form-control stepper" type="number"
+                                                       value="1" min="1" max="{{ pr.remainNotReserved }}"/>
                                             </div>
                                         </div>
                                         <div class="col-sm-6">
                                             <ul>
-                                                <li><button type="button"><i class="fa fa-heart-o"></i></button></li>
+                                                <li>
+                                                    <button type="button" class="add-to-wishlist">
+                                                        <i class="fa fa-heart-o"></i>
+                                                    </button>
+                                                </li>
                                                 {#<li><button type="button"><i class="fa fa-bell-o"></i></button></li>#}
                                             </ul>
                                         </div>
@@ -106,7 +113,8 @@
                                 <div class="option_button form-group">
                                     <div class="row">
                                         <div class="col-xs-6">
-                                            <a href="" class="btn btn-primary btn-block add-to-cart-view" data-id="{{ pr.id }}">ΣΤΟ ΚΑΛΑΘΙ</a>
+                                            <a href="" class="btn btn-primary btn-block add-to-cart-view"
+                                               data-id="{{ pr.id }}">ΣΤΟ ΚΑΛΑΘΙ</a>
                                         </div>
                                         <div class="col-xs-6">
                                             <a href="#" class="btn btn-default btn-block">ΑΓΟΡΑΣΕ
@@ -121,15 +129,15 @@
                                     <div class="content">
                                         <div class="pin-form">
                                             {#<form action="#">#}
-                                                <div class="row no-margin">
-                                                    <div class="col-xs-8 no-padding"><input
-                                                                type="text" class="form-control"
-                                                                placeholder="Enter Pin Code"></div>
-                                                    <div class="col-xs-4 no-padding"><input
-                                                                type="submit"
-                                                                class="btn btn-primary btn-block"
-                                                                value="CHECK"></div>
-                                                </div>
+                                            <div class="row no-margin">
+                                                <div class="col-xs-8 no-padding"><input
+                                                            type="text" class="form-control"
+                                                            placeholder="Enter Pin Code"></div>
+                                                <div class="col-xs-4 no-padding"><input
+                                                            type="submit"
+                                                            class="btn btn-primary btn-block"
+                                                            value="CHECK"></div>
+                                            </div>
                                             {#</form>#}
                                             <p class="text-center">
                                                 <strong>Generally delivered by 5

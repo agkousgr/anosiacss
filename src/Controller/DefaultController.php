@@ -2,10 +2,9 @@
 
 namespace App\Controller;
 
-use App\Service\ProductService;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Session\SessionInterface;
-use App\Service\{SoftoneLogin, CategoryService};
+use App\Service\{SoftoneLogin, CategoryService, ProductService};
 
 class DefaultController extends AbstractController
 {
@@ -22,11 +21,12 @@ class DefaultController extends AbstractController
 //        $latest = $pr->getItems(-1, $session->get("authID"));
         dump($categories, $featured);
 //        return new Response(dump($categories));
-
+        $loggedUser = ($session->get("anosiaUser")) ?: null;
         return $this->render('layout.html.twig', [
             'categories' => $categories,
             'featured' => $featured,
             'popular' => $popular,
+            'loggedUser' => $loggedUser
 //            'latest' => $latest
         ]);
     }

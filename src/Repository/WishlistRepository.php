@@ -8,25 +8,25 @@
 
 namespace App\Repository;
 
-use App\Entity\Cart;
+use App\Entity\Wishlist;
 use Doctrine\Bundle\DoctrineBundle\Repository\ServiceEntityRepository;
 use Symfony\Bridge\Doctrine\RegistryInterface;
 
 /**
- * Class CartRepository
+ * Class WishlistRepository
  */
-class CartRepository extends ServiceEntityRepository
+class WishlistRepository extends ServiceEntityRepository
 {
     public function __construct(RegistryInterface $registry)
     {
-        parent::__construct($registry, Cart::class);
+        parent::__construct($registry, Wishlist::class);
     }
 
     /**
      * @param $sessionId
-     * @return cart[]
+     * @return Wishlist[]
      */
-    public function getCartBySession($sessionId) :array
+    public function getWishlistBySession($sessionId) :array
     {
         $qb = $this->createQueryBuilder('c')
             ->andWhere('c.session_id=:sessionId')

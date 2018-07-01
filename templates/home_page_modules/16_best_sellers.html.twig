@@ -17,9 +17,9 @@
                             </div>
                             <div class="media-body">
                                 <h5><a href="{{ path('product_view', {'id':pr.id}) }}">{{ pr.name }}</a></h5>
-                                <div class="star-rating"><i class="fa fa-star"></i><i
-                                            class="fa fa-star"></i><i class="fa fa-star"></i><i
-                                            class="fa fa-star"></i><i class="fa fa-star-o"></i></div>
+                                {#<div class="star-rating"><i class="fa fa-star"></i><i#}
+                                            {#class="fa fa-star"></i><i class="fa fa-star"></i><i#}
+                                            {#class="fa fa-star"></i><i class="fa fa-star-o"></i></div>#}
                                 <div class="product-price-span">{{ pr.webPrice }}€
                                     <del>{{ pr.retailPrice }}€</del>
                                 </div>
@@ -60,12 +60,12 @@
                                         <div class="hover-img">
                                             <img src="images/product-1-h.jpg" alt="{{ pr.name }}">
                                         </div>
-                                        <a href="#"><img src="images/product-1.jpg" alt="{{ pr.name }}"></a>
+                                        <a href="{{ path('product_view', {'id':pr.id}) }}"><img src="images/product-1.jpg" alt="{{ pr.name }}"></a>
                                     </div>
                                     <div class="hover-info">
                                         <div class="product-short-info">
                                             <div class="product-name">
-                                                <a href="#">{{ pr.name }}</a>
+                                                <a href="{{ path('product_view', {'id':pr.id}) }}">{{ pr.name }}</a>
                                             </div>
                                             {#<div class="star"><i class="fa fa-star"></i><i#}
                                                         {#class="fa fa-star"></i><i class="fa fa-star"></i><i#}
@@ -83,7 +83,7 @@
                                     </div>
                                     <div class="product-short-info">
                                         <div class="product-name">
-                                            <a href="#">{{ pr.name }}</a>
+                                            <a href="{{ path('product_view', {'id':pr.id}) }}">{{ pr.name }}</a>
                                         </div>
                                         {#<div class="star"><i class="fa fa-star"></i><i#}
                                                     {#class="fa fa-star"></i><i#}

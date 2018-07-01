@@ -19754,13 +19754,16 @@ body.modal-open {
 }
 
 .social li {
-    width: 10%;
-    float: left
+    /*width: 10%;*/
+    /*float: left*/
+    display:inline;
 }
 
 .social li .social-btn {
     position: relative;
-    overflow: hidden
+    overflow: hidden;
+    display:inline-block; /* delete those 2 lines if not keep centered */
+    width: 150px;
 }
 
 .social li a,
@@ -20769,11 +20772,13 @@ body.modal-open {
 }
 
 .four-column-wrap ul li:nth-child(odd) {
-    background: #36cb6b
+    background: #f87d00
+    /*background: #36cb6b*/
 }
 
 .four-column-wrap ul li:nth-child(even) {
-    background: #009836
+    background: #fd9c3a
+    /*background: #009836*/
 }
 
 .four-column-wrap ul li h5 {
@@ -24295,6 +24300,18 @@ h3#reply-title {
     .category-banner .banner-img .overlay {
         font-size: 28px
     }
+}
+
+.discount {
+    border: 1px solid #171717;
+    /*border-radius: 40px;*/
+    display: inline-block;
+    color: white;
+    font-weight: bold;
+    padding: 3px 8px 4px 8px;
+    /*margin-top: 5px;*/
+    background: #ea2424;
+    font-size: 18px;
 }
 
 .availability span {

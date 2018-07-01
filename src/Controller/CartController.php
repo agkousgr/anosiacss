@@ -10,6 +10,7 @@ namespace App\Controller;
 
 
 use App\Entity\Cart;
+use App\Service\CartService;
 use Doctrine\ORM\EntityManagerInterface;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Request;
@@ -17,6 +18,20 @@ use Symfony\Component\HttpFoundation\Session\SessionInterface;
 
 class CartController extends AbstractController
 {
+    public function viewCart(SessionInterface $session, CartService $cart)
+    {
+        try {
+            if (null !== $session->get('username')) {
+                $cart->setUsername($session->get('username'));
+            }
+
+            return ($this->render('partials/top_cart.html.twig'));
+        } catch (\Exception $e) {
+            throw $e;
+            //throw $this->createNotFoundException('The resource you are looking for could not be found.');
+        }
+    }
+
     public function addToCart(Request $request, EntityManagerInterface $em, SessionInterface $session)
     {
         if ($request->isXmlHttpRequest()) {
@@ -25,7 +40,7 @@ class CartController extends AbstractController
                 $prId = $request->query->getInt('id');
                 dump($prId);
                 $quantity = $request->request->getInt('quantity') ?: 1;
-                $cart = new Cart;
+                $cart = new Cart();
                 $cart->setQuantity($quantity);
                 $cart->setProductId(29076);
                 $cart->setSessionId($session->getId());
@@ -52,8 +67,24 @@ class CartController extends AbstractController
         }
     }
 
-    public function loadTopCart()
+    public function loadTopCart(EntityManagerInterface $em, CartService $cart, SessionInterface $session)
     {
-        return ($this->render('partials/top_cart.html.twig'));
+//        $cart = new CartService();
+        $cartIds = '';
+        if (null === $session->get('username')) {
+            $cartArr = $em->getRepository(Cart::class)->getCartBySession($session->getId());
+            if ($cartArr) {
+                foreach ($cartArr as $key => $val) {
+                    $cartIds .= $val->getProductId() . ',';
+                }
+                $cartIds = substr($cartIds, 0, -1);
+            }
+        }
+
+        $cartItems = ($cartIds) ? $cart->getCartItems($cartIds) : '';
+        dump('cart items', $cartItems);
+        return ($this->render('partials/top_cart.html.twig', [
+            'cartItems' => $cartItems
+        ]));
     }
 }

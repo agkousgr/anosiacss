@@ -2,7 +2,7 @@
 <html>
 <head>
     <meta charset="UTF-8">
-    <title>{% block title %}Anosia Pharmacy!{% endblock %}</title>
+    <title>Anosia Pharmacy{% block title %}{% endblock %}</title>
     {% block stylesheets %}
         {% include 'partials/stylesheets.html.twig' %}
     {% endblock %}
@@ -23,11 +23,12 @@
         {% include 'home_page_modules/16_best_sellers.html.twig' %}
             </div>
         </div>
+        {% include 'home_page_modules/02_four_column_wrap.html.twig' %}
+        {% include 'home_page_modules/08_social_feeder.html.twig' %}
+        {% include 'home_page_modules/10_latest_offers.html.twig' %}
         {% include 'home_page_modules/01_blog.html.twig' %}
 
-        {% include 'home_page_modules/02_four_column_wrap.html.twig' %}
-
-        {% include 'home_page_modules/03_promo.html.twig' %}
+        {#{% include 'home_page_modules/03_promo.html.twig' %}#}
 
         {% include 'home_page_modules/04_inside_slider.html.twig' %}
 
@@ -39,11 +40,9 @@
                 {% include 'home_page_modules/07_featured_products.html.twig' %}
             </div>
         </div>
-        {% include 'home_page_modules/08_social_feeder.html.twig' %}
 
         {% include 'home_page_modules/09_website_info.html.twig' %}
 
-        {% include 'home_page_modules/10_latest_offers.html.twig' %}
 
         {#{% include 'home_page_modules/11_pricing_table.html.twig' %}#}
 

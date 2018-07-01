@@ -27,18 +27,19 @@ class ProductController extends AbstractController
             array_multisort(array_column($categories, "priority"), $categories);
             $products = $productService->getCategoryItems($id, $session->get("authID"));
             $popular = $productService->getCategoryItems(1022, $session->get("authID"));
-
+            $loggedUser = (null !== $session->get("anosiaUser")) ?: null;
 //            $pagination = $knp->paginate(
 //                $products,
 //                $request->query->getInt('page', 1)/*page number*/,
 //                10/*limit per page*/
 //            );
-            dump($ctgInfo);
+            dump($loggedUser);
             return $this->render('products/list.html.twig', [
                 'categories' => $categories,
                 'ctgInfo' => $ctgInfo,
                 'products' => $products,
                 'popular' => $popular,
+                'loggedUser' => $loggedUser
 //                'pagination' => $pagination
             ]);
         } catch (\Exception $e) {
@@ -55,11 +56,13 @@ class ProductController extends AbstractController
             array_multisort(array_column($categories, "priority"), $categories);
             $product = $productService->getItems($id, $session->get("authID"));
             $popular = $productService->getCategoryItems(1022, $session->get("authID"));
-            dump($product);
+            $loggedUser = ($session->get("anosiaUser")) ?: null;
+            dump($loggedUser);
             return $this->render('products/view.html.twig', [
                 'categories' => $categories,
                 'pr' => $product,
-                'popular' => $popular
+                'popular' => $popular,
+                'loggedUser' => $loggedUser
             ]);
         } catch (\Exception $e) {
             $logger->error(__METHOD__ . ' -> {message}', ['message' => $e->getMessage()]);

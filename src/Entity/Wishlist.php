@@ -12,7 +12,7 @@ use App\Traits\{
     TimestampableTrait
 };
 
-class Cart
+class Wishlist
 {
     use TimestampableTrait;
 
@@ -36,10 +36,6 @@ class Cart
      */
     private $product_id;
 
-    /**
-     * @var int
-     */
-    private $quantity;
 
     /**
      * @return string
@@ -90,28 +86,11 @@ class Cart
     }
 
     /**
-     * @return int
-     */
-    public function getQuantity(): int
-    {
-        return $this->quantity;
-    }
-
-    /**
-     * @param int $quantity
-     */
-    public function setQuantity(int $quantity): void
-    {
-        $this->quantity = $quantity;
-    }
-
-    /**
      * @return int|null
      */
     public function getId(): ?int
     {
         return $this->id;
     }
-
 
 }

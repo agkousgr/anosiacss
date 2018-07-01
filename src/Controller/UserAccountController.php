@@ -11,7 +11,7 @@ namespace App\Controller;
 
 use App\Form\Type\UserRegistrationType;
 use App\Service\{
-    CategoryService, UserAccountService, SoftoneLogin
+    CategoryService, ProductService, UserAccountService, SoftoneLogin
 };
 use Symfony\Component\HttpFoundation\Request;
 use Psr\Log\LoggerInterface;
@@ -51,7 +51,7 @@ class UserAccountController extends AbstractController
                         'username' => $data["username"]
                     ]);
                     $form->handleRequest($request);
-                    return $this->render('user_account/register.html.twig', [
+                    return $this->render('user/register.html.twig', [
                         'categories' => $categories,
                         'username' => $data["username"],
                         'form' => $form->createView()
@@ -62,7 +62,7 @@ class UserAccountController extends AbstractController
                 $data = $formSignIn->getData();
             }
 
-            return $this->render('user_account/index.html.twig', [
+            return $this->render('user/index.html.twig', [
                 'categories' => $categories,
                 'formSignUp' => $formSignUp->createView(),
                 'formSignIn' => $formSignIn->createView(),
@@ -73,21 +73,25 @@ class UserAccountController extends AbstractController
         }
     }
 
-    public function register(Request $request, SoftoneLogin $softoneLogin, CategoryService $categoryService, LoggerInterface $logger, SessionInterface $session, UserAccountService $userAccountService)
+    public function register(Request $request, SoftoneLogin $softoneLogin, ProductService $productService, CategoryService $categoryService, LoggerInterface $logger, SessionInterface $session, UserAccountService $userAccountService)
     {
         try {
             $softoneLogin->login();
             $categories = $categoryService->getCategories();
             array_multisort(array_column($categories, "priority"), $categories);
-
+            $popular = $productService->getCategoryItems(1022, $session->get("authID"));
+            $loggedUser = ($session->get("anosiaUser")) ?: null;
             $form = $this->createForm(UserRegistrationType::class);
             $form->handleRequest($request);
             if ($form->isSubmitted() && $form->isValid()) {
                 $userAccountService->createUser($form, $session->get("authID"));
             }
 
-            return $this->render('user_account/register.html.twig', [
+            return $this->render('user/register.html.twig', [
                 'categories' => $categories,
+                'popular' => $popular,
+                'loggedUser' => $loggedUser,
+                'form' => $form->createView(),
             ]);
         } catch (\Exception $e) {
             $logger->error(__METHOD__ . ' -> {message}', ['message' => $e->getMessage()]);

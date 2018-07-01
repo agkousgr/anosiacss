@@ -20,3 +20,10 @@ $('.owl-dots').css('display', 'none');
 $(document).ready(function () {
     $('#collapseCart').load(Routing.generate('load_top_cart'));
 });
+
+// WISH LIST
+$('.add-to-wishlist').on('click', function () {
+    e.preventDefault();
+    alert($(this).data('id'));
+    $('#collapseCart').load(Routing.generate('add_to_wishlist', {'id': $(this).data('id')}));
+});

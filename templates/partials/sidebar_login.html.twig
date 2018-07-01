@@ -5,37 +5,36 @@
     </div>
 
     <div class="sidebar-login">
-        <h4>Sign in to your Account</h4>
+        <h4>ΕΙΣΟΔΟΣ</h4>
         <form action="#" method="post">
             <div class="form-group">
-                <input type="email" class="form-control" placeholder="Enter email">
+                <input type="email" class="form-control" placeholder="Βάλτε το email σας">
             </div>
             <div class="form-group">
-                <input type="password" class="form-control" placeholder="Password">
+                <input type="password" class="form-control" placeholder="Κωδικός">
             </div>
             <div class="clearfix">
                 <div class="form-group pull-left">
-                    <label><input type="checkbox"> Remember Me</label>
+                    <label><input type="checkbox"> Να με θυμάσαι</label>
                 </div>
-                <a href="#" class="pull-right">Forgot Password?</a>
+                <a href="#" class="pull-right">Ξεχάσατε τον κωδικό σας?</a>
             </div>
             <div class="form-group text-center">
-                <button type="submit" class="btn btn-primary btn-signin">SIGNIN</button>
+                <button type="submit" class="btn btn-primary btn-signin">ΕΙΣΟΔΟΣ</button>
             </div>
         </form>
 
         <div class="form-group text-center">
-            <a href="#"><strong>REGISTER NOW</strong></a>
+            <a href="#"><strong>ΕΓΓΡΑΦΗ ΤΩΡΑ</strong></a>
         </div>
 
-        <div class="form-group"><a href="#" class="signin-with-fb">Signin with <strong>Facebook</strong></a></div>
-        <div class="form-group"><a href="#" class="signin-with-gplus">Signin with <strong>Google+</strong></a></div>
+        <div class="form-group"><a href="#" class="signin-with-fb">Συνδεθείτε μέσω <strong>Facebook</strong></a></div>
+        {#<div class="form-group"><a href="#" class="signin-with-gplus">Signin with <strong>Google+</strong></a></div>#}
 
         <ul>
-            <li class="call">1800-123-4567<span>Call us 24x7</span></li>
-            <li class="email">help@example.com<span>Email us for any help</span></li>
+            <li class="call">210 94 02 027<span>Καλέστε μας</span></li>
+            <li class="email">support@anociapharmacy.gr<span>Επικοινωνείστε μαζί μας</span></li>
         </ul>
-
 
         <div class="sidebar-product-list">
             <h3>Best <span>Seller</span></h3>
@@ -43,120 +42,46 @@
                 <!-- Wrapper for slides -->
                 <div class="carousel-inner" role="listbox">
                     <div class="item active">
-                        <div class="media">
-                            <div class="media-left"><a href="#"><img class="media-object" src="images/product-1.jpg"
-                                                                     alt="..."></a></div>
-                            <div class="media-body">
-                                <h5><a href="#">Provouge Woman Top</a></h5>
-                                <div class="star-rating"><i class="fa fa-star"></i><i class="fa fa-star"></i><i
-                                            class="fa fa-star"></i><i class="fa fa-star"></i><i
-                                            class="fa fa-star-o"></i></div>
-                                <div class="price">$28.40
-                                    <del>$35.50</del>
+                        {% for pr in popular|slice(0,4) %}
+                            <div class="media">
+                                <div class="media-left">
+                                    <a href="{{ path('product_view', {'id':pr.id}) }}">
+                                        <img class="media-object" src="{{ pr.imageUrl }}" alt="{{ pr.name }}">
+                                    </a>
                                 </div>
-                                <button type="button" class="btn btn-primary btn-xs">ADD TO CART</button>
-                            </div>
-                        </div>
-                        <div class="media">
-                            <div class="media-left"><a href="#"><img class="media-object" src="images/product-2.jpg"
-                                                                     alt="..."></a></div>
-                            <div class="media-body">
-                                <h5><a href="#">Provouge Men T-Shirt</a></h5>
-                                <div class="star-rating"><i class="fa fa-star"></i><i class="fa fa-star"></i><i
-                                            class="fa fa-star"></i><i class="fa fa-star"></i><i
-                                            class="fa fa-star-o"></i></div>
-                                <div class="price">$28.40
-                                    <del>$35.50</del>
+                                <div class="media-body">
+                                    <h5><a href="{{ path('product_view', {'id':pr.id}) }}">{{ pr.name }}</a></h5>
+                                    {#<div class="star-rating"><i class="fa fa-star"></i><i class="fa fa-star"></i><i#}
+                                    {#class="fa fa-star"></i><i class="fa fa-star"></i><i#}
+                                    {#class="fa fa-star-o"></i></div>#}
+                                    <div class="price">{{ pr.webPrice }}€
+                                        <del>{{ pr.retailPrice }}€</del>
+                                    </div>
+                                    <button type="button" class="btn btn-primary btn-xs">ΚΑΛΑΘΙ</button>
                                 </div>
-                                <button type="button" class="btn btn-primary btn-xs">ADD TO CART</button>
                             </div>
-                        </div>
-                        <div class="media">
-                            <div class="media-left"><a href="#"><img class="media-object" src="images/product-3.jpg"
-                                                                     alt="..."></a></div>
-                            <div class="media-body">
-                                <h5><a href="#">Gucci Red Backpack</a></h5>
-                                <div class="star-rating"><i class="fa fa-star"></i><i class="fa fa-star"></i><i
-                                            class="fa fa-star"></i><i class="fa fa-star"></i><i
-                                            class="fa fa-star-o"></i></div>
-                                <div class="price">$28.40
-                                    <del>$35.50</del>
-                                </div>
-                                <button type="button" class="btn btn-primary btn-xs">ADD TO CART</button>
-                            </div>
-                        </div>
-                        <div class="media">
-                            <div class="media-left"><a href="#"><img class="media-object" src="images/product-4.jpg"
-                                                                     alt="..."></a></div>
-                            <div class="media-body">
-                                <h5><a href="#">Killer Jeans for Men</a></h5>
-                                <div class="star-rating"><i class="fa fa-star"></i><i class="fa fa-star"></i><i
-                                            class="fa fa-star"></i><i class="fa fa-star"></i><i
-                                            class="fa fa-star-o"></i></div>
-                                <div class="price">$28.40
-                                    <del>$35.50</del>
-                                </div>
-                                <button type="button" class="btn btn-primary btn-xs">ADD TO CART</button>
-                            </div>
-                        </div>
+                        {% endfor %}
                     </div>
                     <div class="item">
-                        <div class="media">
-                            <div class="media-left"><a href="#"><img class="media-object" src="images/product-1.jpg"
-                                                                     alt="..."></a></div>
-                            <div class="media-body">
-                                <h5><a href="#">Provouge Woman Top</a></h5>
-                                <div class="star-rating"><i class="fa fa-star"></i><i class="fa fa-star"></i><i
-                                            class="fa fa-star"></i><i class="fa fa-star"></i><i
-                                            class="fa fa-star-o"></i></div>
-                                <div class="price">$28.40
-                                    <del>$35.50</del>
+                        {% for pr in popular|slice(0,4) %}
+                            <div class="media">
+                                <div class="media-left">
+                                    <a href="{{ path('product_view', {'id':pr.id}) }}">
+                                        <img class="media-object" src="{{ pr.imageUrl }}" alt="{{ pr.name }}">
+                                    </a>
                                 </div>
-                                <button type="button" class="btn btn-primary btn-xs">ADD TO CART</button>
-                            </div>
-                        </div>
-                        <div class="media">
-                            <div class="media-left"><a href="#"><img class="media-object" src="images/product-2.jpg"
-                                                                     alt="..."></a></div>
-                            <div class="media-body">
-                                <h5><a href="#">Provouge Men T-Shirt</a></h5>
-                                <div class="star-rating"><i class="fa fa-star"></i><i class="fa fa-star"></i><i
-                                            class="fa fa-star"></i><i class="fa fa-star"></i><i
-                                            class="fa fa-star-o"></i></div>
-                                <div class="price">$28.40
-                                    <del>$35.50</del>
+                                <div class="media-body">
+                                    <h5><a href="{{ path('product_view', {'id':pr.id}) }}">{{ pr.name }}</a></h5>
+                                    {#<div class="star-rating"><i class="fa fa-star"></i><i class="fa fa-star"></i><i#}
+                                    {#class="fa fa-star"></i><i class="fa fa-star"></i><i#}
+                                    {#class="fa fa-star-o"></i></div>#}
+                                    <div class="price">{{ pr.webPrice }}€
+                                        <del>{{ pr.retailPrice }}€</del>
+                                    </div>
+                                    <button type="button" class="btn btn-primary btn-xs">ΚΑΛΑΘΙ</button>
                                 </div>
-                                <button type="button" class="btn btn-primary btn-xs">ADD TO CART</button>
                             </div>
-                        </div>
-                        <div class="media">
-                            <div class="media-left"><a href="#"><img class="media-object" src="images/product-3.jpg"
-                                                                     alt="..."></a></div>
-                            <div class="media-body">
-                                <h5><a href="#">Gucci Red Backpack</a></h5>
-                                <div class="star-rating"><i class="fa fa-star"></i><i class="fa fa-star"></i><i
-                                            class="fa fa-star"></i><i class="fa fa-star"></i><i
-                                            class="fa fa-star-o"></i></div>
-                                <div class="price">$28.40
-                                    <del>$35.50</del>
-                                </div>
-                                <button type="button" class="btn btn-primary btn-xs">ADD TO CART</button>
-                            </div>
-                        </div>
-                        <div class="media">
-                            <div class="media-left"><a href="#"><img class="media-object" src="images/product-4.jpg"
-                                                                     alt="..."></a></div>
-                            <div class="media-body">
-                                <h5><a href="#">Killer Jeans for Men</a></h5>
-                                <div class="star-rating"><i class="fa fa-star"></i><i class="fa fa-star"></i><i
-                                            class="fa fa-star"></i><i class="fa fa-star"></i><i
-                                            class="fa fa-star-o"></i></div>
-                                <div class="price">$28.40
-                                    <del>$35.50</del>
-                                </div>
-                                <button type="button" class="btn btn-primary btn-xs">ADD TO CART</button>
-                            </div>
-                        </div>
+                        {% endfor %}
                     </div>
                     <div class="carousel-nav">
                         <a class="left carousel-control" href="#carouselOneSidebar" role="button" data-slide="prev">Previous</a>
@@ -167,127 +92,52 @@
             </div>
         </div>
 
-
         <div class="sidebar-product-list">
-            <h3>NEW <span>ARRIVALS</span></h3>
+            <h3>ΝΕΕΣ <span>ΑΦΙΞΕΙΣ</span></h3>
             <div id="carouselTwoSidebar" class="carousel slide" data-ride="carousel">
                 <!-- Wrapper for slides -->
                 <div class="carousel-inner" role="listbox">
                     <div class="item active">
-                        <div class="media">
-                            <div class="media-left"><a href="#"><img class="media-object" src="images/product-1.jpg"
-                                                                     alt="..."></a></div>
-                            <div class="media-body">
-                                <h5><a href="#">Provouge Woman Top</a></h5>
-                                <div class="star-rating"><i class="fa fa-star"></i><i class="fa fa-star"></i><i
-                                            class="fa fa-star"></i><i class="fa fa-star"></i><i
-                                            class="fa fa-star-o"></i></div>
-                                <div class="price">$28.40
-                                    <del>$35.50</del>
+                        {% for pr in popular|slice(0,4) %}
+                            <div class="media">
+                                <div class="media-left">
+                                    <a href="{{ path('product_view', {'id':pr.id}) }}">
+                                        <img class="media-object" src="{{ pr.imageUrl }}" alt="{{ pr.name }}">
+                                    </a>
                                 </div>
-                                <button type="button" class="btn btn-primary btn-xs">ADD TO CART</button>
-                            </div>
-                        </div>
-                        <div class="media">
-                            <div class="media-left"><a href="#"><img class="media-object" src="images/product-2.jpg"
-                                                                     alt="..."></a></div>
-                            <div class="media-body">
-                                <h5><a href="#">Provouge Men T-Shirt</a></h5>
-                                <div class="star-rating"><i class="fa fa-star"></i><i class="fa fa-star"></i><i
-                                            class="fa fa-star"></i><i class="fa fa-star"></i><i
-                                            class="fa fa-star-o"></i></div>
-                                <div class="price">$28.40
-                                    <del>$35.50</del>
+                                <div class="media-body">
+                                    <h5><a href="{{ path('product_view', {'id':pr.id}) }}">{{ pr.name }}</a></h5>
+                                    {#<div class="star-rating"><i class="fa fa-star"></i><i class="fa fa-star"></i><i#}
+                                    {#class="fa fa-star"></i><i class="fa fa-star"></i><i#}
+                                    {#class="fa fa-star-o"></i></div>#}
+                                    <div class="price">{{ pr.webPrice }}€
+                                        <del>{{ pr.retailPrice }}€</del>
+                                    </div>
+                                    <button type="button" class="btn btn-primary btn-xs">ΚΑΛΑΘΙ</button>
                                 </div>
-                                <button type="button" class="btn btn-primary btn-xs">ADD TO CART</button>
                             </div>
-                        </div>
-                        <div class="media">
-                            <div class="media-left"><a href="#"><img class="media-object" src="images/product-3.jpg"
-                                                                     alt="..."></a></div>
-                            <div class="media-body">
-                                <h5><a href="#">Gucci Red Backpack</a></h5>
-                                <div class="star-rating"><i class="fa fa-star"></i><i class="fa fa-star"></i><i
-                                            class="fa fa-star"></i><i class="fa fa-star"></i><i
-                                            class="fa fa-star-o"></i></div>
-                                <div class="price">$28.40
-                                    <del>$35.50</del>
-                                </div>
-                                <button type="button" class="btn btn-primary btn-xs">ADD TO CART</button>
-                            </div>
-                        </div>
-                        <div class="media">
-                            <div class="media-left"><a href="#"><img class="media-object" src="images/product-4.jpg"
-                                                                     alt="..."></a></div>
-                            <div class="media-body">
-                                <h5><a href="#">Killer Jeans for Men</a></h5>
-                                <div class="star-rating"><i class="fa fa-star"></i><i class="fa fa-star"></i><i
-                                            class="fa fa-star"></i><i class="fa fa-star"></i><i
-                                            class="fa fa-star-o"></i></div>
-                                <div class="price">$28.40
-                                    <del>$35.50</del>
-                                </div>
-                                <button type="button" class="btn btn-primary btn-xs">ADD TO CART</button>
-                            </div>
-                        </div>
+                        {% endfor %}
                     </div>
                     <div class="item">
-                        <div class="media">
-                            <div class="media-left"><a href="#"><img class="media-object" src="images/product-1.jpg"
-                                                                     alt="..."></a></div>
-                            <div class="media-body">
-                                <h5><a href="#">Provouge Woman Top</a></h5>
-                                <div class="star-rating"><i class="fa fa-star"></i><i class="fa fa-star"></i><i
-                                            class="fa fa-star"></i><i class="fa fa-star"></i><i
-                                            class="fa fa-star-o"></i></div>
-                                <div class="price">$28.40
-                                    <del>$35.50</del>
+                        {% for pr in popular|slice(0,4) %}
+                            <div class="media">
+                                <div class="media-left">
+                                    <a href="{{ path('product_view', {'id':pr.id}) }}">
+                                        <img class="media-object" src="{{ pr.imageUrl }}" alt="{{ pr.name }}">
+                                    </a>
                                 </div>
-                                <button type="button" class="btn btn-primary btn-xs">ADD TO CART</button>
-                            </div>
-                        </div>
-                        <div class="media">
-                            <div class="media-left"><a href="#"><img class="media-object" src="images/product-2.jpg"
-                                                                     alt="..."></a></div>
-                            <div class="media-body">
-                                <h5><a href="#">Provouge Men T-Shirt</a></h5>
-                                <div class="star-rating"><i class="fa fa-star"></i><i class="fa fa-star"></i><i
-                                            class="fa fa-star"></i><i class="fa fa-star"></i><i
-                                            class="fa fa-star-o"></i></div>
-                                <div class="price">$28.40
-                                    <del>$35.50</del>
+                                <div class="media-body">
+                                    <h5><a href="{{ path('product_view', {'id':pr.id}) }}">{{ pr.name }}</a></h5>
+                                    {#<div class="star-rating"><i class="fa fa-star"></i><i class="fa fa-star"></i><i#}
+                                    {#class="fa fa-star"></i><i class="fa fa-star"></i><i#}
+                                    {#class="fa fa-star-o"></i></div>#}
+                                    <div class="price">{{ pr.webPrice }}€
+                                        <del>{{ pr.retailPrice }}€</del>
+                                    </div>
+                                    <button type="button" class="btn btn-primary btn-xs">ΚΑΛΑΘΙ</button>
                                 </div>
-                                <button type="button" class="btn btn-primary btn-xs">ADD TO CART</button>
                             </div>
-                        </div>
-                        <div class="media">
-                            <div class="media-left"><a href="#"><img class="media-object" src="images/product-3.jpg"
-                                                                     alt="..."></a></div>
-                            <div class="media-body">
-                                <h5><a href="#">Gucci Red Backpack</a></h5>
-                                <div class="star-rating"><i class="fa fa-star"></i><i class="fa fa-star"></i><i
-                                            class="fa fa-star"></i><i class="fa fa-star"></i><i
-                                            class="fa fa-star-o"></i></div>
-                                <div class="price">$28.40
-                                    <del>$35.50</del>
-                                </div>
-                                <button type="button" class="btn btn-primary btn-xs">ADD TO CART</button>
-                            </div>
-                        </div>
-                        <div class="media">
-                            <div class="media-left"><a href="#"><img class="media-object" src="images/product-4.jpg"
-                                                                     alt="..."></a></div>
-                            <div class="media-body">
-                                <h5><a href="#">Killer Jeans for Men</a></h5>
-                                <div class="star-rating"><i class="fa fa-star"></i><i class="fa fa-star"></i><i
-                                            class="fa fa-star"></i><i class="fa fa-star"></i><i
-                                            class="fa fa-star-o"></i></div>
-                                <div class="price">$28.40
-                                    <del>$35.50</del>
-                                </div>
-                                <button type="button" class="btn btn-primary btn-xs">ADD TO CART</button>
-                            </div>
-                        </div>
+                        {% endfor %}
                     </div>
                     <div class="carousel-nav">
                         <a class="left carousel-control" href="#carouselTwoSidebar" role="button" data-slide="prev">Previous</a>
@@ -297,7 +147,5 @@
                 </div>
             </div>
         </div>
-
-
     </div>
 </div>
