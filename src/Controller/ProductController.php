@@ -33,7 +33,7 @@ class ProductController extends AbstractController
 //                $request->query->getInt('page', 1)/*page number*/,
 //                10/*limit per page*/
 //            );
-            dump($loggedUser);
+            dump($products);
             return $this->render('products/list.html.twig', [
                 'categories' => $categories,
                 'ctgInfo' => $ctgInfo,

@@ -34,8 +34,9 @@ Encore
     .addEntry('js/product-list', './assets/js/product-list.js')
 
 
-    .addStyleEntry('css/style', './assets/css/style.css')
+    // .addStyleEntry('css/style', './assets/css/style.css')
     .addStyleEntry('css/apex-slider', './assets/css/apex-slider.css')
+    .addStyleEntry('css/orders', './assets/css/orders.css')
 
     .addLoader({
         test: /\.(png|jpg|svg)$/,

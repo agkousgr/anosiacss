@@ -11,6 +11,9 @@ namespace App\Controller;
 
 use App\Entity\Cart;
 use App\Service\CartService;
+use App\Service\CategoryService;
+use App\Service\ProductService;
+use App\Service\SoftoneLogin;
 use Doctrine\ORM\EntityManagerInterface;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Request;
@@ -18,14 +21,33 @@ use Symfony\Component\HttpFoundation\Session\SessionInterface;
 
 class CartController extends AbstractController
 {
-    public function viewCart(SessionInterface $session, CartService $cart)
+    public function viewCart(SoftoneLogin $softoneLogin, CategoryService $categoryService, SessionInterface $session, CartService $cart, EntityManagerInterface $em, ProductService $productService)
     {
         try {
-            if (null !== $session->get('username')) {
-                $cart->setUsername($session->get('username'));
+            $softoneLogin->login();
+            $categories = $categoryService->getCategories();
+            $cartIds = '';
+            if (null === $session->get('username')) {
+                $cartArr = $em->getRepository(Cart::class)->getCartBySession($session->getId());
+            } else {
+                $cartArr = $em->getRepository(Cart::class)->getCartBySession($session->getId());
             }
+            if ($cartArr) {
+                foreach ($cartArr as $key => $val) {
+                    $cartIds .= $val->getProductId() . ',';
+                }
+                $cartIds = substr($cartIds, 0, -1);
+            }
+            $cartItems = ($cartIds) ? $cart->getCartItems($cartIds) : '';
+            $popular = $productService->getCategoryItems(1022, $session->get("authID"));
+            $loggedUser = (null !== $session->get("anosiaUser")) ?: null;
 
-            return ($this->render('partials/top_cart.html.twig'));
+            return ($this->render('orders/cart.html.twig', [
+                'categories' => $categories,
+                'cartItems' => $cartItems,
+                'popular' => $popular,
+                'loggedUser' => $loggedUser
+            ]));
         } catch (\Exception $e) {
             throw $e;
             //throw $this->createNotFoundException('The resource you are looking for could not be found.');
@@ -73,12 +95,14 @@ class CartController extends AbstractController
         $cartIds = '';
         if (null === $session->get('username')) {
             $cartArr = $em->getRepository(Cart::class)->getCartBySession($session->getId());
-            if ($cartArr) {
-                foreach ($cartArr as $key => $val) {
-                    $cartIds .= $val->getProductId() . ',';
-                }
-                $cartIds = substr($cartIds, 0, -1);
+        } else {
+            $cartArr = $em->getRepository(Cart::class)->getCartBySession($session->getId());
+        }
+        if ($cartArr) {
+            foreach ($cartArr as $key => $val) {
+                $cartIds .= $val->getProductId() . ',';
             }
+            $cartIds = substr($cartIds, 0, -1);
         }
 
         $cartItems = ($cartIds) ? $cart->getCartItems($cartIds) : '';

@@ -51,7 +51,7 @@ EOF;
 //            return $result->SendMessageResult;
 //            return str_replace("utf-16", "utf-8", $result->SendMessageResult);
             $items = simplexml_load_string(str_replace("utf-16", "utf-8", $result->SendMessageResult));
-//            dump($items);
+            dump($result);
             if ($items !== false) {
                 $itemsArr = $this->initializeProducts($items->GetDataRows->GetCategoryItemsRow);
             }

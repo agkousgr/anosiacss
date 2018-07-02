@@ -3,6 +3,10 @@
 {% block bodyId %}category{% endblock %}
 {% block title %}Login{% endblock %}
 {% block slider %}{% endblock %}
+{% block stylesheets %}
+    {{ parent() }}
+    <link href="{{ asset('build/css/orders.css') }}" rel="stylesheet" />
+{% endblock %}
 {% block breadcrumb %}
 
 {% endblock %}
@@ -14,7 +18,7 @@
     <div class="page-header">
         <div class="container">
             <div class="row">
-                <div class="col-md-6"><h1>Εγγραφη χρηστη</h1></div>
+                <div class="col-md-6"><h1>Καλάθι</h1></div>
             </div>
         </div>
     </div>
@@ -33,18 +37,16 @@
                             </div>
                             <hr class="separator">
 
-
                             <div class="cart-overview js-cart"
                                  data-refresh-url="//demo.templatetrip.com/Prestashop/PRS06/PRS176_gym/en/cart?ajax=1&amp;action=refresh">
                                 <ul class="cart-items">
+                                    {% for pr in cartItems %}
                                     <li class="cart-item">
-
                                         <div class="product-line-grid">
                                             <!--  product left content: image-->
                                             <div class="product-line-grid-left col-md-3 col-xs-4">
                                                 <span class="product-image media-middle">
-                                                    <img src="https://demo.templatetrip.com/Prestashop/PRS06/PRS176_gym/385-cart_default/today-is-a-good-day-framed-poster.jpg"
-                                                         alt="voluptate velit esse">
+                                                    <img src="{{ pr.imageUrl }}" alt="voluptate velit esse">
                                                 </span>
                                             </div>
 
@@ -52,8 +54,8 @@
                                             <div class="product-line-grid-body col-md-4 col-xs-8">
                                                 <div class="product-line-info">
                                                     <a class="label"
-                                                       href="https://demo.templatetrip.com/Prestashop/PRS06/PRS176_gym/en/resistance-bands/5-19-today-is-a-good-day-framed-poster.html#/19-dimension-40x60cm"
-                                                       data-id_customization="0">voluptate velit esse</a>
+                                                       href="{{ path('product_view', {'id':pr.id}) }}"
+                                                       data-id_customization="0">{{ pr.name }}</a>
                                                 </div>
 
                                                 <div class="product-line-info product-price h5 has-discount">
@@ -83,29 +85,11 @@
                                                     <div class="col-xs-4 hidden-md-up"></div>
                                                     <div class="col-md-10 col-xs-6">
                                                         <div class="row">
-                                                            <div class="col-md-6 col-xs-6 qty">
-                                                                <div class="input-group bootstrap-touchspin"><span
-                                                                            class="input-group-addon bootstrap-touchspin-prefix"
-                                                                            style="display: none;"></span><input
-                                                                            class="js-cart-line-product-quantity form-control"
-                                                                            data-down-url="https://demo.templatetrip.com/Prestashop/PRS06/PRS176_gym/en/cart?update=1&amp;id_product=5&amp;id_product_attribute=19&amp;token=b1684ee1655e468f303729bd537e4eb5&amp;op=down"
-                                                                            data-up-url="https://demo.templatetrip.com/Prestashop/PRS06/PRS176_gym/en/cart?update=1&amp;id_product=5&amp;id_product_attribute=19&amp;token=b1684ee1655e468f303729bd537e4eb5&amp;op=up"
-                                                                            data-update-url="https://demo.templatetrip.com/Prestashop/PRS06/PRS176_gym/en/cart?update=1&amp;id_product=5&amp;id_product_attribute=19&amp;token=b1684ee1655e468f303729bd537e4eb5"
-                                                                            data-product-id="5" value="1"
-                                                                            name="product-quantity-spin" min="1"
-                                                                            style="display: block;" type="text"><span
-                                                                            class="input-group-addon bootstrap-touchspin-postfix"
-                                                                            style="display: none;"></span><span
-                                                                            class="input-group-btn-vertical">
-                                                                        <button class="btn btn-touchspin js-touchspin js-increase-product-quantity bootstrap-touchspin-up"
-                                                                                type="button"><i
-                                                                                    class="material-icons touchspin-up"></i>
-                                                                        </button>
-                                                                        <button class="btn btn-touchspin js-touchspin js-decrease-product-quantity bootstrap-touchspin-down"
-                                                                                type="button"><i
-                                                                                    class="material-icons touchspin-down"></i>
-                                                                        </button>
-                                                                    </span></div>
+                                                            <div class="col-md-6 col-xs-6">
+                                                                <div class="form-group">
+                                                                    <input id="add-quantity" class="form-control stepper" type="number"
+                                                                           value="1" min="1" max="{{ pr.remainNotReserved }}"/>
+                                                                </div>
                                                             </div>
                                                             <div class="col-md-6 col-xs-2 price">
                                                                 <span class="product-price">
@@ -124,43 +108,27 @@
                                                                data-id-product-attribute="19" data-id-customization="">
                                                                 <i class="material-icons float-xs-left">delete</i>
                                                             </a>
-
-
                                                         </div>
                                                     </div>
                                                 </div>
                                             </div>
-
                                             <div class="clearfix"></div>
                                         </div>
-
                                     </li>
+                                    {% endfor %}
                                 </ul>
                             </div>
-
-
                         </div>
-
-
                         <a class="label" href="https://demo.templatetrip.com/Prestashop/PRS06/PRS176_gym/en/">
                             <i class="material-icons">chevron_left</i>Continue shopping
                         </a>
-
-
                         <!-- shipping informations -->
-
-
                     </div>
 
                     <!-- Right Block: cart subtotal & cart total -->
                     <div class="cart-grid-right col-xs-12 col-lg-4">
-
-
                         <div class="card cart-summary">
-
-
                             <div class="cart-detailed-totals">
-
                                 <div class="card-block">
                                     <div class="cart-summary-line" id="cart-subtotal-products">
                                         <span class="label js-subtotal">
@@ -178,10 +146,7 @@
                                         </div>
                                     </div>
                                 </div>
-
-
                                 <hr class="separator">
-
                                 <div class="card-block">
                                     <div class="cart-summary-line cart-total">
                                         <span class="label">Total (tax incl.)</span>
@@ -193,23 +158,15 @@
                                         <small class="value"></small>
                                     </div>
                                 </div>
-
                                 <hr class="separator">
                             </div>
-
-
                             <div class="checkout cart-detailed-actions card-block">
                                 <div class="text-sm-center">
                                     <a href="https://demo.templatetrip.com/Prestashop/PRS06/PRS176_gym/en/cart?action=show&amp;checkout"
                                        class="btn btn-primary">Proceed to checkout</a>
-
                                 </div>
                             </div>
-
-
                         </div>
-
-
                         <div id="block-reassurance">
                             <ul>
                                 <li>
@@ -235,10 +192,7 @@
                                 </li>
                             </ul>
                         </div>
-
-
                     </div>
-
                 </div>
             </section>
         </div>
@@ -246,7 +200,5 @@
         {% include 'home_page_modules/15_social.html.twig' %}
         {% include 'partials/footer.html.twig' %}
     </div>
-
-
 {% endblock %}
 
