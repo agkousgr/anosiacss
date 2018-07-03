@@ -54,32 +54,32 @@ class CartController extends AbstractController
         }
     }
 
-    public function addToCart(Request $request, EntityManagerInterface $em, SessionInterface $session)
+    public function addToCart(int $id, int $quantity, Request $request, EntityManagerInterface $em, SessionInterface $session)
     {
         if ($request->isXmlHttpRequest()) {
             try {
-                dump($request);
-                $prId = $request->query->getInt('id');
-                dump($prId);
-                $quantity = $request->request->getInt('quantity') ?: 1;
-                $cart = new Cart();
-                $cart->setQuantity($quantity);
-                $cart->setProductId(29076);
-                $cart->setSessionId($session->getId());
-                $date = new \DateTime("now");
-                $cart->setCreatedAt($date);
-                $cart->setUpdatedAt($date);
-                if (null !== $session->get('username')) {
-                    $cart->setUsername($session->get('username'));
+                $itemInCart = (int)$em->getRepository(Cart::class)->checkIfProductExists($session->getId(), $session->get('anosiaUser'), $id);
+                dump($itemInCart);
+                $quantity = ($quantity) ?: 1;
+                if ($itemInCart === 0) {
+                    $cart = new Cart();
+                    $cart->setQuantity($quantity);
+                    $cart->setProductId($id);
+                    $cart->setSessionId($session->getId());
+                    $date = new \DateTime("now");
+//                $cart->setCreatedAt($date);
+//                $cart->setUpdatedAt($date);
+                    if (null !== $session->get('username')) {
+                        $cart->setUsername($session->get('username'));
+                    }
+                    dump($cart);
+                    if (null !== $id) {
+                        $em->persist($cart);
+                        $em->flush();
+                        return $this->redirectToRoute('load_top_cart');
+                    }
                 }
-                dump($cart);
-                if (null !== $prId) {
-                    $em->persist($cart);
-                    $em->flush();
-
-                    return ($this->render('partials/top_cart.html.twig'));
-                }
-                return $this->json(['success' => false]);
+                return $this->redirectToRoute('load_top_cart');
             } catch (\Exception $e) {
                 throw $e;
                 //throw $this->createNotFoundException('The resource you are looking for could not be found.');
@@ -106,7 +106,6 @@ class CartController extends AbstractController
         }
 
         $cartItems = ($cartIds) ? $cart->getCartItems($cartIds) : '';
-        dump('cart items', $cartItems);
         return ($this->render('partials/top_cart.html.twig', [
             'cartItems' => $cartItems
         ]));

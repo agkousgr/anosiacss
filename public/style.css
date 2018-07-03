@@ -50,26 +50,10 @@ fieldset[disabled] a.btn {
 }
 
 @font-face {
-    font-family: 'Aka-AcidGR-QuicksandLite';
-    src: url('../assets/fonts/AC-QuicksandLite.ttf');
-}
-
-@font-face {
-    font-family: 'Aka-AcidGR-Quicksandbold';
-    src: url('../assets/fonts/AC-QuicksandBold.ttf');
-}
-
-@font-face {
-    font-family: 'Aka-AcidGR-Quicksandregular';
-    src: url('../assets/fonts/AC-QuicksandRegular.ttf');
-}
-
-@font-face {
-    font-family: UniversLTStd-BoldCn;
-    src: url(../assets/fonts/universltstdboldcn.eot);
-    src: url(../assets/fonts/universltstdboldcn.eot?#iefix) format('embedded-opentype'), url(../assets/fonts/universltstdboldcn.svg#universltstdboldcn) format('svg'), url(../assets/fonts/universltstdboldcn.ttf) format('truetype'), url(../assets/fonts/universltstdboldcn.woff) format('woff'), url(../assets/fonts/universltstdboldcn.woff2) format('woff2');
-    font-weight: 400;
-    font-style: normal
+    font-family: "pf_dintext_proregular";
+    font-style: normal;
+    font-weight: normal;
+    src: url("../assets/fonts/pfdintext/pfdintextcond-regular-web-webfont.eot?#iefix") format("embedded-opentype"), url("../assets/fonts/pfdintext/pfdintextcond-regular-web-webfont.woff") format("woff"), url("../assets/fonts/pfdintext/pfdintextcond-regular-web-webfont.ttf") format("truetype"), url("../assets/fonts/pfdintext/pfdintextcond-regular-web-webfont.svg#PFDinTextPro") format("svg");
 }
 
 @font-face {
@@ -8730,7 +8714,7 @@ a.ui-button:active {
 
 .custom-apex-slider .description h4 {
     margin: 0;
-    font-family: 'Aka-AcidGR-QuicksandLite', sans
+    font-family: 'pf_dintext_proregular', sans
 }
 
 .custom-apex-slider .description p {
@@ -9101,7 +9085,7 @@ a.ui-button:active {
     font-size: 90px;
     line-height: 90px;
     letter-spacing: 0;
-    font-family: UniversLTStd-BoldCn;
+    font-family: pf_dintext_proregular;
     color: #009836;
     text-transform: uppercase;
     padding: 2px 12px;
@@ -9163,7 +9147,7 @@ a.ui-button:active {
 .apex-slider .caption.medium_black_text {
     position: absolute;
     color: #fff;
-    font-family: UniversLTStd-BoldCn;
+    font-family: pf_dintext_proregular;
     font-size: 48px;
     line-height: 48px;
     text-transform: uppercase
@@ -9272,7 +9256,7 @@ a.ui-button:active {
 
 .apex-slider .caption.small_fade_text {
     position: absolute;
-    font-family: UniversLTStd-BoldCn;
+    font-family: pf_dintext_proregular;
     font-size: 30px;
     line-height: 30px;
     white-space: nowrap;
@@ -11305,7 +11289,7 @@ html {
 }
 
 body {
-    font-family: 'Aka-AcidGR-QuicksandLite', sans-serif;
+    font-family: 'pf_dintext_proregular', sans-serif;
     font-size: 14px;
     line-height: 1.42857143;
     font-weight: 300
@@ -11414,8 +11398,8 @@ h3,
 h4,
 h5,
 h6 {
-    /*font-family: UniversLTStd-BoldCn;*/
-    font-family: Aka-AcidGR-QuicksandLite;
+    /*font-family: pf_dintext_proregular;*/
+    font-family: pf_dintext_proregular;
     /*font-weight: 400;*/
     line-height: 1.1;
     color: inherit
@@ -18513,7 +18497,7 @@ figure.effect-apollo:hover figcaption::before {
 
 .news-ticker .ticker .label-back {
     background: url(../assets/images/latest-bg.png) right center no-repeat;
-    font-family: UniversLTStd-BoldCn;
+    font-family: pf_dintext_proregular;
     text-transform: uppercase;
     color: #fff;
     font-size: 14px;
@@ -18699,7 +18683,7 @@ figure.effect-apollo:hover figcaption::before {
     margin: 0 0 2px;
     padding-right: 30px;
     font-size: 15px;
-    font-family: "Aka-AcidGR-QuicksandLite", sans-serif
+    font-family: "pf_dintext_proregular", sans-serif
 }
 
 .cart-list .media .remove-item {
@@ -18728,7 +18712,7 @@ figure.effect-apollo:hover figcaption::before {
     margin-left: 5%;
     line-height: 24px;
     float: left;
-    font-family: UniversLTStd-BoldCn
+    font-family: pf_dintext_proregular
 }
 
 .cart-list .media .star-rating {
@@ -18746,7 +18730,7 @@ figure.effect-apollo:hover figcaption::before {
 .cart-dropdown .btns .btn,
 .cart-total {
     font-size: 18px;
-    font-family: UniversLTStd-BoldCn
+    font-family: pf_dintext_proregular
 }
 
 .cart-total {
@@ -19043,7 +19027,7 @@ figure.effect-apollo:hover figcaption::before {
 .menu-product-list .media h5 {
     margin: 0 0 2px;
     font-size: 15px;
-    font-family: "Aka-AcidGR-QuicksandLite", sans-serif
+    font-family: "pf_dintext_proregular", sans-serif
 }
 
 .menu-product-list .media button {
@@ -19158,7 +19142,7 @@ figure.effect-apollo:hover figcaption::before {
     display: block;
     line-height: 45px;
     border-bottom: 1px solid #ffa141;
-    font-family: UniversLTStd-BoldCn;
+    font-family: pf_dintext_proregular;
     font-size: 20px
 }
 
@@ -19181,7 +19165,7 @@ figure.effect-apollo:hover figcaption::before {
     padding-left: 25px;
     line-height: 45px;
     font-size: 18px;
-    font-family: "Aka-AcidGR-QuicksandLite", sans-serif
+    font-family: "pf_dintext_proregular", sans-serif
 }
 
 .blueMobileMenu li ul li:hover,
@@ -19379,7 +19363,7 @@ body.modal-open {
 .sidebar-login h4 {
     margin: 0 0 12px;
     font-size: 18px;
-    font-family: UniversLTStd-BoldCn
+    font-family: pf_dintext_proregular
 }
 
 .signin-with-fb:before,
@@ -19476,7 +19460,7 @@ body.modal-open {
     font-size: 24px;
     color: #009836;
     line-height: 22px;
-    font-family: UniversLTStd-BoldCn
+    font-family: pf_dintext_proregular
 }
 
 .sidebar-login ul li.call {
@@ -19492,7 +19476,7 @@ body.modal-open {
     font-size: 14px;
     color: #171717;
     font-weight: 700;
-    font-family: "Aka-AcidGR-QuicksandLite", sans-serif
+    font-family: "pf_dintext_proregular", sans-serif
 }
 
 .search-collapse {
@@ -19614,7 +19598,7 @@ body.modal-open {
     padding: 5px;
     background-color: #fff;
     max-width: 1160px;
-    font-family: UniversLTStd-BoldCn
+    font-family: pf_dintext_proregular
 }
 
 .site-banner .banner {
@@ -19693,7 +19677,7 @@ body.modal-open {
     margin-bottom: 10px;
     padding-bottom: 5px;
     border-bottom: 1px solid #d8d8d8;
-    font-family: UniversLTStd-BoldCn;
+    font-family: pf_dintext_proregular;
     font-size: 24px;
     margin-top: 0
 }
@@ -19707,7 +19691,7 @@ body.modal-open {
 
 .sidebar-product-list .media h5,
 .social li small {
-    font-family: "Aka-AcidGR-QuicksandLite", sans-serif
+    font-family: "pf_dintext_proregular", sans-serif
 }
 
 .sidebar-product-list h3 span {
@@ -19798,7 +19782,7 @@ body.modal-open {
 }
 
 .social li span {
-    font-family: UniversLTStd-BoldCn;
+    font-family: pf_dintext_proregular;
     font-size: 24px
 }
 
@@ -20197,7 +20181,7 @@ body.modal-open {
 }
 
 .newsletter .btn {
-    font-family: UniversLTStd-BoldCn;
+    font-family: pf_dintext_proregular;
     text-transform: uppercase;
     font-weight: 400
 }
@@ -20322,7 +20306,7 @@ body.modal-open {
 .big-slider .carousel-caption a,
 .four-column-wrap ul li,
 .planContainer .price p {
-    font-family: UniversLTStd-BoldCn
+    font-family: pf_dintext_proregular
 }
 
 .testiCarousel .carousel-control.left,
@@ -20876,7 +20860,7 @@ body.modal-open {
 }
 
 .news-post h3 {
-    font-family: 'Aka-AcidGR-QuicksandLite', sans-serif;
+    font-family: 'pf_dintext_proregular', sans-serif;
     font-size: 18px
 }
 
@@ -20887,7 +20871,7 @@ body.modal-open {
 .section-top .btn-lg,
 .tag,
 h3.resp-accordion {
-    font-family: UniversLTStd-BoldCn
+    font-family: pf_dintext_proregular
 }
 
 .post-tag {
@@ -21446,7 +21430,7 @@ h3.resp-accordion:first-child {
 .product-box .media h5 {
     margin: 0 0 2px;
     font-size: 15px;
-    font-family: "Aka-AcidGR-QuicksandLite", sans-serif
+    font-family: "pf_dintext_proregular", sans-serif
 }
 
 .category-banner .banner-img .overlay,
@@ -22070,7 +22054,7 @@ h3.resp-accordion:first-child {
     background: #009836;
     color: #fff;
     line-height: 42px;
-    font-family: UniversLTStd-BoldCn;
+    font-family: pf_dintext_proregular;
     position: relative
 }
 
@@ -22146,7 +22130,7 @@ h3.resp-accordion:first-child {
 }
 
 .product-list h2 span {
-    font-family: 'Aka-AcidGR-QuicksandLite', sans-serif;
+    font-family: 'pf_dintext_proregular', sans-serif;
     float: right;
     font-size: 14px
 }
@@ -22154,7 +22138,7 @@ h3.resp-accordion:first-child {
 .pin-form .btn,
 .single-product .option_button .btn,
 .single-product-details .nav-tabs>li>a {
-    font-family: UniversLTStd-BoldCn
+    font-family: pf_dintext_proregular
 }
 
 .list-group.list-products {
@@ -23580,7 +23564,7 @@ h3#reply-title {
 }
 
 .post-author h3 {
-    font-family: 'Aka-AcidGR-QuicksandLite', sans-serif;
+    font-family: 'pf_dintext_proregular', sans-serif;
     font-size: 24px;
     font-weight: 400;
     margin: 12px 0

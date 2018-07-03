@@ -31,13 +31,15 @@ cart_view:
         id: \d+
 
 add_to_cart:
-    path: /add_to_cart/{id}
+    path: /add_to_cart/{id}/{quantity}
     controller: App\Controller\CartController::addToCart
+    defaults: { quantity: 1 }
     methods: [GET,POST]
     options:
         expose: true
     requirements:
         id: \d+
+        quantity: \d+
 
 load_top_cart:
     path: /top-cart
@@ -57,7 +59,12 @@ add_to_wishlist:
         id: \d+
 
 # Blog
-
+blog_list:
+    path: /blog/{page}
+    controller: App\Controller\BlogController::listBlog
+    defaults: { page: 1 }
+    requirements:
+        page: \d+
 
 # User Account
 user_account:

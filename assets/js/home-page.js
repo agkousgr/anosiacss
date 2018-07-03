@@ -1,8 +1,8 @@
 // $('body').startComponents();
 
 $('.add-to-cart').on('click', function () {
-    alert($(this).data('id') + ' | ' + $(this).data('quantity'));
-    $('#collapseCart').load(Routing.generate('add_to_cart', {'id': $(this).data('id')}));
+    alert($(this).data('id'));
+    $('#collapseCart').load(Routing.generate('add_to_cart', {'id': $(this).data('id'),'quantity': 1}));
 });
 
 

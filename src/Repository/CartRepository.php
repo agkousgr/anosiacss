@@ -26,7 +26,7 @@ class CartRepository extends ServiceEntityRepository
      * @param $sessionId
      * @return cart[]
      */
-    public function getCartBySession($sessionId) :array
+    public function getCartBySession($sessionId): array
     {
         $qb = $this->createQueryBuilder('c')
             ->andWhere('c.session_id=:sessionId')
@@ -34,5 +34,26 @@ class CartRepository extends ServiceEntityRepository
             ->getQuery();
 
         return $qb->execute();
+    }
+
+    public function checkIfProductExists($sessionId, $username = null, $prId)
+    {
+        $qb = $this->createQueryBuilder('c');
+        if (null !== $username) {
+            return $qb->select('COUNT(c.product_id)')
+                ->andWhere('c.username=:username')
+                ->andWhere('c.product_id=:prId')
+                ->setParameters(array('username' => $username, 'prId' => $prId))
+                ->getQuery()
+                ->getSingleScalarResult();
+        } else {
+            return $qb->andWhere('c.session_id=:sessionId')
+                ->andWhere('c.product_id=:prId')
+                ->setParameters(array('sessionId' => $sessionId, 'prId' => $prId))
+                ->select('COUNT(c.product_id)')
+                ->getQuery()
+                ->getSingleScalarResult();
+        }
+//        return $qb->execute();
     }
 }
