@@ -19,18 +19,16 @@ use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Session\SessionInterface;
 
-class CartController extends AbstractController
+class CartController extends MainController
 {
-    public function viewCart(SoftoneLogin $softoneLogin, CategoryService $categoryService, SessionInterface $session, CartService $cart, EntityManagerInterface $em, ProductService $productService)
+    public function viewCart(EntityManagerInterface $em)
     {
         try {
-            $softoneLogin->login();
-            $categories = $categoryService->getCategories();
             $cartIds = '';
-            if (null === $session->get('username')) {
-                $cartArr = $em->getRepository(Cart::class)->getCartBySession($session->getId());
+            if (null === $this->session->get('username')) {
+                $cartArr = $em->getRepository(Cart::class)->getCartBySession($this->session->getId());
             } else {
-                $cartArr = $em->getRepository(Cart::class)->getCartBySession($session->getId());
+                $cartArr = $em->getRepository(Cart::class)->getCartBySession($this->session->getId());
             }
             if ($cartArr) {
                 foreach ($cartArr as $key => $val) {
@@ -38,15 +36,13 @@ class CartController extends AbstractController
                 }
                 $cartIds = substr($cartIds, 0, -1);
             }
-            $cartItems = ($cartIds) ? $cart->getCartItems($cartIds) : '';
-            $popular = $productService->getCategoryItems(1022, $session->get("authID"));
-            $loggedUser = (null !== $session->get("anosiaUser")) ?: null;
+            $cartItems = ($cartIds) ? $this->cart->getCartItems($cartIds, $cartArr) : '';
 
             return ($this->render('orders/cart.html.twig', [
-                'categories' => $categories,
+                'categories' => $this->categories,
                 'cartItems' => $cartItems,
-                'popular' => $popular,
-                'loggedUser' => $loggedUser
+                'popular' => $this->popular,
+                'loggedUser' => $this->loggedUser
             ]));
         } catch (\Exception $e) {
             throw $e;
@@ -105,9 +101,31 @@ class CartController extends AbstractController
             $cartIds = substr($cartIds, 0, -1);
         }
 
-        $cartItems = ($cartIds) ? $cart->getCartItems($cartIds) : '';
+        $cartItems = ($cartIds) ? $cart->getCartItems($cartIds, $cartArr) : '';
         return ($this->render('partials/top_cart.html.twig', [
             'cartItems' => $cartItems
         ]));
+    }
+
+    public function deleteCartItem(EntityManagerInterface $em, int $id, SessionInterface $session)
+    {
+        try {
+            if (!$id) {
+                throw $this->createNotFoundException(
+                    'No product found for id ' . $id
+                );
+            }
+            $cartItem = $em->getRepository(Cart::class)->find($id);
+            // Add code for checking that sessionId or Username has access to specific cartId
+            // Add here
+            // End code
+
+            $em->remove($cartItem);
+            $em->flush();
+            return $this->redirectToRoute('cart_view');
+        } catch (\Exception $e) {
+            throw $e;
+            //throw $this->createNotFoundException('The resource you are looking for could not be found.');
+        }
     }
 }

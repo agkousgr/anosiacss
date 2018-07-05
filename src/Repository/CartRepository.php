@@ -9,18 +9,14 @@
 namespace App\Repository;
 
 use App\Entity\Cart;
-use Doctrine\Bundle\DoctrineBundle\Repository\ServiceEntityRepository;
+use Doctrine\ORM\EntityRepository;
 use Symfony\Bridge\Doctrine\RegistryInterface;
 
 /**
  * Class CartRepository
  */
-class CartRepository extends ServiceEntityRepository
+class CartRepository extends EntityRepository
 {
-    public function __construct(RegistryInterface $registry)
-    {
-        parent::__construct($registry, Cart::class);
-    }
 
     /**
      * @param $sessionId
@@ -33,27 +29,54 @@ class CartRepository extends ServiceEntityRepository
             ->setParameter('sessionId', $sessionId)
             ->getQuery();
 
-        return $qb->execute();
+        return $qb->getResult();
     }
 
+    /**
+     * @param $sessionId
+     * @param null $username
+     * @param $prId
+     * @return mixed
+     * @throws \Doctrine\ORM\NonUniqueResultException
+     */
     public function checkIfProductExists($sessionId, $username = null, $prId)
     {
         $qb = $this->createQueryBuilder('c');
         if (null !== $username) {
-            return $qb->select('COUNT(c.product_id)')
-                ->andWhere('c.username=:username')
+            $qb->select('COUNT(c.product_id)')
+                ->where('c.username=:username')
                 ->andWhere('c.product_id=:prId')
-                ->setParameters(array('username' => $username, 'prId' => $prId))
-                ->getQuery()
-                ->getSingleScalarResult();
+                ->setParameters(array('username' => $username, 'prId' => $prId));
         } else {
-            return $qb->andWhere('c.session_id=:sessionId')
+            $qb->where('c.session_id=:sessionId')
                 ->andWhere('c.product_id=:prId')
                 ->setParameters(array('sessionId' => $sessionId, 'prId' => $prId))
-                ->select('COUNT(c.product_id)')
-                ->getQuery()
-                ->getSingleScalarResult();
+                ->select('COUNT(c.product_id)');
         }
-//        return $qb->execute();
+        return $qb->getQuery()->getSingleScalarResult();
     }
+
+//    /**
+//     * @param $sessionId
+//     * @param null $username
+//     * @param $prId
+//     *
+//     * @return Cart
+//     */
+//    public function getItem($sessionId, $username = null, $prId)
+//    {
+//        $qb = $this->getEntityManager()->createQueryBuilder()
+//            ->select('c')
+//            ->from('App:Cart', 'c');
+//        if (null !== $username) {
+//            $qb->andWhere('c.username=:username')
+//                ->andWhere('c.product_id=:prId')
+//                ->setParameters(array('username' => $username, 'prId' => $prId));
+//        } else {
+//            $qb->andWhere('c.session_id=:sessionId')
+//                ->andWhere('c.product_id=:prId')
+//                ->setParameters(array('sessionId' => $sessionId, 'prId' => $prId));
+//        }
+//        return $qb->getQuery()->getResult();
+//    }
 }

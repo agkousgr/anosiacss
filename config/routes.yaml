@@ -48,6 +48,12 @@ load_top_cart:
     options:
         expose: true
 
+delete_cart_item:
+    path: /delete-cart-item/{id}
+    controller: App\Controller\CartController::deleteCartItem
+    requirements:
+        id: \d+
+
 # Wishlist
 add_to_wishlist:
     path: /wishlist/{id}

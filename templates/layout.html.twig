@@ -7,7 +7,7 @@
         {% include 'partials/stylesheets.html.twig' %}
     {% endblock %}
 </head>
-<body>
+<body id="{% block bodyId %}{% endblock %}">
 {% block body %}
     <div id="mainWrapper">
         {% include 'partials/sidebar_login.html.twig' %}

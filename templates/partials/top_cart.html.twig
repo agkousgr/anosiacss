@@ -1,5 +1,6 @@
 <div class="well">
     <div class="cart-list">
+        {% set cartSubTotal = 0 %}
         {% if cartItems|length > 0 %}
             {% for pr in cartItems %}
                 <div class="media">
@@ -19,16 +20,17 @@
                             </div>
                             <div class="cart-item-price">{{ pr.webPrice }}€</div>
                         </div>
-                        <button type="button" class="remove-item">
+                        <a href="{{ path('delete_cart_item', {'id':pr.cartId}) }}" class="remove-item">
                             <i class="fa fa-times"></i>
-                        </button>
+                        </a>
                     </div>
                 </div>
+                {% set cartSubTotal = cartSubTotal + pr.webPrice %}
             {% endfor %}
         {% endif %}
     </div>
     <div class="cart-total clearfix">
-        Σύνολο: <span>$747.00</span>
+        Σύνολο: <span>{{ cartSubTotal }}€</span>
     </div>
     <div class="row btns">
         <div class="col-xs-10 col-xs-offset-1">
