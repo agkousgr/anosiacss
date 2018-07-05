@@ -10,10 +10,9 @@ namespace App\Controller;
 
 
 use App\Entity\Cart;
-use App\Service\CartService;
-use App\Service\CategoryService;
-use App\Service\ProductService;
-use App\Service\SoftoneLogin;
+use App\Service\{
+    CartService, CategoryService, ProductService, SoftoneLogin
+};
 use Doctrine\ORM\EntityManagerInterface;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Request;
@@ -42,6 +41,7 @@ class CartController extends MainController
                 'categories' => $this->categories,
                 'cartItems' => $cartItems,
                 'popular' => $this->popular,
+                'featured' => $this->featured,
                 'loggedUser' => $this->loggedUser
             ]));
         } catch (\Exception $e) {
@@ -50,23 +50,23 @@ class CartController extends MainController
         }
     }
 
-    public function addToCart(int $id, int $quantity, Request $request, EntityManagerInterface $em, SessionInterface $session)
+    public function addToCart(int $id, int $quantity, Request $request, EntityManagerInterface $em)
     {
         if ($request->isXmlHttpRequest()) {
             try {
-                $itemInCart = (int)$em->getRepository(Cart::class)->checkIfProductExists($session->getId(), $session->get('anosiaUser'), $id);
+                $itemInCart = (int)$em->getRepository(Cart::class)->checkIfProductExists($this->session->getId(), $this->session->get('anosiaUser'), $id);
                 dump($itemInCart);
                 $quantity = ($quantity) ?: 1;
                 if ($itemInCart === 0) {
                     $cart = new Cart();
                     $cart->setQuantity($quantity);
                     $cart->setProductId($id);
-                    $cart->setSessionId($session->getId());
-                    $date = new \DateTime("now");
+                    $cart->setSessionId($this->session->getId());
+//                    $date = new \DateTime("now");
 //                $cart->setCreatedAt($date);
 //                $cart->setUpdatedAt($date);
-                    if (null !== $session->get('username')) {
-                        $cart->setUsername($session->get('username'));
+                    if (null !== $this->session->get('username')) {
+                        $cart->setUsername($this->session->get('username'));
                     }
                     dump($cart);
                     if (null !== $id) {
@@ -85,14 +85,14 @@ class CartController extends MainController
         }
     }
 
-    public function loadTopCart(EntityManagerInterface $em, CartService $cart, SessionInterface $session)
+    public function loadTopCart(EntityManagerInterface $em)
     {
 //        $cart = new CartService();
         $cartIds = '';
-        if (null === $session->get('username')) {
-            $cartArr = $em->getRepository(Cart::class)->getCartBySession($session->getId());
+        if (null === $this->session->get('username')) {
+            $cartArr = $em->getRepository(Cart::class)->getCartBySession($this->session->getId());
         } else {
-            $cartArr = $em->getRepository(Cart::class)->getCartBySession($session->getId());
+            $cartArr = $em->getRepository(Cart::class)->getCartBySession($this->session->getId());
         }
         if ($cartArr) {
             foreach ($cartArr as $key => $val) {
@@ -101,7 +101,7 @@ class CartController extends MainController
             $cartIds = substr($cartIds, 0, -1);
         }
 
-        $cartItems = ($cartIds) ? $cart->getCartItems($cartIds, $cartArr) : '';
+        $cartItems = ($cartIds) ? $this->cart->getCartItems($cartIds, $cartArr) : '';
         return ($this->render('partials/top_cart.html.twig', [
             'cartItems' => $cartItems
         ]));

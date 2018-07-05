@@ -63,8 +63,9 @@
 
                                 <div class="product-id">SKU : <span>{{ pr.mainBarcode }}</span>
                                 </div>
-                                <div class="product-price">{{ pr.webPrice }}€
-                                    <del>{{ pr.retailPrice }}€</del>
+                                <div class="product-price">{{ pr.webPrice|number_format(2, ',', '.') }}
+                                    €
+                                    <del>{{ pr.retailPrice|number_format(2, ',', '.') }}€</del>
                                     {% if pr.discount %}
                                         <div class="discount">-{{ pr.discount }}%</div>
                                     {% endif %}
@@ -72,16 +73,19 @@
                                 <!-- content availability -->
                                 <div class="product_attributes clearfix">
                                     <label>Διαθεσιμότητα:</label>
-                                    <span itemprop="offers" itemscope="" itemtype="https://schema.org/Offer"
+                                    <span itemprop="offers" itemscope=""
+                                          itemtype="https://schema.org/Offer"
                                           class="availability">
                                         {% if (pr.remainNotReserved > "0" or pr.webFree == "true") and pr.outOfStock == "false" %}
                                         <span class="available-now">
-                                            <link itemprop="availability" href="https://schema.org/InStock">
+                                            <link itemprop="availability"
+                                                  href="https://schema.org/InStock">
                                             In Stock
                                         </span>
                                         {% else %}
                                         <span class="out-of-stock">
-                                            <link itemprop="availability" href="https://schema.org/InStock">
+                                            <link itemprop="availability"
+                                                  href="https://schema.org/InStock">
                                             Out of Stock
                                             {% endif %}
                                         </span>
@@ -89,12 +93,21 @@
                                 </div>
                                 <!-- end content availabity -->
 
+                                {% if (pr.maxByOrder > 0) %}
+                                    {% set maxItems = pr.maxByOrder %}
+                                {% elseif (pr.webFree == 'true') %}
+                                    {% set maxItems = pr.remainNotReserved + pr.overAvailability %}
+                                {% else %}
+                                    {% set maxItems = pr.remainNotReserved %}
+                                {% endif %}
                                 <div class="variations_button">
                                     <div class="row">
                                         <div class="col-sm-6">
                                             <div class="form-group">
-                                                <input id="add-quantity" class="form-control stepper" type="number"
-                                                       value="1" min="1" max="{{ pr.remainNotReserved }}"/>
+                                                <input id="add-quantity"
+                                                       class="form-control stepper" type="number"
+                                                       value="1" min="1"
+                                                       max="{{ maxItems }}"/>
                                             </div>
                                         </div>
                                         <div class="col-sm-6">
@@ -113,16 +126,18 @@
                                 <div class="option_button form-group">
                                     <div class="row">
                                         <div class="col-xs-6">
-                                            <a href="" class="btn btn-primary btn-block add-to-cart-view"
+                                            <a href=""
+                                               class="btn btn-primary btn-block add-to-cart-view"
                                                data-id="{{ pr.id }}">ΣΤΟ ΚΑΛΑΘΙ</a>
                                         </div>
-                                        <div class="col-xs-6">
-                                            <a href="#" class="btn btn-default btn-block">ΑΓΟΡΑΣΕ
-                                                ΤΩΡΑ</a>
-                                        </div>
+                                        {#<div class="col-xs-6">#}
+                                            {#<a href="#" class="btn btn-default btn-block">ΑΓΟΡΑΣΕ#}
+                                                {#ΤΩΡΑ</a>#}
+                                        {#</div>#}
                                     </div>
                                 </div>
-                                <div class="share"><img src="{{ asset('images/share.jpg') }}" alt=""></div>
+                                <div class="share"><img src="{{ asset('images/share.jpg') }}"
+                                                        alt=""></div>
 
                                 <div class="pin-widget visible-sm">
                                     <h5>Delivery</h5>

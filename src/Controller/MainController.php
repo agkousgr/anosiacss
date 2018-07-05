@@ -2,6 +2,7 @@
 
 namespace App\Controller;
 
+use Psr\Log\LoggerInterface;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Session\SessionInterface;
 use App\Service\{SoftoneLogin, CategoryService, CartService, ProductService};
@@ -24,6 +25,11 @@ class MainController extends AbstractController
     protected $session;
 
     /**
+     * @var LoggerInterface
+     */
+    protected $logger;
+
+    /**
      * @var \App\Service\CartService
      */
     protected $cart;
@@ -44,16 +50,24 @@ class MainController extends AbstractController
     protected $popular;
 
     /**
+     * @var array
+     */
+    protected $featured;
+
+    /**
      * @var string
      */
     protected $loggedUser;
+
+
 
     public function __construct(
         SoftoneLogin $softoneLogin,
         CategoryService $categoryService,
         CartService $cartService,
         ProductService $productService,
-        SessionInterface $session
+        SessionInterface $session,
+        LoggerInterface $logger
     )
     {
         $this->softoneLogin = $softoneLogin;
@@ -61,10 +75,13 @@ class MainController extends AbstractController
         $this->cart = $cartService;
         $this->productService = $productService;
         $this->session = $session;
+        $this->logger = $logger;
 
         $this->softoneLogin->login();
         $this->categories = $this->categoryService->getCategories();
+        array_multisort(array_column($this->categories, "priority"), $this->categories);
         $this->popular = $productService->getCategoryItems(1022, $session->get("authID"));
+        $this->featured = $productService->getCategoryItems(1008, $session->get("authID"));
         $this->loggedUser = (null !== $session->get("anosiaUser")) ?: null;
     }
 }

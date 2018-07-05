@@ -25,6 +25,6 @@ $(document).ready(function () {
 // WISH LIST
 $('.add-to-wishlist').on('click', function () {
     e.preventDefault();
-    alert($(this).data('id'));
+    // alert($(this).data('id'));
     $('#collapseCart').load(Routing.generate('add_to_wishlist', {'id': $(this).data('id')}));
 });

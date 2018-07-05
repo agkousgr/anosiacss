@@ -73,11 +73,9 @@ EOF;
             $itemsArr = array();
             $result = $client->SendMessage(['Message' => $message]);
             $items = simplexml_load_string(str_replace("utf-16", "utf-8", $result->SendMessageResult));
-            dump($items);
             if ($items !== false) {
                 $itemsArr = $this->initializeProducts($items->GetDataRows->GetItemsRow, $cartArr);
             }
-            dump($itemsArr);
 
             return $itemsArr;
         } catch (\SoapFault $sf) {
@@ -102,18 +100,20 @@ EOF;
                 $prArr[] = array(
                     'id' => $pr->ID,
                     'name' => $pr->Name2,
+                    'isVisible' => $pr->WebVisible,
                     'retailPrice' => $pr->RetailPrice,
                     'discount' => $pr->WebDiscountPerc,
-                    'mainBarcode' => $pr->MainBarcode,
-                    'isVisible' => $pr->WebVisible,
                     'webPrice' => $pr->WebPrice,
                     'outOfStock' => $pr->OutOfStock,
                     'remainNotReserved' => $pr->Remain,
                     'webFree' => $pr->WebFree,
+                    'overAvailability' => $pr->OverAvailability,
+                    'maxByOrder' => $pr->MaxByOrder,
                     'hasMainImage' => $pr->HasMainPhoto,
                     'imageUrl' => ($pr->HasMainPhoto) ? 'https://caron.cloudsystems.gr/FOeshopAPIWeb/DF.aspx?' . str_replace('[Serial]', '01102459200617', str_replace('&amp;', '&', $pr->MainPhotoUrl)) : '',
                     'cartSubTotal' => $subTotal,
-                    'cartId' => $cartArr[$i]->getId()
+                    'cartId' => $cartArr[$i]->getId(),
+                    'quantity' => $cartArr[$i]->getQuantity()
                 );
                 $i++;
             }

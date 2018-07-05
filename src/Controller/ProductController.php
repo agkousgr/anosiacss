@@ -8,80 +8,63 @@
 
 namespace App\Controller;
 
-use App\Service\{ProductService, SoftoneLogin, CategoryService};
-use Knp\Bundle\PaginatorBundle\KnpPaginatorBundle;
-use Symfony\Component\HttpFoundation\Request;
-use Symfony\Component\HttpFoundation\Session\SessionInterface;
-use Psr\Log\LoggerInterface;
-use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
-
-class ProductController extends AbstractController
+class ProductController extends MainController
 {
 
-    public function listProducts(SoftoneLogin $softoneLogin, CategoryService $categoryService, int $id, ProductService $productService, LoggerInterface $logger, SessionInterface $session)
+    public function listProducts(int $id)
     {
         try {
-            $softoneLogin->login();
-            $categories = $categoryService->getCategories();
-            $ctgInfo = $categoryService->getCategoryInfo($id, $session->get("authID"));
-            array_multisort(array_column($categories, "priority"), $categories);
-            $products = $productService->getCategoryItems($id, $session->get("authID"));
-            $popular = $productService->getCategoryItems(1022, $session->get("authID"));
-            $loggedUser = (null !== $session->get("anosiaUser")) ?: null;
+            $ctgInfo = $this->categoryService->getCategoryInfo($id, $this->session->get("authID"));
+            $products = $this->productService->getCategoryItems($id, $this->session->get("authID"));
 //            $pagination = $knp->paginate(
 //                $products,
 //                $request->query->getInt('page', 1)/*page number*/,
 //                10/*limit per page*/
 //            );
-            dump($products);
             return $this->render('products/list.html.twig', [
-                'categories' => $categories,
+                'categories' => $this->categories,
                 'ctgInfo' => $ctgInfo,
                 'products' => $products,
-                'popular' => $popular,
-                'loggedUser' => $loggedUser
+                'popular' => $this->popular,
+                'featured' => $this->featured,
+                'loggedUser' => $this->loggedUser
 //                'pagination' => $pagination
             ]);
         } catch (\Exception $e) {
-            $logger->error(__METHOD__ . ' -> {message}', ['message' => $e->getMessage()]);
+            $this->logger->error(__METHOD__ . ' -> {message}', ['message' => $e->getMessage()]);
             throw $e;
         }
     }
 
-    public function viewProduct(SoftoneLogin $softoneLogin, CategoryService $prCategories, int $id, ProductService $productService, LoggerInterface $logger, SessionInterface $session)
+    public function viewProduct(int $id)
     {
         try {
-            $softoneLogin->login();
-            $categories = $prCategories->getCategories();
-            array_multisort(array_column($categories, "priority"), $categories);
-            $product = $productService->getItems($id, $session->get("authID"));
-            $popular = $productService->getCategoryItems(1022, $session->get("authID"));
-            $loggedUser = ($session->get("anosiaUser")) ?: null;
-            dump($loggedUser);
+            $product = $this->productService->getItems($id, $this->session->get("authID"));
             return $this->render('products/view.html.twig', [
-                'categories' => $categories,
+                'categories' => $this->categories,
                 'pr' => $product,
-                'popular' => $popular,
-                'loggedUser' => $loggedUser
+                'popular' => $this->popular,
+                'featured' => $this->featured,
+                'loggedUser' => $this->loggedUser
             ]);
         } catch (\Exception $e) {
-            $logger->error(__METHOD__ . ' -> {message}', ['message' => $e->getMessage()]);
+            $this->logger->error(__METHOD__ . ' -> {message}', ['message' => $e->getMessage()]);
             throw $e;
         }
     }
 
-    public function quickviewProduct(SoftoneLogin $softoneLogin, CategoryService $prCategories, int $id, ProductService $productService, LoggerInterface $logger, SessionInterface $session)
-    {
-        try {
-            $softoneLogin->login();
-            $product = $productService->getProduct($id, $session->get("authID"));
-//            dump($product);
-            return $this->render('products/quick_view.html.twig', [
-                'pr' => $product,
-            ]);
-        } catch (\Exception $e) {
-            $logger->error(__METHOD__ . ' -> {message}', ['message' => $e->getMessage()]);
-            throw $e;
-        }
-    }
+//    public function quickviewProduct(SoftoneLogin $softoneLogin, CategoryService $prCategories, int $id, ProductService $productService, LoggerInterface $logger, SessionInterface $session)
+//    {
+//        try {
+//            $softoneLogin->login();
+//            $product = $productService->getProduct($id, $session->get("authID"));
+////            dump($product);
+//            return $this->render('products/quick_view.html.twig', [
+//                'pr' => $product,
+//            ]);
+//        } catch (\Exception $e) {
+//            $logger->error(__METHOD__ . ' -> {message}', ['message' => $e->getMessage()]);
+//            throw $e;
+//        }
+//    }
 }

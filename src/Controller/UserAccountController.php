@@ -21,15 +21,11 @@ use Symfony\Component\Form\Extension\Core\Type\{
 };
 use Symfony\Component\HttpFoundation\Session\SessionInterface;
 
-class UserAccountController extends AbstractController
+class UserAccountController extends MainController
 {
-    public function index(Request $request, SoftoneLogin $softoneLogin, CategoryService $categoryService, LoggerInterface $logger, SessionInterface $session, UserAccountService $userAccountService)
+    public function index(Request $request, UserAccountService $userAccountService)
     {
         try {
-            $softoneLogin->login();
-            $categories = $categoryService->getCategories();
-            array_multisort(array_column($categories, "priority"), $categories);
-//            $defaultData = array('message' => 'Type your message here');
             $formSignUp = $this->createFormBuilder()
                 ->add('username', EmailType::class)
                 ->getForm();
@@ -43,7 +39,7 @@ class UserAccountController extends AbstractController
             $formSignIn->handleRequest($request);
             if ($formSignUp->isSubmitted() && $formSignUp->isValid()) {
                 $data = $formSignUp->getData();
-                $userExists = $userAccountService->userAlreadyExists($data["username"], $session->get("authID"));
+                $userExists = $userAccountService->userAlreadyExists($data["username"], $this->session->get("authID"));
                 dump($data["username"]);
                 if (null === $userExists) {
                     return $this->redirectToRoute('user_registration');
@@ -52,7 +48,8 @@ class UserAccountController extends AbstractController
                     ]);
                     $form->handleRequest($request);
                     return $this->render('user/register.html.twig', [
-                        'categories' => $categories,
+                        'categories' => $this->categories,
+                        'featured' => $this->featured,
                         'username' => $data["username"],
                         'form' => $form->createView()
                     ]);
@@ -63,38 +60,35 @@ class UserAccountController extends AbstractController
             }
 
             return $this->render('user/index.html.twig', [
-                'categories' => $categories,
+                'categories' => $this->categories,
+                'featured' => $this->featured,
                 'formSignUp' => $formSignUp->createView(),
                 'formSignIn' => $formSignIn->createView(),
             ]);
         } catch (\Exception $e) {
-            $logger->error(__METHOD__ . ' -> {message}', ['message' => $e->getMessage()]);
+            $this->logger->error(__METHOD__ . ' -> {message}', ['message' => $e->getMessage()]);
             throw $e;
         }
     }
 
-    public function register(Request $request, SoftoneLogin $softoneLogin, ProductService $productService, CategoryService $categoryService, LoggerInterface $logger, SessionInterface $session, UserAccountService $userAccountService)
+    public function register(Request $request, UserAccountService $userAccountService)
     {
         try {
-            $softoneLogin->login();
-            $categories = $categoryService->getCategories();
-            array_multisort(array_column($categories, "priority"), $categories);
-            $popular = $productService->getCategoryItems(1022, $session->get("authID"));
-            $loggedUser = ($session->get("anosiaUser")) ?: null;
             $form = $this->createForm(UserRegistrationType::class);
             $form->handleRequest($request);
             if ($form->isSubmitted() && $form->isValid()) {
-                $userAccountService->createUser($form, $session->get("authID"));
+                $userAccountService->createUser($form, $this->session->get("authID"));
             }
 
             return $this->render('user/register.html.twig', [
-                'categories' => $categories,
-                'popular' => $popular,
-                'loggedUser' => $loggedUser,
+                'categories' => $this->categories,
+                'popular' => $this->popular,
+                'featured' => $this->featured,
+                'loggedUser' => $this->loggedUser,
                 'form' => $form->createView(),
             ]);
         } catch (\Exception $e) {
-            $logger->error(__METHOD__ . ' -> {message}', ['message' => $e->getMessage()]);
+            $this->logger->error(__METHOD__ . ' -> {message}', ['message' => $e->getMessage()]);
             throw $e;
         }
     }

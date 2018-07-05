@@ -61,11 +61,11 @@
 
                             <div class="col-sm-4">
                                 <div class="menu-product-list">
-                                    {% for pr in popular|slice(0, 4) %}
+                                    {% for pr in featured|slice(0, 4) %}
                                         <div class="media">
-                                            <div class="media-left"><a href="#"><img
+                                            <div class="media-left"><a href="{{ path('product_view', {'id':pr.id}) }}"><img
                                                             class="media-object"
-                                                            src="{{ asset('images/product-1.jpg') }}"
+                                                            src="{{ asset(pr.imageUrl) }}"
                                                             alt="{{ pr.name }}"></a>
                                             </div>
                                             <div class="media-body">
@@ -103,32 +103,6 @@
                         </div>
                     </div>
                 </div>
-            </li>
-            <li class="dropdown">
-                <a href="#" class="dropdown-toggle" data-toggle="dropdown">
-                    <i class="fa fa-female"></i>Γυναικα</a>
-                <ul class="dropdown-menu" role="menu">
-                    {% for ctg in categories %}
-                        {% if ctg.id == 1004 %}
-                            {% for subctg in ctg.children %}
-                                <li><a href="{{ path('products_list', {'id':subctg.id}) }}">{{ subctg.name }}</a></li>
-                            {% endfor %}
-                        {% endif %}
-                    {% endfor %}
-                </ul>
-            </li>
-            <li class="dropdown">
-                <a href="#" class="dropdown-toggle" data-toggle="dropdown"><i
-                            class="fa fa-male"></i>Ανδρας</a>
-                <ul class="dropdown-menu" role="menu">
-                    {% for ctg in categories %}
-                        {% if ctg.id == 1003 %}
-                            {% for subctg in ctg.children %}
-                                <li><a href="{{ path('products_list', {'id':subctg.id}) }}">{{ subctg.name }}</a></li>
-                            {% endfor %}
-                        {% endif %}
-                    {% endfor %}
-                </ul>
             </li>
             <li class=""><a href="{{ path('blog_list') }}"><i class="fa fa-pencil"></i>Blog</a></li>
 
