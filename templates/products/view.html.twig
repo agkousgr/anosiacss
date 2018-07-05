@@ -63,8 +63,8 @@
 
                                 <div class="product-id">SKU : <span>{{ pr.mainBarcode }}</span>
                                 </div>
-                                <div class="product-price">{{ pr.webPrice }}€
-                                    <del>{{ pr.retailPrice }}€</del>
+                                <div class="product-price">{{ pr.webPrice|number_format(2, ',', '.') }}€
+                                    <del>{{ pr.retailPrice|number_format(2, ',', '.') }}€</del>
                                     {% if pr.discount %}
                                         <div class="discount">-{{ pr.discount }}%</div>
                                     {% endif %}

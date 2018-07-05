@@ -27,8 +27,6 @@ product_quick_view:
 cart_view:
     path: /cart
     controller: App\Controller\CartController::viewCart
-    requirements:
-        id: \d+
 
 add_to_cart:
     path: /add_to_cart/{id}/{quantity}
@@ -47,6 +45,17 @@ load_top_cart:
     methods: [GET,POST]
     options:
         expose: true
+
+delete_cart_item:
+    path: /delete-cart-item/{id}
+    controller: App\Controller\CartController::deleteCartItem
+    requirements:
+        id: \d+
+
+# Orders Checkout
+checkout:
+    path: /checkout
+    controller: App\Controller\CheckoutController::checkout
 
 # Wishlist
 add_to_wishlist:

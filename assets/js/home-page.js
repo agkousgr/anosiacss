@@ -9,7 +9,7 @@ $('.add-to-cart').on('click', function () {
 // product view add to cart
 $('.add-to-cart-view').on('click', function (e) {
     e.preventDefault();
-    alert($(this).data('id') + ' | ' + $('#add-quantity').val());
+    // alert($(this).data('id') + ' | ' + $('#add-quantity').val());
     $('#collapseCart').load(Routing.generate('add_to_cart', {'id': $(this).data('id'),'quantity': $('#add-quantity').val()}));
 });
 
@@ -24,6 +24,6 @@ $(document).ready(function () {
 // WISH LIST
 $('.add-to-wishlist').on('click', function () {
     e.preventDefault();
-    alert($(this).data('id'));
+    // alert($(this).data('id'));
     $('#collapseCart').load(Routing.generate('add_to_wishlist', {'id': $(this).data('id')}));
 });

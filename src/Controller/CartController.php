@@ -10,10 +10,9 @@ namespace App\Controller;
 
 
 use App\Entity\Cart;
-use App\Service\CartService;
-use App\Service\CategoryService;
-use App\Service\ProductService;
-use App\Service\SoftoneLogin;
+use App\Service\{
+    CartService, CategoryService, ProductService, SoftoneLogin
+};
 use Doctrine\ORM\EntityManagerInterface;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Request;
@@ -38,7 +37,7 @@ class CartController extends AbstractController
                 }
                 $cartIds = substr($cartIds, 0, -1);
             }
-            $cartItems = ($cartIds) ? $cart->getCartItems($cartIds) : '';
+            $cartItems = ($cartIds) ? $cart->getCartItems($cartIds, $cartArr) : '';
             $popular = $productService->getCategoryItems(1022, $session->get("authID"));
             $loggedUser = (null !== $session->get("anosiaUser")) ?: null;
 
@@ -66,7 +65,7 @@ class CartController extends AbstractController
                     $cart->setQuantity($quantity);
                     $cart->setProductId($id);
                     $cart->setSessionId($session->getId());
-                    $date = new \DateTime("now");
+//                    $date = new \DateTime("now");
 //                $cart->setCreatedAt($date);
 //                $cart->setUpdatedAt($date);
                     if (null !== $session->get('username')) {
@@ -105,9 +104,21 @@ class CartController extends AbstractController
             $cartIds = substr($cartIds, 0, -1);
         }
 
-        $cartItems = ($cartIds) ? $cart->getCartItems($cartIds) : '';
+        $cartItems = ($cartIds) ? $cart->getCartItems($cartIds, $cartArr) : '';
         return ($this->render('partials/top_cart.html.twig', [
             'cartItems' => $cartItems
         ]));
+    }
+
+    public function deleteCartItem(EntityManagerInterface $em, int $id)
+    {
+        try {
+            $cartItem = $em->getRepository(Cart::class)->find($id);
+            $em->remove($cartItem);
+            $em->flush();
+            return $this->redirectToRoute('cart_view');
+        } catch (\Exception $e) {
+            throw $e;
+        }
     }
 }

@@ -1,11 +1,11 @@
 {% extends 'layout.html.twig' %}
 
-{% block bodyId %}category{% endblock %}
-{% block title %}Login{% endblock %}
+{% block bodyId %}cart{% endblock %}
+{% block title %} | Καλάθι{% endblock %}
 {% block slider %}{% endblock %}
 {% block stylesheets %}
     {{ parent() }}
-    <link href="{{ asset('build/css/orders.css') }}" rel="stylesheet" />
+    <link href="{{ asset('build/css/orders.css') }}" rel="stylesheet"/>
 {% endblock %}
 {% block breadcrumb %}
 
@@ -38,89 +38,104 @@
                             <hr class="separator">
 
                             <div class="cart-overview js-cart"
-                                 data-refresh-url="//demo.templatetrip.com/Prestashop/PRS06/PRS176_gym/en/cart?ajax=1&amp;action=refresh">
-                                <ul class="cart-items">
-                                    {% for pr in cartItems %}
-                                    <li class="cart-item">
-                                        <div class="product-line-grid">
-                                            <!--  product left content: image-->
-                                            <div class="product-line-grid-left col-md-3 col-xs-4">
-                                                <span class="product-image media-middle">
-                                                    <img src="{{ pr.imageUrl }}" alt="voluptate velit esse">
-                                                </span>
-                                            </div>
-
-                                            <!--  product left body: description -->
-                                            <div class="product-line-grid-body col-md-4 col-xs-8">
-                                                <div class="product-line-info">
-                                                    <a class="label"
-                                                       href="{{ path('product_view', {'id':pr.id}) }}"
-                                                       data-id_customization="0">{{ pr.name }}</a>
-                                                </div>
-
-                                                <div class="product-line-info product-price h5 has-discount">
-                                                    <div class="product-discount">
-                                                        <span class="regular-price">$34.80</span>
-                                                        <span class="discount discount-amount">
-                                                            -$1.00
+                                 data-refresh-url="">
+                                {% if cartItems|length > 0 %}
+                                    <ul class="cart-items">
+                                        {% set cartSubTotal = 0 %}
+                                        {% set cartTotal = 0 %}
+                                        {% set cartShippingCost = 0 %}
+                                        {% set totalCartItems = 0 %}
+                                        {% for pr in cartItems %}
+                                            <li class="cart-item">
+                                                <div class="product-line-grid">
+                                                    <!--  product left content: image-->
+                                                    <div class="product-line-grid-left col-md-3 col-xs-4">
+                                                        <span class="product-image media-middle">
+                                                            <img src="{{ pr.imageUrl }}" alt="voluptate velit esse">
                                                         </span>
                                                     </div>
-                                                    <div class="current-price">
-                                                        <span class="price">$33.80</span>
+
+                                                    <!--  product left body: description -->
+                                                    <div class="product-line-grid-body col-md-4 col-xs-8">
+                                                        <div class="product-line-info">
+                                                            <a class=""
+                                                               href="{{ path('product_view', {'id':pr.id}) }}">{{ pr.name }}</a>
+                                                        </div>
+
+                                                        <div class="product-line-info product-price h5 has-discount">
+                                                            {% if pr.discount > 0 %}
+                                                                <div class="product-discount">
+                                                                    <span class="regular-price">{{ pr.retailPrice|number_format(2, ',', '.') }}
+                                                                        €</span>
+                                                                    <span class="discount discount-amount">-{{ pr.discount }}
+                                                                        %</span>
+                                                                </div>
+                                                            {% endif %}
+                                                            <div class="current-price">
+                                                                <span class="price">{{ pr.webPrice|number_format(2, ',', '.') }}
+                                                                    €</span>
+                                                            </div>
+                                                        </div>
+
+                                                        {#<br>#}
+
+                                                        {#<div class="product-line-info">#}
+                                                        {#<span class="label">Dimension:</span>#}
+                                                        {#<span class="value">40x60cm</span>#}
+                                                        {#</div>#}
+
                                                     </div>
-                                                </div>
 
-                                                <br>
-
-                                                <div class="product-line-info">
-                                                    <span class="label">Dimension:</span>
-                                                    <span class="value">40x60cm</span>
-                                                </div>
-
-                                            </div>
-
-                                            <!--  product left body: description -->
-                                            <div class="product-line-grid-right product-line-actions col-md-5 col-xs-12">
-                                                <div class="row">
-                                                    <div class="col-xs-4 hidden-md-up"></div>
-                                                    <div class="col-md-10 col-xs-6">
+                                                    <!--  product left body: description -->
+                                                    <div class="product-line-grid-right product-line-actions col-md-5 col-xs-12">
                                                         <div class="row">
-                                                            <div class="col-md-6 col-xs-6">
-                                                                <div class="form-group">
-                                                                    <input id="add-quantity" class="form-control stepper" type="number"
-                                                                           value="1" min="1" max="{{ pr.remainNotReserved }}"/>
+                                                            <div class="col-xs-4 hidden-md-up"></div>
+                                                            <div class="col-md-10 col-xs-6">
+                                                                <div class="row">
+                                                                    <div class="col-md-8 col-xs-6">
+                                                                        <div class="form-group">
+                                                                            <input id="add-quantity"
+                                                                                   class="form-control stepper"
+                                                                                   type="number"
+                                                                                   value="{{ pr.quantity }}" min="1"
+                                                                                   max="{{ pr.remainNotReserved }}"/>
+                                                                        </div>
+                                                                    </div>
+                                                                    <div class="col-md-4 col-xs-2 price">
+                                                                        <span class="product-price">
+                                                                            <strong>
+                                                                                {{ ((pr.webPrice|number_format(2, '.', ','))*pr.quantity)|number_format(2, ',', '.') }}€
+                                                                            </strong>
+                                                                        </span>
+                                                                    </div>
                                                                 </div>
                                                             </div>
-                                                            <div class="col-md-6 col-xs-2 price">
-                                                                <span class="product-price">
-                                                                    <strong>
-                                                                        $33.80
-                                                                    </strong>
-                                                                </span>
+                                                            <div class="col-md-2 col-xs-2 text-xsright">
+                                                                <div class="cart-line-product-actions">
+                                                                    <a class="remove-from-cart" rel="nofollow"
+                                                                       href="{{ path('delete_cart_item', {'id':pr.cartId}) }}">
+                                                                        <i class="fa fa-trash-o"></i>
+                                                                    </a>
+                                                                </div>
                                                             </div>
                                                         </div>
                                                     </div>
-                                                    <div class="col-md-2 col-xs-2 text-xsright">
-                                                        <div class="cart-line-product-actions">
-                                                            <a class="remove-from-cart" rel="nofollow"
-                                                               href="https://demo.templatetrip.com/Prestashop/PRS06/PRS176_gym/en/cart?delete=1&amp;id_product=5&amp;id_product_attribute=19&amp;token=b1684ee1655e468f303729bd537e4eb5"
-                                                               data-link-action="delete-from-cart" data-id-product="5"
-                                                               data-id-product-attribute="19" data-id-customization="">
-                                                                <i class="material-icons float-xs-left">delete</i>
-                                                            </a>
-                                                        </div>
-                                                    </div>
+                                                    <div class="clearfix"></div>
                                                 </div>
-                                            </div>
-                                            <div class="clearfix"></div>
-                                        </div>
-                                    </li>
-                                    {% endfor %}
-                                </ul>
+                                            </li>
+                                            {% set cartSubTotal = cartSubTotal + (pr.webPrice|number_format(2, '.', ','))*pr.quantity %}
+                                            {% set totalCartItems = totalCartItems + 1*pr.quantity %}
+                                        {% endfor %}
+
+                                    </ul>
+                                {% else %}
+                                    <div>Δεν υπάρχουν προϊόντα στο καλάθι σας!</div>
+                                {% endif %}
                             </div>
                         </div>
-                        <a class="label" href="https://demo.templatetrip.com/Prestashop/PRS06/PRS176_gym/en/">
-                            <i class="material-icons">chevron_left</i>Continue shopping
+                        <a style="font-size:16px;" class=""
+                           href="https://demo.templatetrip.com/Prestashop/PRS06/PRS176_gym/en/">
+                            <i class="fa fa-chevron-left"></i> Συνεχίστε τα ψώνια σας
                         </a>
                         <!-- shipping informations -->
                     </div>
@@ -132,15 +147,20 @@
                                 <div class="card-block">
                                     <div class="cart-summary-line" id="cart-subtotal-products">
                                         <span class="label js-subtotal">
-                                            1 item
+                                            {{ totalCartItems }}
+                                            {% if totalCartItems == 1 %}
+                                                προϊόν
+                                            {% else %}
+                                                προϊόντα
+                                            {% endif %}
                                         </span>
-                                        <span class="value">$33.80</span>
+                                        <span class="value">{{ cartSubTotal|number_format(2, ',', '.') }}€</span>
                                     </div>
                                     <div class="cart-summary-line" id="cart-subtotal-shipping">
                                         <span class="label">
-                                            Shipping
+                                            Μεταφορικά
                                         </span>
-                                        <span class="value">Free</span>
+                                        <span class="value">Δωρεάν</span>
                                         <div>
                                             <small class="value"></small>
                                         </div>
@@ -148,9 +168,10 @@
                                 </div>
                                 <hr class="separator">
                                 <div class="card-block">
+                                    {% set cartTotal = cartSubTotal + cartShippingCost %}
                                     <div class="cart-summary-line cart-total">
-                                        <span class="label">Total (tax incl.)</span>
-                                        <span class="value">$33.80</span>
+                                        <span class="label">Σύνολο (με ΦΠΑ)</span>
+                                        <span class="value">{{ cartTotal|number_format(2, ',', '.') }}€</span>
                                     </div>
 
                                     <div class="cart-summary-line">
@@ -158,12 +179,12 @@
                                         <small class="value"></small>
                                     </div>
                                 </div>
-                                <hr class="separator">
+                                {#<hr class="separator">#}
                             </div>
                             <div class="checkout cart-detailed-actions card-block">
                                 <div class="text-sm-center">
-                                    <a href="https://demo.templatetrip.com/Prestashop/PRS06/PRS176_gym/en/cart?action=show&amp;checkout"
-                                       class="btn btn-primary">Proceed to checkout</a>
+                                    <a href="{{ path('checkout') }}"
+                                       class="btn btn-primary">Ολοκλήρωση</a>
                                 </div>
                             </div>
                         </div>
