@@ -2,38 +2,38 @@
     <div class="container">
         <div class="pre-header-wrap clearfix">
             {#<div class="pre-header-left">#}
-                {#<ul>#}
-                    {#<li>#}
-                        {#<select class="c-select">#}
-                            {#<option>USD</option>#}
-                            {#<option>INR</option>#}
-                            {#<option>GBP</option>#}
-                            {#<option>EURO</option>#}
-                        {#</select>#}
-                    {#</li>#}
-                    {#<li>#}
-                        {#<select class="c-select">#}
-                            {#<option>ENG</option>#}
-                            {#<option>ESP</option>#}
-                            {#<option>RUS</option>#}
-                            {#<option>FR</option>#}
-                        {#</select>#}
-                    {#</li>#}
-                {#</ul>#}
+            {#<ul>#}
+            {#<li>#}
+            {#<select class="c-select">#}
+            {#<option>USD</option>#}
+            {#<option>INR</option>#}
+            {#<option>GBP</option>#}
+            {#<option>EURO</option>#}
+            {#</select>#}
+            {#</li>#}
+            {#<li>#}
+            {#<select class="c-select">#}
+            {#<option>ENG</option>#}
+            {#<option>ESP</option>#}
+            {#<option>RUS</option>#}
+            {#<option>FR</option>#}
+            {#</select>#}
+            {#</li>#}
+            {#</ul>#}
             {#</div>#}
 
 
             {#<div class="news-ticker visible-lg visible-md">#}
-                {#<div class="ticker">#}
-                    {#<div class="label-back">LATEST</div>#}
-                    {#<div id="carousel-example-generic" class="carousel slide" data-ride="carousel">#}
-                        {#<!-- Wrapper for slides -->#}
-                        {#<div class="carousel-inner" role="listbox">#}
-                            {#<div class="item active">Congue admodum dissentiet</div>#}
-                            {#<div class="item">Congue admodum dissentiet</div>#}
-                        {#</div>#}
-                    {#</div>#}
-                {#</div>#}
+            {#<div class="ticker">#}
+            {#<div class="label-back">LATEST</div>#}
+            {#<div id="carousel-example-generic" class="carousel slide" data-ride="carousel">#}
+            {#<!-- Wrapper for slides -->#}
+            {#<div class="carousel-inner" role="listbox">#}
+            {#<div class="item active">Congue admodum dissentiet</div>#}
+            {#<div class="item">Congue admodum dissentiet</div>#}
+            {#</div>#}
+            {#</div>#}
+            {#</div>#}
             {#</div>#}
 
 
@@ -41,28 +41,37 @@
                 <ul>
                     <li>
                         {% if loggedUser == null %}
-                            {% set accountUrl = 'user_registration' %}
+                            {#{% set accountUrl = '#' %}#}
+                            {#{% set sideClass = 'toogle-sidebar' %}#}
+                            <a href="#" class="account-link toggle-sidebar" style="margin-top: 8px;" title=" Ο λογαριασμός μου">
+                                <span class="link-text" style="visibility:hidden">.</span>
+                            </a>
                         {% else %}
-                            {% set accountUrl = 'user_account' %}
+                            {#{% set accountUrl = 'user_account' %}#}
+                            {#{% set sideClass = '' %}#}
+                            <a href="{{ path('user_account') }}" class="account-link"
+                               style="margin-top: 8px;" title=" Ο λογαριασμός μου">
+                                <span class="link-text" style="visibility:hidden">.</span>
+                            </a>
                         {% endif %}
-                        <a href="{{ path(accountUrl) }}" class="account-link" style="margin-top: 8px; title="Ο λογαριασμός μου">
-                            <span class="link-text" style="visibility:hidden">.</span>
-                        </a>
                     </li>
                     <li>
-                        <a href="#" class="wishlist-link" style="margin-top: 10px; title="Wishlist">
-                            <span class="link-text" style="visibility:hidden">.</span>
-                            <span class="count-baloon">100</span>
+                        <a href="#" class="wishlist-link" style="margin-top: 10px; title=" Wishlist">
+                        <span class="link-text" style="visibility:hidden">.</span>
+                        <span id="wishlist-total-items" class="count-baloon">100</span>
                         </a>
                     </li>
-                    <li>
+                    <li id="top-cart">
                         <a data-toggle="collapse" href="#collapseCart" aria-expanded="false"
                            aria-controls="collapseCart" style="margin-top: 8px;" class="cart-link" title="Καλάθι">
                             <span class="link-text" style="visibility:hidden">.</span>
-                            <span class="count-baloon">
-                                {#{% if cartItems|length > 0 %}#}
-                                    {#{{ cartItems|length }}#}
-                                {#{% endif %}#}
+                            {% if (totalCartItems > 0) %}
+                                {% set display = 'inline' %}
+                            {% else %}
+                                {% set display = 'none' %}
+                            {% endif %}
+                            <span id="cart-total-items" class="count-baloon" style="display:{{ display }};">
+                                {{ totalCartItems }}
                             </span>
                         </a>
                     </li>

@@ -29,26 +29,29 @@ cart_view:
     controller: App\Controller\CartController::viewCart
 
 add_to_cart:
-    path: /add_to_cart/{id}/{quantity}
-    controller: App\Controller\CartController::addToCart
-    defaults: { quantity: 1 }
-    methods: [GET,POST]
+    path: /add_to_cart
+    controller: App\Controller\AjaxCartController::addToCart
+    methods: [POST]
     options:
         expose: true
-    requirements:
-        id: \d+
-        quantity: \d+
 
 load_top_cart:
     path: /top-cart
-    controller: App\Controller\CartController::loadTopCart
+    controller: App\Controller\AjaxCartController::loadTopCart
+    methods: [GET,POST]
+    options:
+        expose: true
+
+delete_top_cart_item:
+    path: /delete-top-cart-item/
+    controller: App\Controller\AjaxCartController::deleteTopCartItem
     methods: [GET,POST]
     options:
         expose: true
 
 delete_cart_item:
     path: /delete-cart-item/{id}
-    controller: App\Controller\CartController::deleteCartItem
+    controller: App\Controller\AjaxCartController::deleteCartItem
     requirements:
         id: \d+
 
@@ -83,3 +86,11 @@ user_account:
 user_registration:
     path: /user-registration
     controller: App\Controller\UserAccountController::register
+
+get_users:
+    path: /get-users
+    controller: App\Controller\UserAccountController::getUsers
+
+login:
+    path: /login
+    controller: App\Controller\UserAccountController::login

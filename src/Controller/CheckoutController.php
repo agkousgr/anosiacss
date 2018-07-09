@@ -8,40 +8,29 @@
 
 namespace App\Controller;
 
-use App\Entity\Cart;
-use App\Service\{
-    CartService, CategoryService, ProductService, SoftoneLogin
-};
+use App\Form\Type\UserRegistrationType;
+use App\Service\UserAccountService;
 use Doctrine\ORM\EntityManagerInterface;
-use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
-use Symfony\Component\HttpFoundation\Session\SessionInterface;
+use Symfony\Component\HttpFoundation\Request;
 
-class CheckoutController extends AbstractController
+class CheckoutController extends MainController
 {
-    public function checkout(SoftoneLogin $softoneLogin, CategoryService $categoryService, SessionInterface $session, CartService $cart, EntityManagerInterface $em, ProductService $productService)
+    public function checkout(Request $request, UserAccountService $userAccountService, EntityManagerInterface $em)
     {
-        $softoneLogin->login();
-        $categories = $categoryService->getCategories();
-        $cartIds = '';
-        if (null === $session->get('username')) {
-            $cartArr = $em->getRepository(Cart::class)->getCartBySession($session->getId());
-        } else {
-            $cartArr = $em->getRepository(Cart::class)->getCartBySession($session->getId());
+        $registerForm = $this->createForm(UserRegistrationType::class);
+
+        $registerForm->handleRequest($request);
+        if ($registerForm->isSubmitted() && $registerForm->isValid()) {
+            $newUser = $userAccountService->createUser($registerForm->getData());
         }
-        if ($cartArr) {
-            foreach ($cartArr as $key => $val) {
-                $cartIds .= $val->getProductId() . ',';
-            }
-            $cartIds = substr($cartIds, 0, -1);
-        }
-        $cartItems = ($cartIds) ? $cart->getCartItems($cartIds, $cartArr) : '';
-        $popular = $productService->getCategoryItems(1022, $session->get("authID"));
-        $loggedUser = (null !== $session->get("anosiaUser")) ?: null;
         return ($this->render('orders/checkout.html.twig', [
-            'categories' => $categories,
-            'cartItems' => $cartItems,
-            'popular' => $popular,
-            'loggedUser' => $loggedUser
+            'categories' => $this->categories,
+            'popular' => $this->popular,
+            'featured' => $this->featured,
+            'cartItems' => $this->cartItems,
+            'totalCartItems' => $this->totalCartItems,
+            'loggedUser' => $this->loggedUser,
+            'registerForm' => $registerForm->createView()
         ]));
     }
 }

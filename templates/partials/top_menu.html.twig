@@ -80,7 +80,7 @@
                                                     <del>{{ pr.retailPrice }}€</del>
                                                     {{ pr.webPrice }}€
                                                 </div>
-                                                <a href="#" class="details-btn">ΠΕΡΙΣΣΟΤΕΡΑ</a>
+                                                <a href="{{ path('product_view', {'id':pr.id}) }}" class="details-btn">ΠΕΡΙΣΣΟΤΕΡΑ</a>
                                             </div>
                                         </div>
                                     {% endfor %}

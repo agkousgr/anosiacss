@@ -12,9 +12,11 @@ class DefaultController extends MainController
 //        $latest = $pr->getItems(-1, $session->get("authID"));
         return $this->render('layout.html.twig', [
             'categories' => $this->categories,
-            'featured' => $this->featured,
             'popular' => $this->popular,
-            'loggedUser' => $this->loggedUser
+            'featured' => $this->featured,
+            'cartItems' => $this->cartItems,
+            'totalCartItems' => $this->totalCartItems,
+            'loggedUser' => $this->loggedUser,
 //            'latest' => $latest
         ]);
     }

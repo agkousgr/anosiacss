@@ -25,6 +25,11 @@
         {% endif %}
         <div class="section" style="background-image:url({{ asset('images/bg-5.jpg') }});">
             <div class="container">
+                {% for message in app.flashes('notice') %}
+                    <div class="flash-notice">
+                        {{ message }}
+                    </div>
+                {% endfor %}
                 <div class="row reverse-row">
                     <div class="col-md-9 column">
                         <div class="product-list">
@@ -93,7 +98,7 @@
                                                         </div>
                                                     </div>
                                                     {% if pr.outOfStock == "false" %}
-                                                        <button type="button" class="add-to-cart" data-id="{{ pr.id }}">
+                                                        <button type="button" class="add-to-cart" data-id="{{ pr.id }}" data-name="{{ pr.name }}">
                                                             <i class="fa fa-cart-plus"></i><span>καλαθι</span>
                                                         </button>
                                                     {% endif %}

@@ -19458,7 +19458,7 @@ body.modal-open {
     padding: 5px 0 5px 64px;
     background-repeat: no-repeat;
     background-position: left;
-    font-size: 24px;
+    font-size: 18px;
     color: #009836;
     line-height: 22px;
     font-family: pf_dintext_proregular
@@ -22804,7 +22804,7 @@ h3.resp-accordion:first-child {
     margin: 0 0 10px;
     padding: 0;
     font-size: 30px;
-    text-transform: uppercase
+    /*text-transform: uppercase*/
 }
 
 .single-product .rating {
@@ -24341,4 +24341,21 @@ ul.product_list .availability span.out-of-stock {
 }
 .bxslider {
     list-style: none;
+}
+.flash-notice {
+    padding: 20px;
+    font-size: 18px;
+}
+.flash-notice.success {
+    border: 1px #89ac77 solid;
+    background: #d2ffbb;
+    margin-bottom: 40px;
+}
+.flash-notice.warning {
+    border: 1px #f99 solid;
+    background: #fbb;
+}
+.general-message {
+    padding:50px 30px;
+    font-size: 18px;
 }

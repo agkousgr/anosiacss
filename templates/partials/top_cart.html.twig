@@ -2,7 +2,9 @@
     {% if cartItems|length > 0 %}
         <div class="cart-list">
             {% set cartSubTotal = 0 %}
+            {% set counter = 0 %}
             {% for pr in cartItems %}
+                {% if (counter < 3) %}
                 <div class="media">
                     <div class="media-left"><a href="#">
                             <img class="media-object" src="{{ pr.imageUrl }}" alt="..."></a>
@@ -23,22 +25,31 @@
                         {% endif %}
                         <div class="clearfix">
                             <div class="qty-box">
-                                <input class="form-control stepper" type="number"
-                                       value="{{ pr.quantity }}" min="1" max="{{ maxItems }}"/>
+                                x {{ pr.quantity }}
+                                {#<input class="form-control stepper" type="number"#}
+                                       {#value="{{ pr.quantity }}" min="1" max="{{ maxItems }}"/>#}
                             </div>
-                            <div class="cart-item-price">{{ pr.webPrice|number_format(2, ',', '.') }}
-                                €
+                            <div class="cart-item-price">{{ pr.webPrice|number_format(2, ',', '.') }}€
                             </div>
                         </div>
-                        <a href="{{ path('delete_cart_item', {'id':pr.cartId}) }}"
+                        <a href=""
+                           data-id="{{ pr.cartId }}"
+                           data-name="{{ pr.name }}"
                            class="remove-item">
                             <i class="fa fa-times"></i>
                         </a>
                     </div>
                 </div>
-                {% set cartSubTotal = cartSubTotal + pr.webPrice*pr.quantity %}
+                {% endif %}
+                {% set counter = counter + 1 %}
+                {% set cartSubTotal = cartSubTotal + (pr.webPrice|number_format(2, '.', ','))*pr.quantity %}
             {% endfor %}
         </div>
+        {% if counter > 3 %}
+            <div class="cart-total clearfix">
+                Για να δείτε όλα τα προϊόντα του καλαθιού σας κάντε κλικ στο "ΚΑΛΑΘΙ"
+            </div>
+        {% endif %}
         <div class="cart-total clearfix">
             Σύνολο: <span>{{ cartSubTotal|number_format(2, ',', '.') }}€</span>
         </div>
@@ -48,7 +59,7 @@
             </div>
         </div>
     {% else %}
-        <div class="media">
+        <div class="media" style="padding: 20px 10px 10px 20px; font-size: 16px;">
             Δεν υπάρχουν προϊόντα στο καλάθι σας
         </div>
     {% endif %}

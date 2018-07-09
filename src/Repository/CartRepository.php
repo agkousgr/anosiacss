@@ -56,27 +56,46 @@ class CartRepository extends EntityRepository
         return $qb->getQuery()->getSingleScalarResult();
     }
 
-//    /**
-//     * @param $sessionId
-//     * @param null $username
-//     * @param $prId
-//     *
-//     * @return Cart
-//     */
-//    public function getItem($sessionId, $username = null, $prId)
-//    {
-//        $qb = $this->getEntityManager()->createQueryBuilder()
-//            ->select('c')
-//            ->from('App:Cart', 'c');
-//        if (null !== $username) {
-//            $qb->andWhere('c.username=:username')
-//                ->andWhere('c.product_id=:prId')
-//                ->setParameters(array('username' => $username, 'prId' => $prId));
-//        } else {
-//            $qb->andWhere('c.session_id=:sessionId')
-//                ->andWhere('c.product_id=:prId')
-//                ->setParameters(array('sessionId' => $sessionId, 'prId' => $prId));
-//        }
-//        return $qb->getQuery()->getResult();
-//    }
+    /**
+     * @param $sessionId
+     * @param null $username
+     * @return mixed
+     * @throws \Doctrine\ORM\NonUniqueResultException
+     */
+    public function countCartItems($sessionId, $username = null)
+    {
+        $qb = $this->createQueryBuilder('c');
+        if (null !== $username) {
+            $qb->select('COUNT(c.product_id)')
+                ->where('c.username=:username')
+                ->setParameter('username', $username);
+        } else {
+            $qb->where('c.session_id=:sessionId')
+                ->setParameter('sessionId', $sessionId)
+                ->select('COUNT(c.product_id)');
+        }
+        return $qb->getQuery()->getSingleScalarResult();
+    }
+
+    /**
+     * @param $sessionId
+     * @param null $username
+     * @param $prId
+     *
+     * @return Cart
+     */
+    public function getItem($sessionId, $username = null, $prId)
+    {
+        $qb = $this->getEntityManager()->createQueryBuilder('c');
+        if (null !== $username) {
+            $qb->andWhere('c.username=:username')
+                ->andWhere('c.product_id=:prId')
+                ->setParameters(array('username' => $username, 'prId' => $prId));
+        } else {
+            $qb->andWhere('c.session_id=:sessionId')
+                ->andWhere('c.product_id=:prId')
+                ->setParameters(array('sessionId' => $sessionId, 'prId' => $prId));
+        }
+        return $qb->getQuery()->getResult();
+    }
 }

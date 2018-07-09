@@ -22,12 +22,14 @@ class ProductController extends MainController
 //                10/*limit per page*/
 //            );
             return $this->render('products/list.html.twig', [
-                'categories' => $this->categories,
-                'ctgInfo' => $ctgInfo,
                 'products' => $products,
+                'ctgInfo' => $ctgInfo,
+                'categories' => $this->categories,
                 'popular' => $this->popular,
                 'featured' => $this->featured,
-                'loggedUser' => $this->loggedUser
+                'cartItems' => $this->cartItems,
+                'totalCartItems' => $this->totalCartItems,
+                'loggedUser' => $this->loggedUser,
 //                'pagination' => $pagination
             ]);
         } catch (\Exception $e) {
@@ -41,11 +43,13 @@ class ProductController extends MainController
         try {
             $product = $this->productService->getItems($id, $this->session->get("authID"));
             return $this->render('products/view.html.twig', [
-                'categories' => $this->categories,
                 'pr' => $product,
+                'categories' => $this->categories,
                 'popular' => $this->popular,
                 'featured' => $this->featured,
-                'loggedUser' => $this->loggedUser
+                'cartItems' => $this->cartItems,
+                'totalCartItems' => $this->totalCartItems,
+                'loggedUser' => $this->loggedUser,
             ]);
         } catch (\Exception $e) {
             $this->logger->error(__METHOD__ . ' -> {message}', ['message' => $e->getMessage()]);

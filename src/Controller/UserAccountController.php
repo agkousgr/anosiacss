@@ -8,18 +8,12 @@
 
 namespace App\Controller;
 
-
+use App\Service\UserAccountService;
 use App\Form\Type\UserRegistrationType;
-use App\Service\{
-    CategoryService, ProductService, UserAccountService, SoftoneLogin
-};
 use Symfony\Component\HttpFoundation\Request;
-use Psr\Log\LoggerInterface;
-use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\Form\Extension\Core\Type\{
     EmailType, PasswordType
 };
-use Symfony\Component\HttpFoundation\Session\SessionInterface;
 
 class UserAccountController extends MainController
 {
@@ -40,6 +34,7 @@ class UserAccountController extends MainController
             if ($formSignUp->isSubmitted() && $formSignUp->isValid()) {
                 $data = $formSignUp->getData();
                 $userExists = $userAccountService->userAlreadyExists($data["username"], $this->session->get("authID"));
+                // add flash message
                 dump($data["username"]);
                 if (null === $userExists) {
                     return $this->redirectToRoute('user_registration');
@@ -49,8 +44,11 @@ class UserAccountController extends MainController
                     $form->handleRequest($request);
                     return $this->render('user/register.html.twig', [
                         'categories' => $this->categories,
+                        'popular' => $this->popular,
                         'featured' => $this->featured,
-                        'username' => $data["username"],
+                        'cartItems' => $this->cartItems,
+                        'totalCartItems' => $this->totalCartItems,
+                        'loggedUser' => $this->loggedUser,
                         'form' => $form->createView()
                     ]);
                 }
@@ -61,7 +59,11 @@ class UserAccountController extends MainController
 
             return $this->render('user/index.html.twig', [
                 'categories' => $this->categories,
+                'popular' => $this->popular,
                 'featured' => $this->featured,
+                'cartItems' => $this->cartItems,
+                'totalCartItems' => $this->totalCartItems,
+                'loggedUser' => $this->loggedUser,
                 'formSignUp' => $formSignUp->createView(),
                 'formSignIn' => $formSignIn->createView(),
             ]);
@@ -75,10 +77,63 @@ class UserAccountController extends MainController
     {
         try {
             $form = $this->createForm(UserRegistrationType::class);
+
             $form->handleRequest($request);
             if ($form->isSubmitted() && $form->isValid()) {
-                $userAccountService->createUser($form, $this->session->get("authID"));
+                $newUser = $userAccountService->createUser($form->getData());
+                dump($newUser);
             }
+
+            return $this->render('user/register.html.twig', [
+                'categories' => $this->categories,
+                'popular' => $this->popular,
+                'featured' => $this->featured,
+                'cartItems' => $this->cartItems,
+                'totalCartItems' => $this->totalCartItems,
+                'loggedUser' => $this->loggedUser,
+                'form' => $form->createView(),
+            ]);
+        } catch (\Exception $e) {
+            $this->logger->error(__METHOD__ . ' -> {message}', ['message' => $e->getMessage()]);
+            throw $e;
+        }
+    }
+
+    public function login(Request $request, UserAccountService $userAccountService)
+    {
+        dump($request);
+        $username = $request->request->get('username');
+        $password = $request->request->get('password');
+
+        $userLoggedIn = $userAccountService->login($username, $password);
+        if ($userLoggedIn) {
+            $this->addFlash(
+                'notice',
+                'Συνδεθήκατε με επιτυχία'
+            );
+        } else {
+            $this->addFlash(
+                'notice',
+                'Παρουσιάστηκε σφάλμα κατά την είσοδο. Παρακαλώ προσπαθήστε ξανά!'
+            );
+        }
+
+        return ($this->render('orders/cart.html.twig', [
+            'categories' => $this->categories,
+            'popular' => $this->popular,
+            'featured' => $this->featured,
+            'cartItems' => $this->cartItems,
+            'totalCartItems' => $this->totalCartItems,
+            'loggedUser' => $this->loggedUser,
+        ]));
+
+    }
+
+    public function getUsers(UserAccountService $userAccountService)
+    {
+        try {
+            $users = $userAccountService->getUsers();
+//            die();
 
             return $this->render('user/register.html.twig', [
                 'categories' => $this->categories,
