@@ -24,17 +24,17 @@ class AjaxLoginController extends AbstractController
                 $password = $request->request->get('password');
 
                 if ($userAccountService->login($username, $password)) {
-                    if ($userAccountService->login($username, $password)) {
-                        $provider->loadUserByUsername($username);
-                        return $this->json([
-                            'success' => true,
-                        ]);
-                    } else {
-                        return $this->json([
-                            'success' => false,
-                            'errorMsg' => 'Ο κωδικός χρήστη είναι λανθασμένος. Παρακαλούμε δοκιμάστε ξανά'
-                        ]);
-                    }
+//                    if ($userAccountService->login($username, $password)) {
+//                        $provider->loadUserByUsername($username);
+//                        return $this->json([
+//                            'success' => true,
+//                        ]);
+//                    } else {
+//                        return $this->json([
+//                            'success' => false,
+//                            'errorMsg' => 'Ο κωδικός χρήστη είναι λανθασμένος. Παρακαλούμε δοκιμάστε ξανά'
+//                        ]);
+//                    }
                 } else {
                     return $this->json([
                         'success' => false,

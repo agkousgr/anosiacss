@@ -98,12 +98,12 @@ EOF;
 //        return 0;
         try {
             $result = $client->SendMessage(['Message' => $message]);
-            $userData = simplexml_load_string(str_replace("utf-16", "utf-8", $result->SendMessageResult));
-            dump($result);
-            if ((string)$userData->IsValid === 'false') {
+            $userXML = simplexml_load_string(str_replace("utf-16", "utf-8", $result->SendMessageResult));
+//            dump($result);
+            if ((string)$userXML->IsValid === 'false') {
                 return 0;
             } else {
-                return (int)$userData->ID;
+                return (int)$userXML->ID;
             }
         } catch (\SoapFault $sf) {
             echo $sf->faultstring;
@@ -122,6 +122,7 @@ EOF;
             'cost' => 12
         ];
         $password = password_hash($userData["password"], PASSWORD_BCRYPT, $options);
+        dump($password);
         $username = $userData["username"];
         $lastLogin = date('Y-m-d') . 'T' . date('H:i:s');
 
@@ -144,7 +145,7 @@ EOF;
         try {
             $result = $client->SendMessage(['Message' => $message]);
             $userData = simplexml_load_string(str_replace("utf-16", "utf-8", $result->SendMessageResult));
-            dump($result);
+//            dump($result);
             if ((string)$userData->ErrorCode === 'None') {
                 return true;
             } else {
@@ -183,7 +184,7 @@ EOF;
         try {
             $result = $client->SendMessage(['Message' => $message]);
             $newsletterData = simplexml_load_string(str_replace("utf-16", "utf-8", $result->SendMessageResult));
-            dump($result);
+//            dump($result);
             return ((string)$newsletterData->IsValid === 'true') ? true : false;
         } catch (\SoapFault $sf) {
             echo $sf->faultstring;
@@ -198,11 +199,13 @@ EOF;
     public function login($username, $password)
     {
         $client = new \SoapClient('http://caron.cloudsystems.gr/FOeshopWS/ForeignOffice.FOeshop.API.FOeshopSvc.svc?singleWsdl', ['trace' => true, 'exceptions' => true,]);
-
         $options = [
-            'cost' => 15
+            'cost' => 12
         ];
+
+        dump($password);
         $password = ($password === 'null') ? 'null' : password_hash($password, PASSWORD_BCRYPT, $options);
+        dump($password);
 
         $message = <<<EOF
 <?xml version="1.0" encoding="utf-16"?>
@@ -275,7 +278,7 @@ EOF;
             if ($userXML === false) {
                 return $userData;
             }
-            dump($result);
+//            dump($result);
             return $userData = $this->initializeUser($userXML->GetDataRows->GetUsersRow);
 //            if ((int)$userData->RowsCount === 0) {
 //                return false;

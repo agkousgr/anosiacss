@@ -84,7 +84,7 @@ class UserAccountController extends MainController
                 if ($this->isCsrfTokenValid('register', $submittedToken)) {
                     $username = $form->get('username')->getData();
                     $user = $userAccountService->getUser($username);
-                    dump($username, (string)$user["username"]);
+//                    dump($username, (string)$user["username"]);
                     if ($username === (string)$user["username"]) {
                         $this->addFlash(
                             'notice',
