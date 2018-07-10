@@ -11290,7 +11290,7 @@ html {
 
 body {
     font-family: 'pf_dintext_proregular', sans-serif;
-    font-size: 14px;
+    font-size: 16px;
     line-height: 1.42857143;
     font-weight: 300
 }
@@ -11735,7 +11735,7 @@ table {
 
 .page-header h1 {
     margin: 0;
-    font-size: 40px
+    font-size: 22px
 }
 
 address,
@@ -18945,7 +18945,7 @@ figure.effect-apollo:hover figcaption::before {
 
 .menu-block .sub-menu a {
     color: #171717;
-    font-size: 14px
+    font-size: 16px
 }
 
 .menu-block .sub-menu a:hover {
@@ -19509,7 +19509,8 @@ body.modal-open {
 }
 
 .search .textbox {
-    width: 75%;
+    width: 100%;
+    /*width: 75%;*/
     float: left;
     position: relative
 }
@@ -21128,7 +21129,8 @@ h3.resp-accordion {
 
 .product-img img {
     width: 100%;
-    height: auto
+    height: auto;
+    max-height: 263px;
 }
 
 .product-case .product-short-info {
@@ -24343,17 +24345,18 @@ ul.product_list .availability span.out-of-stock {
     list-style: none;
 }
 .flash-notice {
-    padding: 20px;
-    font-size: 18px;
-}
-.flash-notice.success {
-    border: 1px #89ac77 solid;
-    background: #d2ffbb;
+    padding:20px;
     margin-bottom: 40px;
-}
-.flash-notice.warning {
+    font-size: 18px;
     border: 1px #f99 solid;
     background: #fbb;
+}
+.flash-success {
+    padding:20px;
+    margin-bottom: 40px;
+    font-size: 18px;
+    border: 1px #89ac77 solid;
+    background: #d2ffbb;
 }
 .general-message {
     padding:50px 30px;

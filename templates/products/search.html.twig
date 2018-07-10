@@ -1,7 +1,7 @@
 {% extends 'layout.html.twig' %}
 
 {% block bodyId %}category{% endblock %}
-{% block title %}Products List{% endblock %}
+{% block title %} | Αποτελέσματα αναζήτησης{% endblock %}
 {% block slider %}{% endblock %}
 {% block breadcrumb %}
 
@@ -15,14 +15,10 @@
         <div class="page-header">
             <div class="container">
                 <div class="row">
-                    <div class="col-md-12"><h1>{{ ctgInfo.name }}</h1></div>
+                    <div class="col-md-12"><h1>Αναζητήσατε με κριτήρια "{{ keyword }}"</h1></div>
                 </div>
             </div>
         </div>
-        {% include 'products/modules/category_slider.html.twig' %}
-        {% if (ctgInfo.children) %}
-            {% include 'products/modules/top_categories.html.twig' %}
-        {% endif %}
         <div class="section" style="background-image:url({{ asset('images/bg-5.jpg') }});">
             <div class="container">
                 {% for message in app.flashes('notice') %}
@@ -33,19 +29,11 @@
                 <div class="row reverse-row">
                     <div class="col-md-9 column">
                         <div class="product-list">
-                            <h2>{{ ctgInfo.name }}
+                            <h2>Αποτελεσματα αναζητησης
                                 <span>(Showing 1 – 60 products of 1,070 products)</span>
                             </h2>
                             <div class="sorting-head clearfix">
                                 <div class="row">
-                                    <div class="col-sm-6 col-md-7 visible-lg visible-md  visible-sm">
-                                        <div class="btn-group">
-                                            <a href="#" id="list" class="btn btn-default btn-sm"><i
-                                                        class="fa fa-th-large"></i></a>
-                                            <a href="#" id="grid" class="btn btn-default btn-sm"><i
-                                                        class="fa fa-th-list"></i></a>
-                                        </div>
-                                    </div>
                                     <div class="col-sm-6 col-md-5">
                                         <div class="row">
                                             <div class="col-xs-6">
@@ -69,7 +57,7 @@
                             </div>
                             <div id="products" class="row list-group list-products">
                                 {% for pr in products %}
-                                    <div class="item col-lg-4 col-md-6 col-sm-6 wow fadeIn"
+                                    <div class="item col-lg-4 col-md-6 col-sm-6 wow fadeIn grid-group-item"
                                          data-wow-delay="0.4s">
                                         <div class="product-case">
                                             <div class="tag tag-green"><span>new</span></div>
@@ -172,9 +160,6 @@
                         {#{% include 'products/modules/aside_color_filter.html.twig' %}#}
                         {#{% include 'products/modules/aside_size.html.twig' %}#}
                         {% include 'products/modules/aside_discount.html.twig' %}
-                        {% if (ctgInfo.children) %}
-                            {#{% include 'products/modules/aside_category.html.twig' %}#}
-                        {% endif %}
                         {% include 'products/modules/aside_clearance_sale.html.twig' %}
                         {% include 'products/modules/aside_best_sellers.html.twig' %}
                     </div>

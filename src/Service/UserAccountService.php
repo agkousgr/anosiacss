@@ -41,69 +41,25 @@ class UserAccountService
     }
 
     /**
-     * @param $username
-     * @return true|false
-     */
-    private function checkIfUserExists($username)
-    {
-        $client = new \SoapClient('http://caron.cloudsystems.gr/FOeshopWS/ForeignOffice.FOeshop.API.FOeshopSvc.svc?singleWsdl', ['trace' => true, 'exceptions' => true,]);
-
-        $message = <<<EOF
-<?xml version="1.0" encoding="utf-16"?>
-<ClientGetUsersRequest>
-    <Type>1015</Type>
-    <Kind>1</Kind>
-    <Domain>pharmacyone</Domain>
-    <AuthID>$this->authId</AuthID>
-    <AppID>157</AppID>
-    <CompanyID>1000</CompanyID>
-    <pagesize>10</pagesize>
-    <pagenumber>0</pagenumber>
-    <Username>$username</Username>
-    <Password>null</Password>
-    <Email>null</Email>
-</ClientGetUsersRequest>
-EOF;
-        try {
-            $result = $client->SendMessage(['Message' => $message]);
-            $userData = simplexml_load_string(str_replace("utf-16", "utf-8", $result->SendMessageResult));
-            dump($result);
-            if ((int)$userData->RowsCount === 0) {
-                return false;
-            } else {
-                return true;
-            }
-        } catch (\SoapFault $sf) {
-            echo $sf->faultstring;
-        }
-
-    }
-
-    /**
      * @param $userData
      * @return string
      */
     public function createUser($userData)
     {
-        dump($userData);
-        if (false === $this->checkIfUserExists($userData["username"])) {
-            $userId = $this->setClient($userData);
-            if ($userId) {
-                dump($userId);
-                if ($this->setUser($userData, $userId) === true) {
-                    if ($this->setNewsletter($userData)) {
-                        return 'Success';
-                    } else {
-                        return 'Error SetUser';
-                    }
+        $userId = $this->setClient($userData);
+        if ($userId) {
+            if ($this->setUser($userData, $userId) === true) {
+                if ($this->setNewsletter($userData)) {
+                    return 'Success';
                 } else {
-                    return 'Error SetNewsletter';
+                    return 'Error SetUser';
                 }
             } else {
-                return 'Error SetClient';
+                return 'Error SetNewsletter';
             }
+        } else {
+            return 'Error SetClient';
         }
-        return 'User exists';
     }
 
     /**
@@ -162,8 +118,10 @@ EOF;
     private function setUser($userData, $userId)
     {
         $client = new \SoapClient('http://caron.cloudsystems.gr/FOeshopWS/ForeignOffice.FOeshop.API.FOeshopSvc.svc?singleWsdl', ['trace' => true, 'exceptions' => true,]);
-
-        $password = $userData["password"];
+        $options = [
+            'cost' => 12
+        ];
+        $password = password_hash($userData["password"], PASSWORD_BCRYPT, $options);
         $username = $userData["username"];
         $lastLogin = date('Y-m-d') . 'T' . date('H:i:s');
 
@@ -241,6 +199,11 @@ EOF;
     {
         $client = new \SoapClient('http://caron.cloudsystems.gr/FOeshopWS/ForeignOffice.FOeshop.API.FOeshopSvc.svc?singleWsdl', ['trace' => true, 'exceptions' => true,]);
 
+        $options = [
+            'cost' => 15
+        ];
+        $password = ($password === 'null') ? 'null' : password_hash($password, PASSWORD_BCRYPT, $options);
+
         $message = <<<EOF
 <?xml version="1.0" encoding="utf-16"?>
 <ClientGetUsersRequest>
@@ -260,11 +223,13 @@ EOF;
         try {
             $result = $client->SendMessage(['Message' => $message]);
             $userData = simplexml_load_string(str_replace("utf-16", "utf-8", $result->SendMessageResult));
-            dump($result);
+            dump($message, $result);
             if ((int)$userData->RowsCount === 0) {
                 return false;
+            } else if ($password === 'null') {
+                return true;
             } else {
-                $this->session->set("anosiaUser", $username);
+//                $this->session->set("anosiaUser", $username);
                 return true;
             }
         } catch (\SoapFault $sf) {
@@ -273,7 +238,80 @@ EOF;
 
     }
 
-    public function getUsers()
+    /**
+     * @param string $username
+     * @param string $password
+     * @return array
+     * @throws \Exception
+     */
+    public function getUser($username = 'null', $password = 'null') // remove nulls in production
+    {
+        $client = new \SoapClient('http://caron.cloudsystems.gr/FOeshopWS/ForeignOffice.FOeshop.API.FOeshopSvc.svc?singleWsdl', ['trace' => true, 'exceptions' => true,]);
+        $options = [
+            'cost' => 12
+        ];
+        $password = ($password === 'null') ? 'null' : password_hash($password, PASSWORD_BCRYPT, $options);
+
+        $message = <<<EOF
+<?xml version="1.0" encoding="utf-16"?>
+<ClientGetUsersRequest>
+    <Type>1015</Type>
+    <Kind>1</Kind>
+    <Domain>pharmacyone</Domain>
+    <AuthID>$this->authId</AuthID>
+    <AppID>157</AppID>
+    <CompanyID>1000</CompanyID>
+    <pagesize>20</pagesize>
+    <pagenumber>0</pagenumber>
+    <Username>$username</Username>
+    <Password>$password</Password>
+    <Email>null</Email>
+</ClientGetUsersRequest>
+EOF;
+        try {
+            $userData = array();
+            $result = $client->SendMessage(['Message' => $message]);
+            $userXML = simplexml_load_string(str_replace("utf-16", "utf-8", $result->SendMessageResult));
+            if ($userXML === false) {
+                return $userData;
+            }
+            dump($result);
+            return $userData = $this->initializeUser($userXML->GetDataRows->GetUsersRow);
+//            if ((int)$userData->RowsCount === 0) {
+//                return false;
+//            } else {
+//                return true;
+//            }
+        } catch (\SoapFault $sf) {
+            echo $sf->faultstring;
+        }
+
+    }
+
+
+    private function initializeUser($userXML)
+    {
+        try {
+            $userArr = array(
+                'username' => $userXML->Username,
+                'password' => $userXML->Password,
+                'lastLoginDT' => $userXML->LastLoginDT,
+                'clientId' => $userXML->ClientID,
+                'userId' => $userXML->ID,
+            );
+            return $userArr;
+        } catch (\Exception $e) {
+            $this->logger->error(__METHOD__ . ' -> {message}', ['message' => $e->getMessage()]);
+            throw $e;
+        }
+    }
+
+    public function getClient()
+    {
+
+    }
+
+    public function getUsers() // to be deleted in production
     {
         $client = new \SoapClient('http://caron.cloudsystems.gr/FOeshopWS/ForeignOffice.FOeshop.API.FOeshopSvc.svc?singleWsdl', ['trace' => true, 'exceptions' => true,]);
 
@@ -288,7 +326,7 @@ EOF;
     <CompanyID>1000</CompanyID>
     <pagesize>20</pagesize>
     <pagenumber>0</pagenumber>
-    <Username>jkravaritis@cloudon.gr</Username>
+    <Username>null</Username>
     <Password>null</Password>
     <Email>null</Email>
 </ClientGetUsersRequest>

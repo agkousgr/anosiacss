@@ -12,6 +12,9 @@ use Psr\Log\LoggerInterface;
 
 class ProductService
 {
+    /**
+     * @var LoggerInterface
+     */
     private $logger;
 
     public function __construct(LoggerInterface $logger)
@@ -48,8 +51,6 @@ EOF;
         try {
             $itemsArr = array();
             $result = $client->SendMessage(['Message' => $message]);
-//            return $result->SendMessageResult;
-//            return str_replace("utf-16", "utf-8", $result->SendMessageResult);
             $items = simplexml_load_string(str_replace("utf-16", "utf-8", $result->SendMessageResult));
             if ($items !== false) {
                 $itemsArr = $this->initializeProducts($items->GetDataRows->GetCategoryItemsRow);
@@ -100,10 +101,11 @@ EOF;
     /**
      * @param $id
      * @param $authId
+     * @param $keyword
      * @return array
      * @throws \Exception
      */
-    public function getItems($id, $authId)
+    public function getItems($id, $authId, $keyword = 'null')
     {
         $client = new \SoapClient('https://caron.cloudsystems.gr/FOeshopWS/ForeignOffice.FOeshop.API.FOeshopSvc.svc?singleWsdl', ['trace' => true, 'exceptions' => true,]);
 
@@ -120,15 +122,17 @@ EOF;
     <pagenumber>0</pagenumber>
     <ItemID>$id</ItemID>
     <ItemCode>null</ItemCode>
-    <SearchToken>null</SearchToken>
+    <SearchToken>$keyword</SearchToken>
 </ClientGetItemsRequest>
 EOF;
         try {
             $itemsArr = array();
             $result = $client->SendMessage(['Message' => $message]);
             $items = simplexml_load_string(str_replace("utf-16", "utf-8", $result->SendMessageResult));
-            dump($result);
-            if ($items !== false) {
+            dump($message, $result);
+            if ($items !== false && $keyword !== 'null') {
+                $itemsArr = $this->initializeProducts($items->GetDataRows->GetItemsRow);
+            } else {
                 $itemsArr = $this->initializeProduct($items->GetDataRows->GetItemsRow);
             }
             return $itemsArr;

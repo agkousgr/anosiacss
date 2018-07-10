@@ -11,7 +11,7 @@ namespace App\Form\Type;
 
 use Symfony\Component\Form\AbstractType;
 use Symfony\Component\Form\Extension\Core\Type\{
-    CheckboxType, PasswordType, TextType
+    CheckboxType, PasswordType, TextType, EmailType
 };
 use Symfony\Component\Form\FormBuilderInterface;
 use Symfony\Component\OptionsResolver\OptionsResolver;
@@ -23,7 +23,7 @@ class UserRegistrationType extends AbstractType
         $builder
             ->add('firstname', TextType::class)
             ->add('lastname', TextType::class)
-            ->add('username', TextType::class, array(
+            ->add('username', EmailType::class, array(
                 'required' => true,
                 'label' => 'Όνομα Χρήστη (email)'
             ))

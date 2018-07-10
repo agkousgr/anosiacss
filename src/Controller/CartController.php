@@ -35,4 +35,26 @@ class CartController extends MainController
         }
     }
 
+    public function deleteCartItem(EntityManagerInterface $em, int $id, SessionInterface $session)
+    {
+        try {
+            if (!$id) {
+                throw $this->createNotFoundException(
+                    'No product found for id ' . $id
+                );
+            }
+            $cartItem = $em->getRepository(Cart::class)->find($id);
+            // Add code for checking that sessionId or Username has access to specific cartId
+            // Add here
+            // End code
+
+            $em->remove($cartItem);
+            $em->flush();
+            return $this->redirectToRoute('cart_view');
+        } catch (\Exception $e) {
+            throw $e;
+            //throw $this->createNotFoundException('The resource you are looking for could not be found.');
+        }
+    }
+
 }

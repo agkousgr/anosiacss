@@ -23,11 +23,12 @@ class AjaxCartController extends AbstractController
             try {
                 $cartIds = '';
                 $totalCartItems = 0;
-                if (null === $session->get('username')) {
+//                if (null === $session->get('anosiaUser')) {
+//                    $cartArr = $em->getRepository(Cart::class)->getCartByUser($session->get('anosiaUser'));
+//                } else {
                     $cartArr = $em->getRepository(Cart::class)->getCartBySession($session->getId());
-                } else {
-                    $cartArr = $em->getRepository(Cart::class)->getCartBySession($session->getId());
-                }
+//                }
+                dump($session->getId());
                 if ($cartArr) {
                     foreach ($cartArr as $key => $val) {
                         $cartIds .= $val->getProductId() . ',';
@@ -66,8 +67,8 @@ class AjaxCartController extends AbstractController
                     $cart->setQuantity($quantity);
                     $cart->setProductId($id);
                     $cart->setSessionId($session->getId());
-                    if (null !== $session->get('username')) {
-                        $cart->setUsername($session->get('username'));
+                    if (null !== $session->get('anosiaUser')) {
+                        $cart->setUsername($session->get('anosiaUser'));
                     }
                     dump($cart);
                     if (null !== $id) {

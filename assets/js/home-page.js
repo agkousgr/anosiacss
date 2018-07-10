@@ -36,6 +36,46 @@ $(document).ready(function () {
         $('#top-cart').css('display', 'none');
     }
 
+    // FACEBOOK
+    FB.getLoginStatus(function(response) {
+        statusChangeCallback(response);
+    });
+
+    function checkLoginState() {
+        FB.getLoginStatus(function(response) {
+            statusChangeCallback(response);
+        });
+    }
+
+    FB.login(function(response){
+        if (response.authResponse) {
+            console.log('Welcome!  Fetching your information.... ');
+            FB.api('/me', function(response) {
+                console.log('Good to see you, ' + response.name + '.');
+            });
+        } else {
+            console.log('User cancelled login or did not fully authorize.');
+        }
+    }, {scope: 'public_profile,email'});
+
+    // This is called with the results from from FB.getLoginStatus().
+    function statusChangeCallback(response) {
+        console.log('statusChangeCallback');
+        console.log(response);
+        // The response object is returned with a status field that lets the
+        // app know the current login status of the person.
+        // Full docs on the response object can be found in the documentation
+        // for FB.getLoginStatus().
+        if (response.status === 'connected') {
+            // Logged into your app and Facebook.
+            testAPI();
+        } else {
+            // The person is not logged into your app or we are unable to tell.
+            document.getElementById('fb-root').innerHTML = 'Please log ' +
+                'into this app.';
+        }
+    }
+
     // $('body').startComponents();
 });
 
@@ -107,6 +147,27 @@ $(".toggle-sidebar").click(function (e) {
     $("#sidebar-wrapper").toggleClass("active");
 });
 
+
+// LOGIN
+$('.btn-signin').on('click', function (e) {
+    e.preventDefault();
+    let data = {
+        'username': $('input[name="_username"]').val(),
+        'password': $('input[name="_password"]').val(),
+    }
+    $.post(Routing.generate('login'), data, function (result) {
+        if (result.success) {
+            Routing.generate('index');
+        }else{
+            swal({
+                title: 'Είσοδος χρήστη',
+                html: '<div style="font-size:17px;">' + result.errorMsg + '</div>',
+                type: 'error',
+                timer: 10000
+            });
+        }
+    });
+});
 
 // function generate(type, Message) {
 //     var n = noty({

@@ -8,6 +8,26 @@
     {% endblock %}
 </head>
 <body id="{% block bodyId %}{% endblock %}">
+<div id="fb-root"></div>
+<script>
+    window.fbAsyncInit = function () {
+        FB.init({
+            appId: '605092459847380',
+            autoLogAppEvents: true,
+            xfbml: true,
+            version: 'v3.0'
+        });
+    };
+
+    (function (d, s, id) {
+        var js, fjs = d.getElementsByTagName(s)[0];
+        if (d.getElementById(id)) return;
+        js = d.createElement(s);
+        js.id = id;
+        js.src = 'https://connect.facebook.net/el_GR/sdk.js#xfbml=1&version=v3.0&appId=605092459847380&autoLogAppEvents=1';
+        fjs.parentNode.insertBefore(js, fjs);
+    }(document, 'script', 'facebook-jssdk'));
+</script>
 {% block body %}
     <div id="mainWrapper">
         {% include 'partials/sidebar_login.html.twig' %}
@@ -20,7 +40,7 @@
         {% include 'home_page_modules/00_promo_categories.html.twig' %}
         <div class="section" style="background-image:url({{ asset('images/bg-5.jpg') }});">
             <div class="container">
-        {% include 'home_page_modules/16_best_sellers.html.twig' %}
+                {% include 'home_page_modules/16_best_sellers.html.twig' %}
             </div>
         </div>
         {% include 'home_page_modules/02_four_column_wrap.html.twig' %}

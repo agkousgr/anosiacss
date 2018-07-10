@@ -24,21 +24,29 @@
     </div>
     <div class="section" style="background-image:url({{ asset('images/bg-5.jpg') }});">
         <div class="container">
-            <div class="col-xs-12">
+            <div class="row">
                 {% for message in app.flashes('notice') %}
                     <div class="flash-notice">
+                        {{ message }}
+                    </div>
+                {% endfor %}
+                {% for message in app.flashes('success') %}
+                    <div class="flash-success">
                         {{ message }}
                     </div>
                 {% endfor %}
             </div>
             <section id="main">
                 <section id="content" class="page-content card card-block">
+                    {% if (registerOk == 'true') %}
+                        <div><h4>Κάντε κλικ <a href="#" class="toggle-sidebar">εδώ</a> να συνδεθείτε</h4></div>
+                    {% else %}
                     <section class="register-form">
                         {{ form_start(form) }}
                         <section>
                             <input name="id_customer" value="" type="hidden">
                             <div class="form-group row ">
-                                    {{ form_label(form.firstname, 'Όνομα', {'label_attr': {'class': 'col-md-3 form-control-label required'}}) }}
+                                {{ form_label(form.firstname, 'Όνομα', {'label_attr': {'class': 'col-md-3 form-control-label required'}}) }}
                                 <div class="col-md-6">
                                     {{ form_widget(form.firstname, {'attr': {'class': 'form-control'}}) }}
                                 </div>
@@ -70,8 +78,8 @@
                                     <div class="input-group js-parent-focus">
                                         {{ form_widget(form.password, {'attr': {'class': 'form-control'}}) }}
                                         {#<input class="form-control js-child-focus js-visible-password"#}
-                                               {#name="password" value="" pattern=".{5,}"#}
-                                               {#required="" type="password">#}
+                                        {#name="password" value="" pattern=".{5,}"#}
+                                        {#required="" type="password">#}
                                         <span class="input-group-btn">
                                             <button class="btn" type="button"
                                                     data-action="show-password"
@@ -109,7 +117,8 @@
                                         {{ form_widget(form.newsletter) }}
                                         {#<span><i class="material-icons rtl-no-flip checkbox-checked"></i></span>#}
                                         <label>Εγγραφή στο newsletter<br>
-                                            <em>Μπορείτε να διαγραφείτε οποιαδήποτε στιγμή επιθυμείτε.</em>
+                                            <em>Μπορείτε να διαγραφείτε οποιαδήποτε στιγμή
+                                                επιθυμείτε.</em>
                                         </label>
                                     </span>
                                 </div>
@@ -120,15 +129,22 @@
                         </section>
 
                         <footer class="form-footer clearfix">
-                            <input name="submitCreate" value="1" type="hidden">
                             <button class="btn btn-primary form-control-submit float-xs-right"
                                     data-link-action="save-customer" type="submit">
                                 Save
                             </button>
+                            <div class="pull-right">
+                                <a href="#">
+                                    Ξεχάσατε τον κωδικό σας?
+                                </a>
+                            </div>
                         </footer>
+                        <input type="hidden" name="_csrf_token"
+                               value="{{ csrf_token('register') }}">
                         {#{{ form_row(form._token) }}#}
                         {{ form_end(form) }}
                     </section>
+                    {% endif %}
                 </section>
             </section>
         </div>

@@ -23,6 +23,11 @@ product_quick_view:
     requirements:
         id: \d+
 
+product_search:
+    path: /product/search
+    controller: App\Controller\ProductController::searchResults
+    methods: [POST]
+
 # Orders / Cart
 cart_view:
     path: /cart
@@ -51,7 +56,7 @@ delete_top_cart_item:
 
 delete_cart_item:
     path: /delete-cart-item/{id}
-    controller: App\Controller\AjaxCartController::deleteCartItem
+    controller: App\Controller\CartController::deleteCartItem
     requirements:
         id: \d+
 
@@ -93,4 +98,7 @@ get_users:
 
 login:
     path: /login
-    controller: App\Controller\UserAccountController::login
+    controller: App\Controller\AjaxLoginController::login
+    methods: [POST]
+    options:
+        expose: true

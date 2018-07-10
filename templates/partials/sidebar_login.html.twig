@@ -1,17 +1,23 @@
 <div id="sidebar-wrapper">
     <div class="sidebar-logo clearfix">
-        <div class="logo-sidebar"><a href="#"><img src="{{ asset('build/images/logo.png') }}" alt=""></a></div>
+        <div class="logo-sidebar"><a href="#"><img src="{{ asset('build/images/logo.png') }}"
+                                                   alt=""></a></div>
         <a id="menu-close" href="#" class="close-menu">Close Menu</a>
     </div>
 
     <div class="sidebar-login">
+        {% if (loggedUser) %}
+        <ul>
+            <li>Καλώς ήρθες {{ loggedUser }}</li>
+        </ul>
+        {% else %}
         <h4>ΕΙΣΟΔΟΣ</h4>
         <form action="{{ path('login') }}" method="post">
             <div class="form-group">
-                <input type="text" class="form-control" placeholder="Όνομα χρήστη">
+                <input name="_username" required type="text" class="form-control" placeholder="Όνομα χρήστη">
             </div>
             <div class="form-group">
-                <input type="password" class="form-control" placeholder="Κωδικός">
+                <input name="_password" required type="password" class="form-control" placeholder="Κωδικός">
             </div>
             <div class="clearfix">
                 <div class="form-group pull-left">
@@ -22,14 +28,21 @@
             <div class="form-group text-center">
                 <button type="submit" class="btn btn-primary btn-signin">ΕΙΣΟΔΟΣ</button>
             </div>
+            <input type="hidden" name="_csrf_token" value="{{ csrf_token('authenticate') }}">
         </form>
 
         <div class="form-group text-center">
             <a href="{{ path('user_registration') }}"><strong>ΕΓΓΡΑΦΗ ΤΩΡΑ</strong></a>
         </div>
 
-        <div class="form-group"><a href="#" class="signin-with-fb">Συνδεθείτε μέσω <strong>Facebook</strong></a></div>
+        <div class="form-group">
+            <div class="fb-login-button" data-max-rows="1" data-size="large"
+                 data-button-type="continue_with" data-show-faces="false"
+                 data-auto-logout-link="false" data-use-continue-as="false">
+            </div>
+        </div>
         {#<div class="form-group"><a href="#" class="signin-with-gplus">Signin with <strong>Google+</strong></a></div>#}
+        {% endif %}
 
         <ul>
             <li class="call">210 94 02 027<span>Καλέστε μας</span></li>
@@ -46,18 +59,22 @@
                             <div class="media">
                                 <div class="media-left">
                                     <a href="{{ path('product_view', {'id':pr.id}) }}">
-                                        <img class="media-object" src="{{ pr.imageUrl }}" alt="{{ pr.name }}">
+                                        <img class="media-object" src="{{ pr.imageUrl }}"
+                                             alt="{{ pr.name }}">
                                     </a>
                                 </div>
                                 <div class="media-body">
-                                    <h5><a href="{{ path('product_view', {'id':pr.id}) }}">{{ pr.name }}</a></h5>
+                                    <h5>
+                                        <a href="{{ path('product_view', {'id':pr.id}) }}">{{ pr.name }}</a>
+                                    </h5>
                                     {#<div class="star-rating"><i class="fa fa-star"></i><i class="fa fa-star"></i><i#}
                                     {#class="fa fa-star"></i><i class="fa fa-star"></i><i#}
                                     {#class="fa fa-star-o"></i></div>#}
                                     <div class="price">{{ pr.webPrice }}€
                                         <del>{{ pr.retailPrice }}€</del>
                                     </div>
-                                    <button type="button" class="btn btn-primary btn-xs">ΚΑΛΑΘΙ</button>
+                                    <button type="button" class="btn btn-primary btn-xs">ΚΑΛΑΘΙ
+                                    </button>
                                 </div>
                             </div>
                         {% endfor %}
@@ -67,24 +84,29 @@
                             <div class="media">
                                 <div class="media-left">
                                     <a href="{{ path('product_view', {'id':pr.id}) }}">
-                                        <img class="media-object" src="{{ pr.imageUrl }}" alt="{{ pr.name }}">
+                                        <img class="media-object" src="{{ pr.imageUrl }}"
+                                             alt="{{ pr.name }}">
                                     </a>
                                 </div>
                                 <div class="media-body">
-                                    <h5><a href="{{ path('product_view', {'id':pr.id}) }}">{{ pr.name }}</a></h5>
+                                    <h5>
+                                        <a href="{{ path('product_view', {'id':pr.id}) }}">{{ pr.name }}</a>
+                                    </h5>
                                     {#<div class="star-rating"><i class="fa fa-star"></i><i class="fa fa-star"></i><i#}
                                     {#class="fa fa-star"></i><i class="fa fa-star"></i><i#}
                                     {#class="fa fa-star-o"></i></div>#}
                                     <div class="price">{{ pr.webPrice }}€
                                         <del>{{ pr.retailPrice }}€</del>
                                     </div>
-                                    <button type="button" class="btn btn-primary btn-xs">ΚΑΛΑΘΙ</button>
+                                    <button type="button" class="btn btn-primary btn-xs">ΚΑΛΑΘΙ
+                                    </button>
                                 </div>
                             </div>
                         {% endfor %}
                     </div>
                     <div class="carousel-nav">
-                        <a class="left carousel-control" href="#carouselOneSidebar" role="button" data-slide="prev">Previous</a>
+                        <a class="left carousel-control" href="#carouselOneSidebar" role="button"
+                           data-slide="prev">Previous</a>
                         <a class="right carousel-control" href="#carouselOneSidebar" role="button"
                            data-slide="next">Next</a>
                     </div>
@@ -102,18 +124,22 @@
                             <div class="media">
                                 <div class="media-left">
                                     <a href="{{ path('product_view', {'id':pr.id}) }}">
-                                        <img class="media-object" src="{{ pr.imageUrl }}" alt="{{ pr.name }}">
+                                        <img class="media-object" src="{{ pr.imageUrl }}"
+                                             alt="{{ pr.name }}">
                                     </a>
                                 </div>
                                 <div class="media-body">
-                                    <h5><a href="{{ path('product_view', {'id':pr.id}) }}">{{ pr.name }}</a></h5>
+                                    <h5>
+                                        <a href="{{ path('product_view', {'id':pr.id}) }}">{{ pr.name }}</a>
+                                    </h5>
                                     {#<div class="star-rating"><i class="fa fa-star"></i><i class="fa fa-star"></i><i#}
                                     {#class="fa fa-star"></i><i class="fa fa-star"></i><i#}
                                     {#class="fa fa-star-o"></i></div>#}
                                     <div class="price">{{ pr.webPrice }}€
                                         <del>{{ pr.retailPrice }}€</del>
                                     </div>
-                                    <button type="button" class="btn btn-primary btn-xs">ΚΑΛΑΘΙ</button>
+                                    <button type="button" class="btn btn-primary btn-xs">ΚΑΛΑΘΙ
+                                    </button>
                                 </div>
                             </div>
                         {% endfor %}
@@ -123,24 +149,29 @@
                             <div class="media">
                                 <div class="media-left">
                                     <a href="{{ path('product_view', {'id':pr.id}) }}">
-                                        <img class="media-object" src="{{ pr.imageUrl }}" alt="{{ pr.name }}">
+                                        <img class="media-object" src="{{ pr.imageUrl }}"
+                                             alt="{{ pr.name }}">
                                     </a>
                                 </div>
                                 <div class="media-body">
-                                    <h5><a href="{{ path('product_view', {'id':pr.id}) }}">{{ pr.name }}</a></h5>
+                                    <h5>
+                                        <a href="{{ path('product_view', {'id':pr.id}) }}">{{ pr.name }}</a>
+                                    </h5>
                                     {#<div class="star-rating"><i class="fa fa-star"></i><i class="fa fa-star"></i><i#}
                                     {#class="fa fa-star"></i><i class="fa fa-star"></i><i#}
                                     {#class="fa fa-star-o"></i></div>#}
                                     <div class="price">{{ pr.webPrice }}€
                                         <del>{{ pr.retailPrice }}€</del>
                                     </div>
-                                    <button type="button" class="btn btn-primary btn-xs">ΚΑΛΑΘΙ</button>
+                                    <button type="button" class="btn btn-primary btn-xs">ΚΑΛΑΘΙ
+                                    </button>
                                 </div>
                             </div>
                         {% endfor %}
                     </div>
                     <div class="carousel-nav">
-                        <a class="left carousel-control" href="#carouselTwoSidebar" role="button" data-slide="prev">Previous</a>
+                        <a class="left carousel-control" href="#carouselTwoSidebar" role="button"
+                           data-slide="prev">Previous</a>
                         <a class="right carousel-control" href="#carouselTwoSidebar" role="button"
                            data-slide="next">Next</a>
                     </div>
