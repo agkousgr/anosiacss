@@ -6,7 +6,7 @@
         <id name="id" type="integer">
             <generator strategy="AUTO" />
         </id>
-        <field name="username"  length="150" />
+        <field name="username" nullable="true" length="150" />
         <field name="session_id" length="150" />
         <field name="product_id" type="integer" />
         <field name="quantity" type="integer" />

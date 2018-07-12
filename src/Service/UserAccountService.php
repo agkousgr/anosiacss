@@ -118,11 +118,7 @@ EOF;
     private function setUser($userData, $userId)
     {
         $client = new \SoapClient('http://caron.cloudsystems.gr/FOeshopWS/ForeignOffice.FOeshop.API.FOeshopSvc.svc?singleWsdl', ['trace' => true, 'exceptions' => true,]);
-        $options = [
-            'cost' => 12
-        ];
-        $password = password_hash($userData["password"], PASSWORD_BCRYPT, $options);
-        dump($password);
+        $password = $userData["password"];
         $username = $userData["username"];
         $lastLogin = date('Y-m-d') . 'T' . date('H:i:s');
 
@@ -145,7 +141,7 @@ EOF;
         try {
             $result = $client->SendMessage(['Message' => $message]);
             $userData = simplexml_load_string(str_replace("utf-16", "utf-8", $result->SendMessageResult));
-//            dump($result);
+            dump($result);
             if ((string)$userData->ErrorCode === 'None') {
                 return true;
             } else {
@@ -199,13 +195,6 @@ EOF;
     public function login($username, $password)
     {
         $client = new \SoapClient('http://caron.cloudsystems.gr/FOeshopWS/ForeignOffice.FOeshop.API.FOeshopSvc.svc?singleWsdl', ['trace' => true, 'exceptions' => true,]);
-        $options = [
-            'cost' => 12
-        ];
-
-        dump($password);
-        $password = ($password === 'null') ? 'null' : password_hash($password, PASSWORD_BCRYPT, $options);
-        dump($password);
 
         $message = <<<EOF
 <?xml version="1.0" encoding="utf-16"?>
@@ -250,10 +239,6 @@ EOF;
     public function getUser($username = 'null', $password = 'null') // remove nulls in production
     {
         $client = new \SoapClient('http://caron.cloudsystems.gr/FOeshopWS/ForeignOffice.FOeshop.API.FOeshopSvc.svc?singleWsdl', ['trace' => true, 'exceptions' => true,]);
-        $options = [
-            'cost' => 12
-        ];
-        $password = ($password === 'null') ? 'null' : password_hash($password, PASSWORD_BCRYPT, $options);
 
         $message = <<<EOF
 <?xml version="1.0" encoding="utf-16"?>
