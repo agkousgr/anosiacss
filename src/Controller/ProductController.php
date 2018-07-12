@@ -17,8 +17,9 @@ class ProductController extends MainController
     public function listProducts(int $id)
     {
         try {
-            $ctgInfo = $this->categoryService->getCategoryInfo($id, $this->session->get("authID"));
-            $products = $this->productService->getCategoryItems($id, $this->session->get("authID"));
+            $ctgInfo = $this->categoryService->getCategoryInfo($id);
+            $products = $this->productService->getCategoryItems($id);
+            $totalProducts = $this->productService->getCategoryItemsCount($id);
 //            $pagination = $knp->paginate(
 //                $products,
 //                $request->query->getInt('page', 1)/*page number*/,
@@ -44,7 +45,7 @@ class ProductController extends MainController
     public function viewProduct(int $id)
     {
         try {
-            $product = $this->productService->getItems($id, $this->session->get("authID"), 'null');
+            $product = $this->productService->getItems($id, 'null');
             return $this->render('products/view.html.twig', [
                 'pr' => $product,
                 'categories' => $this->categories,
@@ -66,7 +67,7 @@ class ProductController extends MainController
             $keyword = strip_tags(trim($request->request->get('keyword')));
             $s1Keyword = preg_replace('!\s+!', ',', $keyword);
             dump($keyword);
-            $products = $this->productService->getItems('null', $this->session->get("authID"), $s1Keyword);
+            $products = $this->productService->getItems('null', $s1Keyword);
             return $this->render('products/search.html.twig', [
                 'products' => $products,
                 'categories' => $this->categories,

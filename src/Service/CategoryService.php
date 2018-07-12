@@ -45,6 +45,12 @@ class CategoryService
     private $prCategories;
 
     /**
+     * @var string
+     * @param SessionInterface $session
+     */
+    private $authId;
+
+    /**
      * CategoryService constructor.
      *
      * @param LoggerInterface $logger
@@ -55,6 +61,7 @@ class CategoryService
         $this->logger = $logger;
         $this->em = $em;
         $this->session = $session;
+        $this->authId = $session->get("authID");
         $encoders = array(new XmlEncoder());
         $normalizers = array(new ObjectNormalizer());
         $this->serializer = new Serializer($normalizers, $encoders);
@@ -66,7 +73,7 @@ class CategoryService
      *
      * @return object
      */
-    public function getCategoryInfo($ctg, $authId)
+    public function getCategoryInfo($ctg)
     {
         $client = new \SoapClient('https://caron.cloudsystems.gr/FOeshopWS/ForeignOffice.FOeshop.API.FOeshopSvc.svc?singleWsdl', ['trace' => true, 'exceptions' => true,]);
 
@@ -76,7 +83,7 @@ class CategoryService
     <Type>1007</Type>
     <Kind>1</Kind>
     <Domain>pharmacyone</Domain>
-    <AuthID>$authId</AuthID>
+    <AuthID>$this->authId</AuthID>
     <AppID>157</AppID>
     <CompanyID>1000</CompanyID>
     <IsTopLevel>-1</IsTopLevel>
@@ -113,7 +120,7 @@ EOF;
      *
      * @return object
      */
-    public function getCategoriesFromS1($authId)
+    public function getCategoriesFromS1()
     {
         $client = new \SoapClient('https://caron.cloudsystems.gr/FOeshopWS/ForeignOffice.FOeshop.API.FOeshopSvc.svc?singleWsdl', ['trace' => true, 'exceptions' => true,]);
 
@@ -123,7 +130,7 @@ EOF;
     <Type>1007</Type>
     <Kind>1</Kind>
     <Domain>pharmacyone</Domain>
-    <AuthID>$authId</AuthID>
+    <AuthID>$this->authId</AuthID>
     <AppID>157</AppID>
     <CompanyID>1000</CompanyID>
     <IsTopLevel>1</IsTopLevel>
@@ -135,7 +142,7 @@ EOF;
             $result = $client->SendMessage(['Message' => $message]);
             $resultXML = simplexml_load_string(str_replace("utf-16", "utf-8", $result->SendMessageResult));
 //            dump($resultXML);
-            $categories = $this->initializeCategories($resultXML->GetDataRows->GetCategoriesRow, $authId);
+            $categories = $this->initializeCategories($resultXML->GetDataRows->GetCategoriesRow);
 
             return $categories;
 
@@ -163,7 +170,7 @@ EOF;
         }
     }
 
-    private function initializeCategories($rootCategories, $authId)
+    private function initializeCategories($rootCategories)
     {
         try {
 //            return new Response(dump($rootCategories));
@@ -181,7 +188,7 @@ EOF;
                         'hasMainImage' => $category->HasMainPhoto,
                         'imageUrl' => ($category->HasMainPhoto) ? 'https://caron.cloudsystems.gr/FOeshopAPIWeb/DF.aspx?' . str_replace('[Serial]', '01102459200617', str_replace('&amp;', '&', $category->MainPhotoUrl)) : ''
                     );
-                    $subCtgs = $this->getSubCategories($category->ID, $authId);
+                    $subCtgs = $this->getSubCategories($category->ID);
 
                     $childArr = array();
                     foreach ($subCtgs->GetDataRows->GetCategoryChildrenRow as $child) {
@@ -237,7 +244,7 @@ EOF;
 //            }else{
 //                $rootCategories = $this->getCategoriesFromS1($this->session->get("authID"));
 //            }
-            $rootCategories = $this->getCategoriesFromS1($this->session->get("authID"));
+            $rootCategories = $this->getCategoriesFromS1();
             return $rootCategories;
         } catch (\Exception $e) {
             $this->logger->error(__METHOD__ . ' -> {message}', ['message' => $e->getMessage()]);
@@ -245,7 +252,7 @@ EOF;
         }
     }
 
-    public function getSubCategories($ctgId, $authId)
+    public function getSubCategories($ctgId)
     {
         $client = new \SoapClient('https://caron.cloudsystems.gr/FOeshopWS/ForeignOffice.FOeshop.API.FOeshopSvc.svc?singleWsdl', ['trace' => true, 'exceptions' => true,]);
 
@@ -255,7 +262,7 @@ EOF;
 <Type>1009</Type>
 <Kind>1</Kind>
 <Domain>pharmacyone</Domain>
-<AuthID>$authId</AuthID>
+<AuthID>$this->authId</AuthID>
 <AppID>157</AppID>
 <CompanyID>1000</CompanyID>
 <CategoryID>$ctgId</CategoryID>

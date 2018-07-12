@@ -9,6 +9,7 @@
 namespace App\Service;
 
 use Psr\Log\LoggerInterface;
+use Symfony\Component\HttpFoundation\Session\SessionInterface;
 
 class ProductService
 {
@@ -17,9 +18,17 @@ class ProductService
      */
     private $logger;
 
-    public function __construct(LoggerInterface $logger)
+    /**
+     * @var string
+     * @param SessionInterface $session
+     */
+    private $authId;
+
+    public function __construct(LoggerInterface $logger, SessionInterface $session)
     {
         $this->logger = $logger;
+        $this->session = $session;
+        $this->authId = $session->get("authID");
     }
 
     /**
@@ -28,7 +37,7 @@ class ProductService
      * @return array
      * @throws \Exception
      */
-    public function getCategoryItems($ctgId, $authId)
+    public function getCategoryItems($ctgId)
     {
         $client = new \SoapClient('https://caron.cloudsystems.gr/FOeshopWS/ForeignOffice.FOeshop.API.FOeshopSvc.svc?singleWsdl', ['trace' => true, 'exceptions' => true,]);
 
@@ -38,7 +47,7 @@ class ProductService
     <Type>1011</Type>
     <Kind>1</Kind>
     <Domain>pharmacyone</Domain>
-    <AuthID>$authId</AuthID>
+    <AuthID>$this->authId</AuthID>
     <AppID>157</AppID>
     <CompanyID>1000</CompanyID>
     <pagesize>10</pagesize>
@@ -56,6 +65,40 @@ EOF;
                 $itemsArr = $this->initializeProducts($items->GetDataRows->GetCategoryItemsRow);
             }
             return $itemsArr;
+        } catch (\SoapFault $sf) {
+            echo $sf->faultstring;
+        }
+    }
+
+    /**
+     * @param $ctgId
+     * @return int
+     */
+    public function getCategoryItemsCount($ctgId)
+    {
+        $client = new \SoapClient('https://caron.cloudsystems.gr/FOeshopWS/ForeignOffice.FOeshop.API.FOeshopSvc.svc?singleWsdl', ['trace' => true, 'exceptions' => true,]);
+
+        $message = <<<EOF
+<?xml version="1.0" encoding="utf-16"?>
+<ClientGetCategoryItemsRequest>
+    <Type>1011</Type>
+    <Kind>1</Kind>
+    <Domain>pharmacyone</Domain>
+    <AuthID>$this->authId</AuthID>
+    <AppID>157</AppID>
+    <CompanyID>1000</CompanyID>
+    <pagesize>10</pagesize>
+    <pagenumber>0</pagenumber>
+    <CategoryID>$ctgId</CategoryID>
+    <SearchToken>null</SearchToken>
+    <IncludeChildCategories>1</IncludeChildCategories>
+</ClientGetCategoryItemsRequest>
+EOF;
+        try {
+            $result = $client->SendMessage(['Message' => $message]);
+            $items = simplexml_load_string(str_replace("utf-16", "utf-8", $result->SendMessageResult));
+            dump($message, $result);
+            return (int)$items->GetDataRows->GetItemsCountRow->Count;
         } catch (\SoapFault $sf) {
             echo $sf->faultstring;
         }
@@ -105,7 +148,7 @@ EOF;
      * @return array
      * @throws \Exception
      */
-    public function getItems($id, $authId, $keyword = 'null')
+    public function getItems($id, $keyword = 'null')
     {
         $client = new \SoapClient('https://caron.cloudsystems.gr/FOeshopWS/ForeignOffice.FOeshop.API.FOeshopSvc.svc?singleWsdl', ['trace' => true, 'exceptions' => true,]);
 
@@ -115,7 +158,7 @@ EOF;
     <Type>1005</Type>
     <Kind>1</Kind>
     <Domain>pharmacyone</Domain>
-    <AuthID>$authId</AuthID>
+    <AuthID>$this->authId</AuthID>
     <AppID>157</AppID>
     <CompanyID>1000</CompanyID>
     <pagesize>10</pagesize>
@@ -173,6 +216,41 @@ EOF;
         } catch (\Exception $e) {
             $this->logger->error(__METHOD__ . ' -> {message}', ['message' => $e->getMessage()]);
             throw $e;
+        }
+    }
+
+    /**
+     * @param $id
+     * @param string $keyword
+     * @return int
+     */
+    public function getItemsCount($id, $keyword = 'null')
+    {
+        $client = new \SoapClient('https://caron.cloudsystems.gr/FOeshopWS/ForeignOffice.FOeshop.API.FOeshopSvc.svc?singleWsdl', ['trace' => true, 'exceptions' => true,]);
+
+        $message = <<<EOF
+<?xml version="1.0" encoding="utf-16"?>
+<ClientGetItemsRequest>
+    <Type>1005</Type>
+    <Kind>1</Kind>
+    <Domain>pharmacyone</Domain>
+    <AuthID>$this->authId</AuthID>
+    <AppID>157</AppID>
+    <CompanyID>1000</CompanyID>
+    <pagesize></pagesize>
+    <pagenumber>0</pagenumber>
+    <ItemID>$id</ItemID>
+    <ItemCode>null</ItemCode>
+    <SearchToken>$keyword</SearchToken>
+</ClientGetItemsRequest>
+EOF;
+        try {
+            $result = $client->SendMessage(['Message' => $message]);
+            $items = simplexml_load_string(str_replace("utf-16", "utf-8", $result->SendMessageResult));
+            dump($message, $result);
+            return (int)$items->GetDataRows->GetItemsCountRow->Count;
+        } catch (\SoapFault $sf) {
+            echo $sf->faultstring;
         }
     }
 }
