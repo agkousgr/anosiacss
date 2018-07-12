@@ -8,12 +8,14 @@
 
 namespace App\Controller;
 
+use App\Security\User\WebserviceUser;
 use App\Service\UserAccountService;
 use App\Form\Type\UserRegistrationType;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\Form\Extension\Core\Type\{
     EmailType, PasswordType
 };
+use Symfony\Component\Security\Core\Encoder\UserPasswordEncoderInterface;
 
 class UserAccountController extends MainController
 {
@@ -73,43 +75,40 @@ class UserAccountController extends MainController
 //        }
 //    }
 
-    public function register(Request $request, UserAccountService $userAccountService)
+    public function register(Request $request, UserAccountService $userAccountService, UserPasswordEncoderInterface $encoder)
     {
         try {
+            $user = new WebserviceUser();
             $registerOk = 'false';
             $form = $this->createForm(UserRegistrationType::class);
             $form->handleRequest($request);
-            if ($form->isSubmitted() && $form->isValid()) {
-                $submittedToken = $request->request->get('_csrf_token');
-                if ($this->isCsrfTokenValid('register', $submittedToken)) {
-                    $username = $form->get('username')->getData();
-                    $user = $userAccountService->getUser($username);
+            $submittedToken = $request->request->get('_csrf_token');
+            if ($form->isSubmitted() && $form->isValid() && $this->isCsrfTokenValid('register', $submittedToken)) {
+
+                $username = $form->get('username')->getData();
+                $user = $userAccountService->getUser($username);
 //                    dump($username, (string)$user["username"]);
-                    if ($username === (string)$user["username"]) {
-                        $this->addFlash(
-                            'notice',
-                            'Υπάρχει ήδη χρήστης με αυτό το email. Αν δεν θυμάστε τον κωδικό σας πατήστε στο "Ξεχάσατε τον κωδικό σας?".'
-                        );
-                    } else {
-                        $newUser = $userAccountService->createUser($form->getData());
-                        if ($newUser === 'Success') {
-                            $this->addFlash(
-                                'success',
-                                'Η εγγραφή σας ολοκληρώθηκε. Μπορείτε να συνδεθείτε για να συνεχίσετε τα ψώνια σας.'
-                            );
-                            $registerOk = 'true';
-                        } else {
-                            $this->addFlash(
-                                'notice',
-                                'Παρουσιάστηκε σφάλμα κατά την εγγραφή. Παρακαλώ δοκιμάστε ξανά. Αν το πρόβλημα συνεχιστεί παρακαλώ επικοινωνήστε μαζί μας.'
-                            );
-                        }
-                    }
-                } else {
+                if ($username === (string)$user["username"]) {
                     $this->addFlash(
                         'notice',
-                        'To CSRF Token δεν είναι έγκυρο. Πιθανή προσπάθεια παραβίασης ασφαλείας. Παρακαλώ επικοινωνήστε μαζί μας σε περίπτωση που το σφάλμα επαναληφθεί.'
+                        'Υπάρχει ήδη χρήστης με αυτό το email. Αν δεν θυμάστε τον κωδικό σας πατήστε στο "Ξεχάσατε τον κωδικό σας?".'
                     );
+                } else {
+                    $password = $encoder->encodePassword($user, $user->getPlainPassword());
+//                    $user->set
+                    $newUser = $userAccountService->createUser($form->getData());
+                    if ($newUser === 'Success') {
+                        $this->addFlash(
+                            'success',
+                            'Η εγγραφή σας ολοκληρώθηκε. Μπορείτε να συνδεθείτε για να συνεχίσετε τα ψώνια σας.'
+                        );
+                        $registerOk = 'true';
+                    } else {
+                        $this->addFlash(
+                            'notice',
+                            'Παρουσιάστηκε σφάλμα κατά την εγγραφή. Παρακαλώ δοκιμάστε ξανά. Αν το πρόβλημα συνεχιστεί παρακαλώ επικοινωνήστε μαζί μας.'
+                        );
+                    }
                 }
             }
 

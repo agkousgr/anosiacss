@@ -1,0 +1,18 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<doctrine-mapping xmlns="http://doctrine-project.org/schemas/orm/doctrine-mapping">
+
+    <entity name="App\Entity\Regions" table="regions">
+        <id name="id" type="integer">
+            <generator strategy="AUTO" />
+        </id>
+        <field name="name" length="150" />
+        <field name="slug" length="150" />
+        <many-to-one
+                field="country"
+                target-entity="App\Entity\Countries"
+                inversed-by="regions">
+            <join-column name="country_id" referenced-column-name="id" nullable="false" />
+        </many-to-one>
+    </entity>
+
+</doctrine-mapping>

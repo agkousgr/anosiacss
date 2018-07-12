@@ -41,4 +41,4 @@ security:
     encoders:
         Symfony\Component\Security\Core\User\User:
             algorithm: bcrypt
-            cost: 15
+            cost: 12

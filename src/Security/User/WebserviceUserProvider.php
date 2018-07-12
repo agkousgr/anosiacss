@@ -16,7 +16,7 @@ class WebserviceUserProvider implements UserProviderInterface
         $userAccountService = new UserAccountService;
         $userData = $userAccountService->getUser($username);
         // pretend it returns an array on success, false if there is no user
-        dump($userData);
+        dump('zong');
         if ($userData) {
             $password = '...';
 

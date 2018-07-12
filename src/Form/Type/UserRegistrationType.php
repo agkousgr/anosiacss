@@ -8,10 +8,10 @@
 
 namespace App\Form\Type;
 
-
+use App\Security\User\WebserviceUser;
 use Symfony\Component\Form\AbstractType;
 use Symfony\Component\Form\Extension\Core\Type\{
-    CheckboxType, PasswordType, TextType, EmailType
+    CheckboxType, PasswordType, TextType, EmailType, RepeatedType
 };
 use Symfony\Component\Form\FormBuilderInterface;
 use Symfony\Component\OptionsResolver\OptionsResolver;
@@ -32,7 +32,10 @@ class UserRegistrationType extends AbstractType
 //            ->add('city', TextType::class)
 //            ->add('district', TextType::class)
 //            ->add('phone01', TextType::class)
-            ->add('password', PasswordType::class)
+//            ->add('password', PasswordType::class)
+            ->add('password', RepeatedType::class, array(
+                'type' => PasswordType::class
+            ))
             ->add('newsletter', CheckboxType::class, array(
                 'required' => false,
             ))
@@ -43,6 +46,8 @@ class UserRegistrationType extends AbstractType
 
     public function configureOptions(OptionsResolver $resolver)
     {
-//        $resolver->setRequired('username');
+        $resolver->setDefault(array(
+            'data_class' => WebserviceUser::class,
+        ));
     }
 }
