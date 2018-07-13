@@ -1,0 +1,78 @@
+{% extends 'layout.html.twig' %}
+
+{% block bodyId %}my-account{% endblock %}
+{% block title %} | Ο λογαριασμός μου{% endblock %}
+{% block slider %}{% endblock %}
+{% block stylesheets %}
+    {{ parent() }}
+    <link href="{{ asset('build/css/user.css') }}" rel="stylesheet"/>
+{% endblock %}
+{% block breadcrumb %}
+
+{% endblock %}
+
+{% block body %}
+    {% include 'partials/sidebar_login.html.twig' %}
+    {% include 'partials/swipe_menu.html.twig' %}
+    {% include 'partials/site_header.html.twig' %}
+    <header class="page-header">
+        <h1 class="tt-innerpagetitle">
+            Your account
+        </h1>
+    </header>
+
+    <section id="content" class="page-content card card-block">
+        <aside id="notifications">
+            <div class="container">
+            </div>
+        </aside>
+        <div class="row">
+            <div class="links">
+                <a class="col-lg-4 col-md-6 col-sm-6 col-xs-12" id="identity-link"
+                   href="https://demo.templatetrip.com/Prestashop/PRS06/PRS176_gym/en/identity">
+                    <span class="link-item">
+                        <i class="material-icons">&#xE853;</i>
+                        Information
+                    </span>
+                </a>
+                <a class="col-lg-4 col-md-6 col-sm-6 col-xs-12" id="address-link"
+                   href="https://demo.templatetrip.com/Prestashop/PRS06/PRS176_gym/en/address">
+                    <span class="link-item">
+                        <i class="material-icons">&#xE567;</i>
+                        Add first address
+                    </span>
+                </a>
+                <a class="col-lg-4 col-md-6 col-sm-6 col-xs-12" id="history-link"
+                   href="https://demo.templatetrip.com/Prestashop/PRS06/PRS176_gym/en/order-history">
+                    <span class="link-item">
+                        <i class="material-icons">&#xE916;</i>
+                        Order history and details
+                    </span>
+                </a>
+                <a class="col-lg-4 col-md-6 col-sm-6 col-xs-12" id="order-slips-link"
+                   href="https://demo.templatetrip.com/Prestashop/PRS06/PRS176_gym/en/credit-slip">
+                    <span class="link-item">
+                        <i class="material-icons">&#xE8B0;</i>
+                        Credit slips
+                    </span>
+                </a>
+                <a class="lnk_wishlist col-lg-4 col-md-6 col-sm-6 col-xs-12"
+                   href="https://demo.templatetrip.com/Prestashop/PRS06/PRS176_gym/en/module/ttproductwishlist/mywishlist"
+                   title="My wishlists">
+                    <span class="link-item">
+                        <i class="material-icons">&#xE87D;</i>
+                        My wishlists
+                    </span>
+                </a>
+            </div>
+        </div>
+    </section>
+    <footer class="page-footer">
+        <div class="text-sm-center">
+            <a href="https://demo.templatetrip.com/Prestashop/PRS06/PRS176_gym/en/?mylogout=">
+                Sign out
+            </a>
+        </div>
+    </footer>
+    </section>
+{% endblock %}

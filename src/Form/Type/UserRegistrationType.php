@@ -46,8 +46,8 @@ class UserRegistrationType extends AbstractType
 
     public function configureOptions(OptionsResolver $resolver)
     {
-        $resolver->setDefault(array(
-            'data_class' => WebserviceUser::class,
-        ));
+//        $resolver->setDefault(array(
+//            'data_class' => WebserviceUser::class,
+//        ));
     }
 }

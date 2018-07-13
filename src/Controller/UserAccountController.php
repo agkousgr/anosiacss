@@ -15,6 +15,7 @@ use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\Form\Extension\Core\Type\{
     EmailType, PasswordType
 };
+use Symfony\Component\HttpFoundation\Session\SessionInterface;
 use Symfony\Component\Security\Core\Encoder\UserPasswordEncoderInterface;
 
 class UserAccountController extends MainController
@@ -75,10 +76,28 @@ class UserAccountController extends MainController
 //        }
 //    }
 
+    public function userAccount(UserAccountService $userAccountService)
+    {
+        if (null !== $this->loggedUser) {
+            dump($this->loggedUser);
+            $userData = $userAccountService->getUserInfo($this->loggedUser);
+            return $this->render('user/account.html.twig', [
+                'categories' => $this->categories,
+                'popular' => $this->popular,
+                'featured' => $this->featured,
+                'cartItems' => $this->cartItems,
+                'totalCartItems' => $this->totalCartItems,
+                'loggedUser' => $this->loggedUser,
+                'userData' => $userData
+            ]);
+        }
+
+    }
+
     public function register(Request $request, UserAccountService $userAccountService, UserPasswordEncoderInterface $encoder)
     {
         try {
-            $user = new WebserviceUser();
+//            $user = new WebserviceUser();
             $registerOk = 'false';
             $form = $this->createForm(UserRegistrationType::class);
             $form->handleRequest($request);
@@ -94,7 +113,7 @@ class UserAccountController extends MainController
                         'Υπάρχει ήδη χρήστης με αυτό το email. Αν δεν θυμάστε τον κωδικό σας πατήστε στο "Ξεχάσατε τον κωδικό σας?".'
                     );
                 } else {
-                    $password = $encoder->encodePassword($user, $user->getPlainPassword());
+//                    $password = $encoder->encodePassword($user, $user->getPlainPassword());
 //                    $user->set
                     $newUser = $userAccountService->createUser($form->getData());
                     if ($newUser === 'Success') {

@@ -89,6 +89,7 @@ class MainController extends AbstractController
         EntityManagerInterface $em
     )
     {
+        dump($session);
         $this->softoneLogin = $softoneLogin;
         $this->categoryService = $categoryService;
         $this->cart = $cartService;
@@ -103,7 +104,7 @@ class MainController extends AbstractController
         array_multisort(array_column($this->categories, "priority"), $this->categories);
         $this->popular = $productService->getCategoryItems(1022);
         $this->featured = $productService->getCategoryItems(1008);
-        $this->loggedUser = (null !== $session->get("anosiaUser")) ?: null;
+        $this->loggedUser = ($session->get("anosiaUser")) ?: null;
         $this->cartItems = $this->getCartItems();
 
 //        $this->totalCartItems = $em->getRepository(Cart::class)->countCartItems($session->getId(), $session->get('anosiaUser'));

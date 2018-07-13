@@ -86,7 +86,7 @@ blog_list:
 # User Account
 user_account:
     path: /user-account
-    controller: App\Controller\UserAccountController::index
+    controller: App\Controller\UserAccountController::userAccount
 
 user_registration:
     path: /user-registration

@@ -190,7 +190,7 @@ EOF;
     /**
      * @param $username
      * @param $password
-     * @return bool
+     * @return string
      */
     public function login($username, $password)
     {
@@ -217,12 +217,12 @@ EOF;
             $userData = simplexml_load_string(str_replace("utf-16", "utf-8", $result->SendMessageResult));
             dump($message, $result);
             if ((int)$userData->RowsCount === 0) {
-                return false;
-            } else if ($password === 'null') {
-                return true;
+                return '';
+//            } else if ($password === 'null') {
+//                return false;
             } else {
-//                $this->session->set("anosiaUser", $username);
-                return true;
+                $this->session->set('username', $userData->GetDataRows->GetClientsRow->NAME);
+                return $username;
             }
         } catch (\SoapFault $sf) {
             echo $sf->faultstring;
@@ -260,10 +260,10 @@ EOF;
             $userData = array();
             $result = $client->SendMessage(['Message' => $message]);
             $userXML = simplexml_load_string(str_replace("utf-16", "utf-8", $result->SendMessageResult));
+            dump($result);
             if ($userXML === false) {
                 return $userData;
             }
-//            dump($result);
             return $userData = $this->initializeUser($userXML->GetDataRows->GetUsersRow);
 //            if ((int)$userData->RowsCount === 0) {
 //                return false;
@@ -276,7 +276,11 @@ EOF;
 
     }
 
-
+    /**
+     * @param $userXML
+     * @return array
+     * @throws \Exception
+     */
     private function initializeUser($userXML)
     {
         try {
@@ -294,9 +298,68 @@ EOF;
         }
     }
 
-    public function getClient()
+    public function getUserInfo($username)
     {
+        dump($username);
+        $userArr = $this->getUser($username);
+        $clientArr = $this->getClient($username);
+        $userInfo = array_merge($userArr, $clientArr);
+        dump($userInfo);
+        return $userInfo;
+    }
 
+    public function getClient($username)
+    {
+        $client = new \SoapClient('http://caron.cloudsystems.gr/FOeshopWS/ForeignOffice.FOeshop.API.FOeshopSvc.svc?singleWsdl', ['trace' => true, 'exceptions' => true,]);
+
+        $message = <<<EOF
+<?xml version="1.0" encoding="utf-16"?>
+<ClientGetClientsRequest>
+    <Type>1042</Type>
+    <Kind>1</Kind>
+    <Domain>pharmacyone</Domain>
+    <AuthID>$this->authId</AuthID>
+    <AppID>157</AppID>
+    <CompanyID>1000</CompanyID>
+    <pagesize>1</pagesize>
+    <pagenumber>0</pagenumber>
+    <ClientID>-1</ClientID>
+    <Code>null</Code>
+    <Email>$username</Email>
+</ClientGetClientsRequest>
+EOF;
+        try {
+            $clientData = array();
+            $result = $client->SendMessage(['Message' => $message]);
+            $userXML = simplexml_load_string(str_replace("utf-16", "utf-8", $result->SendMessageResult));
+            if ($userXML === false) {
+                return $clientData;
+            }
+            dump($result);
+            return $clientData = $this->initializeClient($userXML->GetDataRows->GetClientsRow);
+//            if ((int)$userData->RowsCount === 0) {
+//                return false;
+//            } else {
+//                return true;
+//            }
+        } catch (\SoapFault $sf) {
+            echo $sf->faultstring;
+        }
+    }
+
+    private function initializeClient($userXML)
+    {
+        try {
+            dump($userXML);
+            $userArr = array(
+                'address' => $userXML->ADDRESS,
+                'name' => $userXML->NAME,
+            );
+            return $userArr;
+        } catch (\Exception $e) {
+            $this->logger->error(__METHOD__ . ' -> {message}', ['message' => $e->getMessage()]);
+            throw $e;
+        }
     }
 
     public function getUsers() // to be deleted in production

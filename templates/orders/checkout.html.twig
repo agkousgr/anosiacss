@@ -141,7 +141,8 @@
                                                                     {{ form_widget(registerForm.newsletter) }}
                                                                     {#<span><i class="material-icons rtl-no-flip checkbox-checked"></i></span>#}
                                                                     <label>Εγγραφή στο newsletter<br>
-                                                                        <em>Μπορείτε να διαγραφείτε οποιαδήποτε στιγμή επιθυμείτε.</em>
+                                                                        <em>Μπορείτε να διαγραφείτε οποιαδήποτε στιγμή
+                                                                            επιθυμείτε.</em>
                                                                     </label>
                                                                 </span>
                                                             </div>
@@ -152,7 +153,9 @@
                                                     </section>
                                                     <footer class="form-footer clearfix">
                                                         <input name="submitAddress" value="1" type="hidden">
-                                                        <button id="confirm-addresses" type="submit" class="continue btn btn-primary float-xs-right" name="confirm-addresses" value="1">
+                                                        <button id="confirm-addresses" type="submit"
+                                                                class="continue btn btn-primary float-xs-right"
+                                                                name="confirm-addresses" value="1">
                                                             Επόμενο
                                                         </button>
                                                     </footer>
@@ -526,16 +529,275 @@
                                         <h1 class="step-title h3">
                                             <span class="step-number">3</span> Shipping Method
                                         </h1>
+                                        <div class="content">
+                                            <div id="hook-display-before-carrier">
+                                            </div>
+                                            <div class="delivery-options-list">
+                                                <form class="clearfix"
+                                                        id="js-delivery"
+                                                        data-url-update="//demo.templatetrip.com/Prestashop/PRS06/PRS176_gym/en/order?ajax=1&action=selectDeliveryOption"
+                                                        method="post">
+                                                    <div class="form-fields">
+                                                        <div class="delivery-options">
+                                                            <div class="row delivery-option">
+                                                                <div class="col-sm-1">
+                                                                    <span class="custom-radio float-xs-left">
+                                                                        <input type="radio" name="delivery_option[8]"
+                                                                               id="delivery_option_1" value="1,"
+                                                                               checked>
+                                                                        <span></span>
+                                                                    </span>
+                                                                </div>
+                                                                <label for="delivery_option_1"
+                                                                       class="col-sm-11 delivery-option-2">
+                                                                    <div class="row">
+                                                                        <div class="col-sm-5 col-xs-12">
+                                                                            <div class="row">
+                                                                                <div class="col-xs-12">
+                                                                                    <span class="h6 carrier-name">Demo
+                                                                                        Store</span>
+                                                                                </div>
+                                                                            </div>
+                                                                        </div>
+                                                                        <div class="col-sm-4 col-xs-12">
+                                                                            <span class="carrier-delay">Pick up
+                                                                                in-store</span>
+                                                                        </div>
+                                                                        <div class="col-sm-3 col-xs-12">
+                                                                            <span class="carrier-price">Free</span>
+                                                                        </div>
+                                                                    </div>
+                                                                </label>
+                                                            </div>
+                                                            <div class="row carrier-extra-content">
+                                                            </div>
+                                                            <div class="clearfix"></div>
+                                                            <div class="row delivery-option">
+                                                                <div class="col-sm-1">
+                                                                    <span class="custom-radio float-xs-left">
+                                                                        <input type="radio" name="delivery_option[8]"
+                                                                               id="delivery_option_2" value="2,">
+                                                                        <span></span>
+                                                                    </span>
+                                                                </div>
+                                                                <label for="delivery_option_2"
+                                                                       class="col-sm-11 delivery-option-2">
+                                                                    <div class="row">
+                                                                        <div class="col-sm-5 col-xs-12">
+                                                                            <div class="row">
+                                                                                <div class="col-xs-3">
+                                                                                    <img src="/Prestashop/PRS06/PRS176_gym/img/s/2.jpg" alt="My carrier"/>
+                                                                                </div>
+                                                                                <div class="col-xs-9">
+                                                                                    <span class="h6 carrier-name">My
+                                                                                        carrier</span>
+                                                                                </div>
+                                                                            </div>
+                                                                        </div>
+                                                                        <div class="col-sm-4 col-xs-12">
+                                                                            <span class="carrier-delay">Delivery next
+                                                                                day!</span>
+                                                                        </div>
+                                                                        <div class="col-sm-3 col-xs-12">
+                                                                            <span class="carrier-price">$8.40 tax
+                                                                                incl.</span>
+                                                                        </div>
+                                                                    </div>
+                                                                </label>
+                                                            </div>
+                                                            <div class="row carrier-extra-content"
+                                                                 style="display:none;">
+                                                            </div>
+                                                            <div class="clearfix"></div>
+                                                        </div>
+                                                        <div class="order-options">
+                                                            <div id="delivery">
+                                                                <label for="delivery_message">If you would like to add a
+                                                                    comment about your order, please write it in the
+                                                                    field
+                                                                    below.</label>
+                                                                <textarea rows="2" cols="120" id="delivery_message"
+                                                                          name="delivery_message"></textarea>
+                                                            </div>
+                                                        </div>
+                                                    </div>
+                                                    <button type="submit"
+                                                            class="continue btn btn-primary float-xs-right"
+                                                            name="confirmDeliveryOption" value="1">
+                                                        Continue
+                                                    </button>
+                                                </form>
+                                            </div>
+                                            <div id="hook-display-after-carrier">
+                                            </div>
+                                            <div id="extra_carrier"></div>
+                                        </div>
                                     </section>
-
 
                                     <section class="checkout-step -unreachable" id="checkout-payment-step">
                                         <h1 class="step-title h3">
                                             <span class="step-number">4</span> Payment
                                         </h1>
+                                        <div class="content">
+                                            <div class="payment-options ">
+                                                <div>
+                                                    <div id="payment-option-1-container" class="payment-option clearfix">
+                                                        <span class="custom-radio float-xs-left">
+                                                            <input
+                                                                    class="ps-shown-by-js "
+                                                                    id="payment-option-1"
+                                                                    data-module-name="ps_checkpayment"
+                                                                    name="payment-option"
+                                                                    type="radio"
+                                                                    required>
+                                                            <span></span>
+                                                        </span>
+                                                        <form method="GET" class="ps-hidden-by-js">
+                                                            <button class="ps-hidden-by-js" type="submit" name="select_payment_option" value="payment-option-1">
+                                                                Choose
+                                                            </button>
+                                                        </form>
+                                                        <label for="payment-option-1">
+                                                            <span>Pay by Check</span>
+                                                        </label>
+                                                    </div>
+                                                </div>
+                                                <div id="payment-option-1-additional-information"
+                                                        class="js-additional-information definition-list additional-information ps-hidden">
+
+                                                    <section>
+                                                        <p>Please send us your check including the following details:
+                                                        <dl>
+                                                            <dt>Amount</dt>
+                                                            <dd>$33.80 (tax incl.)</dd>
+                                                            <dt>Payee</dt>
+                                                            <dd>___________</dd>
+                                                            <dt>Send your check to this address</dt>
+                                                            <dd>___________</dd>
+                                                        </dl>
+                                                        </p>
+                                                    </section>
+                                                </div>
+                                                <div id="pay-with-payment-option-1-form"
+                                                        class="js-payment-option-form  ps-hidden">
+                                                    <form id="payment-form" method="POST" action="https://demo.templatetrip.com/Prestashop/PRS06/PRS176_gym/en/module/ps_checkpayment/validation">
+                                                        <button style="display:none" id="pay-with-payment-option-1" type="submit"></button>
+                                                    </form>
+                                                </div>
+                                                <div>
+                                                    <div id="payment-option-2-container" class="payment-option clearfix">
+
+                                                        <span class="custom-radio float-xs-left">
+                                                            <input
+                                                                    class="ps-shown-by-js "
+                                                                    id="payment-option-2"
+                                                                    data-module-name="ps_wirepayment"
+                                                                    name="payment-option"
+                                                                    type="radio"
+                                                                    required>
+                                                            <span></span>
+                                                        </span>
+                                                        <form method="GET" class="ps-hidden-by-js">
+                                                            <button class="ps-hidden-by-js" type="submit" name="select_payment_option" value="payment-option-2">
+                                                                Choose
+                                                            </button>
+                                                        </form>
+
+                                                        <label for="payment-option-2">
+                                                            <span>Pay by bank wire</span>
+                                                        </label>
+
+                                                    </div>
+                                                </div>
+                                                <div id="payment-option-2-additional-information"
+                                                        class="js-additional-information definition-list additional-information ps-hidden">
+                                                    <section>
+                                                        <p>
+                                                            Please transfer the invoice amount to our bank account. You will receive our order confirmation by email containing bank details and order number.
+                                                            Goods will be reserved 7 days for you and we'll process the order immediately after receiving the payment.
+                                                        </p>
+                                                        <div class="modal fade" id="bankwire-modal" tabindex="-1" role="dialog" aria-labelledby="Bankwire information" aria-hidden="true">
+                                                            <div class="modal-dialog" role="document">
+                                                                <div class="modal-content">
+                                                                    <div class="modal-header">
+                                                                        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                                                                            <span aria-hidden="true">&times;</span>
+                                                                        </button>
+                                                                        <h2>Bankwire</h2>
+                                                                    </div>
+                                                                    <div class="modal-body">
+                                                                        <p>Payment is made by transfer of the invoice amount to the following account:</p>
+                                                                        <dl>
+                                                                            <dt>Amount</dt>
+                                                                            <dd>$33.80 (tax incl.)</dd>
+                                                                            <dt>Name of account owner</dt>
+                                                                            <dd>___________</dd>
+                                                                            <dt>Please include these details</dt>
+                                                                            <dd>___________</dd>
+                                                                            <dt>Bank name</dt>
+                                                                            <dd>___________</dd>
+                                                                        </dl>
+                                                                    </div>
+                                                                </div>
+                                                            </div>
+                                                        </div>
+                                                    </section>
+                                                </div>
+                                                <div id="pay-with-payment-option-2-form"
+                                                        class="js-payment-option-form  ps-hidden">
+                                                    <form id="payment-form" method="POST" action="https://demo.templatetrip.com/Prestashop/PRS06/PRS176_gym/en/module/ps_wirepayment/validation">
+                                                        <button style="display:none" id="pay-with-payment-option-2" type="submit"></button>
+                                                    </form>
+                                                </div>
+                                            </div>
+                                            <p class="ps-hidden-by-js">
+
+                                                By confirming the order, you certify that you have read and agree with all of the conditions below:
+                                            </p>
+                                            <form id="conditions-to-approve" method="GET">
+                                                <ul>
+                                                    <li>
+                                                        <div class="float-xs-left">
+                                                            <span class="custom-checkbox">
+                                                                <input  id    = "conditions_to_approve[terms-and-conditions]"
+                                                                        name  = "conditions_to_approve[terms-and-conditions]"
+                                                                        required
+                                                                        type  = "checkbox"
+                                                                        value = "1"
+                                                                        class = "ps-shown-by-js"
+                                                                >
+                                                                <span><i class="material-icons rtl-no-flip checkbox-checked">&#xE5CA;</i></span>
+                                                            </span>
+                                                        </div>
+                                                        <div class="condition-label">
+                                                            <label class="js-terms" for="conditions_to_approve[terms-and-conditions]">
+                                                                I agree to the <a href="https://demo.templatetrip.com/Prestashop/PRS06/PRS176_gym/en/content/3-terms-and-conditions-of-use" id="cta-terms-and-conditions-0">terms of service</a> and will adhere to them unconditionally.
+                                                            </label>
+                                                        </div>
+                                                    </li>
+                                                </ul>
+                                            </form>
+                                            <div id="payment-confirmation">
+                                                <div class="ps-shown-by-js">
+                                                    <button type="submit"  disabled  class="btn btn-primary center-block">
+                                                        Order with an obligation to pay
+                                                    </button>
+                                                </div>
+                                                <div class="ps-hidden-by-js">
+                                                </div>
+                                            </div>
+                                            <div class="modal fade" id="modal">
+                                                <div class="modal-dialog" role="document">
+                                                    <div class="modal-content">
+                                                        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                                                            <span aria-hidden="true">&times;</span>
+                                                        </button>
+                                                        <div class="js-modal-content"></div>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
                                     </section>
-
-
                                 </div>
                                 {% set cartSubTotal = 0 %}
                                 {% set cartTotal = 0 %}
