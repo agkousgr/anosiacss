@@ -34,6 +34,7 @@ class ProductController extends MainController
                 'cartItems' => $this->cartItems,
                 'totalCartItems' => $this->totalCartItems,
                 'loggedUser' => $this->loggedUser,
+                'loggedName' => $this->loggedName,
 //                'pagination' => $pagination
             ]);
         } catch (\Exception $e) {
@@ -54,6 +55,7 @@ class ProductController extends MainController
                 'cartItems' => $this->cartItems,
                 'totalCartItems' => $this->totalCartItems,
                 'loggedUser' => $this->loggedUser,
+                'loggedName' => $this->loggedName,
             ]);
         } catch (\Exception $e) {
             $this->logger->error(__METHOD__ . ' -> {message}', ['message' => $e->getMessage()]);
@@ -76,6 +78,7 @@ class ProductController extends MainController
                 'cartItems' => $this->cartItems,
                 'totalCartItems' => $this->totalCartItems,
                 'loggedUser' => $this->loggedUser,
+                'loggedName' => $this->loggedName,
                 'keyword' => $keyword
             ]);
         } catch (\Exception $e) {

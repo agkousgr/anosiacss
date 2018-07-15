@@ -30,6 +30,7 @@ class CheckoutController extends MainController
             'cartItems' => $this->cartItems,
             'totalCartItems' => $this->totalCartItems,
             'loggedUser' => $this->loggedUser,
+            'loggedName' => $this->loggedName,
             'registerForm' => $registerForm->createView()
         ]));
     }

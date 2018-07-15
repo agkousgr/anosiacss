@@ -1,10 +1,4 @@
 <?php
-/**
- * Created by PhpStorm.
- * User: john
- * Date: 3/6/2018
- * Time: 2:29 μμ
- */
 
 namespace App\Form\Type;
 
@@ -16,7 +10,7 @@ use Symfony\Component\Form\Extension\Core\Type\{
 use Symfony\Component\Form\FormBuilderInterface;
 use Symfony\Component\OptionsResolver\OptionsResolver;
 
-class UserRegistrationType extends AbstractType
+class UserInfoType extends AbstractType
 {
     public function buildForm(FormBuilderInterface $builder, array $options)
     {

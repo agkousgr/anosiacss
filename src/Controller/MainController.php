@@ -69,6 +69,11 @@ class MainController extends AbstractController
     protected $loggedUser;
 
     /**
+     * @var string
+     */
+    protected $loggedName;
+
+    /**
      * @var EntityManagerInterface
      */
     protected $em;
@@ -77,6 +82,11 @@ class MainController extends AbstractController
      * @var array
      */
     protected $cartItems;
+
+    /**
+     * @var int
+     */
+    protected $clientId;
 
 
     public function __construct(
@@ -105,6 +115,8 @@ class MainController extends AbstractController
         $this->popular = $productService->getCategoryItems(1022);
         $this->featured = $productService->getCategoryItems(1008);
         $this->loggedUser = ($session->get("anosiaUser")) ?: null;
+        $this->loggedName = ($session->get("anosiaName")) ?: null;
+        $this->loggedClientId = ($session->get("anosiaClientId")) ?: null;
         $this->cartItems = $this->getCartItems();
 
 //        $this->totalCartItems = $em->getRepository(Cart::class)->countCartItems($session->getId(), $session->get('anosiaUser'));

@@ -102,3 +102,7 @@ login:
     methods: [POST]
     options:
         expose: true
+
+logout:
+    path: /logout
+    controller: App\Controller\UserAccountController::logout

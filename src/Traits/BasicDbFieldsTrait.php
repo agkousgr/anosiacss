@@ -8,7 +8,7 @@ namespace App\Traits;
 trait BasicDbFieldsTrait
 {
     /**
-     * @var int|null
+     * @var int
      */
     protected $id;
 

@@ -27,6 +27,7 @@ class CartController extends MainController
                 'popular' => $this->popular,
                 'featured' => $this->featured,
                 'loggedUser' => $this->loggedUser,
+                'loggedName' => $this->loggedName,
                 'hideCart' => true
             ]));
         } catch (\Exception $e) {

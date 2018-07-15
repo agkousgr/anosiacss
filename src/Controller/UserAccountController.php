@@ -10,7 +10,9 @@ namespace App\Controller;
 
 use App\Security\User\WebserviceUser;
 use App\Service\UserAccountService;
-use App\Form\Type\UserRegistrationType;
+use App\Form\Type\{
+    UserAddressType, UserInfoType, UserRegistrationType
+};
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\Form\Extension\Core\Type\{
     EmailType, PasswordType
@@ -76,19 +78,43 @@ class UserAccountController extends MainController
 //        }
 //    }
 
-    public function userAccount(UserAccountService $userAccountService)
+    public function userAccount(Request $request, UserAccountService $userAccountService)
     {
         if (null !== $this->loggedUser) {
-            dump($this->loggedUser);
             $userData = $userAccountService->getUserInfo($this->loggedUser);
+            $user = new WebserviceUser(
+                $userData["clientId"],
+                $userData["username"],
+                $userData["password"],
+                $userData["name"],
+                $userData["name"],
+                $userData["newsletter"],
+                '',
+                []
+            );
+            dump($user);
+//            $formUser = $this->createForm(UserInfoType::class, $user);
+            $formUser = $this->createForm(UserInfoType::class);
+            $formUser->handleRequest($request);
+            $formAddress = $this->createForm(UserAddressType::class);
+            $formAddress->handleRequest($request);
+//            $submittedToken = $request->request->get('_csrf_token');
+            if ($formUser->isSubmitted() && $formUser->isValid()) {
+            }
+            if ($formAddress->isSubmitted() && $formUser->isValid()) {
+                $address = $userAccountService->setAddress($formAddress->getData());
+            }
             return $this->render('user/account.html.twig', [
                 'categories' => $this->categories,
                 'popular' => $this->popular,
                 'featured' => $this->featured,
                 'cartItems' => $this->cartItems,
                 'totalCartItems' => $this->totalCartItems,
+                'loggedName' => $this->loggedName,
                 'loggedUser' => $this->loggedUser,
-                'userData' => $userData
+                'userData' => $userData,
+                'formUser' => $formUser->createView(),
+                'formAddress' => $formAddress->createView(),
             ]);
         }
 
@@ -137,6 +163,7 @@ class UserAccountController extends MainController
                 'featured' => $this->featured,
                 'cartItems' => $this->cartItems,
                 'totalCartItems' => $this->totalCartItems,
+                'loggedName' => $this->loggedName,
                 'loggedUser' => $this->loggedUser,
                 'form' => $form->createView(),
                 'registerOk' => $registerOk
@@ -145,6 +172,13 @@ class UserAccountController extends MainController
             $this->logger->error(__METHOD__ . ' -> {message}', ['message' => $e->getMessage()]);
             throw $e;
         }
+    }
+
+    public function logout()
+    {
+        $this->session->remove('anosiaUser');
+        $this->session->remove('anosiaName');
+        return $this->redirectToRoute('index');
     }
 
 //    public function login(Request $request, UserAccountService $userAccountService)

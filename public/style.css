@@ -19464,6 +19464,14 @@ body.modal-open {
     font-family: pf_dintext_proregular
 }
 
+.sidebar-login ul li.user {
+    background-image: url(../assets/images/user-icon.png)
+}
+
+.sidebar-login ul li.logout {
+    background-image: url(../assets/images/logout.png)
+}
+
 .sidebar-login ul li.call {
     background-image: url(../assets/images/support-phn-icon.png)
 }
