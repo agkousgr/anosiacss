@@ -112,6 +112,108 @@ EOF;
     }
 
     /**
+     * @param \App\Entity\WebUser
+     * @param \App\Entity\Address
+     * @return int
+     */
+    private function updateClient($user, $userMainAddressData)
+    {
+        $client = new \SoapClient('http://caron.cloudsystems.gr/FOeshopWS/ForeignOffice.FOeshop.API.FOeshopSvc.svc?singleWsdl', ['trace' => true, 'exceptions' => true,]);
+
+        $name = $user->getFirstname() . ' ' . $user->getLastname();
+        $clientId = $user->getClientId();
+        $email = $user->getEmail();
+        $address = $userMainAddressData->getAddress();
+        $zip = $userMainAddressData->getZip();
+        $city = $userMainAddressData->getCity();
+        $district = $userMainAddressData->getDistrict();
+        $phone01 = $userMainAddressData->getPhone01();
+        $message = <<<EOF
+<?xml version="1.0" encoding="utf-16"?>
+<ClientSetClientRequest>
+    <Type>1028</Type>
+    <Kind>1</Kind>
+    <Domain>pharmacyone</Domain>
+    <Key>$clientId</Key>
+    <AuthID>$this->authId</AuthID>
+    <AppID>157</AppID>
+    <CompanyID>1000</CompanyID>
+    <CODE>C*</CODE>
+    <NAME>$name</NAME>
+    <BRANCH>1000</BRANCH>
+    <ADDRESS>$address</ADDRESS>
+    <ZIP>$zip</ZIP>
+    <CITY>$city</CITY>
+    <DISTRICT>$district</DISTRICT>
+    <PHONE01>$phone01</PHONE01>
+    <PHONE02></PHONE02>
+    <EMAIL>$email</EMAIL>
+</ClientSetClientRequest>
+EOF;
+
+//        dump($message);
+//        return 0;
+        try {
+            $result = $client->SendMessage(['Message' => $message]);
+            $userXML = simplexml_load_string(str_replace("utf-16", "utf-8", $result->SendMessageResult));
+//            dump($result);
+            if ((string)$userXML->IsValid === 'false') {
+                return 0;
+            } else {
+                return (int)$userXML->ID;
+            }
+        } catch (\SoapFault $sf) {
+            echo $sf->faultstring;
+        }
+    }
+
+    /**
+     * @param \App\Entity\Address
+     * @return int
+     */
+    private function setMainAddress($clientName, $address)
+    {
+        $client = new \SoapClient('http://caron.cloudsystems.gr/FOeshopWS/ForeignOffice.FOeshop.API.FOeshopSvc.svc?singleWsdl', ['trace' => true, 'exceptions' => true,]);
+
+        $message = <<<EOF
+<?xml version="1.0" encoding="utf-16"?>
+<ClientSetClientRequest>
+    <Type>1028</Type>
+    <Kind>1</Kind>
+    <Domain>pharmacyone</Domain>
+    <AuthID>$this->authId</AuthID>
+    <AppID>157</AppID>
+    <CompanyID>1000</CompanyID>
+    <CODE>C*</CODE>
+    <NAME>$clientName</NAME>
+    <BRANCH>1000</BRANCH>
+    <ADDRESS></ADDRESS>
+    <ZIP></ZIP>
+    <CITY></CITY>
+    <DISTRICT></DISTRICT>
+    <PHONE01></PHONE01>
+    <PHONE02></PHONE02>
+    <EMAIL>$address->getEmail()</EMAIL>
+</ClientSetClientRequest>
+EOF;
+
+//        dump($message);
+//        return 0;
+        try {
+            $result = $client->SendMessage(['Message' => $message]);
+            $userXML = simplexml_load_string(str_replace("utf-16", "utf-8", $result->SendMessageResult));
+//            dump($result);
+            if ((string)$userXML->IsValid === 'false') {
+                return 0;
+            } else {
+                return (int)$userXML->ID;
+            }
+        } catch (\SoapFault $sf) {
+            echo $sf->faultstring;
+        }
+    }
+
+    /**
      * @param $userData
      * @param $userId
      * @return bool
@@ -188,7 +290,7 @@ EOF;
         }
     }
 
-    public function getNewsletter($username)
+    public function getNewsletter($username, $user)
     {
         $client = new \SoapClient('http://caron.cloudsystems.gr/FOeshopWS/ForeignOffice.FOeshop.API.FOeshopSvc.svc?singleWsdl', ['trace' => true, 'exceptions' => true,]);
 
@@ -203,21 +305,20 @@ EOF;
     <CompanyID>1000</CompanyID>
     <pagesize>1</pagesize>
     <pagenumber>0</pagenumber>
-    <FilterEmail>null</FilterEmail>
+    <FilterEmail>$username</FilterEmail>
 </ClientGetNewsletterRequest>
 EOF;
         try {
             $result = $client->SendMessage(['Message' => $message]);
             $newsletterData = simplexml_load_string(str_replace("utf-16", "utf-8", $result->SendMessageResult));
-            dump($message, $result);
             if ((int)$newsletterData->RowsCount === 0) {
-                return array(
-                    'newsletter' => $newsletterData->GetDataRows->GetNewsletterRow->Allow
-                );
-            }else{
-                return array(
-                    'newsletter' => false
-                );
+                if ($newsletterData->GetDataRows->GetNewsletterRow->Allow === 'true') {
+                    $user->setNewsletter(true);
+                } else {
+                    $user->setNewsletter(false);
+                }
+            } else {
+                $user->setNewsletter(false);
             }
 //            dump($result);
         } catch (\SoapFault $sf) {
@@ -283,9 +384,9 @@ EOF;
 //            } else if ($password === 'null') {
 //                return false;
             } else {
-                $clientData = $this->getClient($username);
-                dump($clientData["name"]);
-                dump($userData->GetDataRows->GetUsersRow->ClientID);
+//                $clientData = $this->getClient($username);
+//                dump($clientData["name"]);
+//                dump($userData->GetDataRows->GetUsersRow->ClientID);
 //                $this->session->set('anosiaName', $clientData["name"]);
 //                $this->session->set('anosiaClientId', (int)$userData->GetDataRows->GetUsersRow->ClientID);
                 return $username;
@@ -376,15 +477,26 @@ EOF;
      */
     public function getUserInfo($username, $user)
     {
-        $userArr = $this->getUser($username, $user);
-        $clientArr = $this->getClient($username, $user);
-        $newsletterArr = $this->getNewsletter($username);
-        $userInfo = array_merge($userArr, $clientArr, $newsletterArr);
-        dump($userInfo);
-        return $userInfo;
+        $this->getUser($username, $user);
+        $this->getClient($username, $user);
+        $this->getNewsletter($username, $user);
+//        $userInfo = array_merge($userArr, $clientArr, $newsletterArr);
+        return;
     }
 
-    public function getClient($username, $user)
+    /**
+     * @param \App\Entity\WebUser
+     * @param $userMainAddressData
+     */
+    public function updateUserInfo($user, $userMainAddressData)
+    {
+        $this->updateClient($user, $userMainAddressData);
+        $this->getNewsletter($username, $user);
+//        $userInfo = array_merge($userArr, $clientArr, $newsletterArr);
+        return;
+    }
+
+    public function getClient($username, $user = null)
     {
         $client = new \SoapClient('http://caron.cloudsystems.gr/FOeshopWS/ForeignOffice.FOeshop.API.FOeshopSvc.svc?singleWsdl', ['trace' => true, 'exceptions' => true,]);
 
@@ -417,6 +529,54 @@ EOF;
             $user->setLastname($userName[1]);
             $user->setEmail($userXML->EMAIL);
             dump($user);
+            return;
+//            dump($result);
+//            return $clientData = $this->initializeClient($userXML->GetDataRows->GetClientsRow);
+        } catch (\SoapFault $sf) {
+            echo $sf->faultstring;
+        }
+    }
+
+    /**
+     * @param $username
+     * @param \App\Entity\Address
+     */
+    public function getMainAddress($username, $userMainAddress)
+    {
+        $client = new \SoapClient('http://caron.cloudsystems.gr/FOeshopWS/ForeignOffice.FOeshop.API.FOeshopSvc.svc?singleWsdl', ['trace' => true, 'exceptions' => true,]);
+
+        $message = <<<EOF
+<?xml version="1.0" encoding="utf-16"?>
+<ClientGetClientsRequest>
+    <Type>1042</Type>
+    <Kind>1</Kind>
+    <Domain>pharmacyone</Domain>
+    <AuthID>$this->authId</AuthID>
+    <AppID>157</AppID>
+    <CompanyID>1000</CompanyID>
+    <pagesize>1</pagesize>
+    <pagenumber>0</pagenumber>
+    <ClientID>-1</ClientID>
+    <Code>null</Code>
+    <Email>$username</Email>
+</ClientGetClientsRequest>
+EOF;
+        try {
+            $result = $client->SendMessage(['Message' => $message]);
+            $clientResponse = simplexml_load_string(str_replace("utf-16", "utf-8", $result->SendMessageResult));
+            if ($clientResponse === false) {
+                return;
+            }
+            dump($result);
+            $userXML = $clientResponse->GetDataRows->GetClientsRow;
+            (empty($userXML->ADDRESS)) ? $userMainAddress->setAddress((string)$userXML->ADDRESS) : $userMainAddress->setAddress('');
+            (empty($userXML->ZIP)) ? $userMainAddress->setZip((string)$userXML->ZIP) : $userMainAddress->setZip('');
+            (null !== $userXML->CITY) ? $userMainAddress->setCity((string)$userXML->CITY) : $userMainAddress->setCity('');
+            (null !== $userXML->DISTRICT) ? $userMainAddress->setDistrict((string)$userXML->DISTRICT) : $userMainAddress->setDistrict('');
+            (null !== $userXML->PHONE01) ? $userMainAddress->setPhone01((string)$userXML->PHONE01) : $userMainAddress->setPhone01('');
+//            $user->setLastname($userName[1]);
+//            $user->setEmail($userXML->EMAIL);
+            dump($userMainAddress);
             return;
 //            dump($result);
 //            return $clientData = $this->initializeClient($userXML->GetDataRows->GetClientsRow);

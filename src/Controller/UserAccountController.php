@@ -8,11 +8,12 @@
 
 namespace App\Controller;
 
+use App\Entity\Address;
 use App\Entity\WebUser;
 use App\Security\User\WebserviceUser;
 use App\Service\UserAccountService;
 use App\Form\Type\{
-    UserAddressType, UserInfoType, UserRegistrationType
+    UserAddressType, UserGeneralInfoType, UserInfoType, UserRegistrationType
 };
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\Form\Extension\Core\Type\{
@@ -83,14 +84,10 @@ class UserAccountController extends MainController
     {
         if (null !== $this->loggedUser) {
             $user = new WebUser();
+            $userMainAddress = new Address();
             $userData = $userAccountService->getUserInfo($this->loggedUser, $user);
-//            $user->setClientId($userData['clientId']);
-//            $user->setFirstname($userData['name']);
-//            $user->setEmail($userData['username']);
-//            $user->setLastname($userData['name']);
-//            $user->setNewsletter($userData['newsletter']);
-//            $user->setUsername($userData['username']);
-//            $user->setPassword($userData['password']);
+            $userMainAddressData = $userAccountService->getMainAddress($this->loggedUser, $userMainAddress);
+
 //            $user = new WebserviceUser(
 //                $userData["clientId"],
 //                $userData["username"],
@@ -101,17 +98,21 @@ class UserAccountController extends MainController
 //                '',
 //                []
 //            );
-            dump($user);
-            $formUser = $this->createForm(UserInfoType::class, $user);
+            $formUser = $this->createForm(UserGeneralInfoType::class, $user);
 //            $formUser = $this->createForm(UserInfoType::class);
             $formUser->handleRequest($request);
-            $formAddress = $this->createForm(UserAddressType::class);
-            $formAddress->handleRequest($request);
+            $formMainAddress = $this->createForm(UserAddressType::class, $userMainAddress);
+            $formMainAddress->handleRequest($request);
 //            $submittedToken = $request->request->get('_csrf_token');
             if ($formUser->isSubmitted() && $formUser->isValid()) {
+                $user->setFirstname($formUser->get('firstname')->getData());
+                $user->setLastname($formUser->get('lastname')->getData());
+                $user->setNewsletter($formUser->get('newsletter')->getData());
+                dump($user);
+                $userAccountService->updateUserInfo($user, $userMainAddressData);
             }
-            if ($formAddress->isSubmitted() && $formUser->isValid()) {
-                $address = $userAccountService->setAddress($formAddress->getData());
+            if ($formMainAddress->isSubmitted() && $formUser->isValid()) {
+                $address = $userAccountService->setAddress($userMainAddress->getData());
             }
             return $this->render('user/account.html.twig', [
                 'categories' => $this->categories,
@@ -123,7 +124,7 @@ class UserAccountController extends MainController
                 'loggedUser' => $this->loggedUser,
                 'userData' => $userData,
                 'formUser' => $formUser->createView(),
-                'formAddress' => $formAddress->createView(),
+                'formAddress' => $formMainAddress->createView(),
             ]);
         }
 

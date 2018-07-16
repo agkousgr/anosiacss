@@ -75,44 +75,44 @@
                                         </div>
                                     </div>
 
-                                    <div class="form-group row ">
-                                        {{ form_label(formUser.username, 'E-mail', {'label_attr': {'class': 'col-md-3 form-control-label required'}}) }}
-                                        <div class="col-md-6">
-                                            {{ form_widget(formUser.username, {'attr': {'class': 'form-control'}}) }}
-                                        </div>
-                                        <div class="col-md-3 form-control-comment">
-                                        </div>
-                                    </div>
+                                    {#<div class="form-group row ">#}
+                                        {#{{ form_label(formUser.username, 'E-mail', {'label_attr': {'class': 'col-md-3 form-control-label required'}}) }}#}
+                                        {#<div class="col-md-6">#}
+                                            {#{{ form_widget(formUser.username, {'attr': {'class': 'form-control'}}) }}#}
+                                        {#</div>#}
+                                        {#<div class="col-md-3 form-control-comment">#}
+                                        {#</div>#}
+                                    {#</div>#}
 
-                                    <div class="form-group row ">
-                                        {{ form_label(formUser.password.first, 'Κωδικός', {'label_attr': {'class': 'col-md-3 form-control-label required'}}) }}
-                                        <div class="col-md-6">
-                                            <div class="input-group js-parent-focus">
-                                                {{ form_widget(formUser.password.first, {'attr': {'class': 'form-control'}}) }}
-                                                <span class="input-group-btn">
-                                                    <button class="btn" type="button"
-                                                            data-action="show-password"
-                                                            data-text-show="Εμφάνιση"
-                                                            data-text-hide="Απόκρυψη">
-                                                        Show
-                                                    </button>
-                                                </span>
-                                            </div>
-                                        </div>
+                                    {#<div class="form-group row ">#}
+                                        {#{{ form_label(formUser.password.first, 'Κωδικός', {'label_attr': {'class': 'col-md-3 form-control-label required'}}) }}#}
+                                        {#<div class="col-md-6">#}
+                                            {#<div class="input-group js-parent-focus">#}
+                                                {#{{ form_widget(formUser.password.first, {'attr': {'class': 'form-control'}}) }}#}
+                                                {#<span class="input-group-btn">#}
+                                                    {#<button class="btn" type="button"#}
+                                                            {#data-action="show-password"#}
+                                                            {#data-text-show="Εμφάνιση"#}
+                                                            {#data-text-hide="Απόκρυψη">#}
+                                                        {#Show#}
+                                                    {#</button>#}
+                                                {#</span>#}
+                                            {#</div>#}
+                                        {#</div>#}
 
-                                        <div class="col-md-3 form-control-comment">
-                                        </div>
-                                    </div>
+                                        {#<div class="col-md-3 form-control-comment">#}
+                                        {#</div>#}
+                                    {#</div>#}
 
-                                    <div class="form-group row ">
-                                        {{ form_label(formUser.password.second, 'Επαλήθευση κωδικού', {'label_attr': {'class': 'col-md-3 form-control-label required'}}) }}
-                                        <div class="col-md-6">
-                                            {{ form_widget(formUser.password.second, {'attr': {'class': 'form-control'}}) }}
-                                        </div>
+                                    {#<div class="form-group row ">#}
+                                        {#{{ form_label(formUser.password.second, 'Επαλήθευση κωδικού', {'label_attr': {'class': 'col-md-3 form-control-label required'}}) }}#}
+                                        {#<div class="col-md-6">#}
+                                            {#{{ form_widget(formUser.password.second, {'attr': {'class': 'form-control'}}) }}#}
+                                        {#</div>#}
 
-                                        <div class="col-md-3 form-control-comment">
-                                        </div>
-                                    </div>
+                                        {#<div class="col-md-3 form-control-comment">#}
+                                        {#</div>#}
+                                    {#</div>#}
 
                                     {#<div class="form-group row ">#}
                                     {#<label class="col-md-3 form-control-label">#}
@@ -152,11 +152,11 @@
                                             data-link-action="save-customer" type="submit">
                                         Αποθήκευση
                                     </button>
-                                    <div class="pull-right">
-                                        <a href="#">
-                                            Ξεχάσατε τον κωδικό σας?
-                                        </a>
-                                    </div>
+                                    {#<div class="pull-right">#}
+                                        {#<a href="#">#}
+                                            {#Ξεχάσατε τον κωδικό σας?#}
+                                        {#</a>#}
+                                    {#</div>#}
                                 </footer>
                                 {#<input type="hidden" name="_csrf_token"#}
                                 {#value="{{ csrf_token('register') }}">#}
