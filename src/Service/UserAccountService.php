@@ -8,6 +8,7 @@
 
 namespace App\Service;
 
+use App\Entity\WebUser;
 use Psr\Log\LoggerInterface;
 use Symfony\Component\HttpFoundation\Session\SessionInterface;
 
@@ -298,10 +299,10 @@ EOF;
     /**
      * @param string $username
      * @param string $password
-     * @return array
+     * @return \App\Entity\WebUser
      * @throws \Exception
      */
-    public function getUser($username = 'null', $password = 'null') // remove nulls in production
+    public function getUser($username = 'null', $user = null) // remove nulls in production
     {
         $client = new \SoapClient('http://caron.cloudsystems.gr/FOeshopWS/ForeignOffice.FOeshop.API.FOeshopSvc.svc?singleWsdl', ['trace' => true, 'exceptions' => true,]);
 
@@ -317,18 +318,23 @@ EOF;
     <pagesize>20</pagesize>
     <pagenumber>0</pagenumber>
     <Username>$username</Username>
-    <Password>$password</Password>
+    <Password>null</Password>
     <Email>null</Email>
 </ClientGetUsersRequest>
 EOF;
         try {
             $userData = array();
             $result = $client->SendMessage(['Message' => $message]);
-            $userXML = simplexml_load_string(str_replace("utf-16", "utf-8", $result->SendMessageResult));
-            if ($userXML === false) {
+            $userResponse = simplexml_load_string(str_replace("utf-16", "utf-8", $result->SendMessageResult));
+            if ($userResponse === false) {
                 return $userData;
             }
-            return $userData = $this->initializeUser($userXML->GetDataRows->GetUsersRow);
+            $userXML = $userResponse->GetDataRows->GetUsersRow;
+            $user->setUsername($userXML->Username);
+            $user->setPassword($userXML->Password);
+            $user->setClientId($userXML->ClientID);
+            return;
+//            return $userData = $this->initializeUser($userXML->GetDataRows->GetUsersRow);
 //            if ((int)$userData->RowsCount === 0) {
 //                return false;
 //            } else {
@@ -362,17 +368,23 @@ EOF;
         }
     }
 
-    public function getUserInfo($username)
+    /**
+     * @param $username
+     * @param \App\Entity\WebUser
+     * @return array
+     * @throws \Exception
+     */
+    public function getUserInfo($username, $user)
     {
-        $userArr = $this->getUser($username);
-        $clientArr = $this->getClient($username);
+        $userArr = $this->getUser($username, $user);
+        $clientArr = $this->getClient($username, $user);
         $newsletterArr = $this->getNewsletter($username);
         $userInfo = array_merge($userArr, $clientArr, $newsletterArr);
         dump($userInfo);
         return $userInfo;
     }
 
-    public function getClient($username)
+    public function getClient($username, $user)
     {
         $client = new \SoapClient('http://caron.cloudsystems.gr/FOeshopWS/ForeignOffice.FOeshop.API.FOeshopSvc.svc?singleWsdl', ['trace' => true, 'exceptions' => true,]);
 
@@ -393,14 +405,21 @@ EOF;
 </ClientGetClientsRequest>
 EOF;
         try {
-            $clientData = array();
             $result = $client->SendMessage(['Message' => $message]);
-            $userXML = simplexml_load_string(str_replace("utf-16", "utf-8", $result->SendMessageResult));
-            if ($userXML === false) {
-                return $clientData;
+            $clientResponse = simplexml_load_string(str_replace("utf-16", "utf-8", $result->SendMessageResult));
+            if ($clientResponse === false) {
+                return;
             }
+            dump($result);
+            $userXML = $clientResponse->GetDataRows->GetClientsRow;
+            $userName = explode(' ', $userXML->NAME);
+            $user->setFirstname($userName[0]);
+            $user->setLastname($userName[1]);
+            $user->setEmail($userXML->EMAIL);
+            dump($user);
+            return;
 //            dump($result);
-            return $clientData = $this->initializeClient($userXML->GetDataRows->GetClientsRow);
+//            return $clientData = $this->initializeClient($userXML->GetDataRows->GetClientsRow);
         } catch (\SoapFault $sf) {
             echo $sf->faultstring;
         }

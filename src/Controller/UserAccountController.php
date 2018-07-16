@@ -8,6 +8,7 @@
 
 namespace App\Controller;
 
+use App\Entity\WebUser;
 use App\Security\User\WebserviceUser;
 use App\Service\UserAccountService;
 use App\Form\Type\{
@@ -81,20 +82,28 @@ class UserAccountController extends MainController
     public function userAccount(Request $request, UserAccountService $userAccountService)
     {
         if (null !== $this->loggedUser) {
-            $userData = $userAccountService->getUserInfo($this->loggedUser);
-            $user = new WebserviceUser(
-                $userData["clientId"],
-                $userData["username"],
-                $userData["password"],
-                $userData["name"],
-                $userData["name"],
-                $userData["newsletter"],
-                '',
-                []
-            );
+            $user = new WebUser();
+            $userData = $userAccountService->getUserInfo($this->loggedUser, $user);
+//            $user->setClientId($userData['clientId']);
+//            $user->setFirstname($userData['name']);
+//            $user->setEmail($userData['username']);
+//            $user->setLastname($userData['name']);
+//            $user->setNewsletter($userData['newsletter']);
+//            $user->setUsername($userData['username']);
+//            $user->setPassword($userData['password']);
+//            $user = new WebserviceUser(
+//                $userData["clientId"],
+//                $userData["username"],
+//                $userData["password"],
+//                $userData["name"],
+//                $userData["name"],
+//                $userData["newsletter"],
+//                '',
+//                []
+//            );
             dump($user);
-//            $formUser = $this->createForm(UserInfoType::class, $user);
-            $formUser = $this->createForm(UserInfoType::class);
+            $formUser = $this->createForm(UserInfoType::class, $user);
+//            $formUser = $this->createForm(UserInfoType::class);
             $formUser->handleRequest($request);
             $formAddress = $this->createForm(UserAddressType::class);
             $formAddress->handleRequest($request);
