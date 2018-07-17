@@ -11,6 +11,11 @@ class WebUser
     private $clientId;
 
     /**
+     * @var string|null
+     */
+    private $newsletterId;
+
+    /**
      * @var string
      */
     private $username;
@@ -39,6 +44,132 @@ class WebUser
      * @var bool
      */
     private $newsletter;
+
+    /**
+     * @var string|null
+     */
+    protected $address;
+
+    /**
+     * $var string|null
+     */
+    protected $zip;
+
+    /**
+     * $var string|null
+     */
+    protected $city;
+
+    /**
+     * $var string|null
+     */
+    protected $district;
+
+    /**
+     * $var string|null
+     */
+    protected $phone01;
+
+    /**
+     * $var string|null
+     */
+    protected $phone02;
+
+    /**
+     * @return string|null
+     */
+    public function getAddress(): string
+    {
+        return $this->address;
+    }
+
+    /**
+     * @param string $address
+     */
+    public function setAddress(string $address): void
+    {
+        $this->address = $address;
+    }
+
+    /**
+     * @return mixed
+     */
+    public function getZip()
+    {
+        return $this->zip;
+    }
+
+    /**
+     * @param mixed $zip
+     */
+    public function setZip($zip): void
+    {
+        $this->zip = $zip;
+    }
+
+    /**
+     * @return mixed
+     */
+    public function getCity()
+    {
+        return $this->city;
+    }
+
+    /**
+     * @param mixed $city
+     */
+    public function setCity($city): void
+    {
+        $this->city = $city;
+    }
+
+    /**
+     * @return mixed
+     */
+    public function getDistrict()
+    {
+        return $this->district;
+    }
+
+    /**
+     * @param mixed $district
+     */
+    public function setDistrict($district): void
+    {
+        $this->district = $district;
+    }
+
+    /**
+     * @return mixed
+     */
+    public function getPhone01()
+    {
+        return $this->phone01;
+    }
+
+    /**
+     * @param mixed $phone01
+     */
+    public function setPhone01($phone01): void
+    {
+        $this->phone01 = $phone01;
+    }
+
+    /**
+     * @return mixed
+     */
+    public function getPhone02()
+    {
+        return $this->phone02;
+    }
+
+    /**
+     * @param mixed $phone02
+     */
+    public function setPhone02($phone02): void
+    {
+        $this->phone02 = $phone02;
+    }
 
     /**
      * @return string|null
@@ -150,6 +281,22 @@ class WebUser
     public function setNewsletter(bool $newsletter): void
     {
         $this->newsletter = $newsletter;
+    }
+
+    /**
+     * @return null|string
+     */
+    public function getNewsletterId(): ?string
+    {
+        return $this->newsletterId;
+    }
+
+    /**
+     * @param null|string $newsletterId
+     */
+    public function setNewsletterId(?string $newsletterId): void
+    {
+        $this->newsletterId = $newsletterId;
     }
 
 

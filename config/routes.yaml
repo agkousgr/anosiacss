@@ -96,6 +96,12 @@ get_users:
     path: /get-users
     controller: App\Controller\UserAccountController::getUsers
 
+create_address:
+    path: /new-address
+    controller: App\Controller\UserAccountController::createAddress
+
+
+# login logout
 login:
     path: /login
     controller: App\Controller\AjaxLoginController::login

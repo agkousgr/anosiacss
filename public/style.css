@@ -9358,7 +9358,8 @@ a.ui-button:active {
 
 a,
 body {
-    color: #171717
+    color: #171717;
+    letter-spacing: 1px;
 }
 
 .apex-slider .button.big:hover,

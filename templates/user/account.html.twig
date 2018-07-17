@@ -76,42 +76,42 @@
                                     </div>
 
                                     {#<div class="form-group row ">#}
-                                        {#{{ form_label(formUser.username, 'E-mail', {'label_attr': {'class': 'col-md-3 form-control-label required'}}) }}#}
-                                        {#<div class="col-md-6">#}
-                                            {#{{ form_widget(formUser.username, {'attr': {'class': 'form-control'}}) }}#}
-                                        {#</div>#}
-                                        {#<div class="col-md-3 form-control-comment">#}
-                                        {#</div>#}
+                                    {#{{ form_label(formUser.username, 'E-mail', {'label_attr': {'class': 'col-md-3 form-control-label required'}}) }}#}
+                                    {#<div class="col-md-6">#}
+                                    {#{{ form_widget(formUser.username, {'attr': {'class': 'form-control'}}) }}#}
+                                    {#</div>#}
+                                    {#<div class="col-md-3 form-control-comment">#}
+                                    {#</div>#}
                                     {#</div>#}
 
                                     {#<div class="form-group row ">#}
-                                        {#{{ form_label(formUser.password.first, 'Κωδικός', {'label_attr': {'class': 'col-md-3 form-control-label required'}}) }}#}
-                                        {#<div class="col-md-6">#}
-                                            {#<div class="input-group js-parent-focus">#}
-                                                {#{{ form_widget(formUser.password.first, {'attr': {'class': 'form-control'}}) }}#}
-                                                {#<span class="input-group-btn">#}
-                                                    {#<button class="btn" type="button"#}
-                                                            {#data-action="show-password"#}
-                                                            {#data-text-show="Εμφάνιση"#}
-                                                            {#data-text-hide="Απόκρυψη">#}
-                                                        {#Show#}
-                                                    {#</button>#}
-                                                {#</span>#}
-                                            {#</div>#}
-                                        {#</div>#}
+                                    {#{{ form_label(formUser.password.first, 'Κωδικός', {'label_attr': {'class': 'col-md-3 form-control-label required'}}) }}#}
+                                    {#<div class="col-md-6">#}
+                                    {#<div class="input-group js-parent-focus">#}
+                                    {#{{ form_widget(formUser.password.first, {'attr': {'class': 'form-control'}}) }}#}
+                                    {#<span class="input-group-btn">#}
+                                    {#<button class="btn" type="button"#}
+                                    {#data-action="show-password"#}
+                                    {#data-text-show="Εμφάνιση"#}
+                                    {#data-text-hide="Απόκρυψη">#}
+                                    {#Show#}
+                                    {#</button>#}
+                                    {#</span>#}
+                                    {#</div>#}
+                                    {#</div>#}
 
-                                        {#<div class="col-md-3 form-control-comment">#}
-                                        {#</div>#}
+                                    {#<div class="col-md-3 form-control-comment">#}
+                                    {#</div>#}
                                     {#</div>#}
 
                                     {#<div class="form-group row ">#}
-                                        {#{{ form_label(formUser.password.second, 'Επαλήθευση κωδικού', {'label_attr': {'class': 'col-md-3 form-control-label required'}}) }}#}
-                                        {#<div class="col-md-6">#}
-                                            {#{{ form_widget(formUser.password.second, {'attr': {'class': 'form-control'}}) }}#}
-                                        {#</div>#}
+                                    {#{{ form_label(formUser.password.second, 'Επαλήθευση κωδικού', {'label_attr': {'class': 'col-md-3 form-control-label required'}}) }}#}
+                                    {#<div class="col-md-6">#}
+                                    {#{{ form_widget(formUser.password.second, {'attr': {'class': 'form-control'}}) }}#}
+                                    {#</div>#}
 
-                                        {#<div class="col-md-3 form-control-comment">#}
-                                        {#</div>#}
+                                    {#<div class="col-md-3 form-control-comment">#}
+                                    {#</div>#}
                                     {#</div>#}
 
                                     {#<div class="form-group row ">#}
@@ -153,9 +153,9 @@
                                         Αποθήκευση
                                     </button>
                                     {#<div class="pull-right">#}
-                                        {#<a href="#">#}
-                                            {#Ξεχάσατε τον κωδικό σας?#}
-                                        {#</a>#}
+                                    {#<a href="#">#}
+                                    {#Ξεχάσατε τον κωδικό σας?#}
+                                    {#</a>#}
                                     {#</div>#}
                                 </footer>
                                 {#<input type="hidden" name="_csrf_token"#}
@@ -171,8 +171,43 @@
                                 </span>
                             </a>
                             <section class="address-form hidden col-xs-12">
-                                {{ form_start(formUser) }}
                                 <section>
+                                    {% if userData["address"] is not empty %}
+                                        {% set viewAddress = '' %}
+                                    {% else %}
+                                        {% set viewAddress = 'hidden' %}
+                                    {% endif %}
+
+                                    <div id="view-address" class="col-lg-4 col-md-6 col-sm-6 {{ viewAddress }}">
+                                        <article id="address-9" class="address" data-id-address="9">
+                                            <div class="address-body">
+                                                <h4>Βασική διεύθυνση</h4>
+                                                <address>
+                                                    {{ userData["address"] }}<br>
+                                                    {{ userData["city"] }}<br>
+                                                    {{ userData["zip"] }}<br>
+                                                    {{ userData["district"] }}<br>
+                                                    {{ userData["phone01"] }}<br>
+                                                    {{ userData["email"] }}<br>
+                                                </address>
+                                            </div>
+                                            <div class="address-footer">
+                                                <a href="" id="edit-main-address"
+                                                   data-link-action="edit-address">
+                                                    <i class="material-icons"></i>
+                                                    <span>Update</span>
+                                                </a>
+                                            </div>
+                                        </article>
+                                    </div>
+                                    <div class="clearfix"></div>
+                                    <div class="addresses-footer {{ viewAddress }}">
+                                        <a href="https://demo.templatetrip.com/Prestashop/PRS06/PRS176_gym/en/address"
+                                           data-link-action="add-address">
+                                            <i class="material-icons"></i>
+                                            <span>Create new address</span>
+                                        </a>
+                                    </div>
                                     {{ form_start(formAddress) }}
                                     <div class="form-group row ">
                                         {{ form_label(formAddress.address, 'Διεύθυνση', {'label_attr': {'class': 'col-md-3 form-control-label required'}}) }}
@@ -220,7 +255,7 @@
                                             Αποθήκευση
                                         </button>
                                     </footer>
-                                    {{ form_start(formAddress) }}
+                                    {{ form_end(formAddress) }}
                                 </section>
                             </section>
                             <a class="col-lg-4 col-md-6 col-sm-6 col-xs-12" id="history-link"
@@ -231,7 +266,6 @@
                                 </span>
                             </a>
                             <section class="orders-form hidden col-xs-12">
-                                {{ form_start(formUser) }}
                                 <section>
                                     <div>Δεν υπάρχουν διαθέσιμες παραγγελίες</div>
                                 </section>
