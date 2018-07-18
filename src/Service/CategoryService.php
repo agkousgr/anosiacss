@@ -136,24 +136,25 @@ EOF;
     <IsTopLevel>1</IsTopLevel>
     <IsVisible>-1</IsVisible>
     <CategoryID>-1</CategoryID>
+    <Slug></Slug>
 </ClientGetCategoriesRequest>
 EOF;
         try {
             $result = $client->SendMessage(['Message' => $message]);
             $resultXML = simplexml_load_string(str_replace("utf-16", "utf-8", $result->SendMessageResult));
-//            dump($resultXML);
+            dump($message, $result);
             $categories = $this->initializeCategories($resultXML->GetDataRows->GetCategoriesRow);
 
             return $categories;
 
             // -------------------------------------------------
 
-            return $resultXML;
-
-            $doc = new DOMDocument();
-            $doc->formatOutput = TRUE;
-            $doc->loadXML($resultXML->GetDataRows->GetCategoriesRow->asXML());
-            $xml = $doc->saveXML();
+//            return $resultXML;
+//
+//            $doc = new DOMDocument();
+//            $doc->formatOutput = TRUE;
+//            $doc->loadXML($resultXML->GetDataRows->GetCategoriesRow->asXML());
+//            $xml = $doc->saveXML();
 
 //            return new Response(var_dump($xml));
 
@@ -161,10 +162,10 @@ EOF;
 //    $xml
 //EOF;
 
-            $categories = $this->serializer->deserialize($xml, Category::class, 'xml');
-//            return new Response(var_dump($categories));
-//            return str_replace("utf-16", "utf-8", $result->SendMessageResult);
-            return $categories;
+//            $categories = $this->serializer->deserialize($xml, Category::class, 'xml');
+////            return new Response(var_dump($categories));
+////            return str_replace("utf-16", "utf-8", $result->SendMessageResult);
+//            return $categories;
         } catch (\SoapFault $sf) {
             echo $sf->faultstring;
         }
@@ -259,13 +260,13 @@ EOF;
         $message = <<<EOF
 <?xml version="1.0" encoding="utf-16"?>
 <ClientGetCategoryChildrenRequest>
-<Type>1009</Type>
-<Kind>1</Kind>
-<Domain>pharmacyone</Domain>
-<AuthID>$this->authId</AuthID>
-<AppID>157</AppID>
-<CompanyID>1000</CompanyID>
-<CategoryID>$ctgId</CategoryID>
+    <Type>1009</Type>
+    <Kind>1</Kind>
+    <Domain>pharmacyone</Domain>
+    <AuthID>$this->authId</AuthID>
+    <AppID>157</AppID>
+    <CompanyID>1000</CompanyID>
+    <CategoryID>$ctgId</CategoryID>
 </ClientGetCategoryChildrenRequest>
 EOF;
         try {
