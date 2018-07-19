@@ -3,7 +3,7 @@
 namespace App\Entity;
 
 
-class WebUser
+class WebUser extends Address
 {
     /**
      * @var string|null
@@ -45,25 +45,6 @@ class WebUser
      */
     private $newsletter;
 
-    /**
-     * @var string|null
-     */
-    protected $address;
-
-    /**
-     * $var string|null
-     */
-    protected $zip;
-
-    /**
-     * $var string|null
-     */
-    protected $city;
-
-    /**
-     * $var string|null
-     */
-    protected $district;
 
     /**
      * $var string|null

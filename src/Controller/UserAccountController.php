@@ -140,6 +140,7 @@ class UserAccountController extends MainController
                     'formAddress' => $formMainAddress->createView(),
                 ]);
             }
+            return $this->redirectToRoute('index');
         } catch (\Exception $e) {
             $this->logger->error(__METHOD__ . ' -> {message}', ['message' => $e->getMessage()]);
             throw $e;
@@ -149,7 +150,38 @@ class UserAccountController extends MainController
     public function createAddress(Request $request, UserAccountService $userAccountService)
     {
         try {
-
+            if (null !== $this->loggedUser) {
+                $user = new WebUser();
+                $userData = $userAccountService->getUserInfo($this->loggedUser, $user);
+                $formAddress = $this->createForm(UserAddressType::class, $user);
+                $formAddress->handleRequest($request);
+                if ($formAddress->isSubmitted() && $formAddress->isValid()) {
+                    $user->setAddress($formAddress->get('address')->getData());
+                    $user->setZip($formAddress->get('zip')->getData());
+                    $user->setCity($formAddress->get('city')->getData());
+                    $user->setDistrict($formAddress->get('district')->getData());
+                    $user->setPhone01($formAddress->get('phone01')->getData());
+                    $address = $userAccountService->updateUserInfo($user);
+                    $userData = $userAccountService->getUserInfo($this->loggedUser, $user);
+                    $this->addFlash(
+                        'success',
+                        'Τα στοιχεία της διεύθυνσής σας ενημερώθηκαν με επιτυχία.'
+                    );
+                }
+                return $this->render('user/createAddress.html.twig', [
+                    'categories' => $this->categories,
+                    'popular' => $this->popular,
+                    'featured' => $this->featured,
+                    'cartItems' => $this->cartItems,
+                    'totalCartItems' => $this->totalCartItems,
+                    'loggedName' => $this->loggedName,
+                    'loggedUser' => $this->loggedUser,
+//                'userData' => $userData,
+//                'formUser' => $formUser->createView(),
+//                'formAddress' => $formMainAddress->createView(),
+                ]);
+            }
+            return $this->redirectToRoute('index');
         } catch (\Exception $e) {
             $this->logger->error(__METHOD__ . ' -> {message}', ['message' => $e->getMessage()]);
             throw $e;

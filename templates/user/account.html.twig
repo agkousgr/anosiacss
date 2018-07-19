@@ -1,11 +1,14 @@
 {% extends 'layout.html.twig' %}
 
 {% block bodyId %}my-account{% endblock %}
+{% block bodyClass %}page-addresses{% endblock %}
 {% block title %} | Ο λογαριασμός μου{% endblock %}
 {% block slider %}{% endblock %}
 {% block stylesheets %}
     {{ parent() }}
-    <link href="{{ asset('build/css/orders.css') }}" rel="stylesheet"/>
+    <link href="https://fonts.googleapis.com/css?family=Roboto:300,400,500,600,700"
+          rel="stylesheet">
+    {#<link href="{{ asset('build/css/orders.css') }}" rel="stylesheet"/>#}
     <link href="{{ asset('build/css/user.css') }}" rel="stylesheet"/>
 {% endblock %}
 {% block breadcrumb %}
@@ -24,7 +27,7 @@
         </div>
     </div>
 
-    <div class="section" style="background-image:url({{ asset('images/bg-5.jpg') }});">
+    <div id="page" class="section" style="background-image:url({{ asset('images/bg-5.jpg') }});">
         <div class="container">
             <div class="row">
                 {% for message in app.flashes('notice') %}
@@ -55,97 +58,94 @@
                             </a>
                             <section class="register-form hidden col-xs-12">
                                 {{ form_start(formUser) }}
-                                <section>
-                                    <input name="id_customer" value="" type="hidden">
-                                    <div class="form-group row ">
-                                        {{ form_label(formUser.firstname, 'Όνομα', {'label_attr': {'class': 'col-md-3 form-control-label required'}}) }}
-                                        <div class="col-md-6">
-                                            {{ form_widget(formUser.firstname, {'attr': {'class': 'form-control'}}) }}
-                                        </div>
-                                        <div class="col-md-3 form-control-comment">
-                                        </div>
+                                <div class="form-group row ">
+                                    {{ form_label(formUser.firstname, 'Όνομα', {'label_attr': {'class': 'col-md-3 form-control-label required'}}) }}
+                                    <div class="col-md-6">
+                                        {{ form_widget(formUser.firstname, {'attr': {'class': 'form-control'}}) }}
+                                    </div>
+                                    <div class="col-md-3 form-control-comment">
+                                    </div>
+                                </div>
+
+                                <div class="form-group row ">
+                                    {{ form_label(formUser.lastname, 'Επώνυμο', {'label_attr': {'class': 'col-md-3 form-control-label required'}}) }}
+                                    <div class="col-md-6">
+                                        {{ form_widget(formUser.lastname, {'attr': {'class': 'form-control'}}) }}
+                                    </div>
+                                    <div class="col-md-3 form-control-comment">
+                                    </div>
+                                </div>
+
+                                {#<div class="form-group row ">#}
+                                {#{{ form_label(formUser.username, 'E-mail', {'label_attr': {'class': 'col-md-3 form-control-label required'}}) }}#}
+                                {#<div class="col-md-6">#}
+                                {#{{ form_widget(formUser.username, {'attr': {'class': 'form-control'}}) }}#}
+                                {#</div>#}
+                                {#<div class="col-md-3 form-control-comment">#}
+                                {#</div>#}
+                                {#</div>#}
+
+                                {#<div class="form-group row ">#}
+                                {#{{ form_label(formUser.password.first, 'Κωδικός', {'label_attr': {'class': 'col-md-3 form-control-label required'}}) }}#}
+                                {#<div class="col-md-6">#}
+                                {#<div class="input-group js-parent-focus">#}
+                                {#{{ form_widget(formUser.password.first, {'attr': {'class': 'form-control'}}) }}#}
+                                {#<span class="input-group-btn">#}
+                                {#<button class="btn" type="button"#}
+                                {#data-action="show-password"#}
+                                {#data-text-show="Εμφάνιση"#}
+                                {#data-text-hide="Απόκρυψη">#}
+                                {#Show#}
+                                {#</button>#}
+                                {#</span>#}
+                                {#</div>#}
+                                {#</div>#}
+
+                                {#<div class="col-md-3 form-control-comment">#}
+                                {#</div>#}
+                                {#</div>#}
+
+                                {#<div class="form-group row ">#}
+                                {#{{ form_label(formUser.password.second, 'Επαλήθευση κωδικού', {'label_attr': {'class': 'col-md-3 form-control-label required'}}) }}#}
+                                {#<div class="col-md-6">#}
+                                {#{{ form_widget(formUser.password.second, {'attr': {'class': 'form-control'}}) }}#}
+                                {#</div>#}
+
+                                {#<div class="col-md-3 form-control-comment">#}
+                                {#</div>#}
+                                {#</div>#}
+
+                                {#<div class="form-group row ">#}
+                                {#<label class="col-md-3 form-control-label">#}
+                                {#</label>#}
+                                {#<div class="col-md-6">#}
+                                {#<span class="custom-checkbox">#}
+                                {#{{ form_widget(formUser.special_offers) }}#}
+                                {#<span><i class="material-icons rtl-no-flip checkbox-checked"></i></span>#}
+                                {#<label>Να λαμβάνω προσφορές από το κατάστημα</label>#}
+                                {#</span>#}
+                                {#</div>#}
+                                {#<div class="col-md-3 form-control-comment">#}
+                                {#</div>#}
+                                {#</div>#}
+
+                                <div class="form-group row ">
+                                    <label class="col-md-3 form-control-label">
+                                    </label>
+                                    <div class="col-md-6">
+                                        <span class="custom-checkbox">
+                                            {{ form_widget(formUser.newsletter) }}
+                                            {#<span><i class="material-icons rtl-no-flip checkbox-checked"></i></span>#}
+                                            <label>Εγγραφή στο newsletter<br>
+                                                <em>Μπορείτε να διαγραφείτε οποιαδήποτε στιγμή
+                                                    επιθυμείτε.</em>
+                                            </label>
+                                        </span>
                                     </div>
 
-                                    <div class="form-group row ">
-                                        {{ form_label(formUser.lastname, 'Επώνυμο', {'label_attr': {'class': 'col-md-3 form-control-label required'}}) }}
-                                        <div class="col-md-6">
-                                            {{ form_widget(formUser.lastname, {'attr': {'class': 'form-control'}}) }}
-                                        </div>
-                                        <div class="col-md-3 form-control-comment">
-                                        </div>
+                                    <div class="col-md-3 form-control-comment">
                                     </div>
-
-                                    {#<div class="form-group row ">#}
-                                    {#{{ form_label(formUser.username, 'E-mail', {'label_attr': {'class': 'col-md-3 form-control-label required'}}) }}#}
-                                    {#<div class="col-md-6">#}
-                                    {#{{ form_widget(formUser.username, {'attr': {'class': 'form-control'}}) }}#}
-                                    {#</div>#}
-                                    {#<div class="col-md-3 form-control-comment">#}
-                                    {#</div>#}
-                                    {#</div>#}
-
-                                    {#<div class="form-group row ">#}
-                                    {#{{ form_label(formUser.password.first, 'Κωδικός', {'label_attr': {'class': 'col-md-3 form-control-label required'}}) }}#}
-                                    {#<div class="col-md-6">#}
-                                    {#<div class="input-group js-parent-focus">#}
-                                    {#{{ form_widget(formUser.password.first, {'attr': {'class': 'form-control'}}) }}#}
-                                    {#<span class="input-group-btn">#}
-                                    {#<button class="btn" type="button"#}
-                                    {#data-action="show-password"#}
-                                    {#data-text-show="Εμφάνιση"#}
-                                    {#data-text-hide="Απόκρυψη">#}
-                                    {#Show#}
-                                    {#</button>#}
-                                    {#</span>#}
-                                    {#</div>#}
-                                    {#</div>#}
-
-                                    {#<div class="col-md-3 form-control-comment">#}
-                                    {#</div>#}
-                                    {#</div>#}
-
-                                    {#<div class="form-group row ">#}
-                                    {#{{ form_label(formUser.password.second, 'Επαλήθευση κωδικού', {'label_attr': {'class': 'col-md-3 form-control-label required'}}) }}#}
-                                    {#<div class="col-md-6">#}
-                                    {#{{ form_widget(formUser.password.second, {'attr': {'class': 'form-control'}}) }}#}
-                                    {#</div>#}
-
-                                    {#<div class="col-md-3 form-control-comment">#}
-                                    {#</div>#}
-                                    {#</div>#}
-
-                                    {#<div class="form-group row ">#}
-                                    {#<label class="col-md-3 form-control-label">#}
-                                    {#</label>#}
-                                    {#<div class="col-md-6">#}
-                                    {#<span class="custom-checkbox">#}
-                                    {#{{ form_widget(formUser.special_offers) }}#}
-                                    {#<span><i class="material-icons rtl-no-flip checkbox-checked"></i></span>#}
-                                    {#<label>Να λαμβάνω προσφορές από το κατάστημα</label>#}
-                                    {#</span>#}
-                                    {#</div>#}
-                                    {#<div class="col-md-3 form-control-comment">#}
-                                    {#</div>#}
-                                    {#</div>#}
-
-                                    <div class="form-group row ">
-                                        <label class="col-md-3 form-control-label">
-                                        </label>
-                                        <div class="col-md-6">
-                                            <span class="custom-checkbox">
-                                                {{ form_widget(formUser.newsletter) }}
-                                                {#<span><i class="material-icons rtl-no-flip checkbox-checked"></i></span>#}
-                                                <label>Εγγραφή στο newsletter<br>
-                                                    <em>Μπορείτε να διαγραφείτε οποιαδήποτε στιγμή
-                                                        επιθυμείτε.</em>
-                                                </label>
-                                            </span>
-                                        </div>
-
-                                        <div class="col-md-3 form-control-comment">
-                                        </div>
-                                    </div>
-                                </section>
+                                </div>
 
                                 <footer class="form-footer clearfix">
                                     <button class="btn btn-primary form-control-submit float-xs-right"
@@ -178,7 +178,8 @@
                                         {% set viewAddress = 'hidden' %}
                                     {% endif %}
 
-                                    <div id="view-address" class="col-lg-4 col-md-6 col-sm-6 {{ viewAddress }}">
+                                    <div id="view-address"
+                                         class="col-lg-4 col-md-6 col-sm-6 {{ viewAddress }}">
                                         <article id="address-9" class="address" data-id-address="9">
                                             <div class="address-body">
                                                 <h4>Βασική διεύθυνση</h4>
@@ -195,17 +196,17 @@
                                                 <a href="" id="edit-main-address"
                                                    data-link-action="edit-address">
                                                     <i class="material-icons"></i>
-                                                    <span>Update</span>
+                                                    <span>Επεξεργασία</span>
                                                 </a>
                                             </div>
                                         </article>
                                     </div>
                                     <div class="clearfix"></div>
                                     <div class="addresses-footer {{ viewAddress }}">
-                                        <a href="https://demo.templatetrip.com/Prestashop/PRS06/PRS176_gym/en/address"
+                                        <a href="{{ path('create_address') }}"
                                            data-link-action="add-address">
                                             <i class="material-icons"></i>
-                                            <span>Create new address</span>
+                                            <span>Νέα διεύθυνση</span>
                                         </a>
                                     </div>
                                     {{ form_start(formAddress) }}

@@ -345,15 +345,14 @@ EOF;
     <CompanyID>1000</CompanyID>
     <pagesize>1</pagesize>
     <pagenumber>0</pagenumber>
-    <FilterEmail>$username</FilterEmail>
+    <Email>$username</Email>
 </ClientGetNewsletterRequest>
 EOF;
         try {
             $result = $client->SendMessage(['Message' => $message]);
             $newsletterData = simplexml_load_string(str_replace("utf-16", "utf-8", $result->SendMessageResult));
-//            dump($message, $result);
-            if ((int)$newsletterData->RowsCount === 0) {
-                if ($newsletterData->GetDataRows->GetNewsletterRow->Allow === 'true') {
+            if ((int)$newsletterData->RowsCount > 0) {
+                if ((string)$newsletterData->GetDataRows->GetNewsletterRow->Allow === 'true') {
                     $user->setNewsletter(true);
                     $user->setNewsletterId((string)$newsletterData->GetDataRows->GetNewsletterRow->ID);
                 } else {
@@ -427,6 +426,7 @@ EOF;
         try {
             $result = $client->SendMessage(['Message' => $message]);
             $userData = simplexml_load_string(str_replace("utf-16", "utf-8", $result->SendMessageResult));
+            dump($message, $result);
             if ((int)$userData->RowsCount === 0) {
                 return '';
 //            } else if ($password === 'null') {

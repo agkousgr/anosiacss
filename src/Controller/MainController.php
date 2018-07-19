@@ -88,6 +88,11 @@ class MainController extends AbstractController
      */
     protected $clientId;
 
+    /**
+     * @var string
+     */
+    protected $cache_expire;
+
 
     public function __construct(
         SoftoneLogin $softoneLogin,
@@ -99,6 +104,10 @@ class MainController extends AbstractController
         EntityManagerInterface $em
     )
     {
+//        if (session_status() !== PHP_SESSION_ACTIVE) {
+//            session_cache_expire(180);
+//            $session->set('cache_expire', session_cache_expire());
+//        }
         dump($session);
         $this->softoneLogin = $softoneLogin;
         $this->categoryService = $categoryService;
@@ -111,7 +120,9 @@ class MainController extends AbstractController
 
         $this->softoneLogin->login();
         $this->categories = $this->categoryService->getCategories();
-        array_multisort(array_column($this->categories, "priority"), $this->categories);
+        if ($this->categories) {
+            array_multisort(array_column($this->categories, "priority"), $this->categories);
+        }
         $this->popular = $productService->getCategoryItems(1022);
         $this->featured = $productService->getCategoryItems(1008);
         $this->loggedUser = ($session->get("anosiaUser")) ?: null;
@@ -122,7 +133,8 @@ class MainController extends AbstractController
 //        $this->totalCartItems = $em->getRepository(Cart::class)->countCartItems($session->getId(), $session->get('anosiaUser'));
     }
 
-    protected function getCartItems() {
+    protected function getCartItems()
+    {
         $cartIds = '';
         if (null === $this->session->get('username')) {
             $cartArr = $this->em->getRepository(Cart::class)->getCartBySession($this->session->getId());

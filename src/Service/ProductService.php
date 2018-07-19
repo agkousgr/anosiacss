@@ -113,12 +113,14 @@ EOF;
     {
         try {
             $prArr = array();
-
             foreach ($products as $pr) {
                 if ((string)$pr->WebVisible !== "false") {
                     $prArr[] = array(
                         'id' => $pr->ID,
                         'name' => $pr->Name2,
+                        'summary' => $pr->SmallDescription,
+                        'body' => $pr->LargeDescription,
+                        'extraInfo' => $pr->InstructionsHTML,
                         'isVisible' => $pr->WebVisible,
                         'retailPrice' => $pr->RetailPrice,
                         'discount' => $pr->WebDiscountPerc,
@@ -196,6 +198,9 @@ EOF;
                 $prArr = array(
                     'id' => $pr->ID,
                     'name' => $pr->Name2,
+                    'summary' => $pr->SmallDescription,
+                    'body' => $pr->LargeDescription,
+                    'extraInfo' => $pr->InstructionsHTML,
                     'retailPrice' => $pr->RetailPrice,
                     'discount' => $pr->WebDiscountPerc,
                     'mainBarcode' => $pr->MainBarcode,

@@ -11,21 +11,11 @@
         <!-- Tab panes -->
         <div class="tab-content">
             <div role="tabpanel" class="tab-pane active" id="Description">
-                <p>Ray-Ban RB3025I 002/3F Size:58 Black Blue Gradient Aviator Men's Sunglasses</p>
-                <p>Brand: Ray Ban sunglasses, Product Type: Sunglasses, Frame Type: Full Rim Sunglasses, Frame Shape: Aviator, Gender: Men</p>
-                <p>
-                    The most recognizable eye brand, Ray ban has its clutches deep set in the market and has been till date, an unbeatable entity by any of the high-end brands. Preferred by daring and experimentalists, Aviators are a classic style for all moods, occasions and ensembles. These black body metal sunglasses have a classic appeal to it and are bound to attract men with ‚ simple living high thinking ideology. Sculpted legs with cushioned tips will surely provide an ease in wearing. RB3025I 002/3F is a style statement you can cling on to for a very long time.
-                </p>
-                <h4>Features: </h4>
-                <ul>
-                    <li>Black metal body</li>
-                    <li>Suitable for medium faces</li>
-                    <li>Gradient blue lenses</li>
-                    <li>100% UV protection</li>
-                </ul>
-                <div class="embed-responsive embed-responsive-16by9"> <iframe class="embed-responsive-item" src="https://www.youtube.com/embed/v2AC41dglnM?rel=0" allowfullscreen=""></iframe> </div>
+                {{ pr.body }}
             </div>
-            <div role="tabpanel" class="tab-pane" id="Information">Additional Information</div>
+            <div role="tabpanel" class="tab-pane" id="Information">
+                {{ pr.extraInfo }}
+            </div>
             {#<div role="tabpanel" class="tab-pane" id="Sizing">Sizing Guide</div>#}
             {#<div role="tabpanel" class="tab-pane" id="Reviews">Reviews</div>#}
         </div>

@@ -89,7 +89,7 @@ class CategoryService
     <IsTopLevel>-1</IsTopLevel>
     <IsVisible>1</IsVisible>
     <CategoryID>$ctg</CategoryID>
-    <Slug></Slug>
+    <Slug>null</Slug>
 </ClientGetCategoriesRequest>
 EOF;
         try {
@@ -136,13 +136,12 @@ EOF;
     <IsTopLevel>1</IsTopLevel>
     <IsVisible>-1</IsVisible>
     <CategoryID>-1</CategoryID>
-    <Slug></Slug>
+    <Slug>null</Slug>
 </ClientGetCategoriesRequest>
 EOF;
         try {
             $result = $client->SendMessage(['Message' => $message]);
             $resultXML = simplexml_load_string(str_replace("utf-16", "utf-8", $result->SendMessageResult));
-            dump($message, $result);
             $categories = $this->initializeCategories($resultXML->GetDataRows->GetCategoriesRow);
 
             return $categories;
@@ -267,10 +266,12 @@ EOF;
     <AppID>157</AppID>
     <CompanyID>1000</CompanyID>
     <CategoryID>$ctgId</CategoryID>
+    <Slug>null</Slug>
 </ClientGetCategoryChildrenRequest>
 EOF;
         try {
             $result = $client->SendMessage(['Message' => $message]);
+//            dump($message, $result);
 //            return $result->SendMessageResult;
 //            return str_replace("utf-16", "utf-8", $result->SendMessageResult);
             return simplexml_load_string(str_replace("utf-16", "utf-8", $result->SendMessageResult));

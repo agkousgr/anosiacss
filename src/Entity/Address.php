@@ -36,21 +36,6 @@ class Address
     protected $district;
 
     /**
-     * $var string
-     */
-    protected $phone01;
-
-    /**
-     * $var string
-     */
-    protected $phone02;
-
-    /**
-     * $var string
-     */
-    protected $email;
-
-    /**
      * @return string
      */
     public function getAddress(): string
@@ -113,54 +98,5 @@ class Address
     {
         $this->district = $district;
     }
-
-    /**
-     * @return mixed
-     */
-    public function getPhone01()
-    {
-        return $this->phone01;
-    }
-
-    /**
-     * @param mixed $phone01
-     */
-    public function setPhone01($phone01): void
-    {
-        $this->phone01 = $phone01;
-    }
-
-    /**
-     * @return mixed
-     */
-    public function getPhone02()
-    {
-        return $this->phone02;
-    }
-
-    /**
-     * @param mixed $phone02
-     */
-    public function setPhone02($phone02): void
-    {
-        $this->phone02 = $phone02;
-    }
-
-    /**
-     * @return mixed
-     */
-    public function getEmail()
-    {
-        return $this->email;
-    }
-
-    /**
-     * @param mixed $email
-     */
-    public function setEmail($email): void
-    {
-        $this->email = $email;
-    }
-
 
 }
