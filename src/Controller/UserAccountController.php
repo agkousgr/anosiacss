@@ -13,7 +13,7 @@ use App\Entity\WebUser;
 use App\Security\User\WebserviceUser;
 use App\Service\UserAccountService;
 use App\Form\Type\{
-    UserAddressType, UserGeneralInfoType, UserInfoType, UserRegistrationType
+    UserAddressType, UserGeneralInfoType, UserInfoType, UserNewAddressType, UserRegistrationType
 };
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\Form\Extension\Core\Type\{
@@ -152,20 +152,22 @@ class UserAccountController extends MainController
         try {
             if (null !== $this->loggedUser) {
                 $user = new WebUser();
+                $address = new Address();
                 $userData = $userAccountService->getUserInfo($this->loggedUser, $user);
-                $formAddress = $this->createForm(UserAddressType::class, $user);
+                $formAddress = $this->createForm(UserNewAddressType::class, $address);
+                dump('zong');
                 $formAddress->handleRequest($request);
                 if ($formAddress->isSubmitted() && $formAddress->isValid()) {
-                    $user->setAddress($formAddress->get('address')->getData());
-                    $user->setZip($formAddress->get('zip')->getData());
-                    $user->setCity($formAddress->get('city')->getData());
-                    $user->setDistrict($formAddress->get('district')->getData());
-                    $user->setPhone01($formAddress->get('phone01')->getData());
-                    $address = $userAccountService->updateUserInfo($user);
-                    $userData = $userAccountService->getUserInfo($this->loggedUser, $user);
+                    $address->setAddress($formAddress->get('address')->getData());
+                    $address->setZip($formAddress->get('zip')->getData());
+                    $address->setCity($formAddress->get('city')->getData());
+                    $address->setDistrict($formAddress->get('district')->getData());
+                    $address->setName($formAddress->get('name')->getData());
+//                    $address = $userAccountService->updateUserInfo($user);
+//                    $userData = $userAccountService->getUserInfo($this->loggedUser, $user);
                     $this->addFlash(
                         'success',
-                        'Τα στοιχεία της διεύθυνσής σας ενημερώθηκαν με επιτυχία.'
+                        'Η νέα σας διεύθυνση δημιουργήθηκε με επιτυχία.'
                     );
                 }
                 return $this->render('user/createAddress.html.twig', [
@@ -178,7 +180,7 @@ class UserAccountController extends MainController
                     'loggedUser' => $this->loggedUser,
 //                'userData' => $userData,
 //                'formUser' => $formUser->createView(),
-//                'formAddress' => $formMainAddress->createView(),
+                    'formAddress' => $formAddress->createView(),
                 ]);
             }
             return $this->redirectToRoute('index');

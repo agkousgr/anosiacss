@@ -663,7 +663,6 @@ EOF;
                 'district' => $user->getDistrict(),
                 'phone01' => $user->getPhone01(),
                 'email' => $user->getEmail(),
-                'email' => $user->getEmail(),
             );
             return $userArr;
         } catch (\Exception $e) {

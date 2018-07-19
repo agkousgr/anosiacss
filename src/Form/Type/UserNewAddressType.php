@@ -18,8 +18,7 @@ class UserNewAddressType extends AbstractType
             ->add('address', TextType::class)
             ->add('zip', TextType::class)
             ->add('city', TextType::class)
-            ->add('district', TextType::class)
-            ->add('phone01', TextType::class);
+            ->add('district', TextType::class);
     }
 
     public function configureOptions(OptionsResolver $resolver)

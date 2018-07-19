@@ -66,18 +66,49 @@
 
                                     {{ form_start(formAddress) }}
                                     <div class="form-group row ">
-                                        {{ form_label(formUser.firstname, 'Όνομα', {'label_attr': {'class': 'col-md-3 form-control-label required'}}) }}
+                                        {{ form_label(formAddress.name, 'Ονομασία', {'label_attr': {'class': 'col-md-3 form-control-label required'}}) }}
                                         <div class="col-md-6">
-                                            {{ form_widget(formUser.firstname, {'attr': {'class': 'form-control'}}) }}
+                                            {{ form_widget(formAddress.name, {'attr': {'class': 'form-control'}}) }}
                                         </div>
                                         <div class="col-md-3 form-control-comment">
                                         </div>
                                     </div>
-
                                     <div class="form-group row ">
-                                        {{ form_label(formUser.lastname, 'Επώνυμο', {'label_attr': {'class': 'col-md-3 form-control-label required'}}) }}
+                                        {{ form_label(formAddress.address, 'Διεύθυνση', {'label_attr': {'class': 'col-md-3 form-control-label required'}}) }}
                                         <div class="col-md-6">
-                                            {{ form_widget(formUser.lastname, {'attr': {'class': 'form-control'}}) }}
+                                            {{ form_widget(formAddress.address, {'attr': {'class': 'form-control'}}) }}
+                                        </div>
+                                        <div class="col-md-3 form-control-comment">
+                                        </div>
+                                    </div>
+                                    <div class="form-group row ">
+                                        {{ form_label(formAddress.zip, 'Τ.Κ.', {'label_attr': {'class': 'col-md-3 form-control-label required'}}) }}
+                                        <div class="col-md-6">
+                                            {{ form_widget(formAddress.zip, {'attr': {'class': 'form-control'}}) }}
+                                        </div>
+                                        <div class="col-md-3 form-control-comment">
+                                        </div>
+                                    </div>
+                                    <div class="form-group row ">
+                                        {{ form_label(formAddress.address, 'Επώνυμο', {'label_attr': {'class': 'col-md-3 form-control-label required'}}) }}
+                                        <div class="col-md-6">
+                                            {{ form_widget(formAddress.address, {'attr': {'class': 'form-control'}}) }}
+                                        </div>
+                                        <div class="col-md-3 form-control-comment">
+                                        </div>
+                                    </div>
+                                    <div class="form-group row ">
+                                        {{ form_label(formAddress.address, 'Επώνυμο', {'label_attr': {'class': 'col-md-3 form-control-label required'}}) }}
+                                        <div class="col-md-6">
+                                            {{ form_widget(formAddress.address, {'attr': {'class': 'form-control'}}) }}
+                                        </div>
+                                        <div class="col-md-3 form-control-comment">
+                                        </div>
+                                    </div>
+                                    <div class="form-group row ">
+                                        {{ form_label(formAddress.address, 'Επώνυμο', {'label_attr': {'class': 'col-md-3 form-control-label required'}}) }}
+                                        <div class="col-md-6">
+                                            {{ form_widget(formAddress.address, {'attr': {'class': 'form-control'}}) }}
                                         </div>
                                         <div class="col-md-3 form-control-comment">
                                         </div>
