@@ -19,13 +19,13 @@ $('#history-link').on('click', function (e) {
 
 $('#edit-main-address').on('click', function (e) {
     e.preventDefault();
-    $('form[name="user_address"]').removeClass('hidden');
-    $('#view-address').addClass('hidden');
-    $('.addresses-footer').addClass('hidden');
+    $('form[name="user_address"]').toggleClass('hidden');
+    $('#view-main-address-address').toggleClass('hidden');
+    $('.addresses-footer').toggleClass('hidden');
 })
 
 $(document).ready(function () {
-   if ($('#view-address').hasClass('hidden') === false) {
+   if ($('#view-main-address').hasClass('hidden') === false) {
        $('form[name="user_address"]').addClass('hidden');
    }
 });

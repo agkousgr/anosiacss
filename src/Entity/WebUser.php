@@ -45,6 +45,15 @@ class WebUser extends Address
      */
     private $newsletter;
 
+    /**
+     * @var string
+     */
+    private $afm;
+
+    /**
+     * @var string
+     */
+    private $irs;
 
     /**
      * $var string|null
@@ -278,6 +287,38 @@ class WebUser extends Address
     public function setNewsletterId(?string $newsletterId): void
     {
         $this->newsletterId = $newsletterId;
+    }
+
+    /**
+     * @return string
+     */
+    public function getIrs(): string
+    {
+        return $this->irs;
+    }
+
+    /**
+     * @param string $irs
+     */
+    public function setIrs(string $irs): void
+    {
+        $this->irs = $irs;
+    }
+
+    /**
+     * @return string
+     */
+    public function getAfm(): string
+    {
+        return $this->afm;
+    }
+
+    /**
+     * @param string $afm
+     */
+    public function setAfm(string $afm): void
+    {
+        $this->afm = $afm;
     }
 
 

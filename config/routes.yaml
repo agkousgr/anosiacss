@@ -33,6 +33,11 @@ cart_view:
     path: /cart
     controller: App\Controller\CartController::viewCart
 
+update_cart:
+    path: /update-cart
+    controller: App\Controller\CartController::updateCart
+    methods: [POST]
+
 add_to_cart:
     path: /add_to_cart
     controller: App\Controller\AjaxCartController::addToCart

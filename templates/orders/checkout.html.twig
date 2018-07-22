@@ -18,7 +18,7 @@
     <div class="page-header">
         <div class="container">
             <div class="row">
-                <div class="col-md-6"><h1>Καλάθι</h1></div>
+                <div class="col-md-6"><h1>Ολοκλήρωση αγοράς</h1></div>
             </div>
         </div>
     </div>
@@ -66,72 +66,44 @@
                                             </ul>
                                             <div class="tab-content">
                                                 <div class="tab-pane active" id="checkout-guest-form" role="tabpanel">
-                                                    {{ form_start(registerForm) }}
+                                                    {{ form_start(checkoutForm) }}
                                                     <section>
                                                         <input name="id_customer" value="" type="hidden">
                                                         <div class="form-group row ">
-                                                            {{ form_label(registerForm.firstname, 'Όνομα', {'label_attr': {'class': 'col-md-3 form-control-label required'}}) }}
+                                                            {{ form_label(checkoutForm.firstname, 'Όνομα', {'label_attr': {'class': 'col-md-3 form-control-label required'}}) }}
                                                             <div class="col-md-6">
-                                                                {{ form_widget(registerForm.firstname, {'attr': {'class': 'form-control'}}) }}
+                                                                {{ form_widget(checkoutForm.firstname, {'attr': {'class': 'form-control'}}) }}
                                                             </div>
                                                             <div class="col-md-3 form-control-comment">
                                                             </div>
                                                         </div>
 
                                                         <div class="form-group row ">
-                                                            {{ form_label(registerForm.lastname, 'Επώνυμο', {'label_attr': {'class': 'col-md-3 form-control-label required'}}) }}
+                                                            {{ form_label(checkoutForm.lastname, 'Επώνυμο', {'label_attr': {'class': 'col-md-3 form-control-label required'}}) }}
                                                             <div class="col-md-6">
-                                                                {{ form_widget(registerForm.lastname, {'attr': {'class': 'form-control'}}) }}
+                                                                {{ form_widget(checkoutForm.lastname, {'attr': {'class': 'form-control'}}) }}
                                                             </div>
                                                             <div class="col-md-3 form-control-comment">
                                                             </div>
                                                         </div>
 
-                                                        <div class="form-group row ">
-                                                            {{ form_label(registerForm.username, 'E-mail', {'label_attr': {'class': 'col-md-3 form-control-label required'}}) }}
-                                                            <div class="col-md-6">
-                                                                {{ form_widget(registerForm.username, {'attr': {'class': 'form-control'}}) }}
-                                                            </div>
-                                                            <div class="col-md-3 form-control-comment">
-                                                            </div>
-                                                        </div>
 
-                                                        <div class="form-group row ">
-                                                            {{ form_label(registerForm.username, 'Κωδικός', {'label_attr': {'class': 'col-md-3 form-control-label required'}}) }}
-                                                            <div class="col-md-6">
-                                                                <div class="input-group js-parent-focus">
-                                                                    {{ form_widget(registerForm.password, {'attr': {'class': 'form-control'}}) }}
-                                                                    {#<input class="form-control js-child-focus js-visible-password"#}
-                                                                    {#name="password" value="" pattern=".{5,}"#}
-                                                                    {#required="" type="password">#}
-                                                                    <span class="input-group-btn">
-                                                                        <button class="btn" type="button"
-                                                                                data-action="show-password"
-                                                                                data-text-show="Εμφάνιση"
-                                                                                data-text-hide="Απόκρυψη">
-                                                                            Show
-                                                                        </button>
-                                                                    </span>
-                                                                </div>
-                                                            </div>
 
-                                                            <div class="col-md-3 form-control-comment">
-                                                            </div>
-                                                        </div>
 
-                                                        <div class="form-group row ">
-                                                            <label class="col-md-3 form-control-label">
-                                                            </label>
-                                                            <div class="col-md-6">
-                                                                <span class="custom-checkbox">
-                                                                    {{ form_widget(registerForm.special_offers) }}
+
+                                                        {#<div class="form-group row ">#}
+                                                            {#<label class="col-md-3 form-control-label">#}
+                                                            {#</label>#}
+                                                            {#<div class="col-md-6">#}
+                                                                {#<span class="custom-checkbox">#}
+                                                                    {#{{ form_widget(registerForm.special_offers) }}#}
                                                                     {#<span><i class="material-icons rtl-no-flip checkbox-checked"></i></span>#}
-                                                                    <label>Να λαμβάνω προσφορές από το κατάστημα</label>
-                                                                </span>
-                                                            </div>
-                                                            <div class="col-md-3 form-control-comment">
-                                                            </div>
-                                                        </div>
+                                                                    {#<label>Να λαμβάνω προσφορές από το κατάστημα</label>#}
+                                                                {#</span>#}
+                                                            {#</div>#}
+                                                            {#<div class="col-md-3 form-control-comment">#}
+                                                            {#</div>#}
+                                                        {#</div>#}
 
                                                         <div class="form-group row ">
                                                             <label class="col-md-3 form-control-label">

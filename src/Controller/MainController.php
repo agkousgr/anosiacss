@@ -136,8 +136,8 @@ class MainController extends AbstractController
     protected function getCartItems()
     {
         $cartIds = '';
-        if (null === $this->session->get('username')) {
-            $cartArr = $this->em->getRepository(Cart::class)->getCartBySession($this->session->getId());
+        if (null !== $this->loggedUser) {
+            $cartArr = $this->em->getRepository(Cart::class)->getCartByUser($this->loggedUser);
         } else {
             $cartArr = $this->em->getRepository(Cart::class)->getCartBySession($this->session->getId());
         }
@@ -149,7 +149,6 @@ class MainController extends AbstractController
                 $this->totalCartItems = $this->totalCartItems + 1;
             }
             $cartIds = substr($cartIds, 0, -1);
-            dump($this->totalCartItems);
         }
         return ($cartIds) ? $this->cart->getCartItems($cartIds, $cartArr) : '';
     }

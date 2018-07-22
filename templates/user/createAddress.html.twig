@@ -46,86 +46,69 @@
                     </aside>
                     <div class="address-form">
                         <div class="js-address-form">
-                            <form method="POST"
-                                  action="//demo.templatetrip.com/Prestashop/PRS06/PRS176_gym/en/address?id_address=0"
-                                  data-id-address="0"
-                                  data-refresh-url="//demo.templatetrip.com/Prestashop/PRS06/PRS176_gym/en/address?ajax=1&amp;action=addressForm">
-                                <section class="form-fields">
-                                    <div class="form-group row ">
-                                        <label class="col-md-3 form-control-label">
-                                            Alias
-                                        </label>
-                                        <div class="col-md-6">
-                                            <input class="form-control" name="alias" value="" maxlength="32"
-                                                   type="text">
-                                        </div>
-                                        <div class="col-md-3 form-control-comment">
-                                            Optional
-                                        </div>
+                            {{ form_start(formAddress) }}
+                            <section class="form-fields">
+                                <div class="form-group row ">
+                                    {{ form_label(formAddress.name, 'Ονομασία', {'label_attr': {'class': 'col-md-3 form-control-label required'}}) }}
+                                    <div class="col-md-6">
+                                        {{ form_widget(formAddress.name, {'attr': {'class': 'form-control'}}) }}
                                     </div>
+                                    <div class="col-md-3 form-control-comment">
+                                    </div>
+                                </div>
+                                <div class="form-group row ">
+                                    {{ form_label(formAddress.address, 'Διεύθυνση', {'label_attr': {'class': 'col-md-3 form-control-label required'}}) }}
+                                    <div class="col-md-6">
+                                        {{ form_widget(formAddress.address, {'attr': {'class': 'form-control'}}) }}
+                                    </div>
+                                    <div class="col-md-3 form-control-comment">
+                                    </div>
+                                </div>
+                                <div class="form-group row ">
+                                    {{ form_label(formAddress.zip, 'Τ.Κ.', {'label_attr': {'class': 'col-md-3 form-control-label required'}}) }}
+                                    <div class="col-md-6">
+                                        {{ form_widget(formAddress.zip, {'attr': {'class': 'form-control'}}) }}
+                                    </div>
+                                    <div class="col-md-3 form-control-comment">
+                                    </div>
+                                </div>
+                                <div class="form-group row ">
+                                    {{ form_label(formAddress.city, 'Πόλη', {'label_attr': {'class': 'col-md-3 form-control-label required'}}) }}
+                                    <div class="col-md-6">
+                                        {{ form_widget(formAddress.city, {'attr': {'class': 'form-control'}}) }}
+                                    </div>
+                                    <div class="col-md-3 form-control-comment">
+                                    </div>
+                                </div>
+                                <div class="form-group row ">
+                                    {{ form_label(formAddress.district, 'Περιοχή', {'label_attr': {'class': 'col-md-3 form-control-label required'}}) }}
+                                    <div class="col-md-6">
+                                        {{ form_widget(formAddress.district, {'attr': {'class': 'form-control'}}) }}
+                                    </div>
+                                    <div class="col-md-3 form-control-comment">
+                                    </div>
+                                </div>
+                                {#<div class="form-group row ">#}
+                                {#{{ form_label(formAddress., 'Τηλέφωνο', {'label_attr': {'class': 'col-md-3 form-control-label required'}}) }}#}
+                                {#<div class="col-md-6">#}
+                                {#{{ form_widget(formAddress.address, {'attr': {'class': 'form-control'}}) }}#}
+                                {#</div>#}
+                                {#<div class="col-md-3 form-control-comment">#}
+                                {#</div>#}
+                                {#</div>#}
 
-                                    {{ form_start(formAddress) }}
-                                    <div class="form-group row ">
-                                        {{ form_label(formAddress.name, 'Ονομασία', {'label_attr': {'class': 'col-md-3 form-control-label required'}}) }}
-                                        <div class="col-md-6">
-                                            {{ form_widget(formAddress.name, {'attr': {'class': 'form-control'}}) }}
-                                        </div>
-                                        <div class="col-md-3 form-control-comment">
-                                        </div>
-                                    </div>
-                                    <div class="form-group row ">
-                                        {{ form_label(formAddress.address, 'Διεύθυνση', {'label_attr': {'class': 'col-md-3 form-control-label required'}}) }}
-                                        <div class="col-md-6">
-                                            {{ form_widget(formAddress.address, {'attr': {'class': 'form-control'}}) }}
-                                        </div>
-                                        <div class="col-md-3 form-control-comment">
-                                        </div>
-                                    </div>
-                                    <div class="form-group row ">
-                                        {{ form_label(formAddress.zip, 'Τ.Κ.', {'label_attr': {'class': 'col-md-3 form-control-label required'}}) }}
-                                        <div class="col-md-6">
-                                            {{ form_widget(formAddress.zip, {'attr': {'class': 'form-control'}}) }}
-                                        </div>
-                                        <div class="col-md-3 form-control-comment">
-                                        </div>
-                                    </div>
-                                    <div class="form-group row ">
-                                        {{ form_label(formAddress.address, 'Επώνυμο', {'label_attr': {'class': 'col-md-3 form-control-label required'}}) }}
-                                        <div class="col-md-6">
-                                            {{ form_widget(formAddress.address, {'attr': {'class': 'form-control'}}) }}
-                                        </div>
-                                        <div class="col-md-3 form-control-comment">
-                                        </div>
-                                    </div>
-                                    <div class="form-group row ">
-                                        {{ form_label(formAddress.address, 'Επώνυμο', {'label_attr': {'class': 'col-md-3 form-control-label required'}}) }}
-                                        <div class="col-md-6">
-                                            {{ form_widget(formAddress.address, {'attr': {'class': 'form-control'}}) }}
-                                        </div>
-                                        <div class="col-md-3 form-control-comment">
-                                        </div>
-                                    </div>
-                                    <div class="form-group row ">
-                                        {{ form_label(formAddress.address, 'Επώνυμο', {'label_attr': {'class': 'col-md-3 form-control-label required'}}) }}
-                                        <div class="col-md-6">
-                                            {{ form_widget(formAddress.address, {'attr': {'class': 'form-control'}}) }}
-                                        </div>
-                                        <div class="col-md-3 form-control-comment">
-                                        </div>
-                                    </div>
-                                    {{ form_end(formAddress) }}
-
-                                </section>
+                            </section>
 
 
-                                <footer class="form-footer clearfix">
-                                    <input name="submitAddress" value="1" type="hidden">
+                            <footer class="form-footer clearfix">
+                                <input name="submitAddress" value="1" type="hidden">
 
-                                    <button class="btn btn-primary float-xs-right" type="submit">
-                                        Save
-                                    </button>
+                                <button class="btn btn-primary float-xs-right" type="submit">
+                                    Αποθήκευση
+                                </button>
 
-                                </footer>
+                            </footer>
+                            {{ form_end(formAddress) }}
 
 
                             </form>

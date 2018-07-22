@@ -16,6 +16,11 @@ class Address
     use BasicDbFieldsTrait;
 
     /**
+     * @var int
+     */
+    protected $client;
+
+    /**
      * @var string
      */
     protected $address;
@@ -97,6 +102,22 @@ class Address
     public function setDistrict($district): void
     {
         $this->district = $district;
+    }
+
+    /**
+     * @return int
+     */
+    public function getClient(): int
+    {
+        return $this->client;
+    }
+
+    /**
+     * @param int $client
+     */
+    public function setClient(int $client): void
+    {
+        $this->client = $client;
     }
 
 }

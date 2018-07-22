@@ -8,18 +8,12 @@
 
 namespace App\Controller;
 
-use App\Entity\Address;
-use App\Entity\WebUser;
-use App\Security\User\WebserviceUser;
+use App\Entity\{Address, WebUser};
 use App\Service\UserAccountService;
 use App\Form\Type\{
     UserAddressType, UserGeneralInfoType, UserInfoType, UserNewAddressType, UserRegistrationType
 };
 use Symfony\Component\HttpFoundation\Request;
-use Symfony\Component\Form\Extension\Core\Type\{
-    EmailType, PasswordType
-};
-use Symfony\Component\HttpFoundation\Session\SessionInterface;
 use Symfony\Component\Security\Core\Encoder\UserPasswordEncoderInterface;
 
 class UserAccountController extends MainController
@@ -86,8 +80,8 @@ class UserAccountController extends MainController
             dump($request);
             if (null !== $this->loggedUser) {
                 $user = new WebUser();
-                $userData = $userAccountService->getUserInfo($this->loggedUser, $user);
-                dump($user, $userData);
+                $address = new Address();
+                $userData = $userAccountService->getUserInfo($this->loggedUser, $user, $address);
 //            $user = new WebserviceUser(
 //                $userData["clientId"],
 //                $userData["username"],
@@ -106,9 +100,9 @@ class UserAccountController extends MainController
                     $user->setFirstname($formUser->get('firstname')->getData());
                     $user->setLastname($formUser->get('lastname')->getData());
                     $user->setNewsletter($formUser->get('newsletter')->getData());
-                    dump($user);
+//                    dump($user);
                     $userAccountService->updateUserInfo($user);
-                    $userData = $userAccountService->getUserInfo($this->loggedUser, $user);
+                    $userData = $userAccountService->getUserInfo($this->loggedUser, $user, $address);
                     $this->addFlash(
                         'success',
                         'Τα στοιχεία σας ενημερώθηκαν με επιτυχία.'
@@ -120,13 +114,14 @@ class UserAccountController extends MainController
                     $user->setCity($formMainAddress->get('city')->getData());
                     $user->setDistrict($formMainAddress->get('district')->getData());
                     $user->setPhone01($formMainAddress->get('phone01')->getData());
-                    $address = $userAccountService->updateUserInfo($user);
-                    $userData = $userAccountService->getUserInfo($this->loggedUser, $user);
+                    $userAccountService->updateUserInfo($user);
+                    $userData = $userAccountService->getUserInfo($this->loggedUser, $user, $address);
                     $this->addFlash(
                         'success',
                         'Τα στοιχεία της διεύθυνσής σας ενημερώθηκαν με επιτυχία.'
                     );
                 }
+                dump($userData);
                 return $this->render('user/account.html.twig', [
                     'categories' => $this->categories,
                     'popular' => $this->popular,
@@ -151,11 +146,10 @@ class UserAccountController extends MainController
     {
         try {
             if (null !== $this->loggedUser) {
-                $user = new WebUser();
                 $address = new Address();
-                $userData = $userAccountService->getUserInfo($this->loggedUser, $user);
+                $userData = $userAccountService->getAddressInfo($this->loggedUser, $address);
                 $formAddress = $this->createForm(UserNewAddressType::class, $address);
-                dump('zong');
+                dump($userData);
                 $formAddress->handleRequest($request);
                 if ($formAddress->isSubmitted() && $formAddress->isValid()) {
                     $address->setAddress($formAddress->get('address')->getData());
@@ -163,12 +157,20 @@ class UserAccountController extends MainController
                     $address->setCity($formAddress->get('city')->getData());
                     $address->setDistrict($formAddress->get('district')->getData());
                     $address->setName($formAddress->get('name')->getData());
+                    if ($userAccountService->setAddress($address)) {
+                        $this->addFlash(
+                            'success',
+                            'Η νέα σας διεύθυνση δημιουργήθηκε με επιτυχία.'
+                        );
+                        return $this->redirectToRoute('user_account');
+                    } else {
+                        $this->addFlash(
+                            'notice',
+                            'Ένα σφάλμα παρουσιάστηκε. Παρακαλώ δοκιμάστε ξανά. Αν το πρόβλημα συνεχίσει παρακαλούμε επικοινωνήστε μαζί μας.'
+                        );
+                    }
 //                    $address = $userAccountService->updateUserInfo($user);
 //                    $userData = $userAccountService->getUserInfo($this->loggedUser, $user);
-                    $this->addFlash(
-                        'success',
-                        'Η νέα σας διεύθυνση δημιουργήθηκε με επιτυχία.'
-                    );
                 }
                 return $this->render('user/createAddress.html.twig', [
                     'categories' => $this->categories,

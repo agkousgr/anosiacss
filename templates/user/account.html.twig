@@ -178,7 +178,7 @@
                                         {% set viewAddress = 'hidden' %}
                                     {% endif %}
 
-                                    <div id="view-address"
+                                    <div id="view-main-address"
                                          class="col-lg-4 col-md-6 col-sm-6 {{ viewAddress }}">
                                         <article id="address-9" class="address" data-id-address="9">
                                             <div class="address-body">
@@ -201,6 +201,31 @@
                                             </div>
                                         </article>
                                     </div>
+                                    {% if userData["addresses"] is not empty %}
+                                        {#{% for address in userData["addresses"] %}#}
+                                            {#{{ dump(address) }}#}
+                                        <div class="col-lg-4 col-md-6 col-sm-6 extra-addresses">
+                                            <article id="address-9" class="address" data-id-address="9">
+                                                <div class="address-body">
+                                                    <h4>{{ userData["addresses"]["name"] }}</h4>
+                                                    <address>
+                                                        {{ userData["addresses"]["address"] }}<br>
+                                                        {{ userData["addresses"]["city"] }}<br>
+                                                        {{ userData["addresses"]["zip"] }}<br>
+                                                        {{ userData["addresses"]["district"] }}<br>
+                                                    </address>
+                                                </div>
+                                                <div class="address-footer">
+                                                    <a href="" id="edit-main-address"
+                                                       data-link-action="edit-address">
+                                                        <i class="material-icons"></i>
+                                                        <span>Επεξεργασία</span>
+                                                    </a>
+                                                </div>
+                                            </article>
+                                        </div>
+                                        {#{% endfor %}#}
+                                    {% endif %}
                                     <div class="clearfix"></div>
                                     <div class="addresses-footer {{ viewAddress }}">
                                         <a href="{{ path('create_address') }}"
