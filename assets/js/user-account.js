@@ -20,7 +20,8 @@ $('#history-link').on('click', function (e) {
 $('#edit-main-address').on('click', function (e) {
     e.preventDefault();
     $('form[name="user_address"]').toggleClass('hidden');
-    $('#view-main-address-address').toggleClass('hidden');
+    $('#view-main-address').toggleClass('hidden');
+    $('.extra-addresses').toggleClass('hidden');
     $('.addresses-footer').toggleClass('hidden');
 })
 

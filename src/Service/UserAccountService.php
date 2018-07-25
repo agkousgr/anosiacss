@@ -327,6 +327,8 @@ EOF;
     {
         $client = new \SoapClient('http://caron.cloudsystems.gr/FOeshopWS/ForeignOffice.FOeshop.API.FOeshopSvc.svc?singleWsdl', ['trace' => true, 'exceptions' => true,]);
 
+
+
         $message = <<<EOF
 <?xml version="1.0" encoding="utf-16"?>
 <ClientGetShipAddressRequest>
@@ -337,6 +339,7 @@ EOF;
     <AppID>157</AppID>
     <CompanyID>1000</CompanyID>
     <ClientID>$clientId</ClientID>
+    <ID></ID>
 </ClientGetShipAddressRequest>
 EOF;
 
@@ -345,8 +348,8 @@ EOF;
             $addressData = simplexml_load_string(str_replace("utf-16", "utf-8", $result->SendMessageResult));
             dump($message, $result);
             $addressXML = $addressData->GetDataRows->GetShipAddressRow;
-            dump((string)$addressXML->Address);
-            (null !== $addressXML->ID) ? $entity->setAddress((string)$addressXML->Address) : $entity->setAddress('');
+            $entity->setClient((int)$clientId);
+            (null !== $addressXML->ID) ? $entity->setId((int)$addressXML->ID) : $entity->setId(0);
             (null !== $addressXML->Name) ? $entity->setName((string)$addressXML->Name) : $entity->setName('');
             (null !== $addressXML->Address) ? $entity->setAddress((string)$addressXML->Address) : $entity->setAddress('');
             (null !== $addressXML->Zip) ? $entity->setZip((string)$addressXML->Zip) : $entity->setZip('');
@@ -368,9 +371,9 @@ EOF;
     {
         $client = new \SoapClient('http://caron.cloudsystems.gr/FOeshopWS/ForeignOffice.FOeshop.API.FOeshopSvc.svc?singleWsdl', ['trace' => true, 'exceptions' => true,]);
 
-        $id =
+        $id = $Address->getId();
         $name = $Address->getName();
-        $clientId = $Address->getClientId();
+        $clientId = $Address->getClient();
         $address = $Address->getAddress();
         $zip = $Address->getZip();
         $city = $Address->getCity();
@@ -489,19 +492,20 @@ EOF;
             if ($userResponse === false) {
                 return;
             }
+            dump($message, $result);
             $userXML = $userResponse->GetDataRows->GetUsersRow;
             if (null !== $address) {
                 $address->setClient($userXML->ClientID);
             } else {
-                $user->setUsername($userXML->Username);
-                $user->setPassword($userXML->Password);
-                $user->setClientId($userXML->ClientID);
+                (null !== $userXML->Username) ? $user->setUsername($userXML->Username) : $user->setUsername('');
+                (null !== $userXML->Password) ? $user->setPassword($userXML->Password) : $user->setUsername('');
+                (null !== $userXML->ClientID) ? $user->setClientId($userXML->ClientID) : $user->setUsername('');
+                dump($user);
             }
             return;
         } catch (\SoapFault $sf) {
             echo $sf->faultstring;
         }
-
     }
 
     /**
@@ -704,7 +708,7 @@ EOF;
         }
     }
 
-    public function getUsers() // to be deleted in production
+    public function getClientId($username) // to be deleted in production
     {
         $client = new \SoapClient('http://caron.cloudsystems.gr/FOeshopWS/ForeignOffice.FOeshop.API.FOeshopSvc.svc?singleWsdl', ['trace' => true, 'exceptions' => true,]);
 
@@ -717,9 +721,9 @@ EOF;
     <AuthID>$this->authId</AuthID>
     <AppID>157</AppID>
     <CompanyID>1000</CompanyID>
-    <pagesize>20</pagesize>
+    <pagesize>1</pagesize>
     <pagenumber>0</pagenumber>
-    <Username>null</Username>
+    <Username>$username</Username>
     <Password>null</Password>
     <Email>null</Email>
 </ClientGetUsersRequest>
@@ -727,11 +731,11 @@ EOF;
         try {
             $result = $client->SendMessage(['Message' => $message]);
             $userData = simplexml_load_string(str_replace("utf-16", "utf-8", $result->SendMessageResult));
-//            dump($result);
-            if ((int)$userData->RowsCount === 0) {
-                return false;
+//            dump($message, $userData->GetDataRows->GetUsersRow->ClientID);
+            if ((int)$userData->RowsCount > 0) {
+                return $userData->GetDataRows->GetUsersRow->ClientID;
             } else {
-                return true;
+                return 0;
             }
         } catch (\SoapFault $sf) {
             echo $sf->faultstring;

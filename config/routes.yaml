@@ -105,6 +105,11 @@ create_address:
     path: /new-address
     controller: App\Controller\UserAccountController::createAddress
 
+update_address:
+    path: /update-address/{id}
+    controller: App\Controller\UserAccountController::updateAddress
+    requirements:
+        page: \d+
 
 # login logout
 login:

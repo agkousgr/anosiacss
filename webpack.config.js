@@ -35,12 +35,14 @@ Encore
     .addEntry('js/checkout', './assets/js/checkout.js')
     .addEntry('js/user-account', './assets/js/user-account.js')
     .addEntry('js/cart', './assets/js/cart.js')
+    .addEntry('js/404', './assets/js/404.js')
 
 
     // .addStyleEntry('css/style', './assets/css/style.css')
     .addStyleEntry('css/apex-slider', './assets/css/apex-slider.css')
     .addStyleEntry('css/orders', './assets/css/orders.css')
     .addStyleEntry('css/user', './assets/css/user.css')
+    .addStyleEntry('css/404', './assets/css/404.css')
 
     .addLoader({
         test: /\.(png|jpg|svg)$/,

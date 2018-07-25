@@ -28,6 +28,14 @@ trait BasicDbFieldsTrait
     }
 
     /**
+     * @param int $id
+     */
+    public function setId(int $id): void
+    {
+        $this->id = $id;
+    }
+
+    /**
      * Get name.
      *
      * @return null|string

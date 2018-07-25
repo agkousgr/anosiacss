@@ -192,10 +192,62 @@ class UserAccountController extends MainController
         }
     }
 
+    public function updateAddress(int $id, Request $request, UserAccountService $userAccountService)
+    {
+        try {
+            if (null !== $this->loggedUser) {
+                $address = new Address();
+                $clientId = $userAccountService->getClientId($this->loggedUser);
+//                dump($clientId);
+                $userAccountService->getAddress($clientId, $address);
+
+                $formAddress = $this->createForm(UserNewAddressType::class, $address);
+                $formAddress->handleRequest($request);
+                if ($formAddress->isSubmitted() && $formAddress->isValid()) {
+                    $address->setAddress($formAddress->get('address')->getData());
+                    $address->setZip($formAddress->get('zip')->getData());
+                    $address->setCity($formAddress->get('city')->getData());
+                    $address->setDistrict($formAddress->get('district')->getData());
+                    $address->setName($formAddress->get('name')->getData());
+                    if ($userAccountService->setAddress($address)) {
+                        $this->addFlash(
+                            'success',
+                            'Η διεύθυνσή σας ενημερώθηκε με επιτυχία.'
+                        );
+                        return $this->redirectToRoute('user_account');
+                    } else {
+                        $this->addFlash(
+                            'notice',
+                            'Ένα σφάλμα παρουσιάστηκε. Παρακαλώ δοκιμάστε ξανά. Αν το πρόβλημα συνεχίσει παρακαλούμε επικοινωνήστε μαζί μας.'
+                        );
+                    }
+//                    $address = $userAccountService->updateUserInfo($user);
+//                    $userData = $userAccountService->getUserInfo($this->loggedUser, $user);
+                }
+                return $this->render('user/createAddress.html.twig', [
+                    'categories' => $this->categories,
+                    'popular' => $this->popular,
+                    'featured' => $this->featured,
+                    'cartItems' => $this->cartItems,
+                    'totalCartItems' => $this->totalCartItems,
+                    'loggedName' => $this->loggedName,
+                    'loggedUser' => $this->loggedUser,
+//                'userData' => $userData,
+//                'formUser' => $formUser->createView(),
+                    'formAddress' => $formAddress->createView(),
+                ]);
+            }
+            return $this->redirectToRoute('index');
+        } catch (\Exception $e) {
+            $this->logger->error(__METHOD__ . ' -> {message}', ['message' => $e->getMessage()]);
+            throw $e;
+        }
+    }
+
     public function register(Request $request, UserAccountService $userAccountService, UserPasswordEncoderInterface $encoder)
     {
         try {
-//            $user = new WebserviceUser();
+            $user = new WebUser();
             $registerOk = 'false';
             $form = $this->createForm(UserRegistrationType::class);
             $form->handleRequest($request);
@@ -203,9 +255,9 @@ class UserAccountController extends MainController
             if ($form->isSubmitted() && $form->isValid() && $this->isCsrfTokenValid('register', $submittedToken)) {
 
                 $username = $form->get('username')->getData();
-                $user = $userAccountService->getUser($username);
+                $userAccountService->getUser($username, $user);
 //                    dump($username, (string)$user["username"]);
-                if ($username === (string)$user["username"]) {
+                if ($username === $user->getUsername()) {
                     $this->addFlash(
                         'notice',
                         'Υπάρχει ήδη χρήστης με αυτό το email. Αν δεν θυμάστε τον κωδικό σας πατήστε στο "Ξεχάσατε τον κωδικό σας?".'
@@ -217,7 +269,7 @@ class UserAccountController extends MainController
                     if ($newUser === 'Success') {
                         $this->addFlash(
                             'success',
-                            'Η εγγραφή σας ολοκληρώθηκε. Μπορείτε να συνδεθείτε για να συνεχίσετε τα ψώνια σας.'
+                            'Η εγγραφή σας ολοκληρώθηκε. Μπορείτε να συνδεθείτε για να συνεχίσετε τις αγορές σας.'
                         );
                         $registerOk = 'true';
                     } else {
