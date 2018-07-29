@@ -21,4 +21,18 @@ class DefaultController extends MainController
 //            'latest' => $latest
         ]);
     }
+
+    public function notFound()
+    {
+        return $this->render('404/404.html.twig', [
+            'categories' => $this->categories,
+            'popular' => $this->popular,
+            'featured' => $this->featured,
+            'cartItems' => $this->cartItems,
+            'totalCartItems' => $this->totalCartItems,
+            'loggedUser' => $this->loggedUser,
+            'loggedName' => $this->loggedName,
+//            'latest' => $latest
+        ]);
+    }
 }

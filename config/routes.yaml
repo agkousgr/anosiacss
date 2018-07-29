@@ -2,6 +2,10 @@ index:
     path: /
     controller: App\Controller\DefaultController::index
 
+404:
+    path: /404-not-found
+    controller: App\Controller\DefaultController::notFound
+
 # Products
 products_list:
     path: /products/{id}/{page}
@@ -67,8 +71,11 @@ delete_cart_item:
 
 # Orders Checkout
 checkout:
-    path: /checkout
+    path: /checkout/{step}
     controller: App\Controller\CheckoutController::checkout
+    defaults: { step: 1 }
+    requirements:
+        id: \d+
 
 # Wishlist
 add_to_wishlist:

@@ -24357,17 +24357,22 @@ ul.product_list .availability span.out-of-stock {
     padding:20px;
     margin-bottom: 40px;
     font-size: 18px;
-    border: 1px #f99 solid;
-    background: #fbb;
+    background-color: #fef1f1;
+    border-color: #fde2e2;
+    color: #f56b6b;
 }
 .flash-success {
     padding:20px;
     margin-bottom: 40px;
     font-size: 18px;
-    border: 1px #89ac77 solid;
-    background: #d2ffbb;
+    background-color: #ecf3e6;
+    border-color: #dfebd5;
+    color: #8fbb6c;
 }
 .general-message {
     padding:50px 30px;
     font-size: 18px;
+}
+.no-border {
+    border: none;
 }

@@ -68,7 +68,7 @@ $(document).ready(function () {
         // for FB.getLoginStatus().
         if (response.status === 'connected') {
             // Logged into your app and Facebook.
-            testAPI();
+            // testAPI();
         } else {
             // The person is not logged into your app or we are unable to tell.
             document.getElementById('fb-root').innerHTML = 'Please log ' +

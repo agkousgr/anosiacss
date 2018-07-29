@@ -163,7 +163,7 @@ dt, kbd kbd, label {
     vertical-align: middle;
     margin-top: 0.625rem;
 }
-/*** Order details page ***/
+/*** Checkout details page ***/
 
 #order-detail #order-infos strong {
     color: #333333;
@@ -288,7 +288,7 @@ dt, kbd kbd, label {
 .page-order-detail .customization {
     margin-top: 0.75rem;
 }
-/*** Order return page ***/
+/*** Checkout return page ***/
 
 #order-return-infos .thead-default th {
     color: #414141;
