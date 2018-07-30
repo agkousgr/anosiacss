@@ -19467,7 +19467,7 @@ body.modal-open {
     padding: 5px 0 5px 64px;
     background-repeat: no-repeat;
     background-position: left;
-    font-size: 18px;
+    font-size: 15px;
     color: #009836;
     line-height: 22px;
     font-family: inherit;
@@ -20821,7 +20821,7 @@ body.modal-open {
     margin: 0;
     padding: 0;
     font-weight: 600;
-    font-size: 36px
+    font-size: 30px
 }
 
 .four-column-wrap ul li .hover-div {
