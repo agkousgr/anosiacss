@@ -51,7 +51,7 @@ class CheckoutService
     {
         $this->getUser($checkout);
         $this->getClient($checkout);
-        $this->getAddress($checkout->getClientId(), $address);
+        $this->getAddress($checkout->getClientId(), $checkout);
         $this->getNewsletter($checkout);
         $checkout->setNextPage(1);
         $checkout->setSeries('7021');
@@ -59,7 +59,8 @@ class CheckoutService
         $checkout->setPaymentType('1000');
         $checkout->setComments('');
         $checkout->setAgreeTerms(false);
-        return $this->initializeClient($checkout, $address);
+        return;
+//        return $this->initializeClient($checkout, $address);
     }
 
     /**
@@ -99,8 +100,8 @@ EOF;
                 $address->setClient($userXML->ClientID);
             } else {
                 (null !== $userXML->Username) ? $checkout->setUsername($userXML->Username) : $checkout->setUsername('');
-                (null !== $userXML->Password) ? $checkout->setPassword($userXML->Password) : $checkout->setUsername('');
-                (null !== $userXML->ClientID) ? $checkout->setClientId($userXML->ClientID) : $checkout->setUsername('');
+                (null !== $userXML->Password) ? $checkout->setPassword($userXML->Password) : $checkout->setPassword('');
+                (null !== $userXML->ClientID) ? $checkout->setClientId($userXML->ClientID) : $checkout->setClientId('');
             }
             return;
         } catch (\SoapFault $sf) {
@@ -137,6 +138,7 @@ EOF;
             if ($clientResponse === false) {
                 return;
             }
+            $this->session->remove('curOrder');
 //            dump($result);
             $userXML = $clientResponse->GetDataRows->GetClientsRow;
             $userName = explode(' ', $userXML->NAME);
@@ -160,11 +162,11 @@ EOF;
     }
 
     /**
-     * @param \App\Entity\WebUser | \App\Entity\Address
+     * @param \App\Entity\Address
      *
      * @return string
      */
-    public function getAddress($clientId, $entity)
+    public function getAddress($clientId, $address)
     {
         $client = new \SoapClient('http://caron.cloudsystems.gr/FOeshopWS/ForeignOffice.FOeshop.API.FOeshopSvc.svc?singleWsdl', ['trace' => true, 'exceptions' => true,]);
 
@@ -185,15 +187,14 @@ EOF;
         try {
             $result = $client->SendMessage(['Message' => $message]);
             $addressData = simplexml_load_string(str_replace("utf-16", "utf-8", $result->SendMessageResult));
-            dump($message, $result);
             $addressXML = $addressData->GetDataRows->GetShipAddressRow;
-            $entity->setClient((int)$clientId);
-            (null !== $addressXML->ID) ? $entity->setId((int)$addressXML->ID) : $entity->setId(0);
-            (null !== $addressXML->Name) ? $entity->setName((string)$addressXML->Name) : $entity->setName('');
-            (null !== $addressXML->Address) ? $entity->setAddress((string)$addressXML->Address) : $entity->setAddress('');
-            (null !== $addressXML->Zip) ? $entity->setZip((string)$addressXML->Zip) : $entity->setZip('');
-            (null !== $addressXML->City) ? $entity->setCity((string)$addressXML->City) : $entity->setCity('');
-            (null !== $addressXML->District) ? $entity->setDistrict((string)$addressXML->District) : $entity->setDistrict('');
+            $address->setClient((int)$clientId);
+            (null !== $addressXML->ID) ? $address->setId((int)$addressXML->ID) : $address->setId(0);
+            (null !== $addressXML->Name) ? $address->setName((string)$addressXML->Name) : $address->setName('');
+            (null !== $addressXML->Address) ? $address->setAddress((string)$addressXML->Address) : $address->setAddress('');
+            (null !== $addressXML->Zip) ? $address->setZip((string)$addressXML->Zip) : $address->setZip('');
+            (null !== $addressXML->City) ? $address->setCity((string)$addressXML->City) : $address->setCity('');
+            (null !== $addressXML->District) ? $address->setDistrict((string)$addressXML->District) : $address->setDistrict('');
             return;
 //            dump($result);
         } catch (\SoapFault $sf) {
@@ -321,6 +322,8 @@ EOF;
 
     public function initializeOrder($checkout)
     {
+        $checkoutValues = $this->session->get('curOrder');
+        dump($checkoutValues);
         $this->session->set('address', $checkout->getAddress());
         $this->session->set('comments', $checkout->getComments());
     }

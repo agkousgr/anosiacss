@@ -80,19 +80,19 @@ EOF;
 
         $message = <<<EOF
 <?xml version="1.0" encoding="utf-16"?>
-<ClientGetCategoryItemsRequest>
+<ClientGetCategoryItemsCountRequest>
     <Type>1011</Type>
     <Kind>1</Kind>
     <Domain>pharmacyone</Domain>
     <AuthID>$this->authId</AuthID>
     <AppID>157</AppID>
     <CompanyID>1000</CompanyID>
-    <pagesize>10</pagesize>
+    <pagesize>1000</pagesize>
     <pagenumber>0</pagenumber>
     <CategoryID>$ctgId</CategoryID>
     <SearchToken>null</SearchToken>
     <IncludeChildCategories>1</IncludeChildCategories>
-</ClientGetCategoryItemsRequest>
+</ClientGetCategoryItemsCountRequest>
 EOF;
         try {
             $result = $client->SendMessage(['Message' => $message]);

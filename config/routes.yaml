@@ -129,3 +129,8 @@ login:
 logout:
     path: /logout
     controller: App\Controller\UserAccountController::logout
+
+# Admin
+#admin:
+#    path: /admin
+#    controller: App\Controller\AdminDefaultController::login

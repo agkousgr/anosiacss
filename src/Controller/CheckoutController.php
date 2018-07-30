@@ -13,6 +13,9 @@ use App\Form\Type\{
 use App\Service\CheckoutService;
 use Doctrine\ORM\EntityManagerInterface;
 use Symfony\Component\HttpFoundation\Request;
+use Symfony\Component\Serializer\Serializer;
+use Symfony\Component\Serializer\Encoder\JsonEncoder;
+use Symfony\Component\Serializer\Normalizer\ObjectNormalizer;
 
 class CheckoutController extends MainController
 {
@@ -23,14 +26,17 @@ class CheckoutController extends MainController
             $curStep = ($request->request->get('currentStep')) ?: $step;
             if (null !== $this->loggedUser) {
                 $checkout = new Checkout();
-                $address = new Address();
-                $orderData = $checkoutService->getUserInfo($checkout, $address);
-                $this->session->set('curOrder', $orderData);
                 if ($this->session->has('curOrder') === false) {
-                } else {
-//                    dump($this->session->get('curOrder')->replace('firstname', 'zong'));
-                    $orderData = $this->session->get('curOrder');
+                    $orderData = $checkoutService->getUserInfo($checkout);
+                    $this->session->set('curOrder', $checkout);
+                }else{
+                    $checkoutService->initializeOrder($checkout);
                 }
+//                $address = new Address();
+//                if ($this->session->has('curOrder') === false) {
+//                } else {
+//                    $orderData = $this->session->get('curOrder');
+//                }
                 $step1Form = $this->createForm(CheckoutStep1Type::class, $checkout, [
                     'loggedUser' => $this->loggedUser
                 ]);
@@ -42,27 +48,26 @@ class CheckoutController extends MainController
                 $step4Form = $this->createForm(CheckoutStep4Type::class, $checkout);
                 $step4Form->handleRequest($request);
                 if ($step1Form->isSubmitted() && $step1Form->isValid()) {
-                    array_push($orderData, [
-                        'name' => $step1Form->get("firstname")->getData() . " " . $step1Form->get("lastname")->getData()
-                    ]);
-//                    $this->session->set('curOrder', $orderData);
+
                     $curStep = 2;
-                }
-                if ($step2Form->isSubmitted() && $step2Form->isValid()) {
+                } elseif ($step2Form->isSubmitted() && $step2Form->isValid()) {
 
                     $curStep = 3;
-                }
-                if ($step3Form->isSubmitted() && $step3Form->isValid()) {
+                } elseif ($step3Form->isSubmitted() && $step3Form->isValid()) {
 
                     $curStep = 4;
-                }
-                if ($step4Form->isSubmitted() && $step4Form->isValid()) {
+                } elseif ($step4Form->isSubmitted() && $step4Form->isValid()) {
 
                 }
+                dump($checkout);
+//                $encoders = array(new JsonEncoder());
+//                $normalizers = array(new ObjectNormalizer());
+//                $serializer = new Serializer($normalizers, $encoders);
+//                $jsonContent = $serializer->serialize($checkout, 'json');
 
-                $checkoutService->initializeOrder($checkout);
-
-                dump($this->session->get('curOrder'));
+//                $checkoutService->initializeOrder($checkout);
+//                $this->session->set('curOrder', $jsonContent);
+//                dump($jsonContent);
 
                 return ($this->render('orders/checkout.html.twig', [
                     'categories' => $this->categories,

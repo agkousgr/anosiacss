@@ -23,7 +23,7 @@
 .radio-extra-info {
     font-size: 14px;
 }
-.radio {
+.radio.payment-method {
     border-bottom: 1px #dedede solid;
     padding: 10px;
 }

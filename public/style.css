@@ -21114,7 +21114,9 @@ h3.resp-accordion {
 }
 
 .product-img {
-    position: relative
+    position: relative;
+    text-align: center;
+    height: 263px;
 }
 
 .product-case .hover-img {
@@ -21137,7 +21139,7 @@ h3.resp-accordion {
 }
 
 .product-img img {
-    width: 100%;
+    /*width: 100%;*/
     height: auto;
     max-height: 263px;
 }

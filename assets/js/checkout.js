@@ -79,7 +79,8 @@ $('input[name="checkout_step4[paymentType]"]').on('change', function () {
 })
 
 $(document).ready(function () {
-    $('#checkout_step2_series_0').attr('checked', 'checked');
+    // $('#checkout_step2_series_0').attr('checked', 'checked');
+    // $('#checkout_step4_paymentType_0').attr('checked', 'checked');
     $('.checkout_step3_shippingType_1').html('Για να δεσμευτεί μια παραγγελία έτσι ώστε να είναι δυνατή η παραλαβή της από το Φαρμακείο απαιτεί χρόνο τριών εως πέντε ωρών.\n' +
         'Μόλις η παραγγελία σας είναι διαθέσιμη στο κατάστημα, θα επικοινωνήσουμε μαζί σας τηλεφωνικά για να περάσετε να παραλάβετε.');
     $('#checkout_step4_paymentType').css({'padding-top': '0'});
