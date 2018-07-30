@@ -11344,6 +11344,8 @@ img {
     height: auto
 }
 
+.bottom-buttons img { width: 80%;  }
+
 .img-thumbnail {
     padding: 4px;
     border: 1px solid #ddd;
@@ -13081,13 +13083,13 @@ output {
     height: 41px;
     padding: 6px 12px;
     background-color: #fff;
-    border: 1px solid #d8d8d8;
+    /*border: 1px solid #d8d8d8;
     border-radius: 0;
     -webkit-box-shadow: inset 0 1px 1px rgba(0, 0, 0, .075);
     box-shadow: inset 0 1px 1px rgba(0, 0, 0, .075);
     -webkit-transition: border-color ease-in-out .15s, -webkit-box-shadow ease-in-out .15s;
     -o-transition: border-color ease-in-out .15s, box-shadow ease-in-out .15s;
-    transition: border-color ease-in-out .15s, box-shadow ease-in-out .15s
+    transition: border-color ease-in-out .15s, box-shadow ease-in-out .15s*/
 }
 
 .form-control:focus {
@@ -19749,14 +19751,14 @@ body.modal-open {
 .social li {
     /*width: 10%;*/
     /*float: left*/
-    display:inline;
+    display: inline;
 }
 
 .social li .social-btn {
     position: relative;
     overflow: hidden;
     display:inline-block; /* delete those 2 lines if not keep centered */
-    width: 150px;
+    width: 19.5% !important;
 }
 
 .social li a,
@@ -20195,8 +20197,42 @@ body.modal-open {
     font-weight: 400
 }
 
+.form-circle {
+    background-color: #fff;
+    border-radius: 20px 100px;
+    padding: 50px;
+}
+
+.input-lg-newsletter {
+    border-top: 0 !important;
+    border-left: 0 !important;
+    border-right: 0 !important;
+    border-bottom: 1px solid green !important;
+    font-size: 18px;
+    background: transparent !important;
+    border-radius: 0 !important;
+    margin-bottom: 10px;
+    text-aling: center;
+}
+
+.newsletter-p {
+    font-size: 18px;
+    color: #fff;
+    padding-left: 10px;
+}
+
+.nlsdescr {
+    font-size: 14px;
+    padding-left: 10px;
+}
+
 .info-row {
-    border-top: 1px solid #d8d8d8
+    border-top: 1px solid #d8d8d8;
+    background-color: #ffffff;
+}
+
+.info-row .description {
+    padding: 80px;
 }
 
 .info-row ul {
@@ -20759,7 +20795,7 @@ body.modal-open {
     padding: 48px 15px;
     text-align: center;
     color: #fff;
-    text-transform: uppercase;
+    text-transform: capitalize;
     overflow: hidden;
     position: relative
 }
@@ -21443,12 +21479,12 @@ h3.resp-accordion:first-child {
     font-family: "pf_dintext_proregular", sans-serif
 }
 
-.category-banner .banner-img .overlay,
+/*.category-banner .banner-img .overlay,
 .category-image a p,
 .offer-box button span,
 .offer-box ul li {
     font-family: 'Aka-AcidGR-Quicksandbold'
-}
+}*/
 
 .product-box .media .price {
     font-size: 14px;
@@ -21658,8 +21694,8 @@ h3.resp-accordion:first-child {
 }
 
 .category-banner ul li {
-    width: 25%;
-    float: left
+    width: 33.3%; /*25%;*/
+    float: left;
 }
 
 .category-banner .banner-img img,

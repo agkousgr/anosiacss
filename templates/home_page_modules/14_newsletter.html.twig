@@ -1,30 +1,50 @@
-<div class="section" style="background-image:url({{ asset('images/newsletter-bg.jpg') }});">
+<div class="section" style="/*background-image:url({{ asset('images/newsletter-bg.jpg') }});*/background: #009836;">
     <div class="container">
-        <div class="section-heading section-heading-white row wow flipInX" data-wow-delay="0.4s">
-            <div class="col-sm-8 col-sm-offset-2">
-                <h3>Εγγραφείτε</h3>
-                <h2>Στο Newsletter Μας</h2>
-                <p>Oι προσφορές και τα νέα μας στο email σας. Γίνετε μέλος της παρέας μας και ενημερωθείτε πρώτοι για τα νέα και τις προσφορές μας. </p>
-            </div>
-        </div>
-
-        <div class="row newsletter">
-            <div class="col-md-10 col-md-offset-1">
+        <div class="row">
+            <div class="col-sm-12">
+            <!--<div class="section-heading section-heading-white row wow flipInX" data-wow-delay="0.4s">-->
+                <div class="col-sm-6">
+                    <h2>Εγγραφείτε στο Newsletter μας</h2>
+                    <p class="newsletter-p"><i class="fa fa-circle-o-notch fa-spin"></i>Oι προσφορές και τα νέα μας στο email σας. Γίνετε μέλος της παρέας μας και ενημερωθείτε πρώτοι για τα νέα και τις προσφορές μας, κερδίστε ειδικά εκπτωτικά κουπόνια μόνο για εσάς!</p>
+                    <p class="newsletter-p nlsdescr"><i class="fa fa-circle-o-notch fa-spin"></i>* Συμπληρώστε την ηλικία και το φύλο σας για να σας αποστέλλουμε μόνο προσφορές και νέα που απευθύνονται σε εσάς!</p>
+                </div>
+           <!-- </div>-->
+            
+            <div class="col-sm-6 form-circle">
                 <form action="#" method="post">
-                    <div class="col-sm-6 col-md-4 form-groupwow flipInY" data-wow-delay="0.4s"><input
+                    <div class="col-sm-6 col-md-12 form-groupwow flipInY" data-wow-delay="0.4s"><input
                                 type="text"
-                                class="form-control input-lg"
+                                class="form-control input-lg-newsletter"
                                 placeholder="Ονοματεπώνυμο  ">
                     </div>
-                    <div class="col-sm-6 col-md-4 form-group wow flipInY" data-wow-delay="0.4s"><input
+                    <br/><br/>
+                    <div class="col-sm-6 col-md-12 form-group wow flipInY" data-wow-delay="0.4s"><input
                                 type="email"
-                                class="form-control input-lg"
+                                class="form-control input-lg-newsletter"
                                 placeholder="Email">
                     </div>
-                    <div class="col-sm-6 col-sm-offset-3 col-md-4 col-md-offset-0 form-group wow flipInY"
+                    <br/><br/>
+                    <div class="col-sm-6 col-md-12 form-groupwow flipInY" data-wow-delay="0.4s">
+                        <select name="gender" class="form-control input-lg-newsletter">
+                            <option value="question">Επιλέξτε Φύλο</option>
+                            <option value="man">Άνδρας</option>
+                            <option value="woman">Γυναίκα</option>
+                          </select>
+                    </div>
+                    <br/>
+                    <div class="col-sm-6 col-md-12 form-groupwow flipInY" data-wow-delay="0.4s"><input
+                                type="text"
+                                class="form-control input-lg-newsletter"
+                                placeholder="Ηλικία  ">
+                    </div>
+                    <br/><br/>
+                    <div class="gy-gdpr-consents"><input type="checkbox" name="check" value=""> <label>Επιθυμώ να ενημερώνομαι για προσφορές & νέα!</label></div>
+                    <br/><br/>
+                    <div class="col-sm-6 col-sm-offset-3 col-md-6 col-md-offset-0 form-group wow flipInY"
                          data-wow-delay="0.4s"><input type="submit" value="ΕΓΓΡΑΦΗ"
                                                       class="btn btn-primary btn-block btn-lg"></div>
                 </form>
+            </div>
             </div>
         </div>
     </div>
