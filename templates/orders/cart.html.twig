@@ -62,7 +62,7 @@
                                                         <div class="product-line-grid-left col-md-3 col-xs-4">
                                                             <span class="product-image media-middle">
                                                                 <img src="{{ pr.imageUrl }}"
-                                                                     alt="voluptate velit esse">
+                                                                     alt="{{ pr.name }}">
                                                             </span>
                                                         </div>
 
@@ -132,7 +132,7 @@
                                                                         <a class="remove-from-cart"
                                                                            rel="nofollow"
                                                                            href="{{ path('delete_cart_item', {'id':pr.cartId}) }}">
-                                                                            <i class="material-icons float-xs-left">Delete</i>
+                                                                            <i class="material-icons float-xs-left">delete</i>
                                                                         </a>
                                                                     </div>
                                                                 </div>
@@ -182,18 +182,18 @@
                                             <span class="value">{{ cartSubTotal|number_format(2, ',', '.') }}
                                                 €</span>
                                         </div>
-                                        <div class="cart-summary-line" id="cart-subtotal-shipping">
-                                            <span class="label">
-                                                Μεταφορικά
-                                            </span>
-                                            <span class="value">Δωρεάν</span>
-                                            <div>
-                                                <small class="value"></small>
-                                            </div>
-                                        </div>
+                                        {#<div class="cart-summary-line" id="cart-subtotal-shipping">#}
+                                            {#<span class="label">#}
+                                                {#Μεταφορικά#}
+                                            {#</span>#}
+                                            {#<span class="value">Δωρεάν</span>#}
+                                            {#<div>#}
+                                                {#<small class="value"></small>#}
+                                            {#</div>#}
+                                        {#</div>#}
                                     </div>
                                     <hr class="separator">
-                                    <div class="card-block">
+                                    <div class="card-block ">
                                         {% set cartTotal = cartSubTotal + cartShippingCost %}
                                         <div class="cart-summary-line cart-total">
                                             <span class="label">Σύνολο (με ΦΠΑ)</span>

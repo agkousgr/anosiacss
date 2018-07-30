@@ -50,7 +50,8 @@
                                             Προσωπικά στοιχεία
                                             <a href="{{ path('checkout', {'step': 1}) }}">
                                                 <span id="1" class="step-edit text-muted">
-                                                    <i class="material-icons edit">mode_edit</i> Επεξεργασία
+                                                    <i class="material-icons edit">mode_edit</i>
+                                                    Επεξεργασία
                                                 </span>
                                             </a>
                                         </h1>
@@ -60,7 +61,8 @@
                                                     <li class="nav-item">
                                                         <a class="nav-link active" data-toggle="tab"
                                                            href="#checkout-guest-form" role="tab"
-                                                           aria-controls="checkout-guest-form" aria-selected="true">
+                                                           aria-controls="checkout-guest-form"
+                                                           aria-selected="true">
                                                             Ολοκλήρωση ως επισκέπτης
                                                         </a>
                                                     </li>
@@ -68,8 +70,10 @@
                                                         <span href="nav-separator"> | </span>
                                                     </li>
                                                     <li class="nav-item">
-                                                        <a class="nav-link " data-link-action="show-login-form"
-                                                           data-toggle="tab" href="#checkout-login-form" role="tab"
+                                                        <a class="nav-link "
+                                                           data-link-action="show-login-form"
+                                                           data-toggle="tab"
+                                                           href="#checkout-login-form" role="tab"
                                                            aria-controls="checkout-login-form">
                                                             Είσοδος
                                                         </a>
@@ -77,7 +81,8 @@
                                                 </ul>
                                             {% endif %}
                                             <div class="tab-content">
-                                                <div class="tab-pane active" id="checkout-guest-form" role="tabpanel">
+                                                <div class="tab-pane active"
+                                                     id="checkout-guest-form" role="tabpanel">
                                                     {{ form_start(step1Form) }}
                                                     <section>
                                                         <div class="form-group row ">
@@ -132,7 +137,8 @@
                                                         {#</div>#}
                                                     </section>
                                                     <footer class="form-footer clearfix">
-                                                        <input name="submitAddress" value="1" type="hidden">
+                                                        <input name="submitAddress" value="1"
+                                                               type="hidden">
                                                         <button id="confirm-addresses" type="submit"
                                                                 class="continue btn btn-primary float-xs-right"
                                                                 name="confirm-addresses" value="1">
@@ -141,7 +147,8 @@
                                                     </footer>
                                                     {{ form_end(step1Form) }}
                                                 </div>
-                                                <div class="tab-pane " id="checkout-login-form" role="tabpanel"
+                                                <div class="tab-pane " id="checkout-login-form"
+                                                     role="tabpanel"
                                                      aria-hidden="true">
 
 
@@ -149,13 +156,15 @@
                                                           action="https://demo.templatetrip.com/Prestashop/PRS06/PRS176_gym/en/order"
                                                           method="post">
                                                         <section>
-                                                            <input name="back" value="" type="hidden">
+                                                            <input name="back" value=""
+                                                                   type="hidden">
                                                             <div class="form-group row ">
                                                                 <label class="col-md-3 form-control-label required">
                                                                     Email
                                                                 </label>
                                                                 <div class="col-md-6">
-                                                                    <input class="form-control" name="email" value=""
+                                                                    <input class="form-control"
+                                                                           name="email" value=""
                                                                            required="" type="email">
                                                                 </div>
                                                                 <div class="col-md-3 form-control-comment">
@@ -168,10 +177,14 @@
                                                                 <div class="col-md-6">
                                                                     <div class="input-group js-parent-focus">
                                                                         <input class="form-control js-child-focus js-visible-password"
-                                                                               name="password" value="" pattern=".{5,}"
-                                                                               required="" type="password">
+                                                                               name="password"
+                                                                               value=""
+                                                                               pattern=".{5,}"
+                                                                               required=""
+                                                                               type="password">
                                                                         <span class="input-group-btn">
-                                                                            <button class="btn" type="button"
+                                                                            <button class="btn"
+                                                                                    type="button"
                                                                                     data-action="show-password"
                                                                                     data-text-show="Show"
                                                                                     data-text-hide="Hide">
@@ -191,9 +204,11 @@
                                                             </div>
                                                         </section>
                                                         <footer class="form-footer text-sm-center clearfix">
-                                                            <input name="submitLogin" value="1" type="hidden">
+                                                            <input name="submitLogin" value="1"
+                                                                   type="hidden">
                                                             <button class="continue btn btn-primary float-xs-right"
-                                                                    name="continue" data-link-action="sign-in"
+                                                                    name="continue"
+                                                                    data-link-action="sign-in"
                                                                     type="submit" value="1">
                                                                 Continue
                                                             </button>
@@ -219,7 +234,8 @@
                                             Διευθύνσεις
                                             <a href="{{ path('checkout', {'step': 2}) }}">
                                                 <span id="1" class="step-edit text-muted">
-                                                    <i class="material-icons edit">mode_edit</i> Επεξεργασία
+                                                    <i class="material-icons edit">mode_edit</i>
+                                                    Επεξεργασία
                                                 </span>
                                             </a>
                                         </h1>
@@ -228,10 +244,11 @@
                                             <div class="js-address-form">
                                                 {{ form_start(step2Form) }}
 
-                                                <p>
-                                                    The selected address will be used both as your personal address
-                                                    (for invoice) and as your delivery address.
-                                                </p>
+                                                {#<p>#}
+                                                {#Η επιλεγμένη διεύθυνση θα χρησιμοποιηθεί και σαν διεύθυνση αποστολής. Αν θέλετε η παραγγελία σας να παραδοθεί σε ά#}
+                                                {#The selected address will be used both as your personal address#}
+                                                {#(for invoice) and as your delivery address.#}
+                                                {#</p>#}
 
                                                 <div id="delivery-address">
                                                     <div class="js-address-form">
@@ -299,9 +316,12 @@
                                                                 </div>
                                                                 <div class="form-group row">
                                                                     <div class="col-md-9 col-md-offset-3">
-                                                                        <input name="use_same_address" value="1"
-                                                                               checked="" type="checkbox">
-                                                                        <label>Ίδια διεύθυνση για το τιμολόγιο</label>
+                                                                        <input name="use_same_address"
+                                                                               value="1"
+                                                                               checked=""
+                                                                               type="checkbox">
+                                                                        <label>Ίδια διεύθυνση για το
+                                                                            τιμολόγιο</label>
                                                                     </div>
                                                                 </div>
                                                             </div>
@@ -316,10 +336,13 @@
                                                         </section>
 
                                                         <footer class="form-footer clearfix">
-                                                            <input name="submitAddress" value="1" type="hidden">
-                                                            <button id="confirm-addresses" type="submit"
+                                                            <input name="submitAddress" value="1"
+                                                                   type="hidden">
+                                                            <button id="confirm-addresses"
+                                                                    type="submit"
                                                                     class="continue btn btn-primary float-xs-right"
-                                                                    name="confirm-addresses" value="1">
+                                                                    name="confirm-addresses"
+                                                                    value="1">
                                                                 Επόμενο
                                                             </button>
                                                         </footer>
@@ -336,6 +359,7 @@
                                     {% elseif curStep > 3 %}
                                         {% set step3class = '-complete' %}
                                     {% endif %}
+                                    {% form_theme step3Form 'form_template/bootstrap_3_layout.html.twig' %}
                                     <section id="checkout-shipping-step"
                                              class="checkout-step {{ step3class }} -reachable">
                                         <h1 class="step-title h3">
@@ -344,7 +368,8 @@
                                             Τρόπος αποστολής
                                             <a href="{{ path('checkout', {'step': 3}) }}">
                                                 <span id="1" class="step-edit text-muted">
-                                                    <i class="material-icons edit">mode_edit</i> Επεξεργασία
+                                                    <i class="material-icons edit">mode_edit</i>
+                                                    Επεξεργασία
                                                 </span>
                                             </a>
                                         </h1>
@@ -357,11 +382,11 @@
                                                         <section class="form-fields">
                                                             <div class="form-group row ">
                                                                 {{ form_label(step3Form.shippingType, 'Τρόπος Αποστολής', {'label_attr': {'class': 'col-md-3 form-control-label required'}}) }}
-                                                                <div class="col-md-6">
+                                                                <div class="col-md-9">
                                                                     {{ form_widget(step3Form.shippingType, {'attr': {'class': 'form-control no-border'}}) }}
                                                                 </div>
-                                                                <div class="col-md-3 form-control-comment">
-                                                                </div>
+                                                                {#<div class="col-md-3 form-control-comment">#}
+                                                                {#</div>#}
                                                             </div>
                                                             <div class="form-group row ">
                                                                 {{ form_label(step3Form.comments, 'Παρατηρήσεις', {'label_attr': {'class': 'col-md-3 form-control-label required'}}) }}
@@ -369,14 +394,16 @@
                                                                     {{ form_widget(step3Form.comments, {'attr': {'class': 'form-control'}}) }}
                                                                 </div>
                                                             </div>
-
                                                         </section>
 
                                                         <footer class="form-footer clearfix">
-                                                            <input name="submitAddress" value="1" type="hidden">
-                                                            <button id="confirm-addresses" type="submit"
+                                                            <input name="submitAddress" value="1"
+                                                                   type="hidden">
+                                                            <button id="confirm-addresses"
+                                                                    type="submit"
                                                                     class="continue btn btn-primary float-xs-right"
-                                                                    name="confirm-addresses" value="1">
+                                                                    name="confirm-addresses"
+                                                                    value="1">
                                                                 Επόμενο
                                                             </button>
                                                         </footer>
@@ -391,7 +418,9 @@
                                     {% if curStep == 4 %}
                                         {% set step4class = '-current js-current-step' %}
                                     {% endif %}
-                                    <section class="checkout-step -reachable {{ step4class }}" id="checkout-payment-step">
+                                    {% form_theme step4Form 'form_template/bootstrap_3_layout.html.twig' %}
+                                    <section class="checkout-step -reachable {{ step4class }}"
+                                             id="checkout-payment-step">
                                         <h1 class="step-title h3">
                                             <span class="step-number">4</span> Τρόπος Πληρωμής
                                         </h1>
@@ -403,28 +432,29 @@
                                                         <section class="form-fields">
                                                             <div class="form-group row ">
                                                                 {{ form_label(step4Form.paymentType, 'Τρόπος Πληρωμής', {'label_attr': {'class': 'col-md-3 form-control-label required'}}) }}
-                                                                <div class="col-md-6">
+                                                                <div class="col-md-9">
                                                                     {{ form_widget(step4Form.paymentType, {'attr': {'class': 'form-control no-border'}}) }}
-                                                                </div>
-                                                                <div class="col-md-3 form-control-comment">
                                                                 </div>
                                                             </div>
                                                             <div class="clearfix"></div>
                                                             <div class="form-group row ">
-                                                                <div class="col-md-12">
-                                                                    {{ form_widget(step4Form.agreeTerms, {'attr': {'class': 'form-control'}}) }}
                                                                     {{ form_label(step4Form.agreeTerms, 'Έχω διαβάσει και αποδέχομαι ανεπιφύλακτα τους Όρους Χρήσης') }}
+                                                                <div class="col-md-12">
+                                                                    {{ form_widget(step4Form.agreeTerms) }}
                                                                 </div>
                                                             </div>
 
                                                         </section>
 
                                                         <footer class="form-footer clearfix">
-                                                            <input name="submitAddress" value="1" type="hidden">
-                                                            <button id="confirm-addresses" type="submit"
+                                                            <input name="submitAddress" value="1"
+                                                                   type="hidden">
+                                                            <button id="confirm-addresses"
+                                                                    type="submit"
                                                                     class="continue btn btn-primary float-xs-right"
-                                                                    name="confirm-addresses" value="1">
-                                                                Επόμενο
+                                                                    name="confirm-addresses"
+                                                                    value="1">
+                                                                Ολοκλήρωση Παραγγελίας
                                                             </button>
                                                         </footer>
                                                     </div>
@@ -435,7 +465,8 @@
                                             <div class="modal fade" id="modal">
                                                 <div class="modal-dialog" role="document">
                                                     <div class="modal-content">
-                                                        <button type="button" class="close" data-dismiss="modal"
+                                                        <button type="button" class="close"
+                                                                data-dismiss="modal"
                                                                 aria-label="Close">
                                                             <span aria-hidden="true">&times;</span>
                                                         </button>
@@ -466,19 +497,19 @@
                                                 <p>
                                                     <a href="#" data-toggle="collapse"
                                                        data-target="#cart-summary-product-list">
-                                                        Λεπτομέρειες
+                                                        Λεπτομέρειες καλαθιού
                                                     </a>
                                                 </p>
-                                                <div class="collapse" id="cart-summary-product-list">
+                                                <div class="collapse"
+                                                     id="cart-summary-product-list">
                                                     <ul class="media-list">
                                                         {% set cartSubTotal = 0 %}
                                                         {% set cartTotal = 0 %}
-                                                        {% set cartShippingCost = 0 %}
+                                                        {% set cartShippingCost = 2.00 %}
                                                         {% for pr in cartItems %}
                                                             <li class="media">
                                                                 <div class="media-left">
-                                                                    <a href="{{ path('product_view', {'id':pr.id}) }}"
-                                                                       title="voluptate velit esse">
+                                                                    <a href="{{ path('product_view', {'id':pr.id}) }}" title="{{ pr.name }}">
                                                                         <img class="media-object"
                                                                              src="{{ pr.imageUrl }}"
                                                                              alt="{{ pr.name }}">
@@ -486,9 +517,10 @@
                                                                 </div>
                                                                 <div class="media-body">
                                                                     <span class="product-name">{{ pr.name }}</span>
-                                                                    <span class="product-quantity">x{{ pr.quantity }}</span>
-                                                                    <span class="product-price float-xs-right">{{ ((pr.webPrice|number_format(2, '.', ','))*pr.quantity)|number_format(2, ',', '.') }}
+                                                                    <span class="product-price float-xs-right pull-right">{{ ((pr.webPrice|number_format(2, '.', ','))*pr.quantity)|number_format(2, ',', '.') }}
                                                                         €</span>
+                                                                    <span style="padding-right: 10px;"
+                                                                          class="product-quantity pull-right">x{{ pr.quantity }}</span>
                                                                 </div>
                                                             </li>
                                                             {% set cartSubTotal = cartSubTotal + (pr.webPrice|number_format(2, '.', ','))*pr.quantity %}
@@ -500,12 +532,22 @@
                                             <div class="cart-summary-line cart-summary-subtotals"
                                                  id="cart-subtotal-products">
                                                 <span class="label">Μερικό σύνολο</span>
-                                                <span class="value">{{ cartSubTotal|number_format(2, ',', '.') }}</span>
+                                                <span class="value">€</span>
+                                                <span id="cart-cost" data-cost="{{ cartSubTotal }}" class="value">{{ cartSubTotal|number_format(2, ',', '.') }}</span>
                                             </div>
                                             <div class="cart-summary-line cart-summary-subtotals"
                                                  id="cart-subtotal-shipping">
                                                 <span class="label">Μεταφορικά</span>
-                                                <span class="value">Δωρεάν</span>
+                                                <span class="value">€</span>
+                                                <span id="shipping-cost" data-cost="2.00"
+                                                      class="value">2,00</span>
+                                            </div>
+                                            <div class="cart-summary-line cart-summary-subtotals hidden"
+                                                 id="cart-subtotal-pay-on-delivery">
+                                                <span class="label">Αντικαταβολή</span>
+                                                <span class="value">€</span>
+                                                <span id="pay-on-delivery-cost" data-cost="1.50"
+                                                      class="value">1,50</span>
                                             </div>
                                         </div>
                                         <hr class="separator">
@@ -513,7 +555,9 @@
                                         <div class="card-block cart-summary-totals">
                                             <div class="cart-summary-line cart-total">
                                                 <span class="label">Σύνολο (με ΦΠΑ)</span>
-                                                <span class="value">{{ cartTotal|number_format(2, ',', '.') }}</span>
+                                                <span class="value">€</span>
+                                                <span id="total-cost" data-cost="{{ cartTotal }}" class="value">{{ cartTotal|number_format(2, ',', '.') }}
+                                                </span>
                                             </div>
                                             <div class="cart-summary-line">
                                                 <span class="label sub"></span>
@@ -522,34 +566,37 @@
                                         </div>
                                     </section>
 
-                                    <div id="block-reassurance">
-                                        <ul>
-                                            <li>
-                                                <div class="block-reassurance-item">
-                                                    <img src="https://demo.templatetrip.com/Prestashop/PRS06/PRS176_gym/modules/blockreassurance/img/ic_verified_user_black_36dp_1x.png"
-                                                         alt="Security policy (edit with Customer reassurance module)">
-                                                    <span class="h6">Security policy (edit with Customer reassurance
-                                                        module)</span>
-                                                </div>
-                                            </li>
-                                            <li>
-                                                <div class="block-reassurance-item">
-                                                    <img src="https://demo.templatetrip.com/Prestashop/PRS06/PRS176_gym/modules/blockreassurance/img/ic_local_shipping_black_36dp_1x.png"
-                                                         alt="Delivery policy (edit with Customer reassurance module)">
-                                                    <span class="h6">Delivery policy (edit with Customer reassurance
-                                                        module)</span>
-                                                </div>
-                                            </li>
-                                            <li>
-                                                <div class="block-reassurance-item">
-                                                    <img src="https://demo.templatetrip.com/Prestashop/PRS06/PRS176_gym/modules/blockreassurance/img/ic_swap_horiz_black_36dp_1x.png"
-                                                         alt="Return policy (edit with Customer reassurance module)">
-                                                    <span class="h6">Return policy (edit with Customer reassurance
-                                                        module)</span>
-                                                </div>
-                                            </li>
-                                        </ul>
-                                    </div>
+                                    {#<div id="block-reassurance">#}
+                                        {#<ul>#}
+                                            {#<li>#}
+                                                {#<div class="block-reassurance-item">#}
+                                                    {#<img src="https://demo.templatetrip.com/Prestashop/PRS06/PRS176_gym/modules/blockreassurance/img/ic_verified_user_black_36dp_1x.png"#}
+                                                         {#alt="Security policy (edit with Customer reassurance module)">#}
+                                                    {#<span class="h6">Security policy (edit with#}
+                                                        {#Customer reassurance#}
+                                                        {#module)</span>#}
+                                                {#</div>#}
+                                            {#</li>#}
+                                            {#<li>#}
+                                                {#<div class="block-reassurance-item">#}
+                                                    {#<img src="https://demo.templatetrip.com/Prestashop/PRS06/PRS176_gym/modules/blockreassurance/img/ic_local_shipping_black_36dp_1x.png"#}
+                                                         {#alt="Delivery policy (edit with Customer reassurance module)">#}
+                                                    {#<span class="h6">Delivery policy (edit with#}
+                                                        {#Customer reassurance#}
+                                                        {#module)</span>#}
+                                                {#</div>#}
+                                            {#</li>#}
+                                            {#<li>#}
+                                                {#<div class="block-reassurance-item">#}
+                                                    {#<img src="https://demo.templatetrip.com/Prestashop/PRS06/PRS176_gym/modules/blockreassurance/img/ic_swap_horiz_black_36dp_1x.png"#}
+                                                         {#alt="Return policy (edit with Customer reassurance module)">#}
+                                                    {#<span class="h6">Return policy (edit with#}
+                                                        {#Customer reassurance#}
+                                                        {#module)</span>#}
+                                                {#</div>#}
+                                            {#</li>#}
+                                        {#</ul>#}
+                                    {#</div>#}
 
                                 </div>
                             </div>

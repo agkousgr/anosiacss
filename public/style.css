@@ -13034,7 +13034,7 @@ input[type=search] {
 
 input[type=checkbox],
 input[type=radio] {
-    margin: 4px 0 0;
+    /*margin: 4px 0 0;*/
     margin-top: 1px\9;
     line-height: normal
 }
@@ -13074,7 +13074,7 @@ output {
 
 .form-control {
     width: 100%;
-    height: 41px;
+    min-height: 41px;
     padding: 6px 12px;
     background-color: #fff;
     border: 1px solid #d8d8d8;
@@ -13185,7 +13185,7 @@ textarea.form-control {
     min-height: 20px;
     padding-left: 20px;
     margin-bottom: 0;
-    font-weight: 700;
+    /*font-weight: 700;*/
     cursor: pointer
 }
 
@@ -24375,4 +24375,5 @@ ul.product_list .availability span.out-of-stock {
 }
 .no-border {
     border: none;
+    -webkit-box-shadow: none;
 }

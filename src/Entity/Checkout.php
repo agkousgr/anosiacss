@@ -11,17 +11,17 @@ namespace App\Entity;
 
 class Checkout extends WebUser
 {
-    const SHIPPING_TYPES = [
+    const PAYMENT_TYPES = [
+        'Κατάθεση σε τράπεζα' => '1004',
         'Πληρωμή στο κατάστημα' => '1000',
         'Πιστωτική' => '1001',
         'Paypal' => '1002',
         'Αντικαταβολή' => '1003',
-        'Κατάθεση σε τράπεζα' => '1004',
     ];
 
-    const PAYMENT_TYPES = [
+    const SHIPPING_TYPES = [
         'Courier' => '1000',
-        'Παραλαβή από το κατάστημα' => '1001',
+        'Παραλαβή από το φαρμακείο' => '1001',
     ];
 
     /**

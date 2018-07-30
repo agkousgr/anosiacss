@@ -18,7 +18,9 @@ class CheckoutStep4Type extends AbstractType
                 'multiple'=>false,
                 'expanded'=>true
             ))
-            ->add('agreeTerms', CheckboxType::class);
+            ->add('agreeTerms', CheckboxType::class, array(
+                'label' => 'Έχω διαβάσει και αποδέχομαι ανεπιφύλακτα τους Όρους Χρήσης'
+            ));
     }
 
     public function configureOptions(OptionsResolver $resolver)

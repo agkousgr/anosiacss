@@ -20,6 +20,17 @@
     -webkit-border-radius: 25px;
     -khtml-border-radius: 25px;
 }
+.radio-extra-info {
+    font-size: 14px;
+}
+.radio {
+    border-bottom: 1px #dedede solid;
+    padding: 10px;
+}
+.media-left {
+    display: block;
+    max-width: 60px;
+}
 form label {
     font-weight: normal;
 }
