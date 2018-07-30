@@ -1,3 +1,33 @@
+/*@font-face {*/
+    /*font-family: "Roboto-Condensed";*/
+    /*font-style: normal;*/
+    /*font-weight: normal;*/
+/*}*/
+/*body {*/
+    /*font-family: 'Roboto-Condensed';*/
+
+/*}*/
+dt, kbd kbd, label {
+    font-weight: normal;
+}
+.card-block {
+    padding: 1.25rem;
+}
+.text-sm-center {
+    text-align: center !important;
+    padding-top: 20px;
+}
+.btn-primary {
+    font-size: 14px;
+    letter-spacing: 1px;
+    line-height: 24px;
+    padding: 6px 20px;
+    overflow: hidden;
+    border-radius: 25px;
+    -moz-border-radius: 25px;
+    -webkit-border-radius: 25px;
+    -khtml-border-radius: 25px;
+}
 #authentication .tooltip.tooltip-bottom {
     padding: 0;
     margin: 0;
@@ -70,7 +100,7 @@
     background: #ffffff none repeat scroll 0 0;
     border: 1px solid #e9e9e9;
     color: #414141;
-    font-size: 14px;
+    font-size: 15px;
     margin-bottom: 0;
 }
 .page-addresses .address .address-body {
@@ -99,10 +129,12 @@
     color: #414141;
 }
 .page-addresses .address .address-footer a i {
-    font-size: 1rem;
+    font-size: 1.8rem!important;
 }
 .page-addresses .address .address-footer a span {
-    font-size: 0.9375rem;
+    font-size: 1.7rem;
+    font-weight: normal;
+    float: left;
     vertical-align: middle;
 }
 .page-addresses .addresses-footer {
@@ -112,7 +144,7 @@
     padding: 25px 10px;
     border: 1px solid #e9e9e9;
 }
-.page-my-account .page-content {
+#my-account .page-content {
     border: 1px solid #e9e9e9;
 }
 .page-addresses .addresses-footer a {
@@ -125,11 +157,13 @@
     font-size: 1rem;
 }
 .page-addresses .addresses-footer a span {
-    font-size: 1rem;
+    font-size: 1.7rem;
+    font-weight: normal;
+    float: left;
     vertical-align: middle;
     margin-top: 0.625rem;
 }
-/*** Order details page ***/
+/*** Checkout details page ***/
 
 #order-detail #order-infos strong {
     color: #333333;
@@ -254,7 +288,7 @@
 .page-order-detail .customization {
     margin-top: 0.75rem;
 }
-/*** Order return page ***/
+/*** Checkout return page ***/
 
 #order-return-infos .thead-default th {
     color: #414141;
@@ -264,7 +298,7 @@
 }
 /*** My account landing page ***/
 
-.page-my-account #content .links {
+#my-account #content .links {
     display: -webkit-box;
     display: -moz-box;
     display: box;
@@ -290,7 +324,7 @@
     justify-content: flex-start;
     -ms-flex-pack: start;
 }
-.page-my-account #content .links a {
+#my-account #content .links a {
     color: #777777;
     display: inline-block;
     float: left;
@@ -302,10 +336,10 @@
     text-transform: uppercase;
     width: 100%;
 }
-.page-my-account #content .links a:last-child {
+#my-account #content .links a:last-child {
     margin: 0;
 }
-.page-my-account #content .links a span.link-item {
+#my-account #content .links a span.link-item {
     background: #f5f5f5 none repeat scroll 0 0;
     display: block;
     float: left;
@@ -317,7 +351,7 @@
     text-transform: capitalize;
     width: 100%;
 }
-.page-my-account #content .links a i {
+#my-account #content .links a i {
     color: #777777;
     float: left;
     font-size: 36px;
@@ -325,10 +359,10 @@
     padding: 0;
     vertical-align: top;
 }
-.page-my-account #content .links a:hover {
+#my-account #content .links a:hover {
     color: #414141;
 }
-.page-my-account #content .links a:hover i {
+#my-account #content .links a:hover i {
     color: #000000;
 }
 /*** History page ***/
@@ -489,3 +523,127 @@
     margin-left: -15px;
     margin-right: -15px;
 }
+/* My account */
+#order-return-infos .thead-default th {
+    color: #414141
+}
+#order-return-infos .customization {
+    margin-top: .75rem
+}
+#my-account #content .links {
+    display: -webkit-box;
+    display: -moz-box;
+    display: box;
+    display: -webkit-flex;
+    display: -moz-flex;
+    display: -ms-flexbox;
+    -js-display: flex;
+    display: flex;
+    -webkit-box-lines: multiple;
+    -moz-box-lines: multiple;
+    box-lines: multiple;
+    -webkit-flex-wrap: wrap;
+    -moz-flex-wrap: wrap;
+    -ms-flex-wrap: wrap;
+    flex-wrap: wrap;
+    -webkit-box-pack: start;
+    -moz-box-pack: start;
+    box-pack: start;
+    -webkit-justify-content: flex-start;
+    -moz-justify-content: flex-start;
+    -ms-justify-content: flex-start;
+    -o-justify-content: flex-start;
+    justify-content: flex-start;
+    -ms-flex-pack: start
+}
+#my-account #content .links a {
+    color: #777;
+    display: inline-block;
+    float: left;
+    font-size: 1rem;
+    font-weight: 700;
+    margin: 0 0 5px;
+    padding: 5px 20px;
+    text-align: center;
+    text-transform: uppercase;
+    width: 100%
+}
+#my-account #content .links a:last-child {
+    margin: 0;
+    float: none;
+    text-transform: none;
+}
+#my-account #content .links a span.link-item {
+    background: #f5f5f5 none repeat scroll 0 0;
+    display: block;
+    float: left;
+    font-weight: 400;
+    height: 100%;
+    line-height: 35px;
+    padding: 10px;
+    text-align: left;
+    text-transform: capitalize;
+    width: 100%;
+    font-size: 20px;
+}
+#my-account #content .links a i {
+    color: #777;
+    float: left;
+    font-size: 36px;
+    margin: 0 10px 0 0;
+    padding: 0;
+    vertical-align: top
+}
+#my-account #content .links a:hover {
+    color: #414141
+}
+#my-account #content .links a:hover i {
+    color: #000
+}
+#history .orders {
+    margin: 0 -1rem
+}
+#history .orders .order {
+    padding: .75rem 1rem;
+    border-bottom: 1px solid #e9e9e9
+}
+#history .orders .order a h3 {
+    color: #878787
+}
+#history .orders .order .label {
+    display: inline-block;
+    margin: .25rem 0;
+    padding: .25rem .375rem;
+    color: white;
+    border-radius: 3px;
+    -moz-border-radius: 3px;
+    -webkit-border-radius: 3px;
+    -khtml-border-radius: 3px
+}
+#history .orders .order:last-child {
+    border-bottom: 0
+}
+.page-footer .account-link {
+    margin-right: 1rem
+}
+.page-footer .account-link i {
+    font-size: 1rem
+}
+.page-footer .account-link span {
+    font-size: .875rem;
+    vertical-align: middle
+}
+.register-form, .address-form, .orders-form {
+    padding: 20px 0 30px 77px;
+}
+
+/*.btn-primary, .page-footer .text-sm-center a, .button.ajax_add_to_cart_button {*/
+/*color: #000;*/
+/*background: #009836;*/
+/*padding: 6px 20px;*/
+/*border-color: transparent;*/
+/*border-radius: 25px;*/
+/*-moz-border-radius: 25px;*/
+/*-webkit-border-radius: 25px;*/
+/*-khtml-border-radius: 25px;*/
+/*}*/

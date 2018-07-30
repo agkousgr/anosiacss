@@ -37,20 +37,20 @@ $(document).ready(function () {
     }
 
     // FACEBOOK
-    FB.getLoginStatus(function(response) {
+    FB.getLoginStatus(function (response) {
         statusChangeCallback(response);
     });
 
     function checkLoginState() {
-        FB.getLoginStatus(function(response) {
+        FB.getLoginStatus(function (response) {
             statusChangeCallback(response);
         });
     }
 
-    FB.login(function(response){
+    FB.login(function (response) {
         if (response.authResponse) {
             console.log('Welcome!  Fetching your information.... ');
-            FB.api('/me', function(response) {
+            FB.api('/me', function (response) {
                 console.log('Good to see you, ' + response.name + '.');
             });
         } else {
@@ -68,7 +68,7 @@ $(document).ready(function () {
         // for FB.getLoginStatus().
         if (response.status === 'connected') {
             // Logged into your app and Facebook.
-            testAPI();
+            // testAPI();
         } else {
             // The person is not logged into your app or we are unable to tell.
             document.getElementById('fb-root').innerHTML = 'Please log ' +
@@ -155,18 +155,33 @@ $('.btn-signin').on('click', function (e) {
         'username': $('input[name="_username"]').val(),
         'password': $('input[name="_password"]').val(),
     }
-    $.post(Routing.generate('login'), data, function (result) {
-        if (result.success) {
-            Routing.generate('index');
-        }else{
-            swal({
-                title: 'Είσοδος χρήστη',
-                html: '<div style="font-size:17px;">' + result.errorMsg + '</div>',
-                type: 'error',
-                timer: 10000
-            });
-        }
-    });
+    if (data.username == '' || data.password == '') {
+        swal({
+            title: 'Είσοδος χρήστη',
+            html: '<div style="font-size:17px;">Συμπληρώστε τα πεδία και δοκιμάστε ξανά!</div>',
+            type: 'error',
+            timer: 10000
+        });
+    } else {
+        $.post(Routing.generate('login'), data, function (result) {
+            if (result.success) {
+                swal({
+                    title: 'Είσοδος χρήστη',
+                    html: '<div style="font-size:17px;">Συνδεθήκατε με επιτυχία!</div>',
+                    type: 'success',
+                    timer: 10000
+                });
+                location.reload();
+            } else {
+                swal({
+                    title: 'Είσοδος χρήστη',
+                    html: '<div style="font-size:17px;">' + result.errorMsg + '</div>',
+                    type: 'error',
+                    timer: 10000
+                });
+            }
+        });
+    }
 });
 
 // function generate(type, Message) {

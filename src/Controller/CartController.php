@@ -8,7 +8,6 @@
 
 namespace App\Controller;
 
-
 use App\Entity\Cart;
 use Doctrine\ORM\EntityManagerInterface;
 use Symfony\Component\HttpFoundation\Request;
@@ -16,10 +15,9 @@ use Symfony\Component\HttpFoundation\Session\SessionInterface;
 
 class CartController extends MainController
 {
-    public function viewCart(EntityManagerInterface $em)
+    public function viewCart()
     {
         try {
-
             return ($this->render('orders/cart.html.twig', [
                 'categories' => $this->categories,
                 'cartItems' => $this->cartItems,
@@ -27,8 +25,33 @@ class CartController extends MainController
                 'popular' => $this->popular,
                 'featured' => $this->featured,
                 'loggedUser' => $this->loggedUser,
+                'loggedName' => $this->loggedName,
                 'hideCart' => true
             ]));
+        } catch (\Exception $e) {
+            throw $e;
+            //throw $this->createNotFoundException('The resource you are looking for could not be found.');
+        }
+    }
+
+    public function updateCart(Request $request, EntityManagerInterface $em)
+    {
+        try {
+            $quantityArr = $request->request->get("quantity");
+            if (null !== $quantityArr) {
+//            $cart = new Cart();
+                foreach ($quantityArr as $key => $val) {
+                    $cartItem = $em->getRepository(Cart::class)->find($key);
+                    $cartItem->setQuantity($val);
+                    $em->persist($cartItem);
+                }
+                $em->flush();
+                $this->addFlash(
+                    'success',
+                    'Το καλάθι σας ενημερώθηκε με επιτυχία.'
+                );
+            }
+            return $this->redirectToRoute('cart_view');
         } catch (\Exception $e) {
             throw $e;
             //throw $this->createNotFoundException('The resource you are looking for could not be found.');

@@ -23,11 +23,11 @@ class AjaxCartController extends AbstractController
             try {
                 $cartIds = '';
                 $totalCartItems = 0;
-//                if (null === $session->get('anosiaUser')) {
-//                    $cartArr = $em->getRepository(Cart::class)->getCartByUser($session->get('anosiaUser'));
-//                } else {
+                if (null !== $session->get('anosiaUser')) {
+                    $cartArr = $em->getRepository(Cart::class)->getCartByUser($session->get('anosiaUser'));
+                } else {
                     $cartArr = $em->getRepository(Cart::class)->getCartBySession($session->getId());
-//                }
+                }
                 dump($session->getId());
                 if ($cartArr) {
                     foreach ($cartArr as $key => $val) {

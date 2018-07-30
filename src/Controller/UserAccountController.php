@@ -8,14 +8,12 @@
 
 namespace App\Controller;
 
-use App\Security\User\WebserviceUser;
+use App\Entity\{Address, WebUser};
 use App\Service\UserAccountService;
-use App\Form\Type\UserRegistrationType;
-use Symfony\Component\HttpFoundation\Request;
-use Symfony\Component\Form\Extension\Core\Type\{
-    EmailType, PasswordType
+use App\Form\Type\{
+    UserAddressType, UserGeneralInfoType, UserInfoType, UserNewAddressType, UserRegistrationType
 };
-use Symfony\Component\HttpFoundation\Session\SessionInterface;
+use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\Security\Core\Encoder\UserPasswordEncoderInterface;
 
 class UserAccountController extends MainController
@@ -76,28 +74,180 @@ class UserAccountController extends MainController
 //        }
 //    }
 
-    public function userAccount(UserAccountService $userAccountService)
+    public function userAccount(Request $request, UserAccountService $userAccountService)
     {
-        if (null !== $this->loggedUser) {
-            dump($this->loggedUser);
-            $userData = $userAccountService->getUserInfo($this->loggedUser);
-            return $this->render('user/account.html.twig', [
-                'categories' => $this->categories,
-                'popular' => $this->popular,
-                'featured' => $this->featured,
-                'cartItems' => $this->cartItems,
-                'totalCartItems' => $this->totalCartItems,
-                'loggedUser' => $this->loggedUser,
-                'userData' => $userData
-            ]);
+        try {
+            dump($request);
+            if (null !== $this->loggedUser) {
+                $user = new WebUser();
+                $address = new Address();
+                $userData = $userAccountService->getUserInfo($this->loggedUser, $user, $address);
+//            $user = new WebserviceUser(
+//                $userData["clientId"],
+//                $userData["username"],
+//                $userData["password"],
+//                $userData["name"],
+//                $userData["name"],
+//                $userData["newsletter"],
+//                '',
+//                []
+//            );
+                $formUser = $this->createForm(UserGeneralInfoType::class, $user);
+                $formUser->handleRequest($request);
+                $formMainAddress = $this->createForm(UserAddressType::class, $user);
+                $formMainAddress->handleRequest($request);
+                if ($formUser->isSubmitted() && $formUser->isValid()) {
+                    $user->setFirstname($formUser->get('firstname')->getData());
+                    $user->setLastname($formUser->get('lastname')->getData());
+                    $user->setNewsletter($formUser->get('newsletter')->getData());
+//                    dump($user);
+                    $userAccountService->updateUserInfo($user);
+                    $userData = $userAccountService->getUserInfo($this->loggedUser, $user, $address);
+                    $this->addFlash(
+                        'success',
+                        'Τα στοιχεία σας ενημερώθηκαν με επιτυχία.'
+                    );
+                }
+                if ($formMainAddress->isSubmitted() && $formMainAddress->isValid()) {
+                    $user->setAddress($formMainAddress->get('address')->getData());
+                    $user->setZip($formMainAddress->get('zip')->getData());
+                    $user->setCity($formMainAddress->get('city')->getData());
+                    $user->setDistrict($formMainAddress->get('district')->getData());
+                    $user->setPhone01($formMainAddress->get('phone01')->getData());
+                    $userAccountService->updateUserInfo($user);
+                    $userData = $userAccountService->getUserInfo($this->loggedUser, $user, $address);
+                    $this->addFlash(
+                        'success',
+                        'Τα στοιχεία της διεύθυνσής σας ενημερώθηκαν με επιτυχία.'
+                    );
+                }
+                dump($userData);
+                return $this->render('user/account.html.twig', [
+                    'categories' => $this->categories,
+                    'popular' => $this->popular,
+                    'featured' => $this->featured,
+                    'cartItems' => $this->cartItems,
+                    'totalCartItems' => $this->totalCartItems,
+                    'loggedName' => $this->loggedName,
+                    'loggedUser' => $this->loggedUser,
+                    'userData' => $userData,
+                    'formUser' => $formUser->createView(),
+                    'formAddress' => $formMainAddress->createView(),
+                ]);
+            }
+            return $this->redirectToRoute('index');
+        } catch (\Exception $e) {
+            $this->logger->error(__METHOD__ . ' -> {message}', ['message' => $e->getMessage()]);
+            throw $e;
         }
+    }
 
+    public function createAddress(Request $request, UserAccountService $userAccountService)
+    {
+        try {
+            if (null !== $this->loggedUser) {
+                $address = new Address();
+                $userData = $userAccountService->getAddressInfo($this->loggedUser, $address);
+                $formAddress = $this->createForm(UserNewAddressType::class, $address);
+                dump($userData);
+                $formAddress->handleRequest($request);
+                if ($formAddress->isSubmitted() && $formAddress->isValid()) {
+                    $address->setAddress($formAddress->get('address')->getData());
+                    $address->setZip($formAddress->get('zip')->getData());
+                    $address->setCity($formAddress->get('city')->getData());
+                    $address->setDistrict($formAddress->get('district')->getData());
+                    $address->setName($formAddress->get('name')->getData());
+                    if ($userAccountService->setAddress($address)) {
+                        $this->addFlash(
+                            'success',
+                            'Η νέα σας διεύθυνση δημιουργήθηκε με επιτυχία.'
+                        );
+                        return $this->redirectToRoute('user_account');
+                    } else {
+                        $this->addFlash(
+                            'notice',
+                            'Ένα σφάλμα παρουσιάστηκε. Παρακαλώ δοκιμάστε ξανά. Αν το πρόβλημα συνεχίσει παρακαλούμε επικοινωνήστε μαζί μας.'
+                        );
+                    }
+//                    $address = $userAccountService->updateUserInfo($user);
+//                    $userData = $userAccountService->getUserInfo($this->loggedUser, $user);
+                }
+                return $this->render('user/createAddress.html.twig', [
+                    'categories' => $this->categories,
+                    'popular' => $this->popular,
+                    'featured' => $this->featured,
+                    'cartItems' => $this->cartItems,
+                    'totalCartItems' => $this->totalCartItems,
+                    'loggedName' => $this->loggedName,
+                    'loggedUser' => $this->loggedUser,
+//                'userData' => $userData,
+//                'formUser' => $formUser->createView(),
+                    'formAddress' => $formAddress->createView(),
+                ]);
+            }
+            return $this->redirectToRoute('index');
+        } catch (\Exception $e) {
+            $this->logger->error(__METHOD__ . ' -> {message}', ['message' => $e->getMessage()]);
+            throw $e;
+        }
+    }
+
+    public function updateAddress(int $id, Request $request, UserAccountService $userAccountService)
+    {
+        try {
+            if (null !== $this->loggedUser) {
+                $address = new Address();
+                $clientId = $userAccountService->getClientId($this->loggedUser);
+//                dump($clientId);
+                $userAccountService->getAddress($clientId, $address);
+
+                $formAddress = $this->createForm(UserNewAddressType::class, $address);
+                $formAddress->handleRequest($request);
+                if ($formAddress->isSubmitted() && $formAddress->isValid()) {
+                    $address->setAddress($formAddress->get('address')->getData());
+                    $address->setZip($formAddress->get('zip')->getData());
+                    $address->setCity($formAddress->get('city')->getData());
+                    $address->setDistrict($formAddress->get('district')->getData());
+                    $address->setName($formAddress->get('name')->getData());
+                    if ($userAccountService->setAddress($address)) {
+                        $this->addFlash(
+                            'success',
+                            'Η διεύθυνσή σας ενημερώθηκε με επιτυχία.'
+                        );
+                        return $this->redirectToRoute('user_account');
+                    } else {
+                        $this->addFlash(
+                            'notice',
+                            'Ένα σφάλμα παρουσιάστηκε. Παρακαλώ δοκιμάστε ξανά. Αν το πρόβλημα συνεχίσει παρακαλούμε επικοινωνήστε μαζί μας.'
+                        );
+                    }
+//                    $address = $userAccountService->updateUserInfo($user);
+//                    $userData = $userAccountService->getUserInfo($this->loggedUser, $user);
+                }
+                return $this->render('user/createAddress.html.twig', [
+                    'categories' => $this->categories,
+                    'popular' => $this->popular,
+                    'featured' => $this->featured,
+                    'cartItems' => $this->cartItems,
+                    'totalCartItems' => $this->totalCartItems,
+                    'loggedName' => $this->loggedName,
+                    'loggedUser' => $this->loggedUser,
+//                'userData' => $userData,
+//                'formUser' => $formUser->createView(),
+                    'formAddress' => $formAddress->createView(),
+                ]);
+            }
+            return $this->redirectToRoute('index');
+        } catch (\Exception $e) {
+            $this->logger->error(__METHOD__ . ' -> {message}', ['message' => $e->getMessage()]);
+            throw $e;
+        }
     }
 
     public function register(Request $request, UserAccountService $userAccountService, UserPasswordEncoderInterface $encoder)
     {
         try {
-//            $user = new WebserviceUser();
+            $user = new WebUser();
             $registerOk = 'false';
             $form = $this->createForm(UserRegistrationType::class);
             $form->handleRequest($request);
@@ -105,9 +255,9 @@ class UserAccountController extends MainController
             if ($form->isSubmitted() && $form->isValid() && $this->isCsrfTokenValid('register', $submittedToken)) {
 
                 $username = $form->get('username')->getData();
-                $user = $userAccountService->getUser($username);
+                $userAccountService->getUser($username, $user);
 //                    dump($username, (string)$user["username"]);
-                if ($username === (string)$user["username"]) {
+                if ($username === $user->getUsername()) {
                     $this->addFlash(
                         'notice',
                         'Υπάρχει ήδη χρήστης με αυτό το email. Αν δεν θυμάστε τον κωδικό σας πατήστε στο "Ξεχάσατε τον κωδικό σας?".'
@@ -119,7 +269,7 @@ class UserAccountController extends MainController
                     if ($newUser === 'Success') {
                         $this->addFlash(
                             'success',
-                            'Η εγγραφή σας ολοκληρώθηκε. Μπορείτε να συνδεθείτε για να συνεχίσετε τα ψώνια σας.'
+                            'Η εγγραφή σας ολοκληρώθηκε. Μπορείτε να συνδεθείτε για να συνεχίσετε τις αγορές σας.'
                         );
                         $registerOk = 'true';
                     } else {
@@ -137,6 +287,7 @@ class UserAccountController extends MainController
                 'featured' => $this->featured,
                 'cartItems' => $this->cartItems,
                 'totalCartItems' => $this->totalCartItems,
+                'loggedName' => $this->loggedName,
                 'loggedUser' => $this->loggedUser,
                 'form' => $form->createView(),
                 'registerOk' => $registerOk
@@ -145,6 +296,13 @@ class UserAccountController extends MainController
             $this->logger->error(__METHOD__ . ' -> {message}', ['message' => $e->getMessage()]);
             throw $e;
         }
+    }
+
+    public function logout()
+    {
+        $this->session->remove('anosiaUser');
+        $this->session->remove('anosiaName');
+        return $this->redirectToRoute('index');
     }
 
 //    public function login(Request $request, UserAccountService $userAccountService)

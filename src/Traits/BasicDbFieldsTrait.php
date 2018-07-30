@@ -8,7 +8,7 @@ namespace App\Traits;
 trait BasicDbFieldsTrait
 {
     /**
-     * @var int|null
+     * @var int
      */
     protected $id;
 
@@ -25,6 +25,14 @@ trait BasicDbFieldsTrait
     public function getId(): ?int
     {
         return $this->id;
+    }
+
+    /**
+     * @param int $id
+     */
+    public function setId(int $id): void
+    {
+        $this->id = $id;
     }
 
     /**

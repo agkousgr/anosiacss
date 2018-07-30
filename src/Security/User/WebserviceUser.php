@@ -7,19 +7,23 @@ use Symfony\Component\Security\Core\User\EquatableInterface;
 
 class WebserviceUser implements UserInterface, EquatableInterface
 {
+    private $clientId;
     private $username;
     private $password;
     private $firstname;
     private $lastname;
+    private $newsletter;
     private $salt;
     private $roles;
 
-    public function __construct($username, $password, $firstname, $lastname, $salt, array $roles)
+    public function __construct($clientId, $username, $password, $firstname, $lastname, $newsletter, $salt, array $roles)
     {
+        $this->clientId = $clientId;
         $this->username = $username;
         $this->password = $password;
         $this->firstname = $firstname;
         $this->lastname = $lastname;
+        $this->newsletter = $newsletter;
         $this->salt = $salt;
         $this->roles = $roles;
     }
@@ -77,5 +81,77 @@ class WebserviceUser implements UserInterface, EquatableInterface
         }
 
         return true;
+    }
+
+    /**
+     * @return mixed
+     */
+    public function getClientId()
+    {
+        return $this->clientId;
+    }
+
+    /**
+     * @param mixed $clientId
+     */
+    public function setClientId($clientId): void
+    {
+        $this->clientId = $clientId;
+    }
+
+    /**
+     * @param mixed $username
+     */
+    public function setUsername($username): void
+    {
+        $this->username = $username;
+    }
+
+    /**
+     * @param mixed $password
+     */
+    public function setPassword($password): void
+    {
+        $this->password = $password;
+    }
+
+    /**
+     * @param mixed $firstname
+     */
+    public function setFirstname($firstname): void
+    {
+        $this->firstname = $firstname;
+    }
+
+    /**
+     * @param mixed $lastname
+     */
+    public function setLastname($lastname): void
+    {
+        $this->lastname = $lastname;
+    }
+
+    /**
+     * @param mixed $salt
+     */
+    public function setSalt($salt): void
+    {
+        $this->salt = $salt;
+    }
+
+    /**
+     * @return mixed
+     */
+    public function getNewsletter()
+    {
+        return $this->newsletter;
+    }
+
+    /**
+     * @param mixed $newsletter
+     */
+    public function setNewsletter($newsletter): void
+    {
+        $this->newsletter = $newsletter;
     }
 }

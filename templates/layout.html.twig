@@ -7,7 +7,7 @@
         {% include 'partials/stylesheets.html.twig' %}
     {% endblock %}
 </head>
-<body id="{% block bodyId %}{% endblock %}">
+<body id="{% block bodyId %}{% endblock %}" class="{% block bodyClass %}{% endblock %}">
 <div id="fb-root"></div>
 <script>
     window.fbAsyncInit = function () {

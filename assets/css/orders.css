@@ -20,6 +20,26 @@
     -webkit-border-radius: 25px;
     -khtml-border-radius: 25px;
 }
+.radio-extra-info {
+    font-size: 14px;
+}
+.radio.payment-method {
+    border-bottom: 1px #dedede solid;
+    padding: 10px;
+}
+.media-left {
+    display: block;
+    max-width: 60px;
+}
+form label {
+    font-weight: normal;
+}
+#delivery textarea {
+    border: 1px solid #e5e5e5;
+    float: left;
+    margin: 0 0 10px;
+    width: 100%;
+}
 .seperator {
     border-top: 1px solid #e9e9e9;
     margin: 0;
@@ -397,11 +417,12 @@ body#checkout section.checkout-step .content {
     padding: 0 2.3125rem;
 }
 body#checkout section.checkout-step .step-edit {
-    text-transform: lowercase;
+    /*text-transform: lowercase;*/
     font-weight: normal;
+    font-size: 16px;
 }
 body#checkout section.checkout-step .step-edit .edit {
-    font-size: 1rem;
+    font-size: 1.5rem;
 }
 body#checkout section.checkout-step .not-allowed {
     cursor: not-allowed;
@@ -409,6 +430,12 @@ body#checkout section.checkout-step .not-allowed {
     -moz-opacity: 0.5;
     -khtml-opacity: 0.5;
     -webkit-opacity: 0.5;
+}
+.done {
+    color: #4cbb6c;
+    display: inline-block;
+    padding: 0 .8125rem;
+    margin-right: 1.5625rem;
 }
 body#checkout section.checkout-step .content,
 body#checkout section.checkout-step .done,
@@ -1103,7 +1130,7 @@ body#checkout #gift_message {
     vertical-align: middle;
     margin-top: 0.625rem;
 }
-/*** Order details page ***/
+/*** Checkout details page ***/
 
 #order-detail #order-infos strong {
     color: #333333;
@@ -1228,7 +1255,7 @@ body#checkout #gift_message {
 .page-order-detail .customization {
     margin-top: 0.75rem;
 }
-/*** Order return page ***/
+/*** Checkout return page ***/
 
 #order-return-infos .thead-default th {
     color: #414141;

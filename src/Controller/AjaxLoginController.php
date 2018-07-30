@@ -25,12 +25,12 @@ class AjaxLoginController extends AbstractController
                 $password = $request->request->get('password');
 //                if ($userAccountService->login($username, $password)) {
 //                if ($provider->loadUserByUsername($username)) {
-                    if ($userAccountService->login($username, $password) === $username) {
-                        $session->set("anosiaUser");
+                if ($userAccountService->login($username, $password) === $username) {
+                    $session->set("anosiaUser", $username);
 //                        $provider->loadUserByUsername($username);
-                        return $this->json([
-                            'success' => true,
-                        ]);
+                    return $this->json([
+                        'success' => true,
+                    ]);
 //                    } else {
 //                        return $this->json([
 //                            'success' => false,

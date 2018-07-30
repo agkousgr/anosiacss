@@ -8,22 +8,23 @@
 
 namespace App\Controller;
 
-
+//use Knp\Bundle\PaginatorBundle\KnpPaginatorBundle;
 use Symfony\Component\HttpFoundation\Request;
 
 class ProductController extends MainController
 {
 
-    public function listProducts(int $id)
+    public function listProducts(Request $request, int $id)
     {
         try {
             $ctgInfo = $this->categoryService->getCategoryInfo($id);
             $products = $this->productService->getCategoryItems($id);
-            $totalProducts = $this->productService->getCategoryItemsCount($id);
-//            $pagination = $knp->paginate(
+//            $totalProducts = $this->productService->getCategoryItemsCount($id);
+//            $totalProducts = 15;
+//            $paginatedProducts = $paginator->paginate(
 //                $products,
 //                $request->query->getInt('page', 1)/*page number*/,
-//                10/*limit per page*/
+//                5/*limit per page*/
 //            );
             return $this->render('products/list.html.twig', [
                 'products' => $products,
@@ -34,7 +35,8 @@ class ProductController extends MainController
                 'cartItems' => $this->cartItems,
                 'totalCartItems' => $this->totalCartItems,
                 'loggedUser' => $this->loggedUser,
-//                'pagination' => $pagination
+                'loggedName' => $this->loggedName,
+//                'products' => $paginatedProducts
             ]);
         } catch (\Exception $e) {
             $this->logger->error(__METHOD__ . ' -> {message}', ['message' => $e->getMessage()]);
@@ -54,6 +56,7 @@ class ProductController extends MainController
                 'cartItems' => $this->cartItems,
                 'totalCartItems' => $this->totalCartItems,
                 'loggedUser' => $this->loggedUser,
+                'loggedName' => $this->loggedName,
             ]);
         } catch (\Exception $e) {
             $this->logger->error(__METHOD__ . ' -> {message}', ['message' => $e->getMessage()]);
@@ -76,6 +79,7 @@ class ProductController extends MainController
                 'cartItems' => $this->cartItems,
                 'totalCartItems' => $this->totalCartItems,
                 'loggedUser' => $this->loggedUser,
+                'loggedName' => $this->loggedName,
                 'keyword' => $keyword
             ]);
         } catch (\Exception $e) {

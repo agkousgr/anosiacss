@@ -69,6 +69,11 @@ class MainController extends AbstractController
     protected $loggedUser;
 
     /**
+     * @var string
+     */
+    protected $loggedName;
+
+    /**
      * @var EntityManagerInterface
      */
     protected $em;
@@ -77,6 +82,16 @@ class MainController extends AbstractController
      * @var array
      */
     protected $cartItems;
+
+    /**
+     * @var int
+     */
+    protected $clientId;
+
+    /**
+     * @var string
+     */
+    protected $cache_expire;
 
 
     public function __construct(
@@ -89,6 +104,10 @@ class MainController extends AbstractController
         EntityManagerInterface $em
     )
     {
+//        if (session_status() !== PHP_SESSION_ACTIVE) {
+//            session_cache_expire(180);
+//            $session->set('cache_expire', session_cache_expire());
+//        }
         dump($session);
         $this->softoneLogin = $softoneLogin;
         $this->categoryService = $categoryService;
@@ -101,19 +120,25 @@ class MainController extends AbstractController
 
         $this->softoneLogin->login();
         $this->categories = $this->categoryService->getCategories();
-       // array_multisort(array_column($this->categories, "priority"), $this->categories);
+
+        if ($this->categories) {
+            array_multisort(array_column($this->categories, "priority"), $this->categories);
+        }
         $this->popular = $productService->getCategoryItems(1022);
         $this->featured = $productService->getCategoryItems(1008);
         $this->loggedUser = ($session->get("anosiaUser")) ?: null;
+        $this->loggedName = ($session->get("anosiaName")) ?: null;
+        $this->loggedClientId = ($session->get("anosiaClientId")) ?: null;
         $this->cartItems = $this->getCartItems();
 
 //        $this->totalCartItems = $em->getRepository(Cart::class)->countCartItems($session->getId(), $session->get('anosiaUser'));
     }
 
-    protected function getCartItems() {
+    protected function getCartItems()
+    {
         $cartIds = '';
-        if (null === $this->session->get('username')) {
-            $cartArr = $this->em->getRepository(Cart::class)->getCartBySession($this->session->getId());
+        if (null !== $this->loggedUser) {
+            $cartArr = $this->em->getRepository(Cart::class)->getCartByUser($this->loggedUser);
         } else {
             $cartArr = $this->em->getRepository(Cart::class)->getCartBySession($this->session->getId());
         }
@@ -125,7 +150,6 @@ class MainController extends AbstractController
                 $this->totalCartItems = $this->totalCartItems + 1;
             }
             $cartIds = substr($cartIds, 0, -1);
-            dump($this->totalCartItems);
         }
         return ($cartIds) ? $this->cart->getCartItems($cartIds, $cartArr) : '';
     }

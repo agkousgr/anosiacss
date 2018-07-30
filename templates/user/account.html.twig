@@ -1,10 +1,14 @@
 {% extends 'layout.html.twig' %}
 
 {% block bodyId %}my-account{% endblock %}
+{% block bodyClass %}page-addresses{% endblock %}
 {% block title %} | Ο λογαριασμός μου{% endblock %}
 {% block slider %}{% endblock %}
 {% block stylesheets %}
     {{ parent() }}
+    <link href="https://fonts.googleapis.com/css?family=Roboto:300,400,500,600,700"
+          rel="stylesheet">
+    {#<link href="{{ asset('build/css/orders.css') }}" rel="stylesheet"/>#}
     <link href="{{ asset('build/css/user.css') }}" rel="stylesheet"/>
 {% endblock %}
 {% block breadcrumb %}
@@ -15,64 +19,315 @@
     {% include 'partials/sidebar_login.html.twig' %}
     {% include 'partials/swipe_menu.html.twig' %}
     {% include 'partials/site_header.html.twig' %}
-    <header class="page-header">
-        <h1 class="tt-innerpagetitle">
-            Your account
-        </h1>
-    </header>
+    <div class="page-header">
+        <div class="container">
+            <div class="row">
+                <div class="col-md-6"><h1>Ο λογαριασμός μου</h1></div>
+            </div>
+        </div>
+    </div>
 
-    <section id="content" class="page-content card card-block">
-        <aside id="notifications">
-            <div class="container">
+    <div id="page" class="section" style="background-image:url({{ asset('images/bg-5.jpg') }});">
+        <div class="container">
+            <div class="row">
+                {% for message in app.flashes('notice') %}
+                    <div class="flash-notice">
+                        {{ message }}
+                    </div>
+                {% endfor %}
+                {% for message in app.flashes('success') %}
+                    <div class="flash-success">
+                        {{ message }}
+                    </div>
+                {% endfor %}
             </div>
-        </aside>
-        <div class="row">
-            <div class="links">
-                <a class="col-lg-4 col-md-6 col-sm-6 col-xs-12" id="identity-link"
-                   href="https://demo.templatetrip.com/Prestashop/PRS06/PRS176_gym/en/identity">
-                    <span class="link-item">
-                        <i class="material-icons">&#xE853;</i>
-                        Information
-                    </span>
-                </a>
-                <a class="col-lg-4 col-md-6 col-sm-6 col-xs-12" id="address-link"
-                   href="https://demo.templatetrip.com/Prestashop/PRS06/PRS176_gym/en/address">
-                    <span class="link-item">
-                        <i class="material-icons">&#xE567;</i>
-                        Add first address
-                    </span>
-                </a>
-                <a class="col-lg-4 col-md-6 col-sm-6 col-xs-12" id="history-link"
-                   href="https://demo.templatetrip.com/Prestashop/PRS06/PRS176_gym/en/order-history">
-                    <span class="link-item">
-                        <i class="material-icons">&#xE916;</i>
-                        Order history and details
-                    </span>
-                </a>
-                <a class="col-lg-4 col-md-6 col-sm-6 col-xs-12" id="order-slips-link"
-                   href="https://demo.templatetrip.com/Prestashop/PRS06/PRS176_gym/en/credit-slip">
-                    <span class="link-item">
-                        <i class="material-icons">&#xE8B0;</i>
-                        Credit slips
-                    </span>
-                </a>
-                <a class="lnk_wishlist col-lg-4 col-md-6 col-sm-6 col-xs-12"
-                   href="https://demo.templatetrip.com/Prestashop/PRS06/PRS176_gym/en/module/ttproductwishlist/mywishlist"
-                   title="My wishlists">
-                    <span class="link-item">
-                        <i class="material-icons">&#xE87D;</i>
-                        My wishlists
-                    </span>
-                </a>
-            </div>
+            <section id="main">
+                <section id="content" class="page-content card card-block">
+                    <aside id="notifications">
+                        <div class="container">
+                        </div>
+                    </aside>
+                    <div class="row">
+                        <div class="links">
+                            <a class="col-lg-4 col-md-6 col-sm-6 col-xs-12" id="identity-link"
+                               href="">
+                                <span class="link-item">
+                                    <i class="material-icons">&#xE853;</i>
+                                    Πληροφορίες
+                                </span>
+                            </a>
+                            <section class="register-form hidden col-xs-12">
+                                {{ form_start(formUser) }}
+                                <div class="form-group row ">
+                                    {{ form_label(formUser.firstname, 'Όνομα', {'label_attr': {'class': 'col-md-3 form-control-label required'}}) }}
+                                    <div class="col-md-6">
+                                        {{ form_widget(formUser.firstname, {'attr': {'class': 'form-control'}}) }}
+                                    </div>
+                                    <div class="col-md-3 form-control-comment">
+                                    </div>
+                                </div>
+
+                                <div class="form-group row ">
+                                    {{ form_label(formUser.lastname, 'Επώνυμο', {'label_attr': {'class': 'col-md-3 form-control-label required'}}) }}
+                                    <div class="col-md-6">
+                                        {{ form_widget(formUser.lastname, {'attr': {'class': 'form-control'}}) }}
+                                    </div>
+                                    <div class="col-md-3 form-control-comment">
+                                    </div>
+                                </div>
+
+                                {#<div class="form-group row ">#}
+                                {#{{ form_label(formUser.username, 'E-mail', {'label_attr': {'class': 'col-md-3 form-control-label required'}}) }}#}
+                                {#<div class="col-md-6">#}
+                                {#{{ form_widget(formUser.username, {'attr': {'class': 'form-control'}}) }}#}
+                                {#</div>#}
+                                {#<div class="col-md-3 form-control-comment">#}
+                                {#</div>#}
+                                {#</div>#}
+
+                                {#<div class="form-group row ">#}
+                                {#{{ form_label(formUser.password.first, 'Κωδικός', {'label_attr': {'class': 'col-md-3 form-control-label required'}}) }}#}
+                                {#<div class="col-md-6">#}
+                                {#<div class="input-group js-parent-focus">#}
+                                {#{{ form_widget(formUser.password.first, {'attr': {'class': 'form-control'}}) }}#}
+                                {#<span class="input-group-btn">#}
+                                {#<button class="btn" type="button"#}
+                                {#data-action="show-password"#}
+                                {#data-text-show="Εμφάνιση"#}
+                                {#data-text-hide="Απόκρυψη">#}
+                                {#Show#}
+                                {#</button>#}
+                                {#</span>#}
+                                {#</div>#}
+                                {#</div>#}
+
+                                {#<div class="col-md-3 form-control-comment">#}
+                                {#</div>#}
+                                {#</div>#}
+
+                                {#<div class="form-group row ">#}
+                                {#{{ form_label(formUser.password.second, 'Επαλήθευση κωδικού', {'label_attr': {'class': 'col-md-3 form-control-label required'}}) }}#}
+                                {#<div class="col-md-6">#}
+                                {#{{ form_widget(formUser.password.second, {'attr': {'class': 'form-control'}}) }}#}
+                                {#</div>#}
+
+                                {#<div class="col-md-3 form-control-comment">#}
+                                {#</div>#}
+                                {#</div>#}
+
+                                {#<div class="form-group row ">#}
+                                {#<label class="col-md-3 form-control-label">#}
+                                {#</label>#}
+                                {#<div class="col-md-6">#}
+                                {#<span class="custom-checkbox">#}
+                                {#{{ form_widget(formUser.special_offers) }}#}
+                                {#<span><i class="material-icons rtl-no-flip checkbox-checked"></i></span>#}
+                                {#<label>Να λαμβάνω προσφορές από το κατάστημα</label>#}
+                                {#</span>#}
+                                {#</div>#}
+                                {#<div class="col-md-3 form-control-comment">#}
+                                {#</div>#}
+                                {#</div>#}
+
+                                <div class="form-group row ">
+                                    <label class="col-md-3 form-control-label">
+                                    </label>
+                                    <div class="col-md-6">
+                                        <span class="custom-checkbox">
+                                            {{ form_widget(formUser.newsletter) }}
+                                            {#<span><i class="material-icons rtl-no-flip checkbox-checked"></i></span>#}
+                                            <label>Εγγραφή στο newsletter<br>
+                                                <em>Μπορείτε να διαγραφείτε οποιαδήποτε στιγμή
+                                                    επιθυμείτε.</em>
+                                            </label>
+                                        </span>
+                                    </div>
+
+                                    <div class="col-md-3 form-control-comment">
+                                    </div>
+                                </div>
+
+                                <footer class="form-footer clearfix">
+                                    <button class="btn btn-primary form-control-submit float-xs-right"
+                                            data-link-action="save-customer" type="submit">
+                                        Αποθήκευση
+                                    </button>
+                                    {#<div class="pull-right">#}
+                                    {#<a href="#">#}
+                                    {#Ξεχάσατε τον κωδικό σας?#}
+                                    {#</a>#}
+                                    {#</div>#}
+                                </footer>
+                                {#<input type="hidden" name="_csrf_token"#}
+                                {#value="{{ csrf_token('register') }}">#}
+                                {#{{ form_row(form._token) }}#}
+                                {{ form_end(formUser) }}
+                            </section>
+                            <a class="col-lg-4 col-md-6 col-sm-6 col-xs-12" id="address-link"
+                               href="">
+                                <span class="link-item">
+                                    <i class="material-icons">&#xE567;</i>
+                                    Διευθύνσεις
+                                </span>
+                            </a>
+                            <section class="address-form hidden col-xs-12">
+                                <section>
+                                    {% if userData["address"] is not empty %}
+                                        {% set viewAddress = '' %}
+                                    {% else %}
+                                        {% set viewAddress = 'hidden' %}
+                                    {% endif %}
+
+                                    <div id="view-main-address"
+                                         class="col-lg-4 col-md-6 col-sm-6 {{ viewAddress }}">
+                                        <article id="address-9" class="address" data-id-address="9">
+                                            <div class="address-body">
+                                                <h4>Βασική διεύθυνση</h4>
+                                                <address>
+                                                    {{ userData["address"] }}<br>
+                                                    {{ userData["city"] }}<br>
+                                                    {{ userData["zip"] }}<br>
+                                                    {{ userData["district"] }}<br>
+                                                    {{ userData["phone01"] }}<br>
+                                                    {{ userData["email"] }}<br>
+                                                </address>
+                                            </div>
+                                            <div class="address-footer">
+                                                <a href="" id="edit-main-address"
+                                                   data-link-action="edit-address">
+                                                    <i class="material-icons"></i>
+                                                    <span>Επεξεργασία</span>
+                                                </a>
+                                            </div>
+                                        </article>
+                                    </div>
+                                    {% if userData["addresses"] is not empty %}
+                                        {#{% for address in userData["addresses"] %}#}
+                                            {#{{ dump(address) }}#}
+                                        <div class="col-lg-4 col-md-6 col-sm-6 extra-addresses">
+                                            <article id="address-9" class="address" data-id-address="9">
+                                                <div class="address-body">
+                                                    <h4>{{ userData["addresses"]["name"] }}</h4>
+                                                    <address>
+                                                        {{ userData["addresses"]["address"] }}<br>
+                                                        {{ userData["addresses"]["city"] }}<br>
+                                                        {{ userData["addresses"]["zip"] }}<br>
+                                                        {{ userData["addresses"]["district"] }}<br>
+                                                    </address>
+                                                </div>
+                                                <div class="address-footer">
+                                                    <a href="{{ path('update_address', {'id':userData["addresses"]["id"]}) }}" id="edit-main-address"
+                                                       data-link-action="edit-address">
+                                                        <i class="material-icons"></i>
+                                                        <span>Επεξεργασία</span>
+                                                    </a>
+                                                </div>
+                                            </article>
+                                        </div>
+                                        {#{% endfor %}#}
+                                    {% endif %}
+                                    <div class="clearfix"></div>
+                                    <div class="addresses-footer {{ viewAddress }}">
+                                        <a href="{{ path('create_address') }}"
+                                           data-link-action="add-address">
+                                            <i class="material-icons"></i>
+                                            <span>Νέα διεύθυνση</span>
+                                        </a>
+                                    </div>
+                                    {{ form_start(formAddress) }}
+                                    <div class="form-group row ">
+                                        {{ form_label(formAddress.address, 'Διεύθυνση', {'label_attr': {'class': 'col-md-3 form-control-label required'}}) }}
+                                        <div class="col-md-6">
+                                            {{ form_widget(formAddress.address, {'attr': {'class': 'form-control'}}) }}
+                                        </div>
+                                        <div class="col-md-3 form-control-comment">
+                                        </div>
+                                    </div>
+                                    <div class="form-group row ">
+                                        {{ form_label(formAddress.zip, 'Τ.Κ.', {'label_attr': {'class': 'col-md-3 form-control-label required'}}) }}
+                                        <div class="col-md-6">
+                                            {{ form_widget(formAddress.zip, {'attr': {'class': 'form-control'}}) }}
+                                        </div>
+                                        <div class="col-md-3 form-control-comment">
+                                        </div>
+                                    </div>
+                                    <div class="form-group row ">
+                                        {{ form_label(formAddress.city, 'Πόλη', {'label_attr': {'class': 'col-md-3 form-control-label required'}}) }}
+                                        <div class="col-md-6">
+                                            {{ form_widget(formAddress.city, {'attr': {'class': 'form-control'}}) }}
+                                        </div>
+                                        <div class="col-md-3 form-control-comment">
+                                        </div>
+                                    </div>
+                                    <div class="form-group row ">
+                                        {{ form_label(formAddress.district, 'Περιοχή', {'label_attr': {'class': 'col-md-3 form-control-label required'}}) }}
+                                        <div class="col-md-6">
+                                            {{ form_widget(formAddress.district, {'attr': {'class': 'form-control'}}) }}
+                                        </div>
+                                        <div class="col-md-3 form-control-comment">
+                                        </div>
+                                    </div>
+                                    <div class="form-group row ">
+                                        {{ form_label(formAddress.phone01, 'Τηλέφωνο', {'label_attr': {'class': 'col-md-3 form-control-label required'}}) }}
+                                        <div class="col-md-6">
+                                            {{ form_widget(formAddress.phone01, {'attr': {'class': 'form-control'}}) }}
+                                        </div>
+                                        <div class="col-md-3 form-control-comment">
+                                        </div>
+                                    </div>
+                                    <footer class="form-footer clearfix">
+                                        <button class="btn btn-primary form-control-submit float-xs-right"
+                                                data-link-action="save-customer" type="submit">
+                                            Αποθήκευση
+                                        </button>
+                                    </footer>
+                                    {{ form_end(formAddress) }}
+                                </section>
+                            </section>
+                            <a class="col-lg-4 col-md-6 col-sm-6 col-xs-12" id="history-link"
+                               href="">
+                                <span class="link-item">
+                                    <i class="material-icons">&#xE916;</i>
+                                    Ιστορικό παραγγελιών
+                                </span>
+                            </a>
+                            <section class="orders-form hidden col-xs-12">
+                                <section>
+                                    <div>Δεν υπάρχουν διαθέσιμες παραγγελίες</div>
+                                </section>
+                            </section>
+                            <a class="col-lg-4 col-md-6 col-sm-6 col-xs-12" id="order-slips-link"
+                               href="">
+                                <span class="link-item">
+                                    <i class="material-icons">&#xE8B0;</i>
+                                    Credit slips
+                                </span>
+                            </a>
+                            <a class="lnk_wishlist col-lg-4 col-md-6 col-sm-6 col-xs-12"
+                               href=""
+                               title="My wishlists">
+                                <span class="link-item">
+                                    <i class="material-icons">&#xE87D;</i>
+                                    Η wishlist μου
+                                </span>
+                            </a>
+                        </div>
+                    </div>
+                </section>
+                <footer class="page-footer">
+                    <div class="text-sm-center">
+                        <a class="btn-primary" href="">
+                            Αποσύνδεση
+                        </a>
+                    </div>
+                </footer>
+            </section>
         </div>
-    </section>
-    <footer class="page-footer">
-        <div class="text-sm-center">
-            <a href="https://demo.templatetrip.com/Prestashop/PRS06/PRS176_gym/en/?mylogout=">
-                Sign out
-            </a>
-        </div>
-    </footer>
-    </section>
+    </div>
+    {% include 'home_page_modules/15_social.html.twig' %}
+    {% include 'partials/footer.html.twig' %}
+{% endblock %}
+{% block javascripts %}
+    {{ parent() }}
+    <script src="{{ asset('build/js/user-account.js') }}"></script>
 {% endblock %}

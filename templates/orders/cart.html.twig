@@ -15,227 +15,241 @@
     {% include 'partials/sidebar_login.html.twig' %}
     {% include 'partials/swipe_menu.html.twig' %}
     {% include 'partials/site_header.html.twig' %}
-<div class="page-header">
-    <div class="container">
-        <div class="row">
-            <div class="col-md-6"><h1>Καλάθι</h1></div>
+    <div class="page-header">
+        <div class="container">
+            <div class="row">
+                <div class="col-md-6"><h1>Καλάθι</h1></div>
+            </div>
         </div>
     </div>
-</div>
-<div class="section" style="background-image:url({{ asset('images/bg-5.jpg') }});">
-    <div class="container">
-        <div class="col-xs-12">
-            {% for message in app.flashes('notice') %}
-                <div class="flash-notice warning">
-                    {{ message }}
-                </div>
-            {% endfor %}
-            {% for message in app.flashes('success') %}
-                <div class="flash-notice success">
-                    {{ message }}
-                </div>
-            {% endfor %}
-        </div>
-        <section id="main">
-            <div class="cart-grid row">
-                <!-- Left Block: cart product informations & shpping -->
-                <div class="cart-grid-body col-xs-12 col-lg-8">
+    <div class="section" style="background-image:url({{ asset('images/bg-5.jpg') }});">
+        <div class="container">
+            <div class="col-xs-12">
+                {% for message in app.flashes('notice') %}
+                    <div class="flash-notice">
+                        {{ message }}
+                    </div>
+                {% endfor %}
+                {% for message in app.flashes('success') %}
+                    <div class="flash-success">
+                        {{ message }}
+                    </div>
+                {% endfor %}
+            </div>
+            <section id="main">
+                <div class="cart-grid row">
+                    <!-- Left Block: cart product informations & shpping -->
+                    <div class="cart-grid-body col-xs-12 col-lg-8">
 
-                    <!-- cart products detailed -->
-                    <div class="card cart-container">
-                        <div class="card-block">
-                            <h1 class="h1">Καλάθι αγορών</h1>
-                        </div>
-                        <hr class="separator">
-                        {% if cartItems|length > 0 %}
+                        <!-- cart products detailed -->
+                        <div class="card cart-container">
+                            <div class="card-block">
+                                <h1 class="h1">Καλάθι αγορών</h1>
+                            </div>
+                            <hr class="separator">
+                            {% if cartItems|length > 0 %}
+                                <form name="cart-items" action="{{ path('update_cart') }}" method="post">
+                                    <div class="cart-overview js-cart" data-refresh-url="">
 
-                        <div class="cart-overview js-cart"
-                             data-refresh-url="">
-
-                            <ul class="cart-items">
-                                {% set cartSubTotal = 0 %}
-                                {% set cartTotal = 0 %}
-                                {% set cartShippingCost = 0 %}
-                                {% for pr in cartItems %}
-                                    <li class="cart-item">
-                                        <div class="product-line-grid">
-                                            <!--  product left content: image-->
-                                            <div class="product-line-grid-left col-md-3 col-xs-4">
-                                                <span class="product-image media-middle">
-                                                    <img src="{{ pr.imageUrl }}"
-                                                         alt="voluptate velit esse">
-                                                </span>
-                                            </div>
-
-                                            <!--  product left body: description -->
-                                            <div class="product-line-grid-body col-md-4 col-xs-8">
-                                                <div class="product-line-info">
-                                                    <a class=""
-                                                       href="{{ path('product_view', {'id':pr.id}) }}">{{ pr.name }}</a>
-                                                </div>
-
-                                                <div class="product-line-info product-price h5 has-discount">
-                                                    {% if pr.discount > 0 %}
-                                                        <div class="product-discount">
-                                                            <span class="regular-price">{{ pr.retailPrice|number_format(2, ',', '.') }}€</span>
-                                                            <span class="discount discount-amount">-{{ pr.discount }}
-                                                                %</span>
+                                        <ul class="cart-items">
+                                            {% set cartSubTotal = 0 %}
+                                            {% set cartTotal = 0 %}
+                                            {% set cartShippingCost = 0 %}
+                                            {% for pr in cartItems %}
+                                                <li class="cart-item">
+                                                    <div class="product-line-grid">
+                                                        <!--  product left content: image-->
+                                                        <div class="product-line-grid-left col-md-3 col-xs-4">
+                                                            <span class="product-image media-middle">
+                                                                <img src="{{ pr.imageUrl }}"
+                                                                     alt="{{ pr.name }}">
+                                                            </span>
                                                         </div>
-                                                    {% endif %}
-                                                    <div class="current-price">
-                                                        <span class="price">{{ pr.webPrice|number_format(2, ',', '.') }}
-                                                            €</span>
-                                                    </div>
-                                                </div>
 
-                                                {#<br>#}
+                                                        <!--  product left body: description -->
+                                                        <div class="product-line-grid-body col-md-4 col-xs-8">
+                                                            <div class="product-line-info">
+                                                                <a class=""
+                                                                   href="{{ path('product_view', {'id':pr.id}) }}">{{ pr.name }}</a>
+                                                            </div>
 
-                                                {#<div class="product-line-info">#}
-                                                {#<span class="label">Dimension:</span>#}
-                                                {#<span class="value">40x60cm</span>#}
-                                                {#</div>#}
-
-                                            </div>
-
-                                            <!--  product left body: description -->
-                                            {% if (pr.maxByOrder > 0) %}
-                                                {% set maxItems = pr.maxByOrder %}
-                                            {% elseif (pr.webFree == 'true') %}
-                                                {% set maxItems = pr.remainNotReserved + pr.overAvailability %}
-                                            {% else %}
-                                                {% set maxItems = pr.remainNotReserved %}
-                                            {% endif %}
-                                            <div class="product-line-grid-right product-line-actions col-md-5 col-xs-12">
-                                                <div class="row">
-                                                    <div class="col-xs-4 hidden-md-up"></div>
-                                                    <div class="col-md-10 col-xs-6">
-                                                        <div class="row">
-                                                            <div class="col-md-8 col-xs-6">
-                                                                <div class="form-group">
-                                                                    <input id="add-quantity"
-                                                                           class="form-control stepper"
-                                                                           type="number"
-                                                                           value="{{ pr.quantity }}"
-                                                                           min="1"
-                                                                           max="{{ maxItems }}"/>
+                                                            <div class="product-line-info product-price h5 has-discount">
+                                                                {% if pr.discount > 0 %}
+                                                                    <div class="product-discount">
+                                                                        <span class="regular-price">{{ pr.retailPrice|number_format(2, ',', '.') }}€</span>
+                                                                        <span class="discount discount-amount">-{{ pr.discount }}%</span>
+                                                                    </div>
+                                                                {% endif %}
+                                                                <div class="current-price">
+                                                                    <span class="price">{{ pr.webPrice|number_format(2, ',', '.') }}€</span>
                                                                 </div>
                                                             </div>
-                                                            <div class="col-md-4 col-xs-2 price">
-                                                                <span class="product-price">
-                                                                    <strong>
-                                                                        {{ ((pr.webPrice|number_format(2, '.', ','))*pr.quantity)|number_format(2, ',', '.') }}€
-                                                                    </strong>
-                                                                </span>
+
+                                                            {#<br>#}
+
+                                                            {#<div class="product-line-info">#}
+                                                            {#<span class="label">Dimension:</span>#}
+                                                            {#<span class="value">40x60cm</span>#}
+                                                            {#</div>#}
+
+                                                        </div>
+
+                                                        <!--  product left body: description -->
+                                                        {% if (pr.maxByOrder > 0) %}
+                                                            {% set maxItems = pr.maxByOrder %}
+                                                        {% elseif (pr.webFree == 'true') %}
+                                                            {% set maxItems = pr.remainNotReserved + pr.overAvailability %}
+                                                        {% else %}
+                                                            {% set maxItems = pr.remainNotReserved %}
+                                                        {% endif %}
+                                                        <div class="product-line-grid-right product-line-actions col-md-5 col-xs-12">
+                                                            <div class="row">
+                                                                <div class="col-xs-4 hidden-md-up"></div>
+                                                                <div class="col-md-10 col-xs-6">
+                                                                    <div class="row">
+                                                                        <div class="col-md-8 col-xs-6">
+                                                                            <div class="form-group">
+                                                                                <input id="add-quantity"
+                                                                                       name="quantity[{{ pr.cartId }}]"
+                                                                                       class="form-control stepper"
+                                                                                       type="number"
+                                                                                       value="{{ pr.quantity }}"
+                                                                                       min="1"
+                                                                                       max="{{ maxItems }}"/>
+                                                                            </div>
+                                                                        </div>
+                                                                        <div class="col-md-4 col-xs-2 price">
+                                                                            <span class="product-price">
+                                                                                <strong>
+                                                                                    {{ ((pr.webPrice|number_format(2, '.', ','))*pr.quantity)|number_format(2, ',', '.') }}€
+                                                                                </strong>
+                                                                            </span>
+                                                                        </div>
+                                                                    </div>
+                                                                </div>
+                                                                <div class="col-md-2 col-xs-2 text-xsright">
+                                                                    <div class="cart-line-product-actions">
+                                                                        <a class="remove-from-cart"
+                                                                           rel="nofollow"
+                                                                           href="{{ path('delete_cart_item', {'id':pr.cartId}) }}">
+                                                                            <i class="material-icons float-xs-left">delete</i>
+                                                                        </a>
+                                                                    </div>
+                                                                </div>
                                                             </div>
                                                         </div>
+                                                        <div class="clearfix"></div>
                                                     </div>
-                                                    <div class="col-md-2 col-xs-2 text-xsright">
-                                                        <div class="cart-line-product-actions">
-                                                            <a class="remove-from-cart"
-                                                               rel="nofollow"
-                                                               href="{{ path('delete_cart_item', {'id':pr.cartId}) }}">
-                                                                <i class="fa fa-trash-o"></i>
-                                                            </a>
-                                                        </div>
-                                                    </div>
-                                                </div>
-                                            </div>
-                                            <div class="clearfix"></div>
+                                                </li>
+                                                <input type="hidden" name="cart" value="1">
+                                                {% set cartSubTotal = cartSubTotal + (pr.webPrice|number_format(2, '.', ','))*pr.quantity %}
+                                            {% endfor %}
+
+                                        </ul>
+                                    </div>
+                                    <div class="text-sm-center" style="padding: 10px 0 20px;">
+                                        <a class="btn-primary" id="update-cart-btn" href="">
+                                            Ενημέρωση καλαθιού
+                                        </a>
+                                    </div>
+                                </form>
+                            {% else %}
+                                <div class="col-xs-12 general-message">Δεν υπάρχουν προϊόντα στο καλάθι σας!</div>
+                            {% endif %}
+                        </div>
+                        <a style="font-size:16px;" class=""
+                           href="javascript:history.back()">
+                            <i class="fa fa-chevron-left"></i> Συνεχίστε τις αγορές σας
+                        </a>
+                        <!-- shipping informations -->
+                    </div>
+
+                    {% if cartItems|length > 0 %}
+                        <!-- Right Block: cart subtotal & cart total -->
+                        <div class="cart-grid-right col-xs-12 col-lg-4">
+                            <div class="card cart-summary">
+                                <div class="cart-detailed-totals">
+                                    <div class="card-block">
+                                        <div class="cart-summary-line" id="cart-subtotal-products">
+                                            <span class="label js-subtotal">
+                                                {{ totalCartItems }}
+                                                {% if totalCartItems == 1 %}
+                                                    προϊόν
+                                                {% else %}
+                                                    προϊόντα
+                                                {% endif %}
+                                            </span>
+                                            <span class="value">{{ cartSubTotal|number_format(2, ',', '.') }}
+                                                €</span>
+                                        </div>
+                                        {#<div class="cart-summary-line" id="cart-subtotal-shipping">#}
+                                            {#<span class="label">#}
+                                                {#Μεταφορικά#}
+                                            {#</span>#}
+                                            {#<span class="value">Δωρεάν</span>#}
+                                            {#<div>#}
+                                                {#<small class="value"></small>#}
+                                            {#</div>#}
+                                        {#</div>#}
+                                    </div>
+                                    <hr class="separator">
+                                    <div class="card-block ">
+                                        {% set cartTotal = cartSubTotal + cartShippingCost %}
+                                        <div class="cart-summary-line cart-total">
+                                            <span class="label">Σύνολο (με ΦΠΑ)</span>
+                                            <span class="value">{{ cartTotal|number_format(2, ',', '.') }}
+                                                €</span>
+                                        </div>
+
+                                    </div>
+                                </div>
+                                <div class="checkout cart-detailed-actions card-block">
+                                    <div class="text-sm-center">
+                                        <a href="{{ path('checkout') }}" class="btn btn-primary">Ταμείο</a>
+
+                                    </div>
+                                </div>
+                            </div>
+                            <div id="block-reassurance">
+                                <ul>
+                                    <li>
+                                        <div class="block-reassurance-item">
+                                            <img src="https://demo.templatetrip.com/Prestashop/PRS06/PRS176_gym/modules/blockreassurance/img/ic_verified_user_black_36dp_1x.png"
+                                                 alt="Security policy (edit with Customer reassurance module)">
+                                            <span class="h6">Security policy (edit with Customer reassurance
+                                                module)</span>
                                         </div>
                                     </li>
-                                    <input type="hidden" name="cart" value="1">
-                                    {% set cartSubTotal = cartSubTotal + (pr.webPrice|number_format(2, '.', ','))*pr.quantity %}
-                                {% endfor %}
-
-                            </ul>
-                        </div>
-                        {% else %}
-                            <div class="col-xs-12 general-message">Δεν υπάρχουν προϊόντα στο καλάθι σας!</div>
-                        {% endif %}
-                    </div>
-                    <a style="font-size:16px;" class=""
-                       href="javascript:history.back()">
-                        <i class="fa fa-chevron-left"></i> Συνεχίστε τα ψώνια σας
-                    </a>
-                    <!-- shipping informations -->
-                </div>
-
-                {% if cartItems|length > 0 %}
-                    <!-- Right Block: cart subtotal & cart total -->
-                    <div class="cart-grid-right col-xs-12 col-lg-4">
-                        <div class="card cart-summary">
-                            <div class="cart-detailed-totals">
-                                <div class="card-block">
-                                    <div class="cart-summary-line" id="cart-subtotal-products">
-                                        <span class="label js-subtotal">
-                                            {{ totalCartItems }}
-                                            {% if totalCartItems == 1 %}
-                                                προϊόν
-                                            {% else %}
-                                                προϊόντα
-                                            {% endif %}
-                                        </span>
-                                        <span class="value">{{ cartSubTotal|number_format(2, ',', '.') }}
-                                            €</span>
-                                    </div>
-                                    <div class="cart-summary-line" id="cart-subtotal-shipping">
-                                        <span class="label">
-                                            Μεταφορικά
-                                        </span>
-                                        <span class="value">Δωρεάν</span>
-                                        <div>
-                                            <small class="value"></small>
+                                    <li>
+                                        <div class="block-reassurance-item">
+                                            <img src="https://demo.templatetrip.com/Prestashop/PRS06/PRS176_gym/modules/blockreassurance/img/ic_local_shipping_black_36dp_1x.png"
+                                                 alt="Delivery policy (edit with Customer reassurance module)">
+                                            <span class="h6">Delivery policy (edit with Customer reassurance
+                                                module)</span>
                                         </div>
-                                    </div>
-                                </div>
-                                <hr class="separator">
-                                <div class="card-block">
-                                    {% set cartTotal = cartSubTotal + cartShippingCost %}
-                                    <div class="cart-summary-line cart-total">
-                                        <span class="label">Σύνολο (με ΦΠΑ)</span>
-                                        <span class="value">{{ cartTotal|number_format(2, ',', '.') }}
-                                            €</span>
-                                    </div>
-
-                                </div>
-                            </div>
-                            <div class="checkout cart-detailed-actions card-block">
-                                <div class="text-sm-center">
-                                    <a href="{{ path('checkout') }}" class="btn btn-primary">Ταμείο</a>
-
-                                </div>
+                                    </li>
+                                    <li>
+                                        <div class="block-reassurance-item">
+                                            <img src="https://demo.templatetrip.com/Prestashop/PRS06/PRS176_gym/modules/blockreassurance/img/ic_swap_horiz_black_36dp_1x.png"
+                                                 alt="Return policy (edit with Customer reassurance module)">
+                                            <span class="h6">Return policy (edit with Customer reassurance
+                                                module)</span>
+                                        </div>
+                                    </li>
+                                </ul>
                             </div>
                         </div>
-                        <div id="block-reassurance">
-                            <ul>
-                                <li>
-                                    <div class="block-reassurance-item">
-                                        <img src="https://demo.templatetrip.com/Prestashop/PRS06/PRS176_gym/modules/blockreassurance/img/ic_verified_user_black_36dp_1x.png" alt="Security policy (edit with Customer reassurance module)">
-                                        <span class="h6">Security policy (edit with Customer reassurance module)</span>
-                                    </div>
-                                </li>
-                                <li>
-                                    <div class="block-reassurance-item">
-                                        <img src="https://demo.templatetrip.com/Prestashop/PRS06/PRS176_gym/modules/blockreassurance/img/ic_local_shipping_black_36dp_1x.png" alt="Delivery policy (edit with Customer reassurance module)">
-                                        <span class="h6">Delivery policy (edit with Customer reassurance module)</span>
-                                    </div>
-                                </li>
-                                <li>
-                                    <div class="block-reassurance-item">
-                                        <img src="https://demo.templatetrip.com/Prestashop/PRS06/PRS176_gym/modules/blockreassurance/img/ic_swap_horiz_black_36dp_1x.png" alt="Return policy (edit with Customer reassurance module)">
-                                        <span class="h6">Return policy (edit with Customer reassurance module)</span>
-                                    </div>
-                                </li>
-                            </ul>
-                        </div>
-                    </div>
-                {% endif %}
-            </div>
-        </section>
+                    {% endif %}
+                </div>
+            </section>
+        </div>
+        {% include 'home_page_modules/14_newsletter.html.twig' %}
+        {% include 'home_page_modules/15_social.html.twig' %}
+        {% include 'partials/footer.html.twig' %}
     </div>
-    {% include 'home_page_modules/14_newsletter.html.twig' %}
-    {% include 'home_page_modules/15_social.html.twig' %}
-    {% include 'partials/footer.html.twig' %}
-</div>
 {% endblock %}
 
+{% block javascripts %}
+    {{ parent() }}
+    <script src="{{ asset('build/js/cart.js') }}"></script>
+{% endblock %}

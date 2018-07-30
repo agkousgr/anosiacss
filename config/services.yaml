@@ -30,5 +30,5 @@ services:
     # database session storage
     Symfony\Component\HttpFoundation\Session\Storage\Handler\PdoSessionHandler:
         arguments:
-            - 'mysql:dbname=ergacis_sessions'
+            - 'mysql:dbname=anosia_sessions'
             - {db_username: '%env(SESSION_DATABASE_USER)%', db_password: '%env(SESSION_DATABASE_PASSWORD)%'}

@@ -38,7 +38,6 @@ EOF;
             if (!$this->curSession->get("authID")) {
                 $result = $client->SendMessage(['Message' => $message]);
                 $s1result = simplexml_load_string(str_replace("utf-16", "utf-8", $result->SendMessageResult));
-//                dump($result);
                 $this->curSession->set("authID", (string)$s1result->AuthID);
             }
             return;

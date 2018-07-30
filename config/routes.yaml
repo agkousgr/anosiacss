@@ -2,6 +2,10 @@ index:
     path: /
     controller: App\Controller\DefaultController::index
 
+404:
+    path: /404-not-found
+    controller: App\Controller\DefaultController::notFound
+
 # Products
 products_list:
     path: /products/{id}/{page}
@@ -33,6 +37,11 @@ cart_view:
     path: /cart
     controller: App\Controller\CartController::viewCart
 
+update_cart:
+    path: /update-cart
+    controller: App\Controller\CartController::updateCart
+    methods: [POST]
+
 add_to_cart:
     path: /add_to_cart
     controller: App\Controller\AjaxCartController::addToCart
@@ -62,8 +71,11 @@ delete_cart_item:
 
 # Orders Checkout
 checkout:
-    path: /checkout
+    path: /checkout/{step}
     controller: App\Controller\CheckoutController::checkout
+    defaults: { step: 1 }
+    requirements:
+        id: \d+
 
 # Wishlist
 add_to_wishlist:
@@ -96,9 +108,29 @@ get_users:
     path: /get-users
     controller: App\Controller\UserAccountController::getUsers
 
+create_address:
+    path: /new-address
+    controller: App\Controller\UserAccountController::createAddress
+
+update_address:
+    path: /update-address/{id}
+    controller: App\Controller\UserAccountController::updateAddress
+    requirements:
+        page: \d+
+
+# login logout
 login:
     path: /login
     controller: App\Controller\AjaxLoginController::login
     methods: [POST]
     options:
         expose: true
+
+logout:
+    path: /logout
+    controller: App\Controller\UserAccountController::logout
+
+# Admin
+#admin:
+#    path: /admin
+#    controller: App\Controller\AdminDefaultController::login

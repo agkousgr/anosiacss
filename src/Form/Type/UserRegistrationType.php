@@ -38,10 +38,10 @@ class UserRegistrationType extends AbstractType
             ))
             ->add('newsletter', CheckboxType::class, array(
                 'required' => false,
-            ))
-            ->add('special_offers', CheckboxType::class, array(
-                'required' => false,
             ));
+//            ->add('special_offers', CheckboxType::class, array(
+//                'required' => false,
+//            ));
     }
 
     public function configureOptions(OptionsResolver $resolver)
