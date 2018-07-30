@@ -101,7 +101,7 @@ class MainController extends AbstractController
 
         $this->softoneLogin->login();
         $this->categories = $this->categoryService->getCategories();
-        array_multisort(array_column($this->categories, "priority"), $this->categories);
+       // array_multisort(array_column($this->categories, "priority"), $this->categories);
         $this->popular = $productService->getCategoryItems(1022);
         $this->featured = $productService->getCategoryItems(1008);
         $this->loggedUser = ($session->get("anosiaUser")) ?: null;

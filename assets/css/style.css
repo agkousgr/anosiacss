@@ -65,6 +65,13 @@ fieldset[disabled] a.btn {
     font-style: normal
 }
 
+@font-face {
+    font-family: "ACQinfo";
+    src: url("../assets/fonts/ACQinfo/ACQinfo.ttf");
+    font-style: normal;
+    font-weight: normal;
+}
+
 .fa {
     font: normal normal normal 14px/1 FontAwesome;
     font-size: inherit;
@@ -11290,7 +11297,7 @@ html {
 }
 
 body {
-    font-family: '', sans-serif;
+    font-family: 'ACQinfo', sans-serif;
     font-size: 14px;
     line-height: 1.42857143;
     font-weight: 300
@@ -18593,7 +18600,7 @@ figure.effect-apollo:hover figcaption::before {
 }
 
 .pre-header-right ul li a.wishlist-link {
-    background: url(../images/wishlist-icon.png) right no-repeat
+    background: url(images/wishlist-icon.png) right no-repeat
 }
 
 .pre-header-right ul li a.search-link {
@@ -18840,7 +18847,7 @@ figure.effect-apollo:hover figcaption::before {
 }
 
 .post-header-wrap .navbar-nav>li>a {
-    color: #171717;
+    color: red;
     line-height: 82px;
     padding: 0 20px;
     text-transform: uppercase

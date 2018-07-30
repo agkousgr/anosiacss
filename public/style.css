@@ -64,6 +64,11 @@ fieldset[disabled] a.btn {
     font-style: normal
 }
 
+@font-face {
+  font-family: "Aka-AcidGR-QuicksandLite";
+  src: url("http://www.aka-acid.com/assets/AC-QuicksandLite.ttf");
+}
+
 .fa {
     font: normal normal normal 14px/1 FontAwesome;
     font-size: inherit;
@@ -4235,14 +4240,14 @@ a.ui-button:active {
 .ui-icon,
 .ui-widget-content .ui-icon,
 .ui-widget-header .ui-icon {
-    background-image: url(../assets/images/ui-icons_444444_256x240.png)
+    background-image: url(assets/images/ui-icons_444444_256x240.png)
 }
 
 .ui-button:focus .ui-icon,
 .ui-button:hover .ui-icon,
 .ui-state-focus .ui-icon,
 .ui-state-hover .ui-icon {
-    background-image: url(../assets/images/ui-icons_555555_256x240.png)
+    background-image: url(assets/images/ui-icons_555555_256x240.png)
 }
 
 .ui-button:active .ui-icon,
@@ -11289,7 +11294,7 @@ html {
 }
 
 body {
-    font-family: 'pf_dintext_proregular', sans-serif;
+    font-family: 'Aka-AcidGR-QuicksandLite', sans-serif !important;
     font-size: 16px;
     line-height: 1.42857143;
     font-weight: 300
@@ -11399,7 +11404,7 @@ h4,
 h5,
 h6 {
     /*font-family: pf_dintext_proregular;*/
-    font-family: pf_dintext_proregular;
+    /*font-family: pf_dintext_proregular;*/
     /*font-weight: 400;*/
     line-height: 1.1;
     color: inherit
@@ -17780,13 +17785,14 @@ option {
 }
 
 .owl-carousel .owl-dots.disabled,
-.owl-carousel .owl-nav.disabled {
-    display: none
+.owl-carousel .owl-nav.disabled, 
+.owl-carousel .owl-dots {
+    display: none;
 }
 
 .no-js .owl-carousel,
 .owl-carousel.owl-loaded {
-    display: block
+    display: block;
 }
 
 .owl-carousel .owl-dot,
@@ -17797,7 +17803,7 @@ option {
     -khtml-user-select: none;
     -moz-user-select: none;
     -ms-user-select: none;
-    user-select: none
+    user-select: none;
 }
 
 .owl-carousel.owl-loading {
@@ -17940,32 +17946,33 @@ option {
 }
 
 .owl-nav {
-    text-align: center;
-    background: url(../assets/images/owl-line.png) center repeat-x;
+    /*text-align: center;
+    background: url(../assets/images/owl-line.png) center repeat-x;*/
     margin-top: 20px
 }
 
 .owl-next,
 .owl-prev {
-    background-color: #fff;
+    background-color: #000;
+    color: #fff;
     border-radius: 4px;
-    text-indent: -9999px;
-    height: 32px;
-    width: 32px;
+    /*text-indent: -9999px;*/
+    height: 27px;
+    width: 27px;
     display: inline-block;
     -webkit-transition: .2s;
     -moz-transition: .2s;
     -o-transition: .2s;
     transition: .2s;
-    margin: 0 4px
+    margin: 0 2px
 }
 
 .owl-prev {
-    background-image: url(../assets/images/owl-prev.png)
+    /*background-image: url(../assets/images/owl-prev.png)*/
 }
 
 .owl-next {
-    background-image: url(../assets/images/owl-next.png)
+    /*background-image: url(../assets/images/owl-next.png)*/
 }
 
 .owl-next:hover,
@@ -18497,7 +18504,7 @@ figure.effect-apollo:hover figcaption::before {
 
 .news-ticker .ticker .label-back {
     background: url(../assets/images/latest-bg.png) right center no-repeat;
-    font-family: pf_dintext_proregular;
+    font-family: inherit;
     text-transform: uppercase;
     color: #fff;
     font-size: 14px;
@@ -18561,46 +18568,46 @@ figure.effect-apollo:hover figcaption::before {
     float: right
 }
 
-.pre-header-right ul {
+.pre-header-right ul , .pre-header-left ul{
     margin: 0;
     padding: 0;
     list-style: none;
     border-right: 1px solid #ccc
 }
 
-.pre-header-right ul li {
+.pre-header-right ul li, .pre-header-left ul li {
     border-left: 1px solid #d8d8d8;
     float: left;
     position: relative;
-    line-height: 60px;
+    line-height: 53px;
     padding: 0 8px;
     text-transform: uppercase
 }
 
-.pre-header-right ul li a {
+.pre-header-right ul li a, .pre-header-left ul li a {
     display: block;
     padding-right: 32px;
     color: #171717
 }
 
-.pre-header-right ul li a:hover {
+.pre-header-right ul li a:hover, .pre-header-left ul li a:hover {
     color: #36cb6b
 }
 
 .pre-header-right ul li a.cart-link {
-    background: url(../assets/images/cart-icon.png) right no-repeat
+    /*background: url(assets/images/cart-icon.png) right no-repeat*/
 }
 
 .pre-header-right ul li a.wishlist-link {
-    background: url(../assets/images/wishlist-icon.png) right no-repeat
+    /*background: url(assets/images/wishlist-icon.png) right no-repeat*/
 }
 
 .pre-header-right ul li a.search-link {
-    background: url(../assets/images/search-icon.png) right no-repeat
+   /*background: url(assets/images/search-icon.png) right no-repeat*/
 }
 
 .pre-header-right ul li a.account-link {
-    background: url(../assets/images/profile-icon.png) right no-repeat;
+    /*background: url(assets/images/profile-icon.png) right no-repeat;*/
     max-height:60px;
 }
 
@@ -18683,7 +18690,7 @@ figure.effect-apollo:hover figcaption::before {
     margin: 0 0 2px;
     padding-right: 30px;
     font-size: 15px;
-    font-family: "pf_dintext_proregular", sans-serif
+    font-family: inherit;
 }
 
 .cart-list .media .remove-item {
@@ -18713,7 +18720,7 @@ figure.effect-apollo:hover figcaption::before {
     margin-left: 5%;
     line-height: 24px;
     float: left;
-    font-family: pf_dintext_proregular
+    font-family: inherit;
 }
 
 .cart-list .media .star-rating {
@@ -18731,7 +18738,7 @@ figure.effect-apollo:hover figcaption::before {
 .cart-dropdown .btns .btn,
 .cart-total {
     font-size: 18px;
-    font-family: pf_dintext_proregular
+    font-family: inherit;
 }
 
 .cart-total {
@@ -19028,7 +19035,7 @@ figure.effect-apollo:hover figcaption::before {
 .menu-product-list .media h5 {
     margin: 0 0 2px;
     font-size: 15px;
-    font-family: "pf_dintext_proregular", sans-serif
+    font-family: inherit;
 }
 
 .menu-product-list .media button {
@@ -19143,7 +19150,7 @@ figure.effect-apollo:hover figcaption::before {
     display: block;
     line-height: 45px;
     border-bottom: 1px solid #ffa141;
-    font-family: pf_dintext_proregular;
+    font-family: inherit;
     font-size: 20px
 }
 
@@ -19166,7 +19173,7 @@ figure.effect-apollo:hover figcaption::before {
     padding-left: 25px;
     line-height: 45px;
     font-size: 18px;
-    font-family: "pf_dintext_proregular", sans-serif
+    font-family: inherit;
 }
 
 .blueMobileMenu li ul li:hover,
@@ -19364,7 +19371,7 @@ body.modal-open {
 .sidebar-login h4 {
     margin: 0 0 12px;
     font-size: 18px;
-    font-family: pf_dintext_proregular
+    font-family: inherit;
 }
 
 .signin-with-fb:before,
@@ -19461,7 +19468,7 @@ body.modal-open {
     font-size: 18px;
     color: #009836;
     line-height: 22px;
-    font-family: pf_dintext_proregular
+    font-family: inherit;
 }
 
 .sidebar-login ul li.call {
@@ -19477,7 +19484,7 @@ body.modal-open {
     font-size: 14px;
     color: #171717;
     font-weight: 700;
-    font-family: "pf_dintext_proregular", sans-serif
+    font-family: inherit;
 }
 
 .search-collapse {
@@ -19600,7 +19607,7 @@ body.modal-open {
     padding: 5px;
     background-color: #fff;
     max-width: 1160px;
-    font-family: pf_dintext_proregular
+    font-family: inherit;
 }
 
 .site-banner .banner {
@@ -19679,7 +19686,7 @@ body.modal-open {
     margin-bottom: 10px;
     padding-bottom: 5px;
     border-bottom: 1px solid #d8d8d8;
-    font-family: pf_dintext_proregular;
+    font-family: inherit;
     font-size: 24px;
     margin-top: 0
 }
@@ -19693,7 +19700,7 @@ body.modal-open {
 
 .sidebar-product-list .media h5,
 .social li small {
-    font-family: "pf_dintext_proregular", sans-serif
+    font-family: inherit;
 }
 
 .sidebar-product-list h3 span {
@@ -19784,7 +19791,7 @@ body.modal-open {
 }
 
 .social li span {
-    font-family: pf_dintext_proregular;
+    font-family: inherit;
     font-size: 24px
 }
 
@@ -20183,7 +20190,7 @@ body.modal-open {
 }
 
 .newsletter .btn {
-    font-family: pf_dintext_proregular;
+    font-family: inherit;
     text-transform: uppercase;
     font-weight: 400
 }
@@ -20308,7 +20315,7 @@ body.modal-open {
 .big-slider .carousel-caption a,
 .four-column-wrap ul li,
 .planContainer .price p {
-    font-family: pf_dintext_proregular
+    font-family: inherit;
 }
 
 .testiCarousel .carousel-control.left,
@@ -20862,7 +20869,7 @@ body.modal-open {
 }
 
 .news-post h3 {
-    font-family: 'pf_dintext_proregular', sans-serif;
+    font-family: inherit;
     font-size: 18px
 }
 
@@ -20873,7 +20880,7 @@ body.modal-open {
 .section-top .btn-lg,
 .tag,
 h3.resp-accordion {
-    font-family: pf_dintext_proregular
+    font-family: inherit;
 }
 
 .post-tag {
