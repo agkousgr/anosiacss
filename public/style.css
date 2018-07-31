@@ -65,8 +65,8 @@ fieldset[disabled] a.btn {
 }
 
 @font-face {
-  font-family: "Aka-AcidGR-QuicksandLite";
-  src: url("http://www.aka-acid.com/assets/AC-QuicksandLite.ttf");
+    font-family: "Aka-AcidGR-QuicksandLite";
+    src: url("http://www.aka-acid.com/assets/AC-QuicksandLite.ttf");
 }
 
 .fa {
@@ -9363,8 +9363,7 @@ a.ui-button:active {
 
 a,
 body {
-    color: #171717;
-    letter-spacing: 1px;
+    color: #171717
 }
 
 .apex-slider .button.big:hover,
@@ -17788,7 +17787,7 @@ option {
 }
 
 .owl-carousel .owl-dots.disabled,
-.owl-carousel .owl-nav.disabled, 
+.owl-carousel .owl-nav.disabled,
 .owl-carousel .owl-dots {
     display: none;
 }
@@ -18606,7 +18605,7 @@ figure.effect-apollo:hover figcaption::before {
 }
 
 .pre-header-right ul li a.search-link {
-   /*background: url(assets/images/search-icon.png) right no-repeat*/
+    /*background: url(assets/images/search-icon.png) right no-repeat*/
 }
 
 .pre-header-right ul li a.account-link {
@@ -18846,7 +18845,7 @@ figure.effect-apollo:hover figcaption::before {
 }
 
 .post-header-wrap .navbar-nav>li {
-    font-size: 17px;
+    font-size: 15px;
     float: left
 }
 
@@ -18955,7 +18954,7 @@ figure.effect-apollo:hover figcaption::before {
 
 .menu-block .sub-menu a {
     color: #171717;
-    font-size: 16px
+    font-size: 13px
 }
 
 .menu-block .sub-menu a:hover {
@@ -19037,7 +19036,7 @@ figure.effect-apollo:hover figcaption::before {
 
 .menu-product-list .media h5 {
     margin: 0 0 2px;
-    font-size: 15px;
+    font-size: 13px;
     font-family: inherit;
 }
 

@@ -19,6 +19,11 @@ class ProductService
     private $logger;
 
     /**
+     * @var SessionInterface
+     */
+    private $session;
+
+    /**
      * @var string
      * @param SessionInterface $session
      */
@@ -28,7 +33,8 @@ class ProductService
     {
         $this->logger = $logger;
         $this->session = $session;
-        $this->authId = $session->get("authID");
+//        $this->authId = $session->get("authID");
+//        dump($this->authId);
     }
 
     /**
@@ -37,8 +43,9 @@ class ProductService
      * @return array
      * @throws \Exception
      */
-    public function getCategoryItems($ctgId)
+    public function getCategoryItems($ctgId, $authId='')
     {
+        $this->authId = ($this->authId) ?: $authId;
         $client = new \SoapClient('https://caron.cloudsystems.gr/FOeshopWS/ForeignOffice.FOeshop.API.FOeshopSvc.svc?singleWsdl', ['trace' => true, 'exceptions' => true,]);
 
         $message = <<<EOF
@@ -118,8 +125,8 @@ EOF;
                     $prArr[] = array(
                         'id' => $pr->ID,
                         'name' => $pr->Name2,
-                        'summary' => $pr->SmallDescription,
-                        'body' => $pr->LargeDescription,
+                        'summary' => $pr->SmallDescriptionHTML,
+                        'body' => $pr->LargeDescriptionHTML,
                         'extraInfo' => $pr->InstructionsHTML,
                         'isVisible' => $pr->WebVisible,
                         'retailPrice' => $pr->RetailPrice,
@@ -198,8 +205,8 @@ EOF;
                 $prArr = array(
                     'id' => $pr->ID,
                     'name' => $pr->Name2,
-                    'summary' => $pr->SmallDescription,
-                    'body' => $pr->LargeDescription,
+                    'summary' => $pr->SmallDescriptionHTML,
+                    'body' => $pr->LargeDescriptionHTML,
                     'extraInfo' => $pr->InstructionsHTML,
                     'retailPrice' => $pr->RetailPrice,
                     'discount' => $pr->WebDiscountPerc,

@@ -104,11 +104,13 @@ class MainController extends AbstractController
         EntityManagerInterface $em
     )
     {
-//        if (session_status() !== PHP_SESSION_ACTIVE) {
+        if (session_status() !== PHP_SESSION_ACTIVE) {
+            session_start();
+            dump('Session started');
 //            session_cache_expire(180);
 //            $session->set('cache_expire', session_cache_expire());
-//        }
-        dump($session);
+        }
+
         $this->softoneLogin = $softoneLogin;
         $this->categoryService = $categoryService;
         $this->cart = $cartService;
@@ -118,14 +120,19 @@ class MainController extends AbstractController
         $this->em = $em;
         $this->totalCartItems = 0;
 
-        $this->softoneLogin->login();
-        $this->categories = $this->categoryService->getCategories();
+        if ($this->session->has("authID") === false) {
+            dump('go login');
+            $authID = $this->softoneLogin->login();
+            $this->session->set('authID', $authID);
+        }
+        dump($this->session);
+        $this->categories = $this->categoryService->getCategories($this->session->get('authID'));
 
         if ($this->categories) {
             array_multisort(array_column($this->categories, "priority"), $this->categories);
         }
-        $this->popular = $productService->getCategoryItems(1022);
-        $this->featured = $productService->getCategoryItems(1008);
+        $this->popular = $productService->getCategoryItems(1022, $this->session->get('authID'));
+        $this->featured = $productService->getCategoryItems(1008, $this->session->get('authID'));
         $this->loggedUser = ($session->get("anosiaUser")) ?: null;
         $this->loggedName = ($session->get("anosiaName")) ?: null;
         $this->loggedClientId = ($session->get("anosiaClientId")) ?: null;

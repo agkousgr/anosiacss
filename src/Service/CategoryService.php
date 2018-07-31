@@ -3,11 +3,7 @@
 
 namespace App\Service;
 
-use DOMDocument;
-use Monolog\Logger;
-use phpDocumentor\Reflection\Types\Array_;
 use Psr\Log\LoggerInterface;
-use Symfony\Component\HttpFoundation\Response;
 use App\Entity\Category;
 use Doctrine\ORM\{
     EntityRepository, EntityManagerInterface
@@ -62,9 +58,9 @@ class CategoryService
         $this->em = $em;
         $this->session = $session;
         $this->authId = $session->get("authID");
-        $encoders = array(new XmlEncoder());
-        $normalizers = array(new ObjectNormalizer());
-        $this->serializer = new Serializer($normalizers, $encoders);
+//        $encoders = array(new XmlEncoder());
+//        $normalizers = array(new ObjectNormalizer());
+//        $this->serializer = new Serializer($normalizers, $encoders);
     }
 
     /**
@@ -120,7 +116,7 @@ EOF;
      *
      * @return object
      */
-    public function getCategoriesFromS1()
+    public function getCategoriesFromS1($authId)
     {
         $client = new \SoapClient('https://caron.cloudsystems.gr/FOeshopWS/ForeignOffice.FOeshop.API.FOeshopSvc.svc?singleWsdl', ['trace' => true, 'exceptions' => true,]);
 
@@ -130,7 +126,7 @@ EOF;
     <Type>1007</Type>
     <Kind>1</Kind>
     <Domain>pharmacyone</Domain>
-    <AuthID>$this->authId</AuthID>
+    <AuthID>$authId</AuthID>
     <AppID>157</AppID>
     <CompanyID>1000</CompanyID>
     <IsTopLevel>1</IsTopLevel>
@@ -142,7 +138,7 @@ EOF;
         try {
             $result = $client->SendMessage(['Message' => $message]);
             $resultXML = simplexml_load_string(str_replace("utf-16", "utf-8", $result->SendMessageResult));
-            $categories = $this->initializeCategories($resultXML->GetDataRows->GetCategoriesRow);
+            $categories = $this->initializeCategories($resultXML->GetDataRows->GetCategoriesRow, $authId);
 
             return $categories;
 
@@ -170,7 +166,7 @@ EOF;
         }
     }
 
-    private function initializeCategories($rootCategories)
+    private function initializeCategories($rootCategories, $authId)
     {
         try {
 //            return new Response(dump($rootCategories));
@@ -188,7 +184,7 @@ EOF;
                         'hasMainImage' => $category->HasMainPhoto,
                         'imageUrl' => ($category->HasMainPhoto) ? 'https://caron.cloudsystems.gr/FOeshopAPIWeb/DF.aspx?' . str_replace('[Serial]', '01102459200617', str_replace('&amp;', '&', $category->MainPhotoUrl)) : ''
                     );
-                    $subCtgs = $this->getSubCategories($category->ID);
+                    $subCtgs = $this->getSubCategories($category->ID, $authId);
 
                     $childArr = array();
                     foreach ($subCtgs->GetDataRows->GetCategoryChildrenRow as $child) {
@@ -232,10 +228,12 @@ EOF;
     }
 
     /**
+     * @param $authId
+     *
      * @return mixed
      * @throws \Exception
      */
-    public function getCategories()
+    public function getCategories($authId)
     {
         try {
 //            $rootCategories = $this->em->getRepository(Category::class)->findAll();
@@ -244,7 +242,7 @@ EOF;
 //            }else{
 //                $rootCategories = $this->getCategoriesFromS1($this->session->get("authID"));
 //            }
-            $rootCategories = $this->getCategoriesFromS1();
+            $rootCategories = $this->getCategoriesFromS1($authId);
             return $rootCategories;
         } catch (\Exception $e) {
             $this->logger->error(__METHOD__ . ' -> {message}', ['message' => $e->getMessage()]);
@@ -252,7 +250,7 @@ EOF;
         }
     }
 
-    public function getSubCategories($ctgId)
+    public function getSubCategories($ctgId, $authId)
     {
         $client = new \SoapClient('https://caron.cloudsystems.gr/FOeshopWS/ForeignOffice.FOeshop.API.FOeshopSvc.svc?singleWsdl', ['trace' => true, 'exceptions' => true,]);
 
@@ -262,7 +260,7 @@ EOF;
     <Type>1009</Type>
     <Kind>1</Kind>
     <Domain>pharmacyone</Domain>
-    <AuthID>$this->authId</AuthID>
+    <AuthID>$authId</AuthID>
     <AppID>157</AppID>
     <CompanyID>1000</CompanyID>
     <CategoryID>$ctgId</CategoryID>

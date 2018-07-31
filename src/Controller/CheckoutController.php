@@ -24,7 +24,7 @@ class CheckoutController extends MainController
         try {
             $userData = '';
             $curStep = ($request->request->get('currentStep')) ?: $step;
-            if (null !== $this->loggedUser) {
+//            if (null !== $this->loggedUser) {
                 $checkout = new Checkout();
                 if ($this->session->has('curOrder') === false) {
                     $orderData = $checkoutService->getUserInfo($checkout);
@@ -83,10 +83,10 @@ class CheckoutController extends MainController
                     'step4Form' => $step4Form->createView(),
                     'curStep' => $curStep
                 ]));
-            } else {
-                throw $this->createNotFoundException('Δεν έχετε πρόσβαση σε αυτή τη σελίδα. Συνδεθείτε και προσπαθήστε ξανά');
-//                return $this->redirectToRoute('404');
-            }
+//            } else {
+//                throw $this->createNotFoundException('Δεν έχετε πρόσβαση σε αυτή τη σελίδα. Συνδεθείτε και προσπαθήστε ξανά');
+////                return $this->redirectToRoute('404');
+//            }
 //            $registerForm = $this->createForm(UserRegistrationType::class);
 //
 //            $registerForm->handleRequest($request);

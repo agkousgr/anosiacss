@@ -7,13 +7,6 @@ use SimpleXMLElement;
 
 class SoftoneLogin
 {
-    private $curSession;
-
-    public function __construct(SessionInterface $session)
-    {
-        $this->curSession = $session;
-    }
-
     public function login()
     {
         $client = new \SoapClient('http://caron.cloudsystems.gr/FOeshopWS/ForeignOffice.FOeshop.API.FOeshopSvc.svc?singleWsdl', ['trace' => true, 'exceptions' => true,]);
@@ -35,12 +28,12 @@ class SoftoneLogin
 </ClientSingleLoginRequest>
 EOF;
         try {
-            if (!$this->curSession->get("authID")) {
+//            if ($session->has("authID") === false) {
                 $result = $client->SendMessage(['Message' => $message]);
                 $s1result = simplexml_load_string(str_replace("utf-16", "utf-8", $result->SendMessageResult));
-                $this->curSession->set("authID", (string)$s1result->AuthID);
-            }
-            return;
+//                $session->set("authID", (string)$s1result->AuthID);
+//            }
+            return (string)$s1result->AuthID;
         } catch (\SoapFault $sf) {
             echo $sf->faultstring;
         }
