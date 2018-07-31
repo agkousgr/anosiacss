@@ -16,42 +16,58 @@ class Address
     use BasicDbFieldsTrait;
 
     /**
-     * @var int
+     * @var int|null
      */
-    protected $client;
+    private $client;
 
     /**
-     * @var string
+     * @var string|null
      */
-    protected $address;
+    private $address;
 
     /**
-     * $var string
+     * $var string|null
      */
-    protected $zip;
+    private $zip;
 
     /**
-     * $var string
+     * $var string|null
      */
-    protected $city;
+    private $city;
 
     /**
-     * $var string
+     * $var string|null
      */
-    protected $district;
+    private $district;
 
     /**
-     * @return string
+     * @return int|null
      */
-    public function getAddress(): string
+    public function getClient(): ?int
+    {
+        return $this->client;
+    }
+
+    /**
+     * @param int|null $client
+     */
+    public function setClient(?int $client): void
+    {
+        $this->client = $client;
+    }
+
+    /**
+     * @return null|string
+     */
+    public function getAddress(): ?string
     {
         return $this->address;
     }
 
     /**
-     * @param string $address
+     * @param null|string $address
      */
-    public function setAddress(string $address): void
+    public function setAddress(?string $address): void
     {
         $this->address = $address;
     }
@@ -102,22 +118,6 @@ class Address
     public function setDistrict($district): void
     {
         $this->district = $district;
-    }
-
-    /**
-     * @return int
-     */
-    public function getClient(): int
-    {
-        return $this->client;
-    }
-
-    /**
-     * @param int $client
-     */
-    public function setClient(int $client): void
-    {
-        $this->client = $client;
     }
 
 }

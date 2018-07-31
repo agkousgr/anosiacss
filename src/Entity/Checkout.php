@@ -25,56 +25,56 @@ class Checkout extends WebUser
     ];
 
     /**
-     * @var int
+     * @var int|null
      */
-    protected $nextPage;
+    private $nextPage;
 
     /**
      * 7021 For Invoice, 7023 for Receipt
-     * @var string
+     * @var string|null
      */
-    protected $series;
+    private $series;
 
     /**
      * @var string|null
      */
-    protected $comments;
+    private $comments;
 
     /**
-     * @var string
+     * @var string|null
      */
     private $shippingType;
 
     /**
-     * @var string
+     * @var string|null
      */
     private $paymentType;
 
     /**
-     * @var bool
+     * @var bool|null
      */
-    protected $agreeTerms;
+    private $agreeTerms;
 
     /**
-     * @return int
+     * @return int|null
      */
-    public function getNextPage(): int
+    public function getNextPage(): ?int
     {
         return $this->nextPage;
     }
 
     /**
-     * @param int $nextPage
+     * @param int|null $nextPage
      */
-    public function setNextPage(int $nextPage): void
+    public function setNextPage(?int $nextPage): void
     {
         $this->nextPage = $nextPage;
     }
 
     /**
-     * @return string
+     * @return null|string
      */
-    public function getSeries(): string
+    public function getSeries(): ?string
     {
         return $this->series;
     }
@@ -82,41 +82,9 @@ class Checkout extends WebUser
     /**
      * @param string $series
      */
-    public function setSeries(string $series): void
+    public function setSeries(?string $series): void
     {
         $this->series = $series;
-    }
-
-    /**
-     * @return string
-     */
-    public function getShippingType(): string
-    {
-        return $this->shippingType;
-    }
-
-    /**
-     * @param string $shippingType
-     */
-    public function setShippingType(string $shippingType): void
-    {
-        $this->shippingType = $shippingType;
-    }
-
-    /**
-     * @return string
-     */
-    public function getPaymentType(): string
-    {
-        return $this->paymentType;
-    }
-
-    /**
-     * @param string $paymentType
-     */
-    public function setPaymentType(string $paymentType): void
-    {
-        $this->paymentType = $paymentType;
     }
 
     /**
@@ -136,17 +104,49 @@ class Checkout extends WebUser
     }
 
     /**
-     * @return bool
+     * @return string
      */
-    public function isAgreeTerms(): bool
+    public function getShippingType(): ?string
+    {
+        return $this->shippingType;
+    }
+
+    /**
+     * @param string $shippingType
+     */
+    public function setShippingType(?string $shippingType): void
+    {
+        $this->shippingType = $shippingType;
+    }
+
+    /**
+     * @return string
+     */
+    public function getPaymentType(): ?string
+    {
+        return $this->paymentType;
+    }
+
+    /**
+     * @param string $paymentType
+     */
+    public function setPaymentType(?string $paymentType): void
+    {
+        $this->paymentType = $paymentType;
+    }
+
+    /**
+     * @return bool|null
+     */
+    public function getAgreeTerms(): ?bool
     {
         return $this->agreeTerms;
     }
 
     /**
-     * @param bool $agreeTerms
+     * @param bool|null $agreeTerms
      */
-    public function setAgreeTerms(bool $agreeTerms): void
+    public function setAgreeTerms(?bool $agreeTerms): void
     {
         $this->agreeTerms = $agreeTerms;
     }

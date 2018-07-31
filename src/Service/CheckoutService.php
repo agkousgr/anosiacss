@@ -2,6 +2,7 @@
 
 namespace App\Service;
 
+use App\Entity\Checkout;
 use App\Entity\WebUser;
 use Psr\Log\LoggerInterface;
 use Symfony\Component\HttpFoundation\Session\SessionInterface;
@@ -29,6 +30,11 @@ class CheckoutService
     private $username;
 
     /**
+     * @var Checkout
+     */
+    private $curOrder;
+
+    /**
      * UserAccountService constructor.
      * @param LoggerInterface $logger
      * @param SessionInterface $session
@@ -39,6 +45,7 @@ class CheckoutService
         $this->session = $session;
         $this->authId = $session->get("authID");
         $this->username = $session->get('anosiaUser');
+        $this->curOrder = $session->get('curOrder');
     }
 
 
@@ -320,11 +327,57 @@ EOF;
 
     }
 
-    public function initializeOrder($checkout)
+
+    public function initializeOrder($checkout, $cartItems)
     {
-        $checkoutValues = $this->session->get('curOrder');
-        dump($checkoutValues);
-        $this->session->set('address', $checkout->getAddress());
-        $this->session->set('comments', $checkout->getComments());
+        $expenses = $this->initializeExpenses($checkout);
+        $items = $this->initializeCartItems($cartItems);
+        dump($cartItems, $items);
+
+        return;
+    }
+
+
+    private function initializeExpenses($checkout)
+    {
+        $expenses = "<Expenses>";
+        if ($checkout->getShippingType === '1000') {
+//            $expenses .= Write code to get value from Soft1
+            $expenses .= "<ClientSetOrderExpense>
+    <ExpenseID>1000</ExpenseID>
+    <Value>2.00</Value>
+</ClientSetOrderExpense>";
+        }
+        return $expenses;
+    }
+
+    /**
+     * @param $cartItems
+     * @return string
+     */
+    private function initializeCartItems($cartItems)
+    {
+        $items = "<Items>";
+        $count = 1;
+        foreach ($cartItems as $cartItem) {
+            $id = $cartItem['id'];
+            $quantity = $cartItem['quantity'];
+            $webPrice = $cartItem['webPrice'];
+            $items .= "<ClientSetOrderItem>
+    <Number>$count</Number>
+    <ItemID>$id</ItemID>
+    <Quantity>$quantity</Quantity>
+    <Price>$webPrice</Price>
+</ClientSetOrderItem>
+";
+            $count++;
+        }
+        $items .= "</Items>";
+        return $items;
+    }
+
+    private function sendOrder()
+    {
+
     }
 }

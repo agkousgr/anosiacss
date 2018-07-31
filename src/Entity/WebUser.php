@@ -16,117 +16,213 @@ class WebUser extends Address
     private $newsletterId;
 
     /**
-     * @var string
+     * @var string|null
      */
     private $username;
 
     /**
-     * @var string
+     * @var string|null
      */
     private $password;
 
     /**
-     * @var string
+     * @var string|null
      */
     private $email;
 
     /**
-     * @var string
+     * @var string|null
      */
     private $firstname;
 
     /**
-     * @var string
+     * @var string|null
      */
     private $lastname;
 
     /**
-     * @var bool
+     * @var bool|null
      */
     private $newsletter;
 
     /**
-     * @var string
+     * @var string|null
      */
     private $afm;
 
     /**
-     * @var string
+     * @var string|null
      */
     private $irs;
 
     /**
      * $var string|null
      */
-    protected $phone01;
+    private $phone01;
 
     /**
      * $var string|null
      */
-    protected $phone02;
+    private $phone02;
 
     /**
-     * @return string|null
+     * @return null|string
      */
-    public function getAddress(): string
+    public function getClientId(): ?string
     {
-        return $this->address;
+        return $this->clientId;
     }
 
     /**
-     * @param string $address
+     * @param null|string $clientId
      */
-    public function setAddress(string $address): void
+    public function setClientId(?string $clientId): void
     {
-        $this->address = $address;
+        $this->clientId = $clientId;
     }
 
     /**
-     * @return mixed
+     * @return null|string
      */
-    public function getZip()
+    public function getNewsletterId(): ?string
     {
-        return $this->zip;
+        return $this->newsletterId;
     }
 
     /**
-     * @param mixed $zip
+     * @param null|string $newsletterId
      */
-    public function setZip($zip): void
+    public function setNewsletterId(?string $newsletterId): void
     {
-        $this->zip = $zip;
+        $this->newsletterId = $newsletterId;
     }
 
     /**
-     * @return mixed
+     * @return null|string
      */
-    public function getCity()
+    public function getUsername(): ?string
     {
-        return $this->city;
+        return $this->username;
     }
 
     /**
-     * @param mixed $city
+     * @param null|string $username
      */
-    public function setCity($city): void
+    public function setUsername(?string $username): void
     {
-        $this->city = $city;
+        $this->username = $username;
     }
 
     /**
-     * @return mixed
+     * @return null|string
      */
-    public function getDistrict()
+    public function getPassword(): ?string
     {
-        return $this->district;
+        return $this->password;
     }
 
     /**
-     * @param mixed $district
+     * @param null|string $password
      */
-    public function setDistrict($district): void
+    public function setPassword(?string $password): void
     {
-        $this->district = $district;
+        $this->password = $password;
+    }
+
+    /**
+     * @return null|string
+     */
+    public function getEmail(): ?string
+    {
+        return $this->email;
+    }
+
+    /**
+     * @param null|string $email
+     */
+    public function setEmail(?string $email): void
+    {
+        $this->email = $email;
+    }
+
+    /**
+     * @return null|string
+     */
+    public function getFirstname(): ?string
+    {
+        return $this->firstname;
+    }
+
+    /**
+     * @param null|string $firstname
+     */
+    public function setFirstname(?string $firstname): void
+    {
+        $this->firstname = $firstname;
+    }
+
+    /**
+     * @return null|string
+     */
+    public function getLastname(): ?string
+    {
+        return $this->lastname;
+    }
+
+    /**
+     * @param null|string $lastname
+     */
+    public function setLastname(?string $lastname): void
+    {
+        $this->lastname = $lastname;
+    }
+
+    /**
+     * @return bool|null
+     */
+    public function getNewsletter(): ?bool
+    {
+        return $this->newsletter;
+    }
+
+    /**
+     * @param bool|null $newsletter
+     */
+    public function setNewsletter(?bool $newsletter): void
+    {
+        $this->newsletter = $newsletter;
+    }
+
+    /**
+     * @return null|string
+     */
+    public function getAfm(): ?string
+    {
+        return $this->afm;
+    }
+
+    /**
+     * @param null|string $afm
+     */
+    public function setAfm(?string $afm): void
+    {
+        $this->afm = $afm;
+    }
+
+    /**
+     * @return null|string
+     */
+    public function getIrs(): ?string
+    {
+        return $this->irs;
+    }
+
+    /**
+     * @param null|string $irs
+     */
+    public function setIrs(?string $irs): void
+    {
+        $this->irs = $irs;
     }
 
     /**
@@ -160,166 +256,5 @@ class WebUser extends Address
     {
         $this->phone02 = $phone02;
     }
-
-    /**
-     * @return string|null
-     */
-    public function getClientId(): ?string
-    {
-        return $this->clientId;
-    }
-
-    /**
-     * @param string|null $clientId
-     */
-    public function setClientId(?string $clientId): void
-    {
-        $this->clientId = $clientId;
-    }
-
-    /**
-     * @return string
-     */
-    public function getUsername(): string
-    {
-        return $this->username;
-    }
-
-    /**
-     * @param string $username
-     */
-    public function setUsername(string $username): void
-    {
-        $this->username = $username;
-    }
-
-    /**
-     * @return string
-     */
-    public function getPassword(): string
-    {
-        return $this->password;
-    }
-
-    /**
-     * @param string $password
-     */
-    public function setPassword(string $password): void
-    {
-        $this->password = $password;
-    }
-
-    /**
-     * @return string
-     */
-    public function getEmail(): string
-    {
-        return $this->email;
-    }
-
-    /**
-     * @param string $email
-     */
-    public function setEmail(string $email): void
-    {
-        $this->email = $email;
-    }
-
-    /**
-     * @return string
-     */
-    public function getFirstname(): string
-    {
-        return $this->firstname;
-    }
-
-    /**
-     * @param string $firstname
-     */
-    public function setFirstname(string $firstname): void
-    {
-        $this->firstname = $firstname;
-    }
-
-    /**
-     * @return string
-     */
-    public function getLastname(): string
-    {
-        return $this->lastname;
-    }
-
-    /**
-     * @param string $lastname
-     */
-    public function setLastname(string $lastname): void
-    {
-        $this->lastname = $lastname;
-    }
-
-    /**
-     * @return bool
-     */
-    public function isNewsletter(): bool
-    {
-        return $this->newsletter;
-    }
-
-    /**
-     * @param bool $newsletter
-     */
-    public function setNewsletter(bool $newsletter): void
-    {
-        $this->newsletter = $newsletter;
-    }
-
-    /**
-     * @return null|string
-     */
-    public function getNewsletterId(): ?string
-    {
-        return $this->newsletterId;
-    }
-
-    /**
-     * @param null|string $newsletterId
-     */
-    public function setNewsletterId(?string $newsletterId): void
-    {
-        $this->newsletterId = $newsletterId;
-    }
-
-    /**
-     * @return string
-     */
-    public function getIrs(): string
-    {
-        return $this->irs;
-    }
-
-    /**
-     * @param string $irs
-     */
-    public function setIrs(string $irs): void
-    {
-        $this->irs = $irs;
-    }
-
-    /**
-     * @return string
-     */
-    public function getAfm(): string
-    {
-        return $this->afm;
-    }
-
-    /**
-     * @param string $afm
-     */
-    public function setAfm(string $afm): void
-    {
-        $this->afm = $afm;
-    }
-
 
 }

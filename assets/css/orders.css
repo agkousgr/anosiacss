@@ -1,3 +1,7 @@
+#checkout label {
+    font-size: 14px;
+}
+
 .btn-primary:focus,
 .btn-primary.focus,
 .page-footer .text-sm-center a:focus,
@@ -33,6 +37,9 @@
 }
 form label {
     font-weight: normal;
+}
+#cart a {
+    font-size: 14px;
 }
 #delivery textarea {
     border: 1px solid #e5e5e5;
@@ -73,13 +80,13 @@ form label {
     padding-left: 0;
     font-weight: normal;
     white-space: inherit;
-    font-size: 18px;
+    font-size: 14px;
     color: #414141;
 }
 .cart-summary-line .value {
     color: #414141;
     float: right !important;
-    font-size: 18px;
+    font-size: 14px;
 }
 .cart-summary-line.cart-summary-subtotals .label,
 .cart-summary-line.cart-summary-subtotals .value {
@@ -120,7 +127,7 @@ form label {
 }
 #cart .product-discount .regular-price,
 #cart .cart-item .product-line-info .price {
-    font-size: 16px;
+    font-size: 14px;
     line-height: 18px;
 }
 #cart .cart-item .has-discount .discount {
@@ -348,7 +355,7 @@ form label {
     padding: 10px;
 }
 .block-reassurance-item .h6 {
-    font-size: 15px;
+    font-size: 14px;
     font-weight: normal;
     line-height: 18px;
 }
@@ -419,7 +426,7 @@ body#checkout section.checkout-step .content {
 body#checkout section.checkout-step .step-edit {
     /*text-transform: lowercase;*/
     font-weight: normal;
-    font-size: 16px;
+    font-size: 14px;
 }
 body#checkout section.checkout-step .step-edit .edit {
     font-size: 1.5rem;
@@ -1080,7 +1087,7 @@ body#checkout #gift_message {
 .page-addresses .address .address-body h4 {
     border-bottom: 1px solid #e9e9e9;
     color: #333333;
-    font-size: 18px;
+    font-size: 14px;
     font-weight: 400;
     margin: 0 0 15px;
     padding: 0 0 10px;
