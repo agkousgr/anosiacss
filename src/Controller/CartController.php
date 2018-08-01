@@ -58,7 +58,7 @@ class CartController extends MainController
         }
     }
 
-    public function deleteCartItem(EntityManagerInterface $em, int $id, SessionInterface $session)
+    public function deleteCartItem(EntityManagerInterface $em, int $id)
     {
         try {
             if (!$id) {

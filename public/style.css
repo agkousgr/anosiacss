@@ -24402,7 +24402,7 @@ ul.product_list .availability span.out-of-stock {
     margin-bottom: 40px;
     font-size: 18px;
     background-color: #fef1f1;
-    border-color: #fde2e2;
+    border: 1px #fde2e2 solid;
     color: #f56b6b;
 }
 .flash-success {
@@ -24410,7 +24410,7 @@ ul.product_list .availability span.out-of-stock {
     margin-bottom: 40px;
     font-size: 18px;
     background-color: #ecf3e6;
-    border-color: #dfebd5;
+    border: 1px #dfebd5 solid;
     color: #8fbb6c;
 }
 .general-message {

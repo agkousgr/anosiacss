@@ -56,6 +56,11 @@ class Checkout extends WebUser
     private $agreeTerms;
 
     /**
+     * $var int|null
+     */
+    private $orderNo;
+
+    /**
      * @return int|null
      */
     public function getNextPage(): ?int
@@ -150,4 +155,21 @@ class Checkout extends WebUser
     {
         $this->agreeTerms = $agreeTerms;
     }
+
+    /**
+     * @return mixed
+     */
+    public function getOrderNo()
+    {
+        return $this->orderNo;
+    }
+
+    /**
+     * @param mixed $orderNo
+     */
+    public function setOrderNo($orderNo): void
+    {
+        $this->orderNo = $orderNo;
+    }
+
 }

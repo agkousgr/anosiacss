@@ -19,12 +19,8 @@ class CheckoutController extends MainController
     public function checkout(int $step, Request $request, CheckoutService $checkoutService, EntityManagerInterface $em)
     {
         try {
-            $orderData = array();
             $curStep = ($request->request->get('currentStep')) ?: $step;
-//            if (null !== $this->loggedUser) {
             if ($this->session->has('curOrder') === false) {
-//                $checkoutService->initializeCheckoutEntity();
-//            } else {
                 $checkout = new Checkout();
                 if (null !== $this->loggedUser) {
                     $checkoutService->getUserInfo($checkout);
@@ -33,11 +29,6 @@ class CheckoutController extends MainController
             }else{
                 $checkout = $this->session->get('curOrder');
             }
-//                $address = new Address();
-//                if ($this->session->has('curOrder') === false) {
-//                } else {
-//                    $orderData = $this->session->get('curOrder');
-//                }
             $step1Form = $this->createForm(CheckoutStep1Type::class, $checkout, [
                 'loggedUser' => $this->loggedUser
             ]);
@@ -49,33 +40,42 @@ class CheckoutController extends MainController
             $step4Form = $this->createForm(CheckoutStep4Type::class, $checkout);
             $step4Form->handleRequest($request);
             if ($step1Form->isSubmitted() && $step1Form->isValid()) {
-//                $checkout->setFirstname($step1Form->get('firstname')->getData());
-//                $checkout->setLastname($step1Form->get('lastname')->getData());
-//                $this->session->set('curOrder', $checkout);
                 $curStep = 2;
             } elseif ($step2Form->isSubmitted() && $step2Form->isValid()) {
-//                $checkout->setFirstname($step2Form->get('address')->getData());
-//                $checkout->setFirstname($step2Form->get('zip')->getData());
-//                $checkout->setFirstname($step2Form->get('city')->getData());
-//                $checkout->setFirstname($step2Form->get('district')->getData());
-//                $checkout->setFirstname($step2Form->get('phone01')->getData());
-//                $checkout->setFirstname($step2Form->get('series')->getData());
-//                $checkout->setFirstname($step2Form->get('afm')->getData());
-//                $checkout->setFirstname($step2Form->get('irs')->getData());
-//                $this->session->set('curOrder', $checkout);
-
                 $curStep = 3;
             } elseif ($step3Form->isSubmitted() && $step3Form->isValid()) {
-//                $checkout->setFirstname($step3Form->get('shippingType')->getData());
-//                $checkout->setFirstname($step3Form->get('comments')->getData());
-
                 $curStep = 4;
             }
             $this->session->set('curOrder', $checkout);
 
             if ($step4Form->isSubmitted() && $step4Form->isValid()) {
                 $curStep = 4;
-                $checkoutService->initializeOrder($checkout, $this->cartItems);
+                $orderResponse = $checkoutService->submitOrder($checkout, $this->cartItems);
+                if ($orderResponse) {
+                    $this->addFlash(
+                        'success',
+                        'Η παραγγελία σας ολοκληρώθηκε με επιτυχία. Ένα αντίγραφο έχει αποσταλεί στο email σας ' . $checkout->getEmail() . '. Ευχαριστούμε που μας προτιμήσατε για τις αγορές σας!'
+                    );
+                    $orderCompleted = true;
+                    // CLEAR SESSION
+                }else{
+                    $checkoutService->emptyCart($this->cartItems, $em);
+                    $checkoutService->sendOrderConfirmationEmail($checkout);
+                    $this->addFlash(
+                        'notice',
+                        'Ένα σφάλμα παρουσιάστηκε κατά την διαδικασία της παραγγελίας σας. Παρακαλούμε προσπαθήστε ξανά. Αν το πρόβλημα παραμείνει επικοινωνήστε μαζί μας!'
+                    );
+                    $orderCompleted = false;
+                }
+//                return ($this->render('orders/order_completed.html.twig', [
+//                    'categories' => $this->categories,
+//                    'popular' => $this->popular,
+//                    'featured' => $this->featured,
+//                    'checkout' => $checkout,
+//                    'loggedUser' => $this->loggedUser,
+//                    'cartItems' => $this->cartItems,
+//                    'orderCompleted' => $orderCompleted
+//                ]));
             }
 
             return ($this->render('orders/checkout.html.twig', [
@@ -91,16 +91,6 @@ class CheckoutController extends MainController
                 'step4Form' => $step4Form->createView(),
                 'curStep' => $curStep
             ]));
-//            } else {
-//                throw $this->createNotFoundException('Δεν έχετε πρόσβαση σε αυτή τη σελίδα. Συνδεθείτε και προσπαθήστε ξανά');
-////                return $this->redirectToRoute('404');
-//            }
-//            $registerForm = $this->createForm(UserRegistrationType::class);
-//
-//            $registerForm->handleRequest($request);
-//            if ($registerForm->isSubmitted() && $registerForm->isValid()) {
-//                $newUser = $userAccountService->createUser($registerForm->getData());
-//            }
         } catch (\Exception $e) {
             $this->logger->error(__METHOD__ . ' -> {message}', ['message' => $e->getMessage()]);
             throw $e;

@@ -81,6 +81,16 @@ $('input[name="checkout_step4[paymentType]"]').on('change', function () {
 $(document).ready(function () {
     $('#checkout_step2_series_0').attr('checked', 'checked');
     // $('#checkout_step4_paymentType_0').attr('checked', 'checked');
+    initializePaymentInfos();
+    calculateAntikatovoli();
+    if ($('#checkout_step3_shippingType_1').is(':checked')) {
+        $('[for="checkout_step4_paymentType_4"]').parent('div').addClass('hidden');
+    }
+
+
+})
+
+function initializePaymentInfos() {
     $('.checkout_step3_shippingType_1').html('Για να δεσμευτεί μια παραγγελία έτσι ώστε να είναι δυνατή η παραλαβή της από το Φαρμακείο απαιτεί χρόνο τριών εως πέντε ωρών.\n' +
         'Μόλις η παραγγελία σας είναι διαθέσιμη στο κατάστημα, θα επικοινωνήσουμε μαζί σας τηλεφωνικά για να περάσετε να παραλάβετε.');
     $('#checkout_step4_paymentType').css({'padding-top': '0'});
@@ -91,9 +101,16 @@ $(document).ready(function () {
     $('.checkout_step4_paymentType_3').html('<img src="http://anosia.democloudon.cloud/public/images/paypal.png" alt="Λογότυπο Αποδοχής PayPal"><br><a href="https://www.paypal.com/gr/webapps/mpp/paypal-popup" target="_blank">Τι είναι το PayPal;</a> <br>Πληρώστε με ασφάλεια μέσω PayPal.');
     $('.checkout_step4_paymentType_4').html('Έξοδα αντικαταβολής (1,5€) χρεώνονται μόνο σε παραγγελίες μικρότερες των 39€.\n' +
         'Για παραγγελίες μεγαλύτερες των 39€ δεν χρεώνονται ούτε έξοδα αντικαταβολής, ούτε μεταφορικά.');
-    if ($('#checkout_step3_shippingType_1').is(':checked')) {
-        $('[for="checkout_step4_paymentType_4"]').parent('div').addClass('hidden');
-    }
-})
+}
 
-// function check
+function calculateAntikatovoli() {
+    if ($('#checkout_step4_paymentType_4').is(':checked')) {
+        let shippingCost = parseFloat($('#shipping-cost').data('cost'));
+        $('#cart-subtotal-pay-on-delivery').removeClass('hidden');
+        totalCost = $('#cart-cost').data('cost') + 1.5 + shippingCost;
+        $('#total-cost').data('cost', totalCost.toFixed(2));
+        let totalCostString = totalCost.toFixed(2);
+        let newTotalCostString = totalCostString.replace('.',',');
+        $('#total-cost').html(newTotalCostString);
+    }
+}
