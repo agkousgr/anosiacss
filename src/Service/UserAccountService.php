@@ -450,7 +450,7 @@ EOF;
 //                dump($clientData["name"]);
 //                dump($userData->GetDataRows->GetUsersRow->ClientID);
 //                $this->session->set('anosiaName', $clientData["name"]);
-//                $this->session->set('anosiaClientId', (int)$userData->GetDataRows->GetUsersRow->ClientID);
+                $this->session->set('anosiaClientId', (int)$userData->GetDataRows->GetUsersRow->ClientID);
                 return $username;
             }
         } catch (\SoapFault $sf) {

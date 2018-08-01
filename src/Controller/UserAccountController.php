@@ -302,6 +302,7 @@ class UserAccountController extends MainController
     {
         $this->session->remove('anosiaUser');
         $this->session->remove('anosiaName');
+        $this->session->remove('curOrder');
         return $this->redirectToRoute('index');
     }
 

@@ -54,8 +54,11 @@
             Σύνολο: <span>{{ cartSubTotal|number_format(2, ',', '.') }}€</span>
         </div>
         <div class="row btns">
-            <div class="col-xs-10 col-xs-offset-1">
+            <div class="col-xs-5 col-xs-offset-1">
                 <a href="{{ path('cart_view') }}" class="btn btn-default btn-block">Καλαθι</a>
+            </div>
+            <div class="col-xs-5 col-xs-offset-1">
+                <a href="{{ path('checkout') }}" class="btn btn-default btn-block">Ταμειο</a>
             </div>
         </div>
     {% else %}

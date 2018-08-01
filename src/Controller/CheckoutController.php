@@ -22,8 +22,10 @@ class CheckoutController extends MainController
             $curStep = ($request->request->get('currentStep')) ?: $step;
             if ($this->session->has('curOrder') === false) {
                 $checkout = new Checkout();
+                dump("i'm in");
                 if (null !== $this->loggedUser) {
                     $checkoutService->getUserInfo($checkout);
+                    dump($checkout);
                 }
                 $this->session->set('curOrder', $checkout);
             }else{
@@ -77,7 +79,7 @@ class CheckoutController extends MainController
 //                    'orderCompleted' => $orderCompleted
 //                ]));
             }
-
+            dump($this->session);
             return ($this->render('orders/checkout.html.twig', [
                 'categories' => $this->categories,
                 'popular' => $this->popular,

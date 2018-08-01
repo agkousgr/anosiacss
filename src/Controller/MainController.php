@@ -121,7 +121,6 @@ class MainController extends AbstractController
         $this->totalCartItems = 0;
 
         if ($this->session->has("authID") === false) {
-            dump('go login');
             $authID = $this->softoneLogin->login();
             $this->session->set('authID', $authID);
         }
@@ -133,10 +132,11 @@ class MainController extends AbstractController
         }
         $this->popular = $productService->getCategoryItems(1022, $this->session->get('authID'));
         $this->featured = $productService->getCategoryItems(1008, $this->session->get('authID'));
-        $this->loggedUser = ($session->get("anosiaUser")) ?: null;
-        $this->loggedName = ($session->get("anosiaName")) ?: null;
-        $this->loggedClientId = ($session->get("anosiaClientId")) ?: null;
+        $this->loggedUser = ($this->session->get("anosiaUser")) ?: null;
+        $this->loggedName = ($this->session->get("anosiaName")) ?: null;
+        $this->loggedClientId = ($this->session->get("anosiaClientId")) ?: null;
         $this->cartItems = $this->getCartItems();
+        dump($this->session);
 
 //        $this->totalCartItems = $em->getRepository(Cart::class)->countCartItems($session->getId(), $session->get('anosiaUser'));
     }

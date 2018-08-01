@@ -3,11 +3,10 @@
 namespace App\Service;
 
 use Symfony\Component\HttpFoundation\Session\SessionInterface;
-use SimpleXMLElement;
 
 class SoftoneLogin
 {
-    public function login()
+    public function login(SessionInterface $session)
     {
         $client = new \SoapClient('http://caron.cloudsystems.gr/FOeshopWS/ForeignOffice.FOeshop.API.FOeshopSvc.svc?singleWsdl', ['trace' => true, 'exceptions' => true,]);
 
@@ -29,9 +28,12 @@ class SoftoneLogin
 EOF;
         try {
 //            if ($session->has("authID") === false) {
-                $result = $client->SendMessage(['Message' => $message]);
-                $s1result = simplexml_load_string(str_replace("utf-16", "utf-8", $result->SendMessageResult));
-//                $session->set("authID", (string)$s1result->AuthID);
+            $result = $client->SendMessage(['Message' => $message]);
+            $s1result = simplexml_load_string(str_replace("utf-16", "utf-8", $result->SendMessageResult));
+            $session->remove('curOrder');
+            $session->
+            dump('login', $this->session);
+//            $this->session->set("authID", (string)$s1result->AuthID);
 //            }
             return (string)$s1result->AuthID;
         } catch (\SoapFault $sf) {
