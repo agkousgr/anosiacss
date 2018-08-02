@@ -6,7 +6,17 @@ use Symfony\Component\HttpFoundation\Session\SessionInterface;
 
 class SoftoneLogin
 {
-    public function login(SessionInterface $session)
+    /**
+     * @var SessionInterface
+     */
+    protected $session;
+
+    public function __construct(SessionInterface $session)
+    {
+        $this->session = $session;
+    }
+
+    public function login()
     {
         $client = new \SoapClient('http://caron.cloudsystems.gr/FOeshopWS/ForeignOffice.FOeshop.API.FOeshopSvc.svc?singleWsdl', ['trace' => true, 'exceptions' => true,]);
 
@@ -27,14 +37,8 @@ class SoftoneLogin
 </ClientSingleLoginRequest>
 EOF;
         try {
-//            if ($session->has("authID") === false) {
             $result = $client->SendMessage(['Message' => $message]);
             $s1result = simplexml_load_string(str_replace("utf-16", "utf-8", $result->SendMessageResult));
-            $session->remove('curOrder');
-            $session->
-            dump('login', $this->session);
-//            $this->session->set("authID", (string)$s1result->AuthID);
-//            }
             return (string)$s1result->AuthID;
         } catch (\SoapFault $sf) {
             echo $sf->faultstring;

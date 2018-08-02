@@ -249,6 +249,7 @@ EOF;
         try {
             $result = $this->client->SendMessage(['Message' => $message]);
             $newsletterData = simplexml_load_string(str_replace("utf-16", "utf-8", $result->SendMessageResult));
+            dump($result);
             if ((int)$newsletterData->RowsCount > 0) {
                 if ((string)$newsletterData->GetDataRows->GetNewsletterRow->Allow === 'true') {
                     $checkout->setNewsletter(true);
@@ -261,7 +262,6 @@ EOF;
                 $checkout->setNewsletter(false);
             }
             return;
-//            dump($result);
         } catch (\SoapFault $sf) {
             echo $sf->faultstring;
         }
@@ -389,10 +389,9 @@ EOF;
             dump($message, $result);
             if ((string)$orderResult->IsValid === 'false') {
                 $checkout->setOrderNo($orderNo);
-            } else {
-
+                return true;
             }
-            return;
+            return false;
         } catch (\SoapFault $sf) {
             echo $sf->faultstring;
         }

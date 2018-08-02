@@ -19,18 +19,21 @@ class CheckoutController extends MainController
     public function checkout(int $step, Request $request, CheckoutService $checkoutService, EntityManagerInterface $em)
     {
         try {
+
+            if ($this->totalCartItems === 0) {
+                return $this->redirectToRoute('cart_view');
+            }
             $curStep = ($request->request->get('currentStep')) ?: $step;
             if ($this->session->has('curOrder') === false) {
                 $checkout = new Checkout();
-                dump("i'm in");
                 if (null !== $this->loggedUser) {
                     $checkoutService->getUserInfo($checkout);
-                    dump($checkout);
                 }
                 $this->session->set('curOrder', $checkout);
-            }else{
+            } else {
                 $checkout = $this->session->get('curOrder');
             }
+
             $step1Form = $this->createForm(CheckoutStep1Type::class, $checkout, [
                 'loggedUser' => $this->loggedUser
             ]);
@@ -46,11 +49,18 @@ class CheckoutController extends MainController
             } elseif ($step2Form->isSubmitted() && $step2Form->isValid()) {
                 $curStep = 3;
             } elseif ($step3Form->isSubmitted() && $step3Form->isValid()) {
+                if ($step3Form->get('shippingType')->getData() === '1000') {
+                    $checkout->setShippingCost(2.00);
+                }
                 $curStep = 4;
             }
             $this->session->set('curOrder', $checkout);
-
             if ($step4Form->isSubmitted() && $step4Form->isValid()) {
+                if ($step4Form->get('paymentType')->getData() === '1003') {
+                    $checkout->setAntikatavoliCost(1.50);
+                }else{
+                    $checkout->setAntikatavoliCost(0);
+                }
                 $curStep = 4;
                 $orderResponse = $checkoutService->submitOrder($checkout, $this->cartItems);
                 if ($orderResponse) {
@@ -58,28 +68,28 @@ class CheckoutController extends MainController
                         'success',
                         'Η παραγγελία σας ολοκληρώθηκε με επιτυχία. Ένα αντίγραφο έχει αποσταλεί στο email σας ' . $checkout->getEmail() . '. Ευχαριστούμε που μας προτιμήσατε για τις αγορές σας!'
                     );
-                    $orderCompleted = true;
-                    // CLEAR SESSION
-                }else{
-                    $checkoutService->emptyCart($this->cartItems, $em);
                     $checkoutService->sendOrderConfirmationEmail($checkout);
+                    $checkoutService->emptyCart($this->cartItems, $em);
+                    $orderCompleted = true;
+                    // CLEAR curOrder SESSION
+                    return ($this->render('orders/order_completed.html.twig', [
+                        'categories' => $this->categories,
+                        'popular' => $this->popular,
+                        'featured' => $this->featured,
+                        'checkout' => $checkout,
+                        'loggedUser' => $this->loggedUser,
+                        'totalCartItems' => $this->totalCartItems,
+                        'cartItems' => $this->cartItems,
+                        'orderCompleted' => $orderCompleted
+                    ]));
+                } else {
                     $this->addFlash(
                         'notice',
                         'Ένα σφάλμα παρουσιάστηκε κατά την διαδικασία της παραγγελίας σας. Παρακαλούμε προσπαθήστε ξανά. Αν το πρόβλημα παραμείνει επικοινωνήστε μαζί μας!'
                     );
                     $orderCompleted = false;
                 }
-//                return ($this->render('orders/order_completed.html.twig', [
-//                    'categories' => $this->categories,
-//                    'popular' => $this->popular,
-//                    'featured' => $this->featured,
-//                    'checkout' => $checkout,
-//                    'loggedUser' => $this->loggedUser,
-//                    'cartItems' => $this->cartItems,
-//                    'orderCompleted' => $orderCompleted
-//                ]));
             }
-            dump($this->session);
             return ($this->render('orders/checkout.html.twig', [
                 'categories' => $this->categories,
                 'popular' => $this->popular,

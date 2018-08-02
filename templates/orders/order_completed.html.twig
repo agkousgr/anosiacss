@@ -24,79 +24,108 @@
     </div>
     <div class="section" style="background-image:url({{ asset('images/bg-5.jpg') }});">
         <div class="container">
-            <div class="row">
-                {% for message in app.flashes('notice') %}
-                    <div class="flash-notice">
-                        {{ message }}
-                    </div>
-                {% endfor %}
-                {% for message in app.flashes('success') %}
-                    <div class="flash-success">
-                        {{ message }}
-                    </div>
-                {% endfor %}
-            </div>
+            {% for message in app.flashes('notice') %}
+                <div class="flash-notice">
+                    {{ message }}
+                </div>
+            {% endfor %}
+            {% for message in app.flashes('success') %}
+                <div class="flash-success">
+                    {{ message }}
+                </div>
+            {% endfor %}
             <section id="main">
-                <div class="container">
-                    <div class="columns_inner">
-                        {% if orderCompleted == true %}
-                        <section id="content" class="page-content page-order-confirmation card">
-                            <div class="card-block">
-                                <div class="row">
-                                    <div id="order-items" class="col-md-12">
-                                        <h3 class="card-title h3">Προϊόντα παραγγελίας</h3>
-                                        <div class="order-confirmation-table">
-                                            <div class="order-line row">
-                                                <div class="col-sm-2 col-xs-3">
-                                                    <span class="image">
-                                                        <img src="https://demo.templatetrip.com/Prestashop/PRS06/PRS176_gym/412-home_default/mountain-fox-cushion.jpg">
-                                                    </span>
-                                                </div>
-                                                <div class="col-sm-4 col-xs-9 details">
-                                                    <span>corporis suscipit libor</span>
-                                                </div>
-                                                <div class="col-sm-6 col-xs-12 qty">
-                                                    <div class="row">
-                                                        <div class="col-xs-5 text-sm-right text-xs-left">$18.90</div>
-                                                        <div class="col-xs-2">2</div>
-                                                        <div class="col-xs-5 text-xs-right bold">$37.80</div>
-                                                    </div>
+                <div class="columns_inner">
+                    {% if orderCompleted == true %}
+                    <section id="content" class="page-content page-order-confirmation card">
+                        <div class="card-block">
+                            <div class="row">
+                                <div id="order-items" class="col-md-12">
+                                    <h3 class="card-title h3">Προϊόντα παραγγελίας</h3>
+                                    <div class="order-confirmation-table">
+                                        {% set cartSubTotal = 0 %}
+                                        {% set cartTotal = 0 %}
+                                        {% set cartShippingCost = 0 %}
+                                        {% for pr in cartItems %}
+                                        <div class="order-line row">
+                                            <div class="col-sm-1 col-xs-3">
+                                                <span class="image">
+                                                    <img src="{{ pr.imageUrl }}">
+                                                </span>
+                                            </div>
+                                            <div class="col-sm-7 col-xs-9 details">
+                                                <span>{{ pr.name }}</span>
+                                            </div>
+                                            <div class="col-sm-4 col-xs-12 qty">
+                                                <div class="row">
+                                                    <div class="col-xs-5 text-sm-right text-xs-left">{{ pr.webPrice|number_format(2, ',', '.') }}€</div>
+                                                    <div class="col-xs-2">{{ pr.quantity }}</div>
+                                                    <div class="col-xs-5 text-xs-right bold">{{ (pr.webPrice|number_format(2, '.', ','))*pr.quantity }}€</div>
                                                 </div>
                                             </div>
-                                            <hr>
-                                            <table>
-                                                <tbody><tr>
-                                                    <td>Subtotal</td>
-                                                    <td>$45.36</td>
-                                                </tr>
-                                                <tr>
-                                                    <td>Shipping and handling</td>
-                                                    <td>Free</td>
-                                                </tr>
-                                                <tr class="font-weight-bold">
-                                                    <td><span class="text-uppercase">Total</span> (tax incl.)</td>
-                                                    <td>$45.36</td>
-                                                </tr>
-                                                </tbody>
-                                            </table>
                                         </div>
-                                    </div>
-                                    <div id="order-details" class="col-md-4">
-                                        <h3 class="h3 card-title">Order details:</h3>
-                                        <ul>
-                                            <li>Order reference: QBVCSHUTW</li>
-                                            <li>Payment method: Payments by check</li>
-                                            <li>
-                                                Shipping method: Demo Store<br>
-                                                <em>Pick up in-store</em>
-                                            </li>
-                                        </ul>
+                                        {% set cartSubTotal = cartSubTotal + (pr.webPrice|number_format(2, '.', ','))*pr.quantity %}
+                                        {% endfor %}
+                                        <hr>
+                                        <table>
+                                            <tbody><tr>
+                                                <td>Μερικό σύνολο</td>
+                                                <td>{{ cartSubTotal }}€</td>
+                                            </tr>
+                                            <tr>
+                                                <td>Μεταφορικά</td>
+                                                {% if checkout.shippingCost > 0 %}
+                                                <td>{{ checkout.shippingCost|number_format(2, ',', '.') }}€</td>
+                                                {% else %}
+                                                    <td>Δωρεάν</td>
+                                                {% endif %}
+                                            </tr>
+                                            {% if checkout.antikatavoliCost > 0 %}
+                                            <tr>
+                                                <td>Αντικαταβολή</td>
+                                                <td>{{ checkout.antikatavoliCost|number_format(2, ',', '.') }}€</td>
+                                            </tr>
+                                            {% endif %}
+                                            {% set cartTotal = cartSubTotal + checkout.shippingCost + checkout.antikatavoliCost %}
+                                            <tr class="font-weight-bold">
+                                                <td><span class="text-uppercase">ΣΥΝΟΛΟ</span> (συμπ. ΦΠΑ)</td>
+                                                <td>{{ cartTotal|number_format(2, ',', '.') }}€</td>
+                                            </tr>
+                                            </tbody>
+                                        </table>
                                     </div>
                                 </div>
+                                {% if checkout.shippingType == '1000' %}
+                                    {% set shippintMethod = 'Courier' %}
+                                {% else %}
+                                    {% set shippintMethod = 'Παραλαβή από το φαρμακείο' %}
+                                {% endif %}
+                                {% if checkout.paymentType == '1000' %}
+                                    {% set paymentMethod = 'Πληρωμή στο κατάστημα' %}
+                                {% elseif checkout.paymentType == '1001' %}
+                                    {% set paymentMethod = 'Πιστωτική' %}
+                                {% elseif checkout.paymentType == '1002' %}
+                                    {% set paymentMethod = 'Paypal' %}
+                                {% elseif checkout.paymentType == '1003' %}
+                                    {% set paymentMethod = 'Αντικαταβολή' %}
+                                {% elseif checkout.paymentType == '1004' %}
+                                    {% set paymentMethod = 'Κατάθεση σε τράπεζα' %}
+                                {% endif %}
+                                <div id="order-details" class="col-md-6">
+                                    <h3 class="h3 card-title">Λεπτομέρειες παραγγελίας:</h3>
+                                    <ul>
+                                        <li>Κωδικός παραγγελίας: {{ checkout.orderNo }}</li>
+                                        <li>Τρόπος αποστολής: {{ shippintMethod }}</li>
+                                        <li>
+                                            Τρόπος πληρωμής: {{ paymentMethod }}<br>
+                                            {#<em>Pick up in-store</em>#}
+                                        </li>
+                                    </ul>
+                                </div>
                             </div>
-                        </section>
-                        {% endif %}
-                    </div>
+                        </div>
+                    </section>
+                    {% endif %}
                 </div>
             </section>
         </div>

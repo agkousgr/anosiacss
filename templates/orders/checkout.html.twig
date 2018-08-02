@@ -35,599 +35,605 @@
                 </div>
             {% endfor %}
             <section id="main">
-                <div class="columns_inner">
-                    <section id="content">
-                        <div class="row">
-                            <div class="col-md-8">
-                                {% set step1class = '' %}
-                                {% if curStep == 1 %}
-                                    {% set step1class = '-current js-current-step' %}
-                                    {% set step1AreaHidden = '' %}
-                                {% elseif curStep > 1 %}
-                                    {% set step1class = '-complete' %}
-                                {% endif %}
-                                {% if loggedUser is empty %}
-                                    {#<ul class="nav nav-inline my-2" role="tablist">#}
-                                    {#<li class="nav-item">#}
-                                    <section class="checkout-step">
-                                        <div>
-                                            {#<a class="nav-link active" data-toggle="tab"#}
-                                            {#href="#checkout-guest-form" role="tab"#}
-                                            {#aria-controls="checkout-guest-form"#}
-                                            {#aria-selected="true">#}
-                                            Ολοκλήρωση ως επισκέπτης
-                                            {#</a>#}
-                                            {#</li>#}
-                                            {#<li class="nav-item">#}
-                                            <span href="nav-separator"> | </span>
-                                            {#</li>#}
-                                            {#<li class="nav-item">#}
-                                            <a class="nav-link toggle-sidebar"
-                                               data-link-action="show-login-form"
-                                               data-toggle="tab"
-                                               href="" role="tab"
-                                               aria-controls="checkout-login-form">
-                                                Είσοδος
+                {% if cartItems|length > 0 %}
+                    <div class="columns_inner">
+                        <section id="content">
+                            <div class="row">
+                                <div class="col-md-8">
+                                    {% set step1class = '' %}
+                                    {% if curStep == 1 %}
+                                        {% set step1class = '-current js-current-step' %}
+                                        {% set step1AreaHidden = '' %}
+                                    {% elseif curStep > 1 %}
+                                        {% set step1class = '-complete' %}
+                                    {% endif %}
+                                    {% if loggedUser is empty %}
+                                        {#<ul class="nav nav-inline my-2" role="tablist">#}
+                                        {#<li class="nav-item">#}
+                                        <section class="checkout-step">
+                                            <div>
+                                                {#<a class="nav-link active" data-toggle="tab"#}
+                                                {#href="#checkout-guest-form" role="tab"#}
+                                                {#aria-controls="checkout-guest-form"#}
+                                                {#aria-selected="true">#}
+                                                Ολοκλήρωση ως επισκέπτης
+                                                {#</a>#}
+                                                {#</li>#}
+                                                {#<li class="nav-item">#}
+                                                <span href="nav-separator"> | </span>
+                                                {#</li>#}
+                                                {#<li class="nav-item">#}
+                                                <a class="nav-link toggle-sidebar"
+                                                   data-link-action="show-login-form"
+                                                   data-toggle="tab"
+                                                   href="" role="tab"
+                                                   aria-controls="checkout-login-form">
+                                                    Είσοδος
+                                                </a>
+                                                {#</li>#}
+                                                {#</ul>#}
+                                            </div>
+                                        </section>
+                                    {% endif %}
+                                    <section id="checkout-personal-information-step"
+                                             class="checkout-step {{ step1class }} -reachable">
+                                        <h1 class="step-title h3">
+                                            <i class="material-icons rtl-no-flip done"></i>
+                                            <span class="step-number">1</span>
+                                            Προσωπικά στοιχεία
+                                            <a href="{{ path('checkout', {'step': 1}) }}">
+                                                <span id="1" class="step-edit text-muted">
+                                                    <i class="material-icons edit">mode_edit</i>
+                                                    Επεξεργασία
+                                                </span>
                                             </a>
-                                            {#</li>#}
-                                            {#</ul>#}
-                                        </div>
-                                    </section>
-                                {% endif %}
-                                <section id="checkout-personal-information-step"
-                                         class="checkout-step {{ step1class }} -reachable">
-                                    <h1 class="step-title h3">
-                                        <i class="material-icons rtl-no-flip done"></i>
-                                        <span class="step-number">1</span>
-                                        Προσωπικά στοιχεία
-                                        <a href="{{ path('checkout', {'step': 1}) }}">
-                                            <span id="1" class="step-edit text-muted">
-                                                <i class="material-icons edit">mode_edit</i>
-                                                Επεξεργασία
-                                            </span>
-                                        </a>
-                                    </h1>
-                                    <div class="content">
-                                        <div class="tab-content">
-                                            <div class="tab-pane active"
-                                                 id="checkout-guest-form" role="tabpanel">
-                                                {{ form_start(step1Form) }}
-                                                <section>
-                                                    <div class="form-group row ">
-                                                        {{ form_label(step1Form.firstname, 'Όνομα', {'label_attr': {'class': 'col-md-3 form-control-label required'}}) }}
-                                                        <div class="col-md-6">
-                                                            {{ form_widget(step1Form.firstname, {'attr': {'class': 'form-control'}}) }}
-                                                        </div>
-                                                        <div class="col-md-3 form-control-comment">
-                                                        </div>
-                                                    </div>
-
-                                                    <div class="form-group row ">
-                                                        {{ form_label(step1Form.lastname, 'Επώνυμο', {'label_attr': {'class': 'col-md-3 form-control-label required'}}) }}
-                                                        <div class="col-md-6">
-                                                            {{ form_widget(step1Form.lastname, {'attr': {'class': 'form-control'}}) }}
-                                                        </div>
-                                                        <div class="col-md-3 form-control-comment">
-                                                        </div>
-                                                    </div>
-                                                    <div class="form-group row ">
-                                                        {{ form_label(step1Form.email, 'E-mail', {'label_attr': {'class': 'col-md-3 form-control-label required'}}) }}
-                                                        <div class="col-md-6">
-                                                            {{ form_widget(step1Form.email, {'attr': {'class': 'form-control'}}) }}
-                                                        </div>
-                                                        <div class="col-md-3 form-control-comment">
-                                                        </div>
-                                                    </div>
-
-                                                    <div class="clearfix"></div>
-                                                    <div class="form-group row ">
-                                                        <div class="col-md-12">
-                                                            {{ form_widget(step1Form.newsletter) }}
-                                                            {{ form_label(step1Form.newsletter, 'Εγγραφή στο newsletter. Μπορείτε να διαγραφείτε οποιαδήποτε στιγμή επιθυμείτε.') }}
-                                                        </div>
-                                                    </div>
-
-                                                    {#<div class="form-group row ">#}
-                                                    {#<label class="col-md-3 form-control-label">#}
-                                                    {#</label>#}
-                                                    {#<div class="col-md-6">#}
-                                                    {#<span class="custom-checkbox">#}
-                                                    {#{{ form_widget(registerForm.special_offers) }}#}
-                                                    {#<span><i class="material-icons rtl-no-flip checkbox-checked"></i></span>#}
-                                                    {#<label>Να λαμβάνω προσφορές από το κατάστημα</label>#}
-                                                    {#</span>#}
-                                                    {#</div>#}
-                                                    {#<div class="col-md-3 form-control-comment">#}
-                                                    {#</div>#}
-                                                    {#</div>#}
-
-                                                    {#<div class="form-group row ">#}
-                                                    {#<label class="col-md-3 form-control-label">#}
-                                                    {#</label>#}
-                                                    {#<div class="col-md-6">#}
-                                                    {#<span class="custom-checkbox">#}
-                                                    {#{{ form_widget(registerForm.newsletter) }}#}
-                                                    {#<span><i class="material-icons rtl-no-flip checkbox-checked"></i></span>#}
-                                                    {#<label>Εγγραφή στο newsletter<br>#}
-                                                    {#<em>Μπορείτε να διαγραφείτε οποιαδήποτε στιγμή#}
-                                                    {#επιθυμείτε.</em>#}
-                                                    {#</label>#}
-                                                    {#</span>#}
-                                                    {#</div>#}
-
-                                                    {#<div class="col-md-3 form-control-comment">#}
-                                                    {#</div>#}
-                                                    {#</div>#}
-                                                </section>
-                                                <footer class="form-footer clearfix">
-                                                    <input name="submitAddress" value="1"
-                                                           type="hidden">
-                                                    <button id="confirm-addresses" type="submit"
-                                                            class="continue btn btn-primary float-xs-right"
-                                                            name="confirm-addresses" value="1">
-                                                        Επόμενο
-                                                    </button>
-                                                </footer>
-                                                {{ form_end(step1Form) }}
-                                            </div>
-                                            <div class="tab-pane " id="checkout-login-form"
-                                                 role="tabpanel"
-                                                 aria-hidden="true">
-
-
-                                                <form id="login-form"
-                                                      action="https://demo.templatetrip.com/Prestashop/PRS06/PRS176_gym/en/order"
-                                                      method="post">
+                                        </h1>
+                                        <div class="content">
+                                            <div class="tab-content">
+                                                <div class="tab-pane active"
+                                                     id="checkout-guest-form" role="tabpanel">
+                                                    {{ form_start(step1Form) }}
                                                     <section>
-                                                        <input name="back" value=""
-                                                               type="hidden">
                                                         <div class="form-group row ">
-                                                            <label class="col-md-3 form-control-label required">
-                                                                Email
-                                                            </label>
+                                                            {{ form_label(step1Form.firstname, 'Όνομα', {'label_attr': {'class': 'col-md-3 form-control-label required'}}) }}
                                                             <div class="col-md-6">
-                                                                <input class="form-control"
-                                                                       name="email" value=""
-                                                                       required="" type="email">
+                                                                {{ form_widget(step1Form.firstname, {'attr': {'class': 'form-control'}}) }}
                                                             </div>
                                                             <div class="col-md-3 form-control-comment">
                                                             </div>
                                                         </div>
+
                                                         <div class="form-group row ">
-                                                            <label class="col-md-3 form-control-label required">
-                                                                Password
-                                                            </label>
+                                                            {{ form_label(step1Form.lastname, 'Επώνυμο', {'label_attr': {'class': 'col-md-3 form-control-label required'}}) }}
                                                             <div class="col-md-6">
-                                                                <div class="input-group js-parent-focus">
-                                                                    <input class="form-control js-child-focus js-visible-password"
-                                                                           name="password"
-                                                                           value=""
-                                                                           pattern=".{5,}"
-                                                                           required=""
-                                                                           type="password">
-                                                                    <span class="input-group-btn">
-                                                                        <button class="btn"
-                                                                                type="button"
-                                                                                data-action="show-password"
-                                                                                data-text-show="Show"
-                                                                                data-text-hide="Hide">
-                                                                            Show
-                                                                        </button>
-                                                                    </span>
-                                                                </div>
+                                                                {{ form_widget(step1Form.lastname, {'attr': {'class': 'form-control'}}) }}
                                                             </div>
                                                             <div class="col-md-3 form-control-comment">
                                                             </div>
                                                         </div>
-                                                        <div class="forgot-password">
-                                                            <a href="https://demo.templatetrip.com/Prestashop/PRS06/PRS176_gym/en/password-recovery"
-                                                               rel="nofollow">
-                                                                Forgot your password?
-                                                            </a>
-                                                        </div>
-                                                    </section>
-                                                    <footer class="form-footer text-sm-center clearfix">
-                                                        <input name="submitLogin" value="1"
-                                                               type="hidden">
-                                                        <button class="continue btn btn-primary float-xs-right"
-                                                                name="continue"
-                                                                data-link-action="sign-in"
-                                                                type="submit" value="1">
-                                                            Continue
-                                                        </button>
-                                                    </footer>
-                                                </form>
-                                            </div>
-                                        </div>
-                                    </div>
-                                </section>
-
-
-                                {% set step2class = '' %}
-                                {% if curStep == 2 %}
-                                    {% set step2class = '-current js-current-step' %}
-                                {% elseif curStep > 2 %}
-                                    {% set step2class = '-complete' %}
-                                {% endif %}
-                                <section id="checkout-addresses-step"
-                                         class="checkout-step {{ step2class }} -reachable">
-                                    <h1 class="step-title h3">
-                                        <i class="material-icons rtl-no-flip done"></i>
-                                        <span class="step-number">2</span>
-                                        Διευθύνσεις
-                                        <a href="{{ path('checkout', {'step': 2}) }}">
-                                            <span id="1" class="step-edit text-muted">
-                                                <i class="material-icons edit">mode_edit</i>
-                                                Επεξεργασία
-                                            </span>
-                                        </a>
-                                    </h1>
-
-                                    <div class="content">
-                                        <div class="js-address-form">
-                                            {{ form_start(step2Form) }}
-
-                                            {#<p>#}
-                                            {#Η επιλεγμένη διεύθυνση θα χρησιμοποιηθεί και σαν διεύθυνση αποστολής. Αν θέλετε η παραγγελία σας να παραδοθεί σε ά#}
-                                            {#The selected address will be used both as your personal address#}
-                                            {#(for invoice) and as your delivery address.#}
-                                            {#</p>#}
-
-                                            <div id="delivery-address">
-                                                <div class="js-address-form">
-                                                    <section class="form-fields">
                                                         <div class="form-group row ">
-                                                            {{ form_label(step2Form.address, 'Διεύθυνση', {'label_attr': {'class': 'col-md-3 form-control-label required'}}) }}
+                                                            {{ form_label(step1Form.email, 'E-mail', {'label_attr': {'class': 'col-md-3 form-control-label required'}}) }}
                                                             <div class="col-md-6">
-                                                                {{ form_widget(step2Form.address, {'attr': {'class': 'form-control'}}) }}
+                                                                {{ form_widget(step1Form.email, {'attr': {'class': 'form-control'}}) }}
                                                             </div>
                                                             <div class="col-md-3 form-control-comment">
                                                             </div>
                                                         </div>
 
-                                                        <div class="form-group row ">
-                                                            {{ form_label(step2Form.zip, 'Τ.Κ.', {'label_attr': {'class': 'col-md-3 form-control-label required'}}) }}
-                                                            <div class="col-md-6">
-                                                                {{ form_widget(step2Form.zip, {'attr': {'class': 'form-control'}}) }}
-                                                            </div>
-                                                            <div class="col-md-3 form-control-comment">
-                                                            </div>
-                                                        </div>
-
-                                                        <div class="form-group row ">
-                                                            {{ form_label(step2Form.city, 'Πόλη', {'label_attr': {'class': 'col-md-3 form-control-label required'}}) }}
-                                                            <div class="col-md-6">
-                                                                {{ form_widget(step2Form.city, {'attr': {'class': 'form-control'}}) }}
-                                                            </div>
-                                                            <div class="col-md-3 form-control-comment">
-                                                            </div>
-                                                        </div>
-
-                                                        <div class="form-group row ">
-                                                            {{ form_label(step2Form.district, 'Περιοχή', {'label_attr': {'class': 'col-md-3 form-control-label required'}}) }}
-                                                            <div class="col-md-6">
-                                                                {{ form_widget(step2Form.district, {'attr': {'class': 'form-control'}}) }}
-                                                            </div>
-                                                            <div class="col-md-3 form-control-comment">
-                                                            </div>
-                                                        </div>
-
-                                                        <div class="form-group row ">
-                                                            {{ form_label(step2Form.phone01, 'Τηλέφωνο', {'label_attr': {'class': 'col-md-3 form-control-label required'}}) }}
-                                                            <div class="col-md-6 ">
-                                                                {{ form_widget(step2Form.phone01, {'attr': {'class': 'form-control'}}) }}
-                                                            </div>
-                                                            <div class="col-md-3 form-control-comment">
-                                                            </div>
-                                                        </div>
-                                                        <div id="invoice-fields" class="hidden">
-                                                            <div class="form-group row ">
-                                                                {{ form_label(step2Form.afm, 'ΑΦΜ', {'label_attr': {'class': 'col-md-3 form-control-label required'}}) }}
-                                                                <div class="col-md-6 ">
-                                                                    {{ form_widget(step2Form.afm, {'attr': {'class': 'form-control'}}) }}
-                                                                </div>
-                                                                <div class="col-md-3 form-control-comment">
-                                                                </div>
-                                                            </div>
-                                                            <div class="form-group row ">
-                                                                {{ form_label(step2Form.irs, 'ΔΟΥ', {'label_attr': {'class': 'col-md-3 form-control-label required'}}) }}
-                                                                <div class="col-md-6 ">
-                                                                    {{ form_widget(step2Form.irs, {'attr': {'class': 'form-control'}}) }}
-                                                                </div>
-                                                                <div class="col-md-3 form-control-comment">
-                                                                </div>
-                                                            </div>
-                                                            <div class="form-group row">
-                                                                <div class="col-md-9 col-md-offset-3">
-                                                                    <input name="use_same_address"
-                                                                           value="1"
-                                                                           checked=""
-                                                                           type="checkbox">
-                                                                    <label>Ίδια διεύθυνση για το
-                                                                        τιμολόγιο</label>
-                                                                </div>
-                                                            </div>
-                                                        </div>
-                                                        <div class="form-group row ">
-                                                            {{ form_label(step2Form.series, 'Παραστατικό', {'label_attr': {'class': 'col-md-3 form-control-label required'}}) }}
-                                                            <div class="col-md-6">
-                                                                {{ form_widget(step2Form.series, {'attr': {'class': 'form-control no-border'}}) }}
-                                                            </div>
-                                                            <div class="col-md-3 form-control-comment">
-                                                            </div>
-                                                        </div>
-                                                    </section>
-
-                                                    <footer class="form-footer clearfix">
-                                                        <input name="submitAddress" value="1"
-                                                               type="hidden">
-                                                        <button id="confirm-addresses"
-                                                                type="submit"
-                                                                class="continue btn btn-primary float-xs-right"
-                                                                name="confirm-addresses"
-                                                                value="1">
-                                                            Επόμενο
-                                                        </button>
-                                                    </footer>
-                                                </div>
-                                            </div>
-                                            {{ form_end(step2Form) }}
-                                        </div>
-                                    </div>
-                                </section>
-
-                                {% set step3class = '' %}
-                                {% if curStep == 3 %}
-                                    {% set step3class = '-current js-current-step' %}
-                                {% elseif curStep > 3 %}
-                                    {% set step3class = '-complete' %}
-                                {% endif %}
-                                {% form_theme step3Form 'form_template/bootstrap_3_step3_checkout.html.twig' %}
-                                <section id="checkout-shipping-step"
-                                         class="checkout-step {{ step3class }} -reachable">
-                                    <h1 class="step-title h3">
-                                        <i class="material-icons rtl-no-flip done"></i>
-                                        <span class="step-number">3</span>
-                                        Τρόπος αποστολής
-                                        <a href="{{ path('checkout', {'step': 3}) }}">
-                                            <span id="1" class="step-edit text-muted">
-                                                <i class="material-icons edit">mode_edit</i>
-                                                Επεξεργασία
-                                            </span>
-                                        </a>
-                                    </h1>
-
-                                    <div class="content">
-                                        <div class="js-address-form">
-                                            {{ form_start(step3Form) }}
-                                            <div id="delivery-address">
-                                                <div class="js-address-form">
-                                                    <section class="form-fields">
-                                                        <div class="form-group row ">
-                                                            {{ form_label(step3Form.shippingType, 'Τρόπος Αποστολής', {'label_attr': {'class': 'col-md-3 form-control-label required'}}) }}
-                                                            <div class="col-md-9">
-                                                                {{ form_widget(step3Form.shippingType, {'attr': {'class': 'form-control no-border'}}) }}
-                                                            </div>
-                                                            {#<div class="col-md-3 form-control-comment">#}
-                                                            {#</div>#}
-                                                        </div>
-                                                        <div class="form-group row ">
-                                                            {{ form_label(step3Form.comments, 'Παρατηρήσεις', {'label_attr': {'class': 'col-md-3 form-control-label required'}}) }}
-                                                            <div class="col-md-9">
-                                                                {{ form_widget(step3Form.comments, {'attr': {'class': 'form-control'}}) }}
-                                                            </div>
-                                                        </div>
-                                                    </section>
-
-                                                    <footer class="form-footer clearfix">
-                                                        <input name="submitAddress" value="1"
-                                                               type="hidden">
-                                                        <button id="confirm-addresses"
-                                                                type="submit"
-                                                                class="continue btn btn-primary float-xs-right"
-                                                                name="confirm-addresses"
-                                                                value="1">
-                                                            Επόμενο
-                                                        </button>
-                                                    </footer>
-                                                </div>
-                                            </div>
-                                            {{ form_end(step3Form) }}
-                                        </div>
-                                    </div>
-                                </section>
-
-                                {% set step4class = '' %}
-                                {% if curStep == 4 %}
-                                    {% set step4class = '-current js-current-step' %}
-                                {% endif %}
-                                {% form_theme step4Form 'form_template/bootstrap_3_layout.html.twig' %}
-                                <section class="checkout-step -reachable {{ step4class }}"
-                                         id="checkout-payment-step">
-                                    <h1 class="step-title h3">
-                                        <span class="step-number">4</span> Τρόπος Πληρωμής
-                                    </h1>
-                                    <div class="content">
-                                        <div class="payment-options ">
-                                            {{ form_start(step4Form) }}
-                                            <div id="delivery-address">
-                                                <div class="js-address-form">
-                                                    <section class="form-fields">
-                                                        <div class="form-group row ">
-                                                            {{ form_label(step4Form.paymentType, 'Τρόπος Πληρωμής', {'label_attr': {'class': 'col-md-3 form-control-label required'}}) }}
-                                                            <div class="col-md-9">
-                                                                {{ form_widget(step4Form.paymentType, {'attr': {'class': 'form-control no-border'}}) }}
-                                                            </div>
-                                                        </div>
                                                         <div class="clearfix"></div>
                                                         <div class="form-group row ">
-                                                            {{ form_label(step4Form.agreeTerms, 'Έχω διαβάσει και αποδέχομαι ανεπιφύλακτα τους Όρους Χρήσης') }}
                                                             <div class="col-md-12">
-                                                                {{ form_widget(step4Form.agreeTerms) }}
+                                                                {{ form_widget(step1Form.newsletter) }}
+                                                                {{ form_label(step1Form.newsletter, 'Εγγραφή στο newsletter. Μπορείτε να διαγραφείτε οποιαδήποτε στιγμή επιθυμείτε.') }}
                                                             </div>
                                                         </div>
 
-                                                    </section>
+                                                        {#<div class="form-group row ">#}
+                                                        {#<label class="col-md-3 form-control-label">#}
+                                                        {#</label>#}
+                                                        {#<div class="col-md-6">#}
+                                                        {#<span class="custom-checkbox">#}
+                                                        {#{{ form_widget(registerForm.special_offers) }}#}
+                                                        {#<span><i class="material-icons rtl-no-flip checkbox-checked"></i></span>#}
+                                                        {#<label>Να λαμβάνω προσφορές από το κατάστημα</label>#}
+                                                        {#</span>#}
+                                                        {#</div>#}
+                                                        {#<div class="col-md-3 form-control-comment">#}
+                                                        {#</div>#}
+                                                        {#</div>#}
 
+                                                        {#<div class="form-group row ">#}
+                                                        {#<label class="col-md-3 form-control-label">#}
+                                                        {#</label>#}
+                                                        {#<div class="col-md-6">#}
+                                                        {#<span class="custom-checkbox">#}
+                                                        {#{{ form_widget(registerForm.newsletter) }}#}
+                                                        {#<span><i class="material-icons rtl-no-flip checkbox-checked"></i></span>#}
+                                                        {#<label>Εγγραφή στο newsletter<br>#}
+                                                        {#<em>Μπορείτε να διαγραφείτε οποιαδήποτε στιγμή#}
+                                                        {#επιθυμείτε.</em>#}
+                                                        {#</label>#}
+                                                        {#</span>#}
+                                                        {#</div>#}
+
+                                                        {#<div class="col-md-3 form-control-comment">#}
+                                                        {#</div>#}
+                                                        {#</div>#}
+                                                    </section>
                                                     <footer class="form-footer clearfix">
                                                         <input name="submitAddress" value="1"
                                                                type="hidden">
-                                                        <button id="confirm-addresses"
-                                                                type="submit"
+                                                        <button id="confirm-addresses" type="submit"
                                                                 class="continue btn btn-primary float-xs-right"
-                                                                name="confirm-addresses"
-                                                                value="1">
-                                                            Ολοκλήρωση Παραγγελίας
+                                                                name="confirm-addresses" value="1">
+                                                            Επόμενο
                                                         </button>
                                                     </footer>
+                                                    {{ form_end(step1Form) }}
                                                 </div>
-                                            </div>
-                                            {{ form_end(step4Form) }}
-                                        </div>
+                                                <div class="tab-pane " id="checkout-login-form"
+                                                     role="tabpanel"
+                                                     aria-hidden="true">
 
-                                        <div class="modal fade" id="modal">
-                                            <div class="modal-dialog" role="document">
-                                                <div class="modal-content">
-                                                    <button type="button" class="close"
-                                                            data-dismiss="modal"
-                                                            aria-label="Close">
-                                                        <span aria-hidden="true">&times;</span>
-                                                    </button>
-                                                    <div class="js-modal-content"></div>
-                                                </div>
-                                            </div>
-                                        </div>
-                                    </div>
-                                </section>
-                            </div>
-                            {% set cartSubTotal = 0 %}
-                            {% set cartTotal = 0 %}
-                            {% set cartShippingCost = 0 %}
-                            {% for pr in cartItems %}
-                                {% set cartSubTotal = cartSubTotal + (pr.webPrice|number_format(2, '.', ','))*pr.quantity %}
-                            {% endfor %}
-                            <div class="col-md-4">
-                                <section id="js-checkout-summary" class="card js-cart">
-                                    <div class="card-block">
 
-                                        <div class="cart-summary-products">
-                                            <p>{{ totalCartItems }}
-                                                {% if totalCartItems == 1 %}
-                                                    προϊόν
-                                                {% else %}
-                                                    προϊόντα
-                                                {% endif %}</p>
-                                            <p>
-                                                <a href="#" data-toggle="collapse"
-                                                   data-target="#cart-summary-product-list">
-                                                    Λεπτομέρειες καλαθιού
-                                                </a>
-                                            </p>
-                                            <div class="collapse"
-                                                 id="cart-summary-product-list">
-                                                <ul class="media-list">
-                                                    {% set cartSubTotal = 0 %}
-                                                    {% set cartTotal = 0 %}
-                                                    {% set cartShippingCost = 2.00 %}
-                                                    {% for pr in cartItems %}
-                                                        <li class="media">
-                                                            <div class="media-left">
-                                                                <a href="{{ path('product_view', {'id':pr.id}) }}"
-                                                                   title="{{ pr.name }}">
-                                                                    <img class="media-object"
-                                                                         src="{{ pr.imageUrl }}"
-                                                                         alt="{{ pr.name }}">
+                                                    <form id="login-form"
+                                                          action="https://demo.templatetrip.com/Prestashop/PRS06/PRS176_gym/en/order"
+                                                          method="post">
+                                                        <section>
+                                                            <input name="back" value=""
+                                                                   type="hidden">
+                                                            <div class="form-group row ">
+                                                                <label class="col-md-3 form-control-label required">
+                                                                    Email
+                                                                </label>
+                                                                <div class="col-md-6">
+                                                                    <input class="form-control"
+                                                                           name="email" value=""
+                                                                           required="" type="email">
+                                                                </div>
+                                                                <div class="col-md-3 form-control-comment">
+                                                                </div>
+                                                            </div>
+                                                            <div class="form-group row ">
+                                                                <label class="col-md-3 form-control-label required">
+                                                                    Password
+                                                                </label>
+                                                                <div class="col-md-6">
+                                                                    <div class="input-group js-parent-focus">
+                                                                        <input class="form-control js-child-focus js-visible-password"
+                                                                               name="password"
+                                                                               value=""
+                                                                               pattern=".{5,}"
+                                                                               required=""
+                                                                               type="password">
+                                                                        <span class="input-group-btn">
+                                                                            <button class="btn"
+                                                                                    type="button"
+                                                                                    data-action="show-password"
+                                                                                    data-text-show="Show"
+                                                                                    data-text-hide="Hide">
+                                                                                Show
+                                                                            </button>
+                                                                        </span>
+                                                                    </div>
+                                                                </div>
+                                                                <div class="col-md-3 form-control-comment">
+                                                                </div>
+                                                            </div>
+                                                            <div class="forgot-password">
+                                                                <a href="https://demo.templatetrip.com/Prestashop/PRS06/PRS176_gym/en/password-recovery"
+                                                                   rel="nofollow">
+                                                                    Forgot your password?
                                                                 </a>
                                                             </div>
-                                                            <div class="media-body">
-                                                                <span class="product-name">{{ pr.name }}</span>
-                                                                <span class="product-price float-xs-right pull-right">{{ ((pr.webPrice|number_format(2, '.', ','))*pr.quantity)|number_format(2, ',', '.') }}
-                                                                    €</span>
-                                                                <span style="padding-right: 10px;"
-                                                                      class="product-quantity pull-right">x{{ pr.quantity }}</span>
-                                                            </div>
-                                                        </li>
-                                                        {% set cartSubTotal = cartSubTotal + (pr.webPrice|number_format(2, '.', ','))*pr.quantity %}
-                                                    {% endfor %}
-                                                </ul>
+                                                        </section>
+                                                        <footer class="form-footer text-sm-center clearfix">
+                                                            <input name="submitLogin" value="1"
+                                                                   type="hidden">
+                                                            <button class="continue btn btn-primary float-xs-right"
+                                                                    name="continue"
+                                                                    data-link-action="sign-in"
+                                                                    type="submit" value="1">
+                                                                Continue
+                                                            </button>
+                                                        </footer>
+                                                    </form>
+                                                </div>
                                             </div>
                                         </div>
+                                    </section>
 
-                                        <div class="cart-summary-line cart-summary-subtotals"
-                                             id="cart-subtotal-products">
-                                            <span class="label">Μερικό σύνολο</span>
-                                            <span class="value">€</span>
-                                            <span id="cart-cost" data-cost="{{ cartSubTotal }}"
-                                                  class="value">{{ cartSubTotal|number_format(2, ',', '.') }}</span>
-                                        </div>
-                                        <div class="cart-summary-line cart-summary-subtotals"
-                                             id="cart-subtotal-shipping">
-                                            <span class="label">Μεταφορικά</span>
-                                            <span class="value">€</span>
-                                            <span id="shipping-cost" data-cost="2.00"
-                                                  class="value">2,00</span>
-                                        </div>
-                                        <div class="cart-summary-line cart-summary-subtotals hidden"
-                                             id="cart-subtotal-pay-on-delivery">
-                                            <span class="label">Αντικαταβολή</span>
-                                            <span class="value">€</span>
-                                            <span id="pay-on-delivery-cost" data-cost="1.50"
-                                                  class="value">1,50</span>
-                                        </div>
-                                    </div>
-                                    <hr class="separator">
-                                    {% set cartTotal = cartSubTotal + cartShippingCost %}
-                                    <div class="card-block cart-summary-totals">
-                                        <div class="cart-summary-line cart-total">
-                                            <span class="label">Σύνολο (με ΦΠΑ)</span>
-                                            <span class="value">€</span>
-                                            <span id="total-cost" data-cost="{{ cartTotal }}"
-                                                  class="value">{{ cartTotal|number_format(2, ',', '.') }}
-                                            </span>
-                                        </div>
-                                        <div class="cart-summary-line">
-                                            <span class="label sub"></span>
-                                            <span class="value sub"></span>
-                                        </div>
-                                    </div>
-                                </section>
 
-                                {#<div id="block-reassurance">#}
-                                {#<ul>#}
-                                {#<li>#}
-                                {#<div class="block-reassurance-item">#}
-                                {#<img src="https://demo.templatetrip.com/Prestashop/PRS06/PRS176_gym/modules/blockreassurance/img/ic_verified_user_black_36dp_1x.png"#}
-                                {#alt="Security policy (edit with Customer reassurance module)">#}
-                                {#<span class="h6">Security policy (edit with#}
-                                {#Customer reassurance#}
-                                {#module)</span>#}
-                                {#</div>#}
-                                {#</li>#}
-                                {#<li>#}
-                                {#<div class="block-reassurance-item">#}
-                                {#<img src="https://demo.templatetrip.com/Prestashop/PRS06/PRS176_gym/modules/blockreassurance/img/ic_local_shipping_black_36dp_1x.png"#}
-                                {#alt="Delivery policy (edit with Customer reassurance module)">#}
-                                {#<span class="h6">Delivery policy (edit with#}
-                                {#Customer reassurance#}
-                                {#module)</span>#}
-                                {#</div>#}
-                                {#</li>#}
-                                {#<li>#}
-                                {#<div class="block-reassurance-item">#}
-                                {#<img src="https://demo.templatetrip.com/Prestashop/PRS06/PRS176_gym/modules/blockreassurance/img/ic_swap_horiz_black_36dp_1x.png"#}
-                                {#alt="Return policy (edit with Customer reassurance module)">#}
-                                {#<span class="h6">Return policy (edit with#}
-                                {#Customer reassurance#}
-                                {#module)</span>#}
-                                {#</div>#}
-                                {#</li>#}
-                                {#</ul>#}
-                                {#</div>#}
+                                    {% set step2class = '' %}
+                                    {% if curStep == 2 %}
+                                        {% set step2class = '-current js-current-step' %}
+                                    {% elseif curStep > 2 %}
+                                        {% set step2class = '-complete' %}
+                                    {% endif %}
+                                    <section id="checkout-addresses-step"
+                                             class="checkout-step {{ step2class }} -reachable">
+                                        <h1 class="step-title h3">
+                                            <i class="material-icons rtl-no-flip done"></i>
+                                            <span class="step-number">2</span>
+                                            Διευθύνσεις
+                                            <a href="{{ path('checkout', {'step': 2}) }}">
+                                                <span id="1" class="step-edit text-muted">
+                                                    <i class="material-icons edit">mode_edit</i>
+                                                    Επεξεργασία
+                                                </span>
+                                            </a>
+                                        </h1>
 
+                                        <div class="content">
+                                            <div class="js-address-form">
+                                                {{ form_start(step2Form) }}
+
+                                                {#<p>#}
+                                                {#Η επιλεγμένη διεύθυνση θα χρησιμοποιηθεί και σαν διεύθυνση αποστολής. Αν θέλετε η παραγγελία σας να παραδοθεί σε ά#}
+                                                {#The selected address will be used both as your personal address#}
+                                                {#(for invoice) and as your delivery address.#}
+                                                {#</p>#}
+
+                                                <div id="delivery-address">
+                                                    <div class="js-address-form">
+                                                        <section class="form-fields">
+                                                            <div class="form-group row ">
+                                                                {{ form_label(step2Form.address, 'Διεύθυνση', {'label_attr': {'class': 'col-md-3 form-control-label required'}}) }}
+                                                                <div class="col-md-6">
+                                                                    {{ form_widget(step2Form.address, {'attr': {'class': 'form-control'}}) }}
+                                                                </div>
+                                                                <div class="col-md-3 form-control-comment">
+                                                                </div>
+                                                            </div>
+
+                                                            <div class="form-group row ">
+                                                                {{ form_label(step2Form.zip, 'Τ.Κ.', {'label_attr': {'class': 'col-md-3 form-control-label required'}}) }}
+                                                                <div class="col-md-6">
+                                                                    {{ form_widget(step2Form.zip, {'attr': {'class': 'form-control'}}) }}
+                                                                </div>
+                                                                <div class="col-md-3 form-control-comment">
+                                                                </div>
+                                                            </div>
+
+                                                            <div class="form-group row ">
+                                                                {{ form_label(step2Form.city, 'Πόλη', {'label_attr': {'class': 'col-md-3 form-control-label required'}}) }}
+                                                                <div class="col-md-6">
+                                                                    {{ form_widget(step2Form.city, {'attr': {'class': 'form-control'}}) }}
+                                                                </div>
+                                                                <div class="col-md-3 form-control-comment">
+                                                                </div>
+                                                            </div>
+
+                                                            <div class="form-group row ">
+                                                                {{ form_label(step2Form.district, 'Περιοχή', {'label_attr': {'class': 'col-md-3 form-control-label required'}}) }}
+                                                                <div class="col-md-6">
+                                                                    {{ form_widget(step2Form.district, {'attr': {'class': 'form-control'}}) }}
+                                                                </div>
+                                                                <div class="col-md-3 form-control-comment">
+                                                                </div>
+                                                            </div>
+
+                                                            <div class="form-group row ">
+                                                                {{ form_label(step2Form.phone01, 'Τηλέφωνο', {'label_attr': {'class': 'col-md-3 form-control-label required'}}) }}
+                                                                <div class="col-md-6 ">
+                                                                    {{ form_widget(step2Form.phone01, {'attr': {'class': 'form-control'}}) }}
+                                                                </div>
+                                                                <div class="col-md-3 form-control-comment">
+                                                                </div>
+                                                            </div>
+                                                            <div id="invoice-fields" class="hidden">
+                                                                <div class="form-group row ">
+                                                                    {{ form_label(step2Form.afm, 'ΑΦΜ', {'label_attr': {'class': 'col-md-3 form-control-label required'}}) }}
+                                                                    <div class="col-md-6 ">
+                                                                        {{ form_widget(step2Form.afm, {'attr': {'class': 'form-control'}}) }}
+                                                                    </div>
+                                                                    <div class="col-md-3 form-control-comment">
+                                                                    </div>
+                                                                </div>
+                                                                <div class="form-group row ">
+                                                                    {{ form_label(step2Form.irs, 'ΔΟΥ', {'label_attr': {'class': 'col-md-3 form-control-label required'}}) }}
+                                                                    <div class="col-md-6 ">
+                                                                        {{ form_widget(step2Form.irs, {'attr': {'class': 'form-control'}}) }}
+                                                                    </div>
+                                                                    <div class="col-md-3 form-control-comment">
+                                                                    </div>
+                                                                </div>
+                                                                <div class="form-group row">
+                                                                    <div class="col-md-9 col-md-offset-3">
+                                                                        <input name="use_same_address"
+                                                                               value="1"
+                                                                               checked=""
+                                                                               type="checkbox">
+                                                                        <label>Ίδια διεύθυνση για το
+                                                                            τιμολόγιο</label>
+                                                                    </div>
+                                                                </div>
+                                                            </div>
+                                                            <div class="form-group row ">
+                                                                {{ form_label(step2Form.series, 'Παραστατικό', {'label_attr': {'class': 'col-md-3 form-control-label required'}}) }}
+                                                                <div class="col-md-6">
+                                                                    {{ form_widget(step2Form.series, {'attr': {'class': 'form-control no-border'}}) }}
+                                                                </div>
+                                                                <div class="col-md-3 form-control-comment">
+                                                                </div>
+                                                            </div>
+                                                        </section>
+
+                                                        <footer class="form-footer clearfix">
+                                                            <input name="submitAddress" value="1"
+                                                                   type="hidden">
+                                                            <button id="confirm-addresses"
+                                                                    type="submit"
+                                                                    class="continue btn btn-primary float-xs-right"
+                                                                    name="confirm-addresses"
+                                                                    value="1">
+                                                                Επόμενο
+                                                            </button>
+                                                        </footer>
+                                                    </div>
+                                                </div>
+                                                {{ form_end(step2Form) }}
+                                            </div>
+                                        </div>
+                                    </section>
+
+                                    {% set step3class = '' %}
+                                    {% if curStep == 3 %}
+                                        {% set step3class = '-current js-current-step' %}
+                                    {% elseif curStep > 3 %}
+                                        {% set step3class = '-complete' %}
+                                    {% endif %}
+                                    {% form_theme step3Form 'form_template/bootstrap_3_step3_checkout.html.twig' %}
+                                    <section id="checkout-shipping-step"
+                                             class="checkout-step {{ step3class }} -reachable">
+                                        <h1 class="step-title h3">
+                                            <i class="material-icons rtl-no-flip done"></i>
+                                            <span class="step-number">3</span>
+                                            Τρόπος αποστολής
+                                            <a href="{{ path('checkout', {'step': 3}) }}">
+                                                <span id="1" class="step-edit text-muted">
+                                                    <i class="material-icons edit">mode_edit</i>
+                                                    Επεξεργασία
+                                                </span>
+                                            </a>
+                                        </h1>
+
+                                        <div class="content">
+                                            <div class="js-address-form">
+                                                {{ form_start(step3Form) }}
+                                                <div id="delivery-address">
+                                                    <div class="js-address-form">
+                                                        <section class="form-fields">
+                                                            <div class="form-group row ">
+                                                                {{ form_label(step3Form.shippingType, 'Τρόπος Αποστολής', {'label_attr': {'class': 'col-md-3 form-control-label required'}}) }}
+                                                                <div class="col-md-9">
+                                                                    {{ form_widget(step3Form.shippingType, {'attr': {'class': 'form-control no-border'}}) }}
+                                                                </div>
+                                                                {#<div class="col-md-3 form-control-comment">#}
+                                                                {#</div>#}
+                                                            </div>
+                                                            <div class="form-group row ">
+                                                                {{ form_label(step3Form.comments, 'Παρατηρήσεις', {'label_attr': {'class': 'col-md-3 form-control-label required'}}) }}
+                                                                <div class="col-md-9">
+                                                                    {{ form_widget(step3Form.comments, {'attr': {'class': 'form-control'}}) }}
+                                                                </div>
+                                                            </div>
+                                                        </section>
+
+                                                        <footer class="form-footer clearfix">
+                                                            <input name="submitAddress" value="1"
+                                                                   type="hidden">
+                                                            <button id="confirm-addresses"
+                                                                    type="submit"
+                                                                    class="continue btn btn-primary float-xs-right"
+                                                                    name="confirm-addresses"
+                                                                    value="1">
+                                                                Επόμενο
+                                                            </button>
+                                                        </footer>
+                                                    </div>
+                                                </div>
+                                                {{ form_end(step3Form) }}
+                                            </div>
+                                        </div>
+                                    </section>
+
+                                    {% set step4class = '' %}
+                                    {% if curStep == 4 %}
+                                        {% set step4class = '-current js-current-step' %}
+                                    {% endif %}
+                                    {% form_theme step4Form 'form_template/bootstrap_3_layout.html.twig' %}
+                                    <section class="checkout-step -reachable {{ step4class }}"
+                                             id="checkout-payment-step">
+                                        <h1 class="step-title h3">
+                                            <span class="step-number">4</span> Τρόπος Πληρωμής
+                                        </h1>
+                                        <div class="content">
+                                            <div class="payment-options ">
+                                                {{ form_start(step4Form) }}
+                                                <div id="delivery-address">
+                                                    <div class="js-address-form">
+                                                        <section class="form-fields">
+                                                            <div class="form-group row ">
+                                                                {{ form_label(step4Form.paymentType, 'Τρόπος Πληρωμής', {'label_attr': {'class': 'col-md-3 form-control-label required'}}) }}
+                                                                <div class="col-md-9">
+                                                                    {{ form_widget(step4Form.paymentType, {'attr': {'class': 'form-control no-border'}}) }}
+                                                                </div>
+                                                            </div>
+                                                            <div class="clearfix"></div>
+                                                            <div class="form-group row ">
+                                                                {{ form_label(step4Form.agreeTerms, 'Έχω διαβάσει και αποδέχομαι ανεπιφύλακτα τους Όρους Χρήσης') }}
+                                                                <div class="col-md-12">
+                                                                    {{ form_widget(step4Form.agreeTerms) }}
+                                                                </div>
+                                                            </div>
+
+                                                        </section>
+
+                                                        <footer class="form-footer clearfix">
+                                                            <input name="submitAddress" value="1"
+                                                                   type="hidden">
+                                                            <button id="confirm-addresses"
+                                                                    type="submit"
+                                                                    class="continue btn btn-primary float-xs-right"
+                                                                    name="confirm-addresses"
+                                                                    value="1">
+                                                                Ολοκλήρωση Παραγγελίας
+                                                            </button>
+                                                        </footer>
+                                                    </div>
+                                                </div>
+                                                {{ form_end(step4Form) }}
+                                            </div>
+
+                                            <div class="modal fade" id="modal">
+                                                <div class="modal-dialog" role="document">
+                                                    <div class="modal-content">
+                                                        <button type="button" class="close"
+                                                                data-dismiss="modal"
+                                                                aria-label="Close">
+                                                            <span aria-hidden="true">&times;</span>
+                                                        </button>
+                                                        <div class="js-modal-content"></div>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </section>
+                                </div>
+                                {% set cartSubTotal = 0 %}
+                                {% set cartTotal = 0 %}
+                                {% set cartShippingCost = 0 %}
+                                {% for pr in cartItems %}
+                                    {% set cartSubTotal = cartSubTotal + (pr.webPrice|number_format(2, '.', ','))*pr.quantity %}
+                                {% endfor %}
+                                <div class="col-md-4">
+                                    <section id="js-checkout-summary" class="card js-cart">
+                                        <div class="card-block">
+
+                                            <div class="cart-summary-products">
+                                                <p>{{ totalCartItems }}
+                                                    {% if totalCartItems == 1 %}
+                                                        προϊόν
+                                                    {% else %}
+                                                        προϊόντα
+                                                    {% endif %}</p>
+                                                <p>
+                                                    <a href="#" data-toggle="collapse"
+                                                       data-target="#cart-summary-product-list">
+                                                        Λεπτομέρειες καλαθιού
+                                                    </a>
+                                                </p>
+                                                <div class="collapse"
+                                                     id="cart-summary-product-list">
+                                                    <ul class="media-list">
+                                                        {% set cartSubTotal = 0 %}
+                                                        {% set cartTotal = 0 %}
+                                                        {% set cartShippingCost = 2.00 %}
+                                                        {% for pr in cartItems %}
+                                                            <li class="media">
+                                                                <div class="media-left">
+                                                                    <a href="{{ path('product_view', {'id':pr.id}) }}"
+                                                                       title="{{ pr.name }}">
+                                                                        <img class="media-object"
+                                                                             src="{{ pr.imageUrl }}"
+                                                                             alt="{{ pr.name }}">
+                                                                    </a>
+                                                                </div>
+                                                                <div class="media-body">
+                                                                    <span class="product-name">{{ pr.name }}</span>
+                                                                    <span class="product-price float-xs-right pull-right">{{ ((pr.webPrice|number_format(2, '.', ','))*pr.quantity)|number_format(2, ',', '.') }}
+                                                                        €</span>
+                                                                    <span style="padding-right: 10px;"
+                                                                          class="product-quantity pull-right">x{{ pr.quantity }}</span>
+                                                                </div>
+                                                            </li>
+                                                            {% set cartSubTotal = cartSubTotal + (pr.webPrice|number_format(2, '.', ','))*pr.quantity %}
+                                                        {% endfor %}
+                                                    </ul>
+                                                </div>
+                                            </div>
+
+                                            <div class="cart-summary-line cart-summary-subtotals"
+                                                 id="cart-subtotal-products">
+                                                <span class="label">Μερικό σύνολο</span>
+                                                <span class="value">€</span>
+                                                <span id="cart-cost" data-cost="{{ cartSubTotal }}"
+                                                      class="value">{{ cartSubTotal|number_format(2, ',', '.') }}</span>
+                                            </div>
+                                            <div class="cart-summary-line cart-summary-subtotals"
+                                                 id="cart-subtotal-shipping">
+                                                <span class="label">Μεταφορικά</span>
+                                                <span class="value">€</span>
+                                                <span id="shipping-cost" data-cost="2.00"
+                                                      class="value">2,00</span>
+                                            </div>
+                                            <div class="cart-summary-line cart-summary-subtotals hidden"
+                                                 id="cart-subtotal-pay-on-delivery">
+                                                <span class="label">Αντικαταβολή</span>
+                                                <span class="value">€</span>
+                                                <span id="pay-on-delivery-cost" data-cost="1.50"
+                                                      class="value">1,50</span>
+                                            </div>
+                                        </div>
+                                        <hr class="separator">
+                                        {% set cartTotal = cartSubTotal + cartShippingCost %}
+                                        <div class="card-block cart-summary-totals">
+                                            <div class="cart-summary-line cart-total">
+                                                <span class="label">Σύνολο (με ΦΠΑ)</span>
+                                                <span class="value">€</span>
+                                                <span id="total-cost" data-cost="{{ cartTotal }}"
+                                                      class="value">{{ cartTotal|number_format(2, ',', '.') }}
+                                                </span>
+                                            </div>
+                                            <div class="cart-summary-line">
+                                                <span class="label sub"></span>
+                                                <span class="value sub"></span>
+                                            </div>
+                                        </div>
+                                    </section>
+
+                                    {#<div id="block-reassurance">#}
+                                    {#<ul>#}
+                                    {#<li>#}
+                                    {#<div class="block-reassurance-item">#}
+                                    {#<img src="https://demo.templatetrip.com/Prestashop/PRS06/PRS176_gym/modules/blockreassurance/img/ic_verified_user_black_36dp_1x.png"#}
+                                    {#alt="Security policy (edit with Customer reassurance module)">#}
+                                    {#<span class="h6">Security policy (edit with#}
+                                    {#Customer reassurance#}
+                                    {#module)</span>#}
+                                    {#</div>#}
+                                    {#</li>#}
+                                    {#<li>#}
+                                    {#<div class="block-reassurance-item">#}
+                                    {#<img src="https://demo.templatetrip.com/Prestashop/PRS06/PRS176_gym/modules/blockreassurance/img/ic_local_shipping_black_36dp_1x.png"#}
+                                    {#alt="Delivery policy (edit with Customer reassurance module)">#}
+                                    {#<span class="h6">Delivery policy (edit with#}
+                                    {#Customer reassurance#}
+                                    {#module)</span>#}
+                                    {#</div>#}
+                                    {#</li>#}
+                                    {#<li>#}
+                                    {#<div class="block-reassurance-item">#}
+                                    {#<img src="https://demo.templatetrip.com/Prestashop/PRS06/PRS176_gym/modules/blockreassurance/img/ic_swap_horiz_black_36dp_1x.png"#}
+                                    {#alt="Return policy (edit with Customer reassurance module)">#}
+                                    {#<span class="h6">Return policy (edit with#}
+                                    {#Customer reassurance#}
+                                    {#module)</span>#}
+                                    {#</div>#}
+                                    {#</li>#}
+                                    {#</ul>#}
+                                    {#</div>#}
+
+                                </div>
                             </div>
-                        </div>
-                    </section>
-                </div>
+                        </section>
+                    </div>
+                {% else %}
+                    <div class="col-xs-12 general-message">Δεν υπάρχουν προϊόντα στο
+                        καλάθι σας!
+                    </div>
+                {% endif %}
             </section>
         </div>
         {% include 'home_page_modules/14_newsletter.html.twig' %}

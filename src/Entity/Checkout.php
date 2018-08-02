@@ -30,6 +30,17 @@ class Checkout extends WebUser
     private $nextPage;
 
     /**
+     * @var double|null
+     *
+     */
+    private $shippingCost;
+
+    /**
+     * @var double|null
+     */
+    private $antikatavoliCost;
+
+    /**
      * 7021 For Invoice, 7023 for Receipt
      * @var string|null
      */
@@ -170,6 +181,38 @@ class Checkout extends WebUser
     public function setOrderNo($orderNo): void
     {
         $this->orderNo = $orderNo;
+    }
+
+    /**
+     * @return float|null
+     */
+    public function getShippingCost(): ?float
+    {
+        return $this->shippingCost;
+    }
+
+    /**
+     * @param float|null $shippingCost
+     */
+    public function setShippingCost(?float $shippingCost): void
+    {
+        $this->shippingCost = $shippingCost;
+    }
+
+    /**
+     * @return float|null
+     */
+    public function getAntikatavoliCost(): ?float
+    {
+        return $this->antikatavoliCost;
+    }
+
+    /**
+     * @param float|null $antikatavoliCost
+     */
+    public function setAntikatavoliCost(?float $antikatavoliCost): void
+    {
+        $this->antikatavoliCost = $antikatavoliCost;
     }
 
 }
