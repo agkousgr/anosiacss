@@ -69,7 +69,7 @@ class CheckoutController extends MainController
                         'Η παραγγελία σας ολοκληρώθηκε με επιτυχία. Ένα αντίγραφο έχει αποσταλεί στο email σας ' . $checkout->getEmail() . '. Ευχαριστούμε που μας προτιμήσατε για τις αγορές σας!'
                     );
                     $checkoutService->sendOrderConfirmationEmail($checkout);
-                    $checkoutService->emptyCart($this->cartItems, $em);
+//                    $checkoutService->emptyCart($this->cartItems, $em);
                     $orderCompleted = true;
                     // CLEAR curOrder SESSION
                     return ($this->render('orders/order_completed.html.twig', [

@@ -11,13 +11,13 @@
                             <div class="col-sm-5">
                                 <div class="row">
                                     {% for ctg in categories %}
-                                        {% if ctg.isVisible == "1" %}
+                                        {% if ctg.isVisible == true %}
                                             <div class="col-sm-6">
                                                 <div class="sub-menu">
                                                     <h4><a href="{{ path('products_list', {'id':ctg.id}) }}">{{ ctg.name }}</a></h4>
-                                                    {% if ctg.children %}
+                                                    {% if ctg.__children %}
                                                         <ul>
-                                                            {% for subctg in ctg.children %}
+                                                            {% for subctg in ctg.__children %}
                                                                 {% if subctg.isVisible == "1" %}
                                                                     <li><a href="{{ path('products_list', {'id':subctg.id}) }}">{{ subctg.name }}</a></li>
                                                                 {% endif %}

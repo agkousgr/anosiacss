@@ -13,14 +13,24 @@ class Category
     use BasicDbFieldsTrait;
 
     /**
-     * @var string|null
+     * @var int
      */
-    protected $slug;
+    private $s1id;
 
     /**
-     * @ORM\Column(type="text")
+     * @var string|null
+     */
+    private $slug;
+
+    /**
+     * @var string|null
      */
     private $description;
+
+    /**
+     * @var string|null
+     */
+    private $imageUrl;
 
     /**
      * @var bool
@@ -68,6 +78,22 @@ class Category
     public function __construct()
     {
         $this->children = new \Doctrine\Common\Collections\ArrayCollection();
+    }
+
+    /**
+     * @return int
+     */
+    public function getS1id(): int
+    {
+        return $this->s1id;
+    }
+
+    /**
+     * @param int $s1id
+     */
+    public function setS1id(int $s1id): void
+    {
+        $this->s1id = $s1id;
     }
 
     /**
@@ -194,6 +220,86 @@ class Category
     public function setRoot(Category $root): void
     {
         $this->root = $root;
+    }
+
+    /**
+     * @return null|string
+     */
+    public function getSlug(): ?string
+    {
+        return $this->slug;
+    }
+
+    /**
+     * @param null|string $slug
+     */
+    public function setSlug(?string $slug): void
+    {
+        $this->slug = $slug;
+    }
+
+    /**
+     * @return null|string
+     */
+    public function getDescription(): ?string
+    {
+        return $this->description;
+    }
+
+    /**
+     * @param null|string $description
+     */
+    public function setDescription(?string $description): void
+    {
+        $this->description = $description;
+    }
+
+    /**
+     * @return null|string
+     */
+    public function getImageUrl(): ?string
+    {
+        return $this->imageUrl;
+    }
+
+    /**
+     * @param null|string $imageUrl
+     */
+    public function setImageUrl(?string $imageUrl): void
+    {
+        $this->imageUrl = $imageUrl;
+    }
+
+    /**
+     * @return bool
+     */
+    public function isVisible(): bool
+    {
+        return $this->isVisible;
+    }
+
+    /**
+     * @param bool $isVisible
+     */
+    public function setIsVisible(bool $isVisible): void
+    {
+        $this->isVisible = $isVisible;
+    }
+
+    /**
+     * @return int
+     */
+    public function getPriority(): int
+    {
+        return $this->priority;
+    }
+
+    /**
+     * @param int $priority
+     */
+    public function setPriority(int $priority): void
+    {
+        $this->priority = $priority;
     }
 
 }

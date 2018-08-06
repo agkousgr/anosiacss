@@ -1,33 +1,31 @@
 <?php
-/**
- * Created by PhpStorm.
- * User: john
- * Date: 13/5/2018
- * Time: 8:02 μμ
- */
 
 namespace App\Controller;
 
-//use Knp\Bundle\PaginatorBundle\KnpPaginatorBundle;
+use App\Entity\Category;
+use Doctrine\ORM\EntityManagerInterface;
+use Knp\Component\Pager\PaginatorInterface;
 use Symfony\Component\HttpFoundation\Request;
 
 class ProductController extends MainController
 {
 
-    public function listProducts(Request $request, int $id)
+    public function listProducts(Request $request, int $id, PaginatorInterface $paginator, EntityManagerInterface $em)
     {
         try {
-            $ctgInfo = $this->categoryService->getCategoryInfo($id);
+//            $ctgInfo = $this->categoryService->getCategoryInfo($id);
+            $ctgInfo = $this->em->getRepository(Category::class)->find($id);
             $products = $this->productService->getCategoryItems($id);
-//            $totalProducts = $this->productService->getCategoryItemsCount($id);
+            $totalProducts = $this->productService->getCategoryItemsCount($id);
 //            $totalProducts = 15;
-//            $paginatedProducts = $paginator->paginate(
-//                $products,
-//                $request->query->getInt('page', 1)/*page number*/,
-//                5/*limit per page*/
-//            );
+            $paginatedProducts = $paginator->paginate(
+                $products,
+                $request->query->getInt('page', 1)/*page number*/,
+                12/*limit per page*/
+            );
+//            $paginator->setTemplate('bundles/KnpPaginator/twitter_bootstrap_v3_pagination.html.twig');
             return $this->render('products/list.html.twig', [
-                'products' => $products,
+                'products' => $paginatedProducts,
                 'ctgInfo' => $ctgInfo,
                 'categories' => $this->categories,
                 'popular' => $this->popular,

@@ -6,6 +6,11 @@ index:
     path: /404-not-found
     controller: App\Controller\DefaultController::notFound
 
+# Cron Jobs
+create_categories:
+    path: /create-categories
+    controller: App\Controller\CreateCategoriesController::createCategories
+
 # Products
 products_list:
     path: /products/{id}/{page}
@@ -78,6 +83,10 @@ checkout:
         id: \d+
 
 # Wishlist
+whishlist_view:
+    path: /whishlist
+    controller: App\Controller\WhishlistController::viewWhishlist
+
 add_to_wishlist:
     path: /wishlist/{id}
     controller: App\Controller\WishlistController::addToWishlist

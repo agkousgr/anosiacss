@@ -2,7 +2,7 @@
 
 namespace App\Controller;
 
-use App\Entity\Cart;
+use App\Entity\{Cart, Category};
 use Doctrine\ORM\EntityManagerInterface;
 use Psr\Log\LoggerInterface;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
@@ -125,7 +125,8 @@ class MainController extends AbstractController
             $this->session->set('authID', $authID);
         }
         dump($this->session);
-        $this->categories = $this->categoryService->getCategories($this->session->get('authID'));
+        $repo = $this->em->getRepository(Category::class);
+        $this->categories = $repo->childrenHierarchy();
 
         if ($this->categories) {
             array_multisort(array_column($this->categories, "priority"), $this->categories);

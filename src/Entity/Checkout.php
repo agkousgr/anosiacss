@@ -41,6 +41,12 @@ class Checkout extends WebUser
     private $antikatavoliCost;
 
     /**
+     * @var double|null
+     *
+     */
+    private $totalOrderCost;
+
+    /**
      * 7021 For Invoice, 7023 for Receipt
      * @var string|null
      */
@@ -213,6 +219,22 @@ class Checkout extends WebUser
     public function setAntikatavoliCost(?float $antikatavoliCost): void
     {
         $this->antikatavoliCost = $antikatavoliCost;
+    }
+
+    /**
+     * @return float|null
+     */
+    public function getTotalOrderCost(): ?float
+    {
+        return $this->totalOrderCost;
+    }
+
+    /**
+     * @param float|null $totalOrderCost
+     */
+    public function setTotalOrderCost(?float $totalOrderCost): void
+    {
+        $this->totalOrderCost = $totalOrderCost;
     }
 
 }

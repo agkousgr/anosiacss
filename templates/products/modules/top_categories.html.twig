@@ -5,7 +5,7 @@
             <div class="owl-carousel owl-theme CatCarousel">
                 {% for ctg in categories %}
                     {% if ctg.id|number_format == ctgInfo.id|number_format %}
-                        {% for subctg in ctg.children %}
+                        {% for subctg in ctg.__children %}
                             <div class="item  wow fadeIn" data-wow-delay="0.4s">
                                 <div class="category-image">
                                     <a href="{{ path('products_list', {'id':subctg.id}) }}">

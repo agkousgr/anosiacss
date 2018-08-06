@@ -52,6 +52,11 @@ class CheckoutService
     private $twig;
 
     /**
+     * @var double
+     */
+    private $cartItemsCost;
+
+    /**
      * UserAccountService constructor.
      * @param LoggerInterface $logger
      * @param SessionInterface $session
@@ -66,6 +71,7 @@ class CheckoutService
         $this->client = new \SoapClient('http://caron.cloudsystems.gr/FOeshopWS/ForeignOffice.FOeshop.API.FOeshopSvc.svc?singleWsdl', ['trace' => true, 'exceptions' => true,]);
         $this->mailer = $mailer;
         $this->twig = $twig;
+        $this->cartItemsCost = 0;
     }
 
 
@@ -341,7 +347,11 @@ EOF;
 
     }
 
-
+    /**
+     * @param $checkout
+     * @param $cartItems
+     * @return bool
+     */
     public function submitOrder($checkout, $cartItems)
     {
         $expenses = $this->initializeExpenses($checkout);
@@ -356,6 +366,8 @@ EOF;
         $district = $checkout->getDistrict();
         $city = $checkout->getCity();
         $email = $checkout->getEmail();
+
+        $checkout->setTotalOrderCost($this->cartItemsCost + $checkout->getShippingCost() + $checkout->getAntikatavoliCost());
 
         $message = <<<EOF
 <?xml version="1.0" encoding="utf-16"?>
@@ -436,7 +448,8 @@ EOF;
         foreach ($cartItems as $cartItem) {
             $id = $cartItem['id'];
             $quantity = $cartItem['quantity'];
-            $webPrice = $cartItem['webPrice'];
+            $webPrice = floatval($cartItem['webPrice']);
+            $this->cartItemsCost += number_format(($quantity * $webPrice), 2, '.', ',');
             $items .= "        <ClientSetOrderItem>
             <Number>$count</Number>
             <ItemID>$id</ItemID>
@@ -450,6 +463,12 @@ EOF;
         return $items;
     }
 
+    /**
+     * @param App\Entity\Checkout
+     * @throws \Twig_Error_Loader
+     * @throws \Twig_Error_Runtime
+     * @throws \Twig_Error_Syntax
+     */
     public function sendOrderConfirmationEmail($checkout)
     {
         $message = (new \Swift_Message('Anosiapharmacy - Νέα παραγγελία #' . $checkout->getOrderNo()))
