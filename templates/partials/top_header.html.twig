@@ -64,10 +64,17 @@
                         {% endif %}
                     </li>
                     <li>
-                        <a href="#" class="wishlist-link" style="margin-top: 10px; title=" Wishlist">
+                        <a href="{{ path('wishlist_view') }}" class="wishlist-link" style="margin-top: 10px;" title=" Wishlist">
                         <i class="fa fa-heart wishlist-link"></i>
                         <span class="link-text" style="visibility:hidden">.</span>
-                        <span id="wishlist-total-items" class="count-baloon">100</span>
+                        {% if (totalWishlistItems > 0) %}
+                            {% set display = 'inline' %}
+                        {% else %}
+                            {% set display = 'none' %}
+                        {% endif %}
+                        <span id="wishlist-total-items" class="count-baloon" style="display:{{ display }};">
+                            {{ totalWishlistItems }}
+                        </span>
                         </a>
                     </li>
                     <li>

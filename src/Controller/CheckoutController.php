@@ -79,6 +79,7 @@ class CheckoutController extends MainController
                         'checkout' => $checkout,
                         'loggedUser' => $this->loggedUser,
                         'totalCartItems' => $this->totalCartItems,
+                        'totalWishlistItems' => $this->totalWishlistItems,
                         'cartItems' => $this->cartItems,
                         'orderCompleted' => $orderCompleted
                     ]));
@@ -96,6 +97,7 @@ class CheckoutController extends MainController
                 'featured' => $this->featured,
                 'cartItems' => $this->cartItems,
                 'totalCartItems' => $this->totalCartItems,
+                'totalWishlistItems' => $this->totalWishlistItems,
                 'loggedUser' => $this->loggedUser,
                 'step1Form' => $step1Form->createView(),
                 'step2Form' => $step2Form->createView(),

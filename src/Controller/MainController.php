@@ -2,7 +2,7 @@
 
 namespace App\Controller;
 
-use App\Entity\{Cart, Category};
+use App\Entity\{Cart, Category, Wishlist};
 use Doctrine\ORM\EntityManagerInterface;
 use Psr\Log\LoggerInterface;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
@@ -42,6 +42,11 @@ class MainController extends AbstractController
      * @var int
      */
     protected $totalCartItems;
+
+    /**
+     * @var int
+     */
+    protected $totalWishlistItems;
 
     /**
      * @var \App\Service\ProductService
@@ -119,6 +124,7 @@ class MainController extends AbstractController
         $this->logger = $logger;
         $this->em = $em;
         $this->totalCartItems = 0;
+        $this->totalWishlistItems = 0;
 
         if ($this->session->has("authID") === false) {
             $authID = $this->softoneLogin->login();
@@ -137,6 +143,7 @@ class MainController extends AbstractController
         $this->loggedName = ($this->session->get("anosiaName")) ?: null;
         $this->loggedClientId = ($this->session->get("anosiaClientId")) ?: null;
         $this->cartItems = $this->getCartItems();
+        $this->totalWishlistItems = $this->em->getRepository(Wishlist::class)->countWishlistItems($this->session->getId(), $this->loggedUser);
         dump($this->session);
 
 //        $this->totalCartItems = $em->getRepository(Cart::class)->countCartItems($session->getId(), $session->get('anosiaUser'));

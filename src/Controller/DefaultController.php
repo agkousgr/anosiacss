@@ -15,6 +15,7 @@ class DefaultController extends MainController
             'popular' => $this->popular,
             'featured' => $this->featured,
             'cartItems' => $this->cartItems,
+            'totalWishlistItems' => $this->totalWishlistItems,
             'totalCartItems' => $this->totalCartItems,
             'loggedUser' => $this->loggedUser,
             'loggedName' => $this->loggedName,
@@ -30,6 +31,7 @@ class DefaultController extends MainController
             'featured' => $this->featured,
             'cartItems' => $this->cartItems,
             'totalCartItems' => $this->totalCartItems,
+            'totalWishlistItems' => $this->totalWishlistItems,
             'loggedUser' => $this->loggedUser,
             'loggedName' => $this->loggedName,
 //            'latest' => $latest

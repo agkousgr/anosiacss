@@ -83,16 +83,20 @@ checkout:
         id: \d+
 
 # Wishlist
-whishlist_view:
-    path: /whishlist
-    controller: App\Controller\WhishlistController::viewWhishlist
+wishlist_view:
+    path: /wishlist
+    controller: App\Controller\WishlistController::viewWishlist
 
 add_to_wishlist:
-    path: /wishlist/{id}
+    path: /add_to_wishlist
     controller: App\Controller\WishlistController::addToWishlist
     methods: [GET,POST]
     options:
         expose: true
+
+delete_wishlist_item:
+    path: /delete_wishlist_item/{id}
+    controller: App\Controller\WishlistController::deleteWishlistItem
     requirements:
         id: \d+
 

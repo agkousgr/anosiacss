@@ -32,6 +32,7 @@ class ProductController extends MainController
                 'featured' => $this->featured,
                 'cartItems' => $this->cartItems,
                 'totalCartItems' => $this->totalCartItems,
+                'totalWishlistItems' => $this->totalWishlistItems,
                 'loggedUser' => $this->loggedUser,
                 'loggedName' => $this->loggedName,
 //                'products' => $paginatedProducts
@@ -53,6 +54,7 @@ class ProductController extends MainController
                 'featured' => $this->featured,
                 'cartItems' => $this->cartItems,
                 'totalCartItems' => $this->totalCartItems,
+                'totalWishlistItems' => $this->totalWishlistItems,
                 'loggedUser' => $this->loggedUser,
                 'loggedName' => $this->loggedName,
             ]);
@@ -76,6 +78,7 @@ class ProductController extends MainController
                 'featured' => $this->featured,
                 'cartItems' => $this->cartItems,
                 'totalCartItems' => $this->totalCartItems,
+                'totalWishlistItems' => $this->totalWishlistItems,
                 'loggedUser' => $this->loggedUser,
                 'loggedName' => $this->loggedName,
                 'keyword' => $keyword
