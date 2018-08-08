@@ -671,6 +671,8 @@ EOF;
 
     /**
      * @param \App\Entity\WebUser
+     * @param \App\Entity\Address
+     *
      * @return array
      * @throws \Exception
      */
@@ -683,7 +685,7 @@ EOF;
                 'lastname' => $user->getLastname(),
                 'clientId' => $user->getClientId(),
                 'newsletterId' => $user->getNewsletterId(),
-                'newsletter' => $user->isNewsletter(),
+                'newsletter' => $user->getNewsletter(),
                 'address' => $user->getAddress(),
                 'city' => $user->getCity(),
                 'zip' => $user->getZip(),
