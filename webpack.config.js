@@ -37,12 +37,31 @@ Encore
     .addEntry('js/cart', './assets/js/cart.js')
     .addEntry('js/user-google-address', './assets/js/user-google-address.js')
 
+    // Admin javascripts
+    .addEntry('admin/js/bootstrap.min', './assets/admin/js/bootstrap.min.js')
+    .addEntry('admin/js/detect', './assets/admin/js/detect.js')
+    .addEntry('admin/js/fastclick', './assets/admin/js/fastclick.js')
+    .addEntry('admin/js/jquery.blockUI', './assets/admin/js/jquery.blockUI.js')
+    .addEntry('admin/js/jquery.min', './assets/admin/js/jquery.min.js')
+    .addEntry('admin/js/jquery.nicescroll', './assets/admin/js/jquery.nicescroll.js')
+    .addEntry('admin/js/modernizr.min', './assets/admin/js/modernizr.min.js')
+    .addEntry('admin/js/moment.min', './assets/admin/js/moment.min.js')
+    .addEntry('admin/js/pikeadmin', './assets/admin/js/pikeadmin.js')
+    .addEntry('admin/js/popper.min', './assets/admin/js/popper.min.js')
+
+
 
     // .addStyleEntry('css/style', './assets/css/style.css')
     .addStyleEntry('css/apex-slider', './assets/css/apex-slider.css')
     .addStyleEntry('css/orders', './assets/css/orders.css')
     .addStyleEntry('css/user', './assets/css/user.css')
     .addStyleEntry('css/404', './assets/css/404.css')
+
+    // Admin stylesheets
+    .addStyleEntry('admin/css/bootstrap.min', './assets/admin/css/bootstrap.min.css')
+    .addStyleEntry('admin/css/style', './assets/admin/css/style.css')
+    .addStyleEntry('admin/font-awesome/css/font-awesome.min', './assets/admin/font-awesome/css/font-awesome.min.css')
+
 
     .addLoader({
         test: /\.(png|jpg|svg)$/,

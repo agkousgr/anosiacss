@@ -147,3 +147,6 @@ logout:
 #admin:
 #    path: /admin
 #    controller: App\Controller\AdminDefaultController::login
+admin:
+    path: /admin
+    controller: App\Controller\Admin\DefaultController::dashboard
