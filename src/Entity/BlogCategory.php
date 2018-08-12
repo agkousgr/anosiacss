@@ -1,15 +1,12 @@
 <?php
 
-namespace AppBundle\Entity;
+namespace App\Entity;
 
-use App\Traits\{BasicDbFieldsTrait, TimestampTrait, BlameableTrait, CommonDbFieldsTrait};
+use App\Traits\{BasicDbFieldsTrait, TimestampableTrait, BlameableTrait, CommonDbFieldsTrait};
 
-/**
- * Category
- */
-class Category
+class BlogCategory
 {
-    use BasicDbFieldsTrait, TimestampTrait, BlameableTrait, CommonDbFieldsTrait;
+    use BasicDbFieldsTrait, TimestampableTrait, BlameableTrait, CommonDbFieldsTrait;
 
     /**
      * @var \DateTime
@@ -17,19 +14,9 @@ class Category
     private $deletedAt;
 
     /**
-     * @var \AppBundle\Entity\Category
+     * @var string|null
      */
-    private $parent;
-
-    /**
-     * @var \Doctrine\Common\Collections\Collection
-     */
-    private $articles;
-
-    /**
-     * @var \Doctrine\Common\Collections\ArrayCollection
-     */
-    private $children;
+    private $description;
 
     /**
      * @var string|null
@@ -37,12 +24,47 @@ class Category
     private $image;
 
     /**
+     * @var \App\Entity\BlogCategory
+     */
+    private $parent;
+
+    /**
+     * @var int|null
+     */
+    private $lft;
+
+    /**
+     * @var int|null
+     */
+    private $lvl;
+
+    /**
+     * @var int|null
+     */
+    private $rgt;
+
+    /**
+     * @var \App\Entity\BlogCategory
+     */
+    private $root;
+
+    /**
+     * @var \Doctrine\Common\Collections\ArrayCollection
+     */
+    private $children;
+
+    /**
+     * @var \Doctrine\Common\Collections\ArrayCollection
+     */
+    private $blog;
+
+    /**
      * Constructor
      */
     public function __construct()
     {
-        $this->articles = new \Doctrine\Common\Collections\ArrayCollection();
         $this->children = new \Doctrine\Common\Collections\ArrayCollection();
+        $this->blog = new \Doctrine\Common\Collections\ArrayCollection();
     }
 
     /**
@@ -50,7 +72,7 @@ class Category
      *
      * @param \DateTime $deletedAt
      *
-     * @return Category
+     * @return BlogCategory
      */
     public function setDeletedAt(\DateTime $deletedAt = null)
     {
@@ -69,49 +91,15 @@ class Category
         return $this->deletedAt;
     }
 
-    /**
-     * Add article
-     *
-     * @param \AppBundle\Entity\Article $article
-     *
-     * @return Category
-     */
-    public function addArticle(\AppBundle\Entity\Article $article)
-    {
-        $article->addCategory($this);
-        $this->articles[] = $article;
-
-        return $this;
-    }
-
-    /**
-     * Remove article
-     *
-     * @param \AppBundle\Entity\Article $article
-     */
-    public function removeArticle(\AppBundle\Entity\Article $article)
-    {
-        $this->articles->removeElement($article);
-    }
-
-    /**
-     * Get articles
-     *
-     * @return \Doctrine\Common\Collections\Collection
-     */
-    public function getArticles()
-    {
-        return $this->articles;
-    }
 
     /**
      * Add child
      *
-     * @param \AppBundle\Entity\Category $child
+     * @param \App\Entity\BlogCategory $child
      *
-     * @return Category
+     * @return BlogCategory
      */
-    public function addChild(\AppBundle\Entity\Category $child)
+    public function addChild(\App\Entity\BlogCategory $child)
     {
         $this->children[] = $child;
 
@@ -121,9 +109,9 @@ class Category
     /**
      * Remove child
      *
-     * @param \AppBundle\Entity\Category $child
+     * @param \App\Entity\BlogCategory $child
      */
-    public function removeChild(\AppBundle\Entity\Category $child)
+    public function removeChild(\App\Entity\BlogCategory $child)
     {
         $this->children->removeElement($child);
     }
@@ -139,13 +127,29 @@ class Category
     }
 
     /**
+     * @return \Doctrine\Common\Collections\ArrayCollection
+     */
+    public function getBlog(): \Doctrine\Common\Collections\ArrayCollection
+    {
+        return $this->blog;
+    }
+
+    /**
+     * @param \Doctrine\Common\Collections\ArrayCollection $blog
+     */
+    public function setBlog(\Doctrine\Common\Collections\ArrayCollection $blog): void
+    {
+        $this->blog = $blog;
+    }
+
+    /**
      * Set parent
      *
-     * @param \AppBundle\Entity\Category $parent
+     * @param \App\Entity\BlogCategory $parent
      *
-     * @return Category
+     * @return BlogCategory
      */
-    public function setParent(\AppBundle\Entity\Category $parent = null)
+    public function setParent(\App\Entity\BlogCategory $parent = null)
     {
         $this->parent = $parent;
 
@@ -155,11 +159,79 @@ class Category
     /**
      * Get parent
      *
-     * @return  \AppBundle\Entity\Category
+     * @return  \App\Entity\BlogCategory
      */
     public function getParent()
     {
         return $this->parent;
+    }
+    /**
+     * @return int|null
+     */
+    public function getLft(): ?int
+    {
+        return $this->lft;
+    }
+
+    /**
+     * @param int|null $lft
+     */
+    public function setLft(?int $lft): void
+    {
+        $this->lft = $lft;
+    }
+
+    /**
+     * @return int|null
+     */
+    public function getLvl(): ?int
+    {
+        return $this->lvl;
+    }
+
+    /**
+     * @param int|null $lvl
+     */
+    public function setLvl(?int $lvl): void
+    {
+        $this->lvl = $lvl;
+    }
+
+    /**
+     * @return int|null
+     */
+    public function getRgt(): ?int
+    {
+        return $this->rgt;
+    }
+
+    /**
+     * @param int|null $rgt
+     */
+    public function setRgt(?int $rgt): void
+    {
+        $this->rgt = $rgt;
+    }
+
+    /**
+     * @return BlogCategory
+     */
+
+    public function getRoot(): BlogCategory
+    {
+        return $this->root;
+    }
+
+    /**
+     * Set root
+     *
+     * @param \App\Entity\BlogCategory $parent
+     *
+     * @return BlogCategory
+     */
+    public function setRoot(BlogCategory $root): void
+    {
+        $this->root = $root;
     }
 
     /**
@@ -176,6 +248,22 @@ class Category
     public function setImage(?string $image): void
     {
         $this->image = $image;
+    }
+
+    /**
+     * @return null|string
+     */
+    public function getDescription(): ?string
+    {
+        return $this->description;
+    }
+
+    /**
+     * @param null|string $description
+     */
+    public function setDescription(?string $description): void
+    {
+        $this->description = $description;
     }
 
 }

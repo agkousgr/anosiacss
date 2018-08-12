@@ -1,5 +1,5 @@
 // $(function() {
-//     $( "#slider-range" ).slider({
+//     $( "#switchery-range" ).switchery({
 //         range: true,
 //         min: 100,
 //         max: 1000,
@@ -8,6 +8,6 @@
 //             $( "#amount" ).val( "$" + ui.values[ 0 ] + " - $" + ui.values[ 1 ] );
 //         }
 //     });
-//     $( "#amount" ).val( "$" + $( "#slider-range" ).slider( "values", 0 ) +
-//         " - $" + $( "#slider-range" ).slider( "values", 1 ) );
+//     $( "#amount" ).val( "$" + $( "#switchery-range" ).switchery( "values", 0 ) +
+//         " - $" + $( "#switchery-range" ).switchery( "values", 1 ) );
 // });

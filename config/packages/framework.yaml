@@ -10,6 +10,10 @@ framework:
 #        handler_id: ~
         handler_id: Symfony\Component\HttpFoundation\Session\Storage\Handler\PdoSessionHandler
 
+    serializer: true
+    form: true
+    validation: true
+
     #esi: true
     #fragments: true
     php_errors:

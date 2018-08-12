@@ -147,6 +147,82 @@ logout:
 #admin:
 #    path: /admin
 #    controller: App\Controller\AdminDefaultController::login
+admin_login:
+    path: /administrator
+    controller: App\Controller\Admin\SecurityController::login
+
 admin:
     path: /admin
     controller: App\Controller\Admin\DefaultController::dashboard
+
+    # Categories
+category_list:
+    path: /admin/category-list
+    controller: App\Controller\Admin\CategoryController::list
+
+category_add:
+    path: /admin/category-add
+    controller: App\Controller\Admin\CategoryController::create
+    methods: [GET,POST]
+    options:
+        expose: true
+
+category_update:
+    path: /admin/category-update/{id}
+    controller: App\Controller\Admin\CategoryController::update
+    requirements:
+        id: \d+
+
+category_delete:
+    path: /admin/category-delete/{id}
+    controller: App\Controller\Admin\CategoryController::delete
+    requirements:
+        id: \d+
+
+    # Slider
+slider_list:
+    path: /admin/slider-list
+    controller: App\Controller\Admin\SliderController::list
+
+slider_add:
+    path: /admin/slider-add
+    controller: App\Controller\Admin\SliderController::create
+    methods: [GET,POST]
+    options:
+        expose: true
+
+slider_update:
+    path: /admin/slider-update/{id}
+    controller: App\Controller\Admin\SliderController::update
+    requirements:
+        id: \d+
+
+slider_delete:
+    path: /admin/slider-delete/{id}
+    controller: App\Controller\Admin\SliderController::delete
+    requirements:
+        id: \d+
+
+    # Season Promo
+seasonpromo_list:
+    path: /admin/seasonpromo-list
+    controller: App\Controller\Admin\SeasonpromoController::list
+
+seasonpromo_add:
+    path: /admin/seasonpromo-add
+    controller: App\Controller\Admin\SeasonpromoController::create
+    methods: [GET,POST]
+    options:
+        expose: true
+
+seasonpromo_update:
+    path: /admin/seasonpromo-update/{id}
+    controller: App\Controller\Admin\SeasonpromoController::update
+    requirements:
+        id: \d+
+
+seasonpromo_delete:
+    path: /admin/seasonpromo-delete/{id}
+    controller: App\Controller\Admin\SeasonpromoController::delete
+    requirements:
+        id: \d+

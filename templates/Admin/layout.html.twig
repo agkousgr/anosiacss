@@ -17,7 +17,9 @@
 </head>
 
 <body class="adminbody">
+<script>
 
+</script>
 <div id="main">
 
     <!-- top bar navigation -->
@@ -35,6 +37,7 @@
 
             <div class="container-fluid">
 
+                {% block breadcrumb %}
                 <div class="row">
                     <div class="col-xl-12">
                         <div class="breadcrumb-holder">
@@ -48,7 +51,17 @@
                     </div>
                 </div>
                 <!-- end row -->
+                {% endblock %}
 
+                {% block body %}
+                    <div id="flash-messages">
+                        {% for label, messages in app.flashes %}
+                            {% for message in messages %}
+                                <div class="alert alert-{{ label }}">{{ message }}</div>
+                            {% endfor %}
+                        {% endfor %}
+                    </div>
+                {% endblock %}
 
             </div>
             <!-- END container-fluid -->

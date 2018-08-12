@@ -2,7 +2,9 @@
 # https://symfony.com/doc/current/best_practices/configuration.html#application-related-configuration
 parameters:
     locale: 'en'
-    blog_image_directory: '%kernel.project_dir%/public/uploads/blog'
+    upload_dirs:
+        blog_image_directory: '%kernel.project_dir%/public/uploads/blog'
+        slider_image_directory: '%kernel.project_dir%/public/uploads/slider'
 
 services:
     # default configuration for services in *this* file
@@ -33,3 +35,8 @@ services:
         arguments:
             - 'mysql:dbname=anosia_sessions'
             - {db_username: '%env(SESSION_DATABASE_USER)%', db_password: '%env(SESSION_DATABASE_PASSWORD)%'}
+
+    # Admin File Uploaders
+    App\Service\FileUploader:
+        arguments:
+            $targetDirectory: '%upload_dirs%'

@@ -1,0 +1,32 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<doctrine-mapping xmlns="http://doctrine-project.org/schemas/orm/doctrine-mapping"
+                  xmlns:gedmo="http://gediminasm.org/schemas/orm/doctrine-extensions-mapping">
+
+    <entity name="App\Entity\Slider" table="slider" repository-class="App\Repository\SliderRepository">
+        <id name="id" type="integer">
+            <generator strategy="AUTO" />
+        </id>
+        <field name="name" length="150" />
+        <field name="image" type="text" />
+        <field name="url" type="text" />
+        <field name="priority" type="integer" />
+        <field name="description" type="text" />
+        <field name="isPublished" type="boolean" />
+        <field name="createdAt" type="datetime">
+            <gedmo:timestampable on="create" />
+        </field>
+        <field name="updatedAt" type="datetime">
+            <gedmo:timestampable on="update" />
+        </field>
+
+        <many-to-one field="createdBy" target-entity="User">
+            <join-column name="created_by" nullable="false" />
+            <gedmo:blameable on="create" />
+        </many-to-one>
+        <many-to-one field="updatedBy" target-entity="User">
+            <join-column name="updated_by" nullable="false" />
+            <gedmo:blameable on="update" />
+        </many-to-one>
+    </entity>
+
+</doctrine-mapping>

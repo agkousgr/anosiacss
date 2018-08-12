@@ -5,176 +5,129 @@ namespace App\Traits;
 trait CommonDbFieldsTrait
 {
     /**
-     * @var string
+     * @var string|null
      */
     private $slug;
     
     /**
-     * @var string
+     * @var string|null
      */
     private $metadesc;
     
     /**
-     * @var string
+     * @var string|null
      */
     private $metakey;
 
     /**
-     * @var integer
+     * @var integer|null
      */
-    private $ordering;
+    private $priority;
 
     /**
-     * @var boolean
+     * @var boolean|null
      */
     private $isPublished = false;
 
     /**
-     * @var boolean
+     * @var boolean|null
      */
     private $isCheckedOut = false;
 
     /**
-     * Set slug
-     *
-     * @param string $slug
-     *
-     * @return self
+     * @return null|string
      */
-    public function setSlug($slug)
-    {
-        $this->slug = $slug;
-
-        return $this;
-    }
-
-    /**
-     * Get slug
-     *
-     * @return string
-     */
-    public function getSlug()
+    public function getSlug(): ?string
     {
         return $this->slug;
     }
 
     /**
-     * Set metadesc
-     *
-     * @param string $metadesc
-     *
-     * @return self
+     * @param null|string $slug
      */
-    public function setMetadesc($metadesc = null)
+    public function setSlug(?string $slug): void
     {
-        $this->metadesc = $metadesc;
-
-        return $this;
+        $this->slug = $slug;
     }
 
     /**
-     * Get metadesc
-     *
-     * @return string
+     * @return null|string
      */
-    public function getMetadesc()
+    public function getMetadesc(): ?string
     {
         return $this->metadesc;
     }
 
     /**
-     * Set metakey
-     *
-     * @param string $metakey
-     *
-     * @return self
+     * @param null|string $metadesc
      */
-    public function setMetakey($metakey = null)
+    public function setMetadesc(?string $metadesc): void
     {
-        $this->metakey = $metakey;
-
-        return $this;
+        $this->metadesc = $metadesc;
     }
 
     /**
-     * Get metakey
-     *
-     * @return string
+     * @return null|string
      */
-    public function getMetakey()
+    public function getMetakey(): ?string
     {
         return $this->metakey;
     }
 
     /**
-     * Set ordering
-     *
-     * @param integer $ordering
-     *
-     * @return self
+     * @param null|string $metakey
      */
-    public function setOrdering($ordering)
+    public function setMetakey(?string $metakey): void
     {
-        $this->ordering = $ordering;
-
-        return $this;
+        $this->metakey = $metakey;
     }
 
     /**
-     * Get ordering
-     *
-     * @return integer
+     * @return int|null
      */
-    public function getOrdering()
+    public function getPriority(): ?int
     {
-        return $this->ordering;
+        return $this->priority;
     }
 
     /**
-     * Set isPublished
-     *
-     * @param boolean $isPublished
-     *
-     * @return self
+     * @param int|null $priority
      */
-    public function setIsPublished($isPublished)
+    public function setPriority(?int $priority): void
     {
-        $this->isPublished = $isPublished;
-
-        return $this;
+        $this->priority = $priority;
     }
 
     /**
-     * Get isPublished
-     *
-     * @return boolean
+     * @return bool|null
      */
-    public function getIsPublished()
+    public function getisPublished(): ?bool
     {
         return $this->isPublished;
     }
 
     /**
-     * Set isCheckedOut
-     *
-     * @param boolean $isCheckedOut
-     *
-     * @return self
+     * @param bool|null $isPublished
      */
-    public function setIsCheckedOut($isCheckedOut)
+    public function setIsPublished(?bool $isPublished): void
     {
-        $this->isCheckedOut = $isCheckedOut;
-
-        return $this;
+        $this->isPublished = $isPublished;
     }
 
     /**
-     * Get isCheckedOut
-     *
-     * @return boolean
+     * @return bool|null
      */
-    public function getIsCheckedOut()
+    public function getisCheckedOut(): ?bool
     {
         return $this->isCheckedOut;
     }
+
+    /**
+     * @param bool|null $isCheckedOut
+     */
+    public function setIsCheckedOut(?bool $isCheckedOut): void
+    {
+        $this->isCheckedOut = $isCheckedOut;
+    }
+
 }

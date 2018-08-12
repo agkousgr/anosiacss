@@ -119,13 +119,13 @@
 
         // create a namespace to be used throughout the plugin
         var slider = {},
-            // set a reference to our slider element
+            // set a reference to our switchery element
             el = this,
             // get the original window dimens (thanks a lot IE)
             windowWidth = $(window).width(),
             windowHeight = $(window).height();
 
-        // Return if slider is already initialized
+        // Return if switchery is already initialized
         if ($(el).data('bxSlider')) {
             return;
         }
@@ -140,7 +140,7 @@
          * Initializes namespace settings to be used throughout plugin
          */
         var init = function () {
-            // Return if slider is already initialized
+            // Return if switchery is already initialized
             if ($(el).data('bxSlider')) {
                 return;
             }
@@ -163,7 +163,7 @@
             }
             // store active slide information
             slider.active = {index: slider.settings.startSlide};
-            // store if the slider is in carousel mode (displaying / moving multiple slides)
+            // store if the switchery is in carousel mode (displaying / moving multiple slides)
             slider.carousel = slider.settings.minSlides > 1 || slider.settings.maxSlides > 1 ? true : false;
             // if carousel, force preloadImages = 'all'
             if (slider.carousel) {
@@ -173,7 +173,7 @@
             // used to setup and update carousel slides dimensions
             slider.minThreshold = (slider.settings.minSlides * slider.settings.slideWidth) + ((slider.settings.minSlides - 1) * slider.settings.slideMargin);
             slider.maxThreshold = (slider.settings.maxSlides * slider.settings.slideWidth) + ((slider.settings.maxSlides - 1) * slider.settings.slideMargin);
-            // store the current state of the slider (if currently animating, working is true)
+            // store the current state of the switchery (if currently animating, working is true)
             slider.working = false;
             // initialize the controls object
             slider.controls = {};
@@ -257,7 +257,7 @@
                     margin: '0 auto 0px'
                 });
             }
-            // apply css to all slider children
+            // apply css to all switchery children
             slider.children.css({
                 float: slider.settings.mode === 'horizontal' ? 'left' : 'none',
                 listStyle: 'none',
@@ -285,7 +285,7 @@
                     display: 'block'
                 });
             }
-            // create an element to contain all slider controls (pager, start / stop, etc)
+            // create an element to contain all switchery controls (pager, start / stop, etc)
             slider.controls.el = $('<div class="bx-controls" />');
             // if captions are requested, add them
             if (slider.settings.captions) {
@@ -346,7 +346,7 @@
         };
 
         /**
-         * Start the slider
+         * Start the switchery
          */
         var start = function () {
             // if infinite loop, prepare additional slides
@@ -374,7 +374,7 @@
             el.redrawSlider();
             // onSliderLoad callback
             slider.settings.onSliderLoad.call(el, slider.active.index);
-            // slider has been fully initialized
+            // switchery has been fully initialized
             slider.initialized = true;
             // bind the resize call to the window
             if (slider.settings.responsive) {
@@ -555,7 +555,7 @@
         };
 
         /**
-         * Returns the number of individual slides by which to shift the slider
+         * Returns the number of individual slides by which to shift the switchery
          */
         var getMoveBy = function () {
             // if moveSlides was set by the user and moveSlides is less than number of slides showing
@@ -567,7 +567,7 @@
         };
 
         /**
-         * Sets the slider's (el) left or top position
+         * Sets the switchery's (el) left or top position
          */
         var setSlidePosition = function () {
             var position, lastChild, lastShowingIndex;
@@ -709,7 +709,7 @@
                     linkContent = i + 1;
                     slider.pagerEl.addClass('bx-default-pager');
                 }
-                // var linkContent = slider.settings.buildPager && $.isFunction(slider.settings.buildPager) ? slider.settings.buildPager(i) : i + 1;
+                // var linkContent = switchery.settings.buildPager && $.isFunction(switchery.settings.buildPager) ? switchery.settings.buildPager(i) : i + 1;
                 // add the markup to the string
                 pagerHtml += '<div class="bx-pager-item"><a href="" data-slide-index="' + i + '" class="bx-pager-link">' + linkContent + '</a></div>';
             }
@@ -763,7 +763,7 @@
                 slider.controls.directionEl = $('<div class="bx-controls-direction" />');
                 // add the control elements to the directionEl
                 slider.controls.directionEl.append(slider.controls.prev).append(slider.controls.next);
-                // slider.viewport.append(slider.controls.directionEl);
+                // switchery.viewport.append(switchery.controls.directionEl);
                 slider.controls.el.addClass('bx-has-controls-direction').append(slider.controls.directionEl);
             }
         };
@@ -1041,10 +1041,10 @@
         var initTicker = function () {
             var startPosition = 0,
                 position, transform, value, idx, ratio, property, newSpeed, totalDimens;
-            // if autoDirection is "next", append a clone of the entire slider
+            // if autoDirection is "next", append a clone of the entire switchery
             if (slider.settings.autoDirection === 'next') {
                 el.append(slider.children.clone().addClass('bx-clone'));
-                // if autoDirection is "prev", prepend a clone of the entire slider, and set the left position
+                // if autoDirection is "prev", prepend a clone of the entire switchery, and set the left position
             } else {
                 el.prepend(slider.children.clone().addClass('bx-clone'));
                 position = slider.children.first().position();
@@ -1189,7 +1189,7 @@
          *  - DOM event object
          */
         var onTouchStart = function (e) {
-            //disable slider controls while user is interacting with slides to avoid slider freeze that happens on touch devices when a slide swipe happens immediately after interacting with slider controls
+            //disable switchery controls while user is interacting with slides to avoid switchery freeze that happens on touch devices when a slide swipe happens immediately after interacting with switchery controls
             slider.controls.el.addClass('disabled');
 
             if (slider.working) {
@@ -1281,7 +1281,7 @@
          */
         var onTouchEnd = function (e) {
             slider.viewport.unbind('touchmove MSPointerMove pointermove', onTouchMove);
-            //enable slider controls as soon as user stops interacing with slides
+            //enable switchery controls as soon as user stops interacing with slides
             slider.controls.el.removeClass('disabled');
             var orig = e.originalEvent,
                 touchPoints = (typeof orig.changedTouches !== 'undefined') ? orig.changedTouches : [orig],
@@ -1339,11 +1339,11 @@
          * Window resize event callback
          */
         var resizeWindow = function (e) {
-            // don't do anything if slider isn't initialized.
+            // don't do anything if switchery isn't initialized.
             if (!slider.initialized) {
                 return;
             }
-            // Delay if slider working.
+            // Delay if switchery working.
             if (slider.working) {
                 window.setTimeout(resizeWindow, 10);
             } else {
@@ -1476,7 +1476,7 @@
             if (slider.settings.controls) {
                 updateDirectionControls();
             }
-            // if slider is set to mode: "fade"
+            // if switchery is set to mode: "fade"
             if (slider.settings.mode === 'fade') {
                 // if adaptiveHeight is true and next height is different from current height, animate to the new height
                 if (slider.settings.adaptiveHeight && slider.viewport.height() !== getViewportHeight()) {
@@ -1489,7 +1489,7 @@
                     $(this).css('zIndex', slider.settings.slideZIndex);
                     updateAfterSlideTransition();
                 });
-                // slider mode is not "fade"
+                // switchery mode is not "fade"
             } else {
                 // if adaptiveHeight is true and next height is different from current height, animate to the new height
                 if (slider.settings.adaptiveHeight && slider.viewport.height() !== getViewportHeight()) {
@@ -1527,7 +1527,7 @@
                 }
 
                 /* If the position doesn't exist
-                 * (e.g. if you destroy the slider on a next click),
+                 * (e.g. if you destroy the switchery on a next click),
                  * it doesn't throw an error.
                  */
                 if (typeof (position) !== 'undefined') {
@@ -1643,14 +1643,14 @@
         };
 
         /**
-         * Return slider.working variable
+         * Return switchery.working variable
          */
         el.isWorking = function () {
             return slider.working;
         };
 
         /**
-         * Update all dynamic slider elements
+         * Update all dynamic switchery elements
          */
         el.redrawSlider = function () {
             // resize all children in ratio to new screen size
@@ -1681,10 +1681,10 @@
         };
 
         /**
-         * Destroy the current instance of the slider (revert everything back to original state)
+         * Destroy the current instance of the switchery (revert everything back to original state)
          */
         el.destroySlider = function () {
-            // don't do anything if slider has already been destroyed
+            // don't do anything if switchery has already been destroyed
             if (!slider.initialized) {
                 return;
             }
@@ -1731,7 +1731,7 @@
         };
 
         /**
-         * Reload the slider (revert all DOM changes, and re-initialize)
+         * Reload the switchery (revert all DOM changes, and re-initialize)
          */
         el.reloadSlider = function (settings) {
             if (settings !== undefined) {

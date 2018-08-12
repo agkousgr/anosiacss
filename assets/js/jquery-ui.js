@@ -1,6 +1,6 @@
 /*! jQuery UI - v1.10.4 - 2014-01-17
 * http://jqueryui.com
-* Includes: jquery.ui.core.js, jquery.ui.widget.js, jquery.ui.mouse.js, jquery.ui.position.js, jquery.ui.accordion.js, jquery.ui.autocomplete.js, jquery.ui.button.js, jquery.ui.datepicker.js, jquery.ui.dialog.js, jquery.ui.draggable.js, jquery.ui.droppable.js, jquery.ui.effect.js, jquery.ui.effect-blind.js, jquery.ui.effect-bounce.js, jquery.ui.effect-clip.js, jquery.ui.effect-drop.js, jquery.ui.effect-explode.js, jquery.ui.effect-fade.js, jquery.ui.effect-fold.js, jquery.ui.effect-highlight.js, jquery.ui.effect-pulsate.js, jquery.ui.effect-scale.js, jquery.ui.effect-shake.js, jquery.ui.effect-slide.js, jquery.ui.effect-transfer.js, jquery.ui.menu.js, jquery.ui.progressbar.js, jquery.ui.resizable.js, jquery.ui.selectable.js, jquery.ui.slider.js, jquery.ui.sortable.js, jquery.ui.spinner.js, jquery.ui.tabs.js, jquery.ui.tooltip.js
+* Includes: jquery.ui.core.js, jquery.ui.widget.js, jquery.ui.mouse.js, jquery.ui.position.js, jquery.ui.accordion.js, jquery.ui.autocomplete.js, jquery.ui.button.js, jquery.ui.datepicker.js, jquery.ui.dialog.js, jquery.ui.draggable.js, jquery.ui.droppable.js, jquery.ui.effect.js, jquery.ui.effect-blind.js, jquery.ui.effect-bounce.js, jquery.ui.effect-clip.js, jquery.ui.effect-drop.js, jquery.ui.effect-explode.js, jquery.ui.effect-fade.js, jquery.ui.effect-fold.js, jquery.ui.effect-highlight.js, jquery.ui.effect-pulsate.js, jquery.ui.effect-scale.js, jquery.ui.effect-shake.js, jquery.ui.effect-slide.js, jquery.ui.effect-transfer.js, jquery.ui.menu.js, jquery.ui.progressbar.js, jquery.ui.resizable.js, jquery.ui.selectable.js, jquery.ui.switchery.js, jquery.ui.sortable.js, jquery.ui.spinner.js, jquery.ui.tabs.js, jquery.ui.tooltip.js
 * Copyright 2014 jQuery Foundation and other contributors; Licensed MIT */
 
 (function( $, undefined ) {
@@ -11369,7 +11369,7 @@ $.widget("ui.selectable", $.ui.mouse, {
 })(jQuery);
 (function( $, undefined ) {
 
-// number of pages in a slider
+// number of pages in a switchery
 // (how many times can you page up/down to go through the whole range)
 var numPages = 5;
 
@@ -11404,8 +11404,8 @@ $.widget( "ui.slider", $.ui.mouse, {
 		this._mouseInit();
 
 		this.element
-			.addClass( "ui-slider" +
-				" ui-slider-" + this.orientation +
+			.addClass( "ui-switchery" +
+				" ui-switchery-" + this.orientation +
 				" ui-widget" +
 				" ui-widget-content" +
 				" ui-corner-all");
@@ -11426,8 +11426,8 @@ $.widget( "ui.slider", $.ui.mouse, {
 	_createHandles: function() {
 		var i, handleCount,
 			options = this.options,
-			existingHandles = this.element.find( ".ui-slider-handle" ).addClass( "ui-state-default ui-corner-all" ),
-			handle = "<a class='ui-slider-handle ui-state-default ui-corner-all' href='#'></a>",
+			existingHandles = this.element.find( ".ui-switchery-handle" ).addClass( "ui-state-default ui-corner-all" ),
+			handle = "<a class='ui-switchery-handle ui-state-default ui-corner-all' href='#'></a>",
 			handles = [];
 
 		handleCount = ( options.values && options.values.length ) || 1;
@@ -11446,7 +11446,7 @@ $.widget( "ui.slider", $.ui.mouse, {
 		this.handle = this.handles.eq( 0 );
 
 		this.handles.each(function( i ) {
-			$( this ).data( "ui-slider-handle-index", i );
+			$( this ).data( "ui-switchery-handle-index", i );
 		});
 	},
 
@@ -11469,12 +11469,12 @@ $.widget( "ui.slider", $.ui.mouse, {
 				this.range = $( "<div></div>" )
 					.appendTo( this.element );
 
-				classes = "ui-slider-range" +
+				classes = "ui-switchery-range" +
 				// note: this isn't the most fittingly semantic framework class for this element,
 				// but worked best visually with a variety of themes
 				" ui-widget-header ui-corner-all";
 			} else {
-				this.range.removeClass( "ui-slider-range-min ui-slider-range-max" )
+				this.range.removeClass( "ui-switchery-range-min ui-switchery-range-max" )
 					// Handle range switching from true to min/max
 					.css({
 						"left": "",
@@ -11483,7 +11483,7 @@ $.widget( "ui.slider", $.ui.mouse, {
 			}
 
 			this.range.addClass( classes +
-				( ( options.range === "min" || options.range === "max" ) ? " ui-slider-range-" + options.range : "" ) );
+				( ( options.range === "min" || options.range === "max" ) ? " ui-switchery-range-" + options.range : "" ) );
 		} else {
 			if ( this.range ) {
 				this.range.remove();
@@ -11507,9 +11507,9 @@ $.widget( "ui.slider", $.ui.mouse, {
 		}
 
 		this.element
-			.removeClass( "ui-slider" +
-				" ui-slider-horizontal" +
-				" ui-slider-vertical" +
+			.removeClass( "ui-switchery" +
+				" ui-switchery-horizontal" +
+				" ui-switchery-vertical" +
 				" ui-widget" +
 				" ui-widget-content" +
 				" ui-corner-all" );
@@ -11559,7 +11559,7 @@ $.widget( "ui.slider", $.ui.mouse, {
 			.focus();
 
 		offset = closestHandle.offset();
-		mouseOverHandle = !$( event.target ).parents().addBack().is( ".ui-slider-handle" );
+		mouseOverHandle = !$( event.target ).parents().addBack().is( ".ui-switchery-handle" );
 		this._clickOffset = mouseOverHandle ? { left: 0, top: 0 } : {
 			left: event.pageX - offset.left - ( closestHandle.width() / 2 ),
 			top: event.pageY - offset.top -
@@ -11792,8 +11792,8 @@ $.widget( "ui.slider", $.ui.mouse, {
 			case "orientation":
 				this._detectOrientation();
 				this.element
-					.removeClass( "ui-slider-horizontal ui-slider-vertical" )
-					.addClass( "ui-slider-" + this.orientation );
+					.removeClass( "ui-switchery-horizontal ui-switchery-vertical" )
+					.addClass( "ui-switchery-" + this.orientation );
 				this._refreshValue();
 				break;
 			case "value":
@@ -11949,7 +11949,7 @@ $.widget( "ui.slider", $.ui.mouse, {
 	_handleEvents: {
 		keydown: function( event ) {
 			var allowed, curVal, newVal, step,
-				index = $( event.target ).data( "ui-slider-handle-index" );
+				index = $( event.target ).data( "ui-switchery-handle-index" );
 
 			switch ( event.keyCode ) {
 				case $.ui.keyCode.HOME:
@@ -12014,7 +12014,7 @@ $.widget( "ui.slider", $.ui.mouse, {
 			event.preventDefault();
 		},
 		keyup: function( event ) {
-			var index = $( event.target ).data( "ui-slider-handle-index" );
+			var index = $( event.target ).data( "ui-switchery-handle-index" );
 
 			if ( this._keySliding ) {
 				this._keySliding = false;

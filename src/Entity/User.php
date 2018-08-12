@@ -3,12 +3,12 @@
 namespace App\Entity;
 
 
-use Symfony\Component\Validator\Constraints as Assert;
+use Symfony\Component\Security\Core\User\UserInterface;
 
 /**
  * Class User
  */
-class User implements \Serializable
+class User implements UserInterface
 {
     /**
      * @var int|null
@@ -54,6 +54,11 @@ class User implements \Serializable
      * @var int|null
      */
     private $passwordRequestCounter;
+
+    /**
+     * @var \App\Entity\Role|null
+     */
+    private $role;
 
     /**
      * Get id.
@@ -186,6 +191,30 @@ class User implements \Serializable
     }
 
     /**
+     * Get role.
+     *
+     * @return \App\Entity\Role|null
+     */
+    public function getRole(): ?\App\Entity\Role
+    {
+        return $this->role;
+    }
+
+    /**
+     * Set role.
+     *
+     * @param \App\Entity\Role|null $role
+     *
+     * @return User
+     */
+    public function setRole(?\App\Entity\Role $role): User
+    {
+        $this->role = $role;
+
+        return $this;
+    }
+
+    /**
      * Get confirmationToken.
      *
      * @return null|string
@@ -255,6 +284,14 @@ class User implements \Serializable
         $this->passwordRequestCounter = $passwordRequestCounter;
 
         return $this;
+    }
+
+    /**
+     * {@inheritdoc}
+     */
+    public function getRoles()
+    {
+        return [$this->getRole()->getName()];
     }
 
     /**
