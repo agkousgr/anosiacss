@@ -17,6 +17,7 @@ class DefaultController extends MainController
             'cartItems' => $this->cartItems,
             'totalCartItems' => $this->totalCartItems,
             'loggedUser' => $this->loggedUser,
+            'instagramfeed' => $this->instagramfeed
 //            'latest' => $latest
         ]);
     }

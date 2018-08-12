@@ -5,6 +5,7 @@ namespace App\Controller;
 use App\Entity\Cart;
 use Doctrine\ORM\EntityManagerInterface;
 use Psr\Log\LoggerInterface;
+use Vinkla\Instagram\Instagram;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Session\SessionInterface;
 use App\Service\{
@@ -78,6 +79,13 @@ class MainController extends AbstractController
      */
     protected $cartItems;
 
+    /**
+     * @var array
+     */
+    protected $instagramfeed;
+
+
+
 
     public function __construct(
         SoftoneLogin $softoneLogin,
@@ -101,11 +109,15 @@ class MainController extends AbstractController
 
         $this->softoneLogin->login();
         $this->categories = $this->categoryService->getCategories();
-       // array_multisort(array_column($this->categories, "priority"), $this->categories);
+        // array_multisort(array_column($this->categories, "priority"), $this->categories);
         $this->popular = $productService->getCategoryItems(1022);
         $this->featured = $productService->getCategoryItems(1008);
         $this->loggedUser = ($session->get("anosiaUser")) ?: null;
         $this->cartItems = $this->getCartItems();
+        // Create a new instagram instance.
+        $instagram = new Instagram('2209588506.1677ed0.361223b4d3a547eebd1ad92202375d17');
+        // Fetch recent user media items.
+        $this->instagramfeed = $instagram->media();
 
 //        $this->totalCartItems = $em->getRepository(Cart::class)->countCartItems($session->getId(), $session->get('anosiaUser'));
     }
@@ -128,5 +140,16 @@ class MainController extends AbstractController
             dump($this->totalCartItems);
         }
         return ($cartIds) ? $this->cart->getCartItems($cartIds, $cartArr) : '';
+    }
+
+    protected function instragam() {
+        // use this instagram access token generator http://instagram.pixelunion.net/
+        $access_token="CHANGE_TO_YOUR_ACCESS_TOKEN";
+        $photo_count=9;
+             
+        $json_link="https://api.instagram.com/v1/users/self/media/recent/?";
+        $json_link.="access_token={$access_token}&count={$photo_count}";
+        $json = file_get_contents($json_link);
+$obj = json_decode($json, true, 512, JSON_BIGINT_AS_STRING);
     }
 }
