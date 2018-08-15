@@ -151,6 +151,9 @@ admin_login:
     path: /administrator
     controller: App\Controller\Admin\SecurityController::login
 
+admin_logout:
+    path: /admin/logout
+
 admin:
     path: /admin
     controller: App\Controller\Admin\DefaultController::dashboard

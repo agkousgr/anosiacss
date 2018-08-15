@@ -28,8 +28,8 @@ security:
                 secret: '%kernel.secret%'
                 lifetime: 604800
             logout:
-                path: logout
-                target: login
+                path: admin_logout
+                target: admin_login
         main:
             anonymous: true
 

@@ -4,12 +4,14 @@ namespace App\Form\Type;
 
 
 use App\Entity\BlogCategory;
+use Symfony\Bridge\Doctrine\Form\Type\EntityType;
 use Symfony\Component\Form\AbstractType;
 use Symfony\Component\Form\Extension\Core\Type\{CheckboxType,
     FileType,
     IntegerType,
     TextareaType,
     TextType};
+use Doctrine\ORM\EntityRepository;
 use Symfony\Component\Form\FormBuilderInterface;
 use Symfony\Component\OptionsResolver\OptionsResolver;
 
@@ -20,6 +22,16 @@ class BlogCategoryType extends AbstractType
         $builder
             ->add('name', TextType::class)
             ->add('slug', TextType::class)
+            ->add('parent', EntityType::class, [
+                'class' => 'App\Entity\BlogCategory',
+                'choice_label' => 'name',
+                'query_builder' => function(EntityRepository $er) {
+                    return $er->createQueryBuilder('c')
+                        ->orderBy('c.id');
+                },
+                'placeholder' => 'Επιλέξτε γονική κατηγορία',
+                'required' => false
+            ])
             ->add('metakey', TextareaType::class, [
                 'required' => false
             ])

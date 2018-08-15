@@ -18,6 +18,9 @@
             <gedmo:timestampable on="update" />
         </field>
 
+        <many-to-one target-entity="App\Entity\BlogCategory" field="category" inversed-by="blogs">
+            <join-column name="category_id" referenced-column-name="id" nullable="false" />
+        </many-to-one>
         <many-to-one field="createdBy" target-entity="User">
             <join-column name="created_by" nullable="false" />
             <gedmo:blameable on="create" />

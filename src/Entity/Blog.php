@@ -38,7 +38,7 @@ class Blog
     private $description;
 
     /**
-     * @var BlogCategory|null
+     * @var BlogCategory
      */
     private $category;
 
@@ -107,7 +107,7 @@ class Blog
     }
 
     /**
-     * @return BlogCategory|null
+     * @return BlogCategory
      */
     public function getCategory(): ?BlogCategory
     {
@@ -115,7 +115,11 @@ class Blog
     }
 
     /**
-     * @param BlogCategory|null $category
+     * Set BlogCategory
+     *
+     * @param \App\Entity\BlogCategory $facilityOwner
+     *
+     * @return BlogCategory
      */
     public function setCategory(?BlogCategory $category): void
     {

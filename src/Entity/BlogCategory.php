@@ -19,11 +19,6 @@ class BlogCategory
     private $description;
 
     /**
-     * @var string|null
-     */
-    private $image;
-
-    /**
      * @var \App\Entity\BlogCategory
      */
     private $parent;
@@ -44,7 +39,7 @@ class BlogCategory
     private $rgt;
 
     /**
-     * @var \App\Entity\BlogCategory
+     * @var \App\Entity\BlogCategory|null
      */
     private $root;
 
@@ -56,7 +51,7 @@ class BlogCategory
     /**
      * @var \Doctrine\Common\Collections\ArrayCollection
      */
-    private $blog;
+    private $blogs;
 
     /**
      * Constructor
@@ -64,7 +59,7 @@ class BlogCategory
     public function __construct()
     {
         $this->children = new \Doctrine\Common\Collections\ArrayCollection();
-        $this->blog = new \Doctrine\Common\Collections\ArrayCollection();
+        $this->blogs = new \Doctrine\Common\Collections\ArrayCollection();
     }
 
     /**
@@ -127,19 +122,37 @@ class BlogCategory
     }
 
     /**
-     * @return \Doctrine\Common\Collections\ArrayCollection
+     * Add blog
+     *
+     * @param \App\Entity\Blog $blog
+     *
+     * @return Blog
      */
-    public function getBlog(): \Doctrine\Common\Collections\ArrayCollection
+    public function addBlog(\App\Entity\Blog $blog)
     {
-        return $this->blog;
+        $this->blog[] = $blog;
+
+        return $this;
     }
 
     /**
-     * @param \Doctrine\Common\Collections\ArrayCollection $blog
+     * Remove blog
+     *
+     * @param \App\Entity\Blog $blog
      */
-    public function setBlog(\Doctrine\Common\Collections\ArrayCollection $blog): void
+    public function removeBlog(\App\Entity\Blog $blog)
     {
-        $this->blog = $blog;
+        $this->blog->removeElement($blog);
+    }
+
+    /**
+     * Get blogs
+     *
+     * @return \Doctrine\Common\Collections\Collection
+     */
+    public function getBlogs()
+    {
+        return $this->blog;
     }
 
     /**
@@ -165,6 +178,7 @@ class BlogCategory
     {
         return $this->parent;
     }
+
     /**
      * @return int|null
      */
@@ -214,10 +228,9 @@ class BlogCategory
     }
 
     /**
-     * @return BlogCategory
+     * @return BlogCategory|null
      */
-
-    public function getRoot(): BlogCategory
+    public function getRoot(): ?BlogCategory
     {
         return $this->root;
     }
@@ -229,25 +242,9 @@ class BlogCategory
      *
      * @return BlogCategory
      */
-    public function setRoot(BlogCategory $root): void
+    public function setRoot(?BlogCategory $root): void
     {
         $this->root = $root;
-    }
-
-    /**
-     * @return null|string
-     */
-    public function getImage(): ?string
-    {
-        return $this->image;
-    }
-
-    /**
-     * @param null|string $image
-     */
-    public function setImage(?string $image): void
-    {
-        $this->image = $image;
     }
 
     /**

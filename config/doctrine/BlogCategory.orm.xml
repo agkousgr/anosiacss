@@ -3,15 +3,14 @@
                   xmlns:gedmo="http://gediminasm.org/schemas/orm/doctrine-extensions-mapping">
 
     <entity name="App\Entity\BlogCategory" repository-class="App\Repository\BlogCategoryRepository">
-        <id name="id" type="integer" />
-        <!--<generator strategy="AUTO" />-->
-        <!--</id>-->
+        <id name="id" type="integer">
+            <generator strategy="AUTO" />
+        </id>
         <field name="name" length="50" />
         <field name="slug" length="50" />
-        <field name="image" type="text" />
-        <field name="description" type="text"/>
+        <field name="description" type="text" nullable="true" />
         <field name="priority" type="integer" />
-        <field name="metadesc" nullable="true" />
+        <field name="metadesc" nullable="true"  />
         <field name="metakey" nullable="true" />
         <field name="isPublished" type="boolean">
             <options>
@@ -48,7 +47,7 @@
             </order-by>
         </one-to-many>
 
-        <one-to-many target-entity="App\Entity\Blog" mapped-by="category" field="blog" />
+        <one-to-many target-entity="App\Entity\Blog" mapped-by="category" field="blogs" />
 
         <gedmo:tree type="nested"/>
     </entity>

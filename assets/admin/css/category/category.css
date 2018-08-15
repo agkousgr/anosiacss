@@ -74,10 +74,10 @@
     margin-right: 12px;
     font-weight: bold;
 }
-.card-body input, label {
+.card-body > input, .card-body > label {
     margin: 12px 0px 20px 0px;
 }
-.card-body label {
+.card-body > label {
     padding-left: 6px;
     padding-right: 12px;
 }

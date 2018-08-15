@@ -19,6 +19,14 @@
 <div class="row">
     <div class="col-lg-12">
         <div class="form-group">
+            {{ form_label(form.parent, 'Γονική κατηγορία') }}
+            {{ form_widget(form.parent, {'attr': {'class': 'form-control'}}) }}
+        </div>
+    </div>
+</div>
+<div class="row">
+    <div class="col-lg-12">
+        <div class="form-group">
             {{ form_label(form.metakey, 'Meta Keys') }}
             {{ form_widget(form.metakey, {'attr': {'class': 'form-control'}}) }}
         </div>
