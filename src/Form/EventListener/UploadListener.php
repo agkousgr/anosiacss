@@ -32,6 +32,32 @@ class UploadListener
         $this->uploadFile($entity);
     }
 
+    public function preLoad(LifecycleEventArgs $args)
+    {
+        $entity = $args->getEntity();
+
+        if (!$entity instanceof Slider) {
+            return;
+        }
+
+        if ($fileName = $entity->getImage()) {
+            $entity->setImage(new File($this->uploader->getTargetDirectory().'/'.$fileName));
+        }
+    }
+
+    public function postLoad(LifecycleEventArgs $args)
+    {
+        $entity = $args->getEntity();
+
+        if (!$entity instanceof Slider) {
+            return;
+        }
+
+        if ($fileName = $entity->getImage()) {
+            $entity->setImage(new File($this->uploader->getTargetDirectory().'/'.$fileName));
+        }
+    }
+
     private function uploadFile($entity)
     {
         // upload only works for existing entities
@@ -45,11 +71,11 @@ class UploadListener
         // only upload new files
         if ($file instanceof UploadedFile) {
             $fileName = $this->uploader->upload($file);
-            $entity->setBrochure($fileName);
+            $entity->setImage($fileName);
         } elseif ($file instanceof File) {
             // prevents the full file path being saved on updates
             // as the path is set on the postLoad listener
-            $entity->setBrochure($file->getFilename());
+            $entity->setImage($file->getFilename());
         }
     }
 }

@@ -6,93 +6,86 @@ use App\Entity\Slider;
 use App\Form\Type\SliderType;
 use App\Service\FileUploader;
 use Doctrine\ORM\EntityManagerInterface;
+use Psr\Log\LoggerInterface;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
+use Symfony\Component\HttpFoundation\File\File;
 use Symfony\Component\HttpFoundation\Request;
 
 class SliderController extends AbstractController
 {
-    public function list()
+    public function list(EntityManagerInterface $em)
     {
-        return $this->render('Admin/slider/list.html.twig');
+        $slides = $em->getRepository(Slider::class)->findBy(['category' => null],['priority' => 'ASC']);
+        return $this->render('Admin/slider/list.html.twig', [
+            'slides' => $slides
+        ]);
     }
 
-    public function create(Request $request, EntityManagerInterface $em, FileUploader $uploader)
+    public function create(Request $request, EntityManagerInterface $em, LoggerInterface $logger)
     {
-        if ($request->isXmlHttpRequest()) {
-            try {
-                $slider = new Slider();
-                $form = $this->createForm(SliderType::class, $slider);
-                $form->handleRequest($request);
-
-                if ($form->isSubmitted() && $form->isValid()) {
-                    $image = $slider->getImage();
-
-                    $fileName = $uploader->upload($image);
-
-                    // updates the 'image' property to store the Image file name
-                    // instead of its contents
-                    $slider->setImage($fileName);
-                    $em->persist($slider);
-                    $em->flush();
-                    $this->addFlash(
-                        'success',
-                        'Η προσθήκη ολοκληρώθηκε με επιτυχία!'
-                    );
-                }
-                return $this->render('Admin/slider/create.html.twig', [
-                    'form' => $form->createView()
-                ]);
-
-            } catch (\Exception $e) {
+        try {
+            $slider = new Slider();
+            $form = $this->createForm(SliderType::class, $slider, [
+                'action' => $this->generateUrl('slider_add'),
+            ]);
+            $form->handleRequest($request);
+            if ($form->isSubmitted() && $form->isValid()) {
+//                $slider->setImage($form->get('image')->getData());
+                $em->persist($slider);
+                $em->flush();
                 $this->addFlash(
-                    'notice',
-                    'Παρουσιάστηκε σφάλμα κατά την εγγραφή! Παρακαλώ δοκιμάστε ξανά.'
+                    'success',
+                    'Η προσθήκη ολοκληρώθηκε με επιτυχία!'
                 );
-                return $this->render('Admin/slider/list.html.twig');
+                return $this->redirectToRoute('slider_list');
             }
-        } else {
-            throw $this->createNotFoundException('The resource you are looking for could not be found.');
+            return $this->render('Admin/slider/slider.html.twig', [
+                'form' => $form->createView()
+            ]);
+
+        } catch (\Exception $e) {
+            $this->addFlash(
+                'notice',
+                'Παρουσιάστηκε σφάλμα κατά την εγγραφή! Παρακαλώ δοκιμάστε ξανά.'
+            );
+//            $logger->error(__METHOD__ . ' -> {message}', ['message' => $e->getMessage()]);
+//            throw $e;
+            return $this->redirectToRoute('slider_list');
         }
     }
 
-    public function update(Request $request, EntityManagerInterface $em, FileUploader $uploader)
+    public function update(Request $request, int $id, EntityManagerInterface $em, FileUploader $uploader, LoggerInterface $logger)
     {
-        if ($request->isXmlHttpRequest()) {
-            try {
-                $slider = new Slider();
-                $id = $request->query->getInt('id');
-                $em->getRepository()->find($id);
-                $form = $this->createForm(SliderType::class, $slider);
-                $form->handleRequest($request);
+        try {
+            $slider = $em->getRepository(Slider::class)->find($id);
+//            $slider->setImage(new File($uploader->getTargetDirectory().'/'.$slider->getImage()));
+            $form = $this->createForm(SliderType::class, $slider, [
+                'action' => $this->generateUrl('slider_update', ['id' => $id]),
+            ]);
+            dump('zong');
+            $form->handleRequest($request);
 
-                if ($form->isSubmitted() && $form->isValid()) {
-                    $image = $slider->getImage();
-
-                    $fileName = $uploader->upload($image);
-
-                    // updates the 'image' property to store the Image file name
-                    // instead of its contents
-                    $slider->setImage($fileName);
-                    $em->persist($slider);
-                    $em->flush();
-                    $this->addFlash(
-                        'success',
-                        'Η προσθήκη ολοκληρώθηκε με επιτυχία!'
-                    );
-                }
-                return $this->render('Admin/slider/create.html.twig', [
-                    'form' => $form->createView()
-                ]);
-
-            } catch (\Exception $e) {
+            if ($form->isSubmitted() && $form->isValid()) {
+                $em->flush();
                 $this->addFlash(
-                    'notice',
-                    'Παρουσιάστηκε σφάλμα κατά την εγγραφή! Παρακαλώ δοκιμάστε ξανά.'
+                    'success',
+                    'Η ενημέρωση ολοκληρώθηκε με επιτυχία!'
                 );
-                return $this->render('Admin/slider/list.html.twig');
+                return $this->redirectToRoute('slider_list');
             }
-        } else {
-            throw $this->createNotFoundException('The resource you are looking for could not be found.');
+            dump('wtf');
+            return $this->render('Admin/slider/slider.html.twig', [
+                'form' => $form->createView()
+            ]);
+
+        } catch (\Exception $e) {
+            $this->addFlash(
+                'notice',
+                'Παρουσιάστηκε σφάλμα κατά την εγγραφή! Παρακαλώ δοκιμάστε ξανά.'
+            );
+            $logger->error(__METHOD__ . ' -> {message}', ['message' => $e->getMessage()]);
+            throw $e;
+            return $this->redirectToRoute('slider_list');
         }
     }
 }

@@ -73,11 +73,17 @@ class Category
     private $root;
 
     /**
+     * @var \Doctrine\Common\Collections\Collection
+     */
+    private $slides;
+
+    /**
      * Constructor
      */
     public function __construct()
     {
         $this->children = new \Doctrine\Common\Collections\ArrayCollection();
+        $this->slides = new \Doctrine\Common\Collections\ArrayCollection();
     }
 
     /**
@@ -128,6 +134,40 @@ class Category
     public function getChildren()
     {
         return $this->children;
+    }
+
+    /**
+     * Add slide
+     *
+     * @param \App\Entity\Category $slide
+     *
+     * @return Category
+     */
+    public function addSlide(\App\Entity\Slider $slide)
+    {
+        $this->slides[] = $slide;
+
+        return $this;
+    }
+
+    /**
+     * Remove slide
+     *
+     * @param \App\Entity\Category $slide
+     */
+    public function removeSlide(\App\Entity\Category $slide)
+    {
+        $this->slides->removeElement($slide);
+    }
+
+    /**
+     * Get slides
+     *
+     * @return \Doctrine\Common\Collections\Collection
+     */
+    public function getSlides()
+    {
+        return $this->slides;
     }
 
     /**

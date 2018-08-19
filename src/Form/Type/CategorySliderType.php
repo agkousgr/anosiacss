@@ -13,7 +13,7 @@ use Symfony\Component\Form\Extension\Core\Type\{CheckboxType,
 use Symfony\Component\Form\FormBuilderInterface;
 use Symfony\Component\OptionsResolver\OptionsResolver;
 
-class SliderType extends AbstractType
+class CategorySliderType extends AbstractType
 {
     public function buildForm(FormBuilderInterface $builder, array $options)
     {
@@ -22,16 +22,16 @@ class SliderType extends AbstractType
             ->add('description', TextareaType::class, [
                 'required' => false
             ])
-//            ->add('category', EntityType::class, [
-//                'class' => 'App\Entity\Category',
-//                'choice_label' => 'name',
-//                'query_builder' => function(EntityRepository $er) {
-//                    return $er->createQueryBuilder('c')
-//                        ->orderBy('c.id');
-//                },
-//                'placeholder' => 'Επιλέξτε κατηγορία',
-//                'required' => false
-//            ])
+            ->add('category', EntityType::class, [
+                'class' => 'App\Entity\Category',
+                'choice_label' => 'name',
+                'query_builder' => function(EntityRepository $er) {
+                    return $er->createQueryBuilder('c')
+                        ->orderBy('c.id');
+                },
+                'placeholder' => 'Επιλέξτε κατηγορία',
+                'required' => false
+            ])
             ->add('priority', IntegerType::class)
             ->add('url', TextType::class, [
                 'required' => false

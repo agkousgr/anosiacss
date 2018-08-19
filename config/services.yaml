@@ -40,3 +40,8 @@ services:
     App\Service\FileUploader:
         arguments:
             $targetDirectory: '%upload_dirs%'
+
+    App\Form\EventListener\UploadListener:
+        tags:
+        - { name: doctrine.event_listener, event: prePersist }
+        - { name: doctrine.event_listener, event: preUpdate }

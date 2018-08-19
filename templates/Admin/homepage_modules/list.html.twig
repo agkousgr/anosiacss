@@ -73,16 +73,17 @@
                                 <td style="width:20px">#</td>
                                 <td style="width:150px">Image</td>
                                 <td>Slide details</td>
+                                <td style="width:100px;">Σειρά ταξινόμησης</td>
                                 <td style="width:100px">Actions</td>
                             </tr>
                             </thead>
                             <tbody>
 
-                            {% if slides|length > 0 %}
-                                {% for slide in slides %}
+                            {% if modules|length > 0 %}
+                                {% for module in modules %}
                                     <tr>
                                         <th>
-                                            1
+                                            {{ loop.index }}
                                         </th>
 
                                         <td>
@@ -93,21 +94,15 @@
                                         </td>
 
                                         <td>
-                                            <h4>{{ slide.name }}</h4>
-                                            <small>{{ slide.description }}
-                                            </small>
-                                            <br>
-                                            URl: <a target="_blank"
-                                                    href="{{ slide.url }}">{{ slide.url }}</a>
+                                            <h4>{{ module.name }}</h4>
+                                        </td>
+                                        <td style="text-align: center;">
+                                            {{ module.priority }}
                                         </td>
 
                                         <td>
                                             <a id="edit-slide" data-id="1" href="#" class="btn btn-primary btn-sm">
                                                 <i class="fa fa-pencil" aria-hidden="true"></i>
-                                            </a>
-                                            <a href="" class="btn btn-danger btn-sm"
-                                               data-placement="top" data-toggle="tooltip" data-title="Delete">
-                                                <i class="fa fa-trash-o" aria-hidden="true"></i>
                                             </a>
                                         </td>
                                     </tr>

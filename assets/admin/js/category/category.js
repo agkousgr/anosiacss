@@ -10,7 +10,7 @@ $(document).ready(function () {
         displayModal('category_add');
     });
 
-    $('#edit-category').on('click', function (e) {
+    $('.card-body').on('click', '#edit-category', function (e) {
         e.preventDefault();
         displayEditModal('category_update', $(this).data('id'));
     });
@@ -20,7 +20,7 @@ $(document).ready(function () {
             .load(Routing.generate(route));
         modalTitle.text('Προσθήκη κατηγορίας');
         modal.modal('show');
-        $('#slider_isPublished').select2();
+        $('#admin_category_isPublished').select2();
     }
 
     function displayEditModal(route, id) {
@@ -28,7 +28,7 @@ $(document).ready(function () {
             .load(Routing.generate(route, {'id': id}));
         modalTitle.text('Επεξεργασία κατηγορίας');
         modal.modal('show');
-        $('#slider_isPublished').select2();
+        $('#admin_category_isPublished').select2();
     }
 
 });

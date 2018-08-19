@@ -2,24 +2,19 @@
 
 {% macro display_tree(category) %}
     {% import _self as macros %}
-    <ol class="wtree">
+    <ul class="wtree">
         <li><span>{{ category.name }}
-                <a href="" data-id="{{ category.id }}" class="btn btn-danger btn-sm pull-right" data-placement="top" data-toggle="tooltip" data-title="Delete">
-                    <i class="fa fa-trash-o" aria-hidden="true"></i>
-                </a>
-                <a id="edit-category" data-id="{{ category.id }}" href="" class="btn btn-primary btn-sm pull-right">
+                <a href="{{ path('category_slider_list') }}" class="btn btn-primary btn-sm pull-right">
                     <i class="fa fa-pencil" aria-hidden="true"></i>
                 </a>
             </span>
             {% if category.children|length > 0 %}
-                <ol>
-                    {% for subctg in category.children %}
-                        {{ func.display_tree(subctg[0]) }}
-                    {% endfor %}
-                </ol>
+                {% for subctg in category.children %}
+                    {{ macros.display_tree(subctg) }}
+                {% endfor %}
             {% endif %}
         </li>
-    </ol>
+    </ul>
 {% endmacro %}
 {% import _self as func %}
 
@@ -71,17 +66,14 @@
         <div class="col-xs-12 col-sm-12">
             <div class="card mb-3">
                 <div class="card-header">
-                    <span class="pull-right">
-                        <button id="add-category" class="btn btn-primary btn-sm">
-                            <i class="fa fa-plus" aria-hidden="true"></i> Προσθήκη κατηγορίας
-                        </button>
-                    </span>
                     <h3><i class="fa fa-fw fa-indent"></i> Κατηγορίες</h3>
                 </div>
 
                 <div class="card-body">
                     {% if categories|length > 0 %}
-                        {{ func.display_tree(categories[0]) }}
+                        {% for category in categories %}
+                            {{ func.display_tree(category) }}
+                        {% endfor %}
                     {% else %}
                         <h5>Δεν υπάρχουν διαθέσιμες κατηγορίες</h5>
                     {% endif %}
@@ -100,5 +92,5 @@
     <script src="{{ path('fos_js_routing_js', { callback: 'fos.Router.setData' }) }}"></script>
 
     <script src="{{ asset('build/admin/js/jstree.min.js') }}"></script>
-    <script src="{{ asset('build/admin/js/category.js') }}"></script>
+    {#<script src="{{ asset('build/admin/js/category.js') }}"></script>#}
 {% endblock %}

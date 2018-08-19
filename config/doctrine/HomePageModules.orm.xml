@@ -1,0 +1,16 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<doctrine-mapping xmlns="http://doctrine-project.org/schemas/orm/doctrine-mapping">
+
+    <entity name="App\Entity\HomePageModules" repository-class="App\Repository\HomePageModulesRepository">
+        <id name="id" type="integer">
+            <generator strategy="AUTO" />
+        </id>
+        <field name="name" length="150" />
+        <field name="priority" type="integer" />
+        <field name="isPublished" type="boolean" />
+        <field name="url" length="150" nullable="true" />
+
+
+    </entity>
+
+</doctrine-mapping>

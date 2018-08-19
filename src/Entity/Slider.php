@@ -5,8 +5,7 @@ namespace App\Entity;
 use App\Traits\{
     BasicDbFieldsTrait, BlameableTrait, TimestampableTrait
 };
-use http\Env\Url;
-use Symfony\Bridge\Doctrine\Validator\Constraints\UniqueEntity;
+use Symfony\Component\Validator\Constraints as Assert;
 
 class Slider
 {
@@ -14,6 +13,7 @@ class Slider
 
     /**
      * @var string|null
+     *
      */
     private $image;
 
@@ -38,6 +38,11 @@ class Slider
     private $isPublished;
 
     /**
+     * @var Category
+     */
+    private $category;
+
+    /**
      * @return null|string
      */
     public function getImage(): ?string
@@ -46,9 +51,10 @@ class Slider
     }
 
     /**
-     * @param null|string $image
+     * @param $image
+     *
      */
-    public function setImage(?string $image): void
+    public function setImage($image): void
     {
         $this->image = $image;
     }
@@ -115,5 +121,25 @@ class Slider
     public function setIsPublished(?bool $isPublished): void
     {
         $this->isPublished = $isPublished;
+    }
+
+    /**
+     * @return Category
+     */
+    public function getCategory(): ?Category
+    {
+        return $this->category;
+    }
+
+    /**
+     * Set Category
+     *
+     * @param \App\Entity\Category $category
+     *
+     * @return Category
+     */
+    public function setCategory(?Category $category): void
+    {
+        $this->category = $category;
     }
 }

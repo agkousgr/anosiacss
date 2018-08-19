@@ -6,7 +6,7 @@ use App\Traits\{BasicDbFieldsTrait, TimestampableTrait, BlameableTrait, CommonDb
 
 class BlogCategory
 {
-    use BasicDbFieldsTrait, TimestampableTrait, BlameableTrait, CommonDbFieldsTrait;
+    use BasicDbFieldsTrait, CommonDbFieldsTrait, TimestampableTrait, BlameableTrait;
 
     /**
      * @var \DateTime
@@ -39,7 +39,7 @@ class BlogCategory
     private $rgt;
 
     /**
-     * @var \App\Entity\BlogCategory|null
+     * @var \App\Entity\BlogCategory
      */
     private $root;
 
@@ -162,7 +162,7 @@ class BlogCategory
      *
      * @return BlogCategory
      */
-    public function setParent(\App\Entity\BlogCategory $parent = null)
+    public function setParent(?\App\Entity\BlogCategory $parent)
     {
         $this->parent = $parent;
 
@@ -228,7 +228,7 @@ class BlogCategory
     }
 
     /**
-     * @return BlogCategory|null
+     * @return BlogCategory
      */
     public function getRoot(): ?BlogCategory
     {

@@ -2,20 +2,23 @@
 {{ form_start(form) }}
 <div class="row">
     <div class="col-lg-12">
-        <div class="form-group">
-            {{ form_label(form.name, 'Όνομα') }}
-            {{ form_widget(form.name, {'attr': {'class': 'form-control'}}) }}
+        <div class="row">
+            <div class="col-lg-6">
+                <div class="form-group">
+                    {{ form_label(form.name, 'Όνομα') }}
+                    {{ form_widget(form.name, {'attr': {'class': 'form-control'}}) }}
+                </div>
+            </div>
+            <div class="col-lg-6">
+                <div class="form-group">
+                    {{ form_label(form.slug, 'Slug') }}
+                    {{ form_widget(form.slug, {'attr': {'class': 'form-control'}}) }}
+                </div>
+            </div>
         </div>
     </div>
 </div>
-<div class="row">
-    <div class="col-lg-12">
-        <div class="form-group">
-            {{ form_label(form.slug, 'Slug') }}
-            {{ form_widget(form.slug, {'attr': {'class': 'form-control'}}) }}
-        </div>
-    </div>
-</div>
+
 <div class="row">
     <div class="col-lg-12">
         <div class="form-group">

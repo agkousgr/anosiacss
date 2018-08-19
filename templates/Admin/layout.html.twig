@@ -38,29 +38,30 @@
             <div class="container-fluid">
 
                 {% block breadcrumb %}
-                <div class="row">
-                    <div class="col-xl-12">
-                        <div class="breadcrumb-holder">
-                            <h1 class="main-title float-left">Dashboard</h1>
-                            <ol class="breadcrumb float-right">
-                                <li class="breadcrumb-item">Home</li>
-                                <li class="breadcrumb-item active">Dashboard</li>
-                            </ol>
-                            <div class="clearfix"></div>
+                    <div class="row">
+                        <div class="col-xl-12">
+                            <div class="breadcrumb-holder">
+                                <h1 class="main-title float-left">Dashboard</h1>
+                                <ol class="breadcrumb float-right">
+                                    <li class="breadcrumb-item">Home</li>
+                                    <li class="breadcrumb-item active">Dashboard</li>
+                                </ol>
+                                <div class="clearfix"></div>
+                            </div>
                         </div>
                     </div>
-                </div>
-                <!-- end row -->
+                    <!-- end row -->
                 {% endblock %}
 
-                {% block body %}
-                    <div id="flash-messages">
-                        {% for label, messages in app.flashes %}
-                            {% for message in messages %}
-                                <div class="alert alert-{{ label }}">{{ message }}</div>
-                            {% endfor %}
+                <div id="flash-messages">
+                    {% for label, messages in app.flashes %}
+                        {% for message in messages %}
+                            <div class="alert alert-{{ label }}">{{ message }}</div>
                         {% endfor %}
-                    </div>
+                    {% endfor %}
+                </div>
+                {% block body %}
+
                 {% endblock %}
 
             </div>

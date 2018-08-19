@@ -10,13 +10,12 @@ $(document).ready(function () {
         displayModal('slider_add');
     });
 
-    $('#add-slide').on('click', function (e) {
+    $('#edit-slide').on('click', function (e) {
         e.preventDefault();
         displayEditModal('slider_update', $(this).data('id'));
     });
 
     function displayModal(route) {
-        console.log('zong');
         modalBody.empty()
             .load(Routing.generate(route));
         modalTitle.text('Προσθήκη νέου slide');
@@ -25,10 +24,9 @@ $(document).ready(function () {
     }
 
     function displayEditModal(route, id) {
-        console.log('zong');
         modalBody.empty()
             .load(Routing.generate(route, {'id': id}));
-        modalTitle.text('Προσθήκη νέου slide');
+        modalTitle.text('Επεξεργασία slide');
         modal.modal('show');
         $('#slider_isPublished').select2();
     }
