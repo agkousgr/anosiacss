@@ -1,0 +1,87 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <title>Anosiapharmacy Admin {% block title %}{% endblock %}</title>
+    <meta name="description" content="Free Bootstrap 4 Admin Theme | Pike Admin">
+    <meta name="author" content="Pike Web Development - https://www.pikephp.com">
+
+    <!-- Favicon -->
+    <link rel="shortcut icon" href="{{ asset('images/favicon.ico') }}">
+
+    {% block stylesheet %}
+        {{ include('Admin/partials/stylesheet.html.twig') }}
+    {% endblock %}
+</head>
+
+<body class="adminbody">
+<script>
+
+</script>
+<div id="main">
+
+    <!-- top bar navigation -->
+    {{ include('Admin/partials/top_bar_navigation.html.twig') }}
+    <!-- End Navigation -->
+
+    <!-- Left Sidebar -->
+    {{ include('Admin/partials/left_sidebar.html.twig') }}
+    <!-- End Sidebar -->
+
+    <div class="content-page">
+
+        <!-- Start content -->
+        <div class="content">
+
+            <div class="container-fluid">
+
+                {% block breadcrumb %}
+                    <div class="row">
+                        <div class="col-xl-12">
+                            <div class="breadcrumb-holder">
+                                <h1 class="main-title float-left">Dashboard</h1>
+                                <ol class="breadcrumb float-right">
+                                    <li class="breadcrumb-item">Home</li>
+                                    <li class="breadcrumb-item active">Dashboard</li>
+                                </ol>
+                                <div class="clearfix"></div>
+                            </div>
+                        </div>
+                    </div>
+                    <!-- end row -->
+                {% endblock %}
+
+                <div id="flash-messages">
+                    {% for label, messages in app.flashes %}
+                        {% for message in messages %}
+                            <div class="alert alert-{{ label }}">{{ message }}</div>
+                        {% endfor %}
+                    {% endfor %}
+                </div>
+                {% block body %}
+
+                {% endblock %}
+
+            </div>
+            <!-- END container-fluid -->
+
+        </div>
+        <!-- END content -->
+
+    </div>
+    <!-- END content-page -->
+
+    {{ include('Admin/partials/footer.html.twig') }}
+
+</div>
+<!-- END main -->
+
+{% block javascripts %}
+    {{ include('Admin/partials/javascript.html.twig') }}
+{% endblock %}
+
+
+</body>
+</html>

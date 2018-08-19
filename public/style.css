@@ -20822,14 +20822,14 @@ body.modal-open {
     margin: 10px 0 0;
     padding: 0;
     font-weight: 600;
-    font-size: 26px
+    font-size: 20px
 }
 
 .four-column-wrap ul li h4 {
     margin: 0;
     padding: 0;
     font-weight: 600;
-    font-size: 30px
+    font-size: 26px
 }
 
 .four-column-wrap ul li .hover-div {
@@ -23819,10 +23819,10 @@ h3#reply-title {
         font-size: 80px
     }
     .four-column-wrap ul li h5 {
-        font-size: 24px
+        font-size: 18px
     }
     .four-column-wrap ul li h4 {
-        font-size: 24px
+        font-size: 20px
     }
     .four-column-wrap ul li .icon img {
         width: 120px
@@ -24400,17 +24400,17 @@ ul.product_list .availability span.out-of-stock {
 .flash-notice {
     padding:20px;
     margin-bottom: 40px;
-    font-size: 18px;
+    font-size: 14px;
     background-color: #fef1f1;
-    border-color: #fde2e2;
+    border: 1px #fde2e2 solid;
     color: #f56b6b;
 }
 .flash-success {
     padding:20px;
     margin-bottom: 40px;
-    font-size: 18px;
+    font-size: 14px;
     background-color: #ecf3e6;
-    border-color: #dfebd5;
+    border: 1px #749957 solid;
     color: #8fbb6c;
 }
 .general-message {

@@ -29,8 +29,13 @@
                     {{ message }}
                 </div>
             {% endfor %}
+            {% for message in app.flashes('success') %}
+                <div class="flash-success">
+                    {{ message }}
+                </div>
+            {% endfor %}
             <section id="main">
-                <div class="container">
+                {% if cartItems|length > 0 %}
                     <div class="columns_inner">
                         <section id="content">
                             <div class="row">
@@ -41,6 +46,34 @@
                                         {% set step1AreaHidden = '' %}
                                     {% elseif curStep > 1 %}
                                         {% set step1class = '-complete' %}
+                                    {% endif %}
+                                    {% if loggedUser is empty %}
+                                        {#<ul class="nav nav-inline my-2" role="tablist">#}
+                                        {#<li class="nav-item">#}
+                                        <section class="checkout-step">
+                                            <div>
+                                                {#<a class="nav-link active" data-toggle="tab"#}
+                                                {#href="#checkout-guest-form" role="tab"#}
+                                                {#aria-controls="checkout-guest-form"#}
+                                                {#aria-selected="true">#}
+                                                Ολοκλήρωση ως επισκέπτης
+                                                {#</a>#}
+                                                {#</li>#}
+                                                {#<li class="nav-item">#}
+                                                <span href="nav-separator"> | </span>
+                                                {#</li>#}
+                                                {#<li class="nav-item">#}
+                                                <a class="nav-link toggle-sidebar"
+                                                   data-link-action="show-login-form"
+                                                   data-toggle="tab"
+                                                   href="" role="tab"
+                                                   aria-controls="checkout-login-form">
+                                                    Είσοδος
+                                                </a>
+                                                {#</li>#}
+                                                {#</ul>#}
+                                            </div>
+                                        </section>
                                     {% endif %}
                                     <section id="checkout-personal-information-step"
                                              class="checkout-step {{ step1class }} -reachable">
@@ -56,30 +89,6 @@
                                             </a>
                                         </h1>
                                         <div class="content">
-                                            {% if loggedUser is empty %}
-                                                <ul class="nav nav-inline my-2" role="tablist">
-                                                    <li class="nav-item">
-                                                        <a class="nav-link active" data-toggle="tab"
-                                                           href="#checkout-guest-form" role="tab"
-                                                           aria-controls="checkout-guest-form"
-                                                           aria-selected="true">
-                                                            Ολοκλήρωση ως επισκέπτης
-                                                        </a>
-                                                    </li>
-                                                    <li class="nav-item">
-                                                        <span href="nav-separator"> | </span>
-                                                    </li>
-                                                    <li class="nav-item">
-                                                        <a class="nav-link "
-                                                           data-link-action="show-login-form"
-                                                           data-toggle="tab"
-                                                           href="#checkout-login-form" role="tab"
-                                                           aria-controls="checkout-login-form">
-                                                            Είσοδος
-                                                        </a>
-                                                    </li>
-                                                </ul>
-                                            {% endif %}
                                             <div class="tab-content">
                                                 <div class="tab-pane active"
                                                      id="checkout-guest-form" role="tabpanel">
@@ -102,7 +111,22 @@
                                                             <div class="col-md-3 form-control-comment">
                                                             </div>
                                                         </div>
+                                                        <div class="form-group row ">
+                                                            {{ form_label(step1Form.email, 'E-mail', {'label_attr': {'class': 'col-md-3 form-control-label required'}}) }}
+                                                            <div class="col-md-6">
+                                                                {{ form_widget(step1Form.email, {'attr': {'class': 'form-control'}}) }}
+                                                            </div>
+                                                            <div class="col-md-3 form-control-comment">
+                                                            </div>
+                                                        </div>
 
+                                                        <div class="clearfix"></div>
+                                                        <div class="form-group row ">
+                                                            <div class="col-md-12">
+                                                                {{ form_widget(step1Form.newsletter) }}
+                                                                {{ form_label(step1Form.newsletter, 'Εγγραφή στο newsletter. Μπορείτε να διαγραφείτε οποιαδήποτε στιγμή επιθυμείτε.') }}
+                                                            </div>
+                                                        </div>
 
                                                         {#<div class="form-group row ">#}
                                                         {#<label class="col-md-3 form-control-label">#}
@@ -438,7 +462,7 @@
                                                             </div>
                                                             <div class="clearfix"></div>
                                                             <div class="form-group row ">
-                                                                    {{ form_label(step4Form.agreeTerms, 'Έχω διαβάσει και αποδέχομαι ανεπιφύλακτα τους Όρους Χρήσης') }}
+                                                                {{ form_label(step4Form.agreeTerms, 'Έχω διαβάσει και αποδέχομαι ανεπιφύλακτα τους Όρους Χρήσης') }}
                                                                 <div class="col-md-12">
                                                                     {{ form_widget(step4Form.agreeTerms) }}
                                                                 </div>
@@ -509,7 +533,8 @@
                                                         {% for pr in cartItems %}
                                                             <li class="media">
                                                                 <div class="media-left">
-                                                                    <a href="{{ path('product_view', {'id':pr.id}) }}" title="{{ pr.name }}">
+                                                                    <a href="{{ path('product_view', {'id':pr.id}) }}"
+                                                                       title="{{ pr.name }}">
                                                                         <img class="media-object"
                                                                              src="{{ pr.imageUrl }}"
                                                                              alt="{{ pr.name }}">
@@ -533,7 +558,8 @@
                                                  id="cart-subtotal-products">
                                                 <span class="label">Μερικό σύνολο</span>
                                                 <span class="value">€</span>
-                                                <span id="cart-cost" data-cost="{{ cartSubTotal }}" class="value">{{ cartSubTotal|number_format(2, ',', '.') }}</span>
+                                                <span id="cart-cost" data-cost="{{ cartSubTotal }}"
+                                                      class="value">{{ cartSubTotal|number_format(2, ',', '.') }}</span>
                                             </div>
                                             <div class="cart-summary-line cart-summary-subtotals"
                                                  id="cart-subtotal-shipping">
@@ -556,7 +582,8 @@
                                             <div class="cart-summary-line cart-total">
                                                 <span class="label">Σύνολο (με ΦΠΑ)</span>
                                                 <span class="value">€</span>
-                                                <span id="total-cost" data-cost="{{ cartTotal }}" class="value">{{ cartTotal|number_format(2, ',', '.') }}
+                                                <span id="total-cost" data-cost="{{ cartTotal }}"
+                                                      class="value">{{ cartTotal|number_format(2, ',', '.') }}
                                                 </span>
                                             </div>
                                             <div class="cart-summary-line">
@@ -567,45 +594,46 @@
                                     </section>
 
                                     {#<div id="block-reassurance">#}
-                                        {#<ul>#}
-                                            {#<li>#}
-                                                {#<div class="block-reassurance-item">#}
-                                                    {#<img src="https://demo.templatetrip.com/Prestashop/PRS06/PRS176_gym/modules/blockreassurance/img/ic_verified_user_black_36dp_1x.png"#}
-                                                         {#alt="Security policy (edit with Customer reassurance module)">#}
-                                                    {#<span class="h6">Security policy (edit with#}
-                                                        {#Customer reassurance#}
-                                                        {#module)</span>#}
-                                                {#</div>#}
-                                            {#</li>#}
-                                            {#<li>#}
-                                                {#<div class="block-reassurance-item">#}
-                                                    {#<img src="https://demo.templatetrip.com/Prestashop/PRS06/PRS176_gym/modules/blockreassurance/img/ic_local_shipping_black_36dp_1x.png"#}
-                                                         {#alt="Delivery policy (edit with Customer reassurance module)">#}
-                                                    {#<span class="h6">Delivery policy (edit with#}
-                                                        {#Customer reassurance#}
-                                                        {#module)</span>#}
-                                                {#</div>#}
-                                            {#</li>#}
-                                            {#<li>#}
-                                                {#<div class="block-reassurance-item">#}
-                                                    {#<img src="https://demo.templatetrip.com/Prestashop/PRS06/PRS176_gym/modules/blockreassurance/img/ic_swap_horiz_black_36dp_1x.png"#}
-                                                         {#alt="Return policy (edit with Customer reassurance module)">#}
-                                                    {#<span class="h6">Return policy (edit with#}
-                                                        {#Customer reassurance#}
-                                                        {#module)</span>#}
-                                                {#</div>#}
-                                            {#</li>#}
-                                        {#</ul>#}
+                                    {#<ul>#}
+                                    {#<li>#}
+                                    {#<div class="block-reassurance-item">#}
+                                    {#<img src="https://demo.templatetrip.com/Prestashop/PRS06/PRS176_gym/modules/blockreassurance/img/ic_verified_user_black_36dp_1x.png"#}
+                                    {#alt="Security policy (edit with Customer reassurance module)">#}
+                                    {#<span class="h6">Security policy (edit with#}
+                                    {#Customer reassurance#}
+                                    {#module)</span>#}
+                                    {#</div>#}
+                                    {#</li>#}
+                                    {#<li>#}
+                                    {#<div class="block-reassurance-item">#}
+                                    {#<img src="https://demo.templatetrip.com/Prestashop/PRS06/PRS176_gym/modules/blockreassurance/img/ic_local_shipping_black_36dp_1x.png"#}
+                                    {#alt="Delivery policy (edit with Customer reassurance module)">#}
+                                    {#<span class="h6">Delivery policy (edit with#}
+                                    {#Customer reassurance#}
+                                    {#module)</span>#}
+                                    {#</div>#}
+                                    {#</li>#}
+                                    {#<li>#}
+                                    {#<div class="block-reassurance-item">#}
+                                    {#<img src="https://demo.templatetrip.com/Prestashop/PRS06/PRS176_gym/modules/blockreassurance/img/ic_swap_horiz_black_36dp_1x.png"#}
+                                    {#alt="Return policy (edit with Customer reassurance module)">#}
+                                    {#<span class="h6">Return policy (edit with#}
+                                    {#Customer reassurance#}
+                                    {#module)</span>#}
+                                    {#</div>#}
+                                    {#</li>#}
+                                    {#</ul>#}
                                     {#</div>#}
 
                                 </div>
                             </div>
                         </section>
-
                     </div>
-
-                </div>
-
+                {% else %}
+                    <div class="col-xs-12 general-message">Δεν υπάρχουν προϊόντα στο
+                        καλάθι σας!
+                    </div>
+                {% endif %}
             </section>
         </div>
         {% include 'home_page_modules/14_newsletter.html.twig' %}

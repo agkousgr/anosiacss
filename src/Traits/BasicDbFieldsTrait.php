@@ -46,16 +46,11 @@ trait BasicDbFieldsTrait
     }
 
     /**
-     * Set name.
-     *
      * @param null|string $name
-     *
-     * @return object
      */
-    public function setName(?string $name): object
+    public function setName(?string $name): void
     {
         $this->name = $name;
-
-        return $this;
     }
+
 }

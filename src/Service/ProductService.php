@@ -57,7 +57,7 @@ class ProductService
     <AuthID>$this->authId</AuthID>
     <AppID>157</AppID>
     <CompanyID>1000</CompanyID>
-    <pagesize>10</pagesize>
+    <pagesize>100</pagesize>
     <pagenumber>0</pagenumber>
     <CategoryID>$ctgId</CategoryID>
     <SearchToken>null</SearchToken>
@@ -88,7 +88,7 @@ EOF;
         $message = <<<EOF
 <?xml version="1.0" encoding="utf-16"?>
 <ClientGetCategoryItemsCountRequest>
-    <Type>1011</Type>
+    <Type>1040</Type>
     <Kind>1</Kind>
     <Domain>pharmacyone</Domain>
     <AuthID>$this->authId</AuthID>
@@ -104,7 +104,7 @@ EOF;
         try {
             $result = $client->SendMessage(['Message' => $message]);
             $items = simplexml_load_string(str_replace("utf-16", "utf-8", $result->SendMessageResult));
-            dump($message, $result);
+//            dump($message, $result);
             return (int)$items->GetDataRows->GetItemsCountRow->Count;
         } catch (\SoapFault $sf) {
             echo $sf->faultstring;
@@ -205,8 +205,8 @@ EOF;
                 $prArr = array(
                     'id' => $pr->ID,
                     'name' => $pr->Name2,
-                    'summary' => $pr->SmallDescriptionHTML,
-                    'body' => $pr->LargeDescriptionHTML,
+                    'summary' => strip_tags($pr->SmallDescriptionHTML),
+                    'body' => strip_tags($pr->LargeDescriptionHTML),
                     'extraInfo' => $pr->InstructionsHTML,
                     'retailPrice' => $pr->RetailPrice,
                     'discount' => $pr->WebDiscountPerc,

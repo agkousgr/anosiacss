@@ -22,6 +22,7 @@ class CartController extends MainController
                 'categories' => $this->categories,
                 'cartItems' => $this->cartItems,
                 'totalCartItems' => $this->totalCartItems,
+                'totalWishlistItems' => $this->totalWishlistItems,
                 'popular' => $this->popular,
                 'featured' => $this->featured,
                 'loggedUser' => $this->loggedUser,
@@ -58,7 +59,7 @@ class CartController extends MainController
         }
     }
 
-    public function deleteCartItem(EntityManagerInterface $em, int $id, SessionInterface $session)
+    public function deleteCartItem(EntityManagerInterface $em, int $id)
     {
         try {
             if (!$id) {

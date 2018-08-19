@@ -34,9 +34,17 @@
                     <div class="col-md-9 column">
                         <div class="product-list">
                             <h2>{{ ctgInfo.name }}
-                                <span>(Showing 1 – 60 products of 1,070 products)</span>
+                                <span>(Εμφάνιση 1 – 60 προϊόντα σε σύνολο {{ products.getTotalItemCount }})</span>
                             </h2>
                             <div class="sorting-head clearfix">
+                                {#<table>#}
+                                    {#<tr>#}
+                                        {# sorting of properties based on query components #}
+                                        {#<th>{{ knp_pagination_sortable(products, 'Id', 'a.id') }}</th>#}
+                                        {#<th{% if products.isSorted('products.Title') %} class="sorted"{% endif %}>{{ knp_pagination_sortable(products, 'Title', 'a.title') }}</th>#}
+                                        {#<th>{{ knp_pagination_sortable(products, 'Release', ['products.date', 'products.time']) }}</th>#}
+                                    {#</tr>#}
+                                {#</table>#}
                                 <div class="row">
                                     <div class="col-sm-6 col-md-7 visible-lg visible-md  visible-sm">
                                         <div class="btn-group">
@@ -146,6 +154,7 @@
                                 {% endfor %}
                             </div>
                             <nav aria-label="Page navigation">
+                                {{ knp_pagination_render(products) }}
                                 <ul class="pagination">
                                     <li>
                                         <a href="#" aria-label="Previous">

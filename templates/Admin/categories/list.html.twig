@@ -1,0 +1,104 @@
+{% extends 'Admin/layout.html.twig' %}
+
+{% macro display_tree(category) %}
+    {% import _self as macros %}
+    <ol class="wtree">
+        <li><span>{{ category.name }}
+                <a href="" data-id="{{ category.id }}" class="btn btn-danger btn-sm pull-right" data-placement="top" data-toggle="tooltip" data-title="Delete">
+                    <i class="fa fa-trash-o" aria-hidden="true"></i>
+                </a>
+                <a id="edit-category" data-id="{{ category.id }}" href="" class="btn btn-primary btn-sm pull-right">
+                    <i class="fa fa-pencil" aria-hidden="true"></i>
+                </a>
+            </span>
+            {% if category.children|length > 0 %}
+                <ol>
+                    {% for subctg in category.children %}
+                        {{ func.display_tree(subctg[0]) }}
+                    {% endfor %}
+                </ol>
+            {% endif %}
+        </li>
+    </ol>
+{% endmacro %}
+{% import _self as func %}
+
+
+
+{% block stylesheet %}
+    {{ parent() }}
+    {#<link href="{{ asset('build/admin/css/jstree.css') }}" rel="stylesheet" type="text/css" />#}
+    <link href="{{ asset('build/admin/css/category.css') }}" rel="stylesheet" type="text/css"/>
+{% endblock %}
+
+{% block title %}| Κατηγορίες{% endblock %}
+
+{% block breadcrumb %}
+    <div class="row">
+        <div class="col-xl-12">
+            <div class="breadcrumb-holder">
+                <h1 class="main-title float-left">Κατηγορίες</h1>
+                <ol class="breadcrumb float-right">
+                    <li class="breadcrumb-item">Home</li>
+                    <li class="breadcrumb-item active">Κατηγορίες</li>
+                </ol>
+                <div class="clearfix"></div>
+            </div>
+        </div>
+    </div>
+    <!-- end row -->
+{% endblock %}
+
+{% block body %}
+    {#MODAL#}
+    <div class="modal fade custom-modal" tabindex="-1" role="dialog" aria-labelledby="modal_add_slide"
+         aria-hidden="true"
+         id="modal_add_slide">
+        <div class="modal-dialog">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title"></h5>
+                    <button type="button" class="close" data-dismiss="modal"><span aria-hidden="true">×</span><span
+                                class="sr-only">Κλείσιμο</span></button>
+                </div>
+                <div class="modal-body"></div>
+            </div>
+        </div>
+    </div>
+
+    <div class="row">
+
+        <div class="col-xs-12 col-sm-12">
+            <div class="card mb-3">
+                <div class="card-header">
+                    <span class="pull-right">
+                        <button id="add-category" class="btn btn-primary btn-sm">
+                            <i class="fa fa-plus" aria-hidden="true"></i> Προσθήκη κατηγορίας
+                        </button>
+                    </span>
+                    <h3><i class="fa fa-fw fa-indent"></i> Κατηγορίες</h3>
+                </div>
+
+                <div class="card-body">
+                    {% if categories|length > 0 %}
+                        {{ func.display_tree(categories[0]) }}
+                    {% else %}
+                        <h5>Δεν υπάρχουν διαθέσιμες κατηγορίες</h5>
+                    {% endif %}
+
+                </div>
+            </div><!-- end card-->
+        </div>
+        <!-- end col -->
+
+    </div>
+{% endblock %}
+
+{% block javascripts %}
+    {{ parent() }}
+    <script src="{{ asset('bundles/fosjsrouting/js/router.js') }}"></script>
+    <script src="{{ path('fos_js_routing_js', { callback: 'fos.Router.setData' }) }}"></script>
+
+    <script src="{{ asset('build/admin/js/jstree.min.js') }}"></script>
+    <script src="{{ asset('build/admin/js/category.js') }}"></script>
+{% endblock %}

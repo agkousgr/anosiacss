@@ -1,0 +1,62 @@
+{% extends 'Admin/layout.html.twig' %}
+
+{% block stylesheet %}
+    {{ parent() }}
+    <!-- BEGIN CSS for this page -->
+    <style>
+        .bigfonts {
+            font-size: 30px;
+            color: #4e4e4e;
+        }
+    </style>
+    <!-- END CSS for this page -->
+{% endblock %}
+
+{% block title %}| Slider{% endblock %}
+
+{% block breadcrumb %}
+    <div class="row">
+        <div class="col-xl-12">
+            <div class="breadcrumb-holder">
+                <h1 class="main-title float-left">Slider</h1>
+                <ol class="breadcrumb float-right">
+                    <li class="breadcrumb-item">Home</li>
+                    <li class="breadcrumb-item active">Slider</li>
+                </ol>
+                <div class="clearfix"></div>
+            </div>
+        </div>
+    </div>
+    <!-- end row -->
+{% endblock %}
+
+{% block body %}
+    {#MODAL#}
+    <div class="modal fade custom-modal" tabindex="-1" role="dialog" aria-labelledby="modal_add_slide" aria-hidden="true"
+     id="modal_add_slide">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title"></h5>
+                <button type="button" class="close" data-dismiss="modal"><span aria-hidden="true">×</span><span
+                            class="sr-only">Κλείσιμο</span></button>
+            </div>
+            <div class="modal-body"></div>
+        </div>
+    </div>
+    </div>
+
+    <div class="row">
+
+
+        <!-- end col -->
+
+    </div>
+{% endblock %}
+
+{% block javascripts %}
+    {{ parent() }}
+    <script src="{{ asset('bundles/fosjsrouting/js/router.js') }}"></script>
+    <script src="{{ path('fos_js_routing_js', { callback: 'fos.Router.setData' }) }}"></script>
+    <script src="{{ asset('build/admin/js/slider.js') }}"></script>
+{% endblock %}

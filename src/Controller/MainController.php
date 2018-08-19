@@ -2,7 +2,7 @@
 
 namespace App\Controller;
 
-use App\Entity\Cart;
+use App\Entity\{Cart, Category, Wishlist};
 use Doctrine\ORM\EntityManagerInterface;
 use Psr\Log\LoggerInterface;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
@@ -42,6 +42,11 @@ class MainController extends AbstractController
      * @var int
      */
     protected $totalCartItems;
+
+    /**
+     * @var int
+     */
+    protected $totalWishlistItems;
 
     /**
      * @var \App\Service\ProductService
@@ -84,6 +89,7 @@ class MainController extends AbstractController
     protected $cartItems;
 
     /**
+
      * @var int
      */
     protected $clientId;
@@ -92,6 +98,7 @@ class MainController extends AbstractController
      * @var string
      */
     protected $cache_expire;
+
 
 
     public function __construct(
@@ -119,24 +126,30 @@ class MainController extends AbstractController
         $this->logger = $logger;
         $this->em = $em;
         $this->totalCartItems = 0;
+        $this->totalWishlistItems = 0;
+
 
         if ($this->session->has("authID") === false) {
-            dump('go login');
             $authID = $this->softoneLogin->login();
             $this->session->set('authID', $authID);
         }
         dump($this->session);
-        $this->categories = $this->categoryService->getCategories($this->session->get('authID'));
+        $repo = $this->em->getRepository(Category::class);
+        $this->categories = $repo->childrenHierarchy();
 
         if ($this->categories) {
             array_multisort(array_column($this->categories, "priority"), $this->categories);
         }
         $this->popular = $productService->getCategoryItems(1022, $this->session->get('authID'));
         $this->featured = $productService->getCategoryItems(1008, $this->session->get('authID'));
-        $this->loggedUser = ($session->get("anosiaUser")) ?: null;
-        $this->loggedName = ($session->get("anosiaName")) ?: null;
-        $this->loggedClientId = ($session->get("anosiaClientId")) ?: null;
+        $this->loggedUser = ($this->session->get("anosiaUser")) ?: null;
+        $this->loggedName = ($this->session->get("anosiaName")) ?: null;
+        $this->loggedClientId = ($this->session->get("anosiaClientId")) ?: null;
+
         $this->cartItems = $this->getCartItems();
+        $this->totalWishlistItems = $this->em->getRepository(Wishlist::class)->countWishlistItems($this->session->getId(), $this->loggedUser);
+        dump($this->session);
+
 
 //        $this->totalCartItems = $em->getRepository(Cart::class)->countCartItems($session->getId(), $session->get('anosiaUser'));
     }
@@ -160,4 +173,5 @@ class MainController extends AbstractController
         }
         return ($cartIds) ? $this->cart->getCartItems($cartIds, $cartArr) : '';
     }
+
 }

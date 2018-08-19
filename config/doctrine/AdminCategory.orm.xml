@@ -1,0 +1,71 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<doctrine-mapping xmlns="http://doctrine-project.org/schemas/orm/doctrine-mapping"
+                  xmlns:gedmo="http://gediminasm.org/schemas/orm/doctrine-extensions-mapping">
+
+    <entity name="App\Entity\AdminCategory" table="admin_category" repository-class="App\Repository\AdminCategoryRepository">
+
+        <id name="id" type="integer" column="id">
+            <generator strategy="AUTO"/>
+        </id>
+
+        <field name="name" type="string" length="128"/>
+        <field name="slug" length="150" />
+        <field name="description" type="text" nullable="true" />
+        <field name="priority" type="integer" />
+        <field name="metadesc" nullable="true"  />
+        <field name="metakey" nullable="true" />
+        <field name="isPublished" type="boolean">
+            <options>
+                <option name="default">0</option>
+            </options>
+        </field>
+        <field name="isCheckedOut" type="boolean">
+            <options>
+                <option name="default">0</option>
+            </options>
+        </field>
+        <field name="deletedAt" type="datetime" nullable="true" />
+        <field name="createdAt" type="datetime">
+            <gedmo:timestampable on="create" />
+        </field>
+        <field name="updatedAt" type="datetime">
+            <gedmo:timestampable on="update" />
+        </field>
+
+        <field name="left" column="lft" type="integer">
+            <gedmo:tree-left/>
+        </field>
+        <field name="right" column="rgt" type="integer">
+            <gedmo:tree-right/>
+        </field>
+        <field name="level" column="lvl" type="integer">
+            <gedmo:tree-level/>
+        </field>
+        <many-to-one field="root" target-entity="AdminCategory">
+            <join-column name="tree_root" referenced-column-name="id" on-delete="CASCADE"/>
+            <gedmo:tree-root/>
+        </many-to-one>
+        <many-to-one field="parent" target-entity="AdminCategory" inversed-by="children">
+            <join-column name="parent_id" referenced-column-name="id" on-delete="CASCADE"/>
+            <gedmo:tree-parent/>
+        </many-to-one>
+        <one-to-many field="children" target-entity="AdminCategory" mapped-by="parent">
+            <order-by>
+                <order-by-field name="left" direction="ASC" />
+            </order-by>
+        </one-to-many>
+
+        <many-to-one target-entity="User" field="createdBy">
+            <join-column name="created_by" referenced-column-name="id" nullable="false" />
+            <gedmo:blameable on="create" />
+        </many-to-one>
+        <many-to-one target-entity="User" field="updatedBy">
+            <join-column name="updated_by" referenced-column-name="id" nullable="false" />
+            <gedmo:blameable on="update" />
+        </many-to-one>
+
+        <gedmo:tree type="nested"/>
+
+    </entity>
+
+</doctrine-mapping>

@@ -128,6 +128,7 @@ class UserAccountController extends MainController
                     'featured' => $this->featured,
                     'cartItems' => $this->cartItems,
                     'totalCartItems' => $this->totalCartItems,
+                    'totalWishlistItems' => $this->totalWishlistItems,
                     'loggedName' => $this->loggedName,
                     'loggedUser' => $this->loggedUser,
                     'userData' => $userData,
@@ -178,6 +179,7 @@ class UserAccountController extends MainController
                     'featured' => $this->featured,
                     'cartItems' => $this->cartItems,
                     'totalCartItems' => $this->totalCartItems,
+                    'totalWishlistItems' => $this->totalWishlistItems,
                     'loggedName' => $this->loggedName,
                     'loggedUser' => $this->loggedUser,
 //                'userData' => $userData,
@@ -230,6 +232,7 @@ class UserAccountController extends MainController
                     'featured' => $this->featured,
                     'cartItems' => $this->cartItems,
                     'totalCartItems' => $this->totalCartItems,
+                    'totalWishlistItems' => $this->totalWishlistItems,
                     'loggedName' => $this->loggedName,
                     'loggedUser' => $this->loggedUser,
 //                'userData' => $userData,
@@ -287,6 +290,7 @@ class UserAccountController extends MainController
                 'featured' => $this->featured,
                 'cartItems' => $this->cartItems,
                 'totalCartItems' => $this->totalCartItems,
+                'totalWishlistItems' => $this->totalWishlistItems,
                 'loggedName' => $this->loggedName,
                 'loggedUser' => $this->loggedUser,
                 'form' => $form->createView(),
@@ -302,6 +306,7 @@ class UserAccountController extends MainController
     {
         $this->session->remove('anosiaUser');
         $this->session->remove('anosiaName');
+        $this->session->remove('curOrder');
         return $this->redirectToRoute('index');
     }
 

@@ -1,0 +1,149 @@
+{% extends 'layout.html.twig' %}
+
+{% block bodyId %}cart{% endblock %}
+{% block title %} | Καλάθι{% endblock %}
+{% block slider %}{% endblock %}
+{% block stylesheets %}
+    {{ parent() }}
+    <link href="{{ asset('build/css/orders.css') }}" rel="stylesheet"/>
+{% endblock %}
+{% block breadcrumb %}
+
+{% endblock %}
+
+{% block body %}
+    {% include 'partials/sidebar_login.html.twig' %}
+    {% include 'partials/swipe_menu.html.twig' %}
+    {% include 'partials/site_header.html.twig' %}
+    <div class="page-header">
+        <div class="container">
+            <div class="row">
+                <div class="col-md-6"><h1>Wishlist</h1></div>
+            </div>
+        </div>
+    </div>
+    <div class="section" style="background-image:url({{ asset('images/bg-5.jpg') }});">
+        <div class="container">
+            {% for message in app.flashes('notice') %}
+                <div class="flash-notice">
+                    {{ message }}
+                </div>
+            {% endfor %}
+            {% for message in app.flashes('success') %}
+                <div class="flash-success">
+                    {{ message }}
+                </div>
+            {% endfor %}
+            <section id="main">
+                <div class="cart-grid row">
+                    <!-- Left Block: cart product informations & shpping -->
+                    <div class="cart-grid-body col-xs-12 col-lg-8">
+
+                        <!-- cart products detailed -->
+                        <div class="card cart-container">
+                            <div class="card-block">
+                                <h1 class="h1">Wishlist</h1>
+                            </div>
+                            <hr class="separator">
+                            {% if wishlistItems|length > 0 %}
+                                <div class="cart-overview js-cart" data-refresh-url="">
+
+                                    <ul class="cart-items">
+                                        {% for pr in wishlistItems %}
+                                            <li class="cart-item">
+                                                <div class="product-line-grid">
+                                                    <!--  product left content: image-->
+                                                    <div class="product-line-grid-left col-md-3 col-xs-4">
+                                                        <span class="product-image media-middle">
+                                                            <img src="{{ pr.imageUrl }}"
+                                                                 alt="{{ pr.name }}">
+                                                        </span>
+                                                    </div>
+
+                                                    <!--  product left body: description -->
+                                                    <div class="product-line-grid-body col-md-4 col-xs-8">
+                                                        <div class="product-line-info">
+                                                            <a class=""
+                                                               href="{{ path('product_view', {'id':pr.id}) }}">{{ pr.name }}</a>
+                                                        </div>
+
+                                                        <div class="product-line-info product-price h5 has-discount">
+                                                            {% if pr.discount > 0 %}
+                                                                <div class="product-discount">
+                                                                    <span class="regular-price">{{ pr.retailPrice|number_format(2, ',', '.') }}
+                                                                        €</span>
+                                                                    <span class="discount discount-amount">-{{ pr.discount }}
+                                                                        %</span>
+                                                                </div>
+                                                            {% endif %}
+                                                            <div class="current-price">
+                                                                <span class="price">{{ pr.webPrice|number_format(2, ',', '.') }}
+                                                                    €</span>
+                                                            </div>
+                                                        </div>
+
+                                                        {#<br>#}
+
+                                                        {#<div class="product-line-info">#}
+                                                        {#<span class="label">Dimension:</span>#}
+                                                        {#<span class="value">40x60cm</span>#}
+                                                        {#</div>#}
+
+                                                    </div>
+
+                                                    <!--  product left body: description -->
+                                                    <div class="product-line-grid-right product-line-actions col-md-5 col-xs-12">
+                                                        <div class="row">
+                                                            <div class="col-xs-4 hidden-md-up"></div>
+                                                            <div class="col-md-10 col-xs-6">
+                                                                <div class="row">
+                                                                    <div class="col-md-4 col-xs-2 price">
+
+                                                                    </div>
+                                                                </div>
+                                                            </div>
+                                                            <div class="col-md-2 col-xs-2 text-xsright">
+                                                                <div class="cart-line-product-actions">
+                                                                    <a class="remove-from-cart"
+                                                                       rel="nofollow"
+                                                                       href="{{ path('delete_wishlist_item', {'id':pr.wishlistId}) }}">
+                                                                        <i class="material-icons float-xs-left">delete</i>
+                                                                    </a>
+                                                                </div>
+                                                            </div>
+                                                        </div>
+                                                    </div>
+                                                    <div class="clearfix"></div>
+                                                </div>
+                                            </li>
+                                            <input type="hidden" name="cart" value="1">
+                                        {% endfor %}
+
+                                    </ul>
+                                </div>
+                            {% else %}
+                                <div class="col-xs-12 general-message">Δεν υπάρχουν προϊόντα στο
+                                    καλάθι σας!
+                                </div>
+                            {% endif %}
+                        </div>
+                        <a style="font-size:16px;" class=""
+                           href="javascript:history.back()">
+                            <i class="fa fa-chevron-left"></i> Συνεχίστε τις αγορές σας
+                        </a>
+                        <!-- shipping informations -->
+                    </div>
+
+                </div>
+            </section>
+        </div>
+        {% include 'home_page_modules/14_newsletter.html.twig' %}
+        {% include 'home_page_modules/15_social.html.twig' %}
+        {% include 'partials/footer.html.twig' %}
+    </div>
+{% endblock %}
+
+{% block javascripts %}
+    {{ parent() }}
+    <script src="{{ asset('build/js/wishlist.js') }}"></script>
+{% endblock %}

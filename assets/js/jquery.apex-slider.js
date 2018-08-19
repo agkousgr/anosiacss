@@ -128,16 +128,16 @@
 				this.opt.videoStarted = false;
 				this.opt.videoStopped = false;	
 					
-				//Init slider
+				//Init switchery
 				this.init();
 			}
 			
 			ApexSlider.prototype = {
 				
-				//Init slider
+				//Init switchery
 				init:function() {
 					var that = this;
-					if (this.container.attr('id')==undefined) this.container.attr('id',"apex-slider-"+Math.round(Math.random()*1000+5));
+					if (this.container.attr('id')==undefined) this.container.attr('id',"apex-switchery-"+Math.round(Math.random()*1000+5));
 					
 					//Check browser type
 					this.checkBrowser();
@@ -436,8 +436,8 @@
 				//Create shadow
 				createShadow:function() {
 					if (this.opt.shadow) {
-						this.container.parent().append('<div class="apex-slider-shadow apex-slider-shadow'+this.opt.shadow+'"></div>');
-						this.container.parent().find('.apex-slider-shadow').css({'width':this.opt.width});
+						this.container.parent().append('<div class="apex-switchery-shadow apex-switchery-shadow'+this.opt.shadow+'"></div>');
+						this.container.parent().find('.apex-switchery-shadow').css({'width':this.opt.width});
 					}
 				},
 				
@@ -453,7 +453,7 @@
 						that.setSize($(this));					
 			
 						try{
-							that.container.parent().find('.apex-slider-shadow').css({'width':that.opt.width});
+							that.container.parent().find('.apex-switchery-shadow').css({'width':that.opt.width});
 						} catch(e) {}
 			
 						var actsh = that.container.find('>ul >li:eq('+that.opt.act+') .slotholder');
@@ -625,7 +625,7 @@
 					}
 				},
 	
-				//Move thumb slider to position
+				//Move thumb switchery to position
 				moveThumbSliderToPosition:function($this,pos,speed) {
 					$this.stop();
 					$this.find('.thumb-container').animate({'left':pos+'px'}, {duration:speed, queue:false});
@@ -1097,7 +1097,7 @@
 						var cow = this.container.parent().width();
 						var coh = $(window).height();						
 
-						//If the default grid is higher than the calculated slider height, we need to resize the slider height
+						//If the default grid is higher than the calculated switchery height, we need to resize the switchery height
 						var offsety = (coh-(this.opt.startHeight*this.opt.bh))/2;
 						if (offsety<0) coh = this.opt.startHeight*this.opt.bh;
 
@@ -2561,7 +2561,7 @@
 				onPlayerStateChange:function(e) {
 					var embedCode = e.target.getVideoEmbedCode();
 					var ytcont = $('#'+embedCode.split('id="')[1].split('"')[0]);
-					var container = ytcont.closest('.apex-slider');
+					var container = ytcont.closest('.apex-switchery');
 					var timer = container.find('.timer');
 					var opt;
 					
@@ -2612,7 +2612,7 @@
 				vimeoReady:function(player_id, autoplay) {
 					var froogaloop = $f(player_id);
 					var vimcont = $('#'+player_id);
-					var container = vimcont.closest('.apex-slider');
+					var container = vimcont.closest('.apex-switchery');
 					var timer = container.find('.timer');
 					var opt;
 					
@@ -2655,7 +2655,7 @@
 				html5VideoReady:function(myPlayer, player_id, that) {
 					if (player_id==undefined) player_id = $(myPlayer["b"]).attr('id');
 					var player_cont = $('#'+player_id);
-					var container = player_cont.closest('.apex-slider');
+					var container = player_cont.closest('.apex-switchery');
 					var timer = container.find('.timer');
 					var opt;
 					
@@ -3775,9 +3775,9 @@
 				
 			};
 			
-			//Create slider
+			//Create switchery
 			var container = $(this);
-			container.addClass("apex-slider");
+			container.addClass("apex-switchery");
 			container.css({visibility:"visible"});
 			return this.each(function() {
 				objSlider = new ApexSlider($(this), options);

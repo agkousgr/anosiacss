@@ -64,10 +64,9 @@ class CategoryService
     }
 
     /**
-     * @param $authId
      * @param $ctg
      *
-     * @return object
+     * @return array
      */
     public function getCategoryInfo($ctg)
     {
@@ -113,8 +112,8 @@ EOF;
 
     /**
      * @param $authId
-     *
-     * @return object
+     * @return \ArrayObject
+     * @throws \Exception
      */
     public function getCategoriesFromS1($authId)
     {
@@ -142,30 +141,17 @@ EOF;
 
             return $categories;
 
-            // -------------------------------------------------
-
-//            return $resultXML;
-//
-//            $doc = new DOMDocument();
-//            $doc->formatOutput = TRUE;
-//            $doc->loadXML($resultXML->GetDataRows->GetCategoriesRow->asXML());
-//            $xml = $doc->saveXML();
-
-//            return new Response(var_dump($xml));
-
-//            $categoriesXML = <<<EOF
-//    $xml
-//EOF;
-
-//            $categories = $this->serializer->deserialize($xml, Category::class, 'xml');
-////            return new Response(var_dump($categories));
-////            return str_replace("utf-16", "utf-8", $result->SendMessageResult);
-//            return $categories;
         } catch (\SoapFault $sf) {
-            echo $sf->faultstring;
+            throw $sf->faultstring;
         }
     }
 
+    /**
+     * @param $rootCategories
+     * @param $authId
+     * @return \ArrayObject
+     * @throws \Exception
+     */
     private function initializeCategories($rootCategories, $authId)
     {
         try {
@@ -201,25 +187,8 @@ EOF;
                         array_multisort(array_column($childArr, "priority"), $childArr);
                         $this->prCategories[$i]['children'] = $childArr;
                     }
-//                }
-
-//                dump($childArr);
-
-//                $children = ($category->ChildIDs) ? explode(',', $category->ChildIDs) : '';
-//                if ($children) {
-//                    $childArr = array();
-//                    foreach ($children as $child) {
-//
-//                        $childArr[] = array(
-//                            'id' => $child
-//                        );
-//                    }
-//                    $this->prCategories[$i]['children'] = $childArr;
-//                }
-//                dump($this->prCategories);
                 $i++;
             }
-//            return new Response(dump(print_r($this->prCategories)));
             return $this->prCategories;
         } catch (\Exception $e) {
             $this->logger->error(__METHOD__ . ' -> {message}', ['message' => $e->getMessage()]);
@@ -278,13 +247,4 @@ EOF;
         }
     }
 
-    private function createCategory(Category $category, EntityManagerInterface $em, LoggerInterface $logger)
-    {
-
-    }
-
-    private function updateCategory(Category $category, EntityManagerInterface $em, LoggerInterface $logger)
-    {
-
-    }
 }

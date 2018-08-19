@@ -10,17 +10,23 @@
     </div>
 
     <div class="row no-margin">
-        <div class="col-md-3 no-padding news-post">
-            <iframe src="https://www.facebook.com/plugins/page.php?href=https%3A%2F%2Fwww.facebook.com%2FAnosiaPharmacy%2F&tabs=timeline&width=500&height=363&small_header=true&adapt_container_width=true&hide_cover=false&show_facepile=true&appId=605092459847380" width="500" height="363" style="border:none;overflow:hidden" scrolling="no" frameborder="0" allowTransparency="true" allow="encrypted-media"></iframe>
+        <div class="col-md-4 no-padding news-post">
+          <div class="row">
+               {% for post in instagramfeed | slice(1, 12) %}
+                <div class="col-md-3" style="padding-left: 1px; padding-right: 1px;">
+                    <a href="{{ post.link }}" target="_blank">
+                        <img src="{{ post.images.thumbnail.url }}" class="img-responsive clickable">
+                    </a>
+                </div>
+              {% endfor %}
+          </div>
         </div>
-        <div class="col-md-3 no-padding news-post">
-            <!-- LightWidget WIDGET --><script src="https://cdn.lightwidget.com/widgets/lightwidget.js"></script><iframe src="//lightwidget.com/widgets/f1c0bf4d476a5ef5ba12ca7b704d2bab.html" scrolling="no" allowtransparency="true" class="lightwidget-widget" style="width:100%;border:0;overflow:hidden;"></iframe>
+        
+        <div class="col-md-4 no-padding news-post">
+            <iframe id="facebook-box" src="https://www.facebook.com/plugins/page.php?href=https%3A%2F%2Fwww.facebook.com%2FAnosiaPharmacy%2F&tabs=timeline&width=500&height=420&small_header=true&adapt_container_width=true&hide_cover=false&show_facepile=true&appId=605092459847380" width="500" height="420" style="border:none;overflow:hidden;" scrolling="no" frameborder="0" allowTransparency="true" allow="encrypted-media"></iframe>
         </div>
-        <div class="col-md-3 no-padding news-post">
-            <iframe src="https://www.facebook.com/plugins/page.php?href=https%3A%2F%2Fwww.facebook.com%2FAnosiaPharmacy%2F&tabs=timeline&width=500&height=363&small_header=true&adapt_container_width=true&hide_cover=false&show_facepile=true&appId=605092459847380" width="500" height="363" style="border:none;overflow:hidden" scrolling="no" frameborder="0" allowTransparency="true" allow="encrypted-media"></iframe>
-        </div>
-        <div class="col-md-3 no-padding news-post">
-            <iframe src="https://www.facebook.com/plugins/page.php?href=https%3A%2F%2Fwww.facebook.com%2FAnosiaPharmacy%2F&tabs=timeline&width=500&height=363&small_header=true&adapt_container_width=true&hide_cover=false&show_facepile=true&appId=605092459847380" width="500" height="363" style="border:none;overflow:hidden" scrolling="no" frameborder="0" allowTransparency="true" allow="encrypted-media"></iframe>
+        <div class="col-md-4 no-padding news-post">
+            <iframe src="https://www.facebook.com/plugins/page.php?href=https%3A%2F%2Fwww.facebook.com%2FAnosiaPharmacy%2F&tabs=timeline&width=500&height=363&small_header=true&adapt_container_width=true&hide_cover=false&show_facepile=true&appId=605092459847380" width="500" height="420" style="border:none;overflow:hidden" scrolling="no" frameborder="0" allowTransparency="true" allow="encrypted-media"></iframe>
         </div>
     </div>
 </div>

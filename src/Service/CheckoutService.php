@@ -2,9 +2,12 @@
 
 namespace App\Service;
 
-use App\Entity\WebUser;
+use App\Entity\{Checkout, Cart};
+use Doctrine\ORM\EntityManagerInterface;
 use Psr\Log\LoggerInterface;
 use Symfony\Component\HttpFoundation\Session\SessionInterface;
+use Symfony\Component\Filesystem\Filesystem;
+use Twig\Environment;
 
 class CheckoutService
 {
@@ -29,16 +32,46 @@ class CheckoutService
     private $username;
 
     /**
+     * @var Checkout
+     */
+    private $curOrder;
+
+    /**
+     * @var \SoapClient
+     */
+    private $client;
+
+    /**
+     * @var \Swift_Mailer
+     */
+    private $mailer;
+
+    /**
+     * @var Environment
+     */
+    private $twig;
+
+    /**
+     * @var double
+     */
+    private $cartItemsCost;
+
+    /**
      * UserAccountService constructor.
      * @param LoggerInterface $logger
      * @param SessionInterface $session
      */
-    public function __construct(LoggerInterface $logger, SessionInterface $session)
+    public function __construct(LoggerInterface $logger, SessionInterface $session, \Swift_Mailer $mailer, Environment $twig)
     {
         $this->logger = $logger;
         $this->session = $session;
         $this->authId = $session->get("authID");
         $this->username = $session->get('anosiaUser');
+        $this->curOrder = $session->get('curOrder');
+        $this->client = new \SoapClient('http://caron.cloudsystems.gr/FOeshopWS/ForeignOffice.FOeshop.API.FOeshopSvc.svc?singleWsdl', ['trace' => true, 'exceptions' => true,]);
+        $this->mailer = $mailer;
+        $this->twig = $twig;
+        $this->cartItemsCost = 0;
     }
 
 
@@ -71,7 +104,6 @@ class CheckoutService
      */
     public function getUser($checkout, $address = null) // remove nulls in production
     {
-        $client = new \SoapClient('http://caron.cloudsystems.gr/FOeshopWS/ForeignOffice.FOeshop.API.FOeshopSvc.svc?singleWsdl', ['trace' => true, 'exceptions' => true,]);
 
         $message = <<<EOF
 <?xml version="1.0" encoding="utf-16"?>
@@ -90,7 +122,7 @@ class CheckoutService
 </ClientGetUsersRequest>
 EOF;
         try {
-            $result = $client->SendMessage(['Message' => $message]);
+            $result = $this->client->SendMessage(['Message' => $message]);
             $userResponse = simplexml_load_string(str_replace("utf-16", "utf-8", $result->SendMessageResult));
             if ($userResponse === false) {
                 return;
@@ -114,7 +146,6 @@ EOF;
      */
     public function getClient($checkout = null)
     {
-        $client = new \SoapClient('http://caron.cloudsystems.gr/FOeshopWS/ForeignOffice.FOeshop.API.FOeshopSvc.svc?singleWsdl', ['trace' => true, 'exceptions' => true,]);
 
         $message = <<<EOF
 <?xml version="1.0" encoding="utf-16"?>
@@ -133,7 +164,7 @@ EOF;
 </ClientGetClientsRequest>
 EOF;
         try {
-            $result = $client->SendMessage(['Message' => $message]);
+            $result = $this->client->SendMessage(['Message' => $message]);
             $clientResponse = simplexml_load_string(str_replace("utf-16", "utf-8", $result->SendMessageResult));
             if ($clientResponse === false) {
                 return;
@@ -168,7 +199,6 @@ EOF;
      */
     public function getAddress($clientId, $address)
     {
-        $client = new \SoapClient('http://caron.cloudsystems.gr/FOeshopWS/ForeignOffice.FOeshop.API.FOeshopSvc.svc?singleWsdl', ['trace' => true, 'exceptions' => true,]);
 
         $message = <<<EOF
 <?xml version="1.0" encoding="utf-16"?>
@@ -185,7 +215,7 @@ EOF;
 EOF;
 
         try {
-            $result = $client->SendMessage(['Message' => $message]);
+            $result = $this->client->SendMessage(['Message' => $message]);
             $addressData = simplexml_load_string(str_replace("utf-16", "utf-8", $result->SendMessageResult));
             $addressXML = $addressData->GetDataRows->GetShipAddressRow;
             $address->setClient((int)$clientId);
@@ -207,7 +237,6 @@ EOF;
      */
     public function getNewsletter($checkout)
     {
-        $client = new \SoapClient('http://caron.cloudsystems.gr/FOeshopWS/ForeignOffice.FOeshop.API.FOeshopSvc.svc?singleWsdl', ['trace' => true, 'exceptions' => true,]);
 
         $message = <<<EOF
 <?xml version="1.0" encoding="utf-16"?>
@@ -224,8 +253,9 @@ EOF;
 </ClientGetNewsletterRequest>
 EOF;
         try {
-            $result = $client->SendMessage(['Message' => $message]);
+            $result = $this->client->SendMessage(['Message' => $message]);
             $newsletterData = simplexml_load_string(str_replace("utf-16", "utf-8", $result->SendMessageResult));
+            dump($result);
             if ((int)$newsletterData->RowsCount > 0) {
                 if ((string)$newsletterData->GetDataRows->GetNewsletterRow->Allow === 'true') {
                     $checkout->setNewsletter(true);
@@ -238,7 +268,6 @@ EOF;
                 $checkout->setNewsletter(false);
             }
             return;
-//            dump($result);
         } catch (\SoapFault $sf) {
             echo $sf->faultstring;
         }
@@ -287,8 +316,6 @@ EOF;
 
     public function getClientId($username) // to be deleted in production
     {
-        $client = new \SoapClient('http://caron.cloudsystems.gr/FOeshopWS/ForeignOffice.FOeshop.API.FOeshopSvc.svc?singleWsdl', ['trace' => true, 'exceptions' => true,]);
-
         $message = <<<EOF
 <?xml version="1.0" encoding="utf-16"?>
 <ClientGetUsersRequest>
@@ -306,7 +333,7 @@ EOF;
 </ClientGetUsersRequest>
 EOF;
         try {
-            $result = $client->SendMessage(['Message' => $message]);
+            $result = $this->client->SendMessage(['Message' => $message]);
             $userData = simplexml_load_string(str_replace("utf-16", "utf-8", $result->SendMessageResult));
 //            dump($message, $userData->GetDataRows->GetUsersRow->ClientID);
             if ((int)$userData->RowsCount > 0) {
@@ -320,11 +347,183 @@ EOF;
 
     }
 
-    public function initializeOrder($checkout)
+    /**
+     * @param $checkout
+     * @param $cartItems
+     * @return bool
+     */
+    public function submitOrder($checkout, $cartItems)
     {
-        $checkoutValues = $this->session->get('curOrder');
-        dump($checkoutValues);
-        $this->session->set('address', $checkout->getAddress());
-        $this->session->set('comments', $checkout->getComments());
+        $expenses = $this->initializeExpenses($checkout);
+        $items = $this->initializeCartItems($cartItems);
+        $series = $checkout->getSeries();
+        $orderNo = $this->getOrderNo();
+        $clientId = $checkout->getClientId();
+        $comments = $checkout->getComments();
+        $shippingType = $checkout->getShippingType();
+        $address = $checkout->getAddress();
+        $zip = $checkout->getZip();
+        $district = $checkout->getDistrict();
+        $city = $checkout->getCity();
+        $email = $checkout->getEmail();
+
+        $checkout->setTotalOrderCost($this->cartItemsCost + $checkout->getShippingCost() + $checkout->getAntikatavoliCost());
+
+        $message = <<<EOF
+<?xml version="1.0" encoding="utf-16"?>
+<ClientSetOrderRequest>
+    <Type>1024</Type>
+    <Kind>1</Kind>
+    <Domain>pharmacyone</Domain>
+    $expenses
+    $items
+    <AuthID>$this->authId</AuthID>
+    <AppID>157</AppID>
+    <CompanyID>1000</CompanyID>
+    <Key></Key>
+    <Series>$series</Series>
+    <Number></Number>
+    <EshopNumber>$orderNo</EshopNumber>
+    <Status>100</Status>
+    <CustomerID>$clientId</CustomerID>
+    <Remarks>$comments</Remarks>
+    <ShipmentTypeID>$shippingType</ShipmentTypeID>
+    <ShipAddress>$address</ShipAddress>
+    <ShipZip>$zip</ShipZip>
+    <ShipDistrict>$district</ShipDistrict>
+    <ShipCity>$city</ShipCity>
+    <ShipCarrier>1</ShipCarrier>
+</ClientSetOrderRequest>
+EOF;
+        try {
+            $result = $this->client->SendMessage(['Message' => $message]);
+            $orderResult = simplexml_load_string(str_replace("utf-16", "utf-8", $result->SendMessageResult));
+            dump($message, $result);
+            if ((string)$orderResult->IsValid === 'false') {
+                $checkout->setOrderNo($orderNo);
+                return true;
+            }
+            return false;
+        } catch (\SoapFault $sf) {
+            echo $sf->faultstring;
+        }
+    }
+
+    /**
+     * @param Checkout
+     * @return string
+     */
+    private function initializeExpenses($checkout)
+    {
+        $expenses = "<Expenses>\n";
+        if ($checkout->getShippingType() === '1000') {
+//            $expenses .= Write code to get value from Soft1
+            $expenses .= "        <ClientSetOrderExpense>
+            <ExpenseID>1000</ExpenseID>
+            <Value>2.00</Value>
+        </ClientSetOrderExpense>
+";
+        }
+        if ($checkout->getPaymentType() === '1003') {
+//            $expenses .= Write code to get value from Soft1
+            $expenses .= "        <ClientSetOrderExpense>
+            <ExpenseID>1003</ExpenseID>
+            <Value>1.50</Value>
+        </ClientSetOrderExpense>
+";
+        }
+        $expenses .= "    </Expenses>";
+
+        return $expenses;
+    }
+
+    /**
+     * @param $cartItems
+     * @return string
+     */
+    private function initializeCartItems($cartItems)
+    {
+        $items = "<Items>\n";
+        $count = 1;
+        foreach ($cartItems as $cartItem) {
+            $id = $cartItem['id'];
+            $quantity = $cartItem['quantity'];
+            $webPrice = floatval($cartItem['webPrice']);
+            $this->cartItemsCost += number_format(($quantity * $webPrice), 2, '.', ',');
+            $items .= "        <ClientSetOrderItem>
+            <Number>$count</Number>
+            <ItemID>$id</ItemID>
+            <Quantity>$quantity</Quantity>
+            <Price>$webPrice</Price>
+        </ClientSetOrderItem>
+";
+            $count++;
+        }
+        $items .= "    </Items>";
+        return $items;
+    }
+
+    /**
+     * @param App\Entity\Checkout
+     * @throws \Twig_Error_Loader
+     * @throws \Twig_Error_Runtime
+     * @throws \Twig_Error_Syntax
+     */
+    public function sendOrderConfirmationEmail($checkout)
+    {
+        $message = (new \Swift_Message('Anosiapharmacy - Νέα παραγγελία #' . $checkout->getOrderNo()))
+            ->setFrom('demo@democloudon.cloud')
+            ->setTo($checkout->getEmail())
+            ->setBody(
+                $this->twig->render(
+                    'email_templates/order_completed.html.twig'
+//                    array('name' => $name)
+                ),
+                'text/html'
+            )/*
+             * If you also want to include a plaintext version of the message
+            ->addPart(
+                $this->renderView(
+                    'emails/registration.txt.twig',
+                    array('name' => $name)
+                ),
+                'text/plain'
+            )
+            */
+        ;
+
+        $this->mailer->send($message);
+        return;
+    }
+
+    /**
+     * @return int
+     */
+    private function getOrderNo()
+    {
+        $fileSystem = new Filesystem();
+        $fileExists = $fileSystem->exists('../uploads/orders_counter');
+        if ($fileExists) {
+            $orderNo = (int)(file_get_contents('../uploads/orders_counter'));
+            $orderNo++;
+            $fileSystem->dumpFile('../uploads/orders_counter', $orderNo);
+        } else {
+            $orderNo = time();
+        }
+        return $orderNo;
+    }
+
+    /**
+     * @param $cartItems
+     * @param EntityManagerInterface
+     */
+    public function emptyCart($cartItems, $em)
+    {
+        foreach ($cartItems as $item) {
+            $cartItem = $em->getRepository(Cart::class)->find($item["cartId"]);
+            $em->remove($cartItem);
+            $em->flush();
+        }
+        return;
     }
 }

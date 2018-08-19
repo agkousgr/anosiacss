@@ -18,88 +18,112 @@ class Blog
     use BasicDbFieldsTrait, BlameableTrait, TimestampableTrait;
 
     /**
-     * @var string
+     * @var string|null
      */
     protected $slug;
 
     /**
-     * @var string
+     * @var string|null
      */
     private $image;
 
     /**
-     * @ORM\Column(type="text")
+     * @var string|null
      */
     private $summary;
 
     /**
-     * @ORM\Column(type="text")
+     * @var string|null
      */
     private $description;
 
     /**
-     * @return string
+     * @var BlogCategory
      */
-    public function getSlug(): string
+    private $category;
+
+    /**
+     * @return null|string
+     */
+    public function getSlug(): ?string
     {
         return $this->slug;
     }
 
     /**
-     * @param string $slug
+     * @param null|string $slug
      */
-    public function setSlug(string $slug): void
+    public function setSlug(?string $slug): void
     {
         $this->slug = $slug;
     }
 
     /**
-     * @return string
+     * @return null|string
      */
-    public function getImage(): string
+    public function getImage(): ?string
     {
         return $this->image;
     }
 
     /**
-     * @param string $image
+     * @param null|string $image
      */
-    public function setImage(string $image): void
+    public function setImage(?string $image): void
     {
         $this->image = $image;
     }
 
     /**
-     * @return mixed
+     * @return null|string
      */
-    public function getSummary()
+    public function getSummary(): ?string
     {
         return $this->summary;
     }
 
     /**
-     * @param mixed $summary
+     * @param null|string $summary
      */
-    public function setSummary($summary): void
+    public function setSummary(?string $summary): void
     {
         $this->summary = $summary;
     }
 
     /**
-     * @return mixed
+     * @return null|string
      */
-    public function getDescription()
+    public function getDescription(): ?string
     {
         return $this->description;
     }
 
     /**
-     * @param mixed $description
+     * @param null|string $description
      */
-    public function setDescription($description): void
+    public function setDescription(?string $description): void
     {
         $this->description = $description;
     }
 
+    /**
+     * @return BlogCategory
+     */
+    public function getCategory(): ?BlogCategory
+    {
+        return $this->category;
+    }
+
+    /**
+     * Set BlogCategory
+     *
+     * @param \App\Entity\BlogCategory $facilityOwner
+     *
+     * @return BlogCategory
+     */
+    public function setCategory(?BlogCategory $category): void
+    {
+        $this->category = $category;
+    }
 
 }

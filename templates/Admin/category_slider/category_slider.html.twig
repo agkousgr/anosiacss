@@ -1,0 +1,55 @@
+{% form_theme form 'form_template/bootstrap_3_layout.html.twig' %}
+{{ form_start(form) }}
+<div class="row">
+    <div class="col-lg-12">
+        <div class="form-group">
+            {{ form_label(form.name, 'Τίτλος') }}
+            {{ form_widget(form.name, {'attr': {'class': 'form-control'}}) }}
+        </div>
+    </div>
+</div>
+
+<div class="row">
+    <div class="col-lg-12">
+        <div class="form-group">
+            {{ form_label(form.description, 'Περιγραφή') }}
+            {{ form_widget(form.description, {'attr': {'class': 'form-control'}}) }}
+        </div>
+    </div>
+</div>
+
+<div class="row">
+    <div class="col-lg-12">
+        <div class="form-group">
+            {{ form_label(form.url, 'URL') }}
+            {{ form_widget(form.url, {'attr': {'class': 'form-control'}}) }}
+        </div>
+    </div>
+</div>
+
+<div class="row">
+    <div class="col-lg-12">
+        <div class="form-group">
+            {{ form_label(form.priority, 'Σειρά ταξινόμησης') }}
+            {{ form_widget(form.priority, {'attr': {'class': 'form-control', 'min': 1, 'value': 1}}) }}
+        </div>
+    </div>
+</div>
+
+<div class="row">
+    <div class="col-lg-6">
+        <div class="form-group">
+            {{ form_label(form.isPublished, 'Δημοσιευμένο') }}
+            {{ form_widget(form.isPublished) }}
+        </div>
+    </div>
+</div>
+
+<div class="form-group">
+    {{ form_label(form.image, 'Επιλογή αρχείου') }}
+    {{ form_widget(form.image, {'attr': {'class': 'form-control'}}) }}
+</div>
+<div class="modal-footer">
+    <button type="submit" class="btn btn-primary">Αποθήκευση</button>
+</div>
+{{ form_end(form) }}

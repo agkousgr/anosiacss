@@ -79,6 +79,40 @@ $(document).ready(function () {
     // $('body').startComponents();
 });
 
+$('.add-to-wishlist').on('click', function () {
+    let data = {
+        'id': $(this).data('id'),
+        'name': $(this).data('name')
+    }
+    $.post(Routing.generate('add_to_wishlist'), data, function (result) {
+        if (result.success && result.exist === false) {
+            swal({
+                title: 'Καλάθι',
+                html: '<div style="font-size:17px;">Το προϊόν ' + result.prName + ' προστέθηκε με επιτυχία στη wislish σας!</div>',
+                type: 'success',
+                timer: 5000
+            });
+            $('#wishlist-total-items').css('display', 'inline');
+            $('#wishlist-total-items').html(result.totalWishlistItems);
+            // $('#collapseCart').load(Routing.generate('load_top_wishlist'));
+        } else if (result.success && result.exist === true) {
+            swal({
+                title: 'Ουπς',
+                html: '<div style="font-size:17px;">Το προϊόν ' + result.prName + ' υπάρχει ήδη στη wislish σας!</div>',
+                type: 'info',
+                timer: 5000
+            });
+        } else {
+            swal({
+                title: 'Ουπς',
+                html: '<div style="font-size:17px;">Κάποια σφάλμα παρουσιάστηκε!</div>',
+                type: 'error',
+                timer: 5000
+            });
+        }
+    });
+})
+
 $('.add-to-cart').on('click', function (e) {
     e.preventDefault();
     let quantity = 1;
@@ -133,14 +167,6 @@ $('.add-to-cart-view').on('click', function (e) {
 });
 
 $('.owl-dots').css('display', 'none');
-
-// WISH LIST
-$('.add-to-wishlist').on('click', function () {
-    e.preventDefault();
-    // alert($(this).data('id'));
-    $('#collapseCart').load(Routing.generate('add_to_wishlist', {'id': $(this).data('id')}));
-});
-
 
 $(".toggle-sidebar").click(function (e) {
     e.preventDefault();

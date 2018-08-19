@@ -450,7 +450,7 @@ EOF;
 //                dump($clientData["name"]);
 //                dump($userData->GetDataRows->GetUsersRow->ClientID);
 //                $this->session->set('anosiaName', $clientData["name"]);
-//                $this->session->set('anosiaClientId', (int)$userData->GetDataRows->GetUsersRow->ClientID);
+                $this->session->set('anosiaClientId', (int)$userData->GetDataRows->GetUsersRow->ClientID);
                 return $username;
             }
         } catch (\SoapFault $sf) {
@@ -671,6 +671,8 @@ EOF;
 
     /**
      * @param \App\Entity\WebUser
+     * @param \App\Entity\Address
+     *
      * @return array
      * @throws \Exception
      */
@@ -683,7 +685,7 @@ EOF;
                 'lastname' => $user->getLastname(),
                 'clientId' => $user->getClientId(),
                 'newsletterId' => $user->getNewsletterId(),
-                'newsletter' => $user->isNewsletter(),
+                'newsletter' => $user->getNewsletter(),
                 'address' => $user->getAddress(),
                 'city' => $user->getCity(),
                 'zip' => $user->getZip(),
