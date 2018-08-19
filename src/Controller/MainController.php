@@ -89,6 +89,7 @@ class MainController extends AbstractController
     protected $cartItems;
 
     /**
+
      * @var int
      */
     protected $clientId;
@@ -97,6 +98,7 @@ class MainController extends AbstractController
      * @var string
      */
     protected $cache_expire;
+
 
 
     public function __construct(
@@ -126,6 +128,7 @@ class MainController extends AbstractController
         $this->totalCartItems = 0;
         $this->totalWishlistItems = 0;
 
+
         if ($this->session->has("authID") === false) {
             $authID = $this->softoneLogin->login();
             $this->session->set('authID', $authID);
@@ -142,9 +145,11 @@ class MainController extends AbstractController
         $this->loggedUser = ($this->session->get("anosiaUser")) ?: null;
         $this->loggedName = ($this->session->get("anosiaName")) ?: null;
         $this->loggedClientId = ($this->session->get("anosiaClientId")) ?: null;
+
         $this->cartItems = $this->getCartItems();
         $this->totalWishlistItems = $this->em->getRepository(Wishlist::class)->countWishlistItems($this->session->getId(), $this->loggedUser);
         dump($this->session);
+
 
 //        $this->totalCartItems = $em->getRepository(Cart::class)->countCartItems($session->getId(), $session->get('anosiaUser'));
     }
@@ -168,4 +173,5 @@ class MainController extends AbstractController
         }
         return ($cartIds) ? $this->cart->getCartItems($cartIds, $cartArr) : '';
     }
+
 }
