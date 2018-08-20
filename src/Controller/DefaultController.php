@@ -14,9 +14,9 @@ class DefaultController extends MainController
 //        $latest = $pr->getItems(-1, $session->get("authID"));
 
         // Create a new instagram instance.
-        $instagram = new Instagram('2209588506.1677ed0.361223b4d3a547eebd1ad92202375d17');
+//        $instagram = new Instagram('2209588506.1677ed0.361223b4d3a547eebd1ad92202375d17');
         // Fetch recent user media items.
-        $this->instagramfeed = $instagram->media();
+//        $this->instagramfeed = $instagram->media();
 
         return $this->render('layout.html.twig', [
             'categories' => $this->categories,
@@ -27,7 +27,7 @@ class DefaultController extends MainController
             'totalCartItems' => $this->totalCartItems,
             'loggedUser' => $this->loggedUser,
             'loggedName' => $this->loggedName,
-            'instagramfeed' => $this->instagramfeed
+//            'instagramfeed' => $this->instagramfeed
 //            'latest' => $latest
         ]);
     }
@@ -49,7 +49,7 @@ class DefaultController extends MainController
 
     protected function instragam() {
         // use this instagram access token generator http://instagram.pixelunion.net/
-        $access_token="CHANGE_TO_YOUR_ACCESS_TOKEN";
+        $access_token="2209588506.1677ed0.361223b4d3a547eebd1ad92202375d17";
         $photo_count=9;
 
         $json_link="https://api.instagram.com/v1/users/self/media/recent/?";

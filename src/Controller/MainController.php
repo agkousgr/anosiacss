@@ -89,7 +89,6 @@ class MainController extends AbstractController
     protected $cartItems;
 
     /**
-
      * @var int
      */
     protected $clientId;
