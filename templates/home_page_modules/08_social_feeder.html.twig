@@ -12,13 +12,13 @@
     <div class="row no-margin">
         <div class="col-md-4 no-padding news-post">
           <div class="row">
-               {#{% for post in instagramfeed | slice(1, 12) %}#}
-                {#<div class="col-md-3" style="padding-left: 1px; padding-right: 1px;">#}
-                    {#<a href="{{ post.link }}" target="_blank">#}
-                        {#<img src="{{ post.images.thumbnail.url }}" class="img-responsive clickable">#}
-                    {#</a>#}
-                {#</div>#}
-              {#{% endfor %}#}
+               {% for post in instagramfeed | slice(1, 12) %}
+                <div class="col-md-3" style="padding-left: 1px; padding-right: 1px;">
+                    <a href="{{ post.link }}" target="_blank">
+                        <img src="{{ post.images.thumbnail.url }}" class="img-responsive clickable">
+                    </a>
+                </div>
+              {% endfor %}
           </div>
         </div>
         
