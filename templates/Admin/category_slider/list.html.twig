@@ -2,19 +2,23 @@
 
 {% macro display_tree(category) %}
     {% import _self as macros %}
-    <ul class="wtree">
-        <li><span>{{ category.name }}
-                <a href="{{ path('category_slider_list') }}" class="btn btn-primary btn-sm pull-right">
-                    <i class="fa fa-pencil" aria-hidden="true"></i>
-                </a>
-            </span>
-            {% if category.children|length > 0 %}
+    <li><span>{{ category.name }}
+            <a href="" data-id="{{ category.id }}" class="btn btn-danger btn-sm pull-right" data-placement="top"
+               data-toggle="tooltip" data-title="Delete">
+                <i class="fa fa-trash-o" aria-hidden="true"></i>
+            </a>
+            <a id="edit-category" data-id="{{ category.id }}" href="" class="btn btn-primary btn-sm pull-right">
+                <i class="fa fa-pencil" aria-hidden="true"></i>
+            </a>
+        </span>
+        {% if category.children|length > 0 %}
+            <ol class="wtree">
                 {% for subctg in category.children %}
                     {{ macros.display_tree(subctg) }}
                 {% endfor %}
-            {% endif %}
-        </li>
-    </ul>
+            </ol>
+        {% endif %}
+    </li>
 {% endmacro %}
 {% import _self as func %}
 
@@ -71,9 +75,11 @@
 
                 <div class="card-body">
                     {% if categories|length > 0 %}
-                        {% for category in categories %}
-                            {{ func.display_tree(category) }}
-                        {% endfor %}
+                        <ol class="wtree">
+                            {% for category in categories %}
+                                {{ func.display_tree(category) }}
+                            {% endfor %}
+                        </ol>
                     {% else %}
                         <h5>Δεν υπάρχουν διαθέσιμες κατηγορίες</h5>
                     {% endif %}

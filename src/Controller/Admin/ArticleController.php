@@ -3,45 +3,45 @@
 namespace App\Controller\Admin;
 
 use App\Entity\AdminCategory;
+use App\Entity\Article;
 use App\Form\Type\AdminCategoryType;
 use Doctrine\ORM\EntityManagerInterface;
 use Psr\Log\LoggerInterface;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Request;
 
-class CategoryController extends AbstractController
+class ArticleController extends AbstractController
 {
     public function list(EntityManagerInterface $em)
     {
-//        $category = new BlogCategory();
-        $categories = $em->getRepository(AdminCategory::class)->findBy(['parent' => null], ['priority' => 'ASC']);
-        dump($categories);
-        return $this->render('Admin/categories/list.html.twig', [
-            'categories' => $categories
+        $articles = $em->getRepository(Article::class)->findAll();
+        dump($articles);
+        return $this->render('Admin/articles/list.html.twig', [
+            'articles' => $articles
         ]);
     }
 
     public function create(Request $request, EntityManagerInterface $em, LoggerInterface $logger)
     {
         try {
-            $category = new AdminCategory();
-            $form = $this->createForm(AdminCategoryType::class, $category, [
+            $article = new Article();
+            $form = $this->createForm(ArticleType::class, $article, [
                 'action' => $this->generateUrl('category_add'),
             ]);
             $form->handleRequest($request);
 
             if ($form->isSubmitted() && $form->isValid()) {
 
-                $em->persist($category);
+                $em->persist($article);
                 $em->flush();
                 $this->addFlash(
                     'success',
                     'Η προσθήκη ολοκληρώθηκε με επιτυχία!'
                 );
-                return $this->redirectToRoute('category_list');
+                return $this->redirectToRoute('article_list');
 
             }
-            return $this->render('Admin/categories/category.html.twig', [
+            return $this->render('Admin/articles/article_form.html.twig', [
                 'form' => $form->createView()
             ]);
 
@@ -54,10 +54,10 @@ class CategoryController extends AbstractController
     public function update(Request $request, int $id, EntityManagerInterface $em, LoggerInterface $logger)
     {
         try {
-            $category = $em->getRepository(AdminCategory::class)->find($id);
-            dump($category);
-            $form = $this->createForm(AdminCategoryType::class, $category, [
-                'action' => $this->generateUrl('category_update', ['id' => $id]),
+            $article = $em->getRepository(Article::class)->find($id);
+            dump($article);
+            $form = $this->createForm(ArticleType::class, $article, [
+                'action' => $this->generateUrl('article_update', ['id' => $id]),
             ]);
             $form->handleRequest($request);
 
@@ -70,10 +70,10 @@ class CategoryController extends AbstractController
                     'success',
                     'Η ενημέρωση ολοκληρώθηκε με επιτυχία!'
                 );
-                return $this->redirectToRoute('category_list');
+                return $this->redirectToRoute('article_list');
 
             }
-            return $this->render('Admin/categories/category.html.twig', [
+            return $this->render('Admin/articles/article_form.html.twig', [
                 'form' => $form->createView()
             ]);
 
@@ -86,20 +86,20 @@ class CategoryController extends AbstractController
     public function delete(Request $request, EntityManagerInterface $em, int $id, LoggerInterface $logger)
     {
         try {
-            $category = $em->getRepository(AdminCategory::class)->find($id);
+            $article = $em->getRepository(Article::class)->find($id);
             if ($request->request->get('delete')) {
-                $em->remove($category);
+                $em->remove($article);
                 $em->flush();
                 $this->addFlash(
                     'success',
                     'Η διαγραφή ολοκληρώθηκε με επιτυχία!'
                 );
             }else{
-                return $this->render('Admin/categories/delete.html.twig', [
-                    'category' => $category
+                return $this->render('Admin/articles/delete.html.twig', [
+                    'category' => $article
                 ]);
             }
-            return $this->redirectToRoute('category_list');
+            return $this->redirectToRoute('article_list');
         } catch (\Exception $e) {
             $logger->error(__METHOD__ . ' -> {message}', ['message' => $e->getMessage()]);
             throw $e;

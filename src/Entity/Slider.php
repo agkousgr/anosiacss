@@ -14,6 +14,8 @@ class Slider
     /**
      * @var string|null
      *
+     * @Assert\NotBlank(message="Παρακαλώ επιλέξτε μια εικόνα")
+     * @Assert\File(mimeTypes={ "image/gif, image/png, image/jpeg" })
      */
     private $image;
 

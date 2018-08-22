@@ -1,29 +1,20 @@
 <?php
-/**
- * Created by PhpStorm.
- * User: john
- * Date: 20/5/2018
- * Time: 2:39 μμ
- */
 
 namespace App\Entity;
 
 use App\Traits\{
-    BasicDbFieldsTrait, BlameableTrait, TimestampableTrait
+    BasicDbFieldsTrait, BlameableTrait, TimestampableTrait, CommonDbFieldsTrait
 };
-use Symfony\Bridge\Doctrine\Validator\Constraints\UniqueEntity;
 
-class Blog
+class Article
 {
-    use BasicDbFieldsTrait, BlameableTrait, TimestampableTrait;
+    use BasicDbFieldsTrait, BlameableTrait, TimestampableTrait, CommonDbFieldsTrait;
 
     /**
      * @var string|null
-     */
-    protected $slug;
-
-    /**
-     * @var string|null
+     *
+     * @Assert\NotBlank(message="Παρακαλώ επιλέξτε μια εικόνα")
+     * @Assert\File(mimeTypes={ "image/gif, image/png, image/jpeg" })
      */
     private $image;
 
@@ -38,25 +29,9 @@ class Blog
     private $description;
 
     /**
-     * @var BlogCategory
+     * @var AdminCategory
      */
     private $category;
-
-    /**
-     * @return null|string
-     */
-    public function getSlug(): ?string
-    {
-        return $this->slug;
-    }
-
-    /**
-     * @param null|string $slug
-     */
-    public function setSlug(?string $slug): void
-    {
-        $this->slug = $slug;
-    }
 
     /**
      * @return null|string
@@ -67,9 +42,9 @@ class Blog
     }
 
     /**
-     * @param null|string $image
+     * @param null $image
      */
-    public function setImage(?string $image): void
+    public function setImage($image): void
     {
         $this->image = $image;
     }

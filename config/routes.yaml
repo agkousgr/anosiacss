@@ -158,6 +158,36 @@ admin:
     path: /admin
     controller: App\Controller\Admin\DefaultController::dashboard
 
+    # Articles
+article_list:
+    path: /admin/article-list
+    controller: App\Controller\Admin\ArticleController::list
+
+article_add:
+    path: /admin/article-add
+    controller: App\Controller\Admin\ArticleController::create
+    methods: [GET,POST]
+    options:
+        expose: true
+
+article_update:
+    path: /admin/article-update/{id}
+    controller: App\Controller\Admin\ArticleController::update
+    methods: [GET,POST]
+    requirements:
+        id: \d+
+    options:
+        expose: true
+
+article_delete:
+    path: /admin/article-delete/{id}
+    controller: App\Controller\Admin\ArticleController::delete
+    methods: [GET,POST]
+    requirements:
+        id: \d+
+    options:
+        expose: true
+
     # Categories
 category_list:
     path: /admin/category-list
@@ -182,8 +212,11 @@ category_update:
 category_delete:
     path: /admin/category-delete/{id}
     controller: App\Controller\Admin\CategoryController::delete
+    methods: [GET,POST]
     requirements:
         id: \d+
+    options:
+        expose: true
 
     # Slider
 slider_list:

@@ -16,7 +16,7 @@ class CategorySliderController extends AbstractController
     public function list(EntityManagerInterface $em, LoggerInterface $logger)
     {
         try {
-            $categories = $em->getRepository(Category::class)->findBy(['isVisible' => true], ['priority' => 'ASC']);
+            $categories = $em->getRepository(Category::class)->findBy(['isVisible' => true, 'parent' => null], ['priority' => 'ASC']);
             dump($categories);
             return $this->render('Admin/category_slider/list.html.twig', [
                 'categories' => $categories

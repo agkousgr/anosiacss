@@ -1,0 +1,126 @@
+{% extends 'Admin/layout.html.twig' %}
+
+{% block stylesheet %}
+    {{ parent() }}
+    <link rel="stylesheet" type="text/css" href="https://cdn.datatables.net/1.10.16/css/dataTables.bootstrap4.min.css"/>
+{% endblock %}
+
+{% block title %}| Άρθρα{% endblock %}
+
+{% block breadcrumb %}
+    <div class="row">
+        <div class="col-xl-12">
+            <div class="breadcrumb-holder">
+                <h1 class="main-title float-left">Άρθρα</h1>
+                <ol class="breadcrumb float-right">
+                    <li class="breadcrumb-item">Home</li>
+                    <li class="breadcrumb-item active">Άρθρα</li>
+                </ol>
+                <div class="clearfix"></div>
+            </div>
+        </div>
+    </div>
+    <!-- end row -->
+{% endblock %}
+
+{% block body %}
+    {#MODAL#}
+<div class="modal fade custom-modal" tabindex="-1" role="dialog" aria-labelledby="modal_add_slide"
+     aria-hidden="true"
+     id="modal_add_slide">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title"></h5>
+                <button type="button" class="close" data-dismiss="modal"><span aria-hidden="true">×</span><span
+                            class="sr-only">Κλείσιμο</span></button>
+            </div>
+            <div class="modal-body"></div>
+        </div>
+    </div>
+</div>
+
+<div class="col-xs-12 col-sm-12">
+    <div class="card mb-3">
+        <div class="card-header">
+            <span class="pull-right">
+                <button id="add-article" class="btn btn-primary btn-sm">
+                    <i class="fa fa-plus" aria-hidden="true"></i> Προσθήκη άρθρου
+                </button>
+            </span>
+            <h3><i class="fa fa-fw fa-indent"></i> Άρθρα</h3>
+        </div>
+
+        <div class="card-body">
+
+            <div class="table-responsive">
+                {% if articles|length > 0 %}
+                    <table id="articles" class="table table-bordered table-hover display">
+                    <thead>
+                    <tr>
+                        <th>Name</th>
+                        <th>Position</th>
+                        <th>Age</th>
+                        <th>Start date</th>
+                        <th>Salary</th>
+                    </tr>
+                    </thead>
+
+                    <tbody>
+                    <tr>
+                        <td>Tiger Nixon</td>
+                        <td>System Architect</td>
+                        <td>61</td>
+                        <td>2011/04/25</td>
+                        <td>$320,800</td>
+                    </tr>
+                    </tbody>
+                </table>
+                {% else %}
+                    <h5>Δεν υπάρχουν διαθέσιμα άρθρα</h5>
+                {% endif %}
+            </div>
+        </div>
+
+    </div><!-- end card-->
+</div>
+<!-- end col -->
+
+{% endblock %}
+
+{% block javascripts %}
+    {{ parent() }}
+    <script src="{{ asset('bundles/fosjsrouting/js/router.js') }}"></script>
+    <script src="{{ path('fos_js_routing_js', { callback: 'fos.Router.setData' }) }}"></script>
+    <script src="https://cdn.datatables.net/1.10.16/js/jquery.dataTables.min.js"></script>
+    <script src="https://cdn.datatables.net/1.10.16/js/dataTables.bootstrap4.min.js"></script>
+    <script>
+        $(document).ready(function () {
+            $('#articles').DataTable();
+
+            // Setup - add a text input to each footer cell
+            $('#articles thead th').each(function () {
+                var title = $(this).text();
+                $(this).html('<input type="text" placeholder="Search ' + title + '" />');
+            });
+
+            // DataTable
+            var table = $('#articles').DataTable();
+
+            // Apply the search
+            table.columns().every(function () {
+                var that = this;
+
+                $('input', this.header()).on('keyup change', function () {
+                    if (that.search() !== this.value) {
+                        that
+                            .search(this.value)
+                            .draw();
+                    }
+                });
+            });
+        });
+    </script>
+    <script src="{{ asset('build/admin/js/article.js') }}"></script>
+
+{% endblock %}

@@ -53,6 +53,7 @@ Encore
     .addEntry('admin/js/slider', './assets/admin/js/slider/slider.js')
     .addEntry('admin/js/jstree.min', './assets/admin/plugins/jstree/jstree.min.js')
     .addEntry('admin/js/category', './assets/admin/js/category/category.js')
+    .addEntry('admin/js/article', './assets/admin/js/article/article.js')
 
 
 

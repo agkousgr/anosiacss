@@ -124,11 +124,11 @@ class BlogCategory
     /**
      * Add blog
      *
-     * @param \App\Entity\Blog $blog
+     * @param \App\Entity\Article $blog
      *
-     * @return Blog
+     * @return Article
      */
-    public function addBlog(\App\Entity\Blog $blog)
+    public function addBlog(\App\Entity\Article $blog)
     {
         $this->blog[] = $blog;
 
@@ -138,9 +138,9 @@ class BlogCategory
     /**
      * Remove blog
      *
-     * @param \App\Entity\Blog $blog
+     * @param \App\Entity\Article $blog
      */
-    public function removeBlog(\App\Entity\Blog $blog)
+    public function removeBlog(\App\Entity\Article $blog)
     {
         $this->blog->removeElement($blog);
     }
