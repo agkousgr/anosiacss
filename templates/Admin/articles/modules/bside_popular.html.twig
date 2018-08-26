@@ -1,0 +1,23 @@
+<div class="widget-box">
+    <h3>δημοφιλη αρθρα</h3>
+    {% for article in popularArticles %}
+    <div class="pop-post">
+        <div class="media">
+            <div class="media-left">
+                <a href="#">
+                    <img class="media-object" src="{{ asset('uploads/articles/' ~ article.image) }}" alt="{{ article.name }}"></a>
+            </div>
+            <div class="media-body">
+                <h6>{{ article.name }}</h6>
+                <a href="{{ path('blog_view', {'slug': article.slug}) }}"><strong>Περισσότερα</strong>
+                    <i class="fa fa-arrow-right"></i>
+                </a>
+            </div>
+        </div>
+        <ul>
+            <li><i class="fa fa-calendar-o"></i><a href="#">November</a> 11, 2016</li>
+            {#<li><i class="fa fa-comments-o"></i><a href="#">5 comment(s)</a></li>#}
+        </ul>
+    </div>
+    {% endfor %}
+</div>

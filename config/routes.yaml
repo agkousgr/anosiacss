@@ -108,6 +108,11 @@ blog_list:
     requirements:
         page: \d+
 
+blog_view:
+    path: /blog/{slug}
+    controller: App\Controller\BlogController::viewBlog
+
+
 # User Account
 user_account:
     path: /user-account

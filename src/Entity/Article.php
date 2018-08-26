@@ -28,6 +28,11 @@ class Article
     private $description;
 
     /**
+     * @var int|null
+     */
+    private $views;
+
+    /**
      * @var AdminCategory
      */
     private $category;
@@ -78,6 +83,22 @@ class Article
     public function setDescription(?string $description): void
     {
         $this->description = $description;
+    }
+
+    /**
+     * @return int|null
+     */
+    public function getViews(): ?int
+    {
+        return $this->views;
+    }
+
+    /**
+     * @param int|null $views
+     */
+    public function setViews(?int $views): void
+    {
+        $this->views = $views;
     }
 
     /**

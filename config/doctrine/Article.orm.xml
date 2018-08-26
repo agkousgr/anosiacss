@@ -11,6 +11,7 @@
         <field name="image" length="60" nullable="true" />
         <field name="summary" type="text" />
         <field name="description" type="text" />
+        <field name="views" type="integer" nullable="true" />
         <field name="isPublished" type="boolean">
             <options>
                 <option name="default">0</option>

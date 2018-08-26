@@ -24,275 +24,72 @@
     </div>
     <div class="section" style="background-image:url({{ asset('images/bg-5.jpg') }});">
         <div class="container">
-            <div class="blog-header" style="background-image:url(images/bg-10.jpg)">
-                <div class="row wow flipInX" data-wow-delay="0.4s">
-                    <div class="col-sm-8 col-sm-offset-2">
-                        <h3>OUR BLOGS</h3>
-                        <h2>Read all our Latest Blogs</h2>
-                        <p>Nam in docendi reprimique, laoreet honestatis eu mel. Id qui aperiri admodum intellegat, ea
-                            illum populo qui. An modo eleifend vituperatoribus his, id has oporteat honestatis, has quas
-                            efficiendi eu. </p>
-                    </div>
-                </div>
-            </div>
+            {#<div class="blog-header" style="background-image:url(images/bg-10.jpg)">#}
+            {#<div class="row wow flipInX" data-wow-delay="0.4s">#}
+            {#<div class="col-sm-8 col-sm-offset-2">#}
+            {#<h3>OUR BLOGS</h3>#}
+            {#<h2>Read all our Latest Blogs</h2>#}
+            {#<p>Nam in docendi reprimique, laoreet honestatis eu mel. Id qui aperiri admodum intellegat, ea#}
+            {#illum populo qui. An modo eleifend vituperatoribus his, id has oporteat honestatis, has quas#}
+            {#efficiendi eu. </p>#}
+            {#</div>#}
+            {#</div>#}
+            {#</div>#}
 
 
             <div class="row">
                 <div class="col-sm-8 col-md-9">
                     <div class="post-list">
-                        <div class="post-article wow fadeIn" data-wow-delay="0.4s">
-                            <div class="row no-margin">
-                                <div class="col-md-7 no-padding">
-                                    <div class="blog-img coleql_height">
-                                        <div class="post-img "
-                                             style="background-image:url(images/post-img-1.jpg)"></div>
-                                    </div>
-                                </div>
-                                <div class="col-md-5 no-padding">
-                                    <div class="post-article-content coleql_height">
-                                        <h3><a href="#">The Daily Reporter Selects Gilbane Building Company.</a></h3>
-                                        <p>Esse postea sensibus pri an, eu essent inimicus reformidans sea. Alienum
-                                            appetere qui ei, sint consetetur ad vel. Unum posse at vis. Quo vero mundi
-                                            labores te.</p>
-                                        <ul class="postmeta">
-                                            <li><i class="fa fa-calendar"></i>12 february, <a href="#">2015</a></li>
-                                            <li><i class="fa fa-comments"></i><a href="#">23 comments</a></li>
-                                            <li><i class="fa fa-user-circle-o"></i>by <a href="#">Admin</a></li>
-                                        </ul>
-                                        <div class="clearfix">
-                                            <a href="#" class="btn btn-primary pull-left">Read More</a>
-                                            <div class="share pull-right">
-                                                <p>
-                                                    <small>Share this post:</small>
-                                                </p>
-                                                <ul>
-                                                    <li><a href="#" class="facebook"><i class="fa fa-facebook"></i></a>
+                        {% if articles|length > 0 %}
+                            {% for article in articles %}
+                                <div class="post-article wow fadeIn" data-wow-delay="0.4s">
+                                    <div class="row no-margin">
+                                        <div class="col-md-7 no-padding">
+                                            <div class="blog-img coleql_height">
+                                                <div class="post-img "
+                                                     style="background-image:url({{ asset('uploads/articles/' ~ article.image.filename) }})"></div>
+                                            </div>
+                                        </div>
+                                        <div class="col-md-5 no-padding">
+                                            <div class="post-article-content coleql_height">
+                                                <h3><a href="{{ path('blog_view', {'slug': article.slug}) }}">{{ article.name }}</a>
+                                                </h3>
+                                                <p>{{ article.summary|raw }}</p>
+                                                <ul class="postmeta">
+                                                    <li><i class="fa fa-calendar"></i>{{ article.createdAt|date("F jS \\a\\t g:ia") }}
                                                     </li>
-                                                    <li><a href="#" class="twitter"><i class="fa fa-twitter"></i></a>
-                                                    </li>
-                                                    <li><a href="#" class="gplus"><i class="fa fa-google-plus"></i></a>
-                                                    </li>
-                                                    <li><a href="#" class="pinterest"><i
-                                                                    class="fa fa-pinterest"></i></a></li>
+                                                    {#<li><i class="fa fa-comments"></i><a href="#">23 comments</a></li>#}
+                                                    {#<li><i class="fa fa-user-circle-o"></i>by <a href="#">Admin</a></li>#}
                                                 </ul>
+                                                <div class="clearfix">
+                                                    <a href="{{ path('blog_view', {'slug': article.slug}) }}" class="btn btn-primary pull-left">Περισσότερα</a>
+                                                    <div class="share pull-right">
+                                                        <p>
+                                                            <small>Μοιραστείτε το άρθρο:</small>
+                                                        </p>
+                                                        <ul>
+                                                            <li><a href="#" class="facebook"><i
+                                                                            class="fa fa-facebook"></i></a>
+                                                            </li>
+                                                            <li><a href="#" class="twitter"><i
+                                                                            class="fa fa-twitter"></i></a>
+                                                            </li>
+                                                            <li><a href="#" class="gplus"><i
+                                                                            class="fa fa-google-plus"></i></a>
+                                                            </li>
+                                                            <li><a href="#" class="pinterest"><i
+                                                                            class="fa fa-pinterest"></i></a></li>
+                                                        </ul>
+                                                    </div>
+                                                </div>
                                             </div>
                                         </div>
                                     </div>
                                 </div>
-                            </div>
-                        </div>
-
-                        <div class="post-article wow fadeIn" data-wow-delay="0.4s">
-                            <div class="row no-margin">
-                                <div class="col-md-7 no-padding">
-                                    <div class="blog-img coleql_height">
-                                        <div class="post-img "
-                                             style="background-image:url(images/post-img-2.jpg)"></div>
-                                    </div>
-                                </div>
-                                <div class="col-md-5 no-padding">
-                                    <div class="post-article-content coleql_height">
-                                        <h3><a href="#">The Daily Reporter Selects Gilbane Building Company.</a></h3>
-                                        <p>Esse postea sensibus pri an, eu essent inimicus reformidans sea. Alienum
-                                            appetere qui ei, sint consetetur ad vel. Unum posse at vis. Quo vero mundi
-                                            labores te.</p>
-                                        <ul class="postmeta">
-                                            <li><i class="fa fa-calendar"></i>12 february, <a href="#">2015</a></li>
-                                            <li><i class="fa fa-comments"></i><a href="#">23 comments</a></li>
-                                            <li><i class="fa fa-user-circle-o"></i>by <a href="#">Admin</a></li>
-                                        </ul>
-                                        <div class="clearfix">
-                                            <a href="#" class="btn btn-primary pull-left">Read More</a>
-                                            <div class="share pull-right">
-                                                <p>
-                                                    <small>Share this post:</small>
-                                                </p>
-                                                <ul>
-                                                    <li><a href="#" class="facebook"><i class="fa fa-facebook"></i></a>
-                                                    </li>
-                                                    <li><a href="#" class="twitter"><i class="fa fa-twitter"></i></a>
-                                                    </li>
-                                                    <li><a href="#" class="gplus"><i class="fa fa-google-plus"></i></a>
-                                                    </li>
-                                                    <li><a href="#" class="pinterest"><i
-                                                                    class="fa fa-pinterest"></i></a></li>
-                                                </ul>
-                                            </div>
-                                        </div>
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
-
-                        <div class="post-article wow fadeIn" data-wow-delay="0.4s">
-                            <div class="row no-margin">
-                                <div class="col-md-7 no-padding">
-                                    <div class="blog-img coleql_height">
-                                        <div class="post-img "
-                                             style="background-image:url(images/post-img-3.jpg)"></div>
-                                    </div>
-                                </div>
-                                <div class="col-md-5 no-padding">
-                                    <div class="post-article-content coleql_height">
-                                        <h3><a href="#">The Daily Reporter Selects Gilbane Building Company.</a></h3>
-                                        <p>Esse postea sensibus pri an, eu essent inimicus reformidans sea. Alienum
-                                            appetere qui ei, sint consetetur ad vel. Unum posse at vis. Quo vero mundi
-                                            labores te.</p>
-                                        <ul class="postmeta">
-                                            <li><i class="fa fa-calendar"></i>12 february, <a href="#">2015</a></li>
-                                            <li><i class="fa fa-comments"></i><a href="#">23 comments</a></li>
-                                            <li><i class="fa fa-user-circle-o"></i>by <a href="#">Admin</a></li>
-                                        </ul>
-                                        <div class="clearfix">
-                                            <a href="#" class="btn btn-primary pull-left">Read More</a>
-                                            <div class="share pull-right">
-                                                <p>
-                                                    <small>Share this post:</small>
-                                                </p>
-                                                <ul>
-                                                    <li><a href="#" class="facebook"><i class="fa fa-facebook"></i></a>
-                                                    </li>
-                                                    <li><a href="#" class="twitter"><i class="fa fa-twitter"></i></a>
-                                                    </li>
-                                                    <li><a href="#" class="gplus"><i class="fa fa-google-plus"></i></a>
-                                                    </li>
-                                                    <li><a href="#" class="pinterest"><i
-                                                                    class="fa fa-pinterest"></i></a></li>
-                                                </ul>
-                                            </div>
-                                        </div>
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
-
-                        <div class="post-article wow fadeIn" data-wow-delay="0.4s">
-                            <div class="row no-margin">
-                                <div class="col-md-7 no-padding">
-                                    <div class="blog-img coleql_height">
-                                        <div class="post-img "
-                                             style="background-image:url(images/post-img-4.jpg)"></div>
-                                    </div>
-                                </div>
-                                <div class="col-md-5 no-padding">
-                                    <div class="post-article-content coleql_height">
-                                        <h3><a href="#">The Daily Reporter Selects Gilbane Building Company.</a></h3>
-                                        <p>Esse postea sensibus pri an, eu essent inimicus reformidans sea. Alienum
-                                            appetere qui ei, sint consetetur ad vel. Unum posse at vis. Quo vero mundi
-                                            labores te.</p>
-                                        <ul class="postmeta">
-                                            <li><i class="fa fa-calendar"></i>12 february, <a href="#">2015</a></li>
-                                            <li><i class="fa fa-comments"></i><a href="#">23 comments</a></li>
-                                            <li><i class="fa fa-user-circle-o"></i>by <a href="#">Admin</a></li>
-                                        </ul>
-                                        <div class="clearfix">
-                                            <a href="#" class="btn btn-primary pull-left">Read More</a>
-                                            <div class="share pull-right">
-                                                <p>
-                                                    <small>Share this post:</small>
-                                                </p>
-                                                <ul>
-                                                    <li><a href="#" class="facebook"><i class="fa fa-facebook"></i></a>
-                                                    </li>
-                                                    <li><a href="#" class="twitter"><i class="fa fa-twitter"></i></a>
-                                                    </li>
-                                                    <li><a href="#" class="gplus"><i class="fa fa-google-plus"></i></a>
-                                                    </li>
-                                                    <li><a href="#" class="pinterest"><i
-                                                                    class="fa fa-pinterest"></i></a></li>
-                                                </ul>
-                                            </div>
-                                        </div>
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
-
-                        <div class="post-article wow fadeIn" data-wow-delay="0.4s">
-                            <div class="row no-margin">
-                                <div class="col-md-7 no-padding">
-                                    <div class="blog-img coleql_height">
-                                        <div class="post-img "
-                                             style="background-image:url(images/post-img-5.jpg)"></div>
-                                    </div>
-                                </div>
-                                <div class="col-md-5 no-padding">
-                                    <div class="post-article-content coleql_height">
-                                        <h3><a href="#">The Daily Reporter Selects Gilbane Building Company.</a></h3>
-                                        <p>Esse postea sensibus pri an, eu essent inimicus reformidans sea. Alienum
-                                            appetere qui ei, sint consetetur ad vel. Unum posse at vis. Quo vero mundi
-                                            labores te.</p>
-                                        <ul class="postmeta">
-                                            <li><i class="fa fa-calendar"></i>12 february, <a href="#">2015</a></li>
-                                            <li><i class="fa fa-comments"></i><a href="#">23 comments</a></li>
-                                            <li><i class="fa fa-user-circle-o"></i>by <a href="#">Admin</a></li>
-                                        </ul>
-                                        <div class="clearfix">
-                                            <a href="#" class="btn btn-primary pull-left">Read More</a>
-                                            <div class="share pull-right">
-                                                <p>
-                                                    <small>Share this post:</small>
-                                                </p>
-                                                <ul>
-                                                    <li><a href="#" class="facebook"><i class="fa fa-facebook"></i></a>
-                                                    </li>
-                                                    <li><a href="#" class="twitter"><i class="fa fa-twitter"></i></a>
-                                                    </li>
-                                                    <li><a href="#" class="gplus"><i class="fa fa-google-plus"></i></a>
-                                                    </li>
-                                                    <li><a href="#" class="pinterest"><i
-                                                                    class="fa fa-pinterest"></i></a></li>
-                                                </ul>
-                                            </div>
-                                        </div>
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
-
-                        <div class="post-article wow fadeIn" data-wow-delay="0.4s">
-                            <div class="row no-margin">
-                                <div class="col-md-7 no-padding">
-                                    <div class="blog-img coleql_height">
-                                        <div class="post-img "
-                                             style="background-image:url(images/post-img-6.jpg)"></div>
-                                    </div>
-                                </div>
-                                <div class="col-md-5 no-padding">
-                                    <div class="post-article-content coleql_height">
-                                        <h3><a href="#">The Daily Reporter Selects Gilbane Building Company.</a></h3>
-                                        <p>Esse postea sensibus pri an, eu essent inimicus reformidans sea. Alienum
-                                            appetere qui ei, sint consetetur ad vel. Unum posse at vis. Quo vero mundi
-                                            labores te.</p>
-                                        <ul class="postmeta">
-                                            <li><i class="fa fa-calendar"></i>12 february, <a href="#">2015</a></li>
-                                            <li><i class="fa fa-comments"></i><a href="#">23 comments</a></li>
-                                            <li><i class="fa fa-user-circle-o"></i>by <a href="#">Admin</a></li>
-                                        </ul>
-                                        <div class="clearfix">
-                                            <a href="#" class="btn btn-primary pull-left">Read More</a>
-                                            <div class="share pull-right">
-                                                <p>
-                                                    <small>Share this post:</small>
-                                                </p>
-                                                <ul>
-                                                    <li><a href="#" class="facebook"><i class="fa fa-facebook"></i></a>
-                                                    </li>
-                                                    <li><a href="#" class="twitter"><i class="fa fa-twitter"></i></a>
-                                                    </li>
-                                                    <li><a href="#" class="gplus"><i class="fa fa-google-plus"></i></a>
-                                                    </li>
-                                                    <li><a href="#" class="pinterest"><i
-                                                                    class="fa fa-pinterest"></i></a></li>
-                                                </ul>
-                                            </div>
-                                        </div>
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
-
+                            {% endfor %}
+                        {% endif %}
                     </div>
+
 
                     <nav aria-label="Page navigation">
                         <ul class="pagination">
@@ -328,22 +125,22 @@
                     </div>
 
                     {#<div class="widget-box">#}
-                        {#<h3>Categories</h3>#}
-                        {#<div class="category-list">#}
-                            {#<ul>#}
-                                {#<li><a href="#">About us <span>(1)</span></a></li>#}
-                                {#<li><a href="#">Checkerboard <span>(10)</span></a></li>#}
-                                {#<li><a href="#">Fashion <span>(8)</span></a></li>#}
-                                {#<li><a href="#">Lifestyle <span>(5)</span></a></li>#}
-                                {#<li><a href="#">Nature <span>(7)</span></a></li>#}
-                                {#<li><a href="#">Travel <span>(3)</span></a></li>#}
-                                {#<li><a href="#">Types <span>(3)</span></a></li>#}
-                            {#</ul>#}
-                        {#</div>#}
+                    {#<h3>Categories</h3>#}
+                    {#<div class="category-list">#}
+                    {#<ul>#}
+                    {#<li><a href="#">About us <span>(1)</span></a></li>#}
+                    {#<li><a href="#">Checkerboard <span>(10)</span></a></li>#}
+                    {#<li><a href="#">Fashion <span>(8)</span></a></li>#}
+                    {#<li><a href="#">Lifestyle <span>(5)</span></a></li>#}
+                    {#<li><a href="#">Nature <span>(7)</span></a></li>#}
+                    {#<li><a href="#">Travel <span>(3)</span></a></li>#}
+                    {#<li><a href="#">Types <span>(3)</span></a></li>#}
+                    {#</ul>#}
+                    {#</div>#}
                     {#</div>#}
 
                     <div class="widget-box">
-                        <h3>popolar post</h3>
+                        <h3>δημοφιλη αρθρα</h3>
                         <div class="pop-post">
                             <div class="media">
                                 <div class="media-left"><a href="#"><img class="media-object"
