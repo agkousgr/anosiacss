@@ -23,6 +23,10 @@ class BlogController extends MainController
     {
         try {
             $articles = $em->getRepository(Article::class)->findBy(['category' => 1], ['createdAt' => 'DESC']);
+            $popularArticles = $em->getRepository(Article::class)->findBy(
+                ['category' => 1],
+                ['views' => 'DESC'],
+                4);
             return $this->render('blog/list.html.twig', [
                 'categories' => $this->categories,
                 'popular' => $this->popular,
@@ -31,7 +35,8 @@ class BlogController extends MainController
                 'totalWishlistItems' => $this->totalWishlistItems,
                 'totalCartItems' => $this->totalCartItems,
                 'loggedUser' => $this->loggedUser,
-                'articles' => $articles
+                'articles' => $articles,
+                'popularArticles' => $popularArticles
             ]);
         } catch (\Exception $e) {
             $this->logger->error(__METHOD__ . ' -> {message}', ['message' => $e->getMessage()]);
