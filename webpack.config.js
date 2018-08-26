@@ -54,6 +54,7 @@ Encore
     .addEntry('admin/js/jstree.min', './assets/admin/plugins/jstree/jstree.min.js')
     .addEntry('admin/js/category', './assets/admin/js/category/category.js')
     .addEntry('admin/js/article', './assets/admin/js/article/article.js')
+    .addEntry('admin/js/article_form', './assets/admin/js/article/article_form.js')
 
 
 
@@ -74,6 +75,7 @@ Encore
     .addStyleEntry('admin/css/login/bootstrap.min', './assets/admin/css/login/bootstrap.min.css')
     .addStyleEntry('admin/css/login/ace.min', './assets/admin/css/login/ace.min.css')
     .addStyleEntry('admin/css/login/ace-rtl.min', './assets/admin/css/login/ace-rtl.min.css')
+    .addStyleEntry('admin/css/plugins/select2.min', './assets/admin/css/plugins/select2/select2.min.css')
 
 
     .addLoader({

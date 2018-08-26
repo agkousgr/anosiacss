@@ -7,8 +7,8 @@
             <generator strategy="AUTO" />
         </id>
         <field name="name" length="60" />
-        <field name="slug" length="60" />
-        <field name="image" length="60" />
+        <field name="slug" length="60" unique="true" />
+        <field name="image" length="60" nullable="true" />
         <field name="summary" type="text" />
         <field name="description" type="text" />
         <field name="isPublished" type="boolean">

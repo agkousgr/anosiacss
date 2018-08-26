@@ -23,9 +23,11 @@ class BlogController extends MainController
             return $this->render('blog/list.html.twig', [
                 'categories' => $this->categories,
                 'popular' => $this->popular,
+                'featured' => $this->featured,
+                'cartItems' => $this->cartItems,
+                'totalWishlistItems' => $this->totalWishlistItems,
+                'totalCartItems' => $this->totalCartItems,
                 'loggedUser' => $this->loggedUser,
-
-//                'pagination' => $pagination
             ]);
         } catch (\Exception $e) {
             $this->logger->error(__METHOD__ . ' -> {message}', ['message' => $e->getMessage()]);

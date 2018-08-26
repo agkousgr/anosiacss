@@ -2,6 +2,7 @@
 
 namespace App\Form\EventListener;
 
+use App\Entity\Article;
 use Symfony\Component\HttpFoundation\File\UploadedFile;
 use Symfony\Component\HttpFoundation\File\File;
 use Doctrine\ORM\Event\LifecycleEventArgs;
@@ -11,6 +12,9 @@ use App\Service\FileUploader;
 
 class UploadListener
 {
+    /**
+     * @var FileUploader
+     */
     private $uploader;
 
     public function __construct(FileUploader $uploader)
@@ -32,45 +36,55 @@ class UploadListener
         $this->uploadFile($entity);
     }
 
-    public function preLoad(LifecycleEventArgs $args)
-    {
-        $entity = $args->getEntity();
-
-        if (!$entity instanceof Slider) {
-            return;
-        }
-
-        if ($fileName = $entity->getImage()) {
-            $entity->setImage(new File($this->uploader->getTargetDirectory().'/'.$fileName));
-        }
-    }
-
     public function postLoad(LifecycleEventArgs $args)
     {
         $entity = $args->getEntity();
+        switch(true) {
+            case $entity instanceof Article:
+                $filePath = 'articles_image_directory';
+                break;
 
-        if (!$entity instanceof Slider) {
-            return;
+            case $entity instanceof Slider:
+                $filePath = 'articles_image_directory';
+                break;
+
+            default:
+                return;
+                break;
+
         }
 
         if ($fileName = $entity->getImage()) {
-            $entity->setImage(new File($this->uploader->getTargetDirectory().'/'.$fileName));
+
+            dump($entity->getImage());
+            $entity->setImage(new File($this->uploader->getTargetDirectory()[$filePath].'/'.$fileName));
+            dump($entity->getImage());
         }
     }
 
     private function uploadFile($entity)
     {
         // upload only works for existing entities
-        if ($entity instanceof Slider) {
-            $file = $entity->getImage();
-        } else {
-            return;
-        }
+        switch(true) {
+            case $entity instanceof Article:
+                $file = $entity->getImage();
+                $filePath = 'articles_image_directory';
+                break;
 
+            case $entity instanceof Slider:
+                $file = $entity->getImage();
+                $filePath = 'articles_image_directory';
+                break;
+
+            default:
+                return;
+                break;
+
+        }
 
         // only upload new files
         if ($file instanceof UploadedFile) {
-            $fileName = $this->uploader->upload($file);
+            $fileName = $this->uploader->upload($file, $filePath);
             $entity->setImage($fileName);
         } elseif ($file instanceof File) {
             // prevents the full file path being saved on updates

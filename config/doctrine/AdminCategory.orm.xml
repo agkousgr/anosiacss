@@ -54,7 +54,7 @@
                 <order-by-field name="left" direction="ASC" />
             </order-by>
         </one-to-many>
-        <one-to-many field="articles" target-entity="App\Entity\Article" mapped-by="category_id"/>
+        <one-to-many field="articles" target-entity="App\Entity\Article" mapped-by="category"/>
         <many-to-one target-entity="User" field="createdBy">
             <join-column name="created_by" referenced-column-name="id" nullable="false" />
             <gedmo:blameable on="create" />

@@ -2,9 +2,8 @@
 
 namespace App\Controller\Admin;
 
-use App\Entity\AdminCategory;
 use App\Entity\Article;
-use App\Form\Type\AdminCategoryType;
+use App\Form\Type\ArticleType;
 use Doctrine\ORM\EntityManagerInterface;
 use Psr\Log\LoggerInterface;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
@@ -26,7 +25,7 @@ class ArticleController extends AbstractController
         try {
             $article = new Article();
             $form = $this->createForm(ArticleType::class, $article, [
-                'action' => $this->generateUrl('category_add'),
+                'action' => $this->generateUrl('article_add'),
             ]);
             $form->handleRequest($request);
 
@@ -55,13 +54,16 @@ class ArticleController extends AbstractController
     {
         try {
             $article = $em->getRepository(Article::class)->find($id);
-            dump($article);
-            $form = $this->createForm(ArticleType::class, $article, [
-                'action' => $this->generateUrl('article_update', ['id' => $id]),
-            ]);
+            $form = $this->createForm(ArticleType::class, $article);
+            $prevImage = $article->getImage();
             $form->handleRequest($request);
 
             if ($form->isSubmitted() && $form->isValid()) {
+
+                if (empty($form->get('image')->getData())) {
+                    $article->setImage($prevImage);
+                }
+
                 // updates the 'image' property to store the Image file name
                 // instead of its contents
 
@@ -74,7 +76,8 @@ class ArticleController extends AbstractController
 
             }
             return $this->render('Admin/articles/article_form.html.twig', [
-                'form' => $form->createView()
+                'form' => $form->createView(),
+                'id' => $id
             ]);
 
         } catch (\Exception $e) {
@@ -94,12 +97,31 @@ class ArticleController extends AbstractController
                     'success',
                     'Η διαγραφή ολοκληρώθηκε με επιτυχία!'
                 );
-            }else{
+            } else {
                 return $this->render('Admin/articles/delete.html.twig', [
-                    'category' => $article
+                    'article' => $article
                 ]);
             }
             return $this->redirectToRoute('article_list');
+        } catch (\Exception $e) {
+            $logger->error(__METHOD__ . ' -> {message}', ['message' => $e->getMessage()]);
+            throw $e;
+        }
+    }
+
+    public function deleteArticleImage(int $id, EntityManagerInterface $em, LoggerInterface $logger)
+    {
+        try {
+            if (null !== $id) {
+                $article = $em->getRepository(Article::class)->find($id);
+                $article->setImage(null);
+                $em->flush();
+                $this->addFlash(
+                    'success',
+                    'Η διαγραφή της εικόνας ολοκληρώθηκε με επιτυχία!'
+                );
+            }
+            return $this->redirectToRoute('article_update', ['id' => $id]);
         } catch (\Exception $e) {
             $logger->error(__METHOD__ . ' -> {message}', ['message' => $e->getMessage()]);
             throw $e;

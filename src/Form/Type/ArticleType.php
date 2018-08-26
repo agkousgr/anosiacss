@@ -29,17 +29,17 @@ class ArticleType extends AbstractType
                 'required' => false
             ])
             ->add('summary', TextareaType::class, [
-                'required' => false
+                'required' => false,
             ])
             ->add('description', TextareaType::class, [
-                'required' => false
+                'required' => false,
             ])
             ->add('category', EntityType::class, [
-                'class' => 'App\Entity\Category',
+                'class' => 'App\Entity\AdminCategory',
                 'choice_label' => 'name',
-                'query_builder' => function(EntityRepository $er) {
+                'query_builder' => function (EntityRepository $er) {
                     return $er->createQueryBuilder('c')
-                        ->orderBy('name');
+                        ->orderBy('c.name');
                 },
                 'placeholder' => 'Επιλέξτε κατηγορία'
             ])
@@ -49,14 +49,13 @@ class ArticleType extends AbstractType
             ])
             ->add('image', FileType::class, [
                 'required' => false,
-            ])
-        ;
+            ]);
     }
 
     public function configureOptions(OptionsResolver $resolver)
     {
         $resolver->setDefaults(array(
-            'data_class' => AdminCategory::class,
+            'data_class' => Article::class,
         ));
 
     }

@@ -5,6 +5,7 @@ namespace App\Entity;
 use App\Traits\{
     BasicDbFieldsTrait, BlameableTrait, TimestampableTrait, CommonDbFieldsTrait
 };
+use Symfony\Component\Validator\Constraints as Assert;
 
 class Article
 {
@@ -13,8 +14,6 @@ class Article
     /**
      * @var string|null
      *
-     * @Assert\NotBlank(message="Παρακαλώ επιλέξτε μια εικόνα")
-     * @Assert\File(mimeTypes={ "image/gif, image/png, image/jpeg" })
      */
     private $image;
 
@@ -34,9 +33,9 @@ class Article
     private $category;
 
     /**
-     * @return null|string
+     * @return null
      */
-    public function getImage(): ?string
+    public function getImage()
     {
         return $this->image;
     }
@@ -82,21 +81,21 @@ class Article
     }
 
     /**
-     * @return BlogCategory
+     * @return AdminCategory
      */
-    public function getCategory(): ?BlogCategory
+    public function getCategory(): ?AdminCategory
     {
         return $this->category;
     }
 
     /**
-     * Set BlogCategory
+     * Set AdminCategory
      *
-     * @param \App\Entity\BlogCategory $facilityOwner
+     * @param \App\Entity\AdminCategory $category
      *
-     * @return BlogCategory
+     * @return AdminCategory
      */
-    public function setCategory(?BlogCategory $category): void
+    public function setCategory(?AdminCategory $category): void
     {
         $this->category = $category;
     }

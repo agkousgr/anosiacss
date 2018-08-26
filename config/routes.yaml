@@ -166,18 +166,12 @@ article_list:
 article_add:
     path: /admin/article-add
     controller: App\Controller\Admin\ArticleController::create
-    methods: [GET,POST]
-    options:
-        expose: true
 
 article_update:
     path: /admin/article-update/{id}
     controller: App\Controller\Admin\ArticleController::update
-    methods: [GET,POST]
     requirements:
         id: \d+
-    options:
-        expose: true
 
 article_delete:
     path: /admin/article-delete/{id}
@@ -187,6 +181,12 @@ article_delete:
         id: \d+
     options:
         expose: true
+
+delete_article_image:
+    path: /admin/delete-article-image/{id}
+    controller: App\Controller\Admin\ArticleController::deleteArticleImage
+    requirements:
+        id: \d+
 
     # Categories
 category_list:
