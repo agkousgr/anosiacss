@@ -139,53 +139,7 @@
                     {#</div>#}
                     {#</div>#}
 
-                    <div class="widget-box">
-                        <h3>δημοφιλη αρθρα</h3>
-                        <div class="pop-post">
-                            <div class="media">
-                                <div class="media-left"><a href="#"><img class="media-object"
-                                                                         src="images/slide-1-sm.jpg" alt="..."></a>
-                                </div>
-                                <div class="media-body">
-                                    <h6>The Most Readed Blog Post Here</h6>
-                                    <a href="#"><strong>Read More</strong> <i class="fa fa-arrow-right"></i></a>
-                                </div>
-                            </div>
-                            <ul>
-                                <li><i class="fa fa-calendar-o"></i><a href="#">November</a> 11, 2016</li>
-                                <li><i class="fa fa-comments-o"></i><a href="#">5 comment(s)</a></li>
-                            </ul>
-                        </div>
-                        <div class="pop-post">
-                            <div class="media">
-                                <div class="media-left"><a href="#"><img class="media-object" src="images/img-3.jpg"
-                                                                         alt="..."></a></div>
-                                <div class="media-body">
-                                    <h6>The Most Readed Blog Post Here</h6>
-                                    <a href="#"><strong>Read More</strong> <i class="fa fa-arrow-right"></i></a>
-                                </div>
-                            </div>
-                            <ul>
-                                <li><i class="fa fa-calendar-o"></i><a href="#">November</a> 11, 2016</li>
-                                <li><i class="fa fa-comments-o"></i><a href="#">5 comment(s)</a></li>
-                            </ul>
-                        </div>
-                        <div class="pop-post">
-                            <div class="media">
-                                <div class="media-left"><a href="#"><img class="media-object" src="images/img-7.jpg"
-                                                                         alt="..."></a></div>
-                                <div class="media-body">
-                                    <h6>The Most Readed Blog Post Here</h6>
-                                    <a href="#"><strong>Read More</strong> <i class="fa fa-arrow-right"></i></a>
-                                </div>
-                            </div>
-                            <ul>
-                                <li><i class="fa fa-calendar-o"></i><a href="#">November</a> 11, 2016</li>
-                                <li><i class="fa fa-comments-o"></i><a href="#">5 comment(s)</a></li>
-                            </ul>
-                        </div>
-                    </div>
-
+                    {% include('Admin/articles/modules/bside_popular.html.twig') %}
 
                     {% include 'products/modules/aside_best_sellers.html.twig' %}
 
