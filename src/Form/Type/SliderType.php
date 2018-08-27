@@ -40,7 +40,9 @@ class SliderType extends AbstractType
                 'required' => false,
                 'label' => 'Δημοσίευση'
             ))
-            ->add('image', FileType::class);
+            ->add('image', FileType::class, [
+                'required' => false,
+            ]);
     }
 
     public function configureOptions(OptionsResolver $resolver)

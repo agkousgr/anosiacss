@@ -71,9 +71,10 @@
                             <thead>
                             <tr>
                                 <td style="width:20px">#</td>
-                                <td style="width:150px">Image</td>
-                                <td>Slide details</td>
-                                <td style="width:100px">Actions</td>
+                                <td style="width:150px">Εικόνα</td>
+                                <td>Λεπτομέρειες Slide</td>
+                                <td>Ταξινόμηση</td>
+                                <td style="width:100px">Ενέργειες</td>
                             </tr>
                             </thead>
                             <tbody>
@@ -82,13 +83,15 @@
                                 {% for slide in slides %}
                                     <tr>
                                         <th>
-                                            1
+                                            {{ loop.index }}
                                         </th>
 
                                         <td>
                                             <span style="float: left; margin-right:10px;">
-                                                <img alt="image" class="img-fluid" style="max-width:150px; height:auto;"
-                                                     src="assets/images/8b75635e-final-nature.png">
+
+                                                <img alt="{{ slide.name }}" class="img-fluid" style="max-width:150px; height:auto;"
+                                                     src="{{ asset('uploads/slider/' ~ slide.image.filename) }}">
+
                                             </span>
                                         </td>
 
@@ -101,8 +104,12 @@
                                                     href="{{ slide.url }}">{{ slide.url }}</a>
                                         </td>
 
+                                        <td style="width: 10%; text-align: center">
+                                            {{ slide.priority }}
+                                        </td>
+
                                         <td>
-                                            <a id="edit-slide" data-id="1" href="#" class="btn btn-primary btn-sm">
+                                            <a id="edit-slide" data-id="{{ slide.id }}" href="#" class="btn btn-primary btn-sm">
                                                 <i class="fa fa-pencil" aria-hidden="true"></i>
                                             </a>
                                             <a href="" class="btn btn-danger btn-sm"

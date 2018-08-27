@@ -39,7 +39,7 @@ class SliderController extends AbstractController
                 );
                 return $this->redirectToRoute('slider_list');
             }
-            return $this->render('Admin/slider/slider.html.twig', [
+            return $this->render('Admin/slider/slider_form.html.twig', [
                 'form' => $form->createView()
             ]);
 
@@ -54,18 +54,21 @@ class SliderController extends AbstractController
         }
     }
 
-    public function update(Request $request, int $id, EntityManagerInterface $em, FileUploader $uploader, LoggerInterface $logger)
+    public function update(Request $request, int $id, EntityManagerInterface $em, LoggerInterface $logger)
     {
         try {
             $slider = $em->getRepository(Slider::class)->find($id);
-//            $slider->setImage(new File($uploader->getTargetDirectory().'/'.$slider->getImage()));
+            $prevImage = $slider->getImage();
             $form = $this->createForm(SliderType::class, $slider, [
                 'action' => $this->generateUrl('slider_update', ['id' => $id]),
             ]);
-            dump('zong');
+            dump($slider);
             $form->handleRequest($request);
 
             if ($form->isSubmitted() && $form->isValid()) {
+                if (empty($form->get('image')->getData())) {
+                    $slider->setImage($prevImage);
+                }
                 $em->flush();
                 $this->addFlash(
                     'success',
@@ -74,7 +77,7 @@ class SliderController extends AbstractController
                 return $this->redirectToRoute('slider_list');
             }
             dump('wtf');
-            return $this->render('Admin/slider/slider.html.twig', [
+            return $this->render('Admin/slider/slider_form.html.twig', [
                 'form' => $form->createView()
             ]);
 

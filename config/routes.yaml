@@ -256,8 +256,10 @@ category_slider:
     controller: App\Controller\Admin\CategorySliderController::list
 
 category_slider_list:
-    path: /admin/category-slider-list
+    path: /admin/category-slider-list/{id}
     controller: App\Controller\Admin\CategorySliderController::sliderList
+    requirements:
+        id: \d+
 
 category_slider_add:
     path: /admin/category-slider-add
@@ -269,8 +271,11 @@ category_slider_add:
 category_slider_update:
     path: /admin/category-slider-update/{id}
     controller: App\Controller\Admin\CategorySliderController::update
+    methods: [GET,POST]
     requirements:
         id: \d+
+    options:
+        expose: true
 
 category_slider_delete:
     path: /admin/category-slider-delete/{id}

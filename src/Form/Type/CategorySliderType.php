@@ -3,7 +3,9 @@
 namespace App\Form\Type;
 
 use App\Entity\Slider;
+use Doctrine\ORM\EntityRepository;
 use phpDocumentor\Reflection\Types\Integer;
+use Symfony\Bridge\Doctrine\Form\Type\EntityType;
 use Symfony\Component\Form\AbstractType;
 use Symfony\Component\Form\Extension\Core\Type\{CheckboxType,
     FileType,
@@ -40,7 +42,9 @@ class CategorySliderType extends AbstractType
                 'required' => false,
                 'label' => 'Δημοσίευση'
             ))
-            ->add('image', FileType::class);
+            ->add('image', FileType::class, [
+                'required' => false
+            ]);
     }
 
     public function configureOptions(OptionsResolver $resolver)

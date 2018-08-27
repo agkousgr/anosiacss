@@ -45,7 +45,7 @@ class UploadListener
                 break;
 
             case $entity instanceof Slider:
-                $filePath = 'articles_image_directory';
+                $filePath = 'slider_image_directory';
                 break;
 
             default:
@@ -55,10 +55,7 @@ class UploadListener
         }
 
         if ($fileName = $entity->getImage()) {
-
-            dump($entity->getImage());
             $entity->setImage(new File($this->uploader->getTargetDirectory()[$filePath].'/'.$fileName));
-            dump($entity->getImage());
         }
     }
 
@@ -73,7 +70,7 @@ class UploadListener
 
             case $entity instanceof Slider:
                 $file = $entity->getImage();
-                $filePath = 'articles_image_directory';
+                $filePath = 'slider_image_directory';
                 break;
 
             default:

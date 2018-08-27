@@ -44,7 +44,16 @@
         </div>
     </div>
 </div>
-
+{% if form.vars.data.image is not null %}
+    <div class="row">
+        <div class="col-lg-6">
+            <div class="form-group">
+                <img style="width:100%;"
+                     src="{{ asset('uploads/slider/' ~ form.vars.data.image.filename) }}"/><br/>
+            </div>
+        </div>
+    </div>
+{% endif %}
 <div class="form-group">
     {{ form_label(form.image, 'Επιλογή αρχείου') }}
     {{ form_widget(form.image, {'attr': {'class': 'form-control'}}) }}

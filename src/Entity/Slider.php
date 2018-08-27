@@ -13,9 +13,6 @@ class Slider
 
     /**
      * @var string|null
-     *
-     * @Assert\NotBlank(message="Παρακαλώ επιλέξτε μια εικόνα")
-     * @Assert\File(mimeTypes={ "image/gif, image/png, image/jpeg" })
      */
     private $image;
 
@@ -45,9 +42,9 @@ class Slider
     private $category;
 
     /**
-     * @return null|string
+     * @return null
      */
-    public function getImage(): ?string
+    public function getImage()
     {
         return $this->image;
     }

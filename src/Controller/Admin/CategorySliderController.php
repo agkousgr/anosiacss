@@ -27,16 +27,35 @@ class CategorySliderController extends AbstractController
         }
     }
 
-    public function sliderList()
-    {
-        return $this->render('Admin/category_slider/slider-list.html.twig');
-    }
-
-    public function create(Request $request, EntityManagerInterface $em, FileUploader $uploader)
+    public function sliderList(Request $request, EntityManagerInterface $em, int $id, LoggerInterface $logger)
     {
         try {
-            dump($request);
+            $slides = $em->getRepository(Slider::class)->findBy(
+                ['category' => $id],
+                ['priority' => 'ASC']);
+            $category = $em->getRepository(Category::class)->find($id);
+            return $this->render('Admin/category_slider/slider-list.html.twig', [
+                'slides' => $slides,
+                'category' => $category
+            ]);
+        } catch (\Exception $e) {
+            $logger->error(__METHOD__ . ' -> {message}', ['message' => $e->getMessage()]);
+            throw $e;
+            $this->addFlash(
+                'notice',
+                'Παρουσιάστηκε σφάλμα κατά την εγγραφή! Παρακαλώ δοκιμάστε ξανά.'
+            );
+            return $this->render('Admin/slider/list.html.twig');
+        }
+    }
+
+    public function create(Request $request, EntityManagerInterface $em)
+    {
+        try {
+            $id = $request->query->getInt('id');
+            $category = $em->getRepository(Category::class)->find($id);
             $slider = new Slider();
+            $slider->setCategory($category);
             $form = $this->createForm(CategorySliderType::class, $slider, [
                 'action' => $this->generateUrl('category_slider_add'),
             ]);
@@ -56,9 +75,9 @@ class CategorySliderController extends AbstractController
                     'success',
                     'Η προσθήκη ολοκληρώθηκε με επιτυχία!'
                 );
-                return $this->redirectToRoute('slider_list');
+                return $this->redirectToRoute('category_slider_list');
             }
-            return $this->render('Admin/category_slider/category_slider.html.twig', [
+            return $this->render('Admin/category_slider/category_slider_form.html.twig', [
                 'form' => $form->createView()
             ]);
 
@@ -71,39 +90,40 @@ class CategorySliderController extends AbstractController
         }
     }
 
-    public function update(Request $request, int $id, EntityManagerInterface $em, FileUploader $uploader)
+    public function update(Request $request, EntityManagerInterface $em, int $id, LoggerInterface $logger)
     {
         try {
             $slider = $em->getRepository(Slider::class)->find($id);
-            $em->getRepository()->find($id);
-            $form = $this->createForm(CategorySliderType::class, $slider);
+            dump($id);
+            $prevImage = $slider->getImage();
+            $form = $this->createForm(CategorySliderType::class, $slider, [
+                'action' => $this->generateUrl('category_slider_update', ['id' => $id]),
+            ]);
             $form->handleRequest($request);
 
             if ($form->isSubmitted() && $form->isValid()) {
-                $image = $slider->getImage();
-
-                $fileName = $uploader->upload($image);
-
-                // updates the 'image' property to store the Image file name
-                // instead of its contents
-                $slider->setImage($fileName);
-                $em->persist($slider);
+                if (empty($form->get('image')->getData())) {
+                    $slider->setImage($prevImage);
+                }
                 $em->flush();
                 $this->addFlash(
                     'success',
                     'Η ενημέρωση ολοκληρώθηκε με επιτυχία!'
                 );
+                return $this->redirectToRoute('category_slider_list', ['id' => $slider->getCategory()->getId()]);
             }
-            return $this->render('Admin/slider/slider.html.twig', [
+            return $this->render('Admin/category_slider/category_slider_form.html.twig', [
                 'form' => $form->createView()
             ]);
 
         } catch (\Exception $e) {
+            $logger->error(__METHOD__ . ' -> {message}', ['message' => $e->getMessage()]);
+            throw $e;
             $this->addFlash(
                 'notice',
                 'Παρουσιάστηκε σφάλμα κατά την εγγραφή! Παρακαλώ δοκιμάστε ξανά.'
             );
-            return $this->render('Admin/slider/list.html.twig');
+            return $this->redirectToRoute('category_slider_list', ['id' => $slider->getCategory()->getId()]);
         }
     }
 }

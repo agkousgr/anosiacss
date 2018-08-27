@@ -55,6 +55,7 @@ Encore
     .addEntry('admin/js/category', './assets/admin/js/category/category.js')
     .addEntry('admin/js/article', './assets/admin/js/article/article.js')
     .addEntry('admin/js/article_form', './assets/admin/js/article/article_form.js')
+    .addEntry('admin/js/category-slider', './assets/admin/js/category-slider/category-slider.js')
 
 
 
