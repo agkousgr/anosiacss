@@ -91,4 +91,32 @@ class SliderController extends AbstractController
             return $this->redirectToRoute('slider_list');
         }
     }
+
+    public function changePriority(int $id, string $direction, EntityManagerInterface $em, LoggerInterface $logger)
+    {
+        try {
+            $slider = $em->getRepository(Slider::class)->find($id);
+            if ($direction === 'up') {
+                $slider->setPriority($slider->getPriority() - 1);
+            } else {
+                $slider->setPriority($slider->getPriority() + 1);
+            }
+            $em->flush();
+            $this->addFlash(
+                'success',
+                'Η ενημέρωση ολοκληρώθηκε με επιτυχία!'
+            );
+
+            return $this->redirectToRoute('slider_list');
+
+        } catch (\Exception $e) {
+            $logger->error(__METHOD__ . ' -> {message}', ['message' => $e->getMessage()]);
+            throw $e;
+            $this->addFlash(
+                'notice',
+                'Παρουσιάστηκε σφάλμα κατά την εγγραφή! Παρακαλώ δοκιμάστε ξανά.'
+            );
+            return $this->redirectToRoute('slider_list');
+        }
+    }
 }

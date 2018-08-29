@@ -2,6 +2,7 @@
 
 namespace App\Controller;
 
+use App\Entity\Slider;
 use Vinkla\Instagram\Instagram;
 
 class DefaultController extends MainController
@@ -13,6 +14,7 @@ class DefaultController extends MainController
 //        $latest = $pr->getItems(-1, $session->get("authID"));
 
         // Create a new instagram instance.
+        $slider = $this->em->getRepository(Slider::class)->findBy(['category' => null]);
         $instagram = new Instagram('2209588506.1677ed0.361223b4d3a547eebd1ad92202375d17');
         // Fetch recent user media items.
         $this->instagramfeed = $instagram->media();
@@ -26,7 +28,8 @@ class DefaultController extends MainController
             'totalCartItems' => $this->totalCartItems,
             'loggedUser' => $this->loggedUser,
             'loggedName' => $this->loggedName,
-            'instagramfeed' => $this->instagramfeed
+            'instagramfeed' => $this->instagramfeed,
+            'slider' => $slider
 //            'latest' => $latest
         ]);
     }

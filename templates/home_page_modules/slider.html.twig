@@ -2,42 +2,26 @@
     <div class="fullwidthbanner-container">
         <div class="fullwidthbanner black">
             <ul>
-                <li>
-                    <img src="{{ asset('images/slider/banner.jpg') }}" alt=""/>
-                    {#<div class="caption randomrotate" data-x="950" data-y="0" data-speed="600" data-start="1100"#}
-                         {#data-easing="easeOutExpo"><img src="{{ asset('images/tag.png') }}" alt=""/></div>#}
-                    {#<div class="caption medium_black_text sfr" data-x="30" data-y="340" data-speed="1000"#}
-                         {#data-start="300" data-easing="easeInOutQuint">Summer Sale On#}
-                    {#</div>#}
-                    {#<div class="caption medium_white_bg sfr" data-x="30" data-y="400" data-speed="1000"#}
-                         {#data-start="800" data-easing="easeInOutQuint">Woman Clothing#}
-                    {#</div>#}
-                    {#<div class="caption small_fade_text sfr" data-x="30" data-y="500" data-speed="1300"#}
-                         {#data-start="1500" data-easing="easeOutExpo">up to <strong>50% off</strong> on <br>new#}
+                {% for slide in slider %}
+                    <li>
+                        <img src="{{ asset('uploads/slider/' ~ slide.image.filename) }}" alt="{{ slide.name }}"/>
+                        {#<div class="caption randomrotate" data-x="950" data-y="0" data-speed="600" data-start="1100"#}
+                        {#data-easing="easeOutExpo"><img src="{{ asset('images/tag.png') }}" alt=""/></div>#}
+                        {#<div class="caption medium_black_text sfr" data-x="30" data-y="340" data-speed="1000"#}
+                        {#data-start="300" data-easing="easeInOutQuint">Summer Sale On#}
+                        {#</div>#}
+                        {#<div class="caption medium_white_bg sfr" data-x="30" data-y="400" data-speed="1000"#}
+                        {#data-start="800" data-easing="easeInOutQuint">Woman Clothing#}
+                        {#</div>#}
+                        {#<div class="caption small_fade_text sfr" data-x="30" data-y="500" data-speed="1300"#}
+                        {#data-start="1500" data-easing="easeOutExpo">up to <strong>50% off</strong> on <br>new#}
                         {#upcoming collection#}
-                    {#</div>#}
-                    {#<div class="caption sfb" data-x="30" data-y="580" data-speed="1000" data-start="2000"#}
-                         {#data-easing="easeInOutQuint"><a href="#" class="button orange big">SHOP NOW</a>#}
-                    {#</div>#}
-                </li>
-                <li>
-                    <img src="{{ asset('images/slider/banner1.jpg') }}" alt=""/>
-                    {#<div class="caption randomrotate" data-x="950" data-y="0" data-speed="600" data-start="1100"#}
-                         {#data-easing="easeOutExpo"><img src="{{ asset('images/tag.png') }}" alt=""/></div>#}
-                    {#<div class="caption medium_black_text sfr" data-x="30" data-y="340" data-speed="1000"#}
-                         {#data-start="300" data-easing="easeInOutQuint">Summer Sale On#}
-                    {#</div>#}
-                    {#<div class="caption medium_white_bg sfr" data-x="30" data-y="400" data-speed="1000"#}
-                         {#data-start="800" data-easing="easeInOutQuint">Woman Clothing#}
-                    {#</div>#}
-                    {#<div class="caption small_fade_text sfr" data-x="30" data-y="500" data-speed="1300"#}
-                         {#data-start="1500" data-easing="easeOutExpo">up to <strong>50% off</strong> on <br>new#}
-                        {#upcoming collection#}
-                    {#</div>#}
-                    {#<div class="caption sfb" data-x="30" data-y="580" data-speed="1000" data-start="2000"#}
-                         {#data-easing="easeInOutQuint"><a href="#" class="button orange big">SHOP NOW</a>#}
-                    {#</div>#}
-                </li>
+                        {#</div>#}
+                        {#<div class="caption sfb" data-x="30" data-y="580" data-speed="1000" data-start="2000"#}
+                        {#data-easing="easeInOutQuint"><a href="#" class="button orange big">SHOP NOW</a>#}
+                        {#</div>#}
+                    </li>
+                {% endfor %}
             </ul>
         </div>
     </div>

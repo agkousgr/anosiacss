@@ -250,6 +250,12 @@ slider_delete:
     requirements:
         id: \d+
 
+slider_priority:
+    path: /admin/slider-priority/{id}/{direction}
+    controller: App\Controller\Admin\SliderController::changePriority
+    requirements:
+        id: \d+
+
     # Category Slider category_slider_list
 category_slider:
     path: /admin/category-slider
@@ -283,6 +289,12 @@ category_slider_delete:
     requirements:
         id: \d+
 
+category_slider_priority:
+    path: /admin/category-slider-priority/{id}/{direction}
+    controller: App\Controller\Admin\CategorySliderController::changePriority
+    requirements:
+        id: \d+
+
     # Season Promo
 seasonpromo_list:
     path: /admin/seasonpromo-list
@@ -311,3 +323,9 @@ seasonpromo_delete:
 home_page_modules:
     path: /admin/home-page-modules
     controller: App\Controller\Admin\HomePageModulesController::list
+
+homepage_modules_priority:
+    path: /admin/homepage-modules-priority/{id}/{direction}
+    controller: App\Controller\Admin\HomePageModulesController::changePriority
+    requirements:
+        id: \d+

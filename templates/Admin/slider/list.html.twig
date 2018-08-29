@@ -105,6 +105,12 @@
                                         </td>
 
                                         <td style="width: 10%; text-align: center">
+                                            <a href="{{ path('slider_priority', {'id':slide.id, 'direction':'up'}) }}">
+                                                <img src="{{ asset('images/up-arrow.png') }}">
+                                            </a>
+                                            <a href="{{ path('slider_priority', {'id':slide.id, 'direction':'down'}) }}">
+                                                <img style="margin-top: 15px;" src="{{ asset('images/down-arrow.png') }}">
+                                            </a>
                                             {{ slide.priority }}
                                         </td>
 

@@ -27,7 +27,7 @@ class CategorySliderController extends AbstractController
         }
     }
 
-    public function sliderList(Request $request, EntityManagerInterface $em, int $id, LoggerInterface $logger)
+    public function sliderList(EntityManagerInterface $em, int $id, LoggerInterface $logger)
     {
         try {
             $slides = $em->getRepository(Slider::class)->findBy(
@@ -124,6 +124,34 @@ class CategorySliderController extends AbstractController
                 'Παρουσιάστηκε σφάλμα κατά την εγγραφή! Παρακαλώ δοκιμάστε ξανά.'
             );
             return $this->redirectToRoute('category_slider_list', ['id' => $slider->getCategory()->getId()]);
+        }
+    }
+
+    public function changePriority(int $id, string $direction, EntityManagerInterface $em, LoggerInterface $logger)
+    {
+        try {
+            $slider = $em->getRepository(Slider::class)->find($id);
+            if ($direction === 'up') {
+                $slider->setPriority($slider->getPriority() - 1);
+            } else {
+                $slider->setPriority($slider->getPriority() + 1);
+            }
+            $em->flush();
+            $this->addFlash(
+                'success',
+                'Η ενημέρωση ολοκληρώθηκε με επιτυχία!'
+            );
+
+            return $this->redirectToRoute('category_slider_list', ['id' => $slider->getCategory()->getId()]);
+
+        } catch (\Exception $e) {
+            $logger->error(__METHOD__ . ' -> {message}', ['message' => $e->getMessage()]);
+            throw $e;
+            $this->addFlash(
+                'notice',
+                'Παρουσιάστηκε σφάλμα κατά την εγγραφή! Παρακαλώ δοκιμάστε ξανά.'
+            );
+            return $this->redirectToRoute('category_slider_list', ['id' => $id]);
         }
     }
 }
