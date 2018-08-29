@@ -15,7 +15,7 @@ class SliderController extends AbstractController
 {
     public function list(EntityManagerInterface $em)
     {
-        $slides = $em->getRepository(Slider::class)->findBy(['category' => null],['priority' => 'ASC']);
+        $slides = $em->getRepository(Slider::class)->findBy(['category' => null], ['priority' => 'ASC']);
         return $this->render('Admin/slider/list.html.twig', [
             'slides' => $slides
         ]);
@@ -117,6 +117,29 @@ class SliderController extends AbstractController
                 'Παρουσιάστηκε σφάλμα κατά την εγγραφή! Παρακαλώ δοκιμάστε ξανά.'
             );
             return $this->redirectToRoute('slider_list');
+        }
+    }
+
+    public function delete(Request $request, EntityManagerInterface $em, int $id, LoggerInterface $logger)
+    {
+        try {
+            $slider = $em->getRepository(Slider::class)->find($id);
+            if ($request->request->get('delete')) {
+                $em->remove($slider);
+                $em->flush();
+                $this->addFlash(
+                    'success',
+                    'Η διαγραφή ολοκληρώθηκε με επιτυχία!'
+                );
+            } else {
+                return $this->render('Admin/slider/delete.html.twig', [
+                    'slider' => $slider
+                ]);
+            }
+            return $this->redirectToRoute('slider_list');
+        } catch (\Exception $e) {
+            $logger->error(__METHOD__ . ' -> {message}', ['message' => $e->getMessage()]);
+            throw $e;
         }
     }
 }

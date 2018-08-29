@@ -247,8 +247,11 @@ slider_update:
 slider_delete:
     path: /admin/slider-delete/{id}
     controller: App\Controller\Admin\SliderController::delete
+    methods: [GET,POST]
     requirements:
         id: \d+
+    options:
+        expose: true
 
 slider_priority:
     path: /admin/slider-priority/{id}/{direction}
