@@ -57,7 +57,7 @@ class ProductService
     <AuthID>$this->authId</AuthID>
     <AppID>157</AppID>
     <CompanyID>1000</CompanyID>
-    <pagesize>100</pagesize>
+    <pagesize>1000</pagesize>
     <pagenumber>0</pagenumber>
     <CategoryID>$ctgId</CategoryID>
     <SearchToken>null</SearchToken>

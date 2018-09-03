@@ -1,13 +1,27 @@
-// $(function() {
-//     $( "#switchery-range" ).switchery({
-//         range: true,
-//         min: 100,
-//         max: 1000,
-//         values: [ 10, 1000 ],
-//         slide: function( event, ui ) {
-//             $( "#amount" ).val( "$" + ui.values[ 0 ] + " - $" + ui.values[ 1 ] );
-//         }
-//     });
-//     $( "#amount" ).val( "$" + $( "#switchery-range" ).switchery( "values", 0 ) +
-//         " - $" + $( "#switchery-range" ).switchery( "values", 1 ) );
-// });
+require('ion-rangeslider');
+
+$(document).ready(function () {
+    $("#range_slider").ionRangeSlider({
+        type: "double",
+        min: 10,
+        max: 250,
+        from: 100,
+        to: 175,
+        prefix: "Τιμή: ",
+        postfix: " €",
+        decorate_both: true
+    });
+
+    $('select[name="sorting"]').on('change', function () {
+        window.location.replace($('option:selected', this).attr('href'));
+    });
+
+    $('select[name="#maxItemPerPage"]').change(function(){
+
+        let url = '{{path("controller_index_route","maxItemPerPage":_itemNum)}}';
+        let item = $('select[name="#maxItemPerPage"]').find(":selected").val();
+
+        window.location.href = url.replace('_itemNum',item );
+    })
+
+});

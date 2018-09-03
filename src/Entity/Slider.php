@@ -24,7 +24,7 @@ class Slider
     /**
      * @var string|null
      */
-    private $url;
+    private $url = '#';
 
     /**
      * @var int|null

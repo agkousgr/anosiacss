@@ -1,15 +1,5 @@
 {% extends 'layout.html.twig' %}
 
-{% block stylesheets %}
-    {{ parent() }}
-    <style>
-        .product-case .product-name {
-            font-size: 14px;
-            min-height: 40px;
-        }
-    </style>
-
-{% endblock %}
 {% block bodyId %}category{% endblock %}
 {% block title %}Products List{% endblock %}
 {% block slider %}{% endblock %}
@@ -46,9 +36,7 @@
                     <div class="col-md-9 column">
                         <div class="product-list">
                             <h2>{{ ctgInfo.name }}
-                                {% set from = (products.currentPageNumber-1)*12 + 1 %}
-                                {% set to = (products.currentPageNumber*12) %}
-                                <span>(Εμφάνιση {{ from }} – {{ to }} προϊόντα σε σύνολο {{ products.getTotalItemCount }})</span>
+                                <span>(Εμφάνιση 1 – 60 προϊόντα σε σύνολο {{ products.getTotalItemCount }})</span>
                             </h2>
                             <div class="sorting-head clearfix">
                                 {#<table>#}
@@ -70,25 +58,21 @@
                                     </div>
                                     <div class="col-sm-6 col-md-5">
                                         <div class="row">
-                                            <div class="col-xs-6 pull-right"> {# <== pull right tbd #}
-
-                                                <select name="sorting" id="sorting" class="c-select">
-                                                    {{ knp_pagination_sortable(products, 'Όνομα Α->Ω', '[nadme]', {}, {'direction': 'asc'}) }}
-                                                    {{ knp_pagination_sortable(products, ' Ω->Α', '[nasme]', {}, {'direction': 'desc'}) }}
-                                                    {{ knp_pagination_sortable(products, 'Τιμή Φθίνουσα', '[webPrice]', {}, {'direction': 'desc'}) }}
+                                            <div class="col-xs-6">
+                                                <select class="c-select">
                                                     <option>Price Low to High</option>
                                                     <option>Price - high to low</option>
                                                     <option>Highest rated</option>
                                                 </select>
                                             </div>
-                                            {#<div class="col-xs-6">#}
-                                                {#<select name="maxItemPerPage" class="c-select">#}
-                                                    {#<option data-url="{{ app.request.uri }}" value="12">12 προϊόντα</option>#}
-                                                    {#<option data-url="{{ app.request.uri }}" value="18">18 προϊόντα</option>#}
-                                                    {#<option data-url="{{ app.request.uri }}" value="24">24 προϊόντα</option>#}
-                                                    {#<option data-url="{{ app.request.uri }}" value="30">30 προϊόντα</option>#}
-                                                {#</select>#}
-                                            {#</div>#}
+                                            <div class="col-xs-6">
+                                                <select class="c-select">
+                                                    <option>15 Items Per Page</option>
+                                                    <option>18 Items Per Page</option>
+                                                    <option>21 Items Per Page</option>
+                                                    <option>24 Items Per Page</option>
+                                                </select>
+                                            </div>
                                         </div>
                                     </div>
                                 </div>
@@ -118,9 +102,9 @@
                                                     {#class="fa fa-star"></i><i class="fa fa-star-o"></i>#}
                                                     {#</div>#}
                                                     <div class="product-price">
-                                                        <div class="product-price-span">{{ pr.webPrice|number_format(2, ',', '.') }}
+                                                        <div class="product-price-span">{{ pr.webPrice }}
                                                             €
-                                                            <del>{{ pr.retailPrice|number_format(2, ',', '.') }}€</del>
+                                                            <del>{{ pr.retailPrice }}€</del>
                                                         </div>
                                                     </div>
                                                     {% if pr.outOfStock == "false" %}
@@ -139,9 +123,9 @@
                                                 {#class="fa fa-star"></i><i class="fa fa-star"></i><i#}
                                                 {#class="fa fa-star"></i><i class="fa fa-star-o"></i></div>#}
                                                 <div class="product-price">
-                                                    <div class="product-price-span">{{ pr.webPrice|number_format(2, ',', '.') }}
+                                                    <div class="product-price-span">{{ pr.webPrice }}
                                                         €
-                                                        <del>{{ pr.retailPrice|number_format(2, ',', '.') }}€</del>
+                                                        <del>{{ pr.retailPrice }}€</del>
                                                     </div>
                                                 </div>
                                                 <div>
@@ -172,8 +156,25 @@
                                     </div>
                                 {% endfor %}
                             </div>
-                            <nav aria-label="Page navigation" style="text-align: center;">
+                            <nav aria-label="Page navigation">
                                 {{ knp_pagination_render(products) }}
+                                <ul class="pagination">
+                                    <li>
+                                        <a href="#" aria-label="Previous">
+                                            <span aria-hidden="true">&laquo;</span>
+                                        </a>
+                                    </li>
+                                    <li class="active"><a href="#">1</a></li>
+                                    <li><a href="#">2</a></li>
+                                    <li><a href="#">3</a></li>
+                                    <li><a href="#">4</a></li>
+                                    <li><a href="#">5</a></li>
+                                    <li>
+                                        <a href="#" aria-label="Next">
+                                            <span aria-hidden="true">&raquo;</span>
+                                        </a>
+                                    </li>
+                                </ul>
                             </nav>
                         </div>
                     </div>
