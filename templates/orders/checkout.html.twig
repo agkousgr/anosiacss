@@ -269,10 +269,10 @@
                                                 {% for address in addresses['addresses'] %}
                                                     <div class="col-sm-4">
                                                         <div class="form-group" style="border: 1px #cccccc solid; padding: 1px 10px">
-                                                            <h4>
+                                                            <h5>
                                                             <input type="radio" name="address" id="{{ address.id }}">
                                                                 {{ address.name }}
-                                                            </h4>
+                                                            </h5>
                                                         </div>
                                                     </div>
                                                 {% endfor %}
@@ -285,7 +285,21 @@
                                                 {#The selected address will be used both as your personal address#}
                                                 {#(for invoice) and as your delivery address.#}
                                                 {#</p>#}
-
+                                                <article class="address-item selected" id="id-address-delivery-address-8">
+                                                    <header class="h4">
+                                                        <label class="radio-block">
+                                                            <span class="custom-radio">
+                                                                <input name="id_address_delivery" value="8" checked="" type="radio">
+                                                                <span></span>
+                                                            </span>
+                                                            <span class="address-alias h4">Στοιχεία τιμολόγησης</span>
+                                                            <div class="address">JOhn Krav<br>infovalue<br>12321321321<br>Faveirou 39<br>Athens<br>10438<br>United Kingdom</div>
+                                                        </label>
+                                                    </header>
+                                                    <hr>
+                                                    <footer class="address-footer">
+                                                    </footer>
+                                                </article>
                                                 <div id="delivery-address">
                                                     <div class="js-address-form">
                                                         <section class="form-fields">
