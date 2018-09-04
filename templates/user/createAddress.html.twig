@@ -19,7 +19,12 @@
     <div class="page-header">
         <div class="container">
             <div class="row">
-                <div class="col-md-6"><h1>Ο λογαριασμός μου - Προσθήκη διεύθυνσης</h1></div>
+                {% if (addressId|length > 0) %}
+                    {% set title = 'Επεξεργασία διεύθυνσης' %}
+                {% else %}
+                    {% set title = 'Προσθήκη διεύθυνσης' %}
+                {% endif %}
+                <div class="col-md-12"><h1>Ο λογαριασμός μου - {{ title }}</h1></div>
             </div>
         </div>
     </div>
@@ -119,12 +124,12 @@
 
                 </section>
                 <footer class="page-footer">
-                    <a href="https://demo.templatetrip.com/Prestashop/PRS06/PRS176_gym/en/my-account"
+                    <a href="{{ path('user_account') }}"
                        class="account-link">
                         <i class="material-icons"></i>
-                        <span>Back to your account</span>
+                        <span>Επιστροφή στο λογαριασμό σας</span>
                     </a>
-                    <a href="https://demo.templatetrip.com/Prestashop/PRS06/PRS176_gym/en/" class="account-link">
+                    <a href="{{ path('index') }}" class="account-link">
                         <i class="material-icons"></i>
                         <span>Home</span>
                     </a>

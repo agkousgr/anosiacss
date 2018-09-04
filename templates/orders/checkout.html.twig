@@ -265,6 +265,18 @@
                                         </h1>
 
                                         <div class="content">
+                                            <div class="row">
+                                                {% for address in addresses['addresses'] %}
+                                                    <div class="col-sm-4">
+                                                        <div class="form-group" style="border: 1px #cccccc solid; padding: 1px 10px">
+                                                            <h4>
+                                                            <input type="radio" name="address" id="{{ address.id }}">
+                                                                {{ address.name }}
+                                                            </h4>
+                                                        </div>
+                                                    </div>
+                                                {% endfor %}
+                                            </div>
                                             <div class="js-address-form">
                                                 {{ form_start(step2Form) }}
 

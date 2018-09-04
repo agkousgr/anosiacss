@@ -3,7 +3,7 @@
 namespace App\Controller;
 
 
-use App\Entity\{Checkout, Address};
+use App\Entity\Checkout;
 use App\Form\Type\{
     CheckoutStep1Type,
     CheckoutStep2Type,
@@ -11,12 +11,13 @@ use App\Form\Type\{
     CheckoutStep4Type
 };
 use App\Service\CheckoutService;
+use App\Service\UserAccountService;
 use Doctrine\ORM\EntityManagerInterface;
 use Symfony\Component\HttpFoundation\Request;
 
 class CheckoutController extends MainController
 {
-    public function checkout(int $step, Request $request, CheckoutService $checkoutService, EntityManagerInterface $em)
+    public function checkout(int $step, Request $request, CheckoutService $checkoutService, UserAccountService $userAccountService)
     {
         try {
 
@@ -33,7 +34,8 @@ class CheckoutController extends MainController
             } else {
                 $checkout = $this->session->get('curOrder');
             }
-
+            $addresses = $userAccountService->getAddresses($this->loggedClientId);
+            dump($addresses);
             $step1Form = $this->createForm(CheckoutStep1Type::class, $checkout, [
                 'loggedUser' => $this->loggedUser
             ]);
@@ -99,6 +101,7 @@ class CheckoutController extends MainController
                 'totalCartItems' => $this->totalCartItems,
                 'totalWishlistItems' => $this->totalWishlistItems,
                 'loggedUser' => $this->loggedUser,
+                'addresses' => $addresses,
                 'step1Form' => $step1Form->createView(),
                 'step2Form' => $step2Form->createView(),
                 'step3Form' => $step3Form->createView(),

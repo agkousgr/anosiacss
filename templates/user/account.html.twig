@@ -202,21 +202,24 @@
                                         </article>
                                     </div>
                                     {% if userData["addresses"] is not empty %}
-                                        {#{% for address in userData["addresses"] %}#}
+                                        {% for address in userData["addresses"] %}
                                             {#{{ dump(address) }}#}
-                                        <div class="col-lg-4 col-md-6 col-sm-6 extra-addresses">
+                                        <div class="col-lg-4 col-md-6 col-sm-6 extra-addresses" style="padding-bottom:15px;">
                                             <article id="address-9" class="address" data-id-address="9">
                                                 <div class="address-body">
-                                                    <h4>{{ userData["addresses"]["name"] }}</h4>
-                                                    <address>
-                                                        {{ userData["addresses"]["address"] }}<br>
-                                                        {{ userData["addresses"]["city"] }}<br>
-                                                        {{ userData["addresses"]["zip"] }}<br>
-                                                        {{ userData["addresses"]["district"] }}<br>
+
+                                                    <h4>{{ address["name"] }}
+                                                        <i class="fa fa-trash pull-right" style="cursor:pointer;"></i>
+                                                    </h4>
+                                                    <address style="min-height: 127px;">
+                                                        {{ address["address"] }}<br>
+                                                        {{ address["city"] }}<br>
+                                                        {{ address["zip"] }}<br>
+                                                        {{ address["district"] }}<br>
                                                     </address>
                                                 </div>
                                                 <div class="address-footer">
-                                                    <a href="{{ path('update_address', {'id':userData["addresses"]["id"]}) }}" id="edit-main-address"
+                                                    <a href="{{ path('update_address', {'id':address["id"]}) }}" id="edit-main-address"
                                                        data-link-action="edit-address">
                                                         <i class="material-icons"></i>
                                                         <span>Επεξεργασία</span>
@@ -224,7 +227,7 @@
                                                 </div>
                                             </article>
                                         </div>
-                                        {#{% endfor %}#}
+                                        {% endfor %}
                                     {% endif %}
                                     <div class="clearfix"></div>
                                     <div class="addresses-footer {{ viewAddress }}">
