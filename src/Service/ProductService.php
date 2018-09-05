@@ -157,7 +157,7 @@ EOF;
      * @return array
      * @throws \Exception
      */
-    public function getItems($id, $keyword = 'null')
+    public function getItems($id, $keyword = 'null', $pagesize)
     {
         $client = new \SoapClient('https://caron.cloudsystems.gr/FOeshopWS/ForeignOffice.FOeshop.API.FOeshopSvc.svc?singleWsdl', ['trace' => true, 'exceptions' => true,]);
 
@@ -170,7 +170,7 @@ EOF;
     <AuthID>$this->authId</AuthID>
     <AppID>157</AppID>
     <CompanyID>1000</CompanyID>
-    <pagesize>10</pagesize>
+    <pagesize>$pagesize</pagesize>
     <pagenumber>0</pagenumber>
     <ItemID>$id</ItemID>
     <ItemCode>null</ItemCode>
@@ -265,4 +265,6 @@ EOF;
             echo $sf->faultstring;
         }
     }
+
+
 }

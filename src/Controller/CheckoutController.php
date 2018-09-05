@@ -20,7 +20,7 @@ class CheckoutController extends MainController
     public function checkout(int $step, Request $request, CheckoutService $checkoutService, UserAccountService $userAccountService)
     {
         try {
-
+            $addresses = array();
             if ($this->totalCartItems === 0) {
                 return $this->redirectToRoute('cart_view');
             }
@@ -29,13 +29,13 @@ class CheckoutController extends MainController
                 $checkout = new Checkout();
                 if (null !== $this->loggedUser) {
                     $checkoutService->getUserInfo($checkout);
+                    $addresses = $userAccountService->getAddresses($this->loggedClientId);
                 }
                 $this->session->set('curOrder', $checkout);
             } else {
                 $checkout = $this->session->get('curOrder');
             }
-            $addresses = $userAccountService->getAddresses($this->loggedClientId);
-            dump($addresses);
+            dump($checkout);
             $step1Form = $this->createForm(CheckoutStep1Type::class, $checkout, [
                 'loggedUser' => $this->loggedUser
             ]);
@@ -93,6 +93,7 @@ class CheckoutController extends MainController
                     $orderCompleted = false;
                 }
             }
+            dump($checkout);
             return ($this->render('orders/checkout.html.twig', [
                 'categories' => $this->categories,
                 'popular' => $this->popular,

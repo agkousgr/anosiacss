@@ -33,7 +33,12 @@ class CheckoutStep2Type extends AbstractType
             ))
             ->add('irs', TextType::class, array(
                 'data' => 'No Invoice'
-            ));
+            ))
+            ->add('shipAddress', TextType::class)
+            ->add('shipZip', TextType::class)
+            ->add('shipCity', TextType::class)
+            ->add('shipDistrict', TextType::class)
+        ;
     }
 
     public function configureOptions(OptionsResolver $resolver)

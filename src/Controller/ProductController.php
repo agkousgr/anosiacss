@@ -103,7 +103,7 @@ class ProductController extends MainController
     public function viewProduct(int $id)
     {
         try {
-            $product = $this->productService->getItems($id, 'null');
+            $product = $this->productService->getItems($id, 'null', 1);
             return $this->render('products/view.html.twig', [
                 'pr' => $product,
                 'categories' => $this->categories,
@@ -127,7 +127,7 @@ class ProductController extends MainController
             $keyword = strip_tags(trim($request->request->get('keyword')));
             $s1Keyword = preg_replace('!\s+!', ',', $keyword);
             dump($keyword);
-            $products = $this->productService->getItems('null', $s1Keyword);
+            $products = $this->productService->getItems('null', $s1Keyword, 100);
             return $this->render('products/search.html.twig', [
                 'products' => $products,
                 'categories' => $this->categories,

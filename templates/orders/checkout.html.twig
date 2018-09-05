@@ -265,18 +265,23 @@
                                         </h1>
 
                                         <div class="content">
-                                            <div class="row">
-                                                {% for address in addresses['addresses'] %}
-                                                    <div class="col-sm-4">
-                                                        <div class="form-group" style="border: 1px #cccccc solid; padding: 1px 10px">
-                                                            <h5>
-                                                            <input type="radio" name="address" id="{{ address.id }}">
-                                                                {{ address.name }}
-                                                            </h5>
+                                            {% if loggedUser is not empty %}
+                                                <div class="row">
+                                                    {% for address in addresses['addresses'] %}
+                                                        <div class="col-sm-4">
+                                                            <div class="form-group"
+                                                                 style="border: 1px #cccccc solid; padding: 1px 10px">
+                                                                <h5>
+                                                                    <input type="radio"
+                                                                           name="address"
+                                                                           id="{{ address.id }}">
+                                                                    {{ address.name }}
+                                                                </h5>
+                                                            </div>
                                                         </div>
-                                                    </div>
-                                                {% endfor %}
-                                            </div>
+                                                    {% endfor %}
+                                                </div>
+                                            {% endif %}
                                             <div class="js-address-form">
                                                 {{ form_start(step2Form) }}
 
@@ -285,24 +290,34 @@
                                                 {#The selected address will be used both as your personal address#}
                                                 {#(for invoice) and as your delivery address.#}
                                                 {#</p>#}
-                                                <article class="address-item selected" id="id-address-delivery-address-8">
-                                                    <header class="h4">
-                                                        <label class="radio-block">
-                                                            <span class="custom-radio">
-                                                                <input name="id_address_delivery" value="8" checked="" type="radio">
-                                                                <span></span>
-                                                            </span>
-                                                            <span class="address-alias h4">Στοιχεία τιμολόγησης</span>
-                                                            <div class="address">JOhn Krav<br>infovalue<br>12321321321<br>Faveirou 39<br>Athens<br>10438<br>United Kingdom</div>
-                                                        </label>
-                                                    </header>
-                                                    <hr>
-                                                    <footer class="address-footer">
-                                                    </footer>
-                                                </article>
+                                                {% if loggedUser is not empty %}
+                                                    <article class="address-item selected"
+                                                             id="id-address-delivery-address-8">
+                                                        <header class="h4">
+                                                            <label class="radio-block">
+                                                                <span class="custom-radio">
+                                                                    <input name="id_address_delivery"
+                                                                           value="8" checked=""
+                                                                           type="radio">
+                                                                    <span></span>
+                                                                </span>
+                                                                <span class="address-alias h4">Στοιχεία
+                                                                    τιμολόγησης</span>
+                                                                <div class="address">JOhn Krav<br>infovalue<br>12321321321<br>Faveirou
+                                                                    39<br>Athens<br>10438<br>United
+                                                                    Kingdom
+                                                                </div>
+                                                            </label>
+                                                        </header>
+                                                        <hr>
+                                                        <footer class="address-footer">
+                                                        </footer>
+                                                    </article>
+                                                {% endif %}
                                                 <div id="delivery-address">
                                                     <div class="js-address-form">
                                                         <section class="form-fields">
+                                                            <h4>Στοιχεία τιμολόγησης</h4>
                                                             <div class="form-group row ">
                                                                 {{ form_label(step2Form.address, 'Διεύθυνση', {'label_attr': {'class': 'col-md-3 form-control-label required'}}) }}
                                                                 <div class="col-md-6">
@@ -364,16 +379,6 @@
                                                                     <div class="col-md-3 form-control-comment">
                                                                     </div>
                                                                 </div>
-                                                                <div class="form-group row">
-                                                                    <div class="col-md-9 col-md-offset-3">
-                                                                        <input name="use_same_address"
-                                                                               value="1"
-                                                                               checked=""
-                                                                               type="checkbox">
-                                                                        <label>Ίδια διεύθυνση για το
-                                                                            τιμολόγιο</label>
-                                                                    </div>
-                                                                </div>
                                                             </div>
                                                             <div class="form-group row ">
                                                                 {{ form_label(step2Form.series, 'Παραστατικό', {'label_attr': {'class': 'col-md-3 form-control-label required'}}) }}
@@ -382,6 +387,56 @@
                                                                 </div>
                                                                 <div class="col-md-3 form-control-comment">
                                                                 </div>
+                                                            </div>
+                                                            <h4>Διεύθυνση αποστολής</h4>
+                                                            <div class="form-group row">
+                                                                <div class="col-md-9 col-md-offset-3">
+                                                                    <input name="use_same_address"
+                                                                           id="use_same_address"
+                                                                           value="1"
+                                                                           checked=""
+                                                                           type="checkbox">
+                                                                    <label>Ίδια διεύθυνση για το
+                                                                        τιμολόγιο</label>
+                                                                </div>
+                                                            </div>
+                                                            <div id="ship-address" class="hidden">
+                                                                <div class="form-group row ">
+                                                                    {{ form_label(step2Form.shipAddress, 'Διεύθυνση', {'label_attr': {'class': 'col-md-3 form-control-label required'}}) }}
+                                                                    <div class="col-md-6">
+                                                                        {{ form_widget(step2Form.shipAddress, {'attr': {'class': 'form-control'}}) }}
+                                                                    </div>
+                                                                    <div class="col-md-3 form-control-comment">
+                                                                    </div>
+                                                                </div>
+
+                                                                <div class="form-group row ">
+                                                                    {{ form_label(step2Form.shipZip, 'Τ.Κ.', {'label_attr': {'class': 'col-md-3 form-control-label required'}}) }}
+                                                                    <div class="col-md-6">
+                                                                        {{ form_widget(step2Form.shipZip, {'attr': {'class': 'form-control'}}) }}
+                                                                    </div>
+                                                                    <div class="col-md-3 form-control-comment">
+                                                                    </div>
+                                                                </div>
+
+                                                                <div class="form-group row ">
+                                                                    {{ form_label(step2Form.shipCity, 'Πόλη', {'label_attr': {'class': 'col-md-3 form-control-label required'}}) }}
+                                                                    <div class="col-md-6">
+                                                                        {{ form_widget(step2Form.shipCity, {'attr': {'class': 'form-control'}}) }}
+                                                                    </div>
+                                                                    <div class="col-md-3 form-control-comment">
+                                                                    </div>
+                                                                </div>
+
+                                                                <div class="form-group row ">
+                                                                    {{ form_label(step2Form.shipDistrict, 'Περιοχή', {'label_attr': {'class': 'col-md-3 form-control-label required'}}) }}
+                                                                    <div class="col-md-6">
+                                                                        {{ form_widget(step2Form.shipDistrict, {'attr': {'class': 'form-control'}}) }}
+                                                                    </div>
+                                                                    <div class="col-md-3 form-control-comment">
+                                                                    </div>
+                                                                </div>
+
                                                             </div>
                                                         </section>
 

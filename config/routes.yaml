@@ -160,6 +160,11 @@ logout:
     path: /logout
     controller: App\Controller\UserAccountController::logout
 
+# Skroutz XML
+skroutz_xml:
+    path: /skroutz/xml
+    controller: App\Controller\SkroutzController::createXML
+
 # Admin
 #admin:
 #    path: /admin
