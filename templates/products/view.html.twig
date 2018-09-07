@@ -45,8 +45,12 @@
                                             </ul>
                                         </div>
                                         <div class="owl-carousel owl-theme" id="bx-pager">
-                                            <div class="item"><a data-slide-index="0" href="">
-                                                    <img src="{{ pr.imageUrl }}" alt=""/></a></div>
+                                            {#{% for image in pr.images %}#}
+                                            {#<div class="item">#}
+                                                {#<a data-slide-index="0" href="">#}
+                                                    {#<img src="{{ pr.imageUrl }}" alt=""/>#}
+                                                {#</a>#}
+                                            {#</div>#}
                                             {#<div class="item"><a data-slide-index="1" href=""><img src="images/img-18.jpg" alt="" /></a></div>#}
                                             {#<div class="item"><a data-slide-index="2" href=""><img src="images/img-17.jpg" alt="" /></a></div>#}
                                             {#<div class="item"><a data-slide-index="3" href=""><img src="images/img-18.jpg" alt="" /></a></div>#}
@@ -180,11 +184,11 @@
                         {% include 'products/modules/bside_delivery.html.twig' %}
                         {% include 'products/modules/bside_special_products.html.twig' %}
                         {% include 'products/modules/bside_clearance_sale.html.twig' %}
-                        {% include 'products/modules/bside_other_info.html.twig' %}
+                        {#{% include 'products/modules/bside_other_info.html.twig' %}#}
                     </div>
                 </div>
                 {% include 'products/modules/product_view_related.html.twig' %}
-                {% include 'products/modules/bottom_banners.html.twig' %}
+                {#{% include 'products/modules/bottom_banners.html.twig' %}#}
 
 
             </div>

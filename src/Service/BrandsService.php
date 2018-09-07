@@ -25,11 +25,12 @@ class BrandsService
     }
 
     /**
-     * @param $makeId
+     * @param $slug
+     *
      * @return \SimpleXMLElement
      * @throws \Exception
      */
-    public function getBrands($makeId)
+    public function getBrands($slug)
     {
         $client = new \SoapClient('https://caron.cloudsystems.gr/FOeshopWS/ForeignOffice.FOeshop.API.FOeshopSvc.svc?singleWsdl', ['trace' => true, 'exceptions' => true,]);
 
@@ -44,14 +45,15 @@ class BrandsService
     <CompanyID>1000</CompanyID>
     <pagesize>1000</pagesize>
     <pagenumber>0</pagenumber>
-    <MakeID>$makeId</MakeID>
+    <MakeID>-1</MakeID>
+    <Slug>$slug</Slug>
 </ClientGetMakeRequest>
 EOF;
         try {
             $result = $client->SendMessage(['Message' => $message]);
             $resultXML = simplexml_load_string(str_replace("utf-16", "utf-8", $result->SendMessageResult));
-            $brands = $this->initializeBrands($resultXML->GetDataRows->GetCategoriesRow);
-            dump($message, $resultXML);
+            dump($message, $result);
+            $brands = $this->initializeBrands($resultXML->GetDataRows->GetMakeRow);
             return $brands;
 
         } catch (\SoapFault $sf) {
@@ -67,17 +69,18 @@ EOF;
     private function initializeBrands($brands)
     {
         try {
-//            if ((string)$pr->WebVisible !== 'false') {
-                $brandsArr = array(
-                    'id' => $brands->ID,
-                    'name' => $brands->Name,
-                    'slug' => $brands->Slug,
-                    'hasMainImage' => $brands->HasMainPhoto,
-                    'imageUrl' => ($brands->HasMainPhoto) ? 'https://caron.cloudsystems.gr/FOeshopAPIWeb/DF.aspx?' . str_replace('[Serial]', '01102459200617', str_replace('&amp;', '&', $brands->MainPhotoUrl)) : ''
+            $brandsArr = [];
+            foreach ($brands as $brand) {
+                $brandsArr[] = array(
+                    'id' => $brand->ID,
+                    'name' => $brand->Name,
+                    'slug' => $brand->Slug,
+                    'hasMainImage' => $brand->HasMainPhoto,
+                    'imageUrl' => ($brand->HasMainPhoto) ? 'https://caron.cloudsystems.gr/FOeshopAPIWeb/DF.aspx?' . str_replace('[Serial]', '01102459200617', str_replace('&amp;', '&', $brand->MainPhotoUrl)) : ''
                 );
 //            }
-//            'manufacturer' => $pr->ManufactorName
-//            return new Response(dump(print_r($this->prCategories)));
+            }
+            dump($brandsArr);
             return $brandsArr;
         } catch (\Exception $e) {
             $this->logger->error(__METHOD__ . ' -> {message}', ['message' => $e->getMessage()]);

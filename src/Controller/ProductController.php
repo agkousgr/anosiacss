@@ -12,13 +12,19 @@ use Symfony\Component\HttpFoundation\Request;
 class ProductController extends MainController
 {
 
-    public function listProducts(Request $request, int $id, int $page, PaginatorInterface $paginator, EntityManagerInterface $em)
+    public function listProducts(Request $request, int $id, int $page, PaginatorInterface $paginator)
     {
         try {
 //            $ctgInfo = $this->categoryService->getCategoryInfo($id);
+            $sort = preg_replace('/[^A-Za-z0-9\-]/', '', $request->query->get('sort'));
+            $direction = $request->query->get('direction');
             $ctgInfo = $this->em->getRepository(Category::class)->find($id);
             $slider = $this->em->getRepository(Slider::class)->findBy(['category' => $id]);
             $products = $this->productService->getCategoryItems($id);
+            dump($sort);
+            if ($sort) {
+                array_multisort(array_column($products, $sort), $products);
+            }
             $paginatedProducts = $paginator->paginate(
                 $products,
                 $page /*page number*/,
@@ -48,9 +54,18 @@ class ProductController extends MainController
         }
     }
 
-    public function listBrands(Request $request, BrandsService $brandsService)
+    public function listBrands(Request $request, int $page, BrandsService $brandsService, PaginatorInterface  $paginator)
     {
-        $brands = $brandsService->getBrands(-1);
+        $brands = $brandsService->getBrands('null');
+        $paginatedBrands = $paginator->paginate(
+            $brands,
+            $page /*page number*/,
+            15/*limit per page*/
+        );
+        $paginatedBrands->setUsedRoute('products_list');
+        $paginatedBrands->setTemplate('paginator_template/override_template.html.twig');
+        $paginatedBrands->setSortableTemplate('paginator_template/override_sortable.html.twig');
+        dump($brands);
         return $this->render('products/brands_list.html.twig', [
             'categories' => $this->categories,
             'popular' => $this->popular,
@@ -60,19 +75,21 @@ class ProductController extends MainController
             'totalWishlistItems' => $this->totalWishlistItems,
             'loggedUser' => $this->loggedUser,
             'loggedName' => $this->loggedName,
-            'brands' => $brands
+            'brands' => $paginatedBrands
 //            'slider' => $slider
         ]);
     }
 
-    public function listBrandProducts(Request $request, int $id, PaginatorInterface $paginator, EntityManagerInterface $em)
+    public function listBrandProducts(Request $request, string $slug, PaginatorInterface $paginator, BrandsService $brandsService)
     {
         try {
 //            $ctgInfo = $this->categoryService->getCategoryInfo($id);
-            $ctgInfo = $this->em->getRepository(Category::class)->find($id);
-            $slider = $this->em->getRepository(Slider::class)->findBy(['category' => $id]);
-            $products = $this->productService->getBrandItems($id);
-            $totalProducts = $this->productService->getCategoryItemsCount($id);
+            $brandInfo = $brands = $brandsService->getBrands($slug);
+            dump($brandInfo);
+//            $slider = $this->em->getRepository(Slider::class)->findBy(['category' => $id]);
+            $products = $this->productService->getItems('null', 'null', 1000, 'null', '-1', $brandInfo[0]["id"]);
+
+//            $totalProducts = $this->productService->getCategoryItemsCount($id);
 //            $totalProducts = 15;
             $paginatedProducts = $paginator->paginate(
                 $products,
@@ -80,9 +97,9 @@ class ProductController extends MainController
                 12/*limit per page*/
             );
 //            $paginator->setTemplate('bundles/KnpPaginator/twitter_bootstrap_v3_pagination.html.twig');
-            return $this->render('products/list.html.twig', [
+            return $this->render('products/brand_products_list.html.twig', [
                 'products' => $paginatedProducts,
-                'ctgInfo' => $ctgInfo,
+                'brandInfo' => $brandInfo,
                 'categories' => $this->categories,
                 'popular' => $this->popular,
                 'featured' => $this->featured,
@@ -91,7 +108,7 @@ class ProductController extends MainController
                 'totalWishlistItems' => $this->totalWishlistItems,
                 'loggedUser' => $this->loggedUser,
                 'loggedName' => $this->loggedName,
-                'slider' => $slider
+//                'slider' => $slider
 //                'products' => $paginatedProducts
             ]);
         } catch (\Exception $e) {
@@ -127,7 +144,7 @@ class ProductController extends MainController
             $keyword = strip_tags(trim($request->request->get('keyword')));
             $s1Keyword = preg_replace('!\s+!', ',', $keyword);
             dump($keyword);
-            $products = $this->productService->getItems('null', $s1Keyword, 100);
+            $products = $this->productService->getItems('null', $s1Keyword, 60);
             return $this->render('products/search.html.twig', [
                 'products' => $products,
                 'categories' => $this->categories,

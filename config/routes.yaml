@@ -25,12 +25,14 @@ brand_products_list:
     controller: App\Controller\ProductController::listBrandProducts
     defaults: { page: 1 }
     requirements:
-        id: \d+
         page: \d+
 
 brands_list:
-    path: /brands
+    path: /brands/{page}
     controller: App\Controller\ProductController::listBrands
+    defaults: { page: 1 }
+    requirements:
+        page: \d+
 
 product_view:
     path: /product/{id}

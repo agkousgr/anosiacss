@@ -323,7 +323,7 @@ EOF;
      *
      * @return string
      */
-    public function getAddress($clientId, $entity, $id='')
+    public function getAddress($clientId, $entity, $id=-1)
     {
         $client = new \SoapClient('http://caron.cloudsystems.gr/FOeshopWS/ForeignOffice.FOeshop.API.FOeshopSvc.svc?singleWsdl', ['trace' => true, 'exceptions' => true,]);
 
@@ -337,7 +337,8 @@ EOF;
     <AppID>157</AppID>
     <CompanyID>1000</CompanyID>
     <ClientID>$clientId</ClientID>
-    <ID>$id</ID>
+    <ID></ID>
+    <ShipAddressID>$id</ShipAddressID>
 </ClientGetShipAddressRequest>
 EOF;
 
@@ -389,6 +390,7 @@ EOF;
     <CompanyID>1000</CompanyID>
     <ClientID>$clientId</ClientID>
     <ID></ID>
+    <ShipAddressID>-1</ShipAddressID>
 </ClientGetShipAddressRequest>
 EOF;
 
@@ -424,11 +426,11 @@ EOF;
      *
      * @return string
      */
-    public
-    function setAddress($Address)
+    public function setAddress($Address)
     {
         $client = new \SoapClient('http://caron.cloudsystems.gr/FOeshopWS/ForeignOffice.FOeshop.API.FOeshopSvc.svc?singleWsdl', ['trace' => true, 'exceptions' => true,]);
 
+        $id = ($Address->getId()) ?: '';
         $name = $Address->getName();
         $clientId = $Address->getClient();
         $address = $Address->getAddress();
@@ -445,7 +447,7 @@ EOF;
     <AuthID>$this->authId</AuthID>
     <AppID>157</AppID>
     <CompanyID>1000</CompanyID>
-    <Key></Key>
+    <Key>$id</Key>
     <ClientID>$clientId</ClientID>
     <Address>$address</Address>
     <Zip>$zip</Zip>
@@ -572,8 +574,7 @@ EOF;
      * @return array
      * @throws \Exception
      */
-    private
-    function initializeUser($userXML)
+    private function initializeUser($userXML)
     {
         try {
             $userArr = array(

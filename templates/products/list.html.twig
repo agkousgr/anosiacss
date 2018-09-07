@@ -51,6 +51,8 @@
                                 <span>(Εμφάνιση {{ from }} – {{ to }} προϊόντα σε σύνολο {{ products.getTotalItemCount }})</span>
                             </h2>
                             <div class="sorting-head clearfix">
+                                {{ dump(products) }}
+                                {#{{ dump(products.items.name) }}#}
                                 {#<table>#}
                                 {#<tr>#}
                                 {# sorting of properties based on query components #}
@@ -73,8 +75,8 @@
                                             <div class="col-xs-6 pull-right"> {# <== pull right tbd #}
 
                                                 <select name="sorting" id="sorting" class="c-select">
-                                                    {{ knp_pagination_sortable(products, 'Όνομα Α->Ω', '[nadme]', {}, {'direction': 'asc'}) }}
-                                                    {{ knp_pagination_sortable(products, ' Ω->Α', '[nasme]', {}, {'direction': 'desc'}) }}
+                                                    {{ knp_pagination_sortable(products, 'Όνομα Α->Ω', 'products.name', {}, {'direction': 'asc'}) }}
+                                                    {{ knp_pagination_sortable(products, ' Ω->Α', 'a.name', {}, {'direction': 'desc'}) }}
                                                     {{ knp_pagination_sortable(products, 'Τιμή Φθίνουσα', '[webPrice]', {}, {'direction': 'desc'}) }}
                                                     <option>Price Low to High</option>
                                                     <option>Price - high to low</option>

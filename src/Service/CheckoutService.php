@@ -382,7 +382,7 @@ EOF;
     <CompanyID>1000</CompanyID>
     <Key></Key>
     <Series>$series</Series>
-    <Number></Number>
+    <Number>*</Number>
     <EshopNumber>$orderNo</EshopNumber>
     <Status>100</Status>
     <CustomerID>$clientId</CustomerID>

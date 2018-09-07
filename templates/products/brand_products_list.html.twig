@@ -15,16 +15,14 @@
         <div class="page-header">
             <div class="container">
                 <div class="row">
-                    <div class="col-md-12"><h1>{{ ctgInfo.name }}</h1></div>
+                    {{ dump(brandInfo) }}
+                    {#<div class="col-md-12"><h1>{{ brandInfo.name }}</h1></div>#}
                 </div>
             </div>
         </div>
-        {% if slider|length > 0 %}
-            {% include 'products/modules/category_slider.html.twig' %}
-        {% endif %}
-        {% if (ctgInfo.children is not empty) %}
-            {% include 'products/modules/top_categories.html.twig' %}
-        {% endif %}
+        {#{% if slider|length > 0 %}#}
+            {#{% include 'products/modules/category_slider.html.twig' %}#}
+        {#{% endif %}#}
         <div class="section" style="background-image:url({{ asset('images/bg-5.jpg') }});">
             <div class="container">
                 {% for message in app.flashes('notice') %}
@@ -35,8 +33,10 @@
                 <div class="row reverse-row">
                     <div class="col-md-9 column">
                         <div class="product-list">
-                            <h2>{{ ctgInfo.name }}
-                                <span>(Εμφάνιση 1 – 60 προϊόντα σε σύνολο {{ products.getTotalItemCount }})</span>
+                            {#<h2>{{ brandInfo.name }}#}
+                                {% set from = (products.currentPageNumber-1)*12 + 1 %}
+                                {% set to = (products.currentPageNumber*12) %}
+                                <span>(Εμφάνιση {{ from }} – {{ to }} προϊόντα σε σύνολο {{ products.getTotalItemCount }})</span>
                             </h2>
                             <div class="sorting-head clearfix">
                                 {#<table>#}
@@ -184,9 +184,6 @@
                         {#{% include 'products/modules/aside_color_filter.html.twig' %}#}
                         {#{% include 'products/modules/aside_size.html.twig' %}#}
                         {% include 'products/modules/aside_discount.html.twig' %}
-                        {% if (ctgInfo.children) %}
-                            {#{% include 'products/modules/aside_category.html.twig' %}#}
-                        {% endif %}
                         {% include 'products/modules/aside_clearance_sale.html.twig' %}
                         {% include 'products/modules/aside_best_sellers.html.twig' %}
                     </div>

@@ -70,40 +70,25 @@
                                 {#</div>#}
                             </div>
 
-                                    <div class="brands-grid">
-                                        {% set array = [1,1,1,1,1,1,1,1] %}
-                                        {% for data in array %}
-                                            <div class="col-sm-3" style="padding-bottom: 15px;">
-                                                {#<a href="{{ path('brand_products_list', {'id':brand.slug}) }}">#}
-                                                {#<p>{{ brand.name }}</p>#}
-                                                {#<img src="{{ brand.imageUrl }}" alt="">#}
-                                                {#</a>#}
-                                                <a href="">
-                                                    <img style="border:1px #cccccc solid"
-                                                         src="{{ asset('images/brands/brand-11.jpg') }}" alt="">
-                                                </a>
-                                            </div>
-                                        {% endfor %}
+                            <div class="brands-grid">
+                                {% for brand in brands %}
+                                    <div class="col-sm-3" style="padding-bottom: 15px; height: 300px">
+                                        {#<a href="{{ path('brand_products_list', {'id':brand.slug}) }}">#}
+                                        {#<p>{{ brand.name }}</p>#}
+                                        {#<img src="{{ brand.imageUrl }}" alt="">#}
+                                        {#</a>#}
+                                        <a href="{{ path('brand_products_list', {'slug': brand.slug}) }}">
+                                            <img style="border:1px #cccccc solid; width:auto; height:auto;"
+                                                 src="{{ brand.imageUrl }}"
+                                                 alt="{{ brand.name }}">
+                                        {{ brand.name }}
+                                        </a>
                                     </div>
+                                {% endfor %}
+                            </div>
 
-                            <nav aria-label="Page navigation">
-                                <ul class="pagination">
-                                    <li>
-                                        <a href="#" aria-label="Previous">
-                                            <span aria-hidden="true">&laquo;</span>
-                                        </a>
-                                    </li>
-                                    <li class="active"><a href="#">1</a></li>
-                                    <li><a href="#">2</a></li>
-                                    <li><a href="#">3</a></li>
-                                    <li><a href="#">4</a></li>
-                                    <li><a href="#">5</a></li>
-                                    <li>
-                                        <a href="#" aria-label="Next">
-                                            <span aria-hidden="true">&raquo;</span>
-                                        </a>
-                                    </li>
-                                </ul>
+                            <nav aria-label="Page navigation" style="text-align: center;">
+                                {{ knp_pagination_render(brands) }}
                             </nav>
                         </div>
                     </div>

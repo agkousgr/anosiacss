@@ -133,9 +133,7 @@ class MainController extends AbstractController
             $this->session->set('authID', $authID);
         }
         dump($this->session);
-        $repo = $this->em->getRepository(Category::class);
-        $this->categories = $repo->childrenHierarchy();
-
+        $this->categories = $this->em->getRepository(Category::class)->childrenHierarchy();
         if ($this->categories) {
             array_multisort(array_column($this->categories, "priority"), $this->categories);
         }
