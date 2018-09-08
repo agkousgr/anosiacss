@@ -23635,6 +23635,10 @@ h3#reply-title {
     margin: 0
 }
 
+.nopaddings {
+    padding: 0px;
+}
+
 .share-article {
     margin: 5px 0 20px;
     padding: 10px 0
@@ -24145,7 +24149,7 @@ h3#reply-title {
         font-size: 30px
     }
     .search .textbox {
-        width: 60%
+        width: 100%
     }
     .search .option-box {
         width: 40%
