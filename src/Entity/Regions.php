@@ -1,15 +1,8 @@
 <?php
-/**
- * Created by PhpStorm.
- * User: john
- * Date: 20/5/2018
- * Time: 2:39 μμ
- */
 
 namespace App\Entity;
 
 use App\Traits\BasicDbFieldsTrait;
-use Symfony\Bridge\Doctrine\Validator\Constraints\UniqueEntity;
 
 class Regions
 {

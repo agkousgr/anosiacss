@@ -133,24 +133,8 @@
                                     </div>
                                 {% endfor %}
                             </div>
-                            <nav aria-label="Page navigation">
-                                <ul class="pagination">
-                                    <li>
-                                        <a href="#" aria-label="Previous">
-                                            <span aria-hidden="true">&laquo;</span>
-                                        </a>
-                                    </li>
-                                    <li class="active"><a href="#">1</a></li>
-                                    <li><a href="#">2</a></li>
-                                    <li><a href="#">3</a></li>
-                                    <li><a href="#">4</a></li>
-                                    <li><a href="#">5</a></li>
-                                    <li>
-                                        <a href="#" aria-label="Next">
-                                            <span aria-hidden="true">&raquo;</span>
-                                        </a>
-                                    </li>
-                                </ul>
+                            <nav aria-label="Page navigation" style="text-align: center;">
+                                {{ knp_pagination_render(products) }}
                             </nav>
                         </div>
                     </div>
@@ -165,9 +149,8 @@
                     </div>
                 </div>
                 {% include 'products/modules/bottom_product_tabs.html.twig' %}
-                {% include 'products/modules/bottom_category_slider.html.twig' %}
                 {#{% include 'products/modules/bottom_gallery_and_brands.html.twig' %}#}
-                {% include 'products/modules/bottom_banners.html.twig' %}
+                {#{% include 'products/modules/bottom_banners.html.twig' %}#}
             </div>
         </div>
         {% include 'home_page_modules/14_newsletter.html.twig' %}

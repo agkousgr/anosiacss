@@ -43,7 +43,7 @@ class ProductService
      * @return array
      * @throws \Exception
      */
-    public function getCategoryItems($ctgId, $authId='', $sortBy='RetailPrice', $makeId = 'null')
+    public function getCategoryItems($ctgId, $authId = '', $sortBy = 'RetailPrice', $makeId = 'null')
     {
         $this->authId = ($this->authId) ?: $authId;
         $client = new \SoapClient('https://caron.cloudsystems.gr/FOeshopWS/ForeignOffice.FOeshop.API.FOeshopSvc.svc?singleWsdl', ['trace' => true, 'exceptions' => true,]);
@@ -145,6 +145,7 @@ EOF;
                     );
                 }
             }
+//            dump($prArr);
             return $prArr;
         } catch (\Exception $e) {
             $this->logger->error(__METHOD__ . ' -> {message}', ['message' => $e->getMessage()]);
@@ -162,7 +163,7 @@ EOF;
      * @return array
      * @throws \Exception
      */
-    public function getItems($id = 'null', $keyword = 'null', $pagesize, $sortBy='null', $isSkroutz=-1, $makeId = 'null')
+    public function getItems($id = 'null', $keyword = 'null', $pagesize, $sortBy = 'null', $isSkroutz = -1, $makeId = 'null')
     {
         $client = new \SoapClient('https://caron.cloudsystems.gr/FOeshopWS/ForeignOffice.FOeshop.API.FOeshopSvc.svc?singleWsdl', ['trace' => true, 'exceptions' => true,]);
 
@@ -188,12 +189,13 @@ EOF;
         try {
             $result = $client->SendMessage(['Message' => $message]);
             $items = simplexml_load_string(str_replace("utf-16", "utf-8", $result->SendMessageResult));
-            dump($message, $result);
-            if ($items !== false && $keyword !== 'null') {
+            dump($items, $keyword, $makeId);
+            if ($items !== false && ($keyword !== 'null' || $makeId !== 'null')) {
                 $itemsArr = $this->initializeProducts($items->GetDataRows->GetItemsRow);
             } else {
                 $itemsArr = $this->initializeProduct($items->GetDataRows->GetItemsRow);
             }
+
             return $itemsArr;
         } catch (\SoapFault $sf) {
             echo $sf->faultstring;
@@ -265,11 +267,10 @@ EOF;
             $imagesArr = array();
             $result = $client->SendMessage(['Message' => $message]);
             $items = simplexml_load_string(str_replace("utf-16", "utf-8", $result->SendMessageResult));
-            dump($items, $items->GetDataRows->GetItemPhotosRow);
-            if (intval($items->GetDataRows->RowsCount) > 0) {
-                $imagesArr = $this->initializeImages($items->GetDataRows);
+            dump($result);
+            if (intval($items->RowsCount) > 0) {
+                $imagesArr = $this->initializeImages($items->GetDataRows->GetItemPhotosRow);
             }
-            dump($imagesArr);
             return $imagesArr;
         } catch (\SoapFault $sf) {
             echo $sf->faultstring;
@@ -286,12 +287,13 @@ EOF;
         try {
             $imagesArr = [];
             foreach ($images as $image) {
-                $imagesArr = array(
+                $imagesArr['extraImages'][] = array(
                     'id' => $image->ID,
                     'name' => $image->PhotoFileName,
                     'isMain' => $image->IsMain,
-                    'imageUrl' => ($image->HasMainPhoto) ? 'https://caron.cloudsystems.gr/FOeshopAPIWeb/DF.aspx?' . str_replace('[Serial]', '01102459200617', str_replace('&amp;', '&', $image->MainPhotoUrl)) : ''
+                    'imageUrl' => 'https://caron.cloudsystems.gr/FOeshopAPIWeb/DF.aspx?' . str_replace('[Serial]', '01102459200617', str_replace('&amp;', '&', $image->PhotoUrl))
                 );
+                dump($image);
             }
             return $imagesArr;
         } catch (\Exception $e) {
@@ -309,7 +311,7 @@ EOF;
      *
      * @return int
      */
-    public function getItemsCount($id, $keyword = 'null', $isSkroutz=-1, $makeId = 'null')
+    public function getItemsCount($id, $keyword = 'null', $isSkroutz = -1, $makeId = 'null')
     {
         $client = new \SoapClient('https://caron.cloudsystems.gr/FOeshopWS/ForeignOffice.FOeshop.API.FOeshopSvc.svc?singleWsdl', ['trace' => true, 'exceptions' => true,]);
 
@@ -335,7 +337,6 @@ EOF;
         try {
             $result = $client->SendMessage(['Message' => $message]);
             $items = simplexml_load_string(str_replace("utf-16", "utf-8", $result->SendMessageResult));
-            dump($message, $result);
             return (int)$items->GetDataRows->GetItemsCountRow->Count;
         } catch (\SoapFault $sf) {
             echo $sf->faultstring;

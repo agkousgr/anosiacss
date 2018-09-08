@@ -472,12 +472,44 @@ EOF;
     }
 
     /**
+     * @param $id
+     * @return bool
+     */
+    public function deleteAddress($id)
+    {
+        $client = new \SoapClient('http://caron.cloudsystems.gr/FOeshopWS/ForeignOffice.FOeshop.API.FOeshopSvc.svc?singleWsdl', ['trace' => true, 'exceptions' => true,]);
+
+        $message = <<<EOF
+<?xml version="1.0" encoding="utf-16"?>
+<ClientDelShipAddressRequest>
+    <Type>1052</Type>
+    <Kind>1</Kind>
+    <Domain>pharmacyone</Domain>
+    <AuthID>$this->authId</AuthID>
+    <AppID>157</AppID>
+    <CompanyID>1000</CompanyID>
+    <Key>$id</Key>
+</ClientDelShipAddressRequest>
+EOF;
+        try {
+            $result = $client->SendMessage(['Message' => $message]);
+            dump($message, $result);
+            $addressData = simplexml_load_string(str_replace("utf-16", "utf-8", $result->SendMessageResult));
+            if ((string)$addressData->IsValid === 'true') {
+                return true;
+            }
+            return false;
+        } catch (\SoapFault $sf) {
+            echo $sf->faultstring;
+        }
+    }
+
+    /**
      * @param $username
      * @param $password
      * @return string
      */
-    public
-    function login($username, $password)
+    public function login($username, $password)
     {
         $client = new \SoapClient('http://caron.cloudsystems.gr/FOeshopWS/ForeignOffice.FOeshop.API.FOeshopSvc.svc?singleWsdl', ['trace' => true, 'exceptions' => true,]);
 
@@ -526,8 +558,7 @@ EOF;
      *
      * @throws \Exception
      */
-    public
-    function getUser($username = 'null', $user, $address = null) // remove nulls in production
+    public function getUser($username = 'null', $user, $address = null) // remove nulls in production
     {
         $client = new \SoapClient('http://caron.cloudsystems.gr/FOeshopWS/ForeignOffice.FOeshop.API.FOeshopSvc.svc?singleWsdl', ['trace' => true, 'exceptions' => true,]);
 
@@ -828,6 +859,34 @@ EOF;
             $result = $client->SendMessage(['Message' => $message]);
             $newsletterData = simplexml_load_string(str_replace("utf-16", "utf-8", $result->SendMessageResult));
 //            dump($result);
+        } catch (\SoapFault $sf) {
+            echo $sf->faultstring;
+        }
+    }
+
+    public function getOrders($clientId)
+    {
+        $client = new \SoapClient('http://caron.cloudsystems.gr/FOeshopWS/ForeignOffice.FOeshop.API.FOeshopSvc.svc?singleWsdl', ['trace' => true, 'exceptions' => true,]);
+
+        $message = <<<EOF
+<?xml version="1.0" encoding="utf-16"?>
+<ClientGetOrdersRequest>
+    <Type>1048</Type>
+    <Kind>1</Kind>
+    <Domain>pharmacyone</Domain>
+    <AuthID>$this->authId</AuthID>
+    <AppID>157</AppID>
+    <CompanyID>1000</CompanyID>
+    <CustomerID>$clientId</CustomerID>
+    <OrderID>null</OrderID>
+    <Number>null</Number>
+    <EshopNumber>null</EshopNumber>
+</ClientGetOrdersRequest>
+EOF;
+        try {
+            $result = $client->SendMessage(['Message' => $message]);
+            $ordersData = simplexml_load_string(str_replace("utf-16", "utf-8", $result->SendMessageResult));
+            dump($message, $result);
         } catch (\SoapFault $sf) {
             echo $sf->faultstring;
         }

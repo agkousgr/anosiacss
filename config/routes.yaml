@@ -47,9 +47,11 @@ product_quick_view:
         id: \d+
 
 product_search:
-    path: /product/search
+    path: /product/search/{page}
     controller: App\Controller\ProductController::searchResults
-    methods: [POST]
+    defaults: { page: 1 }
+    requirements:
+        page: \d+
 
 # Orders / Cart
 cart_view:
@@ -149,6 +151,13 @@ update_address:
     controller: App\Controller\UserAccountController::updateAddress
     requirements:
         page: \d+
+
+delete_address:
+    path: /delete-address
+    controller: App\Controller\UserAccountController::deleteAddress
+    methods: [GET,POST]
+    options:
+        expose: true
 
 # login logout
 login:

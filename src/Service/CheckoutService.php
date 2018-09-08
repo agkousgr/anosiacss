@@ -399,7 +399,7 @@ EOF;
             $result = $this->client->SendMessage(['Message' => $message]);
             $orderResult = simplexml_load_string(str_replace("utf-16", "utf-8", $result->SendMessageResult));
             dump($message, $result);
-            if ((string)$orderResult->IsValid === 'false') {
+            if ((string)$orderResult->IsValid === 'true') {
                 $checkout->setOrderNo($orderNo);
                 return true;
             }

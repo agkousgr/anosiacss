@@ -3,6 +3,7 @@
 namespace App\Controller;
 
 use App\Entity\Category;
+use App\Entity\ProductViews;
 use App\Entity\Slider;
 use App\Service\BrandsService;
 use Doctrine\ORM\EntityManagerInterface;
@@ -96,7 +97,9 @@ class ProductController extends MainController
                 $request->query->getInt('page', 1)/*page number*/,
                 12/*limit per page*/
             );
-//            $paginator->setTemplate('bundles/KnpPaginator/twitter_bootstrap_v3_pagination.html.twig');
+            $paginatedProducts->setUsedRoute('brand_products_list');
+            $paginatedProducts->setTemplate('paginator_template/override_template.html.twig');
+            $paginatedProducts->setSortableTemplate('paginator_template/override_sortable.html.twig');
             return $this->render('products/brand_products_list.html.twig', [
                 'products' => $paginatedProducts,
                 'brandInfo' => $brandInfo,
@@ -117,10 +120,22 @@ class ProductController extends MainController
         }
     }
 
-    public function viewProduct(int $id)
+    public function viewProduct(int $id, EntityManagerInterface $em)
     {
         try {
             $product = $this->productService->getItems($id, 'null', 1);
+            $productId = intval($product["id"]);
+            dump($product);
+            $productView = $em->getRepository(ProductViews::class)->findOneBy(['product_id' => $productId]);
+            if (empty($productView)) {
+                $productView = new ProductViews();
+                $productView->setViews(1);
+                $productView->setProductId($productId);
+                $em->persist($productView);
+            }else{
+                $productView->setViews($productView->getViews() + 1);
+            }
+            $em->flush();
             return $this->render('products/view.html.twig', [
                 'pr' => $product,
                 'categories' => $this->categories,
@@ -138,15 +153,23 @@ class ProductController extends MainController
         }
     }
 
-    public function searchResults(Request $request)
+    public function searchResults(Request $request, int $page, PaginatorInterface $paginator)
     {
         try {
+            dump($request);
             $keyword = strip_tags(trim($request->request->get('keyword')));
             $s1Keyword = preg_replace('!\s+!', ',', $keyword);
-            dump($keyword);
-            $products = $this->productService->getItems('null', $s1Keyword, 60);
+            $products = $this->productService->getItems('null', $s1Keyword, 1000);
+            $paginatedProducts = $paginator->paginate(
+                $products,
+                $page /*page number*/,
+                12/*limit per page*/
+            );
+            $paginatedProducts->setUsedRoute('product_search');
+            $paginatedProducts->setTemplate('paginator_template/override_template.html.twig');
+            $paginatedProducts->setSortableTemplate('paginator_template/override_sortable.html.twig');
             return $this->render('products/search.html.twig', [
-                'products' => $products,
+                'products' => $paginatedProducts,
                 'categories' => $this->categories,
                 'popular' => $this->popular,
                 'featured' => $this->featured,
@@ -162,6 +185,7 @@ class ProductController extends MainController
             throw $e;
         }
     }
+
 
 //    public function quickviewProduct(SoftoneLogin $softoneLogin, CategoryService $prCategories, int $id, ProductService $productService, LoggerInterface $logger, SessionInterface $session)
 //    {

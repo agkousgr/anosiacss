@@ -83,7 +83,8 @@ class UserAccountController extends MainController
                 $user = new WebUser();
                 $address = new Address();
                 $userData = $userAccountService->getUserInfo($this->loggedUser, $user, $address);
-                dump($userData);
+                $userOrders = $userAccountService->getOrders($this->loggedClientId);
+                dump($userOrders);
 //            $user = new WebserviceUser(
 //                $userData["clientId"],
 //                $userData["username"],
@@ -248,6 +249,39 @@ class UserAccountController extends MainController
         }
     }
 
+    public function deleteAddress(Request $request, UserAccountService $user)
+    {
+        if ($request->isXmlHttpRequest()) {
+            try {
+                $id = $request->request->get('id');
+
+                if (!$id) {
+                    throw $this->createNotFoundException(
+                        'No product found for id ' . $id
+                    );
+                }
+                $response = $user->deleteAddress($id);
+                if ($response === true) {
+                    $this->addFlash(
+                        'success',
+                        'Η διεύθυνσή σας διαγράφηκε με επιτυχία.'
+                    );
+                }else{
+                    $this->addFlash(
+                        'notice',
+                        'Ένα σφάλμα παρουσιάστηκε. Παρακαλώ δοκιμάστε ξανά. Αν το πρόβλημα συνεχίσει παρακαλούμε επικοινωνήστε μαζί μας.'
+                    );
+                }
+                return $this->json(['success' => true]);
+            } catch (\Exception $e) {
+                $this->logger->error(__METHOD__ . ' -> {message}', ['message' => $e->getMessage()]);
+                throw $e;
+            }
+        } else {
+            throw $this->createNotFoundException('The resource you are looking for could not be found.');
+        }
+    }
+
     public function register(Request $request, UserAccountService $userAccountService, UserPasswordEncoderInterface $encoder)
     {
         try {
@@ -311,6 +345,8 @@ class UserAccountController extends MainController
         return $this->redirectToRoute('index');
     }
 
+}
+
 //    public function login(Request $request, UserAccountService $userAccountService)
 //    {
 //        if ($request->isXmlHttpRequest()) {
@@ -343,23 +379,3 @@ class UserAccountController extends MainController
 //        }
 //
 //    }
-
-    public function getUsers(UserAccountService $userAccountService)
-    {
-        try {
-            $users = $userAccountService->getUsers();
-//            die();
-
-            return $this->render('user/register.html.twig', [
-                'categories' => $this->categories,
-                'popular' => $this->popular,
-                'featured' => $this->featured,
-                'loggedUser' => $this->loggedUser,
-                'form' => $form->createView(),
-            ]);
-        } catch (\Exception $e) {
-            $this->logger->error(__METHOD__ . ' -> {message}', ['message' => $e->getMessage()]);
-            throw $e;
-        }
-    }
-}

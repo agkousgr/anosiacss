@@ -33,6 +33,7 @@
                         <div class="row">
                             <div class="col-sm-6">
                                 <div class="product-main-slider">
+                                    {{ dump(pr.imageUrl) }}
                                     <div class="slider">
                                         <div class="main-image">
                                             <ul class="bxslider">
@@ -45,17 +46,14 @@
                                             </ul>
                                         </div>
                                         <div class="owl-carousel owl-theme" id="bx-pager">
-                                            {#{% for image in pr.images %}#}
-                                            {#<div class="item">#}
-                                                {#<a data-slide-index="0" href="">#}
-                                                    {#<img src="{{ pr.imageUrl }}" alt=""/>#}
-                                                {#</a>#}
-                                            {#</div>#}
-                                            {#<div class="item"><a data-slide-index="1" href=""><img src="images/img-18.jpg" alt="" /></a></div>#}
-                                            {#<div class="item"><a data-slide-index="2" href=""><img src="images/img-17.jpg" alt="" /></a></div>#}
-                                            {#<div class="item"><a data-slide-index="3" href=""><img src="images/img-18.jpg" alt="" /></a></div>#}
-                                            {#<div class="item"><a data-slide-index="4" href=""><img src="images/img-17.jpg" alt="" /></a></div>#}
-                                            {#<div class="item"><a data-slide-index="5" href=""><img src="images/img-18.jpg" alt="" /></a></div>#}
+                                            {% for image in pr.extraImages %}
+                                                {#{{ dump(image) }}#}
+                                            <div class="item">
+                                                <a data-slide-index="{{ loop.index }}" href="">
+                                                    <img src="{{ image.imageUrl }}" alt="{{ pr.name }}"/>
+                                                </a>
+                                            </div>
+                                            {% endfor %}
                                         </div>
                                     </div>
                                 </div>
@@ -177,6 +175,9 @@
 
                             </div>
                         </div>
+                        {% for image in pr.extraImages %}
+{{ dump(image.imageUrl) }}
+                        {% endfor %}
                         {{ include('products/modules/product_view_tabs.html.twig') }}
                     </div>
 

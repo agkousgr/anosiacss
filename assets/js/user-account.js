@@ -30,4 +30,29 @@ $(document).ready(function () {
     if ($('#view-main-address').hasClass('hidden') === false) {
         $('form[name="user_address"]').addClass('hidden');
     }
+
+    $('.delete-address').on('click', function () {
+        let data = {
+            'id': $(this).data('id'),
+        }
+
+        swal({
+            title: 'Προσοχή!',
+            text: "Είστε σίγουρος για την διαγραφή της διεύθυνσης;",
+            type: 'warning',
+            showCancelButton: true,
+            confirmButtonColor: '#3085d6',
+            cancelButtonColor: '#d33',
+            cancelButtonText: 'Άκυρο',
+            confirmButtonText: 'Διαγραφή'
+        }).then((result) => {
+            if (result.value) {
+                $.post(Routing.generate('delete_address'), data, function () {
+                    location.reload();
+                });
+            }
+        })
+
+    });
+
 });

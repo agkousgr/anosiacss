@@ -209,7 +209,7 @@
                                                 <div class="address-body">
 
                                                     <h4>{{ address["name"] }}
-                                                        <i class="fa fa-trash pull-right" style="cursor:pointer;"></i>
+                                                        <i data-id="{{ address.id }}" class="fa fa-trash pull-right delete-address" style="cursor:pointer;"></i>
                                                     </h4>
                                                     <address style="min-height: 127px;">
                                                         {{ address["address"] }}<br>
