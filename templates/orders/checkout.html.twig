@@ -267,75 +267,71 @@
                                         <div class="content">
                                             <div class="js-address-form">
                                                 {{ form_start(step2Form) }}
-
-                                                {#<article class="address-item selected"#}
-                                                         {#id="id-address-delivery-address-8">#}
-                                                    {#<header class="h4">#}
-                                                        {#<label class="radio-block">#}
-                                                            {#<span class="custom-radio">#}
-                                                                {#<input name="id_address_delivery" value="8" checked=""#}
-                                                                       {#type="radio">#}
-                                                                {#<span></span>#}
-                                                            {#</span>#}
-                                                            {#<span class="address-alias h4">Στοιχεία τιμολόγησης</span>#}
-                                                            {#<div class="address">JOhn#}
-                                                                {#Krav<br>infovalue<br>12321321321<br>Faveirou 39<br>Athens<br>10438<br>United#}
-                                                                {#Kingdom#}
-                                                            {#</div>#}
-                                                        {#</label>#}
-                                                    {#</header>#}
-                                                    {#<hr>#}
-                                                    {#<footer class="address-footer">#}
-                                                    {#</footer>#}
-                                                {#</article>#}
                                                 <div id="delivery-address">
                                                     <div class="js-address-form">
                                                         <section class="form-fields">
                                                             <h4>Στοιχεία τιμολόγησης</h4>
-                                                            <div class="form-group row ">
-                                                                {{ form_label(step2Form.address, 'Διεύθυνση', {'label_attr': {'class': 'col-md-3 form-control-label required'}}) }}
-                                                                <div class="col-md-6">
-                                                                    {{ form_widget(step2Form.address, {'attr': {'class': 'form-control'}}) }}
+                                                            {% if loggedUser is not empty %}
+                                                                <article
+                                                                        class="address-item selected"
+                                                                        id="id-address-delivery-address-8">
+                                                                    <header class="h4">
+                                                                        <label class="radio-block">
+                                                                            <div class="address">
+                                                                                <span>{{ checkout.address }}</span>
+                                                                                <br>{{ checkout.zip }}
+                                                                                <br>{{ checkout.city }}
+                                                                                <br>{{ checkout.district }}
+                                                                            </div>
+                                                                        </label>
+                                                                    </header>
+                                                                </article>
+                                                            {% else %}
+                                                                <div class="form-group row ">
+                                                                    {{ form_label(step2Form.address, 'Διεύθυνση', {'label_attr': {'class': 'col-md-3 form-control-label required'}}) }}
+                                                                    <div class="col-md-6">
+                                                                        {{ form_widget(step2Form.address, {'attr': {'class': 'form-control'}}) }}
+                                                                    </div>
+                                                                    <div class="col-md-3 form-control-comment">
+                                                                    </div>
                                                                 </div>
-                                                                <div class="col-md-3 form-control-comment">
-                                                                </div>
-                                                            </div>
 
-                                                            <div class="form-group row ">
-                                                                {{ form_label(step2Form.zip, 'Τ.Κ.', {'label_attr': {'class': 'col-md-3 form-control-label required'}}) }}
-                                                                <div class="col-md-6">
-                                                                    {{ form_widget(step2Form.zip, {'attr': {'class': 'form-control'}}) }}
+                                                                <div class="form-group row ">
+                                                                    {{ form_label(step2Form.zip, 'Τ.Κ.', {'label_attr': {'class': 'col-md-3 form-control-label required'}}) }}
+                                                                    <div class="col-md-6">
+                                                                        {{ form_widget(step2Form.zip, {'attr': {'class': 'form-control'}}) }}
+                                                                    </div>
+                                                                    <div class="col-md-3 form-control-comment">
+                                                                    </div>
                                                                 </div>
-                                                                <div class="col-md-3 form-control-comment">
-                                                                </div>
-                                                            </div>
 
-                                                            <div class="form-group row ">
-                                                                {{ form_label(step2Form.city, 'Πόλη', {'label_attr': {'class': 'col-md-3 form-control-label required'}}) }}
-                                                                <div class="col-md-6">
-                                                                    {{ form_widget(step2Form.city, {'attr': {'class': 'form-control'}}) }}
+                                                                <div class="form-group row ">
+                                                                    {{ form_label(step2Form.city, 'Πόλη', {'label_attr': {'class': 'col-md-3 form-control-label required'}}) }}
+                                                                    <div class="col-md-6">
+                                                                        {{ form_widget(step2Form.city, {'attr': {'class': 'form-control'}}) }}
+                                                                    </div>
+                                                                    <div class="col-md-3 form-control-comment">
+                                                                    </div>
                                                                 </div>
-                                                                <div class="col-md-3 form-control-comment">
-                                                                </div>
-                                                            </div>
 
-                                                            <div class="form-group row ">
-                                                                {{ form_label(step2Form.district, 'Περιοχή', {'label_attr': {'class': 'col-md-3 form-control-label required'}}) }}
-                                                                <div class="col-md-6">
-                                                                    {{ form_widget(step2Form.district, {'attr': {'class': 'form-control'}}) }}
+                                                                <div class="form-group row ">
+                                                                    {{ form_label(step2Form.district, 'Περιοχή', {'label_attr': {'class': 'col-md-3 form-control-label required'}}) }}
+                                                                    <div class="col-md-6">
+                                                                        {{ form_widget(step2Form.district, {'attr': {'class': 'form-control'}}) }}
+                                                                    </div>
+                                                                    <div class="col-md-3 form-control-comment">
+                                                                    </div>
                                                                 </div>
-                                                                <div class="col-md-3 form-control-comment">
-                                                                </div>
-                                                            </div>
 
-                                                            <div class="form-group row ">
-                                                                {{ form_label(step2Form.phone01, 'Τηλέφωνο', {'label_attr': {'class': 'col-md-3 form-control-label required'}}) }}
-                                                                <div class="col-md-6 ">
-                                                                    {{ form_widget(step2Form.phone01, {'attr': {'class': 'form-control'}}) }}
+                                                                <div class="form-group row ">
+                                                                    {{ form_label(step2Form.phone01, 'Τηλέφωνο', {'label_attr': {'class': 'col-md-3 form-control-label required'}}) }}
+                                                                    <div class="col-md-6 ">
+                                                                        {{ form_widget(step2Form.phone01, {'attr': {'class': 'form-control'}}) }}
+                                                                    </div>
+                                                                    <div class="col-md-3 form-control-comment">
+                                                                    </div>
                                                                 </div>
-                                                                <div class="col-md-3 form-control-comment">
-                                                                </div>
-                                                            </div>
+                                                            {% endif %}
                                                             <div id="invoice-fields" class="hidden">
                                                                 <div class="form-group row ">
                                                                     {{ form_label(step2Form.afm, 'ΑΦΜ', {'label_attr': {'class': 'col-md-3 form-control-label required'}}) }}

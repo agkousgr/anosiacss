@@ -98,6 +98,13 @@ checkout:
     requirements:
         id: \d+
 
+guest_checkout:
+    path: /checkout/guest/{step}
+    controller: App\Controller\CheckoutController::guestCheckout
+    defaults: { step: 1 }
+    requirements:
+        id: \d+
+
 get_address:
     path: /get-address
     controller: App\Controller\AjaxCheckoutController::getAddress
