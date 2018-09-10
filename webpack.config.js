@@ -59,7 +59,7 @@ Encore
 
 
 
-    // .addStyleEntry('css/style', './assets/css/style.css')
+    .addStyleEntry('css/style', './assets/css/style.css')
     .addStyleEntry('css/apex-slider', './assets/css/apex-slider.css')
     .addStyleEntry('css/orders', './assets/css/orders.css')
     .addStyleEntry('css/user', './assets/css/user.css')
