@@ -98,6 +98,13 @@ checkout:
     requirements:
         id: \d+
 
+get_address:
+    path: /get-address
+    controller: App\Controller\AjaxCheckoutController::getAddress
+    methods: [GET,POST]
+    options:
+        expose: true
+
 # Wishlist
 wishlist_view:
     path: /wishlist

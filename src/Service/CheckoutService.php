@@ -84,7 +84,7 @@ class CheckoutService
     {
         $this->getUser($checkout);
         $this->getClient($checkout);
-        $this->getAddress($checkout->getClientId(), $checkout);
+//        $this->getAddress($checkout->getClientId(), $checkout);
         $this->getNewsletter($checkout);
         $checkout->setNextPage(1);
         $checkout->setSeries('7021');
@@ -193,11 +193,11 @@ EOF;
     }
 
     /**
-     * @param \App\Entity\Address
+     * @param \App\Entity\Checkout
      *
      * @return string
      */
-    public function getAddress($clientId, $address)
+    public function getAddress($clientId, $entity, $id = -1)
     {
 
         $message = <<<EOF
@@ -211,6 +211,7 @@ EOF;
     <CompanyID>1000</CompanyID>
     <ClientID>$clientId</ClientID>
     <ID></ID>
+    <ShipAddressID>$id</ShipAddressID>
 </ClientGetShipAddressRequest>
 EOF;
 
@@ -218,13 +219,13 @@ EOF;
             $result = $this->client->SendMessage(['Message' => $message]);
             $addressData = simplexml_load_string(str_replace("utf-16", "utf-8", $result->SendMessageResult));
             $addressXML = $addressData->GetDataRows->GetShipAddressRow;
-            $address->setClient((int)$clientId);
-            (null !== $addressXML->ID) ? $address->setId((int)$addressXML->ID) : $address->setId(0);
-            (null !== $addressXML->Name) ? $address->setName((string)$addressXML->Name) : $address->setName('');
-            (null !== $addressXML->Address) ? $address->setAddress((string)$addressXML->Address) : $address->setAddress('');
-            (null !== $addressXML->Zip) ? $address->setZip((string)$addressXML->Zip) : $address->setZip('');
-            (null !== $addressXML->City) ? $address->setCity((string)$addressXML->City) : $address->setCity('');
-            (null !== $addressXML->District) ? $address->setDistrict((string)$addressXML->District) : $address->setDistrict('');
+            $entity->setClient((int)$clientId);
+            (null !== $addressXML->ID) ? $entity->setId((int)$addressXML->ID) : $entity->setId(0);
+            (null !== $addressXML->Name) ? $entity->setName((string)$addressXML->Name) : $entity->setName('');
+            (null !== $addressXML->Address) ? $entity->setAddress((string)$addressXML->Address) : $entity->setAddress('');
+            (null !== $addressXML->Zip) ? $entity->setZip((string)$addressXML->Zip) : $entity->setZip('');
+            (null !== $addressXML->City) ? $entity->setCity((string)$addressXML->City) : $entity->setCity('');
+            (null !== $addressXML->District) ? $entity->setDistrict((string)$addressXML->District) : $entity->setDistrict('');
             return;
 //            dump($result);
         } catch (\SoapFault $sf) {
@@ -357,9 +358,10 @@ EOF;
         $expenses = $this->initializeExpenses($checkout);
         $items = $this->initializeCartItems($cartItems);
         $series = $checkout->getSeries();
-        $orderNo = $this->getOrderNo();
+        $orderNo = $checkout->getOrderNo();
         $clientId = $checkout->getClientId();
         $comments = $checkout->getComments();
+        $paymentType = $checkout->getPaymentType();
         $shippingType = $checkout->getShippingType();
         $address = $checkout->getAddress();
         $zip = $checkout->getZip();
@@ -387,6 +389,8 @@ EOF;
     <Status>100</Status>
     <CustomerID>$clientId</CustomerID>
     <Remarks>$comments</Remarks>
+    <PayTypeID>$paymentType</PayTypeID>
+    <Comments>$comments</Comments>
     <ShipmentTypeID>$shippingType</ShipmentTypeID>
     <ShipAddress>$address</ShipAddress>
     <ShipZip>$zip</ShipZip>
@@ -496,22 +500,22 @@ EOF;
         return;
     }
 
-    /**
-     * @return int
-     */
-    private function getOrderNo()
-    {
-        $fileSystem = new Filesystem();
-        $fileExists = $fileSystem->exists('../uploads/orders_counter');
-        if ($fileExists) {
-            $orderNo = (int)(file_get_contents('../uploads/orders_counter'));
-            $orderNo++;
-            $fileSystem->dumpFile('../uploads/orders_counter', $orderNo);
-        } else {
-            $orderNo = time();
-        }
-        return $orderNo;
-    }
+//    /**
+//     * @return int
+//     */
+//    private function getOrderNo()
+//    {
+//        $fileSystem = new Filesystem();
+//        $fileExists = $fileSystem->exists('../uploads/orders_counter');
+//        if ($fileExists) {
+//            $orderNo = (int)(file_get_contents('../uploads/orders_counter'));
+//            $orderNo++;
+//            $fileSystem->dumpFile('../uploads/orders_counter', $orderNo);
+//        } else {
+//            $orderNo = time();
+//        }
+//        return $orderNo;
+//    }
 
     /**
      * @param $cartItems

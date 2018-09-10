@@ -253,7 +253,7 @@ class UserAccountController extends MainController
     {
         if ($request->isXmlHttpRequest()) {
             try {
-                $id = $request->request->get('id');
+                $id = $request->request->getInt('id');
 
                 if (!$id) {
                     throw $this->createNotFoundException(

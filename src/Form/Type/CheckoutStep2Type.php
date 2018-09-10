@@ -34,10 +34,18 @@ class CheckoutStep2Type extends AbstractType
             ->add('irs', TextType::class, array(
                 'data' => 'No Invoice'
             ))
-            ->add('shipAddress', TextType::class)
-            ->add('shipZip', TextType::class)
-            ->add('shipCity', TextType::class)
-            ->add('shipDistrict', TextType::class)
+            ->add('shipAddress', TextType::class, [
+                'required' => false
+            ])
+            ->add('shipZip', TextType::class, [
+                'required' => false
+            ])
+            ->add('shipCity', TextType::class, [
+                'required' => false
+            ])
+            ->add('shipDistrict', TextType::class, [
+                'required' => false
+            ])
         ;
     }
 

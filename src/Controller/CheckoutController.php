@@ -4,6 +4,7 @@ namespace App\Controller;
 
 
 use App\Entity\Checkout;
+use App\Entity\OrdersWebId;
 use App\Form\Type\{
     CheckoutStep1Type,
     CheckoutStep2Type,
@@ -17,7 +18,7 @@ use Symfony\Component\HttpFoundation\Request;
 
 class CheckoutController extends MainController
 {
-    public function checkout(int $step, Request $request, CheckoutService $checkoutService, UserAccountService $userAccountService)
+    public function checkout(int $step, Request $request, CheckoutService $checkoutService, UserAccountService $userAccountService, EntityManagerInterface $em)
     {
         try {
             $addresses = array();
@@ -29,11 +30,13 @@ class CheckoutController extends MainController
                 $checkout = new Checkout();
                 if (null !== $this->loggedUser) {
                     $checkoutService->getUserInfo($checkout);
-                    $addresses = $userAccountService->getAddresses($this->loggedClientId);
                 }
                 $this->session->set('curOrder', $checkout);
             } else {
                 $checkout = $this->session->get('curOrder');
+            }
+            if (null !== $this->loggedUser) {
+                $addresses = $userAccountService->getAddresses($this->loggedClientId);
             }
             dump($checkout);
             $step1Form = $this->createForm(CheckoutStep1Type::class, $checkout, [
@@ -47,6 +50,9 @@ class CheckoutController extends MainController
             $step4Form = $this->createForm(CheckoutStep4Type::class, $checkout);
             $step4Form->handleRequest($request);
             if ($step1Form->isSubmitted() && $step1Form->isValid()) {
+                if (null !== $this->loggedUser) {
+
+                }
                 $curStep = 2;
             } elseif ($step2Form->isSubmitted() && $step2Form->isValid()) {
                 $curStep = 3;
@@ -60,12 +66,15 @@ class CheckoutController extends MainController
             if ($step4Form->isSubmitted() && $step4Form->isValid()) {
                 if ($step4Form->get('paymentType')->getData() === '1003') {
                     $checkout->setAntikatavoliCost(1.50);
-                }else{
+                } else {
                     $checkout->setAntikatavoliCost(0);
                 }
                 $curStep = 4;
+                $orderWebId = $em->getRepository(OrdersWebId::class)->find(1);
+                $checkout->setOrderNo($orderWebId->getOrderNumber() + 1);
                 $orderResponse = $checkoutService->submitOrder($checkout, $this->cartItems);
                 if ($orderResponse) {
+
                     $this->addFlash(
                         'success',
                         'Η παραγγελία σας ολοκληρώθηκε με επιτυχία. Ένα αντίγραφο έχει αποσταλεί στο email σας ' . $checkout->getEmail() . '. Ευχαριστούμε που μας προτιμήσατε για τις αγορές σας!'
@@ -93,7 +102,7 @@ class CheckoutController extends MainController
                     $orderCompleted = false;
                 }
             }
-            dump($checkout);
+            dump($addresses);
             return ($this->render('orders/checkout.html.twig', [
                 'categories' => $this->categories,
                 'popular' => $this->popular,

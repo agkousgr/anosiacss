@@ -20,7 +20,33 @@
 //         }
 //     })
 // })
+require('bootstrap');
+
 $(document).ready(function () {
+
+    $('[data-toggle="popover"]').popover();
+
+    $('input[name="address"]').on('click', function () {
+        let data = {
+            'id': $(this).data('id')
+        };
+        $.post(Routing.generate('get_address'), data, function (response) {
+            if (response.success == true) {
+                $('#checkout_step2_shipAddress').val(response.address["address"]);
+                $('#checkout_step2_shipZip').val(response.address["zip"]);
+                $('#checkout_step2_shipCity').val(response.address["city"]);
+                $('#checkout_step2_shipDistrict').val(response.address["district"]);
+            }else{
+                swal({
+                    title: 'Σφάλμα!',
+                    text: "Παρουσιάστηκε σφάλμα κατά την επιλογή υπάρχουσας διεύθυνσης!",
+                    type: 'cancel',
+                    confirmButtonColor: '#3085d6',
+                    cancelButtonText: 'Κλείσιμο',
+                })
+            }
+        });
+    });
 
     $('input[name="checkout_step2[series]"]').on('change', function () {
         $('#invoice-fields').toggleClass('hidden');
@@ -31,7 +57,7 @@ $(document).ready(function () {
             $('#checkout_step2_afm').val('');
             $('#checkout_step2_irs').val('');
         }
-    })
+    });
 
     $('input[name="checkout_step3[shippingType]"]').on('change', function () {
         let totalCost = 0;
@@ -51,7 +77,7 @@ $(document).ready(function () {
         let totalCostString = totalCost.toFixed(2);
         let newTotalCostString = totalCostString.replace('.', ',');
         $('#total-cost').html(newTotalCostString);
-    })
+    });
 
     $('input[name="checkout_step4[paymentType]"]').on('change', function () {
         let i = 0;
@@ -77,7 +103,7 @@ $(document).ready(function () {
         let newTotalCostString = totalCostString.replace('.', ',');
         $('#total-cost').html(newTotalCostString);
 
-    })
+    });
 
     $('#checkout_step2_series_0').attr('checked', 'checked');
     // $('#checkout_step4_paymentType_0').attr('checked', 'checked');
@@ -95,7 +121,7 @@ $(document).ready(function () {
         }
     });
 
-})
+});
 
 function initializePaymentInfos() {
     $('.checkout_step3_shippingType_1').html('Για να δεσμευτεί μια παραγγελία έτσι ώστε να είναι δυνατή η παραλαβή της από το Φαρμακείο απαιτεί χρόνο τριών εως πέντε ωρών.\n' +
