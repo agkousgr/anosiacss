@@ -15,28 +15,19 @@
         <div class="hover-info">
             <div class="product-short-info">
                 <div class="product-name">
-                    <a href="#">Provouge Men T-Shirt</a>
+                    <a href="#">{{ pr.name }}</a>
                 </div>
-                {#<div class="star">#}
-                    {#<i class="fa fa-star"></i>#}
-                    {#<i class="fa fa-star"></i>#}
-                    {#<i class="fa fa-star"></i>#}
-                    {#<i class="fa fa-star"></i>#}
-                    {#<i class="fa fa-star"></i>#}
-                    {#<i class="fa fa-star-o"></i>#}
-                {#</div>#}
                 <div class="product-price">
                     <div class="product-price-span">{{ pr.webPrice }}€
                         <del>{{ pr.retailPrice }}€</del>
                     </div>
                 </div>
-                <button type="button"><i class="fa fa-cart-plus"></i><span>Add to Cart</span></button>
+                <button type="button"><i class="fa fa-cart-plus"></i><span>Στο καλαθι</span></button>
             </div>
         </div>
         <div class="product-short-info">
-            <div class="product-name"><a href="#">Provouge Men T-Shirt</a></div>
-            <div class="star"><i class="fa fa-star"></i><i class="fa fa-star"></i><i class="fa fa-star"></i><i class="fa fa-star"></i><i class="fa fa-star"></i><i class="fa fa-star-o"></i></div>
-            <div class="product-price"><div class="product-price-span">$28.40 <del>$35.50</del></div></div>
+            <div class="product-name"><a href="#">{{ pr.name }}</a></div>
+            <div class="product-price"><div class="product-price-span">{{ pr.webPrice }}€ <del>{{ pr.retailPrice }}€</del></div></div>
         </div>
     </div>
 </div>

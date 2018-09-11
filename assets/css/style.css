@@ -18805,7 +18805,8 @@ figure.effect-apollo:hover figcaption::before {
     margin: 0;
     padding: 0;
     background: #fff;
-    z-index: 99
+    z-index: 99;
+    border-bottom: 1px #cccccc solid;
 }
 
 .logo {
