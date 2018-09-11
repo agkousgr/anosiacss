@@ -4,7 +4,7 @@ namespace App\Controller;
 
 use App\Entity\Slider;
 use Vinkla\Instagram\Instagram;
-use \Facebook;
+use Facebook\Facebook;
 
 class DefaultController extends MainController
 {
@@ -25,7 +25,7 @@ class DefaultController extends MainController
         // Fetch recent user media items.
         $this->instagramfeed = $instagram->media();
 
-        $fb = new \Facebook\Facebook([
+        $fb = new Facebook([
           'app_id' => '605092459847380',
           'app_secret' => '09f4a59ad57726736664a92d7059025f',
           'default_graph_version' => 'v3.0',

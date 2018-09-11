@@ -3,6 +3,10 @@
 {% block bodyId %}category{% endblock %}
 {% block title %} | {{ pr.name }}{% endblock %}
 {% block slider %}{% endblock %}
+{#{% block stylesheets %}#}
+    {#{{ parent() }}#}
+    {#<link href="{{ asset('build/css/apex-slider.css') }}" rel="stylesheet"/>#}
+{#{% endblock %}#}
 {% block breadcrumb %}
 
 {% endblock %}
@@ -44,8 +48,10 @@
                                         <div class="owl-carousel owl-theme" id="bx-pager">
                                             {% for image in pr.extraImages %}
                                                 <div class="item" style="text-align: center">
-                                                    <a data-slide-index="{{ loop.index }}" href="" style="border: 1px solid #d8d8d8;">
-                                                        <img style="max-height: 95px; border:none;" src="{{ image.imageUrl }}" alt="{{ pr.name }}"/>
+                                                    <a data-slide-index="{{ loop.index }}" href=""
+                                                       style="border: 1px solid #d8d8d8;">
+                                                        <img style="max-height: 95px; border:none;"
+                                                             src="{{ image.imageUrl }}" alt="{{ pr.name }}"/>
                                                     </a>
                                                 </div>
                                             {% endfor %}

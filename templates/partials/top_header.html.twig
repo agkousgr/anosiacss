@@ -55,7 +55,7 @@
                         {% if loggedUser == null %}
                             {#{% set accountUrl = '#' %}#}
                             {#{% set sideClass = 'toogle-sidebar' %}#}
-                            <a href="#" class="account-link toggle-sidebar" style="margin-top: 8px;" title=" Ο λογαριασμός μου">
+                            <a href="#" class="account-link toggle-sidebar" style="margin-top: 8px; padding: 0 5px 0 15px;" title=" Ο λογαριασμός μου">
                             <i class="fa fa-user account-link"></i>
                                 <span class="link-text" style="visibility:hidden">.</span>
                             </a>
@@ -63,14 +63,14 @@
                             {#{% set accountUrl = 'user_account' %}#}
                             {#{% set sideClass = '' %}#}
                             <a href="{{ path('user_account') }}" class="account-link"
-                               style="margin-top: 8px;" title=" Ο λογαριασμός μου">
+                               style="margin-top: 8px; padding: 0 5px 0 15px;" title=" Ο λογαριασμός μου">
                                <i class="fa fa-user account-link"></i>
                                 <span class="link-text" style="visibility:hidden">.</span>
                             </a>
                         {% endif %}
                     </li>
                     <li>
-                        <a href="{{ path('wishlist_view') }}" class="wishlist-link" style="margin-top: 10px;" title=" Wishlist">
+                        <a href="{{ path('wishlist_view') }}" class="wishlist-link" style="margin-top: 8px; padding: 0 5px 0 15px;" title=" Wishlist">
                         <i class="fa fa-heart wishlist-link"></i>
                         <span class="link-text" style="visibility:hidden">.</span>
                         {% if (totalWishlistItems > 0) %}
@@ -83,16 +83,16 @@
                         </span>
                         </a>
                     </li>
-                    <li>
-                        <a href="#" class="tracking-link" style="margin-top: 10px;" title=" Παρακολούθηση Παραγγελίας">
-                        <i class="fa fa-truck trucking-link"></i>
-                        <span class="link-text" style="visibility:hidden">.</span>
-                        </a>
-                    </li>
+                    {#<li>#}
+                        {#<a href="#" class="tracking-link"  style="margin-top: 8px; padding: 0 5px 0 15px;" title=" Παρακολούθηση Παραγγελίας">#}
+                        {#<i class="fa fa-truck trucking-link"></i>#}
+                        {#<span class="link-text" style="visibility:hidden">.</span>#}
+                        {#</a>#}
+                    {#</li>#}
                     <li id="top-cart">
                         <a data-toggle="collapse" href="#collapseCart" aria-expanded="false"
-                           aria-controls="collapseCart" style="margin-top: 8px;" class="cart-link" title="Καλάθι">
-                           <i class="fa fa-cart cart-link"></i>
+                           aria-controls="collapseCart" style="margin-top: 8px; padding: 0 5px 0 15px;" class="cart-link" title="Καλάθι">
+                           <i class="fa fa-shopping-cart cart-link"></i>
                             <span class="link-text" style="visibility:hidden">.</span>
                             {% if (totalCartItems > 0) %}
                                 {% set display = 'inline' %}
