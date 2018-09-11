@@ -4,6 +4,7 @@ namespace App\Controller;
 
 use App\Entity\Slider;
 use Vinkla\Instagram\Instagram;
+use \Facebook;
 
 class DefaultController extends MainController
 {
@@ -16,8 +17,23 @@ class DefaultController extends MainController
         // Create a new instagram instance.
         $slider = $this->em->getRepository(Slider::class)->findBy(['category' => null]);
         $instagram = new Instagram('2209588506.1677ed0.361223b4d3a547eebd1ad92202375d17');
+
+        //fb page token
+        //EAAImVBEgHtQBAFhb99ycIu6WWZAOdOO3lb0M4M9q4aFOoSCZA4G2fd7W9LpsBZAoCELeykpMST4ZAOmVhygKT13rGRoMd4RXL1lqXGbzds0U1ZB3LTqhuRBMkb3r1pG6lLsaSAwHdMTXTmZB8u0KiKldQmo30Vy3VlJooKKK9agViGBc8zMi8nLW0KKZA9zXCpbfZCcV9sCVgeP7XpZCyZABrC
+
+
         // Fetch recent user media items.
         $this->instagramfeed = $instagram->media();
+
+        $fb = new \Facebook\Facebook([
+          'app_id' => '605092459847380',
+          'app_secret' => '09f4a59ad57726736664a92d7059025f',
+          'default_graph_version' => 'v3.0',
+          'default_access_token' => 'EAAImVBEgHtQBAFhb99ycIu6WWZAOdOO3lb0M4M9q4aFOoSCZA4G2fd7W9LpsBZAoCELeykpMST4ZAOmVhygKT13rGRoMd4RXL1lqXGbzds0U1ZB3LTqhuRBMkb3r1pG6lLsaSAwHdMTXTmZB8u0KiKldQmo30Vy3VlJooKKK9agViGBc8zMi8nLW0KKZA9zXCpbfZCcV9sCVgeP7XpZCyZABrC', // optional
+        ]);
+
+        $this->reviews = $fb->get('/292956054170320/ratings')->getDecodedBody();
+        //print_r($this->reviews);
 
         return $this->render('layout.html.twig', [
             'categories' => $this->categories,
@@ -29,8 +45,8 @@ class DefaultController extends MainController
             'loggedUser' => $this->loggedUser,
             'loggedName' => $this->loggedName,
             'instagramfeed' => $this->instagramfeed,
-            'slider' => $slider
-//            'latest' => $latest
+            'slider' => $slider,
+            'reviews' => $this->reviews
         ]);
     }
 

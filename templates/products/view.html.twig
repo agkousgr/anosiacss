@@ -43,9 +43,9 @@
                                         </div>
                                         <div class="owl-carousel owl-theme" id="bx-pager">
                                             {% for image in pr.extraImages %}
-                                                <div class="item">
-                                                    <a data-slide-index="{{ loop.index }}" href="">
-                                                        <img src="{{ image.imageUrl }}" alt="{{ pr.name }}"/>
+                                                <div class="item" style="text-align: center">
+                                                    <a data-slide-index="{{ loop.index }}" href="" style="border: 1px solid #d8d8d8;">
+                                                        <img style="max-height: 95px; border:none;" src="{{ image.imageUrl }}" alt="{{ pr.name }}"/>
                                                     </a>
                                                 </div>
                                             {% endfor %}

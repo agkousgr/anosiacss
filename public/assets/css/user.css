@@ -1,0 +1,491 @@
+#authentication .tooltip.tooltip-bottom {
+    padding: 0;
+    margin: 0;
+}
+#authentication .custom-checkbox {
+    display: -webkit-box;
+    display: -moz-box;
+    display: box;
+    display: -webkit-flex;
+    display: -moz-flex;
+    display: -ms-flexbox;
+    -js-display: flex;
+    display: flex;
+}
+#authentication .custom-checkbox span {
+    flex: 0 0 20px;
+}
+#authentication .custom-checkbox label {
+    padding-left: 8px;
+}
+#authentication [data-action="show-password"] {
+    background: #878787;
+}
+#identity .radio-inline,
+#authentication .radio-inline {
+    padding: 0;
+}
+#identity .radio-inline .custom-radio,
+#authentication .radio-inline .custom-radio {
+    margin-right: 0;
+}
+#authentication label {
+    font-weight: normal;
+    font-size: 18px;
+}
+/*** Most of the customer accpunt pages ***/
+
+.page-customer-account #content {
+    border: 1px solid #e9e9e9;
+    background: white;
+    padding: 1rem;
+    font-size: 0.875rem;
+    color: #878787;
+}
+.page-customer-account #content .order-actions a {
+    padding: 0 0.125rem;
+}
+.page-customer-account #content .forgot-password {
+    text-align: center;
+    font-size: 0.875rem;
+    margin-top: 1rem;
+    padding-bottom: 0.9375rem;
+}
+.page-customer-account #content .no-account {
+    text-align: center;
+    font-size: 1rem;
+}
+/*** Login page ***/
+
+.page-authentication #content {
+    border: 1px solid #e9e9e9;
+    background: white;
+    padding: 1rem;
+    width: 100%;
+    margin: 0 auto;
+}
+/*** Addresses page ***/
+
+.page-addresses #content .address {
+    background: #ffffff none repeat scroll 0 0;
+    border: 1px solid #e9e9e9;
+    color: #414141;
+    font-size: 14px;
+    margin-bottom: 0;
+}
+.page-addresses .address .address-body {
+    padding: 1rem;
+}
+.page-addresses .address .address-body h4 {
+    border-bottom: 1px solid #e9e9e9;
+    color: #333333;
+    font-size: 18px;
+    font-weight: 400;
+    margin: 0 0 15px;
+    padding: 0 0 10px;
+}
+.page-addresses .address .address-body address {
+    min-height: 9rem;
+}
+.page-addresses .address .address-footer {
+    border-top: 1px solid #e9e9e9;
+    padding: 0.5rem 1rem;
+}
+.page-addresses .address .address-footer a {
+    color: #878787;
+    margin-right: 0.5rem;
+}
+.page-addresses .address .address-footer a:hover {
+    color: #414141;
+}
+.page-addresses .address .address-footer a i {
+    font-size: 1rem;
+}
+.page-addresses .address .address-footer a span {
+    font-size: 0.9375rem;
+    vertical-align: middle;
+}
+.page-addresses .addresses-footer {
+    margin: 15px 15px 0;
+}
+#addresses #main .page-content {
+    padding: 25px 10px;
+    border: 1px solid #e9e9e9;
+}
+.page-my-account .page-content {
+    border: 1px solid #e9e9e9;
+}
+.page-addresses .addresses-footer a {
+    color: #414141;
+}
+.page-addresses .addresses-footer a:hover {
+    color: #414141;
+}
+.page-addresses .addresses-footer a i {
+    font-size: 1rem;
+}
+.page-addresses .addresses-footer a span {
+    font-size: 1rem;
+    vertical-align: middle;
+    margin-top: 0.625rem;
+}
+/*** Order details page ***/
+
+#order-detail #order-infos strong {
+    color: #333333;
+    font-weight: normal;
+}
+.page-order-detail {
+    font-size: 0.875rem;
+    color: #878787;
+}
+.page-order-detail .box {
+    background: white;
+    padding: 1rem;
+    margin-bottom: 0;
+}
+.page-order-detail h3 {
+    font-size: 1rem;
+    font-weight: normal;
+    color: #333333;
+    margin-bottom: 1rem;
+}
+.page-order-detail #order-infos ul {
+    margin: 0;
+}
+.page-order-detail #order-history .history-lines .history-line {
+    padding: 0.5rem 0;
+    border-bottom: 1px solid #e9e9e9;
+}
+.page-order-detail #order-history .history-lines .history-line:last-child {
+    border-bottom: 0;
+}
+.page-order-detail #order-history .history-lines .history-line .label {
+    display: inline-block;
+    margin: 0.25rem 0;
+    padding: 0.25rem 0.375rem;
+    color: white;
+    border-radius: 3px;
+    -moz-border-radius: 3px;
+    -webkit-border-radius: 3px;
+    -khtml-border-radius: 3px;
+}
+.page-order-detail .addresses {
+    margin: 0 -0.9375rem;
+}
+.page-order-detail .addresses h4 {
+    font-size: 1rem;
+    color: #333333 !important;
+    font-weight: normal;
+}
+#order-products strong {
+    color: #222222;
+    font-weight: normal;
+}
+.page-order-detail #order-products.return {
+    margin-bottom: 1rem;
+}
+.page-order-detail #order-products.return th.head-checkbox {
+    width: 30px;
+}
+.page-order-detail #order-products.return td {
+    padding: 1.375rem 0.75rem;
+}
+.page-order-detail #order-products.return td.qty {
+    min-width: 125px;
+}
+.page-order-detail #order-products.return td.qty .current {
+    width: 30%;
+    float: left;
+    text-align: right;
+    padding-right: 0.5rem;
+}
+.page-order-detail #order-products.return td.qty .select {
+    width: 70%;
+    float: left;
+    margin: -0.625rem 0;
+    padding-left: 0.25rem;
+}
+.page-order-detail #order-products.return td.qty .select select {
+    text-align: center;
+}
+.page-order-detail .order-items {
+    padding: 0 !important;
+}
+.page-order-detail .order-items .order-item {
+    padding: 1rem 1rem 0;
+    border-bottom: 1px solid #e9e9e9;
+}
+.page-order-detail .order-items .order-item .checkbox {
+    width: 30px;
+    float: left;
+    padding: 0 0.9375rem;
+}
+.page-order-detail .order-items .order-item .content {
+    width: calc(100% - 30px);
+    float: left;
+    padding: 0 0.9375rem;
+}
+.page-order-detail .order-items .order-item .desc {
+    margin-bottom: 1rem;
+}
+.page-order-detail .order-items .order-item .desc .name {
+    font-weight: bold;
+}
+.page-order-detail .order-items .order-item .qty {
+    margin-bottom: 1rem;
+}
+.page-order-detail .order-items .order-item .qty .q {
+    margin-bottom: 0.25rem;
+}
+.page-order-detail .order-items .order-item .qty .s {
+    margin-bottom: 0.25rem;
+}
+.page-order-detail .messages .message {
+    margin-top: 0.5rem;
+    border-bottom: 1px solid #e9e9e9;
+}
+.page-order-detail .messages .message:last-child {
+    border-bottom: 0;
+}
+.page-order-detail .messages .message > div {
+    margin-bottom: 0.5rem;
+}
+.page-order-detail .customization {
+    margin-top: 0.75rem;
+}
+/*** Order return page ***/
+
+#order-return-infos .thead-default th {
+    color: #414141;
+}
+#order-return-infos .customization {
+    margin-top: 0.75rem;
+}
+/*** My account landing page ***/
+
+.page-my-account #content .links {
+    display: -webkit-box;
+    display: -moz-box;
+    display: box;
+    display: -webkit-flex;
+    display: -moz-flex;
+    display: -ms-flexbox;
+    -js-display: flex;
+    display: flex;
+    -webkit-box-lines: multiple;
+    -moz-box-lines: multiple;
+    box-lines: multiple;
+    -webkit-flex-wrap: wrap;
+    -moz-flex-wrap: wrap;
+    -ms-flex-wrap: wrap;
+    flex-wrap: wrap;
+    -webkit-box-pack: start;
+    -moz-box-pack: start;
+    box-pack: start;
+    -webkit-justify-content: flex-start;
+    -moz-justify-content: flex-start;
+    -ms-justify-content: flex-start;
+    -o-justify-content: flex-start;
+    justify-content: flex-start;
+    -ms-flex-pack: start;
+}
+.page-my-account #content .links a {
+    color: #777777;
+    display: inline-block;
+    float: left;
+    font-size: 1rem;
+    font-weight: 700;
+    margin: 0 0 5px;
+    padding: 5px 20px;
+    text-align: center;
+    text-transform: uppercase;
+    width: 100%;
+}
+.page-my-account #content .links a:last-child {
+    margin: 0;
+}
+.page-my-account #content .links a span.link-item {
+    background: #f5f5f5 none repeat scroll 0 0;
+    display: block;
+    float: left;
+    font-weight: normal;
+    height: 100%;
+    line-height: 35px;
+    padding: 10px;
+    text-align: left;
+    text-transform: capitalize;
+    width: 100%;
+}
+.page-my-account #content .links a i {
+    color: #777777;
+    float: left;
+    font-size: 36px;
+    margin: 0 10px 0 0;
+    padding: 0;
+    vertical-align: top;
+}
+.page-my-account #content .links a:hover {
+    color: #414141;
+}
+.page-my-account #content .links a:hover i {
+    color: #000000;
+}
+/*** History page ***/
+
+#history .orders {
+    margin: 0 -1rem;
+}
+#history .orders .order {
+    padding: 0.75rem 1rem;
+    border-bottom: 1px solid #e9e9e9;
+}
+#history .orders .order a h3 {
+    color: #878787;
+}
+#history .orders .order .label {
+    display: inline-block;
+    margin: 0.25rem 0;
+    padding: 0.25rem 0.375rem;
+    color: white;
+    border-radius: 3px;
+    -moz-border-radius: 3px;
+    -webkit-border-radius: 3px;
+    -khtml-border-radius: 3px;
+}
+#history .orders .order:last-child {
+    border-bottom: 0;
+}
+.form-control-label {
+    padding-top: 0.625rem;
+}
+.form-control {
+    background: #ffffff;
+    color: #777777;
+    border: 1px solid #e9e9e9;
+    padding: 0.5rem 1rem;
+}
+.form-control:focus {
+    background-color: white;
+    border-color: #cfcfcf;
+}
+.input-group .form-control:focus {
+    outline: none;
+}
+.input-group .input-group-btn > .btn {
+    border: 0;
+    box-shadow: none;
+    -moz-box-shadow: none;
+    -webkit-box-shadow: none;
+    color: #ffffff;
+    font-size: 14px;
+    font-weight: normal;
+    margin-left: 0;
+    padding: 0.65625rem 1rem;
+    text-transform: capitalize;
+}
+#customer-form .input-group .input-group-btn > .btn {
+    background: #878787 none repeat scroll 0 0;
+}
+.form-control-select {
+    height: 2.625rem;
+    -moz-appearance: none;
+    -webkit-appearance: none;
+    background: #ebebeb url("data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAADAAAAAwCAQAAAD9CzEMAAAAPklEQVR4Ae3TwREAEBQD0V/6do4SXPZg7EsBhsQ8IEmSMOsiuEfg3gL3oXC7wK0bd1G4o8X9F4yIkyQfSrIByQBjp7QuND8AAAAASUVORK5CYII=") no-repeat scroll right 0.5rem center/1.25rem 1.25rem;
+    padding-right: 2rem;
+    cursor: pointer;
+}
+.form-control-valign {
+    padding-top: 0.5rem;
+}
+.form-control-comment {
+    font-size: 12px;
+    padding-top: 0.5rem;
+    color: #878787;
+}
+.form-control-submit.disabled {
+    background: #5bc0de;
+    color: white;
+}
+.form-group {
+    margin-bottom: 1rem;
+}
+.form-group.has-error input,
+.form-group.has-error select {
+    outline: 0.1875rem solid #ff4c4c;
+}
+.form-group.has-error .help-block {
+    color: #ff4c4c;
+}
+.group-span-filestyle label {
+    margin: 0;
+}
+#authentication .col-xs-1,
+.col-xs-2,
+.col-xs-3,
+.col-xs-4,
+.col-xs-5,
+.col-xs-6,
+.col-xs-7,
+.col-xs-8,
+.col-xs-9,
+.col-xs-10,
+.col-xs-11,
+.col-xs-12,
+.col-sm-1,
+.col-sm-2,
+.col-sm-3,
+.col-sm-4,
+.col-sm-5,
+.col-sm-6,
+.col-sm-7,
+.col-sm-8,
+.col-sm-9,
+.col-sm-10,
+.col-sm-11,
+.col-sm-12,
+.col-md-1,
+.col-md-2,
+.col-md-3,
+.col-md-4,
+.col-md-5,
+.col-md-6,
+.col-md-7,
+.col-md-8,
+.col-md-9,
+.col-md-10,
+.col-md-11,
+.col-md-12,
+.col-lg-1,
+.col-lg-2,
+.col-lg-3,
+.col-lg-4,
+.col-lg-5,
+.col-lg-6,
+.col-lg-7,
+.col-lg-8,
+.col-lg-9,
+.col-lg-10,
+.col-lg-11,
+.col-lg-12,
+.col-xl-1,
+.col-xl-2,
+.col-xl-3,
+.col-xl-4,
+.col-xl-5,
+.col-xl-6,
+.col-xl-7,
+.col-xl-8,
+.col-xl-9,
+.col-xl-10,
+.col-xl-11,
+.col-xl-12 {
+    position: relative;
+    min-height: 1px;
+    padding-right: 15px;
+    padding-left: 15px;
+}
+#authentication .row {
+    margin-left: -15px;
+    margin-right: -15px;
+}

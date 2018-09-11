@@ -1,5 +1,5 @@
 <div class="pre-header">
-    <div class="container">
+    <div class="container nopaddings">
         <div class="pre-header-wrap clearfix">
             {#<div class="pre-header-left">#}
             {#<ul>#}
@@ -36,14 +36,20 @@
             {#</div>#}
             {#</div>#}
 
-            <div class="pre-header-left">
+            <div class="pre-header-left hidden-xs">
                 <ul>
                     <li><i class="fa fa-phone"></i> 210 94 02 027</li>
                     <li><i class="fa fa-truck"></i> ΔΩΡΕΑΝ ΜΕΤΑΦΟΡΙΚΑ ΓΙΑ ΠΑΡΑΓΓΕΛΙΕΣ ΑΝΩ ΤΩΝ 39€</li>
                 </ul>
             </div>
+            <div class="pre-header-left visible-xs">
+                <ul>
+                    <li style="width: 100%;"><i class="fa fa-phone"></i> 210 94 02 027</li>
+                    <li style="width: 100%;"><i class="fa fa-truck"></i> ΔΩΡΕΑΝ ΜΕΤΑΦΟΡΙΚΑ ΓΙΑ ΠΑΡΑΓΓΕΛΙΕΣ ΑΝΩ ΤΩΝ 39€</li>
+                </ul>
+            </div>
 
-            <div class="pre-header-right">
+            <div class="pre-header-right hidden-xs">
                 <ul>
                     <li>
                         {% if loggedUser == null %}
@@ -78,7 +84,7 @@
                         </a>
                     </li>
                     <li>
-                        <a href="#" class="tracking-link" style="margin-top: 10px; title=" Παρακολούθηση Παραγγελίας">
+                        <a href="#" class="tracking-link" style="margin-top: 10px;" title=" Παρακολούθηση Παραγγελίας">
                         <i class="fa fa-truck trucking-link"></i>
                         <span class="link-text" style="visibility:hidden">.</span>
                         </a>
@@ -98,26 +104,50 @@
                             </span>
                         </a>
                     </li>
-                    <li>
-                        <a data-toggle="collapse" href="#collapseSearch" aria-expanded="false"
-                           aria-controls="collapseSearch" class="search-link">
-                           <i class="fa fa-search search-link"></i>
-                            <span class="link-text">αναζητηση</span>
-                        </a>
-                    </li>
                 </ul>
-
+                
 
                 <div class="cart-dropdown collapse" id="collapseCart">
                     {#{% include 'partials/top_cart.html.twig' %}#}
                 </div>
 
             </div>
+            {# <div class="well"> #}
+                {# <div class="container nopaddings">
+                    <div class="search-wrap" style="margin-bottom: 15px;">
+                        <a data-toggle="collapse" href="#collapseSearch" aria-expanded="false"
+                        aria-controls="collapseSearch"
+                        class="close-btn visible-lg visible-md visible-sm">Search</a>
+                        <div class="row">
+                            <div class="col-sm-10 col-sm-offset-1 col-md-8 col-md-offset-2">
+                                <div class="search">
+                                    <form action="{{ path('product_search') }}" method="post">
+                                        <div class="textbox">
+                                            <input name="keyword" required class="form-control" type="text" placeholder="Αναζητήστε βάσει κωδικού, ονόματος ή μάρκας" style="width: 100%;">
+                                        </div>
+                                        {#<div class="option-box">#}
+                                            {#<select class="c-select">#}
+                                                {#<option>All</option>#}
+                                                {#<option>Women</option>#}
+                                                {#<option>Men</option>#}
+                                                {#<option>Juniors</option>#}
+                                                {#<option>Kids</option>#}
+                                                {#<option>Accessories</option>#}
+                                            {#</select>#}
+                                        {#</div>#}
+                                        {# <button type="submit"><i class="fa fa-search"></i></button>
+                                    </form>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div> #}
+            {# </div> #}
         </div>
     </div>
 
     <div class="search-collapse collapse" id="collapseSearch">
-        <div class="well">
+        {# <div class="well"> #}
             <div class="container">
                 <div class="search-wrap">
                     <a data-toggle="collapse" href="#collapseSearch" aria-expanded="false"
@@ -147,7 +177,7 @@
                     </div>
                 </div>
             </div>
-        </div>
+        {# </div> #}
     </div>
 
 </div>
