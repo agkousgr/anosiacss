@@ -3,13 +3,11 @@
 namespace App\Controller;
 
 
-use App\Service\ProductService;
 use App\Service\SkroutzService;
-use Monolog\Logger;
 
 class SkroutzController extends MainController
 {
-    function createXML(SkroutzService $skroutzService)
+    public function createXML(SkroutzService $skroutzService)
     {
         try {
             $xml = $skroutzService->initilizeSkroutzXml();

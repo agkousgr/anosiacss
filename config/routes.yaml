@@ -191,9 +191,6 @@ skroutz_xml:
     controller: App\Controller\SkroutzController::createXML
 
 # Admin
-#admin:
-#    path: /admin
-#    controller: App\Controller\AdminDefaultController::login
 admin_login:
     path: /administrator
     controller: App\Controller\Admin\SecurityController::login

@@ -189,8 +189,8 @@ EOF;
         try {
             $result = $client->SendMessage(['Message' => $message]);
             $items = simplexml_load_string(str_replace("utf-16", "utf-8", $result->SendMessageResult));
-            dump($items, $keyword, $makeId);
-            if ($items !== false && ($keyword !== 'null' || $makeId !== 'null')) {
+            dump($items);
+            if ($items !== false && ($keyword !== 'null' || $makeId !== 'null' || $isSkroutz === '1')) {
                 $itemsArr = $this->initializeProducts($items->GetDataRows->GetItemsRow);
             } else {
                 $itemsArr = $this->initializeProduct($items->GetDataRows->GetItemsRow);
