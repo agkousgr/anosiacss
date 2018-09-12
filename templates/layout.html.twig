@@ -76,6 +76,9 @@
 
 {% block javascripts %}
     {% include 'partials/javascripts.html.twig' %}
+    {% if homepage is defined %}
+        <script src="{{ asset('build/js/home-page.js') }}"></script>
+    {% endif %}
 {% endblock %}
 </body>
 </html>

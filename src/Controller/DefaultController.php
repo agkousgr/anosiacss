@@ -46,7 +46,8 @@ class DefaultController extends MainController
             'loggedName' => $this->loggedName,
             'instagramfeed' => $this->instagramfeed,
             'slider' => $slider,
-            'reviews' => $this->reviews
+            'reviews' => $this->reviews,
+            'homepage' => 1
         ]);
     }
 

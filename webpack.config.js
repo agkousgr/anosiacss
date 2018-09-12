@@ -83,7 +83,7 @@ Encore
         test: /\.(png|jpg|svg)$/,
         loader: 'file-loader',
         options: {
-            name: '/[name].[hash:7].[ext]',
+            name: '/[name].[ext]',
             publicPath: '/build',
             outputPath: 'images'
         },
