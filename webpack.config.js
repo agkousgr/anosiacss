@@ -78,19 +78,6 @@ Encore
     .addStyleEntry('admin/css/login/ace-rtl.min', './assets/admin/css/login/ace-rtl.min.css')
     .addStyleEntry('admin/css/plugins/select2.min', './assets/admin/css/plugins/select2/select2.min.css')
 
-
-    .addLoader({
-        test: /\.(png|jpg|svg)$/,
-        loader: 'file-loader',
-        options: {
-            name: '/[name].[ext]',
-            publicPath: '/build',
-            outputPath: 'images'
-        },
-    })
-
-
-
     // uncomment if you use Sass/SCSS files
     // .enableSassLoader()
 
