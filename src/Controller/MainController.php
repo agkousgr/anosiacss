@@ -136,8 +136,8 @@ class MainController extends AbstractController
         if ($this->categories) {
             array_multisort(array_column($this->categories, "priority"), $this->categories);
         }
-        $this->popular = $productService->getCategoryItems(1022, $this->session->get('authID'));
-        $this->featured = $productService->getCategoryItems(1008, $this->session->get('authID'));
+        $this->popular = $productService->getCategoryItems(1022, 0, 15, 'null', 'null');
+        $this->featured = $productService->getCategoryItems(1008, 0, 15, 'null', 'null');
         $this->loggedUser = ($this->session->get("anosiaUser")) ?: null;
         $this->loggedName = ($this->session->get("anosiaName")) ?: null;
         $this->loggedClientId = ($this->session->get("anosiaClientId")) ?: null;

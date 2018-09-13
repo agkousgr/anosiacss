@@ -33,19 +33,19 @@ class ProductService
     {
         $this->logger = $logger;
         $this->session = $session;
-//        $this->authId = $session->get("authID");
+        $this->authId = $session->get("authID");
 //        dump($this->authId);
     }
 
     /**
      * @param $ctgId
-     * @param $authId
+     * @param $sortBy
+     * @param $makeId
      * @return array
      * @throws \Exception
      */
-    public function getCategoryItems($ctgId, $authId = '', $sortBy = 'RetailPrice', $makeId = 'null')
+    public function getCategoryItems($ctgId, $page, $pagesize, $sortBy = 'NameAsc', $makeId = 'null')
     {
-        $this->authId = ($this->authId) ?: $authId;
         $client = new \SoapClient('https://caron.cloudsystems.gr/FOeshopWS/ForeignOffice.FOeshop.API.FOeshopSvc.svc?singleWsdl', ['trace' => true, 'exceptions' => true,]);
 
         $message = <<<EOF
@@ -57,12 +57,12 @@ class ProductService
     <AuthID>$this->authId</AuthID>
     <AppID>157</AppID>
     <CompanyID>1000</CompanyID>
-    <pagesize>1000</pagesize>
-    <pagenumber>0</pagenumber>
+    <pagesize>$pagesize</pagesize>
+    <pagenumber>$page</pagenumber>
     <CategoryID>$ctgId</CategoryID>
     <MakeID>$makeId</MakeID>
     <SearchToken>null</SearchToken>
-    <OrderBy>$sortBy</OrderBy>
+    <OrderBy></OrderBy>
     <IncludeChildCategories>1</IncludeChildCategories>
 </ClientGetCategoryItemsRequest>
 EOF;
@@ -70,6 +70,7 @@ EOF;
             $itemsArr = array();
             $result = $client->SendMessage(['Message' => $message]);
             $items = simplexml_load_string(str_replace("utf-16", "utf-8", $result->SendMessageResult));
+            dump($message, $items);
             if ($items !== false) {
                 $itemsArr = $this->initializeProducts($items->GetDataRows->GetCategoryItemsRow);
             }

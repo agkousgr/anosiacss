@@ -16,27 +16,30 @@ class ProductController extends MainController
     public function listProducts(Request $request, int $id, int $page, PaginatorInterface $paginator)
     {
         try {
+            $pagesize = 12;
+            $sortBy = 'NameAsc';
+            $makeId = 'null';
 //            $ctgInfo = $this->categoryService->getCategoryInfo($id);
             $sort = preg_replace('/[^A-Za-z0-9\-]/', '', $request->query->get('sort'));
             $direction = $request->query->get('direction');
             $ctgInfo = $this->em->getRepository(Category::class)->find($id);
             $slider = $this->em->getRepository(Slider::class)->findBy(['category' => $id]);
-            $products = $this->productService->getCategoryItems($id);
+            $products = $this->productService->getCategoryItems($id, $page - 1, $pagesize, $sortBy, $makeId);
             dump($sort);
             if ($sort) {
                 array_multisort(array_column($products, $sort), $products);
             }
-            $paginatedProducts = $paginator->paginate(
-                $products,
-                $page /*page number*/,
-                12/*limit per page*/
-            );
-            $paginatedProducts->setUsedRoute('products_list');
-            $paginatedProducts->setTemplate('paginator_template/override_template.html.twig');
-            $paginatedProducts->setSortableTemplate('paginator_template/override_sortable.html.twig');
-            dump($request, $paginatedProducts);
+//            $paginatedProducts = $paginator->paginate(
+//                $products,
+//                $page /*page number*/,
+//                12/*limit per page*/
+//            );
+//            $paginatedProducts->setUsedRoute('products_list');
+//            $paginatedProducts->setTemplate('paginator_template/override_template.html.twig');
+//            $paginatedProducts->setSortableTemplate('paginator_template/override_sortable.html.twig');
+            dump($request, $products);
             return $this->render('products/list.html.twig', [
-                'products' => $paginatedProducts,
+                'products' => $products,
                 'ctgInfo' => $ctgInfo,
                 'categories' => $this->categories,
                 'popular' => $this->popular,
@@ -123,7 +126,7 @@ class ProductController extends MainController
     public function viewProduct(int $id, EntityManagerInterface $em)
     {
         try {
-            $product = $this->productService->getItems($id, 'null', 1);
+            $product = $this->productService->getItems($id, 1, 1, 'null', 'null');
             $productId = intval($product["id"]);
             dump($product);
             $productView = $em->getRepository(ProductViews::class)->findOneBy(['product_id' => $productId]);

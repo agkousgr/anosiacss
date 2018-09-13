@@ -5,7 +5,7 @@
                 <div class="panel-title"><a role="button" data-toggle="collapse"
                                             data-parent="#accordion" href="#collapseCategory"
                                             aria-expanded="true"
-                                            aria-controls="collapseCategory">Category</a>
+                                            aria-controls="collapseCategory">κατηγοριεσ</a>
                 </div>
             </div>
             <div id="collapseCategory" class="panel-collapse collapse in" role="tabpanel"
@@ -13,7 +13,7 @@
                 <div class="panel-body">
                     {% for ctg in categories %}
                         {% if ctg.id|number_format == ctgInfo.id|number_format %}
-                            {% for subctg in ctg.children %}
+                            {% for subctg in ctg.__children %}
                                 <div class="custom-cr">
                                     <label>
                                         <input type="checkbox" class="checkbox">
@@ -23,9 +23,9 @@
                             {% endfor %}
                         {% endif %}
                     {% endfor %}
-                    <div class="text-right">
-                        <button type="button" class="btn btn-xs btn-default">ΕΦΑΡΜΟΓΗ</button>
-                    </div>
+                    {#<div class="text-right">#}
+                        {#<button type="button" class="btn btn-xs btn-default">ΕΦΑΡΜΟΓΗ</button>#}
+                    {#</div>#}
                 </div>
             </div>
         </div>
