@@ -64,6 +64,8 @@ Encore
     .addStyleEntry('css/orders', './assets/css/orders.css')
     .addStyleEntry('css/user', './assets/css/user.css')
     .addStyleEntry('css/404', './assets/css/404.css')
+    .addStyleEntry('css/ion.rangeSlider', './assets/plugins/ion-rangeslider/ion.rangeSlider.css')
+    .addStyleEntry('css/ion.rangeSlider.skinModern', './assets/plugins/ion-rangeslider/ion.rangeSlider.skinModern.css')
 
     // Admin stylesheets
     .addStyleEntry('admin/css/bootstrap.min', './assets/admin/css/bootstrap.min.css')

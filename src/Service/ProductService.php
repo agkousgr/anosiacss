@@ -39,6 +39,8 @@ class ProductService
 
     /**
      * @param $ctgId
+     * @param $page
+     * @param $pagesize
      * @param $sortBy
      * @param $makeId
      * @return array
@@ -62,7 +64,7 @@ class ProductService
     <CategoryID>$ctgId</CategoryID>
     <MakeID>$makeId</MakeID>
     <SearchToken>null</SearchToken>
-    <OrderBy></OrderBy>
+    <OrderBy>$sortBy</OrderBy>
     <IncludeChildCategories>1</IncludeChildCategories>
 </ClientGetCategoryItemsRequest>
 EOF;
@@ -82,9 +84,10 @@ EOF;
 
     /**
      * @param $ctgId
+     * @param $makeId
      * @return int
      */
-    public function getCategoryItemsCount($ctgId)
+    public function getCategoryItemsCount($ctgId, $makeId = 'null')
     {
         $client = new \SoapClient('https://caron.cloudsystems.gr/FOeshopWS/ForeignOffice.FOeshop.API.FOeshopSvc.svc?singleWsdl', ['trace' => true, 'exceptions' => true,]);
 
@@ -100,16 +103,16 @@ EOF;
     <pagesize>1000</pagesize>
     <pagenumber>0</pagenumber>
     <CategoryID>$ctgId</CategoryID>
+    <MakeID>$makeId</MakeID>
     <SearchToken>null</SearchToken>
-    <OrderBy></OrderBy>
-<IncludeChildCategories>1</IncludeChildCategories>
+    <IncludeChildCategories>1</IncludeChildCategories>
 </ClientGetCategoryItemsCountRequest>
 EOF;
         try {
             $result = $client->SendMessage(['Message' => $message]);
             $items = simplexml_load_string(str_replace("utf-16", "utf-8", $result->SendMessageResult));
-//            dump($message, $result);
-            return (int)$items->GetDataRows->GetItemsCountRow->Count;
+            dump($message, $result);
+            return (int)$items->GetDataRows->GetCategoryItemsCountRow->Count;
         } catch (\SoapFault $sf) {
             echo $sf->faultstring;
         }
@@ -138,6 +141,7 @@ EOF;
                         'webPrice' => $pr->WebPrice,
                         'outOfStock' => $pr->OutOfStock,
                         'remainNotReserved' => $pr->Remain,
+                        'isNew' => $this->checkIfProductIsNew($pr->InsertDT),
                         'webFree' => $pr->WebFree,
                         'overAvailability' => $pr->OverAvailability,
                         'maxByOrder' => $pr->MaxByOrder,
@@ -152,6 +156,14 @@ EOF;
             $this->logger->error(__METHOD__ . ' -> {message}', ['message' => $e->getMessage()]);
             throw $e;
         }
+    }
+
+    private function checkIfProductIsNew($insertDate)
+    {
+        $prDateArr = explode('T', $insertDate);
+        $prDate = new \DateTime($prDateArr[0]);
+        $curDate = new \DateTime();
+        return (date_diff($curDate, $prDate)->days < 20) ? 'new' : '';
     }
 
 
@@ -224,6 +236,7 @@ EOF;
                     'mainBarcode' => $pr->MainBarcode,
                     'isVisible' => $pr->WebVisible,
                     'webPrice' => $pr->WebPrice,
+                    'isNew' => $this->checkIfProductIsNew($pr->InsertDT),
                     'outOfStock' => $pr->OutOfStock,
                     'remainNotReserved' => $pr->Remain,
                     'webFree' => $pr->WebFree,

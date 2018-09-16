@@ -2,35 +2,28 @@
     <h3>ΜΑΡΚΕΣ</h3>
     <div class="content">
         <div class="brand-list clearfix">
-            <div class="btn-group clearfix" data-toggle="buttons">
-                <label class="btn btn-primary"><input type="checkbox" autocomplete="off"><img
-                            src="{{ asset('images/brands/brand-1.jpg') }}" alt=""></label>
-                <label class="btn btn-primary"><input type="checkbox" autocomplete="off"><img
-                            src="{{ asset('images/brands/brand-2.jpg') }}" alt=""></label>
-                <label class="btn btn-primary"><input type="checkbox" autocomplete="off"><img
-                            src="{{ asset('images/brands/brand-3.jpg') }}" alt=""></label>
-                <label class="btn btn-primary"><input type="checkbox" autocomplete="off"><img
-                            src="{{ asset('images/brands/brand-4.jpg') }}" alt=""></label>
-                <label class="btn btn-primary"><input type="checkbox" autocomplete="off"><img
-                            src="{{ asset('images/brands/brand-5.jpg') }}" alt=""></label>
-                <label class="btn btn-primary"><input type="checkbox" autocomplete="off"><img
-                            src="{{ asset('images/brands/brand-6.jpg') }}" alt=""></label>
-                <label class="btn btn-primary"><input type="checkbox" autocomplete="off"><img
-                            src="{{ asset('images/brands/brand-7.jpg') }}" alt=""></label>
-                <label class="btn btn-primary"><input type="checkbox" autocomplete="off"><img
-                            src="{{ asset('images/brands/brand-8.jpg') }}" alt=""></label>
-                <label class="btn btn-primary"><input type="checkbox" autocomplete="off"><img
-                            src="{{ asset('images/brands/brand-9.jpg') }}" alt=""></label>
-                <label class="btn btn-primary"><input type="checkbox" autocomplete="off"><img
-                            src="{{ asset('images/brands/brand-10.jpg') }}" alt=""></label>
-                <label class="btn btn-primary"><input type="checkbox" autocomplete="off"><img
-                            src="{{ asset('images/brands/brand-11.jpg') }}" alt=""></label>
-                <label class="btn btn-primary"><input type="checkbox" autocomplete="off"><img
-                            src="{{ asset('images/brands/brand-12.jpg') }}" alt=""></label>
-            </div>
+            {% for brand in brands %}
+                {#<label class="btn btn-primary brand-lbl">#}
+                {#<input id="{{ brand.id }}" name="brands" class="brand-chk" type="checkbox" autocomplete="off">#}
+                {#<img src="{{ brand.imageUrl }}" alt="">#}
+                {#</label>#}
+                {% set brandChecked = '' %}
+                {% set brandIds = app.request.query.get('brands')|split('-') %}
+                {% for brandId in brandIds %}
+                    {% if brand.id == brandId %}
+                        {% set brandChecked = 'checked' %}
+                    {% endif %}
+                {% endfor %}
+                <div class="custom-cr">
+                    <label>
+                        <input {{ brandChecked }} id="{{ brand.id }}" type="checkbox" class="checkbox brand-chk">
+                        <span>{{ brand.name }}</span>
+                    </label>
+                </div>
+            {% endfor %}
         </div>
         <div class="text-right">
-            <button type="button" class="btn btn-xs btn-default">ΕΦΑΡΜΟΓΗ</button>
+            <button id="brand-filter" type="button" class="btn btn-xs btn-default">ΕΦΑΡΜΟΓΗ</button>
         </div>
     </div>
 </div>

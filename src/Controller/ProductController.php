@@ -13,31 +13,20 @@ use Symfony\Component\HttpFoundation\Request;
 class ProductController extends MainController
 {
 
-    public function listProducts(Request $request, int $id, int $page, PaginatorInterface $paginator)
+    public function listProducts(Request $request, int $page, int $id, BrandsService $brandsService)
     {
         try {
-            $pagesize = 12;
-            $sortBy = 'NameAsc';
-            $makeId = 'null';
-//            $ctgInfo = $this->categoryService->getCategoryInfo($id);
-            $sort = preg_replace('/[^A-Za-z0-9\-]/', '', $request->query->get('sort'));
-            $direction = $request->query->get('direction');
+            dump($request);
+            $pagesize = ($request->query->get('pagesize')) ? preg_replace('/[^A-Za-z0-9\-]/', '', $request->query->get('pagesize')) : 12;
+            $sortBy = ($request->query->get('sortBy')) ?: 'NameAsc';
+            $makeId = ($request->query->get('brands')) ? str_replace('-', ',', $request->query->get('brands')) : 'null';
+            $priceRange = '';
+            $brands = $brandsService->getBrands('null');
             $ctgInfo = $this->em->getRepository(Category::class)->find($id);
             $slider = $this->em->getRepository(Slider::class)->findBy(['category' => $id]);
             $products = $this->productService->getCategoryItems($id, $page - 1, $pagesize, $sortBy, $makeId);
-            dump($sort);
-            if ($sort) {
-                array_multisort(array_column($products, $sort), $products);
-            }
-//            $paginatedProducts = $paginator->paginate(
-//                $products,
-//                $page /*page number*/,
-//                12/*limit per page*/
-//            );
-//            $paginatedProducts->setUsedRoute('products_list');
-//            $paginatedProducts->setTemplate('paginator_template/override_template.html.twig');
-//            $paginatedProducts->setSortableTemplate('paginator_template/override_sortable.html.twig');
-            dump($request, $products);
+            $productsCount = $this->productService->getCategoryItemsCount($id, $makeId);
+            dump($makeId, $products);
             return $this->render('products/list.html.twig', [
                 'products' => $products,
                 'ctgInfo' => $ctgInfo,
@@ -49,8 +38,14 @@ class ProductController extends MainController
                 'totalWishlistItems' => $this->totalWishlistItems,
                 'loggedUser' => $this->loggedUser,
                 'loggedName' => $this->loggedName,
-                'slider' => $slider
-//                'products' => $paginatedProducts
+                'slider' => $slider,
+                'productsCount' => $productsCount,
+                'brands' => $brands,
+                'page' => $page,
+                'pagesize' => $pagesize,
+                'sortBy' => $sortBy,
+                'brand' => $makeId,
+                'priceRange' => $priceRange
             ]);
         } catch (\Exception $e) {
             $this->logger->error(__METHOD__ . ' -> {message}', ['message' => $e->getMessage()]);
@@ -58,7 +53,7 @@ class ProductController extends MainController
         }
     }
 
-    public function listBrands(Request $request, int $page, BrandsService $brandsService, PaginatorInterface  $paginator)
+    public function listBrands(Request $request, int $page, BrandsService $brandsService, PaginatorInterface $paginator)
     {
         $brands = $brandsService->getBrands('null');
         $paginatedBrands = $paginator->paginate(
@@ -135,7 +130,7 @@ class ProductController extends MainController
                 $productView->setViews(1);
                 $productView->setProductId($productId);
                 $em->persist($productView);
-            }else{
+            } else {
                 $productView->setViews($productView->getViews() + 1);
             }
             $em->flush();

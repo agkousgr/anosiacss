@@ -7,8 +7,15 @@
             font-size: 14px;
             min-height: 40px;
         }
+        .irs-from, .irs-to, .irs-single {
+            background-color: #009836;
+        }
+        .irs-from:after, .irs-to:after, .irs-single:after {
+            background-color: #009836;
+        }
     </style>
-
+    <link href="{{ asset('build/css/ion.rangeSlider.css') }}" rel="stylesheet" />
+    <link href="{{ asset('build/css/ion.rangeSlider.skinModern.css') }}" rel="stylesheet" />
 {% endblock %}
 {% block bodyId %}category{% endblock %}
 {% block title %}Products List{% endblock %}
@@ -25,7 +32,7 @@
         <div class="page-header">
             <div class="container">
                 <div class="row">
-                    <div class="col-md-12"><h1>{{ ctgInfo.name }}</h1></div>
+                    <div class="col-md-12"><h1 id="category-id" data-id="{{ ctgInfo.id }}">{{ ctgInfo.name }}</h1></div>
                 </div>
             </div>
         </div>
@@ -48,153 +55,152 @@
                             <h2>{{ ctgInfo.name }}
                                 {#{% set from = (products.currentPageNumber-1)*12 + 1 %}#}
                                 {#{% set to = (products.currentPageNumber*12) %}#}
-                                {#<span>(Εμφάνιση {{ from }} – {{ to }} προϊόντα σε σύνολο {{ products.getTotalItemCount }})</span>#}Εμφανιση
-                            </h2>
-                            <div class="sorting-head clearfix">
-                                {#{{ dump(products.items.name) }}#}
-                                {#<table>#}
-                                {#<tr>#}
-                                {# sorting of properties based on query components #}
-                                {#<th>{{ knp_pagination_sortable(products, 'Id', 'a.id') }}</th>#}
-                                {#<th{% if products.isSorted('products.Title') %} class="sorted"{% endif %}>{{ knp_pagination_sortable(products, 'Title', 'a.title') }}</th>#}
-                                {#<th>{{ knp_pagination_sortable(products, 'Release', ['products.date', 'products.time']) }}</th>#}
-                                {#</tr>#}
-                                {#</table>#}
-                                <div class="row">
-                                    <div class="col-sm-6 col-md-7 visible-lg visible-md  visible-sm">
-                                        <div class="btn-group">
-                                            <a href="#" id="list" class="btn btn-default btn-sm"><i
-                                                        class="fa fa-th-large"></i></a>
-                                            <a href="#" id="grid" class="btn btn-default btn-sm"><i
-                                                        class="fa fa-th-list"></i></a>
-                                        </div>
-                                    </div>
-  z                                  <div class="col-sm-6 col-md-5">
-                                        <div class="row">
-                                            <div class="col-xs-6 pull-right"> {# <== pull right tbd #}
+                                {#<span>(Εμφάνιση {{ from }} – {{ to }} προϊόντα σε σύνολο {{ products.getTotalItemCount }})</span>#}
 
-                                                <select name="sorting" id="sorting" class="c-select">
-                                                    {#{{ knp_pagination_sortable(products, 'Όνομα Α->Ω', 'products.name', {}, {'direction': 'asc'}) }}#}
-                                                    {#{{ knp_pagination_sortable(products, ' Ω->Α', 'a.name', {}, {'direction': 'desc'}) }}#}
-                                                    {#{{ knp_pagination_sortable(products, 'Τιμή Φθίνουσα', '[webPrice]', {}, {'direction': 'desc'}) }}#}
-                                                    <option data-sort="NameAsc">Όνομα Α->Ω</option>
-                                                    <option data-sort="NameDesc">Όνομα Ω->Α</option>
-                                                    <option data-sort="WebPriceAsc">Τιμή Αύξουσα</option>
-                                                    <option data-sort="NameDesc">Τιμή Φθίνουσα</option>
-                                                    <option>Highest rated</option>
-                                                </select>
+                            </h2>
+                            {% if (productsCount > 0) %}
+                                <div class="sorting-head clearfix">
+                                    <div class="row">
+                                        <div class="col-sm-6 col-md-7 visible-lg visible-md  visible-sm">
+                                            <div class="btn-group">
+                                                <a href="#" id="list" class="btn btn-default btn-sm"><i
+                                                            class="fa fa-th-large"></i></a>
+                                                <a href="#" id="grid" class="btn btn-default btn-sm"><i
+                                                            class="fa fa-th-list"></i></a>
                                             </div>
-                                            {#<div class="col-xs-6">#}
-                                                {#<select name="maxItemPerPage" class="c-select">#}
-                                                    {#<option data-url="{{ app.request.uri }}" value="12">12 προϊόντα</option>#}
-                                                    {#<option data-url="{{ app.request.uri }}" value="18">18 προϊόντα</option>#}
-                                                    {#<option data-url="{{ app.request.uri }}" value="24">24 προϊόντα</option>#}
-                                                    {#<option data-url="{{ app.request.uri }}" value="30">30 προϊόντα</option>#}
-                                                {#</select>#}
-                                            {#</div>#}
+                                        </div>
+                                        <div class="col-sm-6 col-md-5">
+                                            <div class="row">
+                                                <div class="col-xs-6 pull-right"> {# <== pull right tbd #}
+                                                    <select name="sorting" id="sorting" class="c-select">
+                                                        {% set sortArr = {
+                                                            'Όνομα Α->Ω':'NameAsc',
+                                                            'Όνομα Ω->Α':'NameDesc',
+                                                            'Τιμή Αύξουσα':'WebPriceAsc',
+                                                            'Τιμή Φθίνουσα':'WebPriceDesc',
+                                                        } %}
+                                                        {% for key, value in sortArr %}
+                                                            {% if sortBy == value %}
+                                                                {% set selected='selected' %}
+                                                            {% else %}
+                                                                {% set selected='' %}
+                                                            {% endif %}
+                                                            <option {{ selected }}
+                                                                    value="{{ value }}">{{ key }}</option>
+                                                        {% endfor %}
+                                                    </select>
+                                                </div>
+                                                <div class="col-xs-6">
+                                                    <select id="maxItemPerPage" name="maxItemPerPage" class="c-select">
+                                                        {% set paginationArr = [12, 18, 24, 30] %}
+                                                        {% for value in paginationArr %}
+                                                            {% if pagesize == value %}
+                                                                {% set selected='selected' %}
+                                                            {% else %}
+                                                                {% set selected='' %}
+                                                            {% endif %}
+                                                            <option {{ selected }} value="{{ value }}">{{ value }}
+                                                                προϊόντα
+                                                            </option>
+                                                        {% endfor %}
+
+                                                    </select>
+                                                </div>
+                                            </div>
                                         </div>
                                     </div>
                                 </div>
-                            </div>
-                            <div id="products" class="row list-group list-products">
-                                {% for pr in products %}
-                                    <div class="item col-lg-4 col-md-6 col-sm-6 wow fadeIn"
-                                         data-wow-delay="0.4s">
-                                        <div class="product-case">
-                                            <div class="tag tag-green"><span>new</span></div>
-                                            <div class="product-img">
-                                                <div class="hover-img"><img src="{{ pr.imageUrl }}"
-                                                                            alt="{{ pr.name }}">
-                                                </div>
-                                                <a href="{{ path('product_view', {'id':pr.id}) }}"><img
-                                                            src="{{ pr.imageUrl }}"
-                                                            alt="{{ pr.name }}"></a>
-                                            </div>
-                                            <div class="hover-info">
-                                                <div class="product-short-info">
-                                                    <div class="product-name"><a
-                                                                href="{{ path('product_view', {'id':pr.id}) }}">{{ pr.name }}</a>
+                                <div id="products" class="row list-group list-products">
+                                    {% for pr in products %}
+                                        <div class="item col-lg-4 col-md-6 col-sm-6 wow fadeIn"
+                                             data-wow-delay="0.4s">
+                                            <div class="product-case">
+                                                {% if pr.isNew == 'new' %}
+                                                    <div class="tag tag-green"><span>new</span></div>
+                                                {% endif %}
+                                                <div class="product-img">
+                                                    <div class="hover-img"><img src="{{ pr.imageUrl }}"
+                                                                                alt="{{ pr.name }}">
                                                     </div>
-                                                    {#<div class="star"><i class="fa fa-star"></i><i#}
-                                                    {#class="fa fa-star"></i><i#}
+                                                    <a href="{{ path('product_view', {'id':pr.id}) }}"><img
+                                                                src="{{ pr.imageUrl }}"
+                                                                alt="{{ pr.name }}"></a>
+                                                </div>
+                                                <div class="hover-info">
+                                                    <div class="product-short-info">
+                                                        <div class="product-name"><a
+                                                                    href="{{ path('product_view', {'id':pr.id}) }}">{{ pr.name }}</a>
+                                                        </div>
+                                                        {#<div class="star"><i class="fa fa-star"></i><i#}
+                                                        {#class="fa fa-star"></i><i#}
+                                                        {#class="fa fa-star"></i><i class="fa fa-star"></i><i#}
+                                                        {#class="fa fa-star"></i><i class="fa fa-star-o"></i>#}
+                                                        {#</div>#}
+                                                        <div class="product-price">
+                                                            <div class="product-price-span">{{ pr.webPrice|number_format(2, ',', '.') }}
+                                                                €
+                                                                <del>{{ pr.retailPrice|number_format(2, ',', '.') }}€
+                                                                </del>
+                                                            </div>
+                                                        </div>
+                                                        {% if pr.outOfStock == "false" %}
+                                                            <button type="button" class="add-to-cart"
+                                                                    data-id="{{ pr.id }}"
+                                                                    data-name="{{ pr.name }}">
+                                                                <i class="fa fa-cart-plus"></i><span>καλαθι</span>
+                                                            </button>
+                                                        {% endif %}
+                                                    </div>
+                                                </div>
+                                                <div class="product-short-info">
+                                                    <div class="product-name">
+                                                        <a href="{{ path('product_view', {'id':pr.id}) }}">{{ pr.name }}</a>
+                                                    </div>
+                                                    {#<div class="star"><i class="fa fa-star"></i><i class="fa fa-star"></i><i#}
                                                     {#class="fa fa-star"></i><i class="fa fa-star"></i><i#}
-                                                    {#class="fa fa-star"></i><i class="fa fa-star-o"></i>#}
-                                                    {#</div>#}
+                                                    {#class="fa fa-star"></i><i class="fa fa-star-o"></i></div>#}
                                                     <div class="product-price">
                                                         <div class="product-price-span">{{ pr.webPrice|number_format(2, ',', '.') }}
                                                             €
                                                             <del>{{ pr.retailPrice|number_format(2, ',', '.') }}€</del>
                                                         </div>
                                                     </div>
-                                                    {% if pr.outOfStock == "false" %}
-                                                        <button type="button" class="add-to-cart" data-id="{{ pr.id }}"
-                                                                data-name="{{ pr.name }}">
-                                                            <i class="fa fa-cart-plus"></i><span>καλαθι</span>
-                                                        </button>
-                                                    {% endif %}
-                                                </div>
-                                            </div>
-                                            <div class="product-short-info">
-                                                <div class="product-name">
-                                                    <a href="{{ path('product_view', {'id':pr.id}) }}">{{ pr.name }}</a>
-                                                </div>
-                                                {#<div class="star"><i class="fa fa-star"></i><i class="fa fa-star"></i><i#}
-                                                {#class="fa fa-star"></i><i class="fa fa-star"></i><i#}
-                                                {#class="fa fa-star"></i><i class="fa fa-star-o"></i></div>#}
-                                                <div class="product-price">
-                                                    <div class="product-price-span">{{ pr.webPrice|number_format(2, ',', '.') }}
-                                                        €
-                                                        <del>{{ pr.retailPrice|number_format(2, ',', '.') }}€</del>
+                                                    <div>
+                                                        <span itemprop="offers" itemscope=""
+                                                              itemtype="https://schema.org/Offer"
+                                                              class="availability">
+                                                            {% if (pr.remainNotReserved > "0" or pr.webFree == "true") and pr.outOfStock == "false" %}
+                                                                <span class="available-now">
+                                                                    <link itemprop="availability"
+                                                                          href="https://schema.org/InStock">
+                                                                    In Stock
+                                                                </span>
+                                                            {% else %}
+                                                                <span class="out-of-stock">
+                                                                    <link itemprop="availability"
+                                                                          href="https://schema.org/InStock">
+                                                                    Out of Stock
+                                                                </span>
+                                                            {% endif %}
+                                                        </span>
                                                     </div>
+                                                    <button type="button">
+                                                        <i class="fa fa-cart-plus"></i>
+                                                        <span>Add to Cart</span>
+                                                    </button>
                                                 </div>
-                                                <div>
-                                                    <span itemprop="offers" itemscope=""
-                                                          itemtype="https://schema.org/Offer"
-                                                          class="availability">
-                                                        {% if (pr.remainNotReserved > "0" or pr.webFree == "true") and pr.outOfStock == "false" %}
-                                                            <span class="available-now">
-                                                                <link itemprop="availability"
-                                                                      href="https://schema.org/InStock">
-                                                                In Stock
-                                                            </span>
-                                                        {% else %}
-                                                            <span class="out-of-stock">
-                                                                <link itemprop="availability"
-                                                                      href="https://schema.org/InStock">
-                                                                Out of Stock
-                                                            </span>
-                                                        {% endif %}
-                                                    </span>
-                                                </div>
-                                                <button type="button">
-                                                    <i class="fa fa-cart-plus"></i>
-                                                    <span>Add to Cart</span>
-                                                </button>
                                             </div>
                                         </div>
-                                    </div>
-                                {% endfor %}
-                            </div>
-                            <nav aria-label="Page navigation">
-                                {#{{ knp_pagination_render(products) }}#}
-                                <ul class="pagination" style="text-align: center;">
-                                    <li>
-                                        <a href="#" aria-label="Previous">
-                                            <span aria-hidden="true">&laquo;</span>
-                                        </a>
-                                    </li>
-                                    <li class="active"><a href="#">1</a></li>
-                                    <li><a href="#">2</a></li>
-                                    <li><a href="#">3</a></li>
-                                    <li><a href="#">4</a></li>
-                                    <li><a href="#">5</a></li>
-                                    <li>
-                                        <a href="#" aria-label="Next">
-                                            <span aria-hidden="true">&raquo;</span>
-                                        </a>
-                                    </li>
-                                </ul>
-                            </nav>
+                                    {% endfor %}
+                                </div>
+                                <nav aria-label="Page navigation">
+                                    {{ include('products/modules/pagination.html.twig') }}
+                                </nav>
+                            {% else %}
+                                <div class="col-12">
+                                    Δεν υπάρχουν προϊόντα.
+                                </div>
+                            {% endif %}
                         </div>
                     </div>
                     <div class="col-md-3 column">
