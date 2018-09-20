@@ -33,7 +33,7 @@ class ProductService
     {
         $this->logger = $logger;
         $this->session = $session;
-        $this->authId = $session->get("authID");
+        $this->authId = $this->session->get("authID");
 //        dump($this->authId);
     }
 

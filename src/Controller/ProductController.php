@@ -122,8 +122,8 @@ class ProductController extends MainController
     {
         try {
             $product = $this->productService->getItems($id, 1, 1, 'null', 'null');
-            $productId = intval($product["id"]);
             dump($product);
+            $productId = intval($product["id"]);
             $productView = $em->getRepository(ProductViews::class)->findOneBy(['product_id' => $productId]);
             if (empty($productView)) {
                 $productView = new ProductViews();

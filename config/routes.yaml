@@ -22,15 +22,15 @@ products_list:
         page: \d+
     options:
         expose: true
-brand_products_list:
-    path: /products/{slug}/{page}
-    controller: App\Controller\ProductController::listBrandProducts
-    defaults: { page: 1 }
-    methods: [POST]
-    options:
-        expose: true
-    requirements:
-        page: \d+
+#brand_products_list:
+#    path: /products/{slug}/{page}
+#    controller: App\Controller\ProductController::listBrandProducts
+#    defaults: { page: 1 }
+#    methods: [POST]
+#    options:
+#        expose: true
+#    requirements:
+#        page: \d+
 brands_list:
     path: /brands/{page}
     controller: App\Controller\ProductController::listBrands
