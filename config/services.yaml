@@ -6,6 +6,11 @@ parameters:
         articles_image_directory: '%kernel.project_dir%/public/uploads/articles'
         slider_image_directory: '%kernel.project_dir%/public/uploads/slider'
 
+#    beelab_paypal:
+#        username: "sales@anosiapharmacy.gr"
+#        password: "anosia27!"
+#        signature: "%paypal_signature%"
+
 services:
     # default configuration for services in *this* file
     _defaults:

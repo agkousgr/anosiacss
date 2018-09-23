@@ -1,16 +1,30 @@
 <?php
-/**
- * Created by PhpStorm.
- * User: john
- * Date: 4/8/2018
- * Time: 9:35 μμ
- */
 
 namespace App\Service;
 
 
+use Symfony\Component\HttpFoundation\Session\SessionInterface;
+
 class PaypalClass
 {
+    /**
+     * @var SessionInterface
+     */
+    private $session;
+
+    /**
+     * PaypalClass constructor.
+     * @param SessionInterface $session
+     */
+    public function __construct(SessionInterface $session)
+    {
+        $this->session = $session;
+    }
+
+    /**
+     * @param $item
+     * @return float|int
+     */
     function GetItemTotalPrice($item) {
 
         //(Item Price x Quantity = Total) Get total amount of product;
@@ -106,27 +120,27 @@ class PaypalClass
         //print_r($httpParsedResponseAr);
         //Respond according to message we receive from Paypal
         //ob_start();
-        if ("SUCCESS" == strtoupper($httpParsedResponseAr["ACK"]) || "SUCCESSWITHWARNING" == strtoupper($httpParsedResponseAr["ACK"])) {
-
-            $paypalmode = (PPL_MODE == 'sandbox') ? '.sandbox' : '';
-
-            //Redirect user to PayPal store with Token received.
-
-            $paypalurl = 'https://www' . $paypalmode . '.paypal.com/cgi-bin/webscr?cmd=_express-checkout&token=' . $httpParsedResponseAr["TOKEN"] . '';
-            echo "<script>window.location = '$paypalurl';</script>";
-            //header('Location: ' . $paypalurl);
-        } else {
-
-            //Show error message
-
-            echo '<div style="color:red"><b>Error : </b>' . urldecode($httpParsedResponseAr["L_LONGMESSAGE0"]) . '</div>';
-
-            echo '<pre>';
-
-            print_r($httpParsedResponseAr);
-
-            echo '</pre>';
-        }
+//        if ("SUCCESS" == strtoupper($httpParsedResponseAr["ACK"]) || "SUCCESSWITHWARNING" == strtoupper($httpParsedResponseAr["ACK"])) {
+//
+//            $paypalmode = (PPL_MODE == 'sandbox') ? '.sandbox' : '';
+//
+//            //Redirect user to PayPal store with Token received.
+//
+//            $paypalurl = 'https://www' . $paypalmode . '.paypal.com/cgi-bin/webscr?cmd=_express-checkout&token=' . $httpParsedResponseAr["TOKEN"] . '';
+//            echo "<script>window.location = '$paypalurl';</script>";
+//            //header('Location: ' . $paypalurl);
+//        } else {
+//
+//            //Show error message
+//
+//            echo '<div style="color:red"><b>Error : </b>' . urldecode($httpParsedResponseAr["L_LONGMESSAGE0"]) . '</div>';
+//
+//            echo '<pre>';
+//
+//            print_r($httpParsedResponseAr);
+//
+//            echo '</pre>';
+//        }
         //ob_end_flush();
     }
 
@@ -200,7 +214,7 @@ class PaypalClass
 
                 $this->GetTransactionDetails($token);
 
-                create_order_invoice($_SESSION['product_order_code'], $_SESSION['owner_email'], $_SESSION['thiscurrencysymbol'], $_SESSION['billing_id']);
+//                create_order_invoice($_SESSION['product_order_code'], $_SESSION['owner_email'], $_SESSION['thiscurrencysymbol'], $_SESSION['billing_id']);
             } else {
 
                 echo '<div style="color:red"><b>Error : </b>' . urldecode($httpParsedResponseAr["L_LONGMESSAGE0"]) . '</div>';

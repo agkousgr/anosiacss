@@ -100,6 +100,8 @@ class SkroutzService
     <IsSkroutz>1</IsSkroutz>
     <SearchToken>null</SearchToken>
     <OrderBy>NameAsc</OrderBy>
+    <LowPrice>-1</LowPrice>
+    <HighPrice>-1</HighPrice>
 </ClientGetItemsRequest>
 EOF;
         try {

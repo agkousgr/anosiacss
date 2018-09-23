@@ -20,12 +20,16 @@ class ProductController extends MainController
             $pagesize = ($request->query->get('pagesize')) ? preg_replace('/[^A-Za-z0-9\-]/', '', $request->query->get('pagesize')) : 12;
             $sortBy = ($request->query->get('sortBy')) ?: 'NameAsc';
             $makeId = ($request->query->get('brands')) ? str_replace('-', ',', $request->query->get('brands')) : 'null';
-            $priceRange = '';
+            $priceRange = ($request->query->get('priceRange')) ?: 'null';
             $brands = $brandsService->getBrands('null');
             $ctgInfo = $this->em->getRepository(Category::class)->find($id);
             $slider = $this->em->getRepository(Slider::class)->findBy(['category' => $id]);
-            $products = $this->productService->getCategoryItems($id, $page - 1, $pagesize, $sortBy, $makeId);
-            $productsCount = $this->productService->getCategoryItemsCount($id, $makeId);
+            $productsCount = $this->productService->getCategoryItemsCount($id, $makeId, $priceRange);
+            if ($productsCount > $pagesize * $page) {
+                $products = $this->productService->getCategoryItems($id, $page - 1, $pagesize, $sortBy, $makeId, $priceRange);
+            } else {
+                $products = $this->productService->getCategoryItems($id, 0, $pagesize, $sortBy, $makeId, $priceRange);
+            }
             dump($makeId, $products);
             return $this->render('products/list.html.twig', [
                 'products' => $products,
@@ -121,7 +125,7 @@ class ProductController extends MainController
     public function viewProduct(int $id, EntityManagerInterface $em)
     {
         try {
-            $product = $this->productService->getItems($id, 1, 1, 'null', 'null');
+            $product = $this->productService->getItems($id, 'null', 1);
             dump($product);
             $productId = intval($product["id"]);
             $productView = $em->getRepository(ProductViews::class)->findOneBy(['product_id' => $productId]);

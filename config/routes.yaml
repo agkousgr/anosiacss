@@ -93,20 +93,24 @@ checkout:
     defaults: { step: 1 }
     requirements:
         id: \d+
-
-guest_checkout:
+guest_checkout: #Todo: to be deleted possible with get address
     path: /checkout/guest/{step}
     controller: App\Controller\CheckoutController::guestCheckout
     defaults: { step: 1 }
     requirements:
         id: \d+
-
 get_address:
     path: /get-address
     controller: App\Controller\AjaxCheckoutController::getAddress
     methods: [GET,POST]
     options:
         expose: true
+paypal_result:
+    path: /paypal/result
+    controller: App\Controller\PaypalController::return
+paypal_cancel:
+    path: /paypal/cancel
+    controller: App\Controller\PaypalController::cancel
 
 # Wishlist
 wishlist_view:
@@ -367,3 +371,8 @@ homepage_modules_priority:
     controller: App\Controller\Admin\HomePageModulesController::changePriority
     requirements:
         id: \d+
+
+# Csv Import
+csv_import:
+    path: /csv/import
+    controller: App\Controller\CsvImport::importData

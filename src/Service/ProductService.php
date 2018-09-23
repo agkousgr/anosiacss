@@ -46,9 +46,13 @@ class ProductService
      * @return array
      * @throws \Exception
      */
-    public function getCategoryItems($ctgId, $page, $pagesize, $sortBy = 'NameAsc', $makeId = 'null')
+    public function getCategoryItems($ctgId, $page, $pagesize, $sortBy = 'NameAsc', $makeId = 'null', $priceRange = 'null')
     {
         $client = new \SoapClient('https://caron.cloudsystems.gr/FOeshopWS/ForeignOffice.FOeshop.API.FOeshopSvc.svc?singleWsdl', ['trace' => true, 'exceptions' => true,]);
+
+        $priceRangeArr = ($priceRange != 'null') ? explode('-', $priceRange) : -1;
+        $lowPrice = ($priceRangeArr === -1) ? -1 : $priceRangeArr[0];
+        $highPrice = ($priceRangeArr === -1) ? -1 : $priceRangeArr[1];
 
         $message = <<<EOF
 <?xml version="1.0" encoding="utf-16"?>
@@ -62,10 +66,12 @@ class ProductService
     <pagesize>$pagesize</pagesize>
     <pagenumber>$page</pagenumber>
     <CategoryID>$ctgId</CategoryID>
-    <MakeID>$makeId</MakeID>
     <SearchToken>null</SearchToken>
-    <OrderBy>$sortBy</OrderBy>
     <IncludeChildCategories>1</IncludeChildCategories>
+    <OrderBy>$sortBy</OrderBy>
+    <MakeID>$makeId</MakeID>
+    <LowPrice>$lowPrice</LowPrice>
+    <HighPrice>$highPrice</HighPrice>
 </ClientGetCategoryItemsRequest>
 EOF;
         try {
@@ -87,9 +93,13 @@ EOF;
      * @param $makeId
      * @return int
      */
-    public function getCategoryItemsCount($ctgId, $makeId = 'null')
+    public function getCategoryItemsCount($ctgId, $makeId = 'null', $priceRange = 'null')
     {
         $client = new \SoapClient('https://caron.cloudsystems.gr/FOeshopWS/ForeignOffice.FOeshop.API.FOeshopSvc.svc?singleWsdl', ['trace' => true, 'exceptions' => true,]);
+
+        $priceRangeArr = ($priceRange != 'null') ? explode('-', $priceRange) : -1;
+        $lowPrice = ($priceRangeArr === -1) ? -1 : $priceRangeArr[0];
+        $highPrice = ($priceRangeArr === -1) ? -1 : $priceRangeArr[1];
 
         $message = <<<EOF
 <?xml version="1.0" encoding="utf-16"?>
@@ -103,9 +113,11 @@ EOF;
     <pagesize>1000</pagesize>
     <pagenumber>0</pagenumber>
     <CategoryID>$ctgId</CategoryID>
-    <MakeID>$makeId</MakeID>
     <SearchToken>null</SearchToken>
     <IncludeChildCategories>1</IncludeChildCategories>
+    <MakeID>$makeId</MakeID>
+    <LowPrice>$lowPrice</LowPrice>
+    <HighPrice>$highPrice</HighPrice>
 </ClientGetCategoryItemsCountRequest>
 EOF;
         try {
@@ -173,12 +185,18 @@ EOF;
      * @param $pagesize
      * @param $sortBy
      * @param $isSkroutz
+     * @param $makeId
+     * @param $priceRange
      * @return array
      * @throws \Exception
      */
-    public function getItems($id = 'null', $keyword = 'null', $pagesize, $sortBy = 'null', $isSkroutz = -1, $makeId = 'null')
+    public function getItems($id = 'null', $keyword = 'null', $pagesize, $sortBy = 'null', $isSkroutz = -1, $makeId = 'null', $priceRange='null')
     {
         $client = new \SoapClient('https://caron.cloudsystems.gr/FOeshopWS/ForeignOffice.FOeshop.API.FOeshopSvc.svc?singleWsdl', ['trace' => true, 'exceptions' => true,]);
+
+        $priceRangeArr = ($priceRange != 'null') ? explode('-', $priceRange) : -1;
+        $lowPrice = ($priceRangeArr === -1) ? -1 : $priceRangeArr[0];
+        $highPrice = ($priceRangeArr === -1) ? -1 : $priceRangeArr[1];
 
         $message = <<<EOF
 <?xml version="1.0" encoding="utf-16"?>
@@ -197,12 +215,14 @@ EOF;
     <IsSkroutz>$isSkroutz</IsSkroutz>
     <SearchToken>$keyword</SearchToken>
     <OrderBy>$sortBy</OrderBy>
+    <LowPrice>$lowPrice</LowPrice>
+    <HighPrice>$highPrice</HighPrice>
 </ClientGetItemsRequest>
 EOF;
         try {
             $result = $client->SendMessage(['Message' => $message]);
             $items = simplexml_load_string(str_replace("utf-16", "utf-8", $result->SendMessageResult));
-            dump($items);
+            dump($message, $result);
             if ($items !== false && ($keyword !== 'null' || $makeId !== 'null' || $isSkroutz === '1')) {
                 $itemsArr = $this->initializeProducts($items->GetDataRows->GetItemsRow);
             } else {
@@ -274,7 +294,6 @@ EOF;
     <pagenumber>0</pagenumber>
     <ItemID>$id</ItemID>
     <ItemCode>null</ItemCode>
-    
 </ClientGetItemPhotosRequest>
 EOF;
         try {
@@ -346,6 +365,8 @@ EOF;
     <IsSkroutz>$isSkroutz</IsSkroutz>
     <SearchToken>$keyword</SearchToken>
     <OrderBy></OrderBy>
+    <LowPrice>-1</LowPrice>
+    <HighPrice>-1</HighPrice>
 </ClientGetItemsRequest>
 EOF;
         try {

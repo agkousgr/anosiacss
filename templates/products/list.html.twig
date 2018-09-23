@@ -14,8 +14,8 @@
             background-color: #009836;
         }
     </style>
-    <link href="{{ asset('build/css/ion.rangeSlider.css') }}" rel="stylesheet" />
-    <link href="{{ asset('build/css/ion.rangeSlider.skinModern.css') }}" rel="stylesheet" />
+    <link href="{{ asset('build/css/ion.rangeSlider.css') }}" rel="stylesheet"/>
+    <link href="{{ asset('build/css/ion.rangeSlider.skinModern.css') }}" rel="stylesheet"/>
 {% endblock %}
 {% block bodyId %}category{% endblock %}
 {% block title %}Products List{% endblock %}
@@ -111,6 +111,8 @@
                                     </div>
                                 </div>
                                 <div id="products" class="row list-group list-products">
+                                    {#{% set minPrice = 100 %}#}
+                                    {#{% set maxPrice = 1 %}#}
                                     {% for pr in products %}
                                         <div class="item col-lg-4 col-md-6 col-sm-6 wow fadeIn"
                                              data-wow-delay="0.4s">
@@ -191,11 +193,31 @@
                                                 </div>
                                             </div>
                                         </div>
+                                        {#{% if minPrice > pr.webPrice %}#}
+                                        {#{% set minPrice = pr.webPrice|round %}#}
+                                        {#{% endif %}#}
+                                        {#{% if maxPrice < pr.webPrice %}#}
+                                        {#{% set maxPrice = pr.webPrice|round %}#}
+                                        {#{% endif %}#}
                                     {% endfor %}
                                 </div>
-                                <nav aria-label="Page navigation">
-                                    {{ include('products/modules/pagination.html.twig') }}
-                                </nav>
+                                {#<input type="hidden" name="minPrice" value="{{ minPrice }}">#}
+                                {#<input type="hidden" name="maxPrice" value="{{ maxPrice }}">#}
+                                {% if priceRange == 'null' %}
+                                    <input type="hidden" name="lowPrice" value="1">
+                                    <input type="hidden" name="highPrice" value="250">
+                                {% else %}
+                                    {% set priceRangeArr = priceRange|split('-') %}
+                                    <input type="hidden" name="lowPrice" value="{{ priceRangeArr.0 }}">
+                                    <input type="hidden" name="highPrice" value="{{ priceRangeArr.1 }}">
+                                {% endif %}
+                                {#{{ dump(productsCount) }}#}
+                                {#{{ dump(page*pagesize) }}#}
+                                {% if productsCount > (page*pagesize) %}
+                                    <nav aria-label="Page navigation">
+                                        {{ include('products/modules/pagination.html.twig') }}
+                                    </nav>
+                                {% endif %}
                             {% else %}
                                 <div class="col-12">
                                     Δεν υπάρχουν προϊόντα.

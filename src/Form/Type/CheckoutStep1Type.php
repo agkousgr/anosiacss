@@ -3,6 +3,7 @@
 namespace App\Form\Type;
 
 use App\Entity\Checkout;
+use App\Form\Subscriber\CheckoutSubscriber;
 use Symfony\Component\Form\AbstractType;
 use Symfony\Component\Form\Extension\Core\Type\{CheckboxType, EmailType, HiddenType, TextType};
 use Symfony\Component\Form\FormBuilderInterface;
@@ -38,7 +39,7 @@ class CheckoutStep1Type extends AbstractType
                 'required' => false,
             ));
 
-        $builder->addEventSubscriber(new CheckoutSubscriber($options, $this->session));
+//        $builder->addEventSubscriber(new CheckoutSubscriber($options, $this->session));
 
     }
 

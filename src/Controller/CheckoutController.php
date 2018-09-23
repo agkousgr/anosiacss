@@ -11,14 +11,13 @@ use App\Form\Type\{
     CheckoutStep3Type,
     CheckoutStep4Type
 };
-use App\Service\CheckoutService;
-use App\Service\UserAccountService;
+use App\Service\{CheckoutService, UserAccountService, PaypalService};
 use Doctrine\ORM\EntityManagerInterface;
 use Symfony\Component\HttpFoundation\Request;
 
 class CheckoutController extends MainController
 {
-    public function checkout(int $step, Request $request, CheckoutService $checkoutService, UserAccountService $userAccountService, EntityManagerInterface $em)
+    public function checkout(int $step, Request $request, CheckoutService $checkoutService, UserAccountService $userAccountService, EntityManagerInterface $em, PaypalService $paypalService)
     {
         try {
             $addresses = array();
@@ -72,8 +71,14 @@ class CheckoutController extends MainController
                 $curStep = 4;
                 $orderWebId = $em->getRepository(OrdersWebId::class)->find(1);
                 $checkout->setOrderNo($orderWebId->getOrderNumber() + 1);
+                if ($checkout->getPaymentType() === '1002') {
+                    $paypalService->sendToPaypal($checkout);
+                    die();
+                }
                 $orderResponse = $checkoutService->submitOrder($checkout, $this->cartItems);
                 if ($orderResponse) {
+
+
 
                     $this->addFlash(
                         'success',
@@ -125,7 +130,7 @@ class CheckoutController extends MainController
         }
     }
 
-    public function guestCheckout(int $step, Request $request, CheckoutService $checkoutService, UserAccountService $userAccountService, EntityManagerInterface $em)
+    public function guestCheckout(int $step, Request $request, CheckoutService $checkoutService, UserAccountService $userAccountService, EntityManagerInterface $em, PaypalService $paypalService)
     {
         try {
             $addresses = array();
@@ -181,6 +186,11 @@ class CheckoutController extends MainController
                 $checkout->setOrderNo($orderWebId->getOrderNumber() + 1);
                 $orderResponse = $checkoutService->submitOrder($checkout, $this->cartItems);
                 if ($orderResponse) {
+
+                    if ($checkout->getPaymentType() === '1002') {
+                        $paypalService->sendToPaypal($checkout);
+                        die();
+                    }
 
                     $this->addFlash(
                         'success',

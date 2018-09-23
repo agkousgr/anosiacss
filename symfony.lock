@@ -1,4 +1,7 @@
 {
+    "beelab/paypal-bundle": {
+        "version": "v1.3.1"
+    },
     "behat/transliterator": {
         "version": "v1.2.0"
     },
@@ -122,6 +125,12 @@
     "knplabs/knp-paginator-bundle": {
         "version": "v2.8.0"
     },
+    "league/csv": {
+        "version": "9.1.4"
+    },
+    "moneyphp/money": {
+        "version": "v3.1.3"
+    },
     "monolog/monolog": {
         "version": "1.23.0"
     },
@@ -133,6 +142,12 @@
     },
     "ocramius/proxy-manager": {
         "version": "2.2.0"
+    },
+    "omnipay/common": {
+        "version": "v3.0.2"
+    },
+    "omnipay/paypal": {
+        "version": "v3.0.2"
     },
     "php-http/discovery": {
         "version": "1.4.0"

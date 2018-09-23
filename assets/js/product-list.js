@@ -29,17 +29,20 @@ $(document).ready(function () {
 
     $("#range_slider").ionRangeSlider({
         type: "double",
-        min: 3,
+        min: 1,
         max: 250,
-        from: 3,
-        to: 250,
+        // min: $('input[name="minPrice"]').val(),
+        // max: $('input[name="maxPrice"]').val(),
+        from: $('input[name="lowPrice"]').val(),
+        to: $('input[name="highPrice"]').val(),
         prefix: "",
-        postfix: " €",
+        postfix: "",
         decorate_both: true
     });
 
-    $('#brand-filter').on('click', function () {
-
+    $('#price-range').on('click', function () {
+        queryParameters['priceRange'] = $('.irs-from').text() + '-' + $('.irs-to').text();
+        location.search = $.param(queryParameters); // Causes page to reload
     });
 
     $('select[name="sorting"]').on('change', function () {

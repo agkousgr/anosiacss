@@ -6,14 +6,24 @@ use App\Service\PaypalClass;
 
 class PaypalService
 {
+    /**
+     * @var PaypalClass
+     */
+    private $paypal;
+
+    public function __construct(PaypalClass $paypal)
+    {
+        $this->paypal = $paypal;
+    }
+
     public function sendToPaypal($checkout)
     {
         define('PPL_MODE', 'sandbox');
 
         if (PPL_MODE == 'sandbox') {
-            define('PPL_API_USER', 'sales-facilitator_api1.anosiapharmacy.gr');
-            define('PPL_API_PASSWORD', '66SWCJS7NBXMMSV8');
-            define('PPL_API_SIGNATURE', 'Ac2Pzvj5l6nkcvTKl56MxHpjTr2gAMI8y71ijluqxovmVqY2xMWcFFWE');
+            define('PPL_API_USER', 'john-facilitator_api1.3works.gr');
+            define('PPL_API_PASSWORD', 'F78U5M9P2RZD2QTQ');
+            define('PPL_API_SIGNATURE', 'A-X91d6dvj07IIDTUn5hM8p8w8LxAVYxiOpzxcPuC9RLCYmPR3rQ5U1q');
         } else {
 //            define('PPL_API_USER', 'info_api1.blk.gr');
 //            define('PPL_API_PASSWORD', 'AJ6YLHGG7AZ99FPJ');
@@ -25,8 +35,8 @@ class PaypalService
 
         define('PPL_LOGO_IMG', 'https://i0.wp.com/www.anosiapharmacy.gr/wp-content/uploads/2017/03/logo.png');
 
-        define('PPL_RETURN_URL', 'http://anosia.democloudon.cloud/public/index.php/checkout');
-        define('PPL_CANCEL_URL', 'http://www.blk.gr/index/paypal/result/cancel/paypal-canceled');
+        define('PPL_RETURN_URL', 'http://anosia.democloudon.cloud/public//paypal/result');
+        define('PPL_CANCEL_URL', 'http://anosia.democloudon.cloud/public//paypal/cancel');
 
         define('PPL_CURRENCY_CODE', 'EUR');
 
@@ -38,9 +48,8 @@ class PaypalService
 //        } else {
 //            $ip = $_SERVER['REMOTE_ADDR'];
 //        }
-        $paypal = new PaypalClass();
 
-        if (!$_GET['token']) {
+        if (!isset($_GET['token'])) {
 
 
             $orderid = $checkout->getOrderNo();
@@ -68,7 +77,7 @@ class PaypalService
             //------------------SetExpressCheckOut-------------------
             //We need to execute the "SetExpressCheckOut" method to obtain paypal token
 
-            $paypal->SetExpressCheckOut($products, $charges);
+            $this->paypal->SetExpressCheckOut($products, $charges);
         } elseif ($_GET['token'] != '' && $_GET['PayerID'] != '') {
 
             //------------------DoExpressCheckoutPayment-------------------
@@ -76,7 +85,7 @@ class PaypalService
             //we will be using these two variables to execute the "DoExpressCheckoutPayment"
             //Note: we haven't received any payment yet.
 
-            $paypal->DoExpressCheckoutPayment($checkout->getOrderNo());
+            $this->paypal->DoExpressCheckoutPayment($checkout->getOrderNo());
         }
     }
 }

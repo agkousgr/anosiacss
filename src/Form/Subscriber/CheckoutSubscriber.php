@@ -44,11 +44,11 @@ class CheckoutSubscriber implements EventSubscriberInterface
     {
 
         dump($event->getData());
-        if (!$this->session->get("anosiaClientId") && $event->getData()["nextPage"] === 2) {
+        if (!$this->session->get("anosiaClientId") && $event->getData()->getNextPage() === 2) {
 
         }
 
-        if (!$this->session->get("anosiaClientId") && $event->getData()["nextPage"] === 3) {
+        if (!$this->session->get("anosiaClientId")) {
             $form = $event->getForm();
             $form->add('address', TextType::class)
                 ->add('zip', TextType::class)
