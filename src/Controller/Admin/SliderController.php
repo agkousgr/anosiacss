@@ -15,7 +15,7 @@ class SliderController extends AbstractController
 {
     public function list(EntityManagerInterface $em)
     {
-        $slides = $em->getRepository(Slider::class)->findBy(['category' => null],['priority' => 'ASC']);
+        $slides = $em->getRepository(Slider::class)->findBy(['category' => null], ['priority' => 'ASC']);
         return $this->render('Admin/slider/list.html.twig', [
             'slides' => $slides
         ]);
@@ -39,7 +39,7 @@ class SliderController extends AbstractController
                 );
                 return $this->redirectToRoute('slider_list');
             }
-            return $this->render('Admin/slider/slider.html.twig', [
+            return $this->render('Admin/slider/slider_form.html.twig', [
                 'form' => $form->createView()
             ]);
 
@@ -54,18 +54,21 @@ class SliderController extends AbstractController
         }
     }
 
-    public function update(Request $request, int $id, EntityManagerInterface $em, FileUploader $uploader, LoggerInterface $logger)
+    public function update(Request $request, int $id, EntityManagerInterface $em, LoggerInterface $logger)
     {
         try {
             $slider = $em->getRepository(Slider::class)->find($id);
-//            $slider->setImage(new File($uploader->getTargetDirectory().'/'.$slider->getImage()));
+            $prevImage = $slider->getImage();
             $form = $this->createForm(SliderType::class, $slider, [
                 'action' => $this->generateUrl('slider_update', ['id' => $id]),
             ]);
-            dump('zong');
+            dump($slider);
             $form->handleRequest($request);
 
             if ($form->isSubmitted() && $form->isValid()) {
+                if (empty($form->get('image')->getData())) {
+                    $slider->setImage($prevImage);
+                }
                 $em->flush();
                 $this->addFlash(
                     'success',
@@ -74,7 +77,7 @@ class SliderController extends AbstractController
                 return $this->redirectToRoute('slider_list');
             }
             dump('wtf');
-            return $this->render('Admin/slider/slider.html.twig', [
+            return $this->render('Admin/slider/slider_form.html.twig', [
                 'form' => $form->createView()
             ]);
 
@@ -86,6 +89,57 @@ class SliderController extends AbstractController
             $logger->error(__METHOD__ . ' -> {message}', ['message' => $e->getMessage()]);
             throw $e;
             return $this->redirectToRoute('slider_list');
+        }
+    }
+
+    public function changePriority(int $id, string $direction, EntityManagerInterface $em, LoggerInterface $logger)
+    {
+        try {
+            $slider = $em->getRepository(Slider::class)->find($id);
+            if ($direction === 'up') {
+                $slider->setPriority($slider->getPriority() - 1);
+            } else {
+                $slider->setPriority($slider->getPriority() + 1);
+            }
+            $em->flush();
+            $this->addFlash(
+                'success',
+                'Η ενημέρωση ολοκληρώθηκε με επιτυχία!'
+            );
+
+            return $this->redirectToRoute('slider_list');
+
+        } catch (\Exception $e) {
+            $logger->error(__METHOD__ . ' -> {message}', ['message' => $e->getMessage()]);
+            throw $e;
+            $this->addFlash(
+                'notice',
+                'Παρουσιάστηκε σφάλμα κατά την εγγραφή! Παρακαλώ δοκιμάστε ξανά.'
+            );
+            return $this->redirectToRoute('slider_list');
+        }
+    }
+
+    public function delete(Request $request, EntityManagerInterface $em, int $id, LoggerInterface $logger)
+    {
+        try {
+            $slider = $em->getRepository(Slider::class)->find($id);
+            if ($request->request->get('delete')) {
+                $em->remove($slider);
+                $em->flush();
+                $this->addFlash(
+                    'success',
+                    'Η διαγραφή ολοκληρώθηκε με επιτυχία!'
+                );
+            } else {
+                return $this->render('Admin/slider/delete.html.twig', [
+                    'slider' => $slider
+                ]);
+            }
+            return $this->redirectToRoute('slider_list');
+        } catch (\Exception $e) {
+            $logger->error(__METHOD__ . ' -> {message}', ['message' => $e->getMessage()]);
+            throw $e;
         }
     }
 }

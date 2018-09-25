@@ -323,11 +323,9 @@ EOF;
      *
      * @return string
      */
-    public function getAddress($clientId, $entity)
+    public function getAddress($clientId, $entity, $id=-1)
     {
         $client = new \SoapClient('http://caron.cloudsystems.gr/FOeshopWS/ForeignOffice.FOeshop.API.FOeshopSvc.svc?singleWsdl', ['trace' => true, 'exceptions' => true,]);
-
-
 
         $message = <<<EOF
 <?xml version="1.0" encoding="utf-16"?>
@@ -340,23 +338,84 @@ EOF;
     <CompanyID>1000</CompanyID>
     <ClientID>$clientId</ClientID>
     <ID></ID>
+    <ShipAddressID>$id</ShipAddressID>
 </ClientGetShipAddressRequest>
 EOF;
 
         try {
             $result = $client->SendMessage(['Message' => $message]);
             $addressData = simplexml_load_string(str_replace("utf-16", "utf-8", $result->SendMessageResult));
-            dump($message, $result);
-            $addressXML = $addressData->GetDataRows->GetShipAddressRow;
-            $entity->setClient((int)$clientId);
-            (null !== $addressXML->ID) ? $entity->setId((int)$addressXML->ID) : $entity->setId(0);
-            (null !== $addressXML->Name) ? $entity->setName((string)$addressXML->Name) : $entity->setName('');
-            (null !== $addressXML->Address) ? $entity->setAddress((string)$addressXML->Address) : $entity->setAddress('');
-            (null !== $addressXML->Zip) ? $entity->setZip((string)$addressXML->Zip) : $entity->setZip('');
-            (null !== $addressXML->City) ? $entity->setCity((string)$addressXML->City) : $entity->setCity('');
-            (null !== $addressXML->District) ? $entity->setDistrict((string)$addressXML->District) : $entity->setDistrict('');
-            return;
+            dump($message);
+            if ($addressData->RowsCount) {
+                $addressesArr = [];
+                dump($addressData->GetDataRows);
+                $addressXML = $addressData->GetDataRows->GetShipAddressRow;
+
+
+                $entity->setClient((int)$clientId);
+                (null !== $addressXML->ID) ? $entity->setId((int)$addressXML->ID) : $entity->setId(0);
+                (null !== $addressXML->Name) ? $entity->setName((string)$addressXML->Name) : $entity->setName('');
+                (null !== $addressXML->Address) ? $entity->setAddress((string)$addressXML->Address) : $entity->setAddress('');
+                (null !== $addressXML->Zip) ? $entity->setZip((string)$addressXML->Zip) : $entity->setZip('');
+                (null !== $addressXML->City) ? $entity->setCity((string)$addressXML->City) : $entity->setCity('');
+                (null !== $addressXML->District) ? $entity->setDistrict((string)$addressXML->District) : $entity->setDistrict('');
+            }
+            dump($addressesArr);
+
+//            return;
+            return $addressesArr;
 //            dump($result);
+        } catch (\SoapFault $sf) {
+            echo $sf->faultstring;
+        }
+    }
+
+    /**
+     * @param \App\Entity\WebUser | \App\Entity\Address
+     *
+     * @return string
+     */
+    public function getAddresses($clientId)
+    {
+        $client = new \SoapClient('http://caron.cloudsystems.gr/FOeshopWS/ForeignOffice.FOeshop.API.FOeshopSvc.svc?singleWsdl', ['trace' => true, 'exceptions' => true,]);
+
+        $message = <<<EOF
+<?xml version="1.0" encoding="utf-16"?>
+<ClientGetShipAddressRequest>
+    <Type>1034</Type>
+    <Kind>1</Kind>
+    <Domain>pharmacyone</Domain>
+    <AuthID>$this->authId</AuthID>
+    <AppID>157</AppID>
+    <CompanyID>1000</CompanyID>
+    <ClientID>$clientId</ClientID>
+    <ID></ID>
+    <ShipAddressID>-1</ShipAddressID>
+</ClientGetShipAddressRequest>
+EOF;
+
+        try {
+            $result = $client->SendMessage(['Message' => $message]);
+            $addressData = simplexml_load_string(str_replace("utf-16", "utf-8", $result->SendMessageResult));
+            $addressesArr = [];
+                dump($message, $addressData);
+            if ($addressData->RowsCount) {
+                foreach ($addressData->GetDataRows->GetShipAddressRow as $getDataRow) {
+                    $addressXML = $getDataRow;
+
+                    $addressesArr['addresses'][] = array(
+                        'client' => (int)$clientId,
+                        'id' => (null !== $addressXML->ID) ? (int)$addressXML->ID : 0,
+                        'name' => (null !== $addressXML->Name) ? (string)$addressXML->Name : '',
+                        'address' => (null !== $addressXML->Address) ? (string)$addressXML->Address : '',
+                        'zip' => (null !== $addressXML->Zip) ? (string)$addressXML->Zip : '',
+                        'city' => (null !== $addressXML->City) ? (string)$addressXML->City : '',
+                        'district' => (null !== $addressXML->District) ? (string)$addressXML->District : ''
+                    );
+                }
+            }
+
+            return $addressesArr;
         } catch (\SoapFault $sf) {
             echo $sf->faultstring;
         }
@@ -371,7 +430,7 @@ EOF;
     {
         $client = new \SoapClient('http://caron.cloudsystems.gr/FOeshopWS/ForeignOffice.FOeshop.API.FOeshopSvc.svc?singleWsdl', ['trace' => true, 'exceptions' => true,]);
 
-        $id = $Address->getId();
+        $id = ($Address->getId()) ?: '';
         $name = $Address->getName();
         $clientId = $Address->getClient();
         $address = $Address->getAddress();
@@ -388,7 +447,7 @@ EOF;
     <AuthID>$this->authId</AuthID>
     <AppID>157</AppID>
     <CompanyID>1000</CompanyID>
-    <Key></Key>
+    <Key>$id</Key>
     <ClientID>$clientId</ClientID>
     <Address>$address</Address>
     <Zip>$zip</Zip>
@@ -407,6 +466,39 @@ EOF;
                 return false;
             }
 //            dump($result);
+        } catch (\SoapFault $sf) {
+            echo $sf->faultstring;
+        }
+    }
+
+    /**
+     * @param $id
+     * @return bool
+     */
+    public function deleteAddress($id)
+    {
+        $client = new \SoapClient('http://caron.cloudsystems.gr/FOeshopWS/ForeignOffice.FOeshop.API.FOeshopSvc.svc?singleWsdl', ['trace' => true, 'exceptions' => true,]);
+
+        $message = <<<EOF
+<?xml version="1.0" encoding="utf-16"?>
+<ClientDelShipAddressRequest>
+    <Type>1052</Type>
+    <Kind>1</Kind>
+    <Domain>pharmacyone</Domain>
+    <AuthID>$this->authId</AuthID>
+    <AppID>157</AppID>
+    <CompanyID>1000</CompanyID>
+    <Key>$id</Key>
+</ClientDelShipAddressRequest>
+EOF;
+        try {
+            $result = $client->SendMessage(['Message' => $message]);
+            dump($message, $result);
+            $addressData = simplexml_load_string(str_replace("utf-16", "utf-8", $result->SendMessageResult));
+            if ((string)$addressData->IsValid === 'true') {
+                return true;
+            }
+            return false;
         } catch (\SoapFault $sf) {
             echo $sf->faultstring;
         }
@@ -492,15 +584,15 @@ EOF;
             if ($userResponse === false) {
                 return;
             }
-            dump($message, $result);
+//            dump($message, $result);
             $userXML = $userResponse->GetDataRows->GetUsersRow;
             if (null !== $address) {
                 $address->setClient($userXML->ClientID);
             } else {
+//                dump($user);
                 (null !== $userXML->Username) ? $user->setUsername($userXML->Username) : $user->setUsername('');
                 (null !== $userXML->Password) ? $user->setPassword($userXML->Password) : $user->setUsername('');
                 (null !== $userXML->ClientID) ? $user->setClientId($userXML->ClientID) : $user->setUsername('');
-                dump($user);
             }
             return;
         } catch (\SoapFault $sf) {
@@ -540,9 +632,9 @@ EOF;
     {
         $this->getUser($username, $user);
         $this->getClient($username, $user);
-        $this->getAddress($user->getClientId(), $address);
+        $addressesArr = $this->getAddresses($user->getClientId());
         $this->getNewsletter($username, $user);
-        return $this->initializeClient($user, $address);
+        return $this->initializeClient($user, $addressesArr);
     }
 
     /**
@@ -550,10 +642,10 @@ EOF;
      * @param \App\Entity\Address
      * @throws \Exception
      */
-    public function getAddressInfo($username, $address)
+    public function getAddressInfo($username, $user, $address)
     {
-        $this->getUser($username, $address);
-        $this->getAddress($address);
+        $this->getUser($username, $user);
+        $this->getAddress($user->getClientId(), $address);
     }
 
     /**
@@ -676,7 +768,7 @@ EOF;
      * @return array
      * @throws \Exception
      */
-    private function initializeClient($user, $address)
+    private function initializeClient($user, $addressArr)
     {
         try {
             $userArr = array(
@@ -693,16 +785,16 @@ EOF;
                 'phone01' => $user->getPhone01(),
                 'email' => $user->getEmail(),
             );
-            $addressArr = array(
-                'addresses' => array(
-                    'id' => $address->getId(),
-                    'name' => $address->getName(),
-                    'address' => $user->getAddress(),
-                    'city' => $user->getCity(),
-                    'zip' => $user->getZip(),
-                    'district' => $user->getDistrict(),
-                )
-            );
+//            $addressArr = array(
+//                'addresses' => array(
+//                    'id' => $address->getId(),
+//                    'name' => $address->getName(),
+//                    'address' => $user->getAddress(),
+//                    'city' => $user->getCity(),
+//                    'zip' => $user->getZip(),
+//                    'district' => $user->getDistrict(),
+//                )
+//            );
             return array_merge($userArr, $addressArr);
         } catch (\Exception $e) {
             $this->logger->error(__METHOD__ . ' -> {message}', ['message' => $e->getMessage()]);
@@ -767,6 +859,34 @@ EOF;
             $result = $client->SendMessage(['Message' => $message]);
             $newsletterData = simplexml_load_string(str_replace("utf-16", "utf-8", $result->SendMessageResult));
 //            dump($result);
+        } catch (\SoapFault $sf) {
+            echo $sf->faultstring;
+        }
+    }
+
+    public function getOrders($clientId)
+    {
+        $client = new \SoapClient('http://caron.cloudsystems.gr/FOeshopWS/ForeignOffice.FOeshop.API.FOeshopSvc.svc?singleWsdl', ['trace' => true, 'exceptions' => true,]);
+
+        $message = <<<EOF
+<?xml version="1.0" encoding="utf-16"?>
+<ClientGetOrdersRequest>
+    <Type>1048</Type>
+    <Kind>1</Kind>
+    <Domain>pharmacyone</Domain>
+    <AuthID>$this->authId</AuthID>
+    <AppID>157</AppID>
+    <CompanyID>1000</CompanyID>
+    <CustomerID>$clientId</CustomerID>
+    <OrderID>null</OrderID>
+    <Number>null</Number>
+    <EshopNumber>null</EshopNumber>
+</ClientGetOrdersRequest>
+EOF;
+        try {
+            $result = $client->SendMessage(['Message' => $message]);
+            $ordersData = simplexml_load_string(str_replace("utf-16", "utf-8", $result->SendMessageResult));
+            dump($message, $result);
         } catch (\SoapFault $sf) {
             echo $sf->faultstring;
         }

@@ -97,6 +97,14 @@
                                             <h4>{{ module.name }}</h4>
                                         </td>
                                         <td style="text-align: center;">
+                                            <a href="{{ path('homepage_modules_priority', {'id':module.id, 'direction':'up'}) }}">
+                                                <img
+                                                     src="{{ asset('images/up-arrow.png') }}">
+                                            </a>
+                                            <a href="{{ path('homepage_modules_priority', {'id':module.id, 'direction':'down'}) }}">
+                                                <img style="margin-top: 15px;"
+                                                     src="{{ asset('images/down-arrow.png') }}">
+                                            </a>
                                             {{ module.priority }}
                                         </td>
 

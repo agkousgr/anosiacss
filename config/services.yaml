@@ -3,7 +3,7 @@
 parameters:
     locale: 'en'
     upload_dirs:
-        blog_image_directory: '%kernel.project_dir%/public/uploads/blog'
+        articles_image_directory: '%kernel.project_dir%/public/uploads/articles'
         slider_image_directory: '%kernel.project_dir%/public/uploads/slider'
 
 services:
@@ -41,7 +41,13 @@ services:
         arguments:
             $targetDirectory: '%upload_dirs%'
 
+    # Subsctribers
+    App\Form\Subscriber\CheckoutSubscriber:
+        arguments:
+        -   $options: []
+
     App\Form\EventListener\UploadListener:
         tags:
         - { name: doctrine.event_listener, event: prePersist }
         - { name: doctrine.event_listener, event: preUpdate }
+        - { name: doctrine.event_listener, event: postLoad }

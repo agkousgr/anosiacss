@@ -132,10 +132,7 @@ class MainController extends AbstractController
             $authID = $this->softoneLogin->login();
             $this->session->set('authID', $authID);
         }
-        dump($this->session);
-        $repo = $this->em->getRepository(Category::class);
-        $this->categories = $repo->childrenHierarchy();
-
+        $this->categories = $this->em->getRepository(Category::class)->childrenHierarchy();
         if ($this->categories) {
             array_multisort(array_column($this->categories, "priority"), $this->categories);
         }
@@ -147,7 +144,6 @@ class MainController extends AbstractController
 
         $this->cartItems = $this->getCartItems();
         $this->totalWishlistItems = $this->em->getRepository(Wishlist::class)->countWishlistItems($this->session->getId(), $this->loggedUser);
-        dump($this->session);
 
 
 //        $this->totalCartItems = $em->getRepository(Cart::class)->countCartItems($session->getId(), $session->get('anosiaUser'));

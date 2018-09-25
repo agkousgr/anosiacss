@@ -8,11 +8,12 @@
 
 namespace App\Controller;
 
-use App\Entity\{Address, WebUser};
+use App\Entity\{Address, User, WebUser};
 use App\Service\UserAccountService;
 use App\Form\Type\{
     UserAddressType, UserGeneralInfoType, UserInfoType, UserNewAddressType, UserRegistrationType
 };
+use Doctrine\ORM\EntityManagerInterface;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\Security\Core\Encoder\UserPasswordEncoderInterface;
 
@@ -82,6 +83,8 @@ class UserAccountController extends MainController
                 $user = new WebUser();
                 $address = new Address();
                 $userData = $userAccountService->getUserInfo($this->loggedUser, $user, $address);
+                $userOrders = $userAccountService->getOrders($this->loggedClientId);
+                dump($userOrders);
 //            $user = new WebserviceUser(
 //                $userData["clientId"],
 //                $userData["username"],
@@ -148,11 +151,10 @@ class UserAccountController extends MainController
         try {
             if (null !== $this->loggedUser) {
                 $address = new Address();
-                $userData = $userAccountService->getAddressInfo($this->loggedUser, $address);
                 $formAddress = $this->createForm(UserNewAddressType::class, $address);
-                dump($userData);
                 $formAddress->handleRequest($request);
                 if ($formAddress->isSubmitted() && $formAddress->isValid()) {
+                    $address->setClient($this->loggedClientId);
                     $address->setAddress($formAddress->get('address')->getData());
                     $address->setZip($formAddress->get('zip')->getData());
                     $address->setCity($formAddress->get('city')->getData());
@@ -184,6 +186,7 @@ class UserAccountController extends MainController
                     'loggedUser' => $this->loggedUser,
 //                'userData' => $userData,
 //                'formUser' => $formUser->createView(),
+                    'addressId' => '',
                     'formAddress' => $formAddress->createView(),
                 ]);
             }
@@ -194,14 +197,12 @@ class UserAccountController extends MainController
         }
     }
 
-    public function updateAddress(int $id, Request $request, UserAccountService $userAccountService)
+    public function updateAddress(int $id, Request $request, EntityManagerInterface $em, UserAccountService $userAccountService)
     {
         try {
             if (null !== $this->loggedUser) {
                 $address = new Address();
-                $clientId = $userAccountService->getClientId($this->loggedUser);
-//                dump($clientId);
-                $userAccountService->getAddress($clientId, $address);
+                $userAccountService->getAddress($this->loggedClientId, $address, $id);
 
                 $formAddress = $this->createForm(UserNewAddressType::class, $address);
                 $formAddress->handleRequest($request);
@@ -237,6 +238,7 @@ class UserAccountController extends MainController
                     'loggedUser' => $this->loggedUser,
 //                'userData' => $userData,
 //                'formUser' => $formUser->createView(),
+                    'addressId' => $address->getId(),
                     'formAddress' => $formAddress->createView(),
                 ]);
             }
@@ -244,6 +246,39 @@ class UserAccountController extends MainController
         } catch (\Exception $e) {
             $this->logger->error(__METHOD__ . ' -> {message}', ['message' => $e->getMessage()]);
             throw $e;
+        }
+    }
+
+    public function deleteAddress(Request $request, UserAccountService $user)
+    {
+        if ($request->isXmlHttpRequest()) {
+            try {
+                $id = $request->request->getInt('id');
+
+                if (!$id) {
+                    throw $this->createNotFoundException(
+                        'No product found for id ' . $id
+                    );
+                }
+                $response = $user->deleteAddress($id);
+                if ($response === true) {
+                    $this->addFlash(
+                        'success',
+                        'Η διεύθυνσή σας διαγράφηκε με επιτυχία.'
+                    );
+                }else{
+                    $this->addFlash(
+                        'notice',
+                        'Ένα σφάλμα παρουσιάστηκε. Παρακαλώ δοκιμάστε ξανά. Αν το πρόβλημα συνεχίσει παρακαλούμε επικοινωνήστε μαζί μας.'
+                    );
+                }
+                return $this->json(['success' => true]);
+            } catch (\Exception $e) {
+                $this->logger->error(__METHOD__ . ' -> {message}', ['message' => $e->getMessage()]);
+                throw $e;
+            }
+        } else {
+            throw $this->createNotFoundException('The resource you are looking for could not be found.');
         }
     }
 
@@ -310,6 +345,8 @@ class UserAccountController extends MainController
         return $this->redirectToRoute('index');
     }
 
+}
+
 //    public function login(Request $request, UserAccountService $userAccountService)
 //    {
 //        if ($request->isXmlHttpRequest()) {
@@ -342,23 +379,3 @@ class UserAccountController extends MainController
 //        }
 //
 //    }
-
-    public function getUsers(UserAccountService $userAccountService)
-    {
-        try {
-            $users = $userAccountService->getUsers();
-//            die();
-
-            return $this->render('user/register.html.twig', [
-                'categories' => $this->categories,
-                'popular' => $this->popular,
-                'featured' => $this->featured,
-                'loggedUser' => $this->loggedUser,
-                'form' => $form->createView(),
-            ]);
-        } catch (\Exception $e) {
-            $this->logger->error(__METHOD__ . ' -> {message}', ['message' => $e->getMessage()]);
-            throw $e;
-        }
-    }
-}

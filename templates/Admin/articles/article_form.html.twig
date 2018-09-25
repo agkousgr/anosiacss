@@ -1,0 +1,138 @@
+{% extends 'Admin/layout.html.twig' %}
+
+{% block stylesheet %}
+    {{ parent() }}
+    <link href="{{ asset('build/admin/css/plugins/select2.min.css') }}" rel="stylesheet" type="text/css"/>
+    <style>
+        .ck-content {
+            height: 300px;
+        }
+    </style>
+{% endblock %}
+
+{% block title %}| Άρθρα{% endblock %}
+
+{% block breadcrumb %}
+    <div class="row">
+        <div class="col-xl-12">
+            <div class="breadcrumb-holder">
+                <h1 class="main-title float-left">Άρθρα</h1>
+                <ol class="breadcrumb float-right">
+                    <li class="breadcrumb-item">Home</li>
+                    <li class="breadcrumb-item active">Προσθήκη Άρθρου</li>
+                </ol>
+                <div class="clearfix"></div>
+            </div>
+        </div>
+    </div>
+    <!-- end row -->
+{% endblock %}
+
+{% block body %}
+
+    {% form_theme form 'form_template/bootstrap_3_layout.html.twig' %}
+    {{ form_start(form) }}
+    <div class="row">
+        <div class="col-lg-6">
+            <div class="form-group">
+                {{ form_label(form.name, 'Τίτλος') }}
+                {{ form_widget(form.name, {'attr': {'class': 'form-control'}}) }}
+            </div>
+        </div>
+    </div>
+
+    <div class="row">
+        <div class="col-lg-6">
+            <div class="form-group">
+                {{ form_label(form.slug, 'Slug') }}
+                {{ form_widget(form.slug, {'attr': {'class': 'form-control'}}) }}
+            </div>
+        </div>
+    </div>
+    <div class="row">
+        <div class="col-lg-6">
+            <div class="form-group">
+                {{ form_label(form.metakey, 'Meta Keys') }}
+                {{ form_widget(form.metakey, {'attr': {'class': 'form-control'}}) }}
+            </div>
+        </div>
+    </div>
+    <div class="row">
+        <div class="col-lg-6">
+            <div class="form-group">
+                {{ form_label(form.metadesc, 'Meta Description') }}
+                {{ form_widget(form.metadesc, {'attr': {'class': 'form-control'}}) }}
+            </div>
+        </div>
+    </div>
+    <div class="row">
+        <div class="col-lg-10">
+            <div class="form-group">
+                {{ form_label(form.summary, 'Περίληψη') }}
+                {{ form_widget(form.summary, {'attr': {'class': 'form-control ckeditor-summary', 'rows' : 5}}) }}
+            </div>
+        </div>
+    </div>
+    <div class="row">
+        <div class="col-lg-10">
+            <div class="form-group">
+                {{ form_label(form.description, 'Κείμενο') }}
+                {{ form_widget(form.description, {'attr': {'class': 'form-control ckeditor-descr'}}) }}
+            </div>
+        </div>
+    </div>
+
+    <div class="row">
+        <div class="col-lg-4">
+            <div class="form-group">
+                {{ form_label(form.category, 'Κατηγορία') }}
+                {{ form_widget(form.category, {'attr': {'class': 'form-control'}}) }}
+            </div>
+        </div>
+    </div>
+    <div class="row">
+        <div class="col-lg-4">
+            <div class="form-group">
+                {{ form_label(form.isPublished, 'Δημοσιευμένο') }}
+                {{ form_widget(form.isPublished) }}
+            </div>
+        </div>
+    </div>
+    {% if form.vars.data.image is not null %}
+        <div class="row">
+            <div class="col-lg-4">
+                <div class="form-group">
+                    <img style="width:100%;"
+                         src="{{ asset('uploads/articles/' ~ form.vars.data.image.filename) }}"/><br/>
+                </div>
+            </div>
+        </div>
+        <div class="row">
+            <div class="col-lg-4">
+                <div class="form-group">
+                    <a id="delete-article" href="{{ path('delete_article_image', {'id': id}) }}"
+                       class="btn btn-danger btn-sm" data-placement="top"
+                       data-toggle="tooltip" data-title="Διαγραφή εικόνας">
+                        <i class="fa fa-trash-o" aria-hidden="true"></i>
+                    </a>Διαγραφή εικόνας
+                </div>
+            </div>
+        </div>
+    {% endif %}
+    <div class="form-group col-lg-4">
+        {{ form_label(form.image, 'Επιλογή εικόνας') }}
+        {{ form_widget(form.image, {'attr': {'class': 'form-control'}}) }}
+    </div>
+    <div class="modal-footer">
+        <button type="submit" class="btn btn-primary">Αποθήκευση</button>
+    </div>
+    {{ form_end(form) }}
+
+{% endblock %}
+
+{% block javascripts %}
+    {{ parent() }}
+    <script src="{{ asset('bundles/fosjsrouting/js/router.js') }}"></script>
+    <script src="{{ path('fos_js_routing_js', { callback: 'fos.Router.setData' }) }}"></script>
+    <script src="{{ asset('build/admin/js/article_form.js') }}"></script>
+{% endblock %}

@@ -66,7 +66,10 @@ class CartService
     <pagenumber>0</pagenumber>
     <ItemID>$ids</ItemID>
     <ItemCode>null</ItemCode>
+    <IsSkroutz>-1</IsSkroutz>
     <SearchToken>null</SearchToken>
+    <OrderBy>null</OrderBy>
+    <MakeID>null</MakeID>
 </ClientGetItemsRequest>
 EOF;
         try {

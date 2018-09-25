@@ -11,10 +11,10 @@ use Symfony\Component\HttpFoundation\Request;
 
 class CategoryController extends AbstractController
 {
-    public function list(Request $request, EntityManagerInterface $em)
+    public function list(EntityManagerInterface $em)
     {
 //        $category = new BlogCategory();
-        $categories = $em->getRepository(AdminCategory::class)->findBy([], ['priority' => 'ASC']);
+        $categories = $em->getRepository(AdminCategory::class)->findBy(['parent' => null], ['priority' => 'ASC']);
         dump($categories);
         return $this->render('Admin/categories/list.html.twig', [
             'categories' => $categories
@@ -31,8 +31,6 @@ class CategoryController extends AbstractController
             $form->handleRequest($request);
 
             if ($form->isSubmitted() && $form->isValid()) {
-                // updates the 'image' property to store the Image file name
-                // instead of its contents
 
                 $em->persist($category);
                 $em->flush();
@@ -40,7 +38,7 @@ class CategoryController extends AbstractController
                     'success',
                     'Η προσθήκη ολοκληρώθηκε με επιτυχία!'
                 );
-                $this->redirectToRoute('category_list');
+                return $this->redirectToRoute('category_list');
 
             }
             return $this->render('Admin/categories/category.html.twig', [
@@ -72,7 +70,7 @@ class CategoryController extends AbstractController
                     'success',
                     'Η ενημέρωση ολοκληρώθηκε με επιτυχία!'
                 );
-                $this->redirectToRoute('category_list');
+                return $this->redirectToRoute('category_list');
 
             }
             return $this->render('Admin/categories/category.html.twig', [
@@ -85,4 +83,26 @@ class CategoryController extends AbstractController
         }
     }
 
+    public function delete(Request $request, EntityManagerInterface $em, int $id, LoggerInterface $logger)
+    {
+        try {
+            $category = $em->getRepository(AdminCategory::class)->find($id);
+            if ($request->request->get('delete')) {
+                $em->remove($category);
+                $em->flush();
+                $this->addFlash(
+                    'success',
+                    'Η διαγραφή ολοκληρώθηκε με επιτυχία!'
+                );
+            }else{
+                return $this->render('Admin/categories/delete.html.twig', [
+                    'category' => $category
+                ]);
+            }
+            return $this->redirectToRoute('category_list');
+        } catch (\Exception $e) {
+            $logger->error(__METHOD__ . ' -> {message}', ['message' => $e->getMessage()]);
+            throw $e;
+        }
+    }
 }

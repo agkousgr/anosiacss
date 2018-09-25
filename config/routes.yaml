@@ -20,6 +20,20 @@ products_list:
         id: \d+
         page: \d+
 
+brand_products_list:
+    path: /products/{slug}/{page}
+    controller: App\Controller\ProductController::listBrandProducts
+    defaults: { page: 1 }
+    requirements:
+        page: \d+
+
+brands_list:
+    path: /brands/{page}
+    controller: App\Controller\ProductController::listBrands
+    defaults: { page: 1 }
+    requirements:
+        page: \d+
+
 product_view:
     path: /product/{id}
     controller: App\Controller\ProductController::viewProduct
@@ -33,9 +47,11 @@ product_quick_view:
         id: \d+
 
 product_search:
-    path: /product/search
+    path: /product/search/{page}
     controller: App\Controller\ProductController::searchResults
-    methods: [POST]
+    defaults: { page: 1 }
+    requirements:
+        page: \d+
 
 # Orders / Cart
 cart_view:
@@ -82,6 +98,20 @@ checkout:
     requirements:
         id: \d+
 
+guest_checkout:
+    path: /checkout/guest/{step}
+    controller: App\Controller\CheckoutController::guestCheckout
+    defaults: { step: 1 }
+    requirements:
+        id: \d+
+
+get_address:
+    path: /get-address
+    controller: App\Controller\AjaxCheckoutController::getAddress
+    methods: [GET,POST]
+    options:
+        expose: true
+
 # Wishlist
 wishlist_view:
     path: /wishlist
@@ -108,6 +138,11 @@ blog_list:
     requirements:
         page: \d+
 
+blog_view:
+    path: /blog/{slug}
+    controller: App\Controller\BlogController::viewBlog
+
+
 # User Account
 user_account:
     path: /user-account
@@ -131,6 +166,13 @@ update_address:
     requirements:
         page: \d+
 
+delete_address:
+    path: /delete-address
+    controller: App\Controller\UserAccountController::deleteAddress
+    methods: [GET,POST]
+    options:
+        expose: true
+
 # login logout
 login:
     path: /login
@@ -142,6 +184,11 @@ login:
 logout:
     path: /logout
     controller: App\Controller\UserAccountController::logout
+
+# Skroutz XML
+skroutz_xml:
+    path: /skroutz/xml
+    controller: App\Controller\SkroutzController::createXML
 
 # Admin
 #admin:
@@ -157,6 +204,36 @@ admin_logout:
 admin:
     path: /admin
     controller: App\Controller\Admin\DefaultController::dashboard
+
+    # Articles
+article_list:
+    path: /admin/article-list
+    controller: App\Controller\Admin\ArticleController::list
+
+article_add:
+    path: /admin/article-add
+    controller: App\Controller\Admin\ArticleController::create
+
+article_update:
+    path: /admin/article-update/{id}
+    controller: App\Controller\Admin\ArticleController::update
+    requirements:
+        id: \d+
+
+article_delete:
+    path: /admin/article-delete/{id}
+    controller: App\Controller\Admin\ArticleController::delete
+    methods: [GET,POST]
+    requirements:
+        id: \d+
+    options:
+        expose: true
+
+delete_article_image:
+    path: /admin/delete-article-image/{id}
+    controller: App\Controller\Admin\ArticleController::deleteArticleImage
+    requirements:
+        id: \d+
 
     # Categories
 category_list:
@@ -182,8 +259,11 @@ category_update:
 category_delete:
     path: /admin/category-delete/{id}
     controller: App\Controller\Admin\CategoryController::delete
+    methods: [GET,POST]
     requirements:
         id: \d+
+    options:
+        expose: true
 
     # Slider
 slider_list:
@@ -209,6 +289,15 @@ slider_update:
 slider_delete:
     path: /admin/slider-delete/{id}
     controller: App\Controller\Admin\SliderController::delete
+    methods: [GET,POST]
+    requirements:
+        id: \d+
+    options:
+        expose: true
+
+slider_priority:
+    path: /admin/slider-priority/{id}/{direction}
+    controller: App\Controller\Admin\SliderController::changePriority
     requirements:
         id: \d+
 
@@ -218,8 +307,10 @@ category_slider:
     controller: App\Controller\Admin\CategorySliderController::list
 
 category_slider_list:
-    path: /admin/category-slider-list
+    path: /admin/category-slider-list/{id}
     controller: App\Controller\Admin\CategorySliderController::sliderList
+    requirements:
+        id: \d+
 
 category_slider_add:
     path: /admin/category-slider-add
@@ -231,12 +322,21 @@ category_slider_add:
 category_slider_update:
     path: /admin/category-slider-update/{id}
     controller: App\Controller\Admin\CategorySliderController::update
+    methods: [GET,POST]
     requirements:
         id: \d+
+    options:
+        expose: true
 
 category_slider_delete:
     path: /admin/category-slider-delete/{id}
     controller: App\Controller\Admin\CategorySliderController::delete
+    requirements:
+        id: \d+
+
+category_slider_priority:
+    path: /admin/category-slider-priority/{id}/{direction}
+    controller: App\Controller\Admin\CategorySliderController::changePriority
     requirements:
         id: \d+
 
@@ -269,6 +369,7 @@ home_page_modules:
     path: /admin/home-page-modules
     controller: App\Controller\Admin\HomePageModulesController::list
 
+<<<<<<< HEAD
 #fb callback login
 fb_callback:
     path: /fb-callback
@@ -276,3 +377,10 @@ fb_callback:
     methods: [GET]
     options:
         expose: true
+=======
+homepage_modules_priority:
+    path: /admin/homepage-modules-priority/{id}/{direction}
+    controller: App\Controller\Admin\HomePageModulesController::changePriority
+    requirements:
+        id: \d+
+>>>>>>> master

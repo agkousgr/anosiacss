@@ -2,8 +2,8 @@
 <project version="4">
   <component name="WebServers">
     <option name="servers">
-      <webServer id="3605c2e8-25d5-45ef-9f47-0796453db752" name="anosia" url="http://78.108.35.131">
-        <fileTransfer host="78.108.35.131" port="21">
+      <webServer id="3605c2e8-25d5-45ef-9f47-0796453db752" name="anosia" url="http://159.69.124.250">
+        <fileTransfer host="159.69.124.250" port="21" rootFolder="/new.anosiapharmacy.gr">
           <advancedOptions>
             <advancedOptions dataProtectionLevel="Private" />
           </advancedOptions>

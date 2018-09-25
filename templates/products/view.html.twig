@@ -3,6 +3,10 @@
 {% block bodyId %}category{% endblock %}
 {% block title %} | {{ pr.name }}{% endblock %}
 {% block slider %}{% endblock %}
+{#{% block stylesheets %}#}
+    {#{{ parent() }}#}
+    {#<link href="{{ asset('build/css/apex-slider.css') }}" rel="stylesheet"/>#}
+{#{% endblock %}#}
 {% block breadcrumb %}
 
 {% endblock %}
@@ -19,7 +23,7 @@
                 </div>
             </div>
         </div>
-        <div class="section" style="background-image:url(images/bg-5.jpg);">
+        <div class="section">
             <div class="container">
                 <div class="col-xs-12">
                     {% for message in app.flashes('notice') %}
@@ -36,22 +40,21 @@
                                     <div class="slider">
                                         <div class="main-image">
                                             <ul class="bxslider">
-                                                <li><img src="{{ pr.imageUrl }}" alt=""/></li>
-                                                {#<li><img src="images/img-18.jpg" alt="" /></li>#}
-                                                {#<li><img src="images/img-17.jpg" alt="" /></li>#}
-                                                {#<li><img src="images/img-18.jpg" alt="" /></li>#}
-                                                {#<li><img src="images/img-17.jpg" alt="" /></li>#}
-                                                {#<li><img src="images/img-18.jpg" alt="" /></li>#}
+                                                {% for image in pr.extraImages %}
+                                                    <li><img src="{{ image.imageUrl }}" alt="{{ pr.name }}"/></li>
+                                                {% endfor %}
                                             </ul>
                                         </div>
                                         <div class="owl-carousel owl-theme" id="bx-pager">
-                                            <div class="item"><a data-slide-index="0" href="">
-                                                    <img src="{{ pr.imageUrl }}" alt=""/></a></div>
-                                            {#<div class="item"><a data-slide-index="1" href=""><img src="images/img-18.jpg" alt="" /></a></div>#}
-                                            {#<div class="item"><a data-slide-index="2" href=""><img src="images/img-17.jpg" alt="" /></a></div>#}
-                                            {#<div class="item"><a data-slide-index="3" href=""><img src="images/img-18.jpg" alt="" /></a></div>#}
-                                            {#<div class="item"><a data-slide-index="4" href=""><img src="images/img-17.jpg" alt="" /></a></div>#}
-                                            {#<div class="item"><a data-slide-index="5" href=""><img src="images/img-18.jpg" alt="" /></a></div>#}
+                                            {% for image in pr.extraImages %}
+                                                <div class="item" style="text-align: center">
+                                                    <a data-slide-index="{{ loop.index - 1 }}" href=""
+                                                       style="border: 1px solid #d8d8d8;">
+                                                        <img style="max-height: 95px; border:none;"
+                                                             src="{{ image.imageUrl }}" alt="{{ pr.name }}"/>
+                                                    </a>
+                                                </div>
+                                            {% endfor %}
                                         </div>
                                     </div>
                                 </div>
@@ -141,8 +144,8 @@
                                                data-name="{{ pr.name }}">ΣΤΟ ΚΑΛΑΘΙ</a>
                                         </div>
                                         {#<div class="col-xs-6">#}
-                                            {#<a href="#" class="btn btn-default btn-block">ΑΓΟΡΑΣΕ#}
-                                                {#ΤΩΡΑ</a>#}
+                                        {#<a href="#" class="btn btn-default btn-block">ΑΓΟΡΑΣΕ#}
+                                        {#ΤΩΡΑ</a>#}
                                         {#</div>#}
                                     </div>
                                 </div>
@@ -177,15 +180,14 @@
                     </div>
 
                     <div class="col-md-3 sidebar visible-lg visible-md">
-                        {% include 'products/modules/bside_delivery.html.twig' %}
+                        {#{% include 'products/modules/bside_delivery.html.twig' %}#}
                         {% include 'products/modules/bside_special_products.html.twig' %}
                         {% include 'products/modules/bside_clearance_sale.html.twig' %}
-                        {% include 'products/modules/bside_other_info.html.twig' %}
+                        {#{% include 'products/modules/bside_other_info.html.twig' %}#}
                     </div>
                 </div>
                 {% include 'products/modules/product_view_related.html.twig' %}
-                {% include 'products/modules/bottom_banners.html.twig' %}
-
+                {#{% include 'products/modules/bottom_banners.html.twig' %}#}
 
             </div>
         </div>

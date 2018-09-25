@@ -49,11 +49,17 @@ class AdminCategory
     private $children;
 
     /**
+     * @var \Doctrine\Common\Collections\Collection
+     */
+    private $articles;
+
+    /**
      * Constructor
      */
     public function __construct()
     {
         $this->children = new \Doctrine\Common\Collections\ArrayCollection();
+        $this->articles = new \Doctrine\Common\Collections\ArrayCollection();
     }
 
     /**
@@ -212,5 +218,39 @@ class AdminCategory
     public function getChildren()
     {
         return $this->children;
+    }
+
+    /**
+     * Add article
+     *
+     * @param \App\Entity\Article $article
+     *
+     * @return AdminCategory
+     */
+    public function addArticle(\App\Entity\Article $article)
+    {
+        $this->articles[] = $article;
+
+        return $this;
+    }
+
+    /**
+     * Remove article
+     *
+     * @param \App\Entity\Article $article
+     */
+    public function removeArticle(\App\Entity\Article $article)
+    {
+        $this->articles->removeElement($article);
+    }
+
+    /**
+     * Get articles
+     *
+     * @return \Doctrine\Common\Collections\Collection
+     */
+    public function getArticles()
+    {
+        return $this->articles;
     }
 }

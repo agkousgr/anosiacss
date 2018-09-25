@@ -53,10 +53,13 @@ Encore
     .addEntry('admin/js/slider', './assets/admin/js/slider/slider.js')
     .addEntry('admin/js/jstree.min', './assets/admin/plugins/jstree/jstree.min.js')
     .addEntry('admin/js/category', './assets/admin/js/category/category.js')
+    .addEntry('admin/js/article', './assets/admin/js/article/article.js')
+    .addEntry('admin/js/article_form', './assets/admin/js/article/article_form.js')
+    .addEntry('admin/js/category-slider', './assets/admin/js/category-slider/category-slider.js')
 
 
 
-    // .addStyleEntry('css/style', './assets/css/style.css')
+    .addStyleEntry('css/style', './assets/css/style.css')
     .addStyleEntry('css/apex-slider', './assets/css/apex-slider.css')
     .addStyleEntry('css/orders', './assets/css/orders.css')
     .addStyleEntry('css/user', './assets/css/user.css')
@@ -73,19 +76,7 @@ Encore
     .addStyleEntry('admin/css/login/bootstrap.min', './assets/admin/css/login/bootstrap.min.css')
     .addStyleEntry('admin/css/login/ace.min', './assets/admin/css/login/ace.min.css')
     .addStyleEntry('admin/css/login/ace-rtl.min', './assets/admin/css/login/ace-rtl.min.css')
-
-
-    .addLoader({
-        test: /\.(png|jpg|svg)$/,
-        loader: 'file-loader',
-        options: {
-            name: '/[name].[hash:7].[ext]',
-            publicPath: '/build',
-            outputPath: 'images'
-        },
-    })
-
-
+    .addStyleEntry('admin/css/plugins/select2.min', './assets/admin/css/plugins/select2/select2.min.css')
 
     // uncomment if you use Sass/SCSS files
     // .enableSassLoader()

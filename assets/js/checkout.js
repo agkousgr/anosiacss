@@ -20,65 +20,91 @@
 //         }
 //     })
 // })
-
-$('input[name="checkout_step2[series]"]').on('change', function () {
-    $('#invoice-fields').toggleClass('hidden');
-    if ($('#checkout_step2_series_0').is(':checked')) {
-        $('#checkout_step2_afm').val('No invoice');
-        $('#checkout_step2_irs').val('No invoice');
-    } else {
-        $('#checkout_step2_afm').val('');
-        $('#checkout_step2_irs').val('');
-    }
-})
-
-$('input[name="checkout_step3[shippingType]"]').on('change', function () {
-    let totalCost = 0;
-    if ($('#checkout_step3_shippingType_0').is(':checked')) {
-        $('#shipping-cost').data('cost', 2.00);
-        $('#shipping-cost').html('2,00');
-        totalCost = $('#cart-cost').data('cost') + 2;
-        $('.checkout_step3_shippingType_1').addClass('hidden');
-    } else {
-        $('#shipping-cost').data('cost', 0.00);
-        $('#shipping-cost').html('0,00');
-        totalCost = $('#cart-cost').data('cost');
-        $('.checkout_step3_shippingType_1').removeClass('hidden');
-        $('[for="checkout_step4_paymentType_4"]').addClass('hidden');
-    }
-    $('#total-cost').data('cost', totalCost.toFixed(2));
-    let totalCostString = totalCost.toFixed(2);
-    let newTotalCostString = totalCostString.replace('.',',');
-    $('#total-cost').html(newTotalCostString);
-})
-
-$('input[name="checkout_step4[paymentType]"]').on('change', function () {
-    let i = 0;
-    $('input[name="checkout_step4[paymentType]"]').each(function () {
-        if ($('#checkout_step4_paymentType_' + i).is(':checked')) {
-            $('.checkout_step4_paymentType_' + i).removeClass('hidden');
-        } else {
-            $('.checkout_step4_paymentType_' + i).addClass('hidden');
-        }
-        i = i + 1;
-    })
-    let totalCost = 0;
-    let shippingCost = parseFloat($('#shipping-cost').data('cost'));
-    if ($('#checkout_step4_paymentType_4').is(':checked')) {
-        $('#cart-subtotal-pay-on-delivery').removeClass('hidden');
-        totalCost = $('#cart-cost').data('cost') + 1.5 + shippingCost;
-    } else {
-        $('#cart-subtotal-pay-on-delivery').addClass('hidden');
-        totalCost = $('#cart-cost').data('cost') + shippingCost;
-    }
-    $('#total-cost').data('cost', totalCost.toFixed(2));
-    let totalCostString = totalCost.toFixed(2);
-    let newTotalCostString = totalCostString.replace('.',',');
-    $('#total-cost').html(newTotalCostString);
-
-})
+require('bootstrap');
 
 $(document).ready(function () {
+
+    $('[data-toggle="popover"]').popover();
+
+    $('input[name="address"]').on('click', function () {
+        let data = {
+            'id': $(this).data('id')
+        };
+        $.post(Routing.generate('get_address'), data, function (response) {
+            if (response.success == true) {
+                $('#checkout_step2_shipAddress').val(response.address["address"]);
+                $('#checkout_step2_shipZip').val(response.address["zip"]);
+                $('#checkout_step2_shipCity').val(response.address["city"]);
+                $('#checkout_step2_shipDistrict').val(response.address["district"]);
+            }else{
+                swal({
+                    title: 'Σφάλμα!',
+                    text: "Παρουσιάστηκε σφάλμα κατά την επιλογή υπάρχουσας διεύθυνσης!",
+                    type: 'cancel',
+                    confirmButtonColor: '#3085d6',
+                    cancelButtonText: 'Κλείσιμο',
+                })
+            }
+        });
+    });
+
+    $('input[name="checkout_step2[series]"]').on('change', function () {
+        $('#invoice-fields').toggleClass('hidden');
+        if ($('#checkout_step2_series_0').is(':checked')) {
+            $('#checkout_step2_afm').val('No invoice');
+            $('#checkout_step2_irs').val('No invoice');
+        } else {
+            $('#checkout_step2_afm').val('');
+            $('#checkout_step2_irs').val('');
+        }
+    });
+
+    $('input[name="checkout_step3[shippingType]"]').on('change', function () {
+        let totalCost = 0;
+        if ($('#checkout_step3_shippingType_0').is(':checked')) {
+            $('#shipping-cost').data('cost', 2.00);
+            $('#shipping-cost').html('2,00');
+            totalCost = $('#cart-cost').data('cost') + 2;
+            $('.checkout_step3_shippingType_1').addClass('hidden');
+        } else {
+            $('#shipping-cost').data('cost', 0.00);
+            $('#shipping-cost').html('0,00');
+            totalCost = $('#cart-cost').data('cost');
+            $('.checkout_step3_shippingType_1').removeClass('hidden');
+            $('[for="checkout_step4_paymentType_4"]').addClass('hidden');
+        }
+        $('#total-cost').data('cost', totalCost.toFixed(2));
+        let totalCostString = totalCost.toFixed(2);
+        let newTotalCostString = totalCostString.replace('.', ',');
+        $('#total-cost').html(newTotalCostString);
+    });
+
+    $('input[name="checkout_step4[paymentType]"]').on('change', function () {
+        let i = 0;
+        $('input[name="checkout_step4[paymentType]"]').each(function () {
+            if ($('#checkout_step4_paymentType_' + i).is(':checked')) {
+                $('.checkout_step4_paymentType_' + i).removeClass('hidden');
+            } else {
+                $('.checkout_step4_paymentType_' + i).addClass('hidden');
+            }
+            i = i + 1;
+        })
+        let totalCost = 0;
+        let shippingCost = parseFloat($('#shipping-cost').data('cost'));
+        if ($('#checkout_step4_paymentType_4').is(':checked')) {
+            $('#cart-subtotal-pay-on-delivery').removeClass('hidden');
+            totalCost = $('#cart-cost').data('cost') + 1.5 + shippingCost;
+        } else {
+            $('#cart-subtotal-pay-on-delivery').addClass('hidden');
+            totalCost = $('#cart-cost').data('cost') + shippingCost;
+        }
+        $('#total-cost').data('cost', totalCost.toFixed(2));
+        let totalCostString = totalCost.toFixed(2);
+        let newTotalCostString = totalCostString.replace('.', ',');
+        $('#total-cost').html(newTotalCostString);
+
+    });
+
     $('#checkout_step2_series_0').attr('checked', 'checked');
     // $('#checkout_step4_paymentType_0').attr('checked', 'checked');
     initializePaymentInfos();
@@ -87,8 +113,15 @@ $(document).ready(function () {
         $('[for="checkout_step4_paymentType_4"]').parent('div').addClass('hidden');
     }
 
+    $('#use_same_address').on('click', function () {
+        if ($('#use_same_address').is(':checked') === false) {
+            $('#ship-address').removeClass('hidden');
+        }else{
+            $('#ship-address').addClass('hidden');
+        }
+    });
 
-})
+});
 
 function initializePaymentInfos() {
     $('.checkout_step3_shippingType_1').html('Για να δεσμευτεί μια παραγγελία έτσι ώστε να είναι δυνατή η παραλαβή της από το Φαρμακείο απαιτεί χρόνο τριών εως πέντε ωρών.\n' +
@@ -110,7 +143,7 @@ function calculateAntikatovoli() {
         totalCost = $('#cart-cost').data('cost') + 1.5 + shippingCost;
         $('#total-cost').data('cost', totalCost.toFixed(2));
         let totalCostString = totalCost.toFixed(2);
-        let newTotalCostString = totalCostString.replace('.',',');
+        let newTotalCostString = totalCostString.replace('.', ',');
         $('#total-cost').html(newTotalCostString);
     }
 }

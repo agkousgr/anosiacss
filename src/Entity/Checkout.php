@@ -78,6 +78,26 @@ class Checkout extends WebUser
     private $orderNo;
 
     /**
+     * @var string|null
+     */
+    private $shipAddress;
+
+    /**
+     * $var string|null
+     */
+    private $shipZip;
+
+    /**
+     * $var string|null
+     */
+    private $shipCity;
+
+    /**
+     * $var string|null
+     */
+    private $shipDistrict;
+
+    /**
      * @return int|null
      */
     public function getNextPage(): ?int
@@ -235,6 +255,78 @@ class Checkout extends WebUser
     public function setTotalOrderCost(?float $totalOrderCost): void
     {
         $this->totalOrderCost = $totalOrderCost;
+    }
+
+    /**
+     * @return null|string
+     */
+    public function getShipAddress(): ?string
+    {
+        return $this->shipAddress;
+    }
+
+    /**
+     * @param null|string $shipAddress
+     * @return Checkout
+     */
+    public function setShipAddress(?string $shipAddress): Checkout
+    {
+        $this->shipAddress = $shipAddress;
+        return $this;
+    }
+
+    /**
+     * @return mixed
+     */
+    public function getShipZip()
+    {
+        return $this->shipZip;
+    }
+
+    /**
+     * @param mixed $shipZip
+     * @return Checkout
+     */
+    public function setShipZip($shipZip)
+    {
+        $this->shipZip = $shipZip;
+        return $this;
+    }
+
+    /**
+     * @return mixed
+     */
+    public function getShipCity()
+    {
+        return $this->shipCity;
+    }
+
+    /**
+     * @param mixed $shipCity
+     * @return Checkout
+     */
+    public function setShipCity($shipCity)
+    {
+        $this->shipCity = $shipCity;
+        return $this;
+    }
+
+    /**
+     * @return mixed
+     */
+    public function getShipDistrict()
+    {
+        return $this->shipDistrict;
+    }
+
+    /**
+     * @param mixed $shipDistrict
+     * @return Checkout
+     */
+    public function setShipDistrict($shipDistrict)
+    {
+        $this->shipDistrict = $shipDistrict;
+        return $this;
     }
 
 }

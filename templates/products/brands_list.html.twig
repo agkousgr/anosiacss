@@ -1,0 +1,116 @@
+{% extends 'layout.html.twig' %}
+
+{% block bodyId %}category{% endblock %}
+{% block title %} | Κατασκευαστές{% endblock %}
+{% block slider %}{% endblock %}
+{% block breadcrumb %}
+
+{% endblock %}
+
+{% block body %}
+    <div id="mainWrapper">
+        {% include 'partials/sidebar_login.html.twig' %}
+        {% include 'partials/swipe_menu.html.twig' %}
+        {% include 'partials/site_header.html.twig' %}
+        <div class="page-header">
+            <div class="container">
+                <div class="row">
+                    <div class="col-md-12"><h1>Κατασκευαστές</h1></div>
+                </div>
+            </div>
+        </div>
+        <div class="section" style="background-image:url({{ asset('images/bg-5.jpg') }});">
+            <div class="container">
+                {% for message in app.flashes('notice') %}
+                    <div class="flash-notice">
+                        {{ message }}
+                    </div>
+                {% endfor %}
+                <div class="row reverse-row">
+                    <div class="col-md-9 column">
+                        <div class="product-list">
+                            <h2>Κατασκευαστες</h2>
+                            <div class="sorting-head clearfix">
+                                {#<table>#}
+                                {#<tr>#}
+                                {# sorting of properties based on query components #}
+                                {#<th>{{ knp_pagination_sortable(products, 'Id', 'a.id') }}</th>#}
+                                {#<th{% if products.isSorted('products.Title') %} class="sorted"{% endif %}>{{ knp_pagination_sortable(products, 'Title', 'a.title') }}</th>#}
+                                {#<th>{{ knp_pagination_sortable(products, 'Release', ['products.date', 'products.time']) }}</th>#}
+                                {#</tr>#}
+                                {#</table>#}
+                                {#<div class="row">#}
+                                {#<div class="col-sm-6 col-md-7 visible-lg visible-md  visible-sm">#}
+                                {#<div class="btn-group">#}
+                                {#<a href="#" id="list" class="btn btn-default btn-sm"><i#}
+                                {#class="fa fa-th-large"></i></a>#}
+                                {#<a href="#" id="grid" class="btn btn-default btn-sm"><i#}
+                                {#class="fa fa-th-list"></i></a>#}
+                                {#</div>#}
+                                {#</div>#}
+                                {#<div class="col-sm-6 col-md-5">#}
+                                {#<div class="row">#}
+                                {#<div class="col-xs-6">#}
+                                {#<select class="c-select">#}
+                                {#<option>Price Low to High</option>#}
+                                {#<option>Price - high to low</option>#}
+                                {#<option>Highest rated</option>#}
+                                {#</select>#}
+                                {#</div>#}
+                                {#<div class="col-xs-6">#}
+                                {#<select class="c-select">#}
+                                {#<option>15 Items Per Page</option>#}
+                                {#<option>18 Items Per Page</option>#}
+                                {#<option>21 Items Per Page</option>#}
+                                {#<option>24 Items Per Page</option>#}
+                                {#</select>#}
+                                {#</div>#}
+                                {#</div>#}
+                                {#</div>#}
+                                {#</div>#}
+                            </div>
+
+                            <div class="brands-grid">
+                                {% for brand in brands %}
+                                    <div class="col-sm-3" style="padding-bottom: 15px; height: 300px">
+                                        {#<a href="{{ path('brand_products_list', {'id':brand.slug}) }}">#}
+                                        {#<p>{{ brand.name }}</p>#}
+                                        {#<img src="{{ brand.imageUrl }}" alt="">#}
+                                        {#</a>#}
+                                        <a href="{{ path('brand_products_list', {'slug': brand.slug}) }}">
+                                            <img style="border:1px #cccccc solid; width:auto; height:auto;"
+                                                 src="{{ brand.imageUrl }}"
+                                                 alt="{{ brand.name }}">
+                                        {{ brand.name }}
+                                        </a>
+                                    </div>
+                                {% endfor %}
+                            </div>
+
+                            <nav aria-label="Page navigation" style="text-align: center;">
+                                {{ knp_pagination_render(brands) }}
+                            </nav>
+                        </div>
+                    </div>
+                    <div class="col-md-3 column">
+                        {% include 'products/modules/aside_discount.html.twig' %}
+                        {% include 'products/modules/aside_clearance_sale.html.twig' %}
+                        {% include 'products/modules/aside_best_sellers.html.twig' %}
+                    </div>
+                </div>
+                {% include 'products/modules/bottom_product_tabs.html.twig' %}
+                {#{% include 'products/modules/bottom_category_slider.html.twig' %}#}
+                {#{% include 'products/modules/bottom_gallery_and_brands.html.twig' %}#}
+                {#{% include 'products/modules/bottom_banners.html.twig' %}#}
+            </div>
+        </div>
+        {% include 'home_page_modules/14_newsletter.html.twig' %}
+        {% include 'home_page_modules/15_social.html.twig' %}
+        {% include 'partials/footer.html.twig' %}
+    </div>
+{% endblock %}
+
+{% block javascripts %}
+    {{ parent() }}
+    <script src="{{ asset('build/js/product-list.js') }}"></script>
+{% endblock %}

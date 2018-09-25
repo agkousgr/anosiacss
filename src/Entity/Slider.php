@@ -13,7 +13,6 @@ class Slider
 
     /**
      * @var string|null
-     *
      */
     private $image;
 
@@ -25,7 +24,7 @@ class Slider
     /**
      * @var string|null
      */
-    private $url;
+    private $url = '#';
 
     /**
      * @var int|null
@@ -43,9 +42,9 @@ class Slider
     private $category;
 
     /**
-     * @return null|string
+     * @return null
      */
-    public function getImage(): ?string
+    public function getImage()
     {
         return $this->image;
     }
