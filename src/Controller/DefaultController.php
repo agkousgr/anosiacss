@@ -31,6 +31,12 @@ class DefaultController extends MainController
         ]);
 
         $this->reviews = $fb->get('/292956054170320/ratings')->getDecodedBody();
+
+        $helper = $fb->getRedirectLoginHelper();
+
+        $permissions = ['email']; // Optional permissions
+        $loginUrl = $helper->getLoginUrl('https://anosia.test/fb-callback', $permissions);
+        print_r($loginUrl);
         //print_r($this->reviews);
 
         return $this->render('layout.html.twig', [
