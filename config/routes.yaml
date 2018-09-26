@@ -369,7 +369,7 @@ home_page_modules:
     path: /admin/home-page-modules
     controller: App\Controller\Admin\HomePageModulesController::list
 
-<<<<<<< HEAD
+
 #fb callback login
 fb_callback:
     path: /fb-callback
@@ -377,10 +377,10 @@ fb_callback:
     methods: [GET]
     options:
         expose: true
-=======
+
 homepage_modules_priority:
     path: /admin/homepage-modules-priority/{id}/{direction}
     controller: App\Controller\Admin\HomePageModulesController::changePriority
     requirements:
         id: \d+
->>>>>>> master
+

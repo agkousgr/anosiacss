@@ -1,0 +1,12 @@
+@media (max-width: 578px) {
+	.social li .social-btn {
+	    position: relative;
+	    overflow: hidden;
+	    display: inline-block;
+	    width: 45% !important;
+	}
+
+	.info-row .description {
+	    padding: 15px;
+	}
+}

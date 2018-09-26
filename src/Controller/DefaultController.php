@@ -37,9 +37,8 @@ class DefaultController extends MainController
         $helper = $fb->getRedirectLoginHelper();
 
         $permissions = ['email']; // Optional permissions
-        $loginUrl = $helper->getLoginUrl('https://anosia.test/fb-callback', $permissions);
-        print_r($loginUrl);
-        //print_r($this->reviews);
+        $this->loginUrl = $helper->getLoginUrl('https://anosia.test/fb-callback', $permissions);
+       //print_r($this->reviews);
 
         return $this->render('layout.html.twig', [
             'categories' => $this->categories,
@@ -53,7 +52,8 @@ class DefaultController extends MainController
             'instagramfeed' => $this->instagramfeed,
             'slider' => $slider,
             'reviews' => $this->reviews,
-            'homepage' => 1
+            'homepage' => 1,
+            'loginUrl' => $this->loginUrl
         ]);
     }
 

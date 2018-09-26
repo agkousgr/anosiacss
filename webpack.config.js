@@ -64,6 +64,7 @@ Encore
     .addStyleEntry('css/orders', './assets/css/orders.css')
     .addStyleEntry('css/user', './assets/css/user.css')
     .addStyleEntry('css/404', './assets/css/404.css')
+    .addStyleEntry('css/home', './assets/css/home.css')
 
     // Admin stylesheets
     .addStyleEntry('admin/css/bootstrap.min', './assets/admin/css/bootstrap.min.css')
