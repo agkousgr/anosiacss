@@ -1,13 +1,6 @@
 <?php
-/**
- * Created by PhpStorm.
- * User: john
- * Date: 23/5/2018
- * Time: 1:14 πμ
- */
 
 namespace App\Controller;
-
 
 use App\Entity\Wishlist;
 use App\Service\WishlistService;
@@ -48,7 +41,8 @@ class WishlistController extends MainController
                 'featured' => $this->featured,
                 'loggedUser' => $this->loggedUser,
                 'loggedName' => $this->loggedName,
-                'hideCart' => true
+                'hideCart' => true,
+                'loginUrl' => $this->loginUrl
             ]));
         } catch (\Exception $e) {
             throw $e;

@@ -110,7 +110,8 @@ class CheckoutController extends MainController
                             'totalCartItems' => $this->totalCartItems,
                             'totalWishlistItems' => $this->totalWishlistItems,
                             'cartItems' => $this->cartItems,
-                            'orderCompleted' => $orderCompleted
+                            'orderCompleted' => $orderCompleted,
+                            'loginUrl' => $this->loginUrl
                         ]));
                     } else {
                         $this->addFlash(
@@ -137,7 +138,8 @@ class CheckoutController extends MainController
                 'step2Form' => $step2Form->createView(),
                 'step3Form' => $step3Form->createView(),
                 'step4Form' => $step4Form->createView(),
-                'curStep' => $curStep
+                'curStep' => $curStep,
+                'loginUrl' => $this->loginUrl
             ]));
         } catch (\Exception $e) {
             $this->logger->error(__METHOD__ . ' -> {message}', ['message' => $e->getMessage()]);
@@ -224,7 +226,8 @@ class CheckoutController extends MainController
                         'totalCartItems' => $this->totalCartItems,
                         'totalWishlistItems' => $this->totalWishlistItems,
                         'cartItems' => $this->cartItems,
-                        'orderCompleted' => $orderCompleted
+                        'orderCompleted' => $orderCompleted,
+                        'loginUrl' => $this->loginUrl
                     ]));
                 } else {
                     $this->addFlash(
@@ -248,7 +251,8 @@ class CheckoutController extends MainController
                 'step2Form' => $step2Form->createView(),
                 'step3Form' => $step3Form->createView(),
                 'step4Form' => $step4Form->createView(),
-                'curStep' => $curStep
+                'curStep' => $curStep,
+                'loginUrl' => $this->loginUrl
             ]));
         } catch (\Exception $e) {
             $this->logger->error(__METHOD__ . ' -> {message}', ['message' => $e->getMessage()]);

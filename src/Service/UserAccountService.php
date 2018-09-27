@@ -101,7 +101,7 @@ EOF;
         try {
             $result = $client->SendMessage(['Message' => $message]);
             $userXML = simplexml_load_string(str_replace("utf-16", "utf-8", $result->SendMessageResult));
-//            dump($result);
+            dump($message, $result);
             if ((string)$userXML->IsValid === 'false') {
                 return 0;
             } else {
@@ -203,7 +203,7 @@ EOF;
         try {
             $result = $client->SendMessage(['Message' => $message]);
             $userResult = simplexml_load_string(str_replace("utf-16", "utf-8", $result->SendMessageResult));
-            dump($result);
+            dump($message, $result);
             if ((string)$userResult->ErrorCode === 'None') {
                 if ($userData instanceof Checkout) {
                     $userData->setClientId($userResult->ID);
@@ -291,7 +291,7 @@ EOF;
         try {
             $result = $client->SendMessage(['Message' => $message]);
             $newsletterData = simplexml_load_string(str_replace("utf-16", "utf-8", $result->SendMessageResult));
-//            dump($result);
+            dump($message, $result);
             return ((string)$newsletterData->IsValid === 'true') ? true : false;
         } catch (\SoapFault $sf) {
             echo $sf->faultstring;

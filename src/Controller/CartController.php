@@ -27,7 +27,8 @@ class CartController extends MainController
                 'featured' => $this->featured,
                 'loggedUser' => $this->loggedUser,
                 'loggedName' => $this->loggedName,
-                'hideCart' => true
+                'hideCart' => true,
+                'loginUrl' => $this->loginUrl
             ]));
         } catch (\Exception $e) {
             throw $e;

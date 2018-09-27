@@ -137,6 +137,7 @@ class UserAccountController extends MainController
                     'userData' => $userData,
                     'formUser' => $formUser->createView(),
                     'formAddress' => $formMainAddress->createView(),
+                    'loginUrl' => $this->loginUrl
                 ]);
             }
             return $this->redirectToRoute('index');
@@ -188,6 +189,7 @@ class UserAccountController extends MainController
 //                'formUser' => $formUser->createView(),
                     'addressId' => '',
                     'formAddress' => $formAddress->createView(),
+                    'loginUrl' => $this->loginUrl
                 ]);
             }
             return $this->redirectToRoute('index');
@@ -240,6 +242,7 @@ class UserAccountController extends MainController
 //                'formUser' => $formUser->createView(),
                     'addressId' => $address->getId(),
                     'formAddress' => $formAddress->createView(),
+                    'loginUrl' => $this->loginUrl
                 ]);
             }
             return $this->redirectToRoute('index');
@@ -329,7 +332,8 @@ class UserAccountController extends MainController
                 'loggedName' => $this->loggedName,
                 'loggedUser' => $this->loggedUser,
                 'form' => $form->createView(),
-                'registerOk' => $registerOk
+                'registerOk' => $registerOk,
+                'loginUrl' => $this->loginUrl
             ]);
         } catch (\Exception $e) {
             $this->logger->error(__METHOD__ . ' -> {message}', ['message' => $e->getMessage()]);

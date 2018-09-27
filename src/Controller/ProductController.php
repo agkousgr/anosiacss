@@ -49,7 +49,8 @@ class ProductController extends MainController
                 'pagesize' => $pagesize,
                 'sortBy' => $sortBy,
                 'brand' => $makeId,
-                'priceRange' => $priceRange
+                'priceRange' => $priceRange,
+                'loginUrl' => $this->loginUrl
             ]);
         } catch (\Exception $e) {
             $this->logger->error(__METHOD__ . ' -> {message}', ['message' => $e->getMessage()]);
@@ -78,7 +79,8 @@ class ProductController extends MainController
             'totalWishlistItems' => $this->totalWishlistItems,
             'loggedUser' => $this->loggedUser,
             'loggedName' => $this->loggedName,
-            'brands' => $paginatedBrands
+            'brands' => $paginatedBrands,
+            'loginUrl' => $this->loginUrl
 //            'slider' => $slider
         ]);
     }
@@ -113,6 +115,7 @@ class ProductController extends MainController
                 'totalWishlistItems' => $this->totalWishlistItems,
                 'loggedUser' => $this->loggedUser,
                 'loggedName' => $this->loggedName,
+                'loginUrl' => $this->loginUrl
 //                'slider' => $slider
 //                'products' => $paginatedProducts
             ]);
@@ -148,6 +151,7 @@ class ProductController extends MainController
                 'totalWishlistItems' => $this->totalWishlistItems,
                 'loggedUser' => $this->loggedUser,
                 'loggedName' => $this->loggedName,
+                'loginUrl' => $this->loginUrl
             ]);
         } catch (\Exception $e) {
             $this->logger->error(__METHOD__ . ' -> {message}', ['message' => $e->getMessage()]);
@@ -180,7 +184,8 @@ class ProductController extends MainController
                 'totalWishlistItems' => $this->totalWishlistItems,
                 'loggedUser' => $this->loggedUser,
                 'loggedName' => $this->loggedName,
-                'keyword' => $keyword
+                'keyword' => $keyword,
+                'loginUrl' => $this->loginUrl
             ]);
         } catch (\Exception $e) {
             $this->logger->error(__METHOD__ . ' -> {message}', ['message' => $e->getMessage()]);

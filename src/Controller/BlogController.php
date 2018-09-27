@@ -30,7 +30,8 @@ class BlogController extends MainController
                 'totalCartItems' => $this->totalCartItems,
                 'loggedUser' => $this->loggedUser,
                 'articles' => $articles,
-                'popularArticles' => $popularArticles
+                'popularArticles' => $popularArticles,
+                'loginUrl' => $this->loginUrl
             ]);
         } catch (\Exception $e) {
             $this->logger->error(__METHOD__ . ' -> {message}', ['message' => $e->getMessage()]);
@@ -57,7 +58,8 @@ class BlogController extends MainController
                 'totalCartItems' => $this->totalCartItems,
                 'loggedUser' => $this->loggedUser,
                 'article' => $article,
-                'popularArticles' => $popularArticles
+                'popularArticles' => $popularArticles,
+                'loginUrl' => $this->loginUrl
             ]);
         } catch (\Exception $e) {
             $this->logger->error(__METHOD__ . ' -> {message}', ['message' => $e->getMessage()]);
