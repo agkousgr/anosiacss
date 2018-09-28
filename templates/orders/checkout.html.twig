@@ -334,26 +334,28 @@
                                                             <div id="ship-address" class="hidden">
                                                                 {% if loggedUser is not empty %}
                                                                     <div class="row">
-                                                                        {% for address in addresses['addresses'] %}
-                                                                            <div class="col-sm-4">
-                                                                                <div role="button"
-                                                                                     data-toggle="popover"
-                                                                                     data-trigger="hover"
-                                                                                     data-html="true"
-                                                                                     data-placement="top"
-                                                                                     title="{{ address.name }}"
-                                                                                     data-content="{{ address.address }}<br>{{ address.zip }}<br>{{ address.city }}<br>{{ address.district }}"
-                                                                                     class="form-group"
-                                                                                     style="border: 1px #cccccc solid; padding: 1px 10px">
-                                                                                    <span>
-                                                                                        <input type="radio"
-                                                                                               name="address"
-                                                                                               data-id="{{ address.id }}">
-                                                                                        {{ address.name }}
-                                                                                    </span>
+                                                                        {% if addresses|length > 0 %}
+                                                                            {% for address in addresses['addresses'] %}
+                                                                                <div class="col-sm-4">
+                                                                                    <div role="button"
+                                                                                         data-toggle="popover"
+                                                                                         data-trigger="hover"
+                                                                                         data-html="true"
+                                                                                         data-placement="top"
+                                                                                         title="{{ address.name }}"
+                                                                                         data-content="{{ address.address }}<br>{{ address.zip }}<br>{{ address.city }}<br>{{ address.district }}"
+                                                                                         class="form-group"
+                                                                                         style="border: 1px #cccccc solid; padding: 1px 10px">
+                                                                                        <span>
+                                                                                            <input type="radio"
+                                                                                                   name="address"
+                                                                                                   data-id="{{ address.id }}">
+                                                                                            {{ address.name }}
+                                                                                        </span>
+                                                                                    </div>
                                                                                 </div>
-                                                                            </div>
-                                                                        {% endfor %}
+                                                                            {% endfor %}
+                                                                        {% endif %}
                                                                     </div>
                                                                 {% endif %}
                                                                 <div class="form-group row ">

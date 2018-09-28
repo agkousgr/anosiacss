@@ -170,11 +170,11 @@ EOF;
                 return;
             }
             $this->session->remove('curOrder');
-//            dump($result);
+            dump($result);
             $userXML = $clientResponse->GetDataRows->GetClientsRow;
-            $userName = explode(' ', $userXML->NAME);
-            $checkout->setFirstname($userName[0]);
-            $checkout->setLastname($userName[1]);
+            list($firstname, $lastname) = explode(' ', $userXML->NAME . ' ');
+            $checkout->setFirstname($firstname);
+            $checkout->setLastname($lastname);
             $checkout->setEmail($userXML->EMAIL);
             (null !== $userXML->ADDRESS) ? $checkout->setAddress((string)$userXML->ADDRESS) : $checkout->setAddress('');
             (null !== $userXML->ZIP) ? $checkout->setZip((string)$userXML->ZIP) : $checkout->setZip('');
