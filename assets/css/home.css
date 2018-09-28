@@ -79,3 +79,15 @@
 .offer-name {
     min-height: 100px;
 }
+
+.product-case .product-name {
+   min-height: 80px;
+}
+
+.carousel-control.left {
+  left: 0px !important;
+}
+
+.carousel-control.right {
+  right: 0px !important;
+}
