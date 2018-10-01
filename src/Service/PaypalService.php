@@ -35,8 +35,8 @@ class PaypalService
 
         define('PPL_LOGO_IMG', 'https://i0.wp.com/www.anosiapharmacy.gr/wp-content/uploads/2017/03/logo.png');
 
-        define('PPL_RETURN_URL', 'http://anosia.democloudon.cloud/public//paypal/result');
-        define('PPL_CANCEL_URL', 'http://anosia.democloudon.cloud/public//paypal/cancel');
+        define('PPL_RETURN_URL', 'http://new.anosiapharmacy.gr/public/paypal/result');
+        define('PPL_CANCEL_URL', 'http://new.anosiapharmacy.gr/public/paypal/cancel');
 
         define('PPL_CURRENCY_CODE', 'EUR');
 
@@ -50,7 +50,6 @@ class PaypalService
 //        }
 
         if (!isset($_GET['token'])) {
-
 
             $orderid = $checkout->getOrderNo();
             $orderDesc = $checkout->getComments();

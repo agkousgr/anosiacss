@@ -180,7 +180,7 @@ class WebUser extends Address
     /**
      * @return bool|null
      */
-    public function getNewsletter(): ?bool
+    public function isNewsletter(): ?bool
     {
         return $this->newsletter;
     }

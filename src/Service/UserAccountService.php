@@ -607,15 +607,15 @@ EOF;
             if ($userResponse === false) {
                 return;
             }
-//            dump($message, $result);
+            dump($message, $result);
             $userXML = $userResponse->GetDataRows->GetUsersRow;
             if (null !== $address) {
                 $address->setClient($userXML->ClientID);
             } else {
-//                dump($user);
                 (null !== $userXML->Username) ? $user->setUsername($userXML->Username) : $user->setUsername('');
                 (null !== $userXML->Password) ? $user->setPassword($userXML->Password) : $user->setUsername('');
                 (null !== $userXML->ClientID) ? $user->setClientId($userXML->ClientID) : $user->setUsername('');
+                dump($user);
             }
             return;
         } catch (\SoapFault $sf) {
@@ -692,6 +692,8 @@ EOF;
     {
         $client = new \SoapClient('http://caron.cloudsystems.gr/FOeshopWS/ForeignOffice.FOeshop.API.FOeshopSvc.svc?singleWsdl', ['trace' => true, 'exceptions' => true,]);
 
+        $clientId = $user->getClientId();
+
         $message = <<<EOF
 <?xml version="1.0" encoding="utf-16"?>
 <ClientGetClientsRequest>
@@ -703,7 +705,7 @@ EOF;
     <CompanyID>1000</CompanyID>
     <pagesize>1</pagesize>
     <pagenumber>0</pagenumber>
-    <ClientID>-1</ClientID>
+    <ClientID>$clientId</ClientID>
     <Code>null</Code>
     <Email>$username</Email>
 </ClientGetClientsRequest>
@@ -714,11 +716,11 @@ EOF;
             if ($clientResponse === false) {
                 return;
             }
-//            dump($result);
+            dump($message, $result);
             $userXML = $clientResponse->GetDataRows->GetClientsRow;
-            $userName = explode(' ', $userXML->NAME);
-            $user->setFirstname($userName[0]);
-            $user->setLastname($userName[1]);
+            list($firstname, $lastname) = explode(' ', $userXML->NAME);
+            $user->setFirstname($firstname);
+            $user->setLastname($lastname);
             $user->setEmail($userXML->EMAIL);
             (null !== $userXML->ADDRESS) ? $user->setAddress((string)$userXML->ADDRESS) : $user->setAddress('');
             (null !== $userXML->ZIP) ? $user->setZip((string)$userXML->ZIP) : $user->setZip('');
@@ -833,7 +835,7 @@ EOF;
                 'lastname' => $user->getLastname(),
                 'clientId' => $user->getClientId(),
                 'newsletterId' => $user->getNewsletterId(),
-                'newsletter' => $user->getNewsletter(),
+                'newsletter' => $user->isNewsletter(),
                 'address' => $user->getAddress(),
                 'city' => $user->getCity(),
                 'zip' => $user->getZip(),

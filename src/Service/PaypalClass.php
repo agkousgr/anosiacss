@@ -25,13 +25,15 @@ class PaypalClass
      * @param $item
      * @return float|int
      */
-    function GetItemTotalPrice($item) {
+    function GetItemTotalPrice($item)
+    {
 
         //(Item Price x Quantity = Total) Get total amount of product;
         return $item['ItemPrice'] * $item['ItemQty'];
     }
 
-    function GetProductsTotalAmount($products) {
+    function GetProductsTotalAmount($products)
+    {
 
         $ProductsTotalAmount = 0;
 
@@ -43,7 +45,8 @@ class PaypalClass
         return $ProductsTotalAmount;
     }
 
-    function GetGrandTotal($products, $charges) {
+    function GetGrandTotal($products, $charges)
+    {
 
         //Grand total including all tax, insurance, shipping cost and discount
 
@@ -57,7 +60,8 @@ class PaypalClass
         return $GrandTotal;
     }
 
-    function SetExpressCheckout($products, $charges, $noshipping = '1') {
+    function SetExpressCheckout($products, $charges, $noshipping = '1')
+    {
         error_reporting('E_ALL');
         //Parameters for SetExpressCheckout, which will be sent to PayPal
 
@@ -120,37 +124,38 @@ class PaypalClass
         //print_r($httpParsedResponseAr);
         //Respond according to message we receive from Paypal
         //ob_start();
-//        if ("SUCCESS" == strtoupper($httpParsedResponseAr["ACK"]) || "SUCCESSWITHWARNING" == strtoupper($httpParsedResponseAr["ACK"])) {
-//
-//            $paypalmode = (PPL_MODE == 'sandbox') ? '.sandbox' : '';
-//
-//            //Redirect user to PayPal store with Token received.
-//
-//            $paypalurl = 'https://www' . $paypalmode . '.paypal.com/cgi-bin/webscr?cmd=_express-checkout&token=' . $httpParsedResponseAr["TOKEN"] . '';
-//            echo "<script>window.location = '$paypalurl';</script>";
-//            //header('Location: ' . $paypalurl);
-//        } else {
-//
-//            //Show error message
-//
-//            echo '<div style="color:red"><b>Error : </b>' . urldecode($httpParsedResponseAr["L_LONGMESSAGE0"]) . '</div>';
-//
-//            echo '<pre>';
-//
-//            print_r($httpParsedResponseAr);
-//
-//            echo '</pre>';
-//        }
+        if ("SUCCESS" == strtoupper($httpParsedResponseAr["ACK"]) || "SUCCESSWITHWARNING" == strtoupper($httpParsedResponseAr["ACK"])) {
+
+            $paypalmode = (PPL_MODE == 'sandbox') ? '.sandbox' : '';
+
+            //Redirect user to PayPal store with Token received.
+
+            $paypalurl = 'https://www' . $paypalmode . '.paypal.com/cgi-bin/webscr?cmd=_express-checkout&token=' . $httpParsedResponseAr["TOKEN"] . '';
+            echo "<script>window.location = '$paypalurl';</script>";
+            //header('Location: ' . $paypalurl);
+        } else {
+
+            //Show error message
+
+            echo '<div style="color:red"><b>Error : </b>' . urldecode($httpParsedResponseAr["L_LONGMESSAGE0"]) . '</div>';
+
+            echo '<pre>';
+
+            print_r($httpParsedResponseAr);
+
+            echo '</pre>';
+        }
         //ob_end_flush();
     }
 
-    function DoExpressCheckoutPayment($token, $PayerID) {
+    function DoExpressCheckoutPayment($token, $PayerID)
+    {
 //        global $lang_code;
 
 //        if ($lang_code == 'el') {
-            $PAYMENT_SUCCESS = 'Η πληρωμή ολοκληρώθηκε';
-            $PAYMENT_FAILED = 'Η συναλλαγή απέτυχε, παρακαλώ ειδοποιήστε τον διαχειριστή, sales@anosiapharmacy.gr .';
-            $PAYMENT_PENDING = 'Η συναλλαγή ολοκληρώθηκε αλλά η πληρωμή εκκρεμεί. Πρέπει να επιβεβαιώσετε την πληρωμή χειροκίνητα στον <a target="_new" href="http://www.paypal.com">Paypal λογαριασμό σας</a>';
+        $PAYMENT_SUCCESS = 'Η πληρωμή ολοκληρώθηκε';
+        $PAYMENT_FAILED = 'Η συναλλαγή απέτυχε, παρακαλώ ειδοποιήστε τον διαχειριστή, sales@anosiapharmacy.gr .';
+        $PAYMENT_PENDING = 'Η συναλλαγή ολοκληρώθηκε αλλά η πληρωμή εκκρεμεί. Πρέπει να επιβεβαιώσετε την πληρωμή χειροκίνητα στον <a target="_new" href="http://www.paypal.com">Paypal λογαριασμό σας</a>';
 //        } else {
 //            $PAYMENT_SUCCESS = 'Payment was completed succesfully';
 //            $PAYMENT_FAILED = 'Your payment failed, please contact the system administrator at sales@anosiapharmacy.gr .';
@@ -213,7 +218,10 @@ class PaypalClass
                 }
 
                 $this->GetTransactionDetails($token);
-
+                return $paypalResult = [
+                    'success' => true,
+                    'msg' => $PAYMENT_FAILED
+                ];
 //                create_order_invoice($_SESSION['product_order_code'], $_SESSION['owner_email'], $_SESSION['thiscurrencysymbol'], $_SESSION['billing_id']);
             } else {
 
@@ -222,6 +230,10 @@ class PaypalClass
                 //echo '<pre>';
                 //print_r($httpParsedResponseAr);
                 //echo '</pre>';
+                return $paypalResult = [
+                    'success' => false,
+                    'msg' => $PAYMENT_FAILED
+                ];
             }
         } else {
 
@@ -231,7 +243,8 @@ class PaypalClass
         }
     }
 
-    function GetTransactionDetails($token) {
+    function GetTransactionDetails($token)
+    {
 
         // we can retrive transection details using either GetTransactionDetails or GetExpressCheckoutDetails
         // GetTransactionDetails requires a Transaction ID, and GetExpressCheckoutDetails requires Token returned by SetExpressCheckOut
@@ -276,7 +289,8 @@ class PaypalClass
 //
 //            echo '</pre>';
 //            echo getcwd() . "\n";
-            file_put_contents("paypal_transactions/" . $_SESSION["username"] . "_" . date("d-m-Y") . ".txt", print_r($httpParsedResponseAr, true));
+            file_put_contents("paypal_transactions/" . $this->session->get("anosiaUser") . "_" . date("d-m-Y") . ".txt", print_r($httpParsedResponseAr, true));
+            return;
         } else {
 
             echo '<div style="color:red"><b>GetTransactionDetails failed:</b>' . urldecode($httpParsedResponseAr["L_LONGMESSAGE0"]) . '</div>';
@@ -289,7 +303,8 @@ class PaypalClass
         }
     }
 
-    function PPHttpPost($methodName_, $nvpStr_) {
+    function PPHttpPost($methodName_, $nvpStr_)
+    {
 
         // Set up your API credentials, PayPal end point, and API version.
         $API_UserName = urlencode(PPL_API_USER);

@@ -201,7 +201,7 @@
                                             </div>
                                         </article>
                                     </div>
-                                    {% if userData["addresses"] is not empty %}
+                                    {% if userData["addresses"] is defined %}
                                         {% for address in userData["addresses"] %}
                                             {#{{ dump(address) }}#}
                                         <div class="col-lg-4 col-md-6 col-sm-6 extra-addresses" style="padding-bottom:15px;">
@@ -246,10 +246,10 @@
                                         <div class="col-md-3 form-control-comment">
                                         </div>
                                     </div>
-                                    <div id="locationField">
-                                        <input id="autocomplete" placeholder="Enter your address"
-                                               onFocus="geolocate()" type="text"></input>
-                                    </div>
+                                    {#<div id="locationField">#}
+                                        {#<input id="autocomplete" placeholder="Enter your address"#}
+                                               {#onFocus="geolocate()" type="text"></input>#}
+                                    {#</div>#}
                                     <div class="form-group row ">
                                         {{ form_label(formAddress.zip, 'Τ.Κ.', {'label_attr': {'class': 'col-md-3 form-control-label required'}}) }}
                                         <div class="col-md-6">
@@ -303,13 +303,13 @@
                                     <div>Δεν υπάρχουν διαθέσιμες παραγγελίες</div>
                                 </section>
                             </section>
-                            <a class="col-lg-4 col-md-6 col-sm-6 col-xs-12" id="order-slips-link"
-                               href="">
-                                <span class="link-item">
-                                    <i class="material-icons">&#xE8B0;</i>
-                                    Credit slips
-                                </span>
-                            </a>
+                            {#<a class="col-lg-4 col-md-6 col-sm-6 col-xs-12" id="order-slips-link"#}
+                               {#href="">#}
+                                {#<span class="link-item">#}
+                                    {#<i class="material-icons">&#xE8B0;</i>#}
+                                    {#Credit slips#}
+                                {#</span>#}
+                            {#</a>#}
                             <a class="lnk_wishlist col-lg-4 col-md-6 col-sm-6 col-xs-12"
                                href=""
                                title="My wishlists">

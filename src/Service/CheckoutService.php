@@ -315,7 +315,7 @@ EOF;
         }
     }
 
-    public function getClientId($username) // to be deleted in production
+  /*  public function getClientId($username) // to be deleted in production
     {
         $message = <<<EOF
 <?xml version="1.0" encoding="utf-16"?>
@@ -347,6 +347,7 @@ EOF;
         }
 
     }
+  */
 
     /**
      * @param $checkout
@@ -500,22 +501,37 @@ EOF;
         return;
     }
 
-//    /**
-//     * @return int
-//     */
-//    private function getOrderNo()
-//    {
-//        $fileSystem = new Filesystem();
-//        $fileExists = $fileSystem->exists('../uploads/orders_counter');
-//        if ($fileExists) {
-//            $orderNo = (int)(file_get_contents('../uploads/orders_counter'));
-//            $orderNo++;
-//            $fileSystem->dumpFile('../uploads/orders_counter', $orderNo);
-//        } else {
-//            $orderNo = time();
-//        }
-//        return $orderNo;
-//    }
+    public function getOrders($clientId)
+    {
+        $message = <<<EOF
+<?xml version="1.0" encoding="utf-16"?>
+<ClientGetUsersRequest>
+    <Type>1048</Type>
+    <Kind>1</Kind>
+    <Domain>pharmacyone</Domain>
+    <AuthID>$this->authId</AuthID>
+    <AppID>157</AppID>
+    <CompanyID>1000</CompanyID>
+    <CustomerID>$clientId</CustomerID>
+    <OrderID>null</OrderID>
+    <Number>null</Number>
+    <EshopNumber>null</EshopNumber>
+</ClientGetUsersRequest>
+EOF;
+        try {
+            $result = $this->client->SendMessage(['Message' => $message]);
+            $userData = simplexml_load_string(str_replace("utf-16", "utf-8", $result->SendMessageResult));
+//            dump($message, $userData->GetDataRows->GetUsersRow->ClientID);
+            if ((int)$userData->RowsCount > 0) {
+                return $userData->GetDataRows->GetUsersRow->ClientID;
+            } else {
+                return 0;
+            }
+        } catch (\SoapFault $sf) {
+            echo $sf->faultstring;
+        }
+
+    }
 
     /**
      * @param $cartItems

@@ -88,7 +88,7 @@ class CheckoutController extends MainController
                     $checkout->setOrderNo($orderWebId->getOrderNumber() + 1);
                     if ($checkout->getPaymentType() === '1002') {
                         $paypalService->sendToPaypal($checkout);
-                        die();
+//                        die();
                     }
                     $orderResponse = $checkoutService->submitOrder($checkout, $this->cartItems);
                     if ($orderResponse) {
@@ -205,8 +205,9 @@ class CheckoutController extends MainController
                 if ($orderResponse) {
 
                     if ($checkout->getPaymentType() === '1002') {
+                        dump('zong');
                         $paypalService->sendToPaypal($checkout);
-                        die();
+//                        die();
                     }
 
                     $this->addFlash(
