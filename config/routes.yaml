@@ -147,29 +147,29 @@ blog_view:
 user_account:
     path: /user-account
     controller: App\Controller\UserAccountController::userAccount
-
 user_registration:
     path: /user-registration
     controller: App\Controller\UserAccountController::register
-
 get_users:
     path: /get-users
     controller: App\Controller\UserAccountController::getUsers
-
 create_address:
     path: /new-address
     controller: App\Controller\UserAccountController::createAddress
-
 update_address:
     path: /update-address/{id}
     controller: App\Controller\UserAccountController::updateAddress
     requirements:
         page: \d+
-
 delete_address:
     path: /delete-address
     controller: App\Controller\UserAccountController::deleteAddress
     methods: [GET,POST]
+    options:
+        expose: true
+newsletter_registration:
+    path: /newsletter/registration
+    controller: App\Controller\AjaxNewsletterController::newsletterRegistration
     options:
         expose: true
 

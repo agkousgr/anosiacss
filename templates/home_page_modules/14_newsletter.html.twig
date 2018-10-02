@@ -19,13 +19,16 @@
                     <form action="#" method="post">
                         <div class="col-md-12 form-groupwow flipInY" data-wow-delay="0.4s">
                             <input
+                                    id="newsletter-name"
                                     type="text"
                                     class="form-control input-lg-newsletter"
                                     placeholder="Ονοματεπώνυμο  ">
                         </div>
                         <br/><br/>
                         <div class="col-md-12 form-group wow flipInY"
-                             data-wow-delay="0.4s"><input
+                             data-wow-delay="0.4s">
+                            <input
+                                    id="newsletter-email"
                                     type="email"
                                     class="form-control input-lg-newsletter"
                                     placeholder="Email">
@@ -45,14 +48,14 @@
                         {#placeholder="Ηλικία  ">#}
                         {#</div>#}
                         <br/><br/>
-                        <div class="gy-gdpr-consents"><input type="checkbox" name="check" value="">
+                        <div class="gy-gdpr-consents">
+                            <input id="newsletter-chk" type="checkbox" name="check" value="">
                             <label>Επιθυμώ να ενημερώνομαι για προσφορές & νέα!</label>
                         </div>
                         <br/><br/>
                         <div class="col-sm-8 col-sm-offset-2 col-md-6 col-md-offset-0 form-group wow flipInY"
                              data-wow-delay="0.4s">
-                            <input type="submit" value="ΕΓΓΡΑΦΗ"
-                                                          class="btn btn-primary btn-block btn-lg">
+                            <input id="newsletter-btn" type="button" disabled="" value="ΕΓΓΡΑΦΗ" class="btn btn-primary btn-block btn-lg">
                         </div>
                     </form>
                 </div>

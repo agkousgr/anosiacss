@@ -20,9 +20,91 @@ $(document).ready(function () {
     );
 });
 
+// NEWSLETTER REGISTRATION
+$('#newsletter-chk').on('click', function () {
+    let attr = $('#newsletter-btn').attr('disabled');
+    if (typeof attr !== typeof undefined && attr !== false) {
+        $('#newsletter-btn').removeAttr('disabled');
+    } else {
+        $('#newsletter-btn').attr('disabled', 'disabled');
+    }
+});
 
+$('#newsletter-btn').on('click', function () {
+    let email = $('#newsletter-email').val();
+    let name = $('#newsletter-name').val();
+    if (email === "") {
+        swal({
+            title: 'Ουπς',
+            html: '<div style="font-size:17px;">Παρακαλώ συμπληρώστε το email σας!</div>',
+            type: 'error',
+            timer: 5000
+        });
+    } else if (name === '') {
+        swal({
+            title: 'Ουπς',
+            html: '<div style="font-size:17px;">Παρακαλώ συμπληρώστε το ονοματεπώνυμό σας!</div>',
+            type: 'error',
+            timer: 5000
+        });
+    } else if (!isValidEmailAddress(email)) {
+        swal({
+            title: 'Ουπς',
+            html: '<div style="font-size:17px;">Παρακαλώ συμπληρώστε ένα έγκυρο email!</div>',
+            type: 'error',
+            timer: 5000
+        });
+    } else if ($('input[name="newsletter-chk"]').attr('checked') !== true) {
+        swal({
+            title: 'Ουπς',
+            html: '<div style="font-size:17px;">Παρακαλώ τσεκάρετε την επιλογή "Επιθυμώ να ενημερώνομαι για προσφορές & νέα"!</div>',
+            type: 'error',
+            timer: 5000
+        });
+    } else {
+        let data = {
+            'email': email,
+            'name': name
+        }
+        $.post(Routing.generate('newsletter_registration'), data, function (result) {
+            if (result.success && result.exist === false) {
+                swal({
+                    title: 'Newsletter',
+                    html: '<div style="font-size:17px;">Η εγγραφή σας στο Newsletter έγινε με επιτυχία!</div>',
+                    type: 'success',
+                    timer: 5000
+                });
+                $('#newsletter-email').val('');
+                $('#newsletter-name').val('');
+                $('#newsletter-btn').attr('disabled', 'disabled');
+                // $('#collapseCart').load(Routing.generate('load_top_wishlist'));
+            } else if (result.success === 'empty') {
+                swal({
+                    title: 'Ουπς',
+                    html: '<div style="font-size:17px;">Παρακαλώ συμπληρώστε τα στοιχεία σας!</div>',
+                    type: 'error',
+                    timer: 5000
+                });
+            } else if (result.success && result.exist === true) {
+                swal({
+                    title: 'Ουπς',
+                    html: '<div style="font-size:17px;">To email σας βρίσκεται ήδη στη λίστα μας!</div>',
+                    type: 'info',
+                    timer: 5000
+                });
+            } else {
+                swal({
+                    title: 'Ουπς',
+                    html: '<div style="font-size:17px;">Κάποια σφάλμα παρουσιάστηκε!</div>',
+                    type: 'error',
+                    timer: 5000
+                });
+            }
+        });
+    }
+});
 
-
+// MENU TOGGLE
 $("#menu-close").click(function (e) {
     e.preventDefault();
     $("#sidebar-wrapper").toggleClass("active");
@@ -393,3 +475,8 @@ $('.btn-signin').on('click', function (e) {
         });
     }
 });
+
+function isValidEmailAddress(emailAddress) {
+    var pattern = new RegExp(/^(("[\w-+\s]+")|([\w-+]+(?:\.[\w-+]+)*)|("[\w-+\s]+")([\w-+]+(?:\.[\w-+]+)*))(@((?:[\w-+]+\.)*\w[\w-+]{0,66})\.([a-z]{2,6}(?:\.[a-z]{2})?)$)|(@\[?((25[0-5]\.|2[0-4][\d]\.|1[\d]{2}\.|[\d]{1,2}\.))((25[0-5]|2[0-4][\d]|1[\d]{2}|[\d]{1,2})\.){2}(25[0-5]|2[0-4][\d]|1[\d]{2}|[\d]{1,2})\]?$)/i);
+    return pattern.test(emailAddress);
+};
