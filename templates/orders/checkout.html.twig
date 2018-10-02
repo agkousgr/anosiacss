@@ -232,7 +232,7 @@
                                                     <div class="js-address-form">
                                                         <section class="form-fields">
                                                             <h4>Στοιχεία τιμολόγησης</h4>
-                                                            {% if loggedUser is not empty %}
+                                                            {% if loggedUser is not empty and checkout.address|length > 0 %}
                                                                 <article
                                                                         class="address-item selected"
                                                                         id="id-address-delivery-address-8">

@@ -48,13 +48,14 @@ class CheckoutSubscriber implements EventSubscriberInterface
 
         }
 
-        if (!$this->session->get("anosiaClientId")) {
+        if (!$this->session->get("anosiaClientId") || !$event->getData()->getAddress()) {
             $form = $event->getForm();
             $form->add('address', TextType::class)
                 ->add('zip', TextType::class)
                 ->add('city', TextType::class)
                 ->add('district', TextType::class)
                 ->add('phone01', TextType::class);
+            $this->session->set('addAddress', true);
         }
     }
 }

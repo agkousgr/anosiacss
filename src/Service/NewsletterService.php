@@ -1,8 +1,9 @@
 <?php
 
-
 namespace App\Service;
 
+use Psr\Log\LoggerInterface;
+use Symfony\Component\HttpFoundation\Session\SessionInterface;
 
 class NewsletterService
 {
@@ -36,13 +37,13 @@ class NewsletterService
     /**
      * @param $name
      * @param $email
+     * @param $referrer
      *
-     * @return bool
+     * @return array
      */
-    public function getNewsletter($name, $email)
+    public function getNewsletter($name, $email, $referrer)
     {
         $client = new \SoapClient('http://caron.cloudsystems.gr/FOeshopWS/ForeignOffice.FOeshop.API.FOeshopSvc.svc?singleWsdl', ['trace' => true, 'exceptions' => true,]);
-
         $message = <<<EOF
 <?xml version="1.0" encoding="utf-16"?>
 <ClientGetNewsletterRequest>
@@ -52,7 +53,7 @@ class NewsletterService
     <AuthID>$this->authId</AuthID>
     <AppID>157</AppID>
     <CompanyID>1000</CompanyID>
-    <pagesize>1</pagesize>
+    <pagesize>10</pagesize>
     <pagenumber>0</pagenumber>
     <Email>$email</Email>
 </ClientGetNewsletterRequest>
@@ -60,30 +61,41 @@ EOF;
         try {
             $result = $client->SendMessage(['Message' => $message]);
             $newsletterData = simplexml_load_string(str_replace("utf-16", "utf-8", $result->SendMessageResult));
+//            dump($message, $result);
+            $success = false;
+            $exist = false;
             if ((int)$newsletterData->RowsCount > 0) {
                 if ((string)$newsletterData->GetDataRows->GetNewsletterRow->Allow === 'false') {
-                    $this->setNewsletter(); // changes HERE
-                } else {
-//                    $user->setNewsletter(false);
-//                    $user->setNewsletterId('');
+                    $this->setNewsletter($name, $email, intval($newsletterData->GetDataRows->GetNewsletterRow->ID), 'true', $referrer);
+                    //                 When sotiris return key in getNewsletter send it with email
+                    $success = true;
+                    $success = true;
+                    $exist = true;
                 }
             } else {
-//                $user->setNewsletter(false);
+                if ($this->setNewsletter($name, $email, '', '', $referrer)) {
+                    $success = true;
+                }
             }
-            return;
-//            dump($result);
+            return [
+                'success' => $success,
+                'exist' => $exist
+            ];
         } catch (\SoapFault $sf) {
             echo $sf->faultstring;
         }
     }
 
     /**
-     * @param $userData
+     * @param $name
+     * @param $email
+     * @param $key
+     * @param $allow
+     *
      * @return true|false
      */
-    public function setNewsletter($userData)
+    public function setNewsletter($name, $email, $key = '', $allow = 'true', $referrer)
     {
-
         $client = new \SoapClient('http://caron.cloudsystems.gr/FOeshopWS/ForeignOffice.FOeshop.API.FOeshopSvc.svc?singleWsdl', ['trace' => true, 'exceptions' => true,]);
 
         $message = <<<EOF
@@ -96,14 +108,16 @@ EOF;
     <AuthID>$this->authId</AuthID>
     <AppID>157</AppID>
     <CompanyID>1000</CompanyID>
-    <Email>$username</Email>
+    <Email>$email</Email>
     <Name>$name</Name>
+    <Allow>$allow</Allow>
+    <Referrer>$referrer</Referrer>
 </ClientSetNewsletterRequest>
 EOF;
         try {
             $result = $client->SendMessage(['Message' => $message]);
             $newsletterData = simplexml_load_string(str_replace("utf-16", "utf-8", $result->SendMessageResult));
-            dump($message, $result);
+//            dump($message, $result);
             return ((string)$newsletterData->IsValid === 'true') ? true : false;
         } catch (\SoapFault $sf) {
             echo $sf->faultstring;

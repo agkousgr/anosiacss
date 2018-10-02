@@ -48,40 +48,39 @@ class AjaxLoginController extends AbstractController
 
     }
 
-    public function fbcallback(Request $request, UserAccountService $userAccountService, WebserviceUserProvider $provider, SessionInterface $session)
+    public function fbcallback(Request $request, UserAccountService $userAccountService, SessionInterface $session)
     {
-       $fb = new Facebook\Facebook([
-          'app_id' => '605092459847380',
-          'app_secret' => '09f4a59ad57726736664a92d7059025f',
-          'default_graph_version' => 'v3.0',
+        $fb = new Facebook\Facebook([
+            'app_id' => '605092459847380',
+            'app_secret' => '09f4a59ad57726736664a92d7059025f',
+            'default_graph_version' => 'v3.0',
         ]);
-
         $helper = $fb->getRedirectLoginHelper();
 
         try {
-          $accessToken = $helper->getAccessToken();
-        } catch(Facebook\Exceptions\FacebookResponseException $e) {
-          // When Graph returns an error
-          echo 'Graph returned an error: ' . $e->getMessage();
-          exit;
-        } catch(Facebook\Exceptions\FacebookSDKException $e) {
-          // When validation fails or other local issues
-          echo 'Facebook SDK returned an error: ' . $e->getMessage();
-          exit;
+            $accessToken = $helper->getAccessToken();
+        } catch (Facebook\Exceptions\FacebookResponseException $e) {
+            // When Graph returns an error
+            echo 'Graph returned an error: ' . $e->getMessage();
+            exit;
+        } catch (Facebook\Exceptions\FacebookSDKException $e) {
+            // When validation fails or other local issues
+            echo 'Facebook SDK returned an error: ' . $e->getMessage();
+            exit;
         }
 
-        if (! isset($accessToken)) {
-          if ($helper->getError()) {
-            header('HTTP/1.0 401 Unauthorized');
-            echo "Error: " . $helper->getError() . "\n";
-            echo "Error Code: " . $helper->getErrorCode() . "\n";
-            echo "Error Reason: " . $helper->getErrorReason() . "\n";
-            echo "Error Description: " . $helper->getErrorDescription() . "\n";
-          } else {
-            header('HTTP/1.0 400 Bad Request');
-            echo 'Bad request';
-          }
-          exit;
+        if (!isset($accessToken)) {
+            if ($helper->getError()) {
+                header('HTTP/1.0 401 Unauthorized');
+                echo "Error: " . $helper->getError() . "\n";
+                echo "Error Code: " . $helper->getErrorCode() . "\n";
+                echo "Error Reason: " . $helper->getErrorReason() . "\n";
+                echo "Error Description: " . $helper->getErrorDescription() . "\n";
+            } else {
+                header('HTTP/1.0 400 Bad Request');
+                echo 'Bad request';
+            }
+            exit;
         }
 
         // Logged in
@@ -102,32 +101,32 @@ class AjaxLoginController extends AbstractController
         //$tokenMetadata->validateUserId('123');
         $tokenMetadata->validateExpiration();
 
-        if (! $accessToken->isLongLived()) {
-          // Exchanges a short-lived access token for a long-lived one
-          try {
-            $accessToken = $oAuth2Client->getLongLivedAccessToken($accessToken);
-          } catch (Facebook\Exceptions\FacebookSDKException $e) {
-            echo "<p>Error getting long-lived access token: " . $e->getMessage() . "</p>\n\n";
-            exit;
-          }
+        if (!$accessToken->isLongLived()) {
+            // Exchanges a short-lived access token for a long-lived one
+            try {
+                $accessToken = $oAuth2Client->getLongLivedAccessToken($accessToken);
+            } catch (Facebook\Exceptions\FacebookSDKException $e) {
+                echo "<p>Error getting long-lived access token: " . $e->getMessage() . "</p>\n\n";
+                exit;
+            }
 
-          echo '<h3>Long-lived</h3>';
-          var_dump($accessToken->getValue());
+            echo '<h3>Long-lived</h3>';
+            var_dump($accessToken->getValue());
         }
 
 //        $_SESSION['fb_access_token'] = (string) $accessToken;
-        $res = $fb->get('/me', $accessToken);
+        $res = $fb->get('/me?fields=name,email', $accessToken);
 
-         print_r($res->getDecodedBody());
-         // Todo: If button call is via ajax change return code
-        if ($userAccountService->login($res->getDecodedBody()['id'], $res->getDecodedBody()['id']) === $res->getDecodedBody()['id']) {
-            $session->set("anosiaUser", $res->getDecodedBody()['id']);
+        print_r($res->getDecodedBody());
+        // Todo: If button call is via ajax change return code
+        if ($userAccountService->login($res->getDecodedBody()['email'], $res->getDecodedBody()['id'])) {
+            $session->set("anosiaUser", $res->getDecodedBody()['email']);
             $session->remove('curOrder');
-        }else {
+        } else {
             $user = [];
-            $user['username'] = $res->getDecodedBody()['id'];
+            $user['username'] = $res->getDecodedBody()['email'];
             list($firstname, $lastname) = explode(' ', $res->getDecodedBody()['name']);
-            $lastname = ($lastname) ?: '';
+            $lastname = ($lastname) ?: ' ';
             $user['firstname'] = $firstname;
             $user['lastname'] = $lastname;
             $user['password'] = $res->getDecodedBody()['id'];

@@ -20,14 +20,33 @@ class AjaxNewsletterController extends AbstractController
                     return $this->json([
                         'success' => 'empty',
                     ]);
-                }else {
-                    $userIsRegistered = $newsletterService->getNewsletter($name, $email);
+                } else {
+                    $date = date('Y-m-d H:i:s');
+                    $referrer = 'USER AGENT: ' . $request->headers->get('User-Agent') . ' REFERRER: ' . $request->headers->get('referer') . ' DATE: ' . $date;
+                    $userIsRegistered = $newsletterService->getNewsletter($name, $email, $referrer);
+                    dump($userIsRegistered);
+                    return $this->json([
+                        'success' => $userIsRegistered["success"],
+                        'exist' => $userIsRegistered["exist"]
+                    ]);
 
+//                    switch ($userIsRegistered) {
+//                        case 'UserExists':
+//                            return $this->json([
+//                                'success' => true,
+//                                'exist' => true
+//                            ]);
+//                            break;
+//
+//                        case 'Success':
+//                            return $this->json([
+//                                'success' => true,
+//                                'exist' => false
+//                            ]);
+//                            break;
+//                    }
                 }
-                return $this->json([
-                    'success' => true,
-                    'exist' => false
-                ]);
+
             } catch (\Exception $e) {
                 throw $e;
                 //throw $this->createNotFoundException('The resource you are looking for could not be found.');
@@ -35,5 +54,5 @@ class AjaxNewsletterController extends AbstractController
         } else {
             throw $this->createNotFoundException('The resource you are looking for could not be found.');
         }
-}
+    }
 }

@@ -1,27 +1,27 @@
-let apex = require('./jquery.apex-slider.js');
-let apexslider = apex.apexSlider();
+// let apex = require('./jquery.apex-slider.js');
+// let apexslider = apex.apexSlider();
 
 $(document).ready(function () {
 
 
-    let api;
-    $(document).ready(function () {
-        api = $(".fullwidthbanner").apexslider({
-            startWidth: 1170,
-            startHeight: 893,
-            transition: "random",
-            thumbWidth: 100,
-            thumbHeight: 47,
-            thumbAmount: 0,
-            navType: "both",
-            navStyle: "round",
-            navArrow: "visible",
-            showNavOnHover: true,
-            timerAlign: "bottom",
-            shadow: 0,
-            fullWidth: true
-        });
-    });
+    // let api;
+    // $(document).ready(function () {
+    //     api = $(".fullwidthbanner").apexslider({
+    //         startWidth: 1170,
+    //         startHeight: 893,
+    //         transition: "random",
+    //         thumbWidth: 100,
+    //         thumbHeight: 47,
+    //         thumbAmount: 0,
+    //         navType: "both",
+    //         navStyle: "round",
+    //         navArrow: "visible",
+    //         showNavOnHover: true,
+    //         timerAlign: "bottom",
+    //         shadow: 0,
+    //         fullWidth: true
+    //     });
+    // });
 
     // FACEBOOK
     // FB.getLoginStatus(function (response) {

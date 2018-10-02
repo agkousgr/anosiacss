@@ -62,6 +62,10 @@ class CheckoutController extends MainController
                     }
                 }
             } elseif ($step2Form->isSubmitted() && $step2Form->isValid()) {
+                if ($this->session->get("addAddress")) {
+                    $userAccountService->updateUserInfo($checkout);
+                    $this->session->remove('addAddress');
+                }
                 $curStep = 3;
             } elseif ($step3Form->isSubmitted() && $step3Form->isValid()) {
                 if ($step3Form->get('shippingType')->getData() === '1000') {
