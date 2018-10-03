@@ -111,6 +111,9 @@ paypal_result:
 paypal_cancel:
     path: /paypal/cancel
     controller: App\Controller\PaypalController::cancel
+pireus_test:
+    path: /pireaus
+    controller: App\Controller\PireausController::sentToPireaus
 
 # Wishlist
 wishlist_view:
