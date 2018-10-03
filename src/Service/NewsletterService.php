@@ -69,7 +69,6 @@ EOF;
                     $this->setNewsletter($name, $email, intval($newsletterData->GetDataRows->GetNewsletterRow->ID), 'true', $referrer);
                     //                 When sotiris return key in getNewsletter send it with email
                     $success = true;
-                    $success = true;
                     $exist = true;
                 }
             } else {

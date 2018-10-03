@@ -36,9 +36,13 @@ class Checkout extends WebUser
 
     /**
      * @var double|null
-     *
      */
     private $totalOrderCost;
+
+    /**
+     * @var int|null
+     */
+    private $installments;
 
     /**
      * 7021 For Invoice, 7023 for Receipt
@@ -249,6 +253,24 @@ class Checkout extends WebUser
     public function setTotalOrderCost(?float $totalOrderCost): void
     {
         $this->totalOrderCost = $totalOrderCost;
+    }
+
+    /**
+     * @return int|null
+     */
+    public function getInstallments(): ?int
+    {
+        return $this->installments;
+    }
+
+    /**
+     * @param int|null $installments
+     * @return Checkout
+     */
+    public function setInstallments(?int $installments): Checkout
+    {
+        $this->installments = $installments;
+        return $this;
     }
 
     /**
