@@ -7,47 +7,72 @@ use App\Entity\IssueNewTicket;
 
 class PireausRedirection
 {
+    /**
+     * @var array
+     */
+    private $bank_config;
+
+    public function __construct()
+    {
+        $this->bank_config['AcquirerId'] = 14;
+        $this->bank_config['MerchantId'] = 2137477493;
+        $this->bank_config['PosId'] = 2141384532;
+        $this->bank_config['User'] = 'AN895032';
+        $this->bank_config['Password'] = 'YC4589964';
+
+    }
+
     public function submitOrderToPireaus($checkout)
     {
-        $IssueNewTicket = new IssueNewTicket();
-        $params = [
-            'AcquirerId' => 14,
-            'MerchantID' => 2137477493,
-            'PosID' => 2141384532,
-            'UserName' => 'AN895032',
-            'Password' => md5('YC4589964'),
-            'RequestType' => '00',
-            'CurrencyCode' => 978,
-            'MerchantReference' => $checkout->getOrderNo(),
-            'Amount' => $checkout->getTotalOrderCost(),
-            'Installments' => $checkout->getInstallments(),
-            // Αφορά συναλλαγές προέγκρισης (RequestType
-            //=«00») και περιέχει το πλήθος των ημερών
-            //εντός των οποίων η προέγκριση μπορεί να
-            //ολοκληρωθεί. Μέγιστη τιμή: 30 ημέρες min 1
-            'ExpirePreauth' => 1,
-            'Bnpl' => 0,
-            'Parameters' => 'String_for_our_use' // Spaces are NOT allowed
-        ];
-        $IssueNewTicket->setAcquirerId(14);
-        $IssueNewTicket->setMerchantID(2137477493);
-        $IssueNewTicket->setPosID(2141384532);
-        $IssueNewTicket->setUserName('AN895032');
-        $IssueNewTicket->setPassword('YC4589964');
-        $IssueNewTicket->setCurrencyCode('978');
-        $IssueNewTicket->setMerchantReference((string)$checkout->getOrderNo());
-        $IssueNewTicket->setAmount($checkout->getTotalOrderCost());
-        $IssueNewTicket->setInstallments($checkout->getInstallments());
-        $IssueNewTicket->setExpirePreauth(1);
-        $IssueNewTicket->setBnpl(0);
-        $IssueNewTicket->setParameters('String_for_our_use');
+        $wsdl_uri = 'https://paycenter.piraeusbank.gr/services/tickets/issuer.asmx?WSDL';
+        $arrContextOptions = array(
+            "ssl"=>array(
+                "verify_peer" => false,
+                "verify_peer_name" => false,
+                "allow_self_signed" => true,
+            )
+        );
+        try {
+            $ticket_issuer = new \SoapClient($wsdl_uri, array(
+                "exceptions" => 1,
+                "soap_version" => SOAP_1_2,
+                "stream_context" => stream_context_create($arrContextOptions),
+            ));
+            $params = array(
+                'AcquirerId' => $this->bank_config['AcquirerId'],
+                'MerchantId' => $this->bank_config['MerchantId'],
+                'PosId' => $this->bank_config['PosId'],
+                'Username' => $this->bank_config['User'],
+                'Password' => hash('md5', $this->bank_config['Password']),
+                'RequestType' => '02',
+                'CurrencyCode' => 978,
+                'MerchantReference' => $checkout->getOrderNo(),
+                'Amount' => $checkout->getTotalOrderCost(),
+                'Installments' => pack('H', $checkout->getInstallments()),
+                'ExpirePreauth' => 0x1e,
+                'Bnpl' => 0x00,
+                'Parameters' => 'String_for_our_use'
+            );
+            $response = $ticket_issuer->IssueNewTicket(array('Request' => $params));
+            dump($response);
+            return;
+        } catch (SoapFault $sf) {
+            return $sf;
+        }
 
-        $client = new \SoapClient('https://paycenter.piraeusbank.gr/services/tickets/issuer.asmx?WSDL');
-        dump($client->__getFunctions());
 
-        $result = $client->IssueNewTicket($IssueNewTicket);
-        dump($result);
-        return;
+//        $object = new \stdClass();
+//        foreach ($params as $key => $value)
+//        {
+//            $object->$key = $value;
+//        }
+//
+//        $client = new \SoapClient('https://paycenter.piraeusbank.gr/services/tickets/issuer.asmx?WSDL');
+//        dump($client->__getFunctions());
+//
+//        $result = $client->IssueNewTicket(array('Request' => $params));
+//        dump($result);
+//        return;
 
 //        $curl = curl_init();
 //        curl_setopt_array($curl, array(

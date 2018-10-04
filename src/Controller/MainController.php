@@ -120,11 +120,11 @@ class MainController extends AbstractController
         EntityManagerInterface $em
     )
     {
-        if (session_status() !== PHP_SESSION_ACTIVE) {
-            session_start();
-//            session_cache_expire(180);
-//            $session->set('cache_expire', session_cache_expire());
-        }
+//        if (session_status() !== PHP_SESSION_ACTIVE) {
+//            session_start();
+////            session_cache_expire(180);
+////            $session->set('cache_expire', session_cache_expire());
+//        }
 
         $this->softoneLogin = $softoneLogin;
         $this->categoryService = $categoryService;
@@ -146,10 +146,11 @@ class MainController extends AbstractController
         $permissions = ['email']; // Optional permissions
         $this->loginUrl = $helper->getLoginUrl('https://localhost/anosia/public/index.php/fb-callback', $permissions);
 
-
-        if ($this->session->has("authID") === false) {
+        dump($this->session->has("authID"), $this->session->get("authID"));
+        if ($this->session->has("authID") === false || $this->session->get("authID") === null || !$this->session->get("authID")) {
             $authID = $this->softoneLogin->login();
             $this->session->set('authID', $authID);
+            dump($this->session->get("authID"));
         }
         $this->categories = $this->em->getRepository(Category::class)->childrenHierarchy();
         if ($this->categories) {
