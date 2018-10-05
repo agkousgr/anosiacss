@@ -11,13 +11,13 @@ use App\Form\Type\{
     CheckoutStep3Type,
     CheckoutStep4Type
 };
-use App\Service\{CheckoutService, UserAccountService, PaypalService};
+use App\Service\{CheckoutService, PireausRedirection, UserAccountService, PaypalService};
 use Doctrine\ORM\EntityManagerInterface;
 use Symfony\Component\HttpFoundation\Request;
 
 class CheckoutController extends MainController
 {
-    public function checkout(int $step, Request $request, CheckoutService $checkoutService, UserAccountService $userAccountService, EntityManagerInterface $em, PaypalService $paypalService)
+    public function checkout(int $step, Request $request, CheckoutService $checkoutService, UserAccountService $userAccountService, EntityManagerInterface $em, PaypalService $paypalService, PireausRedirection $pireausRedirection)
     {
         try {
             $addresses = array();
@@ -73,7 +73,7 @@ class CheckoutController extends MainController
                 }
                 $curStep = 4;
             }
-            $this->session->set('curOrder', $checkout);
+
             if ($step4Form->isSubmitted() && $step4Form->isValid()) {
                 if (null === $this->loggedUser && 'Success' !== $createUserResult = $userAccountService->createUser($checkout)) {
                     $curStep = 4;
@@ -81,7 +81,8 @@ class CheckoutController extends MainController
                         'notice',
                         'Παρουσιάστηκε σφάλμα κατά την ολοκλήρωση της παραγγελίας σας. Κωδικός σφάλματος "' . $createUserResult . '"! Αν δεν είναι η πρώτη φορά που βλέπετε αυτό το σφάλμα παρακαλούμε επικοινωνείστε μαζί μας.'
                     );
-                }else {
+                } else {
+                    $onlinePaymentError = false;
                     if ($step4Form->get('paymentType')->getData() === '1003') {
                         $checkout->setAntikatavoliCost(1.50);
                     } else {
@@ -92,41 +93,56 @@ class CheckoutController extends MainController
                     $checkout->setOrderNo($orderWebId->getOrderNumber() + 1);
                     if ($checkout->getPaymentType() === '1002') {
                         $paypalService->sendToPaypal($checkout);
-//                        die();
-                    }
-                    $orderResponse = $checkoutService->submitOrder($checkout, $this->cartItems);
-                    if ($orderResponse) {
 
-                        $this->addFlash(
-                            'success',
-                            'Η παραγγελία σας ολοκληρώθηκε με επιτυχία. Ένα αντίγραφο έχει αποσταλεί στο email σας ' . $checkout->getEmail() . '. Ευχαριστούμε που μας προτιμήσατε για τις αγορές σας!'
-                        );
-                        $checkoutService->sendOrderConfirmationEmail($checkout);
+//                        $onlinePaymentError = true;
+//                        die();
+                    } else if ($checkout->getPaymentType() === '1001') {
+                        $checkout->setInstallments(0);
+                        $pireausRedirection->submitOrderToPireaus($checkout);
+                        if ($checkout->getPireausResultCode() !== "0") {
+                            $this->addFlash(
+                                'notice',
+                                $checkout->getPireausResultDescription() . ' ' . $checkout->getPireausResultAction()
+                            );
+                            $orderCompleted = false;
+                            $onlinePaymentError = true;
+                        }
+                    }
+                    if ($onlinePaymentError === false) {
+                        $orderResponse = $checkoutService->submitOrder($checkout, $this->cartItems);
+                        if ($orderResponse) {
+
+                            $this->addFlash(
+                                'success',
+                                'Η παραγγελία σας ολοκληρώθηκε με επιτυχία. Ένα αντίγραφο έχει αποσταλεί στο email σας ' . $checkout->getEmail() . '. Ευχαριστούμε που μας προτιμήσατε για τις αγορές σας!'
+                            );
+                            $checkoutService->sendOrderConfirmationEmail($checkout);
 //                    $checkoutService->emptyCart($this->cartItems, $em);
-                        $orderCompleted = true;
-                        // CLEAR curOrder SESSION
-                        return ($this->render('orders/order_completed.html.twig', [
-                            'categories' => $this->categories,
-                            'popular' => $this->popular,
-                            'featured' => $this->featured,
-                            'checkout' => $checkout,
-                            'loggedUser' => $this->loggedUser,
-                            'totalCartItems' => $this->totalCartItems,
-                            'totalWishlistItems' => $this->totalWishlistItems,
-                            'cartItems' => $this->cartItems,
-                            'orderCompleted' => $orderCompleted,
-                            'loginUrl' => $this->loginUrl
-                        ]));
-                    } else {
-                        $this->addFlash(
-                            'notice',
-                            'Ένα σφάλμα παρουσιάστηκε κατά την διαδικασία της παραγγελίας σας. Παρακαλούμε προσπαθήστε ξανά. Αν το πρόβλημα παραμείνει επικοινωνήστε μαζί μας!'
-                        );
-                        $orderCompleted = false;
+                            $orderCompleted = true;
+                            // CLEAR curOrder SESSION
+                            return ($this->render('orders/order_completed.html.twig', [
+                                'categories' => $this->categories,
+                                'popular' => $this->popular,
+                                'featured' => $this->featured,
+                                'checkout' => $checkout,
+                                'loggedUser' => $this->loggedUser,
+                                'totalCartItems' => $this->totalCartItems,
+                                'totalWishlistItems' => $this->totalWishlistItems,
+                                'cartItems' => $this->cartItems,
+                                'orderCompleted' => $orderCompleted,
+                                'loginUrl' => $this->loginUrl
+                            ]));
+                        } else {
+                            $this->addFlash(
+                                'notice',
+                                'Ένα σφάλμα παρουσιάστηκε κατά την διαδικασία της παραγγελίας σας. Παρακαλούμε προσπαθήστε ξανά. Αν το πρόβλημα παραμείνει επικοινωνήστε μαζί μας!'
+                            );
+                            $orderCompleted = false;
+                        }
                     }
                 }
             }
-            dump($addresses);
+            $this->session->set('curOrder', $checkout);
             return ($this->render('orders/checkout.html.twig', [
                 'categories' => $this->categories,
                 'popular' => $this->popular,

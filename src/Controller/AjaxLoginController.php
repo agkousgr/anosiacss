@@ -119,7 +119,7 @@ class AjaxLoginController extends AbstractController
 
         print_r($res->getDecodedBody());
         // Todo: If button call is via ajax change return code
-        if ($userAccountService->login($res->getDecodedBody()['email'], $res->getDecodedBody()['id'])) {
+        if ($userAccountService->login($res->getDecodedBody()['email'], $res->getDecodedBody()['id']) === $res->getDecodedBody()['email']) {
             $session->set("anosiaUser", $res->getDecodedBody()['email']);
             $session->remove('curOrder');
         } else {
@@ -131,7 +131,7 @@ class AjaxLoginController extends AbstractController
             $user['lastname'] = $lastname;
             $user['password'] = $res->getDecodedBody()['id'];
 
-            if ('Success' !== $createUserResult = $userAccountService->createUser($user)) {
+            if ('Success' === $createUserResult = $userAccountService->createUser($user)) {
                 $userAccountService->login($res->getDecodedBody()['id'], $res->getDecodedBody()['id']);
                 $session->set("anosiaUser", $res->getDecodedBody()['id']);
                 $session->remove('curOrder');

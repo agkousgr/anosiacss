@@ -96,6 +96,31 @@ class Checkout extends WebUser
     private $shipDistrict;
 
     /**
+     * @var string|null
+     */
+    private $pireausResultCode;
+
+    /**
+     * @var string|null
+     */
+    private $pireausResultDescription;
+
+    /**
+     * @var string|null
+     */
+    private $pireausResultAction;
+
+    /**
+     * @var \DateTime|null
+     */
+    private $pireausTimestamp;
+
+    /**
+     * @var string|null
+     */
+    private $pireausTranTicket;
+
+    /**
      * @return int|null
      */
     public function getNextPage(): ?int
@@ -345,4 +370,93 @@ class Checkout extends WebUser
         return $this;
     }
 
+    /**
+     * @return null|string
+     */
+    public function getPireausResultCode(): ?string
+    {
+        return $this->pireausResultCode;
+    }
+
+    /**
+     * @param null|string $pireausResultCode
+     * @return Checkout
+     */
+    public function setPireausResultCode(?string $pireausResultCode): Checkout
+    {
+        $this->pireausResultCode = $pireausResultCode;
+        return $this;
+    }
+
+    /**
+     * @return null|string
+     */
+    public function getPireausResultDescription(): ?string
+    {
+        return $this->pireausResultDescription;
+    }
+
+    /**
+     * @param null|string $pireausResultDescription
+     * @return Checkout
+     */
+    public function setPireausResultDescription(?string $pireausResultDescription): Checkout
+    {
+        $this->pireausResultDescription = $pireausResultDescription;
+        return $this;
+    }
+
+    /**
+     * @return null|string
+     */
+    public function getPireausResultAction(): ?string
+    {
+        return $this->pireausResultAction;
+    }
+
+    /**
+     * @param null|string $pireausResultAction
+     * @return Checkout
+     */
+    public function setPireausResultAction(?string $pireausResultAction): Checkout
+    {
+        $this->pireausResultAction = $pireausResultAction;
+        return $this;
+    }
+
+    /**
+     * @return \DateTime|null
+     */
+    public function getPireausTimestamp(): ?\DateTime
+    {
+        return $this->pireausTimestamp;
+    }
+
+    /**
+     * @param \DateTime|null $pireausTimestamp
+     * @return Checkout
+     */
+    public function setPireausTimestamp(?\DateTime $pireausTimestamp): Checkout
+    {
+        $this->pireausTimestamp = $pireausTimestamp;
+        return $this;
+    }
+
+    /**
+     * @return null|string
+     */
+    public function getPireausTranTicket(): ?string
+    {
+        return $this->pireausTranTicket;
+    }
+
+    /**
+     * @param null|string $pireausTranTicket
+     * @return Checkout
+     */
+    public function setPireausTranTicket(?string $pireausTranTicket): Checkout
+    {
+        $this->pireausTranTicket = $pireausTranTicket;
+        return $this;
+    }
 }

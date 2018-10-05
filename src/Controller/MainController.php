@@ -120,11 +120,11 @@ class MainController extends AbstractController
         EntityManagerInterface $em
     )
     {
-//        if (session_status() !== PHP_SESSION_ACTIVE) {
-//            session_start();
+        if (session_status() !== PHP_SESSION_ACTIVE) {
+            session_start();
 ////            session_cache_expire(180);
 ////            $session->set('cache_expire', session_cache_expire());
-//        }
+        }
 
         $this->softoneLogin = $softoneLogin;
         $this->categoryService = $categoryService;
@@ -150,7 +150,6 @@ class MainController extends AbstractController
         if ($this->categories) {
             array_multisort(array_column($this->categories, "priority"), $this->categories);
         }
-        dump($this->session->get("authID"));
         $this->popular = $productService->getCategoryItems(1022, 0, 15, 'null', 'null');
         $this->featured = $productService->getCategoryItems(1008, 0, 15, 'null', 'null');
         $this->loggedUser = ($this->session->get("anosiaUser")) ?: null;

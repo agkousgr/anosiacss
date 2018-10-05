@@ -420,11 +420,12 @@ EOF;
      */
     private function initializeExpenses($checkout)
     {
+        // Todo: Set expenseId in user's general configuration
         $expenses = "<Expenses>\n";
         if ($checkout->getShippingType() === '1000') {
 //            $expenses .= Write code to get value from Soft1
             $expenses .= "        <ClientSetOrderExpense>
-            <ExpenseID>1000</ExpenseID>
+            <ExpenseID>104</ExpenseID>
             <Value>2.00</Value>
         </ClientSetOrderExpense>
 ";
@@ -432,7 +433,7 @@ EOF;
         if ($checkout->getPaymentType() === '1003') {
 //            $expenses .= Write code to get value from Soft1
             $expenses .= "        <ClientSetOrderExpense>
-            <ExpenseID>1003</ExpenseID>
+            <ExpenseID>105</ExpenseID>
             <Value>1.50</Value>
         </ClientSetOrderExpense>
 ";

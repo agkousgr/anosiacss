@@ -14,11 +14,9 @@ class SoftoneLogin
     public function __construct(SessionInterface $session)
     {
         $this->session = $session;
-        dump($this->session->has("authID"), $this->session->get("authID"));
         if ($this->session->has("authID") === false || $this->session->get("authID") === null || !$this->session->get("authID")) {
             $authID = $this->softoneLogin->login();
             $this->session->set('authID', $authID);
-            dump($this->session->get("authID"));
         }
     }
 
