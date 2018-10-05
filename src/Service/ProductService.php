@@ -1,10 +1,4 @@
 <?php
-/**
- * Created by PhpStorm.
- * User: john
- * Date: 17/4/2018
- * Time: 1:38 πμ
- */
 
 namespace App\Service;
 
@@ -34,7 +28,7 @@ class ProductService
         $this->logger = $logger;
         $this->session = $session;
         $this->authId = $this->session->get("authID");
-//        dump($this->authId);
+        dump($this->authId);
     }
 
     /**

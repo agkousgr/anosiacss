@@ -146,16 +146,11 @@ class MainController extends AbstractController
         $permissions = ['email']; // Optional permissions
         $this->loginUrl = $helper->getLoginUrl('https://localhost/anosia/public/index.php/fb-callback', $permissions);
 
-        dump($this->session->has("authID"), $this->session->get("authID"));
-        if ($this->session->has("authID") === false || $this->session->get("authID") === null || !$this->session->get("authID")) {
-            $authID = $this->softoneLogin->login();
-            $this->session->set('authID', $authID);
-            dump($this->session->get("authID"));
-        }
         $this->categories = $this->em->getRepository(Category::class)->childrenHierarchy();
         if ($this->categories) {
             array_multisort(array_column($this->categories, "priority"), $this->categories);
         }
+        dump($this->session->get("authID"));
         $this->popular = $productService->getCategoryItems(1022, 0, 15, 'null', 'null');
         $this->featured = $productService->getCategoryItems(1008, 0, 15, 'null', 'null');
         $this->loggedUser = ($this->session->get("anosiaUser")) ?: null;
