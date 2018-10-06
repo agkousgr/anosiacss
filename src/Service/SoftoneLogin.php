@@ -15,7 +15,7 @@ class SoftoneLogin
     {
         $this->session = $session;
         if ($this->session->has("authID") === false || $this->session->get("authID") === null || !$this->session->get("authID")) {
-            $authID = $this->softoneLogin->login();
+            $authID = $this->login();
             $this->session->set('authID', $authID);
         }
     }

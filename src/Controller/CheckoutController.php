@@ -106,6 +106,17 @@ class CheckoutController extends MainController
                             );
                             $orderCompleted = false;
                             $onlinePaymentError = true;
+                        } else {
+                            $this->session->set('curOrder', $checkout);
+                            $bank_config['AcquirerId'] = 14;
+                            $bank_config['MerchantId'] = 2137477493;
+                            $bank_config['PosId'] = 2141384532;
+                            $bank_config['User'] = 'AN895032';
+                            $bank_config['LanguageCode'] = 'el-GR';
+                            return $this->render('orders/pireaus_post.html.twig', [
+                                'checkout' => $checkout,
+                                'bankConfig' => $bank_config
+                            ]);
                         }
                     }
                     if ($onlinePaymentError === false) {

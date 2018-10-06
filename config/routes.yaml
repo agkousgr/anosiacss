@@ -111,9 +111,18 @@ paypal_result:
 paypal_cancel:
     path: /paypal/cancel
     controller: App\Controller\PaypalController::cancel
-pireus_test:
-    path: /pireaus
-    controller: App\Controller\PireausController::sentToPireaus
+pireus_post:
+    path: /pireaus/post
+    controller: App\Controller\PireausController::pireausPost
+pireaus_success:
+    path: /checkout/success
+    controller: App\Controller\PireausController::success
+pireaus_cancel:
+    path: /checkout/cancel
+    controller: App\Controller\PireausController::cancel
+pireaus_failure:
+    path: /checkout/failure
+    controller: App\Controller\PireausController::failure
 
 # Wishlist
 wishlist_view:
