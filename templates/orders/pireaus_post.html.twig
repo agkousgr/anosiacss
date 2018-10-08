@@ -1,14 +1,21 @@
-<form id="pireaus-post" action="https://paycenter.piraeusbank.gr/redirection/pay.aspx">
-    <input type="hidden" name="AcquirerId" value="{{ bankConfig.AcquirerId }}">
-    <input type="hidden" name="MerchantId" value="{{ bankConfig.MerchantId }}">
-    <input type="hidden" name="PosId" value="{{ bankConfig.PosId }}">
-    <input type="hidden" name="User" value="{{ bankConfig.User }}">
-    <input type="hidden" name="LanguageCode" value="{{ bankConfig.LanguageCode }}">
-    <input type="hidden" name="MerchantReference" value="{{ checkout.orderNo }}">
-    {#<input type="hidden" name="ParamBackLink" value="">#}
-</form>
-<script>
-    $.document.ready(function () {
-        $('#pireaus-post').submit();
-    })
-</script>
+{% extends 'layout.html.twig' %}
+
+{% block body %}
+    <form id="pireaus-post" action="https://paycenter.piraeusbank.gr/redirection/pay.aspx">
+        <input type="hidden" name="AcquirerId" value="{{ bankConfig.AcquirerId }}">
+        <input type="hidden" name="MerchantId" value="{{ bankConfig.MerchantId }}">
+        <input type="hidden" name="PosId" value="{{ bankConfig.PosId }}">
+        <input type="hidden" name="User" value="{{ bankConfig.User }}">
+        <input type="hidden" name="LanguageCode" value="{{ bankConfig.LanguageCode }}">
+        <input type="hidden" name="MerchantReference" value="{{ checkout.orderNo }}">
+        {#<input type="hidden" name="ParamBackLink" value="">#}
+    </form>
+{% endblock %}
+
+{% block javascripts %}
+    <script>
+        $(document).ready(function () {
+            $('#pireaus-post').submit();
+        })
+    </script>
+{% endblock %}

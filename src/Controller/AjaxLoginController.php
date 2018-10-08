@@ -48,7 +48,7 @@ class AjaxLoginController extends AbstractController
 
     }
 
-    public function fbcallback(Request $request, UserAccountService $userAccountService, SessionInterface $session)
+    public function fbCallback(Request $request, UserAccountService $userAccountService, SessionInterface $session)
     {
         $fb = new Facebook\Facebook([
             'app_id' => '605092459847380',

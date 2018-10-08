@@ -2,9 +2,7 @@
 
 namespace App\Controller;
 
-use App\Entity\Category;
-use App\Entity\ProductViews;
-use App\Entity\Slider;
+use App\Entity\{Category,Slider,ProductViews};
 use App\Service\BrandsService;
 use Doctrine\ORM\EntityManagerInterface;
 use Knp\Component\Pager\PaginatorInterface;

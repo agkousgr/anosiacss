@@ -51,8 +51,9 @@ class PireausRedirection
                 'Installments' => pack('H', $checkout->getInstallments()),
                 'ExpirePreauth' => 0x1e,
                 'Bnpl' => 0x00,
-                'Parameters' => '' // String_for_our_use_no_spaces_allowd
+                'Parameters' => 'Anosia'
             );
+            dump($params);
             $result = $ticket_issuer->IssueNewTicket(array('Request' => $params));
 
             if (!$result) {

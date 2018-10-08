@@ -39,7 +39,8 @@
             <section id="main">
                 <section id="content" class="page-content card card-block">
                     {% if (registerOk == 'true') %}
-                        <div><h4>Κάντε κλικ <a href="#" class="toggle-sidebar">εδώ</a> να συνδεθείτε</h4></div>
+                        <div><h4>Κάντε κλικ <a href="#" class="toggle-sidebar">εδώ</a> να συνδεθείτε
+                            </h4></div>
                     {% else %}
                         <section class="register-form">
                             {{ form_start(form) }}
@@ -78,11 +79,14 @@
                                         <div class="input-group js-parent-focus">
                                             {{ form_widget(form.password.first, {'attr': {'class': 'form-control'}}) }}
                                             <span class="input-group-btn">
-                                                <button class="btn" type="button"
-                                                        data-action="show-password"
-                                                        data-text-show="Εμφάνιση"
-                                                        data-text-hide="Απόκρυψη">
-                                                    Show
+                                                <button class="btn show-password"
+                                                        type="button">
+                                                    Εμφάνιση
+                                                </button>
+                                                <button style="display: none;"
+                                                        class="btn hide-password"
+                                                        type="button">
+                                                    Απόκρυψη
                                                 </button>
                                             </span>
                                         </div>
@@ -160,5 +164,10 @@
     {% include 'home_page_modules/15_social.html.twig' %}
     {% include 'partials/footer.html.twig' %}
 
+{% endblock %}
+
+{% block javascripts %}
+    {{ parent() }}
+    <script src="{{ asset('build/js/user-register.js') }}"></script>
 {% endblock %}
 

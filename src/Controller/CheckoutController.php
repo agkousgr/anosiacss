@@ -97,6 +97,8 @@ class CheckoutController extends MainController
 //                        $onlinePaymentError = true;
 //                        die();
                     } else if ($checkout->getPaymentType() === '1001') {
+                        $cartCost = $checkoutService->calculateCartCost($this->cartItems);
+                        $checkout->setTotalOrderCost($cartCost + $checkout->getAntikatavoliCost() + $checkout->getShippingCost());
                         $checkout->setInstallments(0);
                         $pireausRedirection->submitOrderToPireaus($checkout);
                         if ($checkout->getPireausResultCode() !== "0") {

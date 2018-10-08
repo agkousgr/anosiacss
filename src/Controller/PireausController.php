@@ -7,7 +7,7 @@ namespace App\Controller;
 use App\Entity\Checkout;
 use App\Service\CheckoutService;
 use App\Service\PireausRedirection;
-use http\Env\Request;
+use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Session\SessionInterface;
 
 class PireausController extends MainController
@@ -16,7 +16,8 @@ class PireausController extends MainController
     {
         // Todo: get post or get response and create Hash to validate response
         // Page 26 Pireaus Manual
-
+        dump($request);
+        die();
         $checkout = $session->get('curOrder');
         $orderResponse = $checkoutService->submitOrder($checkout, $this->cartItems);
         if ($orderResponse) {

@@ -547,4 +547,13 @@ EOF;
         }
         return;
     }
+
+    public function calculateCartCost($cartItems)
+    {
+        foreach ($cartItems as $cartItem) {
+            $quantity = $cartItem['quantity'];
+            $webPrice = floatval($cartItem['webPrice']);
+            $this->cartItemsCost += number_format(($quantity * $webPrice), 2, '.', ',');
+        }
+    }
 }

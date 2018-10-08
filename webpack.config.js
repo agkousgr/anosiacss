@@ -34,6 +34,7 @@ Encore
     .addEntry('js/product-list', './assets/js/product-list.js')
     .addEntry('js/checkout', './assets/js/checkout.js')
     .addEntry('js/user-account', './assets/js/user-account.js')
+    .addEntry('js/user-register', './assets/js/user-register.js')
     .addEntry('js/cart', './assets/js/cart.js')
     .addEntry('js/user-google-address', './assets/js/user-google-address.js')
 

@@ -382,7 +382,7 @@ home_page_modules:
 #fb callback login
 fb_callback:
     path: /fb-callback
-    controller: App\Controller\AjaxLoginController::fbcallback
+    controller: App\Controller\AjaxLoginController::fbCallback
     methods: [GET]
     options:
         expose: true
