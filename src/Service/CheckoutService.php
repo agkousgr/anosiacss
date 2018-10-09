@@ -550,10 +550,12 @@ EOF;
 
     public function calculateCartCost($cartItems)
     {
+        $cartTotal = 0;
         foreach ($cartItems as $cartItem) {
             $quantity = $cartItem['quantity'];
             $webPrice = floatval($cartItem['webPrice']);
-            $this->cartItemsCost += number_format(($quantity * $webPrice), 2, '.', ',');
+            $cartTotal += number_format(($quantity * $webPrice), 2, '.', ',');
         }
+        return $cartTotal;
     }
 }

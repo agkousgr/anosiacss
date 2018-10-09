@@ -12,6 +12,9 @@ class PireausRedirection
      */
     private $bank_config;
 
+    /**
+     * PireausRedirection constructor.
+     */
     public function __construct()
     {
         $this->bank_config['AcquirerId'] = 14;
@@ -22,6 +25,10 @@ class PireausRedirection
 
     }
 
+    /**
+     * @param $checkout
+     * @return SoapFault|\Exception|void
+     */
     public function submitOrderToPireaus($checkout)
     {
         $wsdl_uri = 'https://paycenter.piraeusbank.gr/services/tickets/issuer.asmx?WSDL';
@@ -62,6 +69,7 @@ class PireausRedirection
             }
             dump($result);
             $checkout->setPireausResultCode($result->IssueNewTicketResult->ResultCode);
+            $checkout->setPireausTranTicket($result->IssueNewTicketResult->TranTicket);
 
 
             $this->initializeResultCode($checkout);
@@ -73,6 +81,10 @@ class PireausRedirection
 
     }
 
+    /**
+     * @param $checkout
+     * @return mixed
+     */
     private function initializeResultCode($checkout)
     {
         switch ($checkout->getPireausResultCode()) {

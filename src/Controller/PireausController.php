@@ -5,18 +5,46 @@ namespace App\Controller;
 
 
 use App\Entity\Checkout;
+use App\Entity\PireausResults;
 use App\Service\CheckoutService;
 use App\Service\PireausRedirection;
+use Doctrine\ORM\EntityManagerInterface;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Session\SessionInterface;
 
 class PireausController extends MainController
 {
-    public function success(Request $request, SessionInterface $session, CheckoutService $checkoutService)
+
+
+    public function success(Request $request, CheckoutService $checkoutService)
     {
+        $checkout = new Checkout();
+
+        $checkout = $this->session->get('curOrder');
         // Todo: get post or get response and create Hash to validate response
         // Page 26 Pireaus Manual
-        dump($request);
+        dump($request->request, $checkout);
+
+
+
+        $TransactionTicket = 'asfasdfa';
+//        $TransactionTicket = $checkout->getPireausTranTicket();
+        $PosId = 2141384532;
+        $AcquirerId = 14;
+        $MerchantReference = $checkout->getOrderNo();
+        $ApprovalCode = $request->request->get('ApprovalCode');
+        $Parameters = $request->request->get('Parameters');
+        $ResponseCode = $request->request->get('ResponseCode');
+        $SupportReferenceID = $request->request->get('SupportReferenceID');
+        $AuthStatus = $request->request->get('AuthStatus');
+        $PackageNo = $request->request->get('PackageNo');
+        $StatusFlag = $request->request->get('StatusFlag');
+
+        $myHash = pack('H', hash('sha256', $TransactionTicket . $PosId . $AcquirerId . $MerchantReference . $ApprovalCode . $Parameters . $ResponseCode . $SupportReferenceID . $AuthStatus . $PackageNo . $StatusFlag));
+
+        dump($myHash);
+
+
         die();
         $checkout = $session->get('curOrder');
         $orderResponse = $checkoutService->submitOrder($checkout, $this->cartItems);
@@ -58,6 +86,20 @@ class PireausController extends MainController
             'Η online πληρωμή ακυρώθηκε.'
         );
 
+        return $this->redirectToRoute('checkout');
+    }
+
+    public function failure(Request $request, EntityManagerInterface $em)
+    {
+        $pireaus = new PireausResults();
+        $pireaus->setCliendId($request->request->get('clientId'));
+        $pireaus->setMerchantReference();
+//        dump($request);
+     die();
+        $this->addFlash(
+            'notice',
+            'Η συναλλαγή σας δεν ολοκληρώθηκε "Invalid Card number/Exp Month/Exp Year". Παρακαλούμε ελέγξτε τα στοιχεία της κάρτας σας και ξαναπροσπαθήστε.'
+        );
         return $this->redirectToRoute('checkout');
     }
 }

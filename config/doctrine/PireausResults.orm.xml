@@ -9,7 +9,7 @@
         <id name="cliend_id" type="integer" />
         <field name="support_reference_id" type="integer" />
         <field name="merchant_reference" length="50" />
-        <field name="status_flag" length="12" />
+        <field name="status_flag" nullable="true" length="12" />
         <field name="response_code" nullable="true" length="2" />
         <field name="response_description" nullable="true" type="text" />
         <field name="result_code" nullable="true" length="5" />
@@ -17,13 +17,7 @@
         <field name="approval_code" length="6" />
         <field name="package_no" nullable="true" type="integer" />
         <field name="auth_status" nullable="true" length="2" />
-        <field name="createdAt" type="datetime">
-            <gedmo:timestampable on="create" />
-        </field>
-        <field name="updatedAt" type="datetime">
-            <gedmo:timestampable on="update" />
-        </field>
-
+        <field name="createdAt" type="datetime" />
     </entity>
 
 </doctrine-mapping>

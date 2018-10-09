@@ -88,17 +88,17 @@ delete_cart_item:
 
 # Orders Checkout
 checkout:
-    path: /checkout/{step}
+    path: /order/checkout/{step}
     controller: App\Controller\CheckoutController::checkout
     defaults: { step: 1 }
     requirements:
         id: \d+
-guest_checkout: #Todo: to be deleted possible with get address
-    path: /checkout/guest/{step}
-    controller: App\Controller\CheckoutController::guestCheckout
-    defaults: { step: 1 }
-    requirements:
-        id: \d+
+#guest_checkout: #Todo: to be deleted possible with get address
+#    path: /checkout/guest/{step}
+#    controller: App\Controller\CheckoutController::guestCheckout
+#    defaults: { step: 1 }
+#    requirements:
+#        id: \d+
 get_address:
     path: /get-address
     controller: App\Controller\AjaxCheckoutController::getAddress
