@@ -64,7 +64,7 @@ class UserAccountService
      */
     private function setClient($userData)
     {
-        dump($userData);
+//        dump($userData);
         $client = new \SoapClient('http://caron.cloudsystems.gr/FOeshopWS/ForeignOffice.FOeshop.API.FOeshopSvc.svc?singleWsdl', ['trace' => true, 'exceptions' => true,]);
 
         if ($userData instanceof Checkout) {
@@ -101,7 +101,7 @@ EOF;
         try {
             $result = $client->SendMessage(['Message' => $message]);
             $userXML = simplexml_load_string(str_replace("utf-16", "utf-8", $result->SendMessageResult));
-            dump($message, $result);
+//            dump($message, $result);
             if ((string)$userXML->IsValid === 'false') {
                 return 0;
             } else {
@@ -203,7 +203,7 @@ EOF;
         try {
             $result = $client->SendMessage(['Message' => $message]);
             $userResult = simplexml_load_string(str_replace("utf-16", "utf-8", $result->SendMessageResult));
-            dump($message, $result);
+//            dump($message, $result);
             if ((string)$userResult->ErrorCode === 'None') {
                 if ($userData instanceof Checkout) {
                     $userData->setClientId($userResult->ID);
@@ -291,7 +291,7 @@ EOF;
         try {
             $result = $client->SendMessage(['Message' => $message]);
             $newsletterData = simplexml_load_string(str_replace("utf-16", "utf-8", $result->SendMessageResult));
-            dump($message, $result);
+//            dump($message, $result);
             return ((string)$newsletterData->IsValid === 'true') ? true : false;
         } catch (\SoapFault $sf) {
             echo $sf->faultstring;
@@ -368,7 +368,7 @@ EOF;
         try {
             $result = $client->SendMessage(['Message' => $message]);
             $addressData = simplexml_load_string(str_replace("utf-16", "utf-8", $result->SendMessageResult));
-            dump($message);
+//            dump($message);
             if ($addressData->RowsCount) {
                 $addressesArr = [];
                 dump($addressData->GetDataRows);
@@ -383,7 +383,7 @@ EOF;
                 (null !== $addressXML->City) ? $entity->setCity((string)$addressXML->City) : $entity->setCity('');
                 (null !== $addressXML->District) ? $entity->setDistrict((string)$addressXML->District) : $entity->setDistrict('');
             }
-            dump($addressesArr);
+//            dump($addressesArr);
 
 //            return;
             return $addressesArr;
@@ -421,7 +421,7 @@ EOF;
             $result = $client->SendMessage(['Message' => $message]);
             $addressData = simplexml_load_string(str_replace("utf-16", "utf-8", $result->SendMessageResult));
             $addressesArr = [];
-            dump($message, $addressData);
+//            dump($message, $addressData);
             if ($addressData->RowsCount) {
                 foreach ($addressData->GetDataRows->GetShipAddressRow as $getDataRow) {
                     $addressXML = $getDataRow;
@@ -481,7 +481,7 @@ EOF;
 EOF;
         try {
             $result = $client->SendMessage(['Message' => $message]);
-            dump($message, $result);
+//            dump($message, $result);
             $addressData = simplexml_load_string(str_replace("utf-16", "utf-8", $result->SendMessageResult));
             if ((int)$addressData->ID > 0) {
                 return true;
@@ -516,7 +516,7 @@ EOF;
 EOF;
         try {
             $result = $client->SendMessage(['Message' => $message]);
-            dump($message, $result);
+//            dump($message, $result);
             $addressData = simplexml_load_string(str_replace("utf-16", "utf-8", $result->SendMessageResult));
             if ((string)$addressData->IsValid === 'true') {
                 return true;
@@ -555,7 +555,7 @@ EOF;
         try {
             $result = $client->SendMessage(['Message' => $message]);
             $userData = simplexml_load_string(str_replace("utf-16", "utf-8", $result->SendMessageResult));
-            dump($message, $result);
+//            dump($message, $result);
             if ((int)$userData->RowsCount === 0) {
                 return '';
 //            } else if ($password === 'null') {
@@ -607,7 +607,7 @@ EOF;
             if ($userResponse === false) {
                 return;
             }
-            dump($message, $result);
+//            dump($message, $result);
             $userXML = $userResponse->GetDataRows->GetUsersRow;
             if (null !== $address) {
                 $address->setClient($userXML->ClientID);
@@ -615,7 +615,7 @@ EOF;
                 (null !== $userXML->Username) ? $user->setUsername($userXML->Username) : $user->setUsername('');
                 (null !== $userXML->Password) ? $user->setPassword($userXML->Password) : $user->setUsername('');
                 (null !== $userXML->ClientID) ? $user->setClientId($userXML->ClientID) : $user->setUsername('');
-                dump($user);
+//                dump($user);
             }
             return;
         } catch (\SoapFault $sf) {
@@ -716,7 +716,7 @@ EOF;
             if ($clientResponse === false) {
                 return;
             }
-            dump($message, $result);
+//            dump($message, $result);
             $userXML = $clientResponse->GetDataRows->GetClientsRow;
             list($firstname, $lastname) = explode(' ', $userXML->NAME);
             $user->setFirstname($firstname);
@@ -809,7 +809,7 @@ EOF;
         try {
             $result = $client->SendMessage(['Message' => $message]);
             $clientResponse = simplexml_load_string(str_replace("utf-16", "utf-8", $result->SendMessageResult));
-            dump($result);
+//            dump($result);
             if ($clientResponse->RowsCount > 0) {
                 return true;
             }
@@ -944,7 +944,13 @@ EOF;
         try {
             $result = $client->SendMessage(['Message' => $message]);
             $ordersData = simplexml_load_string(str_replace("utf-16", "utf-8", $result->SendMessageResult));
+
             dump($message, $result);
+            if ((int)$ordersData->RowsCount > 0) {
+                return $ordersData->GetDataRows->GetOrdersRow;
+            } else {
+                return 0;
+            }
         } catch (\SoapFault $sf) {
             echo $sf->faultstring;
         }

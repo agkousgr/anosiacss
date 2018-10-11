@@ -53,33 +53,28 @@ product_search:
 cart_view:
     path: /cart
     controller: App\Controller\CartController::viewCart
-
 update_cart:
     path: /update-cart
     controller: App\Controller\CartController::updateCart
     methods: [POST]
-
 add_to_cart:
     path: /add_to_cart
     controller: App\Controller\AjaxCartController::addToCart
     methods: [POST]
     options:
         expose: true
-
 load_top_cart:
     path: /top-cart
     controller: App\Controller\AjaxCartController::loadTopCart
     methods: [GET,POST]
     options:
         expose: true
-
 delete_top_cart_item:
     path: /delete-top-cart-item/
     controller: App\Controller\AjaxCartController::deleteTopCartItem
     methods: [GET,POST]
     options:
         expose: true
-
 delete_cart_item:
     path: /delete-cart-item/{id}
     controller: App\Controller\CartController::deleteCartItem
@@ -128,14 +123,12 @@ pireaus_failure:
 wishlist_view:
     path: /wishlist
     controller: App\Controller\WishlistController::viewWishlist
-
 add_to_wishlist:
     path: /add_to_wishlist
     controller: App\Controller\WishlistController::addToWishlist
     methods: [GET,POST]
     options:
         expose: true
-
 delete_wishlist_item:
     path: /delete_wishlist_item/{id}
     controller: App\Controller\WishlistController::deleteWishlistItem
@@ -149,7 +142,6 @@ blog_list:
     defaults: { page: 1 }
     requirements:
         page: \d+
-
 blog_view:
     path: /blog/{slug}
     controller: App\Controller\BlogController::viewBlog
@@ -172,7 +164,7 @@ update_address:
     path: /update-address/{id}
     controller: App\Controller\UserAccountController::updateAddress
     requirements:
-        page: \d+
+        id: \d+
 delete_address:
     path: /delete-address
     controller: App\Controller\UserAccountController::deleteAddress
@@ -184,6 +176,11 @@ newsletter_registration:
     controller: App\Controller\AjaxNewsletterController::newsletterRegistration
     options:
         expose: true
+user-order:
+    path: /user/order/{id}
+    controller: App\Controller\UserAccountController::viewOrder
+    requirements:
+        id: \d+
 
 # login logout
 login:

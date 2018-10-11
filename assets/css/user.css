@@ -634,7 +634,7 @@ dt, kbd kbd, label {
     vertical-align: middle
 }
 .register-form, .address-form, .orders-form {
-    padding: 20px 0 30px 77px;
+    padding: 20px;
 }
 
 /*.btn-primary, .page-footer .text-sm-center a, .button.ajax_add_to_cart_button {*/

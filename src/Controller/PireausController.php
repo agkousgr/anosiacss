@@ -83,7 +83,7 @@ class PireausController extends MainController
     {
         $this->addFlash(
             'notice',
-            'Η online πληρωμή ακυρώθηκε.'
+                'Η online πληρωμή ακυρώθηκε.'
         );
 
         return $this->redirectToRoute('checkout');

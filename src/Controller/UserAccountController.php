@@ -137,7 +137,8 @@ class UserAccountController extends MainController
                     'userData' => $userData,
                     'formUser' => $formUser->createView(),
                     'formAddress' => $formMainAddress->createView(),
-                    'loginUrl' => $this->loginUrl
+                    'loginUrl' => $this->loginUrl,
+                    'userOrders' => $userOrders
                 ]);
             }
             return $this->redirectToRoute('index');

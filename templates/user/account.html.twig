@@ -204,29 +204,33 @@
                                     {% if userData["addresses"] is defined %}
                                         {% for address in userData["addresses"] %}
                                             {#{{ dump(address) }}#}
-                                        <div class="col-lg-4 col-md-6 col-sm-6 extra-addresses" style="padding-bottom:15px;">
-                                            <article id="address-9" class="address" data-id-address="9">
-                                                <div class="address-body">
+                                            <div class="col-lg-4 col-md-6 col-sm-6 extra-addresses"
+                                                 style="padding-bottom:15px;">
+                                                <article id="address-9" class="address" data-id-address="9">
+                                                    <div class="address-body">
 
-                                                    <h4>{{ address["name"] }}
-                                                        <i data-id="{{ address.id }}" class="fa fa-trash pull-right delete-address" style="cursor:pointer;"></i>
-                                                    </h4>
-                                                    <address style="min-height: 127px;">
-                                                        {{ address["address"] }}<br>
-                                                        {{ address["city"] }}<br>
-                                                        {{ address["zip"] }}<br>
-                                                        {{ address["district"] }}<br>
-                                                    </address>
-                                                </div>
-                                                <div class="address-footer">
-                                                    <a href="{{ path('update_address', {'id':address["id"]}) }}" id="edit-main-address"
-                                                       data-link-action="edit-address">
-                                                        <i class="material-icons"></i>
-                                                        <span>Επεξεργασία</span>
-                                                    </a>
-                                                </div>
-                                            </article>
-                                        </div>
+                                                        <h4>{{ address["name"] }}
+                                                            <i data-id="{{ address.id }}"
+                                                               class="fa fa-trash pull-right delete-address"
+                                                               style="cursor:pointer;"></i>
+                                                        </h4>
+                                                        <address style="min-height: 127px;">
+                                                            {{ address["address"] }}<br>
+                                                            {{ address["city"] }}<br>
+                                                            {{ address["zip"] }}<br>
+                                                            {{ address["district"] }}<br>
+                                                        </address>
+                                                    </div>
+                                                    <div class="address-footer">
+                                                        <a href="{{ path('update_address', {'id':address["id"]}) }}"
+                                                           id="edit-main-address"
+                                                           data-link-action="edit-address">
+                                                            <i class="material-icons"></i>
+                                                            <span>Επεξεργασία</span>
+                                                        </a>
+                                                    </div>
+                                                </article>
+                                            </div>
                                         {% endfor %}
                                     {% endif %}
                                     <div class="clearfix"></div>
@@ -247,8 +251,8 @@
                                         </div>
                                     </div>
                                     {#<div id="locationField">#}
-                                        {#<input id="autocomplete" placeholder="Enter your address"#}
-                                               {#onFocus="geolocate()" type="text"></input>#}
+                                    {#<input id="autocomplete" placeholder="Enter your address"#}
+                                    {#onFocus="geolocate()" type="text"></input>#}
                                     {#</div>#}
                                     <div class="form-group row ">
                                         {{ form_label(formAddress.zip, 'Τ.Κ.', {'label_attr': {'class': 'col-md-3 form-control-label required'}}) }}
@@ -300,15 +304,61 @@
                             </a>
                             <section class="orders-form hidden col-xs-12">
                                 <section>
-                                    <div>Δεν υπάρχουν διαθέσιμες παραγγελίες</div>
+                                    {% if userOrders|length > 0 %}
+                                        <table class="table table-bordered table-hover">
+                                            <tr>
+                                                <th></th>
+                                                <th>Αρ. Παραγγελίας</th>
+                                                <th>Κατάσταση</th>
+                                                <th>Ημερομηνία</th>
+                                                <th>Τρόπος πληρωμής</th>
+                                                <th>Τρόπος αποστολής</th>
+                                                <th>Κόστος</th>
+                                            </tr>
+                                            {% for order in userOrders %}
+                                                {% if order.ShipmentTypeID == 1000 %}
+                                                    {% set shipmentType = 'Courier' %}
+                                                {% else %}
+                                                    {% set shipmentType = 'Παραλαβή από το φαρμακείο' %}
+                                                {% endif %}
+                                                {% if order.PayTypeID == 1000 %}
+                                                    {% set paymentType = 'Πληρωμή στο κατάστημα' %}
+                                                {% elseif order.PayTypeID == 1001 %}
+                                                    {% set paymentType = 'Πιστωτική' %}
+                                                {% elseif order.PayTypeID == 1002 %}
+                                                    {% set paymentType = 'Paypal' %}
+                                                {% elseif order.PayTypeID == 1003 %}
+                                                    {% set paymentType = 'Αντικαταβολή' %}
+                                                {% elseif order.PayTypeID == 1004 %}
+                                                    {% set paymentType = 'Κατάθεση σε τράπεζα' %}
+                                                {% endif %}
+                                                <td>
+                                                    <a href="{{ path('user-order', {'id':order.ID}) }}"><i class="fa fa-eye"></i></a>
+                                                    {% if order.Status == 100 %}
+                                                        {#<a href="{{ path('') }}">#}
+                                                            <i class="fa fa-pencil"></i>
+                                                        {#</a>#}
+                                                    {% endif %}
+                                                </td>
+                                                <td>{{ order.EshopNumber }}</td>
+                                                <td></td>
+                                                <td></td>
+                                                <td>{{ shipmentType }}</td>
+                                                <td>{{ paymentType }}</td>
+                                                <td></td>
+                                            {% endfor %}
+                                        </table>
+                                    {% else %}
+                                        <div>Δεν υπάρχουν διαθέσιμες παραγγελίες</div>
+                                    {% endif %}
                                 </section>
                             </section>
                             {#<a class="col-lg-4 col-md-6 col-sm-6 col-xs-12" id="order-slips-link"#}
-                               {#href="">#}
-                                {#<span class="link-item">#}
-                                    {#<i class="material-icons">&#xE8B0;</i>#}
-                                    {#Credit slips#}
-                                {#</span>#}
+                            {#href="">#}
+                            {#<span class="link-item">#}
+                            {#<i class="material-icons">&#xE8B0;</i>#}
+                            {#Credit slips#}
+                            {#</span>#}
                             {#</a>#}
                             <a class="lnk_wishlist col-lg-4 col-md-6 col-sm-6 col-xs-12"
                                href=""
@@ -338,5 +388,6 @@
     {{ parent() }}
     <script src="{{ asset('build/js/user-account.js') }}"></script>
     <script src="{{ asset('build/js/user-google-address.js') }}"></script>
-    <script src="https://maps.googleapis.com/maps/api/js?key=AIzaSyCVgV2sJEAZFJAAMKf2nhnH7BxtMmQnnis&libraries=places&callback=initAutocomplete" async defer></script>
+    <script src="https://maps.googleapis.com/maps/api/js?key=AIzaSyCVgV2sJEAZFJAAMKf2nhnH7BxtMmQnnis&libraries=places&callback=initAutocomplete"
+            async defer></script>
 {% endblock %}
