@@ -11294,7 +11294,7 @@ html {
 }
 
 body {
-    font-family: 'Aka-AcidGR-QuicksandLite', sans-serif !important;
+    font-family: 'Aka-AcidGR-QuicksandLite', 'pf_dintext_proregular' !important;
     font-size: 16px;
     line-height: 1.42857143;
     font-weight: 300

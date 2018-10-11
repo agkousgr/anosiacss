@@ -25,15 +25,22 @@ class UserAccountService
     private $authId;
 
     /**
+     * @var ProductService
+     */
+    private $productService;
+
+    /**
      * UserAccountService constructor.
      * @param LoggerInterface $logger
      * @param SessionInterface $session
+     * @param ProductService $productService
      */
-    public function __construct(LoggerInterface $logger, SessionInterface $session)
+    public function __construct(LoggerInterface $logger, SessionInterface $session, ProductService $productService)
     {
         $this->logger = $logger;
         $this->session = $session;
         $this->authId = $session->get("authID");
+        $this->productService = $productService;
     }
 
     /**
@@ -269,7 +276,7 @@ EOF;
             }
             $name = $userData->getFirstname() . ' ' . $userData->getLastname();
             $username = $userData->getUsername();
-        }else{
+        } else {
             $name = $userData["firstname"] . ' ' . $userData["lastname"];
             $username = $userData["username"];
         }
@@ -922,6 +929,10 @@ EOF;
         }
     }
 
+    /**
+     * @param $clientId
+     * @return int|\SimpleXMLElement
+     */
     public function getOrders($clientId)
     {
         $client = new \SoapClient('http://caron.cloudsystems.gr/FOeshopWS/ForeignOffice.FOeshop.API.FOeshopSvc.svc?singleWsdl', ['trace' => true, 'exceptions' => true,]);
@@ -953,6 +964,124 @@ EOF;
             }
         } catch (\SoapFault $sf) {
             echo $sf->faultstring;
+        }
+    }
+
+    public function getOrder($clientId, $orderId)
+    {
+        $client = new \SoapClient('http://caron.cloudsystems.gr/FOeshopWS/ForeignOffice.FOeshop.API.FOeshopSvc.svc?singleWsdl', ['trace' => true, 'exceptions' => true,]);
+
+        $message = <<<EOF
+<?xml version="1.0" encoding="utf-16"?>
+<ClientGetOrderRequest>
+    <Type>1050</Type>
+    <Kind>1</Kind>
+    <Domain>pharmacyone</Domain>
+    <AuthID>$this->authId</AuthID>
+    <AppID>157</AppID>
+    <CompanyID>1000</CompanyID>
+    <CustomerID>$clientId</CustomerID>
+    <OrderID>$orderId</OrderID>
+    <Number>null</Number>
+    <EshopNumber>null</EshopNumber>
+</ClientGetOrderRequest>
+EOF;
+        try {
+            $result = $client->SendMessage(['Message' => $message]);
+            $orderData = simplexml_load_string(str_replace("utf-16", "utf-8", $result->SendMessageResult));
+
+            dump($message, $result);
+            if ((int)$orderData->RowsCount > 0) {
+                $expensesArr = $this->initializeExpenses($orderData->GetDataRows->GetOrderRow->Expenses);
+                $itemsArr = $this->initializeItems($orderData->GetDataRows->GetOrderRow->Items);
+                $orderArr = $this->initializeOrder($orderData->GetDataRows->GetOrderRow);
+                $orderArr['expenses'] = $expensesArr;
+                $orderArr['items'] = $itemsArr;
+                dump($orderArr);
+                return $orderArr;
+            } else {
+                return 0;
+            }
+        } catch (\SoapFault $sf) {
+            echo $sf->faultstring;
+        }
+    }
+
+    /**
+     * @param $orderExpenseRow
+     * @return array
+     * @throws \Exception
+     */
+    private function initializeExpenses($orderExpenseRow)
+    {
+        try {
+            $expensesArr = [];
+            foreach ($orderExpenseRow as $expenseRow) {
+                foreach ($expenseRow as $item) {
+                    $expensesArr[] = array(
+                        'expenseId' => $item->ExpenseID,
+                        'expenceCost' => $item->ExpenseValue
+                    );
+                }
+            }
+            return $expensesArr;
+        } catch (\Exception $e) {
+            $this->logger->error(__METHOD__ . ' -> {message}', ['message' => $e->getMessage()]);
+            throw $e;
+        }
+    }
+
+    /**
+     * @param $items
+     * @return array
+     * @throws \Exception
+     */
+    private function initializeItems($items)
+    {
+        try {
+            $itemsArr = [];
+            foreach ($items as $itemRow) {
+                foreach ($itemRow as $item) {
+                    $itemsOrder = array(
+                        'itemIndex' => $item->ItemIndex,
+                        'itemId' => $item->ItemID,
+                        'quantity' => $item->ItemQuantity,
+                        'itemPrice' => $item->ItemPrice
+                    );
+                    $itemData = $this->productService->getItems($item->ItemID, $keyword = 'null', 1, $sortBy = 'null', $isSkroutz = -1, $makeId = 'null', $priceRange='null');
+                    dump($itemsArr, $itemsOrder);
+                    $itemsArr[] = array_merge($itemData, $itemsOrder);
+                    dump($itemsArr);
+                }
+            }
+            return $itemsArr;
+        } catch (\Exception $e) {
+            $this->logger->error(__METHOD__ . ' -> {message}', ['message' => $e->getMessage()]);
+            throw $e;
+        }
+    }
+
+
+    private function initializeOrder($order)
+    {
+        try {
+            $orderArr = array(
+                'orderId' => $order->ID,
+                'orderNo' => $order->EshopNumber,
+                'status' => $order->Status,
+                'paymentType' => $order->PayTypeID,
+                'shippingType' => $order->ShipmentTypeID,
+                'shipAddress' => $order->ShipAddress,
+                'shipCity' => $order->ShipCity,
+                'shipDistrict' => $order->ShipDistrict,
+                'shipZip' => $order->ShipZip,
+                'comments' => (null !== $order->Comments) ? $order->Comments : '',
+            );
+
+            return $orderArr;
+        } catch (\Exception $e) {
+            $this->logger->error(__METHOD__ . ' -> {message}', ['message' => $e->getMessage()]);
+            throw $e;
         }
     }
 }

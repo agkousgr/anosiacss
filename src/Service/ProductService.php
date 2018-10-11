@@ -294,7 +294,7 @@ EOF;
             $imagesArr = array();
             $result = $client->SendMessage(['Message' => $message]);
             $items = simplexml_load_string(str_replace("utf-16", "utf-8", $result->SendMessageResult));
-            dump($result);
+            dump($message, $result);
             if (intval($items->RowsCount) > 0) {
                 $imagesArr = $this->initializeImages($items->GetDataRows->GetItemPhotosRow);
             }

@@ -502,7 +502,7 @@ EOF;
         return;
     }
 
-    public function getOrders($clientId)
+ /*   public function getOrders($clientId)
     {
         $message = <<<EOF
 <?xml version="1.0" encoding="utf-16"?>
@@ -532,7 +532,7 @@ EOF;
             echo $sf->faultstring;
         }
 
-    }
+    } */
 
     /**
      * @param $cartItems

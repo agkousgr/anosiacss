@@ -148,6 +148,23 @@ class UserAccountController extends MainController
         }
     }
 
+    public function viewOrder(int $id, UserAccountService $userAccountService)
+    {
+        $userOrder = $userAccountService->getOrder($this->loggedClientId, $id);
+//        dump($userOrders);
+        return $this->render('user/view_order.html.twig', [
+            'categories' => $this->categories,
+            'popular' => $this->popular,
+            'featured' => $this->featured,
+            'cartItems' => $this->cartItems,
+            'totalCartItems' => $this->totalCartItems,
+            'totalWishlistItems' => $this->totalWishlistItems,
+            'loggedName' => $this->loggedName,
+            'loggedUser' => $this->loggedUser,
+            'order' => $userOrder,
+        ]);
+    }
+
     public function createAddress(Request $request, UserAccountService $userAccountService)
     {
         try {

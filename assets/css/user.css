@@ -636,6 +636,18 @@ dt, kbd kbd, label {
 .register-form, .address-form, .orders-form {
     padding: 20px;
 }
+#my-account #content .links .orders-form a {
+    padding: 2px;
+    /*width: auto;*/
+}
+#my-account #content .links .orders-form a i {
+    font-size: 18px;
+    margin: 0;
+    float: none;
+}
+.table > tbody > tr > td, .table > tbody > tr > th, .table > tfoot > tr > td, .table > tfoot > tr > th, .table > thead > tr > td, .table > thead > tr > th {
+    vertical-align: middle;
+}
 
 /*.btn-primary, .page-footer .text-sm-center a, .button.ajax_add_to_cart_button {*/
 /*color: #000;*/

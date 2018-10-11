@@ -308,7 +308,7 @@
                                         <table class="table table-bordered table-hover">
                                             <tr>
                                                 <th></th>
-                                                <th>Αρ. Παραγγελίας</th>
+                                                <th>Αρ. Παρ.</th>
                                                 <th>Κατάσταση</th>
                                                 <th>Ημερομηνία</th>
                                                 <th>Τρόπος πληρωμής</th>
@@ -333,12 +333,14 @@
                                                     {% set paymentType = 'Κατάθεση σε τράπεζα' %}
                                                 {% endif %}
                                                 <td>
-                                                    <a href="{{ path('user-order', {'id':order.ID}) }}"><i class="fa fa-eye"></i></a>
-                                                    {% if order.Status == 100 %}
-                                                        {#<a href="{{ path('') }}">#}
-                                                            <i class="fa fa-pencil"></i>
+                                                    <a href="{{ path('user-order', {'id':order.ID}) }}">
+                                                        <i class="fa fa-eye"></i>
+                                                    </a>
+                                                    {#{% if order.Status == 100 %}#}
+                                                        {#<a href="{{ path('user-order', {'id':order.ID}) }}">#}
+                                                            {#<i class="fa fa-pencil"></i>#}
                                                         {#</a>#}
-                                                    {% endif %}
+                                                    {#{% endif %}#}
                                                 </td>
                                                 <td>{{ order.EshopNumber }}</td>
                                                 <td></td>

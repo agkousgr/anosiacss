@@ -189,7 +189,6 @@ login:
     methods: [POST]
     options:
         expose: true
-
 logout:
     path: /logout
     controller: App\Controller\UserAccountController::logout
@@ -203,10 +202,8 @@ skroutz_xml:
 admin_login:
     path: /administrator
     controller: App\Controller\Admin\SecurityController::login
-
 admin_logout:
     path: /admin/logout
-
 admin:
     path: /admin
     controller: App\Controller\Admin\DefaultController::dashboard
@@ -215,17 +212,14 @@ admin:
 article_list:
     path: /admin/article-list
     controller: App\Controller\Admin\ArticleController::list
-
 article_add:
     path: /admin/article-add
     controller: App\Controller\Admin\ArticleController::create
-
 article_update:
     path: /admin/article-update/{id}
     controller: App\Controller\Admin\ArticleController::update
     requirements:
         id: \d+
-
 article_delete:
     path: /admin/article-delete/{id}
     controller: App\Controller\Admin\ArticleController::delete
@@ -234,7 +228,6 @@ article_delete:
         id: \d+
     options:
         expose: true
-
 delete_article_image:
     path: /admin/delete-article-image/{id}
     controller: App\Controller\Admin\ArticleController::deleteArticleImage
@@ -245,14 +238,12 @@ delete_article_image:
 category_list:
     path: /admin/category-list
     controller: App\Controller\Admin\CategoryController::list
-
 category_add:
     path: /admin/category-add
     controller: App\Controller\Admin\CategoryController::create
     methods: [GET,POST]
     options:
         expose: true
-
 category_update:
     path: /admin/category-update/{id}
     controller: App\Controller\Admin\CategoryController::update
@@ -261,7 +252,6 @@ category_update:
         id: \d+
     options:
         expose: true
-
 category_delete:
     path: /admin/category-delete/{id}
     controller: App\Controller\Admin\CategoryController::delete
@@ -275,14 +265,12 @@ category_delete:
 slider_list:
     path: /admin/slider-list
     controller: App\Controller\Admin\SliderController::list
-
 slider_add:
     path: /admin/slider-add
     controller: App\Controller\Admin\SliderController::create
     methods: [GET,POST]
     options:
         expose: true
-
 slider_update:
     path: /admin/slider-update/{id}
     controller: App\Controller\Admin\SliderController::update
@@ -291,7 +279,6 @@ slider_update:
         expose: true
     requirements:
         id: \d+
-
 slider_delete:
     path: /admin/slider-delete/{id}
     controller: App\Controller\Admin\SliderController::delete
@@ -300,7 +287,6 @@ slider_delete:
         id: \d+
     options:
         expose: true
-
 slider_priority:
     path: /admin/slider-priority/{id}/{direction}
     controller: App\Controller\Admin\SliderController::changePriority
@@ -311,20 +297,17 @@ slider_priority:
 category_slider:
     path: /admin/category-slider
     controller: App\Controller\Admin\CategorySliderController::list
-
 category_slider_list:
     path: /admin/category-slider-list/{id}
     controller: App\Controller\Admin\CategorySliderController::sliderList
     requirements:
         id: \d+
-
 category_slider_add:
     path: /admin/category-slider-add
     controller: App\Controller\Admin\CategorySliderController::create
     methods: [GET,POST]
     options:
         expose: true
-
 category_slider_update:
     path: /admin/category-slider-update/{id}
     controller: App\Controller\Admin\CategorySliderController::update
@@ -333,13 +316,11 @@ category_slider_update:
         id: \d+
     options:
         expose: true
-
 category_slider_delete:
     path: /admin/category-slider-delete/{id}
     controller: App\Controller\Admin\CategorySliderController::delete
     requirements:
         id: \d+
-
 category_slider_priority:
     path: /admin/category-slider-priority/{id}/{direction}
     controller: App\Controller\Admin\CategorySliderController::changePriority
@@ -350,20 +331,17 @@ category_slider_priority:
 seasonpromo_list:
     path: /admin/seasonpromo-list
     controller: App\Controller\Admin\SeasonpromoController::list
-
 seasonpromo_add:
     path: /admin/seasonpromo-add
     controller: App\Controller\Admin\SeasonpromoController::create
     methods: [GET,POST]
     options:
         expose: true
-
 seasonpromo_update:
     path: /admin/seasonpromo-update/{id}
     controller: App\Controller\Admin\SeasonpromoController::update
     requirements:
         id: \d+
-
 seasonpromo_delete:
     path: /admin/seasonpromo-delete/{id}
     controller: App\Controller\Admin\SeasonpromoController::delete
