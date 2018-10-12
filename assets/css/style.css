@@ -65,8 +65,18 @@ fieldset[disabled] a.btn {
 }
 
 @font-face {
-    font-family: "Aka-AcidGR-QuicksandLite";
-    src: url("http://www.aka-acid.com/AC-QuicksandLite.ttf");
+    font-family: 'Aka-AcidGR-QuicksandLite';
+    src: url(../fonts/ac-quicksand/AC-QuicksandLite.ttf);
+}
+
+@font-face {
+    font-family: 'Aka-AcidGR-Quicksandbold';
+    src: url(../fonts/ac-quicksand/AC-QuicksandBold.ttf);
+}
+
+@font-face {
+    font-family: 'Aka-AcidGR-Quicksandregular';
+    src: url(../fonts/ac-quicksand/AC-QuicksandRegular.ttf);
 }
 
 .fa {
@@ -11294,7 +11304,7 @@ html {
 }
 
 body {
-    font-family: 'Aka-AcidGR-QuicksandLite', 'pf_dintext_proregular' !important;
+    font-family: 'Aka-AcidGR-QuicksandNormal' !important;
     font-size: 16px;
     line-height: 1.42857143;
     font-weight: 300
@@ -21487,7 +21497,7 @@ h3.resp-accordion:first-child {
 .product-box .media h5 {
     margin: 0 0 2px;
     font-size: 15px;
-    font-family: "pf_dintext_proregular", sans-serif
+    font-family: 'Aka-AcidGR-QuicksandNormal';
 }
 
 /*.category-banner .banner-img .overlay,
@@ -22187,7 +22197,7 @@ h3.resp-accordion:first-child {
 }
 
 .product-list h2 span {
-    font-family: 'pf_dintext_proregular', sans-serif;
+    font-family: 'Aka-AcidGR-QuicksandNormal';
     float: right;
     font-size: 14px
 }
@@ -23621,7 +23631,7 @@ h3#reply-title {
 }
 
 .post-author h3 {
-    font-family: 'pf_dintext_proregular', sans-serif;
+    font-family: 'Aka-AcidGR-QuicksandNormal';
     font-size: 24px;
     font-weight: 400;
     margin: 12px 0
