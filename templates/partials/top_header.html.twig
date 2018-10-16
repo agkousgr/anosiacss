@@ -38,74 +38,87 @@
 
             <div class="pre-header-left hidden-xs">
                 <ul>
-                    <li><i class="fa fa-phone"></i> 210 94 02 027</li>
-                    <li><i class="fa fa-truck"></i> ΔΩΡΕΑΝ ΜΕΤΑΦΟΡΙΚΑ ΓΙΑ ΠΑΡΑΓΓΕΛΙΕΣ ΑΝΩ ΤΩΝ 39€</li>
+                    <li><a href="tel:2109402027"><i class="fa fa-phone"></i> 210 94 02 027</a></li>
+                    <li><i class="fa fa-truck"></i> ΔΩΡΕΑΝ ΜΕΤΑΦΟΡΙΚΑ ΓΙΑ ΠΑΡΑΓΓΕΛΙΕΣ ΑΝΩ ΤΩΝ 39€
+                    </li>
                 </ul>
             </div>
             <div class="pre-header-left visible-xs">
                 <ul>
                     <li style="width: 100%;"><i class="fa fa-phone"></i> 210 94 02 027</li>
-                    <li style="width: 100%;"><i class="fa fa-truck"></i> ΔΩΡΕΑΝ ΜΕΤΑΦΟΡΙΚΑ ΓΙΑ ΠΑΡΑΓΓΕΛΙΕΣ ΑΝΩ ΤΩΝ 39€</li>
+                    <li style="width: 100%;"><i class="fa fa-truck"></i> ΔΩΡΕΑΝ ΜΕΤΑΦΟΡΙΚΑ ΓΙΑ
+                        ΠΑΡΑΓΓΕΛΙΕΣ ΑΝΩ ΤΩΝ 39€
+                    </li>
                 </ul>
             </div>
 
-            <div class="pre-header-right hidden-xs">
+            <div class="pre-header-right">
                 <ul>
                     <li>
                         {% if loggedUser == null %}
                             {#{% set accountUrl = '#' %}#}
                             {#{% set sideClass = 'toogle-sidebar' %}#}
-                            <a href="#" class="account-link toggle-sidebar" style="margin-top: 8px; padding: 0 5px 0 15px;" title=" Ο λογαριασμός μου">
-                            <i class="fa fa-user account-link"></i>
+                            <a href="#" class="account-link toggle-sidebar"
+                               style="margin-top: 8px; padding: 0 5px 0 15px;"
+                               title=" Ο λογαριασμός μου">
+                                <i class="fa fa-user account-link"></i>
                                 <span class="link-text" style="visibility:hidden">.</span>
                             </a>
                         {% else %}
                             {#{% set accountUrl = 'user_account' %}#}
                             {#{% set sideClass = '' %}#}
                             <a href="{{ path('user_account') }}" class="account-link"
-                               style="margin-top: 8px; padding: 0 5px 0 15px;" title=" Ο λογαριασμός μου">
-                               <i class="fa fa-user account-link"></i>
+                               style="margin-top: 8px; padding: 0 5px 0 15px;"
+                               title=" Ο λογαριασμός μου">
+                                <i class="fa fa-user account-link"></i>
                                 <span class="link-text" style="visibility:hidden">.</span>
                             </a>
                         {% endif %}
                     </li>
                     <li>
-                        <a href="{{ path('wishlist_view') }}" class="wishlist-link" style="margin-top: 8px; padding: 0 5px 0 15px;" title=" Wishlist">
-                        <i class="fa fa-heart wishlist-link"></i>
-                        <span class="link-text" style="visibility:hidden">.</span>
-                        {% if (totalWishlistItems > 0) %}
-                            {% set display = 'inline' %}
-                        {% else %}
-                            {% set display = 'none' %}
-                        {% endif %}
-                        <span id="wishlist-total-items" class="count-baloon" style="display:{{ display }};">
-                            {{ totalWishlistItems }}
-                        </span>
+                        <a href="{{ path('wishlist_view') }}" class="wishlist-link"
+                           style="margin-top: 8px; padding: 0 5px 0 15px;" title=" Wishlist">
+                            <i class="fa fa-heart wishlist-link"></i>
+                            <span class="link-text" style="visibility:hidden">.</span>
+                            {% if (totalWishlistItems > 0) %}
+                                {% set display = 'inline' %}
+                            {% else %}
+                                {% set display = 'none' %}
+                            {% endif %}
+                            <span id="wishlist-total-items" class="count-baloon"
+                                  style="display:{{ display }};">
+                                {{ totalWishlistItems }}
+                            </span>
                         </a>
                     </li>
                     <li>
-                        <a href="#" class="tracking-link"  style="margin-top: 8px; padding: 0 5px 0 15px;" title=" Παρακολούθηση Παραγγελίας">
-                        <i class="fa fa-truck trucking-link"></i>
-                        <span class="link-text" style="visibility:hidden">.</span>
+                        <a href="#" class="tracking-link"
+                           style="margin-top: 8px; padding: 0 5px 0 15px;"
+                           title=" Παρακολούθηση Παραγγελίας">
+                            <i class="fas fa-truck-moving trucking-link"></i>
+                            <span class="link-text" style="visibility:hidden">.</span>
                         </a>
                     </li>
                     <li id="top-cart">
                         <a data-toggle="collapse" href="#collapseCart" aria-expanded="false"
-                           aria-controls="collapseCart" style="margin-top: 8px; padding: 0 5px 0 15px;" class="cart-link" title="Καλάθι">
-                           <i class="fa fa-shopping-cart cart-link"></i>
+                           aria-controls="collapseCart"
+                           style="margin-top: 8px; padding: 0 5px 0 15px;" class="cart-link"
+                           title="Καλάθι">
+                            <i class="fas fa-shopping-cart cart-link"></i>
                             <span class="link-text" style="visibility:hidden">.</span>
                             {% if (totalCartItems > 0) %}
                                 {% set display = 'inline' %}
                             {% else %}
                                 {% set display = 'none' %}
                             {% endif %}
-                            <span id="cart-total-items" class="count-baloon" style="display:{{ display }};">
+                            <span id="cart-total-items" class="count-baloon"
+                                  style="display:{{ display }};">
                                 {{ totalCartItems }}
                             </span>
                         </a>
                     </li>
                 </ul>
-                
+
 
                 <div class="cart-dropdown collapse" id="collapseCart">
                     {#{% include 'partials/top_cart.html.twig' %}#}
@@ -113,70 +126,71 @@
 
             </div>
             {# <div class="well"> #}
-                {# <div class="container nopaddings">
-                    <div class="search-wrap" style="margin-bottom: 15px;">
-                        <a data-toggle="collapse" href="#collapseSearch" aria-expanded="false"
-                        aria-controls="collapseSearch"
-                        class="close-btn visible-lg visible-md visible-sm">Search</a>
-                        <div class="row">
-                            <div class="col-sm-10 col-sm-offset-1 col-md-8 col-md-offset-2">
-                                <div class="search">
-                                    <form action="{{ path('product_search') }}" method="post">
-                                        <div class="textbox">
-                                            <input name="keyword" required class="form-control" type="text" placeholder="Αναζητήστε βάσει κωδικού, ονόματος ή μάρκας" style="width: 100%;">
-                                        </div>
-                                        {#<div class="option-box">#}
-                                            {#<select class="c-select">#}
-                                                {#<option>All</option>#}
-                                                {#<option>Women</option>#}
-                                                {#<option>Men</option>#}
-                                                {#<option>Juniors</option>#}
-                                                {#<option>Kids</option>#}
-                                                {#<option>Accessories</option>#}
-                                            {#</select>#}
-                                        {#</div>#}
-                                        {# <button type="submit"><i class="fa fa-search"></i></button>
-                                    </form>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-                </div> #}
+            {# <div class="container nopaddings">
+                <div class="search-wrap" style="margin-bottom: 15px;">
+                    <a data-toggle="collapse" href="#collapseSearch" aria-expanded="false"
+                    aria-controls="collapseSearch"
+                    class="close-btn visible-lg visible-md visible-sm">Search</a>
+                    <div class="row">
+                        <div class="col-sm-10 col-sm-offset-1 col-md-8 col-md-offset-2">
+                            <div class="search">
+                                <form action="{{ path('product_search') }}" method="post">
+                                    <div class="textbox">
+                                        <input name="keyword" required class="form-control" type="text" placeholder="Αναζητήστε βάσει κωδικού, ονόματος ή μάρκας" style="width: 100%;">
+                                    </div>
+                                    {#<div class="option-box">#}
+            {#<select class="c-select">#}
+            {#<option>All</option>#}
+            {#<option>Women</option>#}
+            {#<option>Men</option>#}
+            {#<option>Juniors</option>#}
+            {#<option>Kids</option>#}
+            {#<option>Accessories</option>#}
+            {#</select>#}
+            {#</div>#}
+            {# <button type="submit"><i class="fa fa-search"></i></button>
+        </form>
+    </div>
+</div>
+</div>
+</div>
+</div> #}
             {# </div> #}
         </div>
     </div>
 
     <div class="search-collapse collapse" id="collapseSearch">
         {# <div class="well"> #}
-            <div class="container">
-                <div class="search-wrap">
-                    <a data-toggle="collapse" href="#collapseSearch" aria-expanded="false"
-                       aria-controls="collapseSearch"
-                       class="close-btn visible-lg visible-md visible-sm">Search</a>
-                    <div class="row">
-                        <div class="col-sm-10 col-sm-offset-1 col-md-8 col-md-offset-2">
-                            <div class="search">
-                                <form action="{{ path('product_search') }}" method="post">
-                                    <div class="textbox">
-                                        <input name="keyword" required class="form-control" type="text" placeholder="Αναζητήστε βάσει κωδικού, ονόματος ή μάρκας">
-                                    </div>
-                                    {#<div class="option-box">#}
-                                        {#<select class="c-select">#}
-                                            {#<option>All</option>#}
-                                            {#<option>Women</option>#}
-                                            {#<option>Men</option>#}
-                                            {#<option>Juniors</option>#}
-                                            {#<option>Kids</option>#}
-                                            {#<option>Accessories</option>#}
-                                        {#</select>#}
-                                    {#</div>#}
-                                    <button type="submit"><i class="fa fa-search"></i></button>
-                                </form>
-                            </div>
+        <div class="container">
+            <div class="search-wrap">
+                <a data-toggle="collapse" href="#collapseSearch" aria-expanded="false"
+                   aria-controls="collapseSearch"
+                   class="close-btn visible-lg visible-md visible-sm">Search</a>
+                <div class="row">
+                    <div class="col-sm-10 col-sm-offset-1 col-md-8 col-md-offset-2">
+                        <div class="search">
+                            <form action="{{ path('product_search') }}" method="post">
+                                <div class="textbox">
+                                    <input name="keyword" required class="form-control" type="text"
+                                           placeholder="Αναζητήστε βάσει κωδικού, ονόματος ή μάρκας">
+                                </div>
+                                {#<div class="option-box">#}
+                                {#<select class="c-select">#}
+                                {#<option>All</option>#}
+                                {#<option>Women</option>#}
+                                {#<option>Men</option>#}
+                                {#<option>Juniors</option>#}
+                                {#<option>Kids</option>#}
+                                {#<option>Accessories</option>#}
+                                {#</select>#}
+                                {#</div>#}
+                                <button type="submit"><i class="fa fa-search"></i></button>
+                            </form>
                         </div>
                     </div>
                 </div>
             </div>
+        </div>
         {# </div> #}
     </div>
 

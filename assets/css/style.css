@@ -49,34 +49,19 @@ fieldset[disabled] a.btn {
     counter-reset: li-counter
 }
 
-@font-face {
-    font-family: "pf_dintext_proregular";
-    font-style: normal;
-    font-weight: normal;
-    src: url("../fonts/pfdintext/pfdintextcond-regular-web-webfont.eot?#iefix") format("embedded-opentype"), url("../fonts/pfdintext/pfdintextcond-regular-web-webfont.woff") format("woff"), url("../fonts/pfdintext/pfdintextcond-regular-web-webfont.ttf") format("truetype"), url("../fonts/pfdintext/pfdintextcond-regular-web-webfont.svg#PFDinTextPro") format("svg");
-}
+
+
+/*@font-face {*/
+    /*font-family: FontAwesome;*/
+    /*src: url(../fonts/fontawesome-webfont.eot?v=4.7.0);*/
+    /*src: url(../fonts/fontawesome-webfont.eot?#iefix&v=4.7.0) format('embedded-opentype'), url(../fonts/fontawesome-webfont.woff2?v=4.7.0) format('woff2'), url(../fonts/fontawesome-webfont.woff?v=4.7.0) format('woff'), url(../fonts/fontawesome-webfont.ttf?v=4.7.0) format('truetype'), url(../fonts/fontawesome-webfont.svg?v=4.7.0#fontawesomeregular) format('svg');*/
+    /*font-weight: 400;*/
+    /*font-style: normal*/
+/*}*/
 
 @font-face {
-    font-family: FontAwesome;
-    src: url(../fonts/fontawesome-webfont.eot?v=4.7.0);
-    src: url(../fonts/fontawesome-webfont.eot?#iefix&v=4.7.0) format('embedded-opentype'), url(../fonts/fontawesome-webfont.woff2?v=4.7.0) format('woff2'), url(../fonts/fontawesome-webfont.woff?v=4.7.0) format('woff'), url(../fonts/fontawesome-webfont.ttf?v=4.7.0) format('truetype'), url(../fonts/fontawesome-webfont.svg?v=4.7.0#fontawesomeregular) format('svg');
-    font-weight: 400;
-    font-style: normal
-}
-
-@font-face {
-    font-family: 'Aka-AcidGR-QuicksandLite';
-    src: url(../fonts/ac-quicksand/AC-QuicksandLite.ttf);
-}
-
-@font-face {
-    font-family: 'Aka-AcidGR-Quicksandbold';
-    src: url(../fonts/ac-quicksand/AC-QuicksandBold.ttf);
-}
-
-@font-face {
-    font-family: 'Aka-AcidGR-Quicksandregular';
-    src: url(../fonts/ac-quicksand/AC-QuicksandRegular.ttf);
+    font-family: 'GeosansLight';
+    src: url(../fonts/geosans-light/GeosansLight.ttf);
 }
 
 .fa {
@@ -4073,14 +4058,14 @@ body .ui-tooltip {
 }
 
 .ui-widget {
-    font-family: Arial, Helvetica, sans-serif
+    font-family: Arial, Helvetica, Helvetica
 }
 
 .ui-widget button,
 .ui-widget input,
 .ui-widget select,
 .ui-widget textarea {
-    font-family: Arial, Helvetica, sans-serif;
+    font-family: Arial, Helvetica, Helvetica;
     font-size: 1em
 }
 
@@ -8729,12 +8714,12 @@ a.ui-button:active {
 
 .custom-apex-slider .description h4 {
     margin: 0;
-    font-family: 'pf_dintext_proregular', sans
+    font-family: 'GeosansLight', sans
 }
 
 .custom-apex-slider .description p {
     margin: 0;
-    font-family: Arial, Helvetica, sans-serif;
+    font-family: Arial, Helvetica;
     font-weight: 400
 }
 
@@ -9100,7 +9085,7 @@ a.ui-button:active {
     font-size: 90px;
     line-height: 90px;
     letter-spacing: 0;
-    font-family: pf_dintext_proregular;
+    font-family: 'GeosansLight';
     color: #009836;
     text-transform: uppercase;
     padding: 2px 12px;
@@ -9162,7 +9147,7 @@ a.ui-button:active {
 .apex-slider .caption.medium_black_text {
     position: absolute;
     color: #fff;
-    font-family: pf_dintext_proregular;
+    font-family: 'GeosansLight';
     font-size: 48px;
     line-height: 48px;
     text-transform: uppercase
@@ -9173,7 +9158,7 @@ a.ui-button:active {
     color: #A0CE4E;
     font-size: 24px;
     line-height: 24px;
-    font-family: Helvetica, Arial, sans-serif
+    font-family: Helvetica, Arial, Helvetica
 }
 
 .apex-slider .caption.medium_text {
@@ -9271,7 +9256,7 @@ a.ui-button:active {
 
 .apex-slider .caption.small_fade_text {
     position: absolute;
-    font-family: pf_dintext_proregular;
+    font-family: 'GeosansLight';
     font-size: 30px;
     line-height: 30px;
     white-space: nowrap;
@@ -11023,7 +11008,7 @@ img {
 /*! normalize.css v3.0.3 | MIT License | github.com/necolas/normalize.css */
 
 html {
-    font-family: sans-serif;
+    font-family: Helvetica;
     -ms-text-size-adjust: 100%;
     -webkit-text-size-adjust: 100%
 }
@@ -11304,7 +11289,7 @@ html {
 }
 
 body {
-    font-family: 'Aka-AcidGR-QuicksandNormal' !important;
+    font-family: 'GeosansLight' !important;
     font-size: 16px;
     line-height: 1.42857143;
     font-weight: 300
@@ -11415,8 +11400,8 @@ h3,
 h4,
 h5,
 h6 {
-    /*font-family: pf_dintext_proregular;*/
-    /*font-family: pf_dintext_proregular;*/
+    /*font-family: 'GeosansLight';*/
+    /*font-family: 'GeosansLight';*/
     /*font-weight: 400;*/
     line-height: 1.1;
     color: inherit
@@ -18607,6 +18592,7 @@ figure.effect-apollo:hover figcaption::before {
 }
 
 .pre-header-right ul li a.cart-link {
+    font-size: 30px;
     /*background: url(images/cart-icon.png) right no-repeat*/
 }
 
@@ -18826,7 +18812,7 @@ figure.effect-apollo:hover figcaption::before {
 }
 
 .post-header-wrap {
-    padding-right: 75px;
+    /*padding-right: 75px;*/
     position: relative;
     z-index: 50
 }
@@ -21440,6 +21426,9 @@ h3.resp-accordion:first-child {
     h3.resp-accordion {
         display: block
     }
+    .top-search {
+        padding-bottom: 10px
+    }
     .resp-vtabs .resp-tab-content {
         border: 1px solid #fff
     }
@@ -21497,7 +21486,7 @@ h3.resp-accordion:first-child {
 .product-box .media h5 {
     margin: 0 0 2px;
     font-size: 15px;
-    font-family: 'Aka-AcidGR-QuicksandNormal';
+    font-family: 'GeosansLight';
 }
 
 /*.category-banner .banner-img .overlay,
@@ -22121,7 +22110,7 @@ h3.resp-accordion:first-child {
     background: #009836;
     color: #fff;
     line-height: 42px;
-    font-family: pf_dintext_proregular;
+    font-family: 'GeosansLight';
     position: relative
 }
 
@@ -22197,7 +22186,7 @@ h3.resp-accordion:first-child {
 }
 
 .product-list h2 span {
-    font-family: 'Aka-AcidGR-QuicksandNormal';
+    font-family: 'GeosansLight';
     float: right;
     font-size: 14px
 }
@@ -22205,7 +22194,7 @@ h3.resp-accordion:first-child {
 .pin-form .btn,
 .single-product .option_button .btn,
 .single-product-details .nav-tabs>li>a {
-    font-family: pf_dintext_proregular
+    font-family: 'GeosansLight'
 }
 
 .list-group.list-products {
@@ -23631,7 +23620,7 @@ h3#reply-title {
 }
 
 .post-author h3 {
-    font-family: 'Aka-AcidGR-QuicksandNormal';
+    font-family: 'GeosansLight';
     font-size: 24px;
     font-weight: 400;
     margin: 12px 0
@@ -24200,7 +24189,6 @@ h3#reply-title {
     .grid-group-item .product-case:before,
     .grid-group-item:after,
     .grid-group-item:before {
-        content: '';
         display: table
     }
     .info-row ul li a h4 {
