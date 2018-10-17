@@ -18848,7 +18848,8 @@ figure.effect-apollo:hover figcaption::before {
 
 .post-header-wrap .navbar-nav>li>a {
     color: #171717;
-    line-height: 82px;
+    line-height: 60px;
+    /*line-height: 82px;*/
     padding: 0 20px;
     text-transform: uppercase
 }
@@ -24423,4 +24424,8 @@ ul.product_list .availability span.out-of-stock {
 .no-border {
     border: none;
     -webkit-box-shadow: none;
+}
+.social-top {
+    font-size: 32px;
+    /*color: #009836;*/
 }

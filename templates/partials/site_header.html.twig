@@ -4,58 +4,75 @@
 
     <div class="post-header" id="header">
         <div class="container">
-            {#<div class="post-header-wrap">#}
-            {#<a href="#" class="sidebar-toogle" id="menu-toggle">Sidebar Toogle</a>#}
-            <a role="button" href="#menuModal" data-toggle="modal"
-               class="menu-toggle visible-xs visible-sm">MENU
-                TOGGLE</a>
-            <div class="row">
-                <div class="col-md-4">
-                    <div class="logo">
-                        <a href="{{ path('index') }}">
-                            <img src="{{ asset('images/logo.png') }}" alt="">
-                        </a>
-                    </div>
-                </div>
-                <div class="col-md-8 top-search visible-lg visible-md visible-xs visible-sm pull-right">
-                    <div class="search-wrap" style="margin-bottom: 15px; margin-top: 15px;">
-                        {#<a data-toggle="collapse" href="#collapseSearch" aria-expanded="false"#}
-                        {#aria-controls="collapseSearch"#}
-                        {#class="close-btn visible-lg visible-md visible-sm">Search</a>#}
-                        {#<div class="pull-right">#}
-                        <div class="col-sm-10 col-md-10 pull-right">
-                            <div class="search">
-                                <form action="{{ path('product_search') }}" method="post">
-                                    <div class="textbox">
-                                        <input name="keyword" required class="form-control"
-                                               type="text"
-                                               placeholder="Αναζητήστε βάσει κωδικού, ονόματος ή μάρκας"
-                                               style="width: 100%;background: #f3f3f3;">
-                                    </div>
-                                    {#<div class="option-box">#}
-                                    {#<select class="c-select">#}
-                                    {#<option>All</option>#}
-                                    {#<option>Women</option>#}
-                                    {#<option>Men</option>#}
-                                    {#<option>Juniors</option>#}
-                                    {#<option>Kids</option>#}
-                                    {#<option>Accessories</option>#}
-                                    {#</select>#}
-                                    {#</div>#}
-                                    <button type="submit"><i class="fa fa-search"></i>
-                                    </button>
-                                </form>
-                            </div>
+            <div class="post-header-wrap">
+                {#<a href="#" class="sidebar-toogle" id="menu-toggle">Sidebar Toogle</a>#}
+                <a role="button" href="#menuModal" data-toggle="modal"
+                   class="menu-toggle visible-xs visible-sm">MENU
+                    TOGGLE</a>
+                <div class="row">
+                    <div class="col-md-4">
+                        <div class="logo">
+                            <a href="{{ path('index') }}">
+                                <img src="{{ asset('images/logo.png') }}" alt="">
+                            </a>
                         </div>
-                        {#</div>#}
+                    </div>
+                    <div class="col-md-8 top-search visible-lg visible-md visible-xs visible-sm pull-right">
+                        <div class="search-wrap" style="margin-bottom: 15px; margin-top: 15px;">
+                            {#<a data-toggle="collapse" href="#collapseSearch" aria-expanded="false"#}
+                            {#aria-controls="collapseSearch"#}
+                            {#class="close-btn visible-lg visible-md visible-sm">Search</a>#}
+                            {#<div class="pull-right">#}
+                            <div class="col-sm-10 col-md-10 pull-right">
+                                <div class="search">
+                                    <form action="{{ path('product_search') }}" method="post">
+                                        <div class="textbox">
+                                            <input name="keyword" required class="form-control"
+                                                   type="text"
+                                                   placeholder="Αναζητήστε βάσει κωδικού, ονόματος ή μάρκας"
+                                                   style="width: 100%;background: #f3f3f3;">
+                                        </div>
+                                        {#<div class="option-box">#}
+                                        {#<select class="c-select">#}
+                                        {#<option>All</option>#}
+                                        {#<option>Women</option>#}
+                                        {#<option>Men</option>#}
+                                        {#<option>Juniors</option>#}
+                                        {#<option>Kids</option>#}
+                                        {#<option>Accessories</option>#}
+                                        {#</select>#}
+                                        {#</div>#}
+                                        <button type="submit"><i class="fa fa-search"></i>
+                                        </button>
+                                    </form>
+                                </div>
+                            </div>
+                            {#</div>#}
+                        </div>
                     </div>
                 </div>
             </div>
-            {#</div>#}
         </div>
         <div class="container">
-            <div class="post-header-wrap">
+            <div class="post-header-wrap col-xs-12 col-md-8">
                 {% include 'partials/top_menu.html.twig' %}
+            </div>
+            <div class="col-xs-12 col-md-4" style="vertical-align: middle; text-align: center;">
+                <a href="https://www.facebook.com/AnosiaPharmacy" target="_blank">
+                    <i class="fab fa-facebook-square social-top"></i>
+                </a>
+                <a href="https://www.instagram.com/anosiapharmacy.gr/" target="_blank">
+                    <i class="fab fa-instagram social-top"></i>
+                </a>
+                <a href="https://twitter.com/AnosiaPharmacy" target="_blank">
+                    <i class="fab fa-twitter-square social-top"></i>
+                </a>
+                <a href="https://plus.google.com/u/0/118177816495130950018" target="_blank">
+                    <i class="fab fa-google-plus-square social-top"></i>
+                </a>
+                <a href="mailto:info@anosiapharmacy.gr" target="_blank">
+                    <i class="fas fa-envelope-square social-top"></i>
+                </a>
             </div>
         </div>
     </div>
