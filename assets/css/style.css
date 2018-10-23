@@ -24429,3 +24429,10 @@ ul.product_list .availability span.out-of-stock {
     font-size: 32px;
     /*color: #009836;*/
 }
+.map {
+    -webkit-filter: grayscale(100%);
+    -moz-filter: grayscale(100%);
+    -ms-filter: grayscale(100%);
+    -o-filter: grayscale(100%);
+    filter: grayscale(100%);
+}
