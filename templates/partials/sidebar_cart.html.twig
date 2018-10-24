@@ -1,0 +1,184 @@
+<div id="sidebar-cart-wrapper">
+
+    <div class="sidebar-logo clearfix">
+        <div class="logo-sidebar"><a href="#"><img src="{{ asset('build/images/logo.png') }}"
+                                                   alt=""></a></div>
+        <a id="menu-close" href="#" class="close-menu">Close Menu</a>
+    </div>
+    <div id="collapseCart">
+
+    </div>
+
+    {#<div class="sidebar-login">#}
+        {#{% if (loggedUser is not empty) %}#}
+        {#<ul>#}
+            {#<li class="user">Καλώς ήρθες <a href="{{ path('user_account') }}">{{ loggedUser }}</a></li>#}
+            {#<li class="logout"><a href="{{ path('logout') }}">Αποσύνδεση</a> </li>#}
+        {#</ul>#}
+        {#{% else %}#}
+        {#<h4>ΕΙΣΟΔΟΣ</h4>#}
+        {#<form action="{{ path('login') }}" method="post">#}
+            {#<div class="form-group">#}
+                {#<input name="_username" required type="text" class="form-control" placeholder="Όνομα χρήστη">#}
+            {#</div>#}
+            {#<div class="form-group">#}
+                {#<input name="_password" required type="password" class="form-control" placeholder="Κωδικός">#}
+            {#</div>#}
+            {#<div class="clearfix">#}
+                {#<div class="form-group pull-left">#}
+                    {#<label><input type="checkbox"> Να με θυμάσαι</label>#}
+                {#</div>#}
+                {#<a href="#" class="pull-right">Ξεχάσατε τον κωδικό σας?</a>#}
+            {#</div>#}
+            {#<div class="form-group text-center">#}
+                {#<button type="submit" class="btn btn-primary btn-signin">ΕΙΣΟΔΟΣ</button>#}
+            {#</div>#}
+            {#<input type="hidden" name="_csrf_token" value="{{ csrf_token('authenticate') }}">#}
+        {#</form>#}
+
+        {#<div class="form-group text-center">#}
+            {#<a href="{{ path('user_registration') }}"><strong>ΕΓΓΡΑΦΗ ΤΩΡΑ</strong></a>#}
+        {#</div>#}
+
+        {#<div class="form-group">#}
+            {#<a href="{{ loginUrl }}"><button class="loginBtn loginBtn--facebook">Signin with <strong>Facebook</strong></button></a>#}
+        {#</div>#}
+        {#<div class="form-group"><a href="#" class="signin-with-gplus">Signin with <strong>Google+</strong></a></div>#}
+        {#{% endif %}#}
+
+        {#<ul>#}
+            {#<li class="call">210 94 02 027<span>Καλέστε μας</span></li>#}
+            {#<li class="email">support@anosiapharmacy.gr<span>Επικοινωνείστε μαζί μας</span></li>#}
+        {#</ul>#}
+
+        {#<div class="sidebar-product-list">#}
+            {#<h3>Best <span>Seller</span></h3>#}
+            {#<div id="carouselOneSidebar" class="carousel slide" data-ride="carousel">#}
+                {#<!-- Wrapper for slides -->#}
+                {#<div class="carousel-inner" role="listbox">#}
+                    {#<div class="item active">#}
+                        {#{% for pr in popular|slice(0,4) %}#}
+                            {#<div class="media">#}
+                                {#<div class="media-left">#}
+                                    {#<a href="{{ path('product_view', {'id':pr.id}) }}">#}
+                                        {#<img class="media-object" src="{{ pr.imageUrl }}"#}
+                                             {#alt="{{ pr.name }}">#}
+                                    {#</a>#}
+                                {#</div>#}
+                                {#<div class="media-body">#}
+                                    {#<h5>#}
+                                        {#<a href="{{ path('product_view', {'id':pr.id}) }}">{{ pr.name }}</a>#}
+                                    {#</h5>#}
+                                    {#<div class="star-rating"><i class="fa fa-star"></i><i class="fa fa-star"></i><i#}
+                                    {#class="fa fa-star"></i><i class="fa fa-star"></i><i#}
+                                    {#class="fa fa-star-o"></i></div>#}
+                                    {#<div class="price">{{ pr.webPrice }}€#}
+                                        {#<del>{{ pr.retailPrice }}€</del>#}
+                                    {#</div>#}
+                                    {#<button type="button" class="btn btn-primary btn-xs">ΚΑΛΑΘΙ#}
+                                    {#</button>#}
+                                {#</div>#}
+                            {#</div>#}
+                        {#{% endfor %}#}
+                    {#</div>#}
+                    {#<div class="item">#}
+                        {#{% for pr in popular|slice(0,4) %}#}
+                            {#<div class="media">#}
+                                {#<div class="media-left">#}
+                                    {#<a href="{{ path('product_view', {'id':pr.id}) }}">#}
+                                        {#<img class="media-object" src="{{ pr.imageUrl }}"#}
+                                             {#alt="{{ pr.name }}">#}
+                                    {#</a>#}
+                                {#</div>#}
+                                {#<div class="media-body">#}
+                                    {#<h5>#}
+                                        {#<a href="{{ path('product_view', {'id':pr.id}) }}">{{ pr.name }}</a>#}
+                                    {#</h5>#}
+                                    {#<div class="star-rating"><i class="fa fa-star"></i><i class="fa fa-star"></i><i#}
+                                    {#class="fa fa-star"></i><i class="fa fa-star"></i><i#}
+                                    {#class="fa fa-star-o"></i></div>#}
+                                    {#<div class="price">{{ pr.webPrice }}€#}
+                                        {#<del>{{ pr.retailPrice }}€</del>#}
+                                    {#</div>#}
+                                    {#<button type="button" class="btn btn-primary btn-xs">ΚΑΛΑΘΙ#}
+                                    {#</button>#}
+                                {#</div>#}
+                            {#</div>#}
+                        {#{% endfor %}#}
+                    {#</div>#}
+                    {#<div class="carousel-nav">#}
+                        {#<a class="left carousel-control" href="#carouselOneSidebar" role="button"#}
+                           {#data-slide="prev">Previous</a>#}
+                        {#<a class="right carousel-control" href="#carouselOneSidebar" role="button"#}
+                           {#data-slide="next">Next</a>#}
+                    {#</div>#}
+                {#</div>#}
+            {#</div>#}
+        {#</div>#}
+
+        {#<div class="sidebar-product-list">#}
+            {#<h3>ΝΕΕΣ <span>ΑΦΙΞΕΙΣ</span></h3>#}
+            {#<div id="carouselTwoSidebar" class="carousel slide" data-ride="carousel">#}
+                {#<!-- Wrapper for slides -->#}
+                {#<div class="carousel-inner" role="listbox">#}
+                    {#<div class="item active">#}
+                        {#{% for pr in popular|slice(0,4) %}#}
+                            {#<div class="media">#}
+                                {#<div class="media-left">#}
+                                    {#<a href="{{ path('product_view', {'id':pr.id}) }}">#}
+                                        {#<img class="media-object" src="{{ pr.imageUrl }}"#}
+                                             {#alt="{{ pr.name }}">#}
+                                    {#</a>#}
+                                {#</div>#}
+                                {#<div class="media-body">#}
+                                    {#<h5>#}
+                                        {#<a href="{{ path('product_view', {'id':pr.id}) }}">{{ pr.name }}</a>#}
+                                    {#</h5>#}
+                                    {#<div class="star-rating"><i class="fa fa-star"></i><i class="fa fa-star"></i><i#}
+                                    {#class="fa fa-star"></i><i class="fa fa-star"></i><i#}
+                                    {#class="fa fa-star-o"></i></div>#}
+                                    {#<div class="price">{{ pr.webPrice }}€#}
+                                        {#<del>{{ pr.retailPrice }}€</del>#}
+                                    {#</div>#}
+                                    {#<button type="button" class="btn btn-primary btn-xs">ΚΑΛΑΘΙ#}
+                                    {#</button>#}
+                                {#</div>#}
+                            {#</div>#}
+                        {#{% endfor %}#}
+                    {#</div>#}
+                    {#<div class="item">#}
+                        {#{% for pr in popular|slice(0,4) %}#}
+                            {#<div class="media">#}
+                                {#<div class="media-left">#}
+                                    {#<a href="{{ path('product_view', {'id':pr.id}) }}">#}
+                                        {#<img class="media-object" src="{{ pr.imageUrl }}"#}
+                                             {#alt="{{ pr.name }}">#}
+                                    {#</a>#}
+                                {#</div>#}
+                                {#<div class="media-body">#}
+                                    {#<h5>#}
+                                        {#<a href="{{ path('product_view', {'id':pr.id}) }}">{{ pr.name }}</a>#}
+                                    {#</h5>#}
+                                    {#<div class="star-rating"><i class="fa fa-star"></i><i class="fa fa-star"></i><i#}
+                                    {#class="fa fa-star"></i><i class="fa fa-star"></i><i#}
+                                    {#class="fa fa-star-o"></i></div>#}
+                                    {#<div class="price">{{ pr.webPrice }}€#}
+                                        {#<del>{{ pr.retailPrice }}€</del>#}
+                                    {#</div>#}
+                                    {#<button type="button" class="btn btn-primary btn-xs">ΚΑΛΑΘΙ#}
+                                    {#</button>#}
+                                {#</div>#}
+                            {#</div>#}
+                        {#{% endfor %}#}
+                    {#</div>#}
+                    {#<div class="carousel-nav">#}
+                        {#<a class="left carousel-control" href="#carouselTwoSidebar" role="button"#}
+                           {#data-slide="prev">Previous</a>#}
+                        {#<a class="right carousel-control" href="#carouselTwoSidebar" role="button"#}
+                           {#data-slide="next">Next</a>#}
+                    {#</div>#}
+                {#</div>#}
+            {#</div>#}
+        {#</div>#}
+    {#</div>#}
+</div>

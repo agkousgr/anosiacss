@@ -18638,6 +18638,17 @@ figure.effect-apollo:hover figcaption::before {
     position: absolute
 }
 
+.timetable-dropdown {
+    margin: 0;
+    padding: 0;
+    width: 320px;
+    background: #e5e5e5;
+    position: absolute;
+    left: 0;
+    top: 100%;
+    border-top: 1px solid #d8d8d8
+}
+
 .cart-dropdown {
     margin: 0;
     padding: 0;
@@ -19332,6 +19343,34 @@ body.modal-open {
 }
 
 #sidebar-wrapper.active {
+    right: 320px;
+    width: 320px;
+    -webkit-transition: all .6s ease 0s;
+    -moz-transition: all .6s ease 0s;
+    -ms-transition: all .6s ease 0s;
+    -o-transition: all .6s ease 0s;
+    transition: all .6s ease 0s;
+    -webkit-box-shadow: -5px 5px 5px 0 rgba(0, 0, 0, .17);
+    box-shadow: -5px 5px 5px 0 rgba(0, 0, 0, .17)
+}
+
+#sidebar-cart-wrapper {
+    position: fixed;
+    right: 0;
+    width: 320px;
+    height: 100%;
+    transform: translateX(320px);
+    overflow-y: auto;
+    background: #fff;
+    -webkit-transition: all .6s ease 0s;
+    -moz-transition: all .6s ease 0s;
+    -ms-transition: all .6s ease 0s;
+    -o-transition: all .6s ease 0s;
+    transition: all .6s ease 0s;
+    z-index: 1010
+}
+
+#sidebar-cart-wrapper.active {
     right: 320px;
     width: 320px;
     -webkit-transition: all .6s ease 0s;
@@ -24079,6 +24118,9 @@ h3#reply-title {
         padding-top: 0;
         padding-bottom: 0;
         line-height: 34px
+    }
+    .pre-header-left ul li a.phone-link {
+        background-position: center
     }
     .pre-header-right ul li {
         width: 25%;

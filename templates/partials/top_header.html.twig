@@ -38,11 +38,19 @@
 
             <div class="pre-header-left hidden-xs">
                 <ul>
-                    <li><a><i class="far fa-clock"></i> </a></li>
-                    <li><a href="tel:2109402027"><i class="fa fa-phone"></i> 210 94 02 027</a></li>
+                    <li><a data-toggle="collapse" href="#collapseTimetable" aria-expanded="false"
+                           aria-controls="collapseTimetable"
+                           style="margin-top: 8px; padding: 0 5px 0 15px;" class="cart-link"
+                           title="Καλάθι">
+                            <i class="far fa-clock"></i>
+                        </a></li>
+                    <li><a class="phone-link" href="tel:2109402027"><i class="fa fa-phone"></i> 210 94 02 027</a></li>
                     <li><i class="fa fa-truck"></i> ΔΩΡΕΑΝ ΜΕΤΑΦΟΡΙΚΑ ΓΙΑ ΠΑΡΑΓΓΕΛΙΕΣ ΑΝΩ ΤΩΝ 39€
                     </li>
                 </ul>
+                <div class="timetable-dropdown collapse" id="collapseTimetable">
+                    test
+                </div>
             </div>
             <div class="pre-header-left visible-xs">
                 <ul>
@@ -102,9 +110,8 @@
                         </a>
                     </li>
                     <li id="top-cart">
-                        <a data-toggle="collapse" href="#collapseCart" aria-expanded="false"
-                           aria-controls="collapseCart"
-                           style="margin-top: 8px; padding: 0 5px 0 15px;" class="cart-link"
+                        {#<a data-toggle="collapse" href="#collapseCart" aria-expanded="false"#}
+                        <a href="#" style="margin-top: 8px; padding: 0 5px 0 15px;" class="cart-link toggle-cart-sidebar"
                            title="Καλάθι">
                             <i class="fas fa-shopping-cart cart-link"></i>
                             <span class="link-text" style="visibility:hidden">.</span>
@@ -122,9 +129,9 @@
                 </ul>
 
 
-                <div class="cart-dropdown collapse" id="collapseCart">
+                {#<div class="cart-dropdown collapse" id="collapseCart">#}
                     {#{% include 'partials/top_cart.html.twig' %}#}
-                </div>
+                {#</div>#}
 
             </div>
             {# <div class="well"> #}

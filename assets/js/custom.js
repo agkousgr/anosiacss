@@ -26,6 +26,7 @@ $(document).ready(function () {
 $("#menu-close").click(function (e) {
     e.preventDefault();
     $("#sidebar-wrapper").toggleClass("active");
+    $("#sidebar-cart-wrapper").toggleClass("active");
 });
 // Opens the sidebar menu
 $("#menu-toggle").click(function (e) {
@@ -439,6 +440,11 @@ $('.owl-dots').css('display', 'none');
 $(".toggle-sidebar").click(function (e) {
     e.preventDefault();
     $("#sidebar-wrapper").toggleClass("active");
+});
+
+$(".toggle-cart-sidebar").click(function (e) {
+    e.preventDefault();
+    $("#sidebar-cart-wrapper").toggleClass("active");
 });
 
 
