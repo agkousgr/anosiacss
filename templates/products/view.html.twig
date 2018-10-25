@@ -13,7 +13,8 @@
 
 {% block body %}
     <div id="mainWrapper">
-        {% include 'partials/sidebar_login.html.twig' %}
+        {#{% include 'partials/sidebar_login.html.twig' %}#}
+        {% include 'partials/sidebar_cart.html.twig' %}
         {% include 'partials/swipe_menu.html.twig' %}
         {% include 'partials/site_header.html.twig' %}
         <div class="page-header">
@@ -33,9 +34,9 @@
                     {% endfor %}
                 </div>
                 <div class="row">
-                    <div class="col-md-9 single-product">
+                    <div class="col-md-12 single-product">
                         <div class="row">
-                            <div class="col-sm-6">
+                            <div class="col-sm-4">
                                 <div class="product-main-slider">
                                     <div class="slider">
                                         <div class="main-image">
@@ -60,7 +61,7 @@
                                 </div>
                             </div>
 
-                            <div class="col-sm-6 wow fadeIn" data-wow-delay="0.3s">
+                            <div class="col-sm-8 wow fadeIn" data-wow-delay="0.3s">
                                 <h2>{{ pr.name }}</h2>
                                 <p> {{ pr.summary }}</p>
                                 {#<ul class="rating">#}
@@ -111,7 +112,7 @@
                                 {% endif %}
                                 <div class="variations_button">
                                     <div class="row">
-                                        <div class="col-sm-6">
+                                        <div class="col-sm-8 col-md-4">
                                             <div class="form-group">
                                                 <input id="add-quantity"
                                                        class="form-control stepper" type="number"
@@ -119,7 +120,7 @@
                                                        max="{{ maxItems }}"/>
                                             </div>
                                         </div>
-                                        <div class="col-sm-6">
+                                        <div class="col-sm-4">
                                             <ul>
                                                 <li>
                                                     <button type="button"
@@ -137,11 +138,11 @@
 
                                 <div class="option_button form-group">
                                     <div class="row">
-                                        <div class="col-xs-6">
+                                        <div class="col-xs-12 col-sm-8 col-md-4">
                                             <a href=""
                                                class="btn btn-primary btn-block add-to-cart"
                                                data-id="{{ pr.id }}"
-                                               data-name="{{ pr.name }}">ΣΤΟ ΚΑΛΑΘΙ</a>
+                                               data-name="{{ pr.name }}">ΠΡΟΣΘΗΚΗ ΣΤΟ ΚΑΛΑΘΙ</a>
                                         </div>
                                         {#<div class="col-xs-6">#}
                                         {#<a href="#" class="btn btn-default btn-block">ΑΓΟΡΑΣΕ#}
@@ -152,39 +153,39 @@
                                 <div class="share"><img src="{{ asset('images/share.jpg') }}"
                                                         alt=""></div>
 
-                                <div class="pin-widget visible-sm">
-                                    <h5>Delivery</h5>
-                                    <div class="content">
-                                        <div class="pin-form">
-                                            {#<form action="#">#}
-                                            <div class="row no-margin">
-                                                <div class="col-xs-8 no-padding"><input
-                                                            type="text" class="form-control"
-                                                            placeholder="Enter Pin Code"></div>
-                                                <div class="col-xs-4 no-padding"><input
-                                                            type="submit"
-                                                            class="btn btn-primary btn-block"
-                                                            value="CHECK"></div>
-                                            </div>
-                                            {#</form>#}
-                                            <p class="text-center">
-                                                <strong>Generally delivered by 5
-                                                    days</strong></p>
-                                        </div>
-                                    </div>
-                                </div>
+                                {{ include('products/modules/product_view_tabs.html.twig') }}
+                                {#<div class="pin-widget visible-sm">#}
+                                {#<h5>Delivery</h5>#}
+                                {#<div class="content">#}
+                                {#<div class="pin-form">#}
+                                {#<form action="#">#}
+                                {#<div class="row no-margin">#}
+                                {#<div class="col-xs-8 no-padding"><input#}
+                                {#type="text" class="form-control"#}
+                                {#placeholder="Enter Pin Code"></div>#}
+                                {#<div class="col-xs-4 no-padding"><input#}
+                                {#type="submit"#}
+                                {#class="btn btn-primary btn-block"#}
+                                {#value="CHECK"></div>#}
+                                {#</div>#}
+                                {#</form>#}
+                                {#<p class="text-center">#}
+                                {#<strong>Generally delivered by 5#}
+                                {#days</strong></p>#}
+                                {#</div>#}
+                                {#</div>#}
+                                {#</div>#}
 
                             </div>
                         </div>
-                        {{ include('products/modules/product_view_tabs.html.twig') }}
                     </div>
 
-                    <div class="col-md-3 sidebar visible-lg visible-md">
-                        {#{% include 'products/modules/bside_delivery.html.twig' %}#}
-                        {% include 'products/modules/bside_special_products.html.twig' %}
-                        {% include 'products/modules/bside_clearance_sale.html.twig' %}
-                        {#{% include 'products/modules/bside_other_info.html.twig' %}#}
-                    </div>
+                    {#<div class="col-md-3 sidebar visible-lg visible-md">#}
+                    {#{% include 'products/modules/bside_delivery.html.twig' %}#}
+                    {#{% include 'products/modules/bside_special_products.html.twig' %}#}
+                    {#{% include 'products/modules/bside_clearance_sale.html.twig' %}#}
+                    {#{% include 'products/modules/bside_other_info.html.twig' %}#}
+                    {#</div>#}
                 </div>
                 {% include 'products/modules/product_view_related.html.twig' %}
                 {#{% include 'products/modules/bottom_banners.html.twig' %}#}

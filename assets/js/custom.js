@@ -397,14 +397,15 @@ $('.add-to-cart').on('click', function (e) {
     }
     $.post(Routing.generate('add_to_cart'), data, function (result) {
         if (result.success && result.exist === false) {
-            swal({
-                title: 'Καλάθι',
-                html: '<div style="font-size:17px;">Το προϊόν ' + result.prName + ' προστέθηκε με επιτυχία!</div>',
-                type: 'success',
-                timer: 5000
-            });
+            // swal({
+            //     title: 'Καλάθι',
+            //     html: '<div style="font-size:17px;">Το προϊόν ' + result.prName + ' προστέθηκε με επιτυχία!</div>',
+            //     type: 'success',
+            //     timer: 5000
+            // });
             $('#cart-total-items').css('display', 'inline');
             $('#cart-total-items').html(result.totalCartItems);
+            $("#sidebar-cart-wrapper").toggleClass("active");
             $('#collapseCart').load(Routing.generate('load_top_cart'));
         } else if (result.success && result.exist === true) {
             swal({

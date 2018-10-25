@@ -23092,7 +23092,8 @@ h3.resp-accordion:first-child {
     padding: 0 12px;
     line-height: 50px;
     border-radius: 0;
-    font-size: 18px
+    font-size: 15px
+    /*font-size: 18px*/
 }
 
 .single-product-details {
