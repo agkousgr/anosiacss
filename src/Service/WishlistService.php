@@ -66,7 +66,12 @@ class WishlistService
     <pagenumber>0</pagenumber>
     <ItemID>$ids</ItemID>
     <ItemCode>null</ItemCode>
+    <IsSkroutz>-1</IsSkroutz>
     <SearchToken>null</SearchToken>
+    <OrderBy>null</OrderBy>
+    <MakeID>null</MakeID>
+    <LowPrice>-1</LowPrice>
+    <HighPrice>-1</HighPrice>
 </ClientGetItemsRequest>
 EOF;
         try {

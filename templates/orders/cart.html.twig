@@ -58,7 +58,7 @@
                                                 <li class="cart-item">
                                                     <div class="product-line-grid">
                                                         <!--  product left content: image-->
-                                                        <div class="product-line-grid-left col-md-3 col-xs-4">
+                                                        <div class="product-line-grid-left col-md-2 col-xs-4">
                                                             <span class="product-image media-middle">
                                                                 <img src="{{ pr.imageUrl }}"
                                                                      alt="{{ pr.name }}">
@@ -104,7 +104,7 @@
                                                         {% else %}
                                                             {% set maxItems = pr.remainNotReserved %}
                                                         {% endif %}
-                                                        <div class="product-line-grid-right product-line-actions col-md-5 col-xs-12">
+                                                        <div class="product-line-grid-right product-line-actions col-md-6 col-xs-12">
                                                             <div class="row">
                                                                 <div class="col-xs-4 hidden-md-up"></div>
                                                                 <div class="col-md-10 col-xs-6">
@@ -162,8 +162,15 @@
                                 </div>
                             {% endif %}
                         </div>
+                        {% set freeCarriageFare = 39 - cartSubTotal %}
+                        {% if freeCarriageFare >= 0 %}
+                            <div class="alert alert-danger" role="alert">
+                                <i class="fas fa-exclamation pull-left" style="font-size: 32px; padding-right: 15px"></i>
+                                <p>Έχετε υπόλοιπο {{ freeCarriageFare|number_format(2, ',', '.') }}€ για να κερδίσετε δωρεάν μεταφορικά! Μπορείτε να συμπληρώσετε το καλάθι σας με κάποια από τα προτεινόμενα προϊόντα ή οποιαδήποτε άλλα της επιλογής σας.</p>
+                            </div>
+                        {% endif %}
                         <a style="font-size:16px;" class=""
-                           href="javascript:history.back()">
+                           href="{{ path('index') }}">
                             <i class="fa fa-chevron-left"></i> Συνεχίστε τις αγορές σας
                         </a>
                         <!-- shipping informations -->
@@ -172,6 +179,26 @@
                     {% if cartItems|length > 0 %}
                         <!-- Right Block: cart subtotal & cart total -->
                         <div class="cart-grid-right col-xs-12 col-lg-4">
+                            <div id="block-reassurance">
+                                <ul>
+                                    <li>
+                                        <div class="block-reassurance-item">
+                                            <h3>Κωδικός έκπτωσης</h3>
+                                            <div style="padding: 0 0 10px;">Εισάγετε τον κωδικό από το εκπτωτικό κουπόνι
+                                                που έχετε για να αποκτήσετε την έκπτωση.
+                                            </div>
+                                            <input id="discount-coupon" class="form-control"
+                                                   placeholder="Κωδικός κουπονιού" type="text" name="discount-coupon">
+                                        </div>
+                                        <div class="text-sm-center" style="padding: 10px 0 20px;">
+                                            <a class="btn-primary" id="use-coupon" href="">
+                                                Εξαργύρωση
+                                            </a>
+                                        </div>
+                                    </li>
+
+                                </ul>
+                            </div>
                             <div class="card cart-summary">
                                 <div class="cart-detailed-totals">
                                     <div class="card-block">
@@ -215,44 +242,15 @@
                                     </div>
                                 </div>
                             </div>
-                            <div id="block-reassurance">
-                                <ul>
-                                    <li>
-                                        <div class="block-reassurance-item">
-                                            <img src="https://demo.templatetrip.com/Prestashop/PRS06/PRS176_gym/modules/blockreassurance/img/ic_verified_user_black_36dp_1x.png"
-                                                 alt="Security policy (edit with Customer reassurance module)">
-                                            <span class="h6">Security policy (edit with Customer
-                                                reassurance
-                                                module)</span>
-                                        </div>
-                                    </li>
-                                    <li>
-                                        <div class="block-reassurance-item">
-                                            <img src="https://demo.templatetrip.com/Prestashop/PRS06/PRS176_gym/modules/blockreassurance/img/ic_local_shipping_black_36dp_1x.png"
-                                                 alt="Delivery policy (edit with Customer reassurance module)">
-                                            <span class="h6">Delivery policy (edit with Customer
-                                                reassurance
-                                                module)</span>
-                                        </div>
-                                    </li>
-                                    <li>
-                                        <div class="block-reassurance-item">
-                                            <img src="https://demo.templatetrip.com/Prestashop/PRS06/PRS176_gym/modules/blockreassurance/img/ic_swap_horiz_black_36dp_1x.png"
-                                                 alt="Return policy (edit with Customer reassurance module)">
-                                            <span class="h6">Return policy (edit with Customer
-                                                reassurance
-                                                module)</span>
-                                        </div>
-                                    </li>
-                                </ul>
-                            </div>
                         </div>
                     {% endif %}
                 </div>
+                {{ include('orders/modules/product_view_free_transportation.html.twig') }}
+
             </section>
         </div>
         {% include 'home_page_modules/14_newsletter.html.twig' %}
-        {% include 'home_page_modules/15_social.html.twig' %}
+        {#{% include 'home_page_modules/15_social.html.twig' %}#}
         {% include 'partials/footer.html.twig' %}
     </div>
 {% endblock %}

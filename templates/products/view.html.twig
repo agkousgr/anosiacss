@@ -5,7 +5,6 @@
 {% block slider %}{% endblock %}
 {#{% block stylesheets %}#}
     {#{{ parent() }}#}
-    {#<link href="{{ asset('build/css/apex-slider.css') }}" rel="stylesheet"/>#}
 {#{% endblock %}#}
 {% block breadcrumb %}
 
@@ -127,7 +126,7 @@
                                                             class="add-to-wishlist"
                                                             data-id="{{ pr.id }}"
                                                             data-name="{{ pr.name }}">
-                                                        <i class="fa fa-heart-o"></i>
+                                                        <i class="far fa-heart"></i>
                                                     </button>
                                                 </li>
                                                 {#<li><button type="button"><i class="fa fa-bell-o"></i></button></li>#}
@@ -150,8 +149,10 @@
                                         {#</div>#}
                                     </div>
                                 </div>
-                                <div class="share"><img src="{{ asset('images/share.jpg') }}"
-                                                        alt=""></div>
+                                <div class="share">
+                                    <div class="sharethis-inline-share-buttons"></div>
+                                    {#<img src="{{ asset('images/share.jpg') }}" alt="">#}
+                                </div>
 
                                 {{ include('products/modules/product_view_tabs.html.twig') }}
                                 {#<div class="pin-widget visible-sm">#}
@@ -193,12 +194,14 @@
             </div>
         </div>
         {% include 'home_page_modules/14_newsletter.html.twig' %}
-        {% include 'home_page_modules/15_social.html.twig' %}
+        {#{% include 'home_page_modules/15_social.html.twig' %}#}
         {% include 'partials/footer.html.twig' %}
     </div>
 {% endblock %}
 
 {% block javascripts %}
     {{ parent() }}
-    <script src="{{ asset('build/js/product-list.js') }}"></script>
+    <script type="text/javascript" src="{{ asset('build/js/jquery.bxslider.min.js') }}"></script>
+    {#<script src="{{ asset('build/js/product-list.js') }}"></script>#}
+    <script src=“//platform-api.sharethis.com/js/sharethis.js#property=&product=inline-share-buttons”></script>
 {% endblock %}

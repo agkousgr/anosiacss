@@ -356,7 +356,7 @@ $('.add-to-wishlist').on('click', function () {
     $.post(Routing.generate('add_to_wishlist'), data, function (result) {
         if (result.success && result.exist === false) {
             swal({
-                title: 'Καλάθι',
+                title: 'Wishlist',
                 html: '<div style="font-size:17px;">Το προϊόν ' + result.prName + ' προστέθηκε με επιτυχία στη wislish σας!</div>',
                 type: 'success',
                 timer: 5000

@@ -9086,7 +9086,7 @@ a.ui-button:active {
     line-height: 90px;
     letter-spacing: 0;
     font-family: 'GeosansLight';
-    color: #009836;
+    color: #009635;
     text-transform: uppercase;
     padding: 2px 12px;
     background: #fff
@@ -9265,7 +9265,7 @@ a.ui-button:active {
 }
 
 .apex-slider .caption.small_fade_text strong {
-    color: #009836
+    color: #009635
 }
 
 .apex-slider .caption.small_dark_text {
@@ -9401,7 +9401,7 @@ body {
 .apex-slider .button:hover.orange,
 .purchase.orange,
 .purchase:hover.orange {
-    background-color: #009836
+    background-color: #009635
 }
 
 .apex-slider .button.darkgrey,
@@ -11289,7 +11289,7 @@ html {
 }
 
 body {
-    font-family: 'GeosansLight' !important;
+    /*font-family: 'GeosansLight' !important;*/
     font-size: 16px;
     line-height: 1.42857143;
     font-weight: 300
@@ -13078,8 +13078,8 @@ output {
     min-height: 41px;
     padding: 6px 12px;
     background-color: #fff;
-    /*border: 1px solid #d8d8d8;
-    border-radius: 0;
+    border: 1px solid #d8d8d8;
+    /*border-radius: 0;
     -webkit-box-shadow: inset 0 1px 1px rgba(0, 0, 0, .075);
     box-shadow: inset 0 1px 1px rgba(0, 0, 0, .075);
     -webkit-transition: border-color ease-in-out .15s, -webkit-box-shadow ease-in-out .15s;
@@ -13649,8 +13649,8 @@ fieldset[disabled] .btn {
 .open>.dropdown-toggle.btn-default:focus,
 .open>.dropdown-toggle.btn-default:hover {
     color: #fff;
-    background-color: #009836;
-    border-color: #009836
+    background-color: #009635;
+    border-color: #009635
 }
 
 .btn-default.disabled.focus,
@@ -13673,8 +13673,8 @@ fieldset[disabled] .btn-default:hover {
 
 .btn-primary {
     color: #fff;
-    background-color: #009836;
-    border-color: #009836
+    background-color: #009635;
+    border-color: #009635
 }
 
 .btn-primary.active,
@@ -15447,8 +15447,8 @@ fieldset[disabled] .navbar-inverse .btn-link:hover {
 .pagination>li>span:hover {
     z-index: 2;
     color: #fff;
-    background-color: #009836;
-    border-color: #009836
+    background-color: #009635;
+    border-color: #009635
 }
 
 .pagination>.active>a,
@@ -15459,8 +15459,8 @@ fieldset[disabled] .navbar-inverse .btn-link:hover {
 .pagination>.active>span:hover {
     z-index: 3;
     color: #fff;
-    background-color: #009836;
-    border-color: #009836;
+    background-color: #009635;
+    border-color: #009635;
     cursor: default
 }
 
@@ -17352,7 +17352,7 @@ button.close {
 .carousel-indicators .active {
     width: 14px;
     height: 14px;
-    background-color: #009836
+    background-color: #009635
 }
 
 .carousel-caption {
@@ -17975,7 +17975,7 @@ option {
 .owl-next:hover,
 .owl-prev:hover {
     background-position: 0 -32px;
-    background-color: #009836
+    background-color: #009635
 }
 
 .bx-wrapper {
@@ -18621,7 +18621,7 @@ figure.effect-apollo:hover figcaption::before {
     border-radius: 25px;
     color: #fff;
     padding: 0 10px;
-    background: #009836;
+    background: #009635;
     font-size: 11px
 }
 
@@ -18708,7 +18708,7 @@ figure.effect-apollo:hover figcaption::before {
     font-size: 12px;
     color: #fff;
     border: none;
-    background: #009836;
+    background: #009635;
     height: 22px;
     position: absolute;
     top: 12px;
@@ -18760,7 +18760,7 @@ figure.effect-apollo:hover figcaption::before {
 }
 
 .cart-total span {
-    color: #009836
+    color: #009635
 }
 
 .cart-dropdown .btns {
@@ -18877,7 +18877,7 @@ figure.effect-apollo:hover figcaption::before {
 .post-header-wrap .navbar-default .navbar-nav>.open>a:hover,
 .post-header-wrap .navbar-default .navbar-nav>li>a:focus,
 .post-header-wrap .navbar-nav>li>a:hover {
-    color: #009836;
+    color: #009635;
     background: #e5e5e5
 }
 
@@ -18899,7 +18899,7 @@ figure.effect-apollo:hover figcaption::before {
 }
 
 .post-header-wrap .dropdown-menu>li>a:hover {
-    background: #009836;
+    background: #009635;
     color: #fff
 }
 
@@ -18967,7 +18967,7 @@ figure.effect-apollo:hover figcaption::before {
 }
 
 .menu-block .sub-menu a:hover {
-    color: #009836;
+    color: #009635;
     text-decoration: none
 }
 
@@ -19001,7 +19001,7 @@ figure.effect-apollo:hover figcaption::before {
 
 .menu-product-list .media .media-body {
     position: relative;
-    border-bottom: 1px solid #009836
+    border-bottom: 1px solid #009635
 }
 
 .menu-product-list .media:hover .media-body {
@@ -19015,7 +19015,7 @@ figure.effect-apollo:hover figcaption::before {
     right: 0;
     height: 20px;
     line-height: 20px;
-    background: #009836;
+    background: #009635;
     color: #fff;
     font-size: 12px;
     text-transform: uppercase;
@@ -19055,7 +19055,7 @@ figure.effect-apollo:hover figcaption::before {
     font-size: 12px;
     color: #fff;
     border: none;
-    background: #009836
+    background: #009635
 }
 
 .menu-product-list .media button i {
@@ -19094,7 +19094,7 @@ figure.effect-apollo:hover figcaption::before {
     top: 0;
     left: 0;
     z-index: 100;
-    background: url(../images/toogle-open.png) center no-repeat #009836
+    background: url(../images/toogle-open.png) center no-repeat #009635
 }
 
 .menu-toggle[aria-expanded=false] {
@@ -19269,7 +19269,7 @@ figure.effect-apollo:hover figcaption::before {
     border-radius: 0;
     -webkit-box-shadow: none;
     box-shadow: none;
-    background: #009836
+    background: #009635
 }
 
 .large-modal .close-modal {
@@ -19313,7 +19313,7 @@ body.modal-open {
 }
 
 .sidebar-toogle {
-    background: url(../images/toogle-open.png) center no-repeat #009836;
+    background: url(../images/toogle-open.png) center no-repeat #009635;
     height: 65px;
     width: 65px;
     right: 0;
@@ -19505,7 +19505,7 @@ body.modal-open {
     background-repeat: no-repeat;
     background-position: left;
     font-size: 15px;
-    color: #009836;
+    color: #009635;
     line-height: 22px;
     font-family: inherit;
 }
@@ -19602,7 +19602,7 @@ body.modal-open {
     top: 0;
     right: 0;
     bottom: 0;
-    background: #009836;
+    background: #009635;
     border: none;
     cursor: pointer;
     width: 45px;
@@ -19751,7 +19751,7 @@ body.modal-open {
 }
 
 .sidebar-product-list h3 span {
-    color: #009836
+    color: #009635
 }
 
 .sidebar-product-list .media-object {
@@ -19848,12 +19848,12 @@ body.modal-open {
 }
 
 .social li a .social-n span {
-    color: #009836
+    color: #009635
 }
 
 .social li a .social-h {
     top: 100%;
-    background: #009836;
+    background: #009635;
     -webkit-transition: all .6s ease;
     -moz-transition: all .6s ease;
     -o-transition: all .6s ease;
@@ -19890,7 +19890,7 @@ body.modal-open {
 }
 
 .footer a:hover {
-    color: #009836
+    color: #009635
 }
 
 .footer-top {
@@ -19907,7 +19907,7 @@ body.modal-open {
     margin-top: 0;
     margin-bottom: 15px;
     font-size: 18px;
-    color: #009836
+    color: #009635
 }
 
 .footmenu ul {
@@ -19922,12 +19922,12 @@ body.modal-open {
     color: #fff
 }
 
-.footmenu ul li:before {
-    float: left;
-    margin-right: 8px;
-    content: '\f0da';
-    font-family: FontAwesome
-}
+/*.footmenu ul li:before {*/
+    /*float: left;*/
+    /*margin-right: 8px;*/
+    /*content: '\f0da';*/
+    /*font-family: FontAwesome*/
+/*}*/
 
 #pricePlans:after,
 .bottom-buttons .col-md-4:after,
@@ -19987,7 +19987,7 @@ body.modal-open {
     margin: 20px 0 15px;
     text-transform: uppercase;
     font-size: 18px;
-    color: #009836
+    color: #009635
 }
 
 .shop-info p {
@@ -20039,14 +20039,14 @@ body.modal-open {
     display: block;
     text-align: center;
     font-size: 20px;
-    border: 1px solid #009836;
-    color: #009836
+    border: 1px solid #009635;
+    color: #009635
 }
 
 .footer-bottom ul li a:hover {
     color: #fff;
-    background: #009836;
-    border-color: #009836
+    background: #009635;
+    border-color: #009635
 }
 
 .copy {
@@ -20106,7 +20106,8 @@ body.modal-open {
 .bottom-buttons .flip-container,
 .bottom-buttons .front {
     width: 100%;
-    height: 106px
+    height: 130px
+    /*height: 106px*/
 }
 
 .bottom-buttons .flip {
@@ -20135,7 +20136,7 @@ body.modal-open {
 }
 
 .bottom-buttons .back {
-    background: #009836;
+    background: #009635;
     color: #fff;
     -webkit-transform: rotateY(180deg);
     -moz-transform: rotateY(180deg);
@@ -20166,6 +20167,10 @@ body.modal-open {
     top: 50%;
     -webkit-transform: translateY(-50%);
     -ms-transform: translateY(-50%)
+}
+
+.front {
+    background: #009635;
 }
 
 .bottom-buttons .back h5,
@@ -20199,7 +20204,7 @@ body.modal-open {
     margin: 0;
     padding: 0;
     text-transform: uppercase;
-    color: #009836;
+    color: #009635;
     font-size: 18px
 }
 
@@ -20325,7 +20330,7 @@ body.modal-open {
 .info-row ul li a h4 {
     margin: 0;
     padding: 3px 0;
-    color: #009836;
+    color: #009635;
     font-size: 20px;
     text-transform: uppercase
 }
@@ -20408,7 +20413,7 @@ body.modal-open {
     border-radius: 50%;
     border: 1px solid #d8d8d8;
     text-align: center;
-    color: #009836;
+    color: #009635;
     font-size: 18px;
     top: 50%;
     margin-top: -23px;
@@ -20420,7 +20425,7 @@ body.modal-open {
 .testiCarousel .carousel-control.left:hover,
 .testiCarousel .carousel-control.right:hover {
     color: #fff;
-    background: #009836
+    background: #009635
 }
 
 .testiCarousel .carousel-control.left {
@@ -20470,7 +20475,7 @@ body.modal-open {
     -ms-transform: scale(1.04);
     -o-transform: scale(1.04);
     transform: scale(1.04);
-    border: 1px solid #009836;
+    border: 1px solid #009635;
     z-index: 10
 }
 
@@ -20494,18 +20499,18 @@ body.modal-open {
 
 .planContainer .title h3 {
     font-size: 18px;
-    color: #009836;
+    color: #009635;
     margin: 0;
     padding: 30px 0 10px
 }
 
 .planContainer .title h3.bestPlanTitle {
-    background: #009836;
+    background: #009635;
     color: #fff
 }
 
 .planContainer .price p {
-    color: #009836;
+    color: #009635;
     font-size: 60px;
     margin: 10px 0 20px;
     line-height: 40px;
@@ -20524,7 +20529,7 @@ body.modal-open {
 
 .planContainer .options li {
     font-weight: 700;
-    color: #009836;
+    color: #009635;
     font-size: 18px;
     line-height: 36px
 }
@@ -20537,9 +20542,9 @@ body.modal-open {
 .planContainer .button a {
     text-transform: uppercase;
     text-decoration: none;
-    color: #009836;
+    color: #009635;
     font-weight: 700;
-    border: 2px solid #009836;
+    border: 2px solid #009635;
     display: inline-block;
     width: 80%;
     margin: 1.5em 0 1.8em;
@@ -20549,8 +20554,8 @@ body.modal-open {
 
 .planContainer .button a.bestPlanButton {
     color: #fff;
-    background: #009836;
-    border: 2px solid #009836;
+    background: #009635;
+    border: 2px solid #009635;
     border-radius: 6px
 }
 
@@ -20621,7 +20626,7 @@ body.modal-open {
         transition: all .25s
     }
     .planContainer .button a:hover {
-        background: #009836;
+        background: #009635;
         color: #fff
     }
     .planContainer .button a.bestPlanButton:hover {
@@ -20712,8 +20717,8 @@ body.modal-open {
 }
 
 .big-slider .carousel-caption a:hover {
-    border-color: #009836;
-    background: #009836
+    border-color: #009635;
+    background: #009635
 }
 
 .carousel-fade .carousel-inner>.item {
@@ -20786,7 +20791,7 @@ body.modal-open {
 }
 
 .owl-item:nth-child(even) .work-shocase .work-info-overlay {
-    background: #009836
+    background: #009635
 }
 
 .work-shocase .hover-img {
@@ -20852,7 +20857,7 @@ body.modal-open {
 
 .four-column-wrap ul li:nth-child(even) {
     background: #fd9c3a
-    /*background: #009836*/
+    /*background: #009635*/
 }
 
 .four-column-wrap ul li h5 {
@@ -20983,7 +20988,7 @@ h3.resp-accordion {
 }
 
 .post-tag li a:hover {
-    color: #009836
+    color: #009635
 }
 
 .post-meta {
@@ -21087,12 +21092,12 @@ h3.resp-accordion {
 .category-scroll .category-case a:hover {
     background: #fff;
     color: #000
-    /*color: #009836*/
+    /*color: #009635*/
 }
 
 .category-scroll .owl-item:nth-child(odd) .category-case {
     background: #000
-    /*background: #009836*/
+    /*background: #009635*/
 }
 
 .category-scroll .owl-item:nth-child(even) .category-case {
@@ -21107,7 +21112,7 @@ h3.resp-accordion {
 }
 
 .section-top h2 span {
-    color: #009836
+    color: #009635
 }
 
 .section-top p {
@@ -21306,7 +21311,7 @@ h3.resp-accordion {
 
 .product-case button span {
     padding: 0 12px;
-    background: #009836;
+    background: #009635;
     border-radius: 0 4px 4px 0;
     font-size: 18px;
     text-transform: uppercase;
@@ -21322,7 +21327,7 @@ h3.resp-accordion {
 }
 
 .product-case button:hover i {
-    background: #009836
+    background: #009635
 }
 
 .product-case button:hover span {
@@ -21378,7 +21383,7 @@ h3.resp-accordion {
 .resp-tab-active,
 .resp-tabs-list li:hover,
 h3.resp-tab-active {
-    background: #009836!important;
+    background: #009635!important;
     color: #fff
 }
 
@@ -21504,7 +21509,7 @@ h3.resp-accordion:first-child {
 }
 
 .product-media-scroll h3 span {
-    color: #009836
+    color: #009635
 }
 
 .product-box {
@@ -21667,7 +21672,7 @@ h3.resp-accordion:first-child {
     padding: 0 12px;
     display: block;
     float: left;
-    background: #009836;
+    background: #009635;
     border-radius: 0 4px 4px 0;
     font-size: 18px;
     color: #fff;
@@ -21676,7 +21681,7 @@ h3.resp-accordion:first-child {
 }
 
 .offer-box button:hover i {
-    background: #009836
+    background: #009635
 }
 
 .offer-box button:hover span {
@@ -21870,7 +21875,7 @@ h3.resp-accordion:first-child {
     text-transform: uppercase;
     padding: 0 20px;
     font-size: 20px;
-    background: #009836;
+    background: #009635;
     color: #fff;
     line-height: 42px
 }
@@ -22002,7 +22007,7 @@ h3.resp-accordion:first-child {
 }
 
 .price-range .ui-widget-header {
-    background: #009836
+    background: #009635
 }
 
 .price-range {
@@ -22147,7 +22152,7 @@ h3.resp-accordion:first-child {
     text-transform: uppercase;
     padding: 0 20px;
     font-size: 20px;
-    background: #009836;
+    background: #009635;
     color: #fff;
     line-height: 42px;
     font-family: 'GeosansLight';
@@ -22216,7 +22221,7 @@ h3.resp-accordion:first-child {
     margin-top: 0;
     margin-bottom: 15px;
     font-size: 24px;
-    background: #009836
+    background: #009635
 }
 
 .product-list h2:after,
@@ -22573,7 +22578,7 @@ h3.resp-accordion:first-child {
     position: absolute;
     top: 15px;
     left: 15px;
-    background: #009836;
+    background: #009635;
     height: 50px;
     width: 50px;
     text-align: center;
@@ -22658,7 +22663,7 @@ h3.resp-accordion:first-child {
     position: relative;
     text-transform: uppercase;
     font-size: 20px;
-    color: #009836
+    color: #009635
 }
 
 .right-col .widget-box h3:after {
@@ -22770,7 +22775,7 @@ h3.resp-accordion:first-child {
 }
 
 .tags li a:hover {
-    background: #009836
+    background: #009635
 }
 
 .blog-search {
@@ -22791,7 +22796,7 @@ h3.resp-accordion:first-child {
     top: 0;
     right: 0;
     bottom: 0;
-    background: #009836;
+    background: #009635;
     text-align: center;
     line-height: 50px;
     font-size: 20px;
@@ -22867,7 +22872,7 @@ h3.resp-accordion:first-child {
     margin-top: -15px;
     border-radius: 0;
     border: none;
-    background-color: #009836;
+    background-color: #009635;
     margin-left: 0;
     margin-right: 0
 }
@@ -22913,7 +22918,7 @@ h3.resp-accordion:first-child {
 }
 
 .single-product .rating li i {
-    color: #009836
+    color: #009635
 }
 
 .single-product .rating li:after {
@@ -22934,7 +22939,7 @@ h3.resp-accordion:first-child {
 }
 
 .single-product .product-id span {
-    color: #009836
+    color: #009635
 }
 
 .single-product .product-price {
@@ -22945,7 +22950,7 @@ h3.resp-accordion:first-child {
 
 .single-product .product-price del {
     font-size: 18px;
-    color: #009836;
+    color: #009635;
     margin-right: 10px
 }
 
@@ -22959,7 +22964,7 @@ h3.resp-accordion:first-child {
     margin-top: 0;
     font-size: 16px;
     text-transform: uppercase;
-    color: #009836
+    color: #009635
 }
 
 .single-product .features ul {
@@ -23022,7 +23027,7 @@ h3.resp-accordion:first-child {
 }
 
 .single-product .variations_button .btn-default:hover {
-    background: #009836;
+    background: #009635;
     color: #fff
 }
 
@@ -23072,9 +23077,9 @@ h3.resp-accordion:first-child {
 }
 
 .single-product .variations_button ul li button:hover {
-    background: #009836;
+    background: #009635;
     color: #fff;
-    border-color: #009836
+    border-color: #009635
 }
 
 .single-product .option_button .row {
@@ -23197,7 +23202,7 @@ h3.resp-accordion:first-child {
 .pin-widget h5 {
     margin-bottom: 0;
     padding: 0 15px;
-    background: #009836
+    background: #009635
 }
 
 .pin-widget .content {
@@ -23218,7 +23223,7 @@ h3.resp-accordion:first-child {
 .sidebar .side-widget h5 {
     margin-bottom: 0;
     padding: 0 15px;
-    background: #009836
+    background: #009635
 }
 
 .sidebar .side-widget .content-box {
@@ -23256,7 +23261,7 @@ h3.resp-accordion:first-child {
     text-transform: uppercase;
     padding: 0 15px;
     font-size: 20px;
-    background: #009836;
+    background: #009635;
     color: #fff;
     line-height: 42px
 }
@@ -23291,7 +23296,7 @@ h3.resp-accordion:first-child {
 }
 
 .post-content h3 a {
-    color: #009836
+    color: #009635
 }
 
 .post-content h3 a:hover {
@@ -23334,7 +23339,7 @@ iframe {
     margin: 0 0 15px;
     padding: 20px;
     background: #f6f6f6;
-    border: 1px solid #009836
+    border: 1px solid #009635
 }
 
 .post-author,
@@ -23561,7 +23566,7 @@ h3#reply-title {
     right: 1px;
     position: absolute;
     margin-top: -31px;
-    background: #009836;
+    background: #009635;
     padding: 5px 10px;
     color: #fff
 }
@@ -23707,7 +23712,7 @@ h3#reply-title {
     line-height: 32px;
     display: block;
     color: #fff;
-    background: #009836;
+    background: #009635;
     border-radius: 4px
 }
 
@@ -23748,7 +23753,7 @@ h3#reply-title {
     font-weight: 500;
     padding: 0 15px;
     font-size: 20px;
-    background: #009836;
+    background: #009635;
     color: #fff;
     line-height: 42px
 }
@@ -24470,7 +24475,7 @@ ul.product_list .availability span.out-of-stock {
 }
 .social-top {
     font-size: 32px;
-    /*color: #009836;*/
+    /*color: #009635;*/
 }
 .map {
     -webkit-filter: grayscale(100%);
