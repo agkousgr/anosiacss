@@ -12,7 +12,7 @@
 
 {% block body %}
     <div id="mainWrapper">
-        {#{% include 'partials/sidebar_login.html.twig' %}#}
+        {% include 'partials/sidebar_login.html.twig' %}
         {% include 'partials/sidebar_cart.html.twig' %}
         {% include 'partials/swipe_menu.html.twig' %}
         {% include 'partials/site_header.html.twig' %}
@@ -201,7 +201,7 @@
 
 {% block javascripts %}
     {{ parent() }}
-    <script type="text/javascript" src="{{ asset('build/js/jquery.bxslider.min.js') }}"></script>
-    {#<script src="{{ asset('build/js/product-list.js') }}"></script>#}
-    <script src=“//platform-api.sharethis.com/js/sharethis.js#property=&product=inline-share-buttons”></script>
+    {#<script type="text/javascript" src="{{ asset('build/js/jquery.bxslider.min.js') }}"></script>#}
+    <script src="{{ asset('build/js/product-view.js') }}"></script>
+    <script type='text/javascript' src='//platform-api.sharethis.com/js/sharethis.js#property=5bd33569ee8c700011929ddd&product=inline-share-buttons' async='async'></script>
 {% endblock %}

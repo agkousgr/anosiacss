@@ -9,26 +9,38 @@
 namespace App\Controller;
 
 use App\Entity\Cart;
+use App\Service\CartService;
 use Doctrine\ORM\EntityManagerInterface;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Session\SessionInterface;
 
 class CartController extends MainController
 {
-    public function viewCart()
+    public function viewCart(CartService $cartService)
     {
         try {
+            $totalCartPrice = 0;
+            $cartProposals = [];
+            if ($this->cartItems) {
+                foreach ($this->cartItems as $item) {
+                    $totalCartPrice += floatval($item['webPrice']);
+                }
+                $cartProposals = $cartService->getCartItems('null', array(), 8, $totalCartPrice);
+            }
+
             return ($this->render('orders/cart.html.twig', [
                 'categories' => $this->categories,
                 'cartItems' => $this->cartItems,
                 'totalCartItems' => $this->totalCartItems,
                 'totalWishlistItems' => $this->totalWishlistItems,
                 'popular' => $this->popular,
+                'proposals' => $cartProposals,
                 'featured' => $this->featured,
                 'loggedUser' => $this->loggedUser,
                 'loggedName' => $this->loggedName,
                 'hideCart' => true,
-                'loginUrl' => $this->loginUrl
+                'loginUrl' => $this->loginUrl,
+                'totalCartPrice' => $totalCartPrice
             ]));
         } catch (\Exception $e) {
             throw $e;

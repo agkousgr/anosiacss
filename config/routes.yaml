@@ -48,6 +48,12 @@ product_search:
     defaults: { page: 1 }
     requirements:
         page: \d+
+product_search_anosia:
+    path: /product/search/anosia/{page}
+    controller: App\Controller\ProductController::searchAnosiaResults
+    defaults: { page: 1 }
+    requirements:
+        page: \d+
 
 # Orders / Cart
 cart_view:

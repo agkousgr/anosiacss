@@ -32,7 +32,7 @@ class AjaxCartController extends AbstractController
                     $cartIds = substr($cartIds, 0, -1);
                 }
 
-                $cartItems = ($cartIds) ? $cartService->getCartItems($cartIds, $cartArr) : '';
+                $cartItems = ($cartIds) ? $cartService->getCartItems($cartIds, $cartArr, $totalCartItems) : '';
                 return ($this->render('partials/top_cart.html.twig', [
                     'cartItems' => $cartItems,
                     'totalCartItems' => $totalCartItems

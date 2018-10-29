@@ -191,6 +191,40 @@ class ProductController extends MainController
         }
     }
 
+    public function searchAnosiaResults(Request $request, int $page, PaginatorInterface $paginator)
+    {
+        try {
+            dump($request);
+            $keyword = strip_tags(trim($request->request->get('keyword')));
+            $s1Keyword = preg_replace('!\s+!', ',', $keyword);
+            $products = $this->productService->getItems('null', $s1Keyword, 1000);
+            $paginatedProducts = $paginator->paginate(
+                $products,
+                $page /*page number*/,
+                12/*limit per page*/
+            );
+            $paginatedProducts->setUsedRoute('product_search');
+            $paginatedProducts->setTemplate('paginator_template/override_template.html.twig');
+            $paginatedProducts->setSortableTemplate('paginator_template/override_sortable.html.twig');
+            return $this->render('products/search.html.twig', [
+                'products' => $paginatedProducts,
+                'categories' => $this->categories,
+                'popular' => $this->popular,
+                'featured' => $this->featured,
+                'cartItems' => $this->cartItems,
+                'totalCartItems' => $this->totalCartItems,
+                'totalWishlistItems' => $this->totalWishlistItems,
+                'loggedUser' => $this->loggedUser,
+                'loggedName' => $this->loggedName,
+                'keyword' => $keyword,
+                'loginUrl' => $this->loginUrl
+            ]);
+        } catch (\Exception $e) {
+            $this->logger->error(__METHOD__ . ' -> {message}', ['message' => $e->getMessage()]);
+            throw $e;
+        }
+    }
+
 
 //    public function quickviewProduct(SoftoneLogin $softoneLogin, CategoryService $prCategories, int $id, ProductService $productService, LoggerInterface $logger, SessionInterface $session)
 //    {

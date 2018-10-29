@@ -18728,8 +18728,11 @@ figure.effect-apollo:hover figcaption::before {
     width: 50%;
     margin-left: 5%;
     line-height: 24px;
-    float: left;
+    float: right;
     font-family: inherit;
+}
+.qty-box {
+    float: left;
 }
 
 .cart-list .media .star-rating {

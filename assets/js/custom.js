@@ -1,6 +1,6 @@
 // JavaScript Document
 require('owl.carousel');
-require('./jquery.bxslider.min.js');
+require('select2');
 
 let $mainWrapper = $('#mainWrapper');
 $mainWrapper.on('show.bs.collapse', '.collapse', function () {
@@ -26,6 +26,9 @@ $(document).ready(function () {
 $("#menu-close").click(function (e) {
     e.preventDefault();
     $("#sidebar-wrapper").toggleClass("active");
+});
+$("#menu-cart-close").click(function (e) {
+    e.preventDefault();
     $("#sidebar-cart-wrapper").toggleClass("active");
 });
 // Opens the sidebar menu
@@ -182,14 +185,6 @@ $(document).ready(function () {
     })
 })
 
-
-$(document).ready(function () {
-    $('.bxslider').bxSlider({
-        pagerCustom: '#bx-pager',
-        auto: false,
-    });
-})
-
 $(document).ready(function () {
     let owl = $('#bx-pager');
     owl.owlCarousel({
@@ -226,6 +221,8 @@ $(document).ready(function () {
 $("#blue-mobile-menu").blueMobileMenu();
 
 $(document).ready(function () {
+    $('#nl-gender').select2();
+
     let cartContainer = $('#collapseCart');
 
     cartContainer.on('click', '.remove-item', function (e) {
@@ -382,6 +379,17 @@ $('.add-to-wishlist').on('click', function () {
     });
 })
 
+// product view add to cart
+$('.add-to-cart-view').on('click', function (e) {
+    e.preventDefault();
+    // alert($(this).data('id') + ' | ' + $('#add-quantity').val());
+    $('#collapseCart').load(Routing.generate('add_to_cart', {
+        'id': $(this).data('id'),
+        'quantity': $('#add-quantity').val()
+    }));
+});
+
+
 $('.add-to-cart').on('click', function (e) {
     e.preventDefault();
     let quantity = 1;
@@ -425,15 +433,33 @@ $('.add-to-cart').on('click', function (e) {
     });
 });
 
-
-// product view add to cart
-$('.add-to-cart-view').on('click', function (e) {
+$('.add-to-cart-inner').on('click', function (e) {
     e.preventDefault();
-    // alert($(this).data('id') + ' | ' + $('#add-quantity').val());
-    $('#collapseCart').load(Routing.generate('add_to_cart', {
+    let quantity = 1;
+    let data = {
         'id': $(this).data('id'),
-        'quantity': $('#add-quantity').val()
-    }));
+        'quantity': quantity,
+        'name': $(this).data('name')
+    }
+    $.post(Routing.generate('add_to_cart'), data, function (result) {
+        if (result.success && result.exist === false) {
+            Routing.generate('cart_view');
+        } else if (result.success && result.exist === true) {
+            swal({
+                title: 'Ουπς',
+                html: '<div style="font-size:17px;">Το προϊόν ' + result.prName + ' υπάρχει ήδη στο καλάθι σας!</div>',
+                type: 'info',
+                timer: 5000
+            });
+        } else {
+            swal({
+                title: 'Ουπς',
+                html: '<div style="font-size:17px;">Κάποια σφάλμα παρουσιάστηκε!</div>',
+                type: 'error',
+                timer: 5000
+            });
+        }
+    });
 });
 
 $('.owl-dots').css('display', 'none');
