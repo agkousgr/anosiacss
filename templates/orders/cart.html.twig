@@ -256,7 +256,7 @@
                         </div>
                     {% endif %}
                 </div>
-                {% if totalCartItems < 39 %}
+                {% if totalCartItems > 0 %}
                     {{ include('orders/modules/product_view_free_transportation.html.twig') }}
                 {% endif %}
             </section>
