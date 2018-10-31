@@ -9,6 +9,9 @@
 </head>
 <body id="{% block bodyId %}{% endblock %}" class="{% block bodyClass %}{% endblock %}">
 <div id="fb-root"></div>
+<div class="fb-customerchat"
+     page_id="<PAGE_ID>">
+</div>
 <script>
     window.fbAsyncInit = function () {
         FB.init({
@@ -17,6 +20,7 @@
             xfbml: true,
             version: 'v3.0'
         });
+        FB.CustomerChat.show();
     };
 
     (function (d, s, id) {
@@ -24,9 +28,19 @@
         if (d.getElementById(id)) return;
         js = d.createElement(s);
         js.id = id;
-        js.src = 'https://connect.facebook.net/el_GR/sdk.js#xfbml=1&version=v3.0&appId=605092459847380&autoLogAppEvents=1';
+        // js.src = 'https://connect.facebook.net/el_GR/sdk.js#xfbml=1&version=v3.0&appId=605092459847380&autoLogAppEvents=1';
+        js.src = 'https://connect.facebook.net/el_GR/sdk/xfbml.customerchat.js#xfbml=1&version=v3.0&appId=605092459847380&autoLogAppEvents=1';
         fjs.parentNode.insertBefore(js, fjs);
     }(document, 'script', 'facebook-jssdk'));
+
+    // (function(d, s, id) {
+    //     var js, fjs = d.getElementsByTagName(s)[0];
+    //     if (d.getElementById(id)) return;
+    //     js = d.createElement(s); js.id = id;
+    //     js.src = "https://connect.facebook.net/en_US/sdk/xfbml.customerchat.js";
+    //     fjs.parentNode.insertBefore(js, fjs);
+    // }(document, 'script', 'facebook-jssdk'));
+
 </script>
 {% block body %}
     <div id="mainWrapper">
@@ -44,6 +58,7 @@
         {% include 'home_page_modules/02_four_column_wrap.html.twig' %}
         {% include 'home_page_modules/08_social_feeder.html.twig' %}
         {% include 'home_page_modules/10_latest_offers.html.twig' %}
+        {% include 'home_page_modules/latest_offers_new.html.twig' %}
 
         {#{% include 'home_page_modules/03_promo.html.twig' %}#}
 
