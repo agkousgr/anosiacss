@@ -61,7 +61,8 @@ fieldset[disabled] a.btn {
 
 @font-face {
     font-family: 'GeosansLight';
-    src: url(../fonts/geosans-light/GeosansLight.ttf);
+    src: url(../fonts/geosans-light/ACGeosansLight.eot);
+    src: url(../fonts/geosans-light/ACGeosansLight.eot) format('embedded-opentype'), url(../fonts/geosans-light/GeosansLight.ttf) format('truetype'), url(../fonts/geosans-light/ACGeosansLight.woff) format('woff2');
 }
 
 .fa {
