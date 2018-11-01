@@ -109,13 +109,13 @@ $(document).ready(function () {
     owl.owlCarousel({
         margin: 30,
         nav: true,
-        loop: true,
+        loop: false,
         responsive: {
             0: {items: 1},
             480: {items: 2},
             768: {items: 2},
-            992: {items: 3},
-            1200: {items: 4}
+            992: {items: 2},
+            1200: {items: 2}
         }
     })
 })

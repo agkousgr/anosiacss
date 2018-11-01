@@ -4059,14 +4059,14 @@ body .ui-tooltip {
 }
 
 .ui-widget {
-    font-family: Arial, Helvetica, Helvetica
+    /*font-family: Arial, Helvetica, Helvetica*/
 }
 
 .ui-widget button,
 .ui-widget input,
 .ui-widget select,
 .ui-widget textarea {
-    font-family: Arial, Helvetica, Helvetica;
+    /*font-family: Arial, Helvetica, Helvetica;*/
     font-size: 1em
 }
 
@@ -8715,12 +8715,12 @@ a.ui-button:active {
 
 .custom-apex-slider .description h4 {
     margin: 0;
-    font-family: 'GeosansLight', sans
+    font-family: 'GeosansLight'
 }
 
 .custom-apex-slider .description p {
     margin: 0;
-    font-family: Arial, Helvetica;
+    /*font-family: Arial, Helvetica;*/
     font-weight: 400
 }
 
@@ -9159,7 +9159,7 @@ a.ui-button:active {
     color: #A0CE4E;
     font-size: 24px;
     line-height: 24px;
-    font-family: Helvetica, Arial, Helvetica
+    /*font-family: Helvetica, Arial, Helvetica*/
 }
 
 .apex-slider .caption.medium_text {
@@ -11009,7 +11009,7 @@ img {
 /*! normalize.css v3.0.3 | MIT License | github.com/necolas/normalize.css */
 
 html {
-    font-family: Helvetica;
+    /*font-family: Helvetica;*/
     -ms-text-size-adjust: 100%;
     -webkit-text-size-adjust: 100%
 }
@@ -11290,7 +11290,7 @@ html {
 }
 
 body {
-    /*font-family: 'GeosansLight' !important;*/
+    font-family: 'GeosansLight' !important;
     font-size: 16px;
     line-height: 1.42857143;
     font-weight: 300
