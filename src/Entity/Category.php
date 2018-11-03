@@ -28,6 +28,11 @@ class Category
     private $description;
 
     /**
+     * @var int|null
+     */
+    private $itemsCount;
+
+    /**
      * @var string|null
      */
     private $imageUrl;
@@ -292,6 +297,24 @@ class Category
     public function setDescription(?string $description): void
     {
         $this->description = $description;
+    }
+
+    /**
+     * @return int|null
+     */
+    public function getItemsCount(): ?int
+    {
+        return $this->itemsCount;
+    }
+
+    /**
+     * @param int|null $itemsCount
+     * @return Category
+     */
+    public function setItemsCount(?int $itemsCount): Category
+    {
+        $this->itemsCount = $itemsCount;
+        return $this;
     }
 
     /**

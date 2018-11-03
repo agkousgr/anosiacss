@@ -9,6 +9,8 @@ use Doctrine\ORM\Event\LifecycleEventArgs;
 use Doctrine\ORM\Event\PreUpdateEventArgs;
 use App\Entity\Slider;
 use App\Service\FileUploader;
+use Symfony\Component\Security\Core\Authentication\Token\Storage\TokenStorageInterface;
+use Symfony\Component\Security\Core\Security;
 
 class UploadListener
 {
@@ -17,9 +19,15 @@ class UploadListener
      */
     private $uploader;
 
-    public function __construct(FileUploader $uploader)
+    /**
+     * @var TokenStorageInterface
+     */
+    private $tokenStorage;
+
+    public function __construct(FileUploader $uploader, TokenStorageInterface $tokenStorage)
     {
         $this->uploader = $uploader;
+        $this->tokenStorage = $tokenStorage;
     }
 
     public function prePersist(LifecycleEventArgs $args)
@@ -38,31 +46,32 @@ class UploadListener
 
     public function postLoad(LifecycleEventArgs $args)
     {
-        $entity = $args->getEntity();
-        switch(true) {
-            case $entity instanceof Article:
-                $filePath = 'articles_image_directory';
-                break;
+        if (empty($this->tokenStorage->getToken())) {
+            $entity = $args->getEntity();
+            switch (true) {
+                case $entity instanceof Article:
+                    $filePath = 'articles_image_directory';
+                    break;
 
-            case $entity instanceof Slider:
-                $filePath = 'slider_image_directory';
-                break;
+                case $entity instanceof Slider:
+                    $filePath = 'slider_image_directory';
+                    break;
 
-            default:
-                return;
-                break;
+                default:
+                    return;
+                    break;
 
-        }
-
-        if ($fileName = $entity->getImage()) {
-            $entity->setImage(new File($this->uploader->getTargetDirectory()[$filePath].'/'.$fileName));
+            }
+            if ($fileName = $entity->getImage()) {
+                $entity->setImage(new File($this->uploader->getTargetDirectory()[$filePath] . '/' . $fileName));
+            }
         }
     }
 
     private function uploadFile($entity)
     {
         // upload only works for existing entities
-        switch(true) {
+        switch (true) {
             case $entity instanceof Article:
                 $file = $entity->getImage();
                 $filePath = 'articles_image_directory';

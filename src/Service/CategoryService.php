@@ -167,6 +167,7 @@ EOF;
                         'children' => '',
                         'isVisible' => $category->IsVisible,
                         'slug' => $category->Slug,
+                        'itemsCount' => $this->getCategoryItemsCount($category->ID),
                         'hasMainImage' => $category->HasMainPhoto,
                         'imageUrl' => ($category->HasMainPhoto) ? 'https://caron.cloudsystems.gr/FOeshopAPIWeb/DF.aspx?' . str_replace('[Serial]', '01102459200617', str_replace('&amp;', '&', $category->MainPhotoUrl)) : ''
                     );
@@ -181,6 +182,7 @@ EOF;
                             'priority' => (int)$child->Priority,
                             'isVisible' => $child->IsVisible,
                             'slug' => $child->Slug,
+                            'itemsCount' => $this->getCategoryItemsCount($category->ID),
                             'hasMainImage' => $child->HasMainPhoto,
                             'imageUrl' => ($child->HasMainPhoto) ? 'https://caron.cloudsystems.gr/FOeshopAPIWeb/DF.aspx?' . str_replace('[Serial]', '01102459200617', str_replace('&amp;', '&', $child->MainPhotoUrl)) : ''
                         );
@@ -247,4 +249,37 @@ EOF;
         }
     }
 
+    public function getCategoryItemsCount($ctgId)
+    {
+        $client = new \SoapClient('https://caron.cloudsystems.gr/FOeshopWS/ForeignOffice.FOeshop.API.FOeshopSvc.svc?singleWsdl', ['trace' => true, 'exceptions' => true,]);
+
+        $message = <<<EOF
+<?xml version="1.0" encoding="utf-16"?>
+<ClientGetCategoryItemsCountRequest>
+    <Type>1011</Type>
+    <Kind>1</Kind>
+    <Domain>pharmacyone</Domain>
+    <AuthID>$this->authId</AuthID>
+    <AppID>157</AppID>
+    <CompanyID>1000</CompanyID>
+    <pagesize>10</pagesize>
+    <pagenumber>0</pagenumber>
+    <CategoryID>$ctgId</CategoryID>
+    <SearchToken>null</SearchToken>
+    <IncludeChildCategories>1</IncludeChildCategories>
+    <MakeID>null</MakeID>
+    <LowPrice>-1</LowPrice>
+    <HighPrice>-1</HighPrice>
+</ClientGetCategoryItemsCountRequest>
+EOF;
+        try {
+            $result = $client->SendMessage(['Message' => $message]);
+            dump($message, $result);
+//            return $result->SendMessageResult;
+//            return str_replace("utf-16", "utf-8", $result->SendMessageResult);
+            return simplexml_load_string(str_replace("utf-16", "utf-8", $result->SendMessageResult));
+        } catch (\SoapFault $sf) {
+            echo $sf->faultstring;
+        }
+    }
 }

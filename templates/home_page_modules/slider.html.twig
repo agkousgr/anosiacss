@@ -11,7 +11,7 @@
     <div class="carousel-inner">
         {% for slide in slider %}
             <div class="item  {% if loop.index == 1 %} active {% endif %} ">
-                <img src="{{ asset('uploads/slider/' ~ slide.image.filename) }}" alt="{{ slide.name }}">
+                <img src="{{ asset('uploads/slider/' ~ slide.image) }}" alt="{{ slide.name }}">
             </div>
         {% endfor %}
     </div>
@@ -33,7 +33,7 @@
             <ul>
                 {% for slide in slider %}
                     <li>
-                        <img src="{{ asset('uploads/slider/' ~ slide.image.filename) }}" alt="{{ slide.name }}"/>
+                        <img src="{{ asset('uploads/slider/' ~ slide.image) }}" alt="{{ slide.name }}"/>
                         {#<div class="caption randomrotate" data-x="950" data-y="0" data-speed="600" data-start="1100"#}
                         {#data-easing="easeOutExpo"><img src="{{ asset('images/tag.png') }}" alt=""/></div>#}
                         {#<div class="caption medium_black_text sfr" data-x="30" data-y="340" data-speed="1000"#}

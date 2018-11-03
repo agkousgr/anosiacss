@@ -39,120 +39,149 @@
 
 
             <div class="row">
-                <div class="col-sm-8 col-md-9">
-                    <div class="post-list">
+                {#<div class="col-sm-8 col-md-9">#}
+
+                <div class="post-list">
+                    <div class="row imagetiles">
                         {% if articles|length > 0 %}
-                            {% for article in articles %}
-                                <div class="post-article wow fadeIn" data-wow-delay="0.4s">
-                                    <div class="row no-margin">
-                                        <div class="col-md-7 no-padding">
-                                            <div class="blog-img coleql_height">
-                                                <div class="post-img "
-                                                     style="background-image:url({{ asset('uploads/articles/' ~ article.image.filename) }})"></div>
-                                            </div>
-                                        </div>
-                                        <div class="col-md-5 no-padding">
-                                            <div class="post-article-content coleql_height">
-                                                <h3><a href="{{ path('blog_view', {'slug': article.slug}) }}">{{ article.name }}</a>
-                                                </h3>
-                                                <p>{{ article.summary|raw }}</p>
-                                                <ul class="postmeta">
-                                                    <li><i class="fa fa-calendar"></i>{{ article.createdAt|date("F jS \\a\\t g:ia") }}
-                                                    </li>
-                                                    {#<li><i class="fa fa-comments"></i><a href="#">23 comments</a></li>#}
-                                                    {#<li><i class="fa fa-user-circle-o"></i>by <a href="#">Admin</a></li>#}
-                                                </ul>
-                                                <div class="clearfix">
-                                                    <a href="{{ path('blog_view', {'slug': article.slug}) }}" class="btn btn-primary pull-left">Περισσότερα</a>
-                                                    <div class="share pull-right">
-                                                        <p>
-                                                            <small>Μοιραστείτε το άρθρο:</small>
-                                                        </p>
-                                                        <ul>
-                                                            <li><a href="#" class="facebook"><i
-                                                                            class="fa fa-facebook"></i></a>
-                                                            </li>
-                                                            <li><a href="#" class="twitter"><i
-                                                                            class="fa fa-twitter"></i></a>
-                                                            </li>
-                                                            <li><a href="#" class="gplus"><i
-                                                                            class="fa fa-google-plus"></i></a>
-                                                            </li>
-                                                            <li><a href="#" class="pinterest"><i
-                                                                            class="fa fa-pinterest"></i></a></li>
-                                                        </ul>
-                                                    </div>
-                                                </div>
-                                            </div>
-                                        </div>
-                                    </div>
-                                </div>
-                            {% endfor %}
+                        {% for article in articles %}
+                        {% if loop.index is odd %}
+                            {#<div style="margin-bottom: 0;" class="post-article wow fadeIn"#}
+                            {#data-wow-delay="0.4s">#}
+                            {#<div class="row no-margin">#}
                         {% endif %}
+                        <div class="col-sm-6 col-xs-12" style="padding:0">
+                            {#<div class="col-md-6 no-padding">#}
+                            <div class="blog-img coleql_height">
+                                <a href="{{ path('blog_view', {'slug': article.slug}) }}">
+                                    {#<div class="post-img "#}
+                                         {#style="background-image:url({{ asset('uploads/articles/' ~ article.image) }}); height: auto;">#}
+                                        {#{{ article.name }}#}
+                                    {#</div>#}
+                                    <img src="{{ asset('uploads/articles/' ~ article.image) }}">
+                                </a>
+                            </div>
+                        </div>
+                        {#<div class="col-md-6 no-padding">#}
+                        {#<div class="blog-img coleql_height">#}
+                        {#<div class="post-img "#}
+                        {#style="background-image:url({{ asset('uploads/articles/' ~ article.image) }})"></div>#}
+                        {#</div>#}
+                        {#</div>#}
+                        {% if loop.index is even %}
+                            {#</div>#}
+                            {#</div>#}
+                        {% endif %}
+                        {#</div>#}
+                    {% endfor %}
                     </div>
-
-
-                    <nav aria-label="Page navigation">
-                        <ul class="pagination">
-                            <li>
-                                <a href="#" aria-label="Previous">
-                                    <span aria-hidden="true">«</span>
-                                </a>
-                            </li>
-                            <li class="active"><a href="#">1</a></li>
-                            <li><a href="#">2</a></li>
-                            <li><a href="#">3</a></li>
-                            <li><a href="#">4</a></li>
-                            <li><a href="#">5</a></li>
-                            <li>
-                                <a href="#" aria-label="Next">
-                                    <span aria-hidden="true">»</span>
-                                </a>
-                            </li>
-                        </ul>
-                    </nav>
-
+                    {% endif %}
                 </div>
 
+                {#<div class="post-list">#}
+                {#{% if articles|length > 0 %}#}
+                {#{% for article in articles %}#}
+                {#<div class="post-article wow fadeIn" data-wow-delay="0.4s">#}
+                {#<div class="row no-margin">#}
+                {#<div class="col-md-7 no-padding">#}
+                {#<div class="blog-img coleql_height">#}
+                {#<div class="post-img "#}
+                {#style="background-image:url({{ asset('uploads/articles/' ~ article.image) }})"></div>#}
+                {#</div>#}
+                {#</div>#}
+                {#<div class="col-md-5 no-padding">#}
+                {#<div class="post-article-content coleql_height">#}
+                {#<h3><a href="{{ path('blog_view', {'slug': article.slug}) }}">{{ article.name }}</a>#}
+                {#</h3>#}
+                {#<p>{{ article.summary|raw }}</p>#}
+                {#<ul class="postmeta">#}
+                {#<li><i class="fa fa-calendar"></i>{{ article.createdAt|date("F jS \\a\\t g:ia") }}#}
+                {#</li>#}
+                {#<li><i class="fa fa-comments"></i><a href="#">23 comments</a></li>#}
+                {#<li><i class="fa fa-user-circle-o"></i>by <a href="#">Admin</a></li>#}
+                {#</ul>#}
+                {#<div class="clearfix">#}
+                {#<a href="{{ path('blog_view', {'slug': article.slug}) }}" class="btn btn-primary pull-left">Περισσότερα</a>#}
+                {#<div class="share pull-right">#}
+                {#<p>#}
+                {#<small>Μοιραστείτε το άρθρο:</small>#}
+                {#</p>#}
+                {#<div class="share">#}
+                {#<div class="sharethis-inline-share-buttons"></div>#}
+                {#<img src="{{ asset('images/share.jpg') }}" alt="">#}
+                {#</div>#}
+                {#</div>#}
+                {#</div>#}
+                {#</div>#}
+                {#</div>#}
+                {#</div>#}
+                {#</div>#}
+                {#{% endfor %}#}
+                {#{% endif %}#}
+                {#</div>#}
 
-                <div class="col-sm-4 col-md-3 right-col">
-                    <div class="widget-box">
-                        <div class="blog-search">
-                            <form method="post" action="#">
-                                <input placeholder="Search Blog" class="form-control" type="text">
-                                <button type="submit"><i class="fas fa-search"></i></button>
-                            </form>
-                        </div>
-                    </div>
 
-                    {#<div class="widget-box">#}
-                    {#<h3>Categories</h3>#}
-                    {#<div class="category-list">#}
-                    {#<ul>#}
-                    {#<li><a href="#">About us <span>(1)</span></a></li>#}
-                    {#<li><a href="#">Checkerboard <span>(10)</span></a></li>#}
-                    {#<li><a href="#">Fashion <span>(8)</span></a></li>#}
-                    {#<li><a href="#">Lifestyle <span>(5)</span></a></li>#}
-                    {#<li><a href="#">Nature <span>(7)</span></a></li>#}
-                    {#<li><a href="#">Travel <span>(3)</span></a></li>#}
-                    {#<li><a href="#">Types <span>(3)</span></a></li>#}
-                    {#</ul>#}
-                    {#</div>#}
-                    {#</div>#}
+                <nav aria-label="Page navigation">
+                    <ul class="pagination">
+                        <li>
+                            <a href="#" aria-label="Previous">
+                                <span aria-hidden="true">«</span>
+                            </a>
+                        </li>
+                        <li class="active"><a href="#">1</a></li>
+                        <li><a href="#">2</a></li>
+                        <li><a href="#">3</a></li>
+                        <li><a href="#">4</a></li>
+                        <li><a href="#">5</a></li>
+                        <li>
+                            <a href="#" aria-label="Next">
+                                <span aria-hidden="true">»</span>
+                            </a>
+                        </li>
+                    </ul>
+                </nav>
 
-                    {% include('Admin/articles/modules/bside_popular.html.twig') %}
+                {#</div>#}
 
-                    {% include 'products/modules/aside_best_sellers.html.twig' %}
 
-                    <div class="widget-box">
-                        <div class="fb-page" data-href="#" data-tabs="timeline" data-height="648"
-                             data-small-header="false" data-adapt-container-width="true" data-hide-cover="false"
-                             data-show-facepile="true">
-                            <blockquote cite="#" class="fb-xfbml-parse-ignore"><a href="#">Facebook</a></blockquote>
-                        </div>
-                    </div>
+                {#<div class="col-sm-4 col-md-3 right-col">#}
+                {#<div class="widget-box">#}
+                {#<div class="blog-search">#}
+                {#<form method="post" action="#">#}
+                {#<input placeholder="Search Blog" class="form-control" type="text">#}
+                {#<button type="submit"><i class="fas fa-search"></i></button>#}
+                {#</form>#}
+                {#</div>#}
+                {#</div>#}
 
-                </div>
+                {#<div class="widget-box">#}
+                {#<h3>Categories</h3>#}
+                {#<div class="category-list">#}
+                {#<ul>#}
+                {#<li><a href="#">About us <span>(1)</span></a></li>#}
+                {#<li><a href="#">Checkerboard <span>(10)</span></a></li>#}
+                {#<li><a href="#">Fashion <span>(8)</span></a></li>#}
+                {#<li><a href="#">Lifestyle <span>(5)</span></a></li>#}
+                {#<li><a href="#">Nature <span>(7)</span></a></li>#}
+                {#<li><a href="#">Travel <span>(3)</span></a></li>#}
+                {#<li><a href="#">Types <span>(3)</span></a></li>#}
+                {#</ul>#}
+                {#</div>#}
+                {#</div>#}
+
+                {#{% include('Admin/articles/modules/bside_popular.html.twig') %}#}
+
+                {#{% include 'products/modules/aside_best_sellers.html.twig' %}#}
+
+                {#<div class="widget-box">#}
+                {#<div class="fb-page" data-href="#" data-tabs="timeline" data-height="648"#}
+                {#data-small-header="false" data-adapt-container-width="true" data-hide-cover="false"#}
+                {#data-show-facepile="true">#}
+                {#<blockquote cite="#" class="fb-xfbml-parse-ignore"><a href="#">Facebook</a></blockquote>#}
+                {#</div>#}
+                {#</div>#}
+
+                {#</div>#}
 
 
             </div>

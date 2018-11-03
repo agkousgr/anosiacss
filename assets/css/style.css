@@ -51,19 +51,21 @@ fieldset[disabled] a.btn {
 
 
 
+@font-face {
+    font-family: FontAwesome;
+    src: url(../fonts/fontawesome-webfont.eot?v=4.7.0);
+    src: url(../fonts/fontawesome-webfont.eot?#iefix&v=4.7.0) format('embedded-opentype'), url(../fonts/fontawesome-webfont.woff2?v=4.7.0) format('woff2'), url(../fonts/fontawesome-webfont.woff?v=4.7.0) format('woff'), url(../fonts/fontawesome-webfont.ttf?v=4.7.0) format('truetype'), url(../fonts/fontawesome-webfont.svg?v=4.7.0#fontawesomeregular) format('svg');
+    font-weight: 400;
+    font-style: normal
+}
+
 /*@font-face {*/
-    /*font-family: FontAwesome;*/
-    /*src: url(../fonts/fontawesome-webfont.eot?v=4.7.0);*/
-    /*src: url(../fonts/fontawesome-webfont.eot?#iefix&v=4.7.0) format('embedded-opentype'), url(../fonts/fontawesome-webfont.woff2?v=4.7.0) format('woff2'), url(../fonts/fontawesome-webfont.woff?v=4.7.0) format('woff'), url(../fonts/fontawesome-webfont.ttf?v=4.7.0) format('truetype'), url(../fonts/fontawesome-webfont.svg?v=4.7.0#fontawesomeregular) format('svg');*/
-    /*font-weight: 400;*/
-    /*font-style: normal*/
+    /*font-family: 'GeosansLight';*/
+    /*src: url(../fonts/geosans-light/ACGeosansLight.eot);*/
+    /*src: url(../fonts/geosans-light/ACGeosansLight.eot) format('embedded-opentype'), url(../fonts/geosans-light/GeosansLight.ttf) format('truetype'), url(../fonts/geosans-light/ACGeosansLight.woff) format('woff2');*/
 /*}*/
 
-@font-face {
-    font-family: 'GeosansLight';
-    src: url(../fonts/geosans-light/ACGeosansLight.eot);
-    src: url(../fonts/geosans-light/ACGeosansLight.eot) format('embedded-opentype'), url(../fonts/geosans-light/GeosansLight.ttf) format('truetype'), url(../fonts/geosans-light/ACGeosansLight.woff) format('woff2');
-}
+@font-face { font-family: "GeosansLight"; src: local("GeosansLight"), url("https://www.amoradastyling.gr/wp-content/uploads/useanyfont/180608114447ACGeosansLight.eot") format("embedded-opentype"), url("https://www.amoradastyling.gr/wp-content/uploads/useanyfont/180608114447ACGeosansLight.woff") format("woff"); font-style: normal; }
 
 .fa {
     font: normal normal normal 14px/1 FontAwesome;
@@ -24478,7 +24480,7 @@ ul.product_list .availability span.out-of-stock {
     -webkit-box-shadow: none;
 }
 .social-top {
-    font-size: 32px;
+    font-size: 42px;
     /*color: #009635;*/
 }
 .map {

@@ -14,13 +14,15 @@ class ProductController extends MainController
     public function listProducts(Request $request, int $page, int $id, BrandsService $brandsService)
     {
         try {
-            dump($request);
+
             $pagesize = ($request->query->get('pagesize')) ? preg_replace('/[^A-Za-z0-9\-]/', '', $request->query->get('pagesize')) : 12;
             $sortBy = ($request->query->get('sortBy')) ?: 'NameAsc';
             $makeId = ($request->query->get('brands')) ? str_replace('-', ',', $request->query->get('brands')) : 'null';
             $priceRange = ($request->query->get('priceRange')) ?: 'null';
             $brands = $brandsService->getBrands('null');
             $ctgInfo = $this->em->getRepository(Category::class)->find($id);
+//            dump($this->categories);
+//            dump($this->categories->getParent());
             $slider = $this->em->getRepository(Slider::class)->findBy(['category' => $id]);
             $productsCount = $this->productService->getCategoryItemsCount($id, $makeId, $priceRange);
             if ($productsCount > $pagesize * $page) {

@@ -2,18 +2,21 @@
 
 namespace App\Controller;
 
-use App\Entity\Slider;
+use App\Entity\{Article, Slider};
+use Doctrine\ORM\EntityManagerInterface;
 use Vinkla\Instagram\Instagram;
 use Facebook\Facebook;
 
 class DefaultController extends MainController
 {
-    public function index()
+    public function index(EntityManagerInterface $em)
     {
         // Load categories from XML format to array
 //        $ctgEntity = $prCategories->InitializeCategories($categoriesXML, $session->get("authID"));
 //        $latest = $pr->getItems(-1, $session->get("authID"));
 
+
+        $articles = $em->getRepository(Article::class)->findBy(['category' => 1], ['createdAt' => 'DESC'], 3);
         // Create a new instagram instance.
         $slider = $this->em->getRepository(Slider::class)->findBy(['category' => null]);
         $instagram = new Instagram('2209588506.1677ed0.361223b4d3a547eebd1ad92202375d17');
@@ -40,7 +43,8 @@ class DefaultController extends MainController
             'slider' => $slider,
             'reviews' => $reviews,
             'homepage' => 1,
-            'loginUrl' => $this->loginUrl
+            'loginUrl' => $this->loginUrl,
+            'articles' => $articles
         ]);
     }
 

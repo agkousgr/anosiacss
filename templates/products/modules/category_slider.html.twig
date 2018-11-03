@@ -8,7 +8,7 @@
                     {% for slide in slider %}
                     <div class="item active">
                         <a href="{{ slide.url }}">
-                            <img src="{{ asset('uploads/slider/' ~ slide.image.filename) }}" alt="">
+                            <img src="{{ asset('uploads/slider/' ~ slide.image) }}" alt="">
                         </a>
                     </div>
                     {% endfor %}
