@@ -59,6 +59,9 @@ product_search_anosia:
 cart_view:
     path: /cart
     controller: App\Controller\CartController::viewCart
+    methods: [GET,POST]
+    options:
+        expose: true
 update_cart:
     path: /update-cart
     controller: App\Controller\CartController::updateCart
@@ -86,6 +89,12 @@ delete_cart_item:
     controller: App\Controller\CartController::deleteCartItem
     requirements:
         id: \d+
+check_coupon:
+    path: /cart/check-coupon
+    controller: App\Controller\AjaxCartController::checkCoupon
+    methods: [GET,POST]
+    options:
+        expose: true
 
 # Orders Checkout
 checkout:

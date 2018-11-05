@@ -1,12 +1,12 @@
 {% macro create_breadcrumb(ctg, bc) %}
     {% import _self as macros %}
-    {#{% if ctg.parent == null %}#}
-        {#<a style="color: #fff;"#}
-           {#href="{{ path('products_list', {'id':ctg.id}) }}">{{ ctg.name }}</a> {{ bc|raw }}#}
-    {#{% else %}#}
+    {% if ctg.parent == null %}
+        <a style="color: #fff;"
+           href="{{ path('products_list', {'id':ctg.id}) }}">{{ ctg.name }}</a> {{ bc|raw }}
+    {% else %}
         {% set bc = ' / <a style="color: #fff;" href="' ~ path('products_list', {'id':ctg.id}) ~ '">' ~ ctg.name ~ '</a>' ~ bc %}
         {{ macros.create_breadcrumb(ctg.parent, bc) }}
-    {#{% endif %}#}
+    {% endif %}
 {% endmacro %}
 {% import _self as func %}
 
@@ -32,7 +32,11 @@
             <div class="container">
                 <div class="row">
                     <div class="col-md-12">
-                        {#{{ func.create_breadcrumb(ctgInfo, '') }}#}
+                        {#{{ dump(pr.categories.name) }}#}
+                        {#{% for ctg in pr.categories|slice(0,1) %}#}
+                        <a style="color: #fff;" href="{{ path('index') }}">Αρχική
+                            / </a> {{ func.create_breadcrumb(pr.categories.0, '') }} / {{ pr.name }}
+                        {#{% endfor %}#}
                     </div>
                 </div>
             </div>
@@ -75,6 +79,11 @@
                             </div>
 
                             <div class="col-sm-8 wow fadeIn" data-wow-delay="0.3s">
+                                <p>Κατηγορίες που ανήκει το προϊόν:
+                                    {% for ctg in pr.categories %}
+                                        <a href="{{ path('products_list', {'id': pr.id}) }}"><b>{{ ctg.name }}</b></a>
+                                    {% endfor %}
+                                </p>
                                 <h2>{{ pr.name }}</h2>
                                 <p> {{ pr.summary }}</p>
                                 {#<ul class="rating">#}
@@ -217,5 +226,7 @@
     {{ parent() }}
     {#<script type="text/javascript" src="{{ asset('build/js/jquery.bxslider.min.js') }}"></script>#}
     <script src="{{ asset('build/js/product-view.js') }}"></script>
-    <script type='text/javascript' src='//platform-api.sharethis.com/js/sharethis.js#property=5bd33569ee8c700011929ddd&product=inline-share-buttons' async='async'></script>
+    <script type='text/javascript'
+            src='//platform-api.sharethis.com/js/sharethis.js#property=5bd33569ee8c700011929ddd&product=inline-share-buttons'
+            async='async'></script>
 {% endblock %}

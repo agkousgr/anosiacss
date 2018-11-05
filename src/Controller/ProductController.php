@@ -129,7 +129,7 @@ class ProductController extends MainController
     public function viewProduct(Request $request, int $id, EntityManagerInterface $em, ProductService $productService)
     {
         try {
-            $getReferrer = $productService->getReferer($request->server->get('HTTP_REFERER'));
+//            $getReferrer = $productService->getReferer($request->server->get('HTTP_REFERER'));
             $product = $this->productService->getItems($id, 'null', 1);
             dump($product);
             $productId = intval($product["id"]);

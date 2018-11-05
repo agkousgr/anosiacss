@@ -225,6 +225,15 @@
                                             <span class="value">{{ cartSubTotal|number_format(2, ',', '.') }}
                                                 €</span>
                                         </div>
+                                        {% if couponDiscount > 0 %}
+                                        <div class="cart-summary-line" id="cart-subtotal-products">
+                                            <span class="label js-subtotal">
+                                                Έκπτωση από κουπόνι
+                                            </span>
+                                            <span class="value">- {{ couponDiscount|number_format(2, ',', '.') }}
+                                                €</span>
+                                        </div>
+                                        {% endif %}
                                         {#<div class="cart-summary-line" id="cart-subtotal-shipping">#}
                                         {#<span class="label">#}
                                         {#Μεταφορικά#}
@@ -237,7 +246,7 @@
                                     </div>
                                     <hr class="separator">
                                     <div class="card-block ">
-                                        {% set cartTotal = cartSubTotal + cartShippingCost %}
+                                        {% set cartTotal = cartSubTotal + cartShippingCost - couponDiscount %}
                                         <div class="cart-summary-line cart-total">
                                             <span class="label">Σύνολο (με ΦΠΑ)</span>
                                             <span class="value">{{ cartTotal|number_format(2, ',', '.') }}

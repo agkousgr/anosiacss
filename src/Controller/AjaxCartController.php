@@ -109,7 +109,6 @@ class AjaxCartController extends AbstractController
                 }
                 $cartItem = $em->getRepository(Cart::class)->find($id);
 
-                dump($cartItem);
                 // Add code for checking that sessionId or Username has access to specific cartId
                 // Add here
                 // End code
@@ -124,6 +123,27 @@ class AjaxCartController extends AbstractController
                     ]);
                 }
                 return $this->json(['success' => false]);
+            } catch (\Exception $e) {
+                return $this->json(['success' => false]);
+                throw $e;
+                //throw $this->createNotFoundException('The resource you are looking for could not be found.');
+            }
+        } else {
+            throw $this->createNotFoundException('The resource you are looking for could not be found.');
+        }
+    }
+
+    public function checkCoupon(Request $request, CartService $cartService)
+    {
+        if ($request->isXmlHttpRequest()) {
+            try {
+                $couponResult = $cartService->checkCoupon($request->request->get('coupon'));
+
+                if ($couponResult) {
+                    return $this->json(['success' => true]);
+                } else {
+                    return $this->json(['success' => false]);
+                }
             } catch (\Exception $e) {
                 return $this->json(['success' => false]);
                 throw $e;

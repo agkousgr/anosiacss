@@ -75,16 +75,45 @@ class CartService
 </ClientGetItemsRequest>
 EOF;
         try {
-            $itemsArr = array();
             $result = $client->SendMessage(['Message' => $message]);
             $items = simplexml_load_string(str_replace("utf-16", "utf-8", $result->SendMessageResult));
             dump($message, $result);
-            if ($items !== false && $ids !== 'null') {
-                $itemsArr = $this->initializeProducts($items->GetDataRows->GetItemsRow, $cartArr);
-            } else if ($items !== false) {
-                $itemsArr = $this->initializeProposalProducts($items->GetDataRows->GetItemsRow);
-            }
+            $itemsArr = $this->initializeProducts($items->GetDataRows->GetItemsRow, $cartArr);
 
+            return $itemsArr;
+        } catch (\SoapFault $sf) {
+            echo $sf->faultstring;
+        }
+    }
+
+    public function getRelevantItems($highPrice = -1)
+    {
+        $client = new \SoapClient('https://caron.cloudsystems.gr/FOeshopWS/ForeignOffice.FOeshop.API.FOeshopSvc.svc?singleWsdl', ['trace' => true, 'exceptions' => true,]);
+// Todo: replace categoryId with cart items relative categories
+        $message = <<<EOF
+<?xml version="1.0" encoding="utf-16"?>
+<ClientGetRelevantItemsRequest>
+    <Type>1056</Type>
+    <Kind>1</Kind>
+    <Domain>pharmacyone</Domain>
+    <AuthID>$this->authId</AuthID>
+    <AppID>157</AppID>
+    <CategoryID>-1</CategoryID>
+    <CompanyID>1000</CompanyID>
+    <ItemID>100357</ItemID>
+    <IncludeChildCategories>0</IncludeChildCategories>
+    <IsRandom>1</IsRandom>
+    <IsPopular>0</IsPopular>
+    <LowPrice>1</LowPrice>
+    <HighPrice>$highPrice</HighPrice>
+</ClientGetRelevantItemsRequest>
+EOF;
+        try {
+            $result = $client->SendMessage(['Message' => $message]);
+            $items = simplexml_load_string(str_replace("utf-16", "utf-8", $result->SendMessageResult));
+            dump($message, $result);
+            $itemsArr = $this->initializeProposalProducts($items->GetDataRows->GetRelevantItemsRow);
+            dump($itemsArr);
             return $itemsArr;
         } catch (\SoapFault $sf) {
             echo $sf->faultstring;
@@ -104,7 +133,7 @@ EOF;
             $subTotal = 0;
             $i = 0;
             foreach ($products as $pr) {
-                $subTotal +=  $pr->WebPrice;
+                $subTotal += $pr->WebPrice;
                 $prArr[] = array(
                     'id' => $pr->ID,
                     'name' => $pr->Name2,
@@ -138,10 +167,8 @@ EOF;
     {
         try {
             $prArr = array();
-            $subTotal = 0;
             $i = 0;
             foreach ($products as $pr) {
-                $subTotal +=  $pr->WebPrice;
                 $prArr[] = array(
                     'id' => $pr->ID,
                     'name' => $pr->Name2,
@@ -157,14 +184,21 @@ EOF;
                     'hasMainImage' => $pr->HasMainPhoto,
                     'imageUrl' => ($pr->HasMainPhoto) ? 'https://caron.cloudsystems.gr/FOeshopAPIWeb/DF.aspx?' . str_replace('[Serial]', '01102459200617', str_replace('&amp;', '&', $pr->MainPhotoUrl)) : ''
                 );
-                $i++;
             }
-//            'manufacturer' => $pr->ManufactorName
-//            return new Response(dump(print_r($this->prCategories)));
+
             return $prArr;
         } catch (\Exception $e) {
             $this->logger->error(__METHOD__ . ' -> {message}', ['message' => $e->getMessage()]);
             throw $e;
         }
+    }
+
+    public function checkCoupon($coupon)
+    {
+        if ($coupon === 'COUPON') {
+            $this->session->set('couponDisc', 10);
+            return true;
+        }
+        return false;
     }
 }

@@ -2,6 +2,8 @@
 
 namespace App\Service;
 
+use App\Entity\Category;
+use Doctrine\ORM\EntityManagerInterface;
 use Psr\Log\LoggerInterface;
 use Symfony\Component\HttpFoundation\Session\SessionInterface;
 
@@ -18,17 +20,22 @@ class ProductService
     private $session;
 
     /**
+     * @var \Doctrine\ORM\EntityManagerInterface
+     */
+    private $em;
+
+    /**
      * @var string
      * @param SessionInterface $session
      */
     private $authId;
 
-    public function __construct(LoggerInterface $logger, SessionInterface $session)
+    public function __construct(LoggerInterface $logger, EntityManagerInterface $em, SessionInterface $session)
     {
         $this->logger = $logger;
+        $this->em = $em;
         $this->session = $session;
         $this->authId = $this->session->get("authID");
-        dump($this->authId);
     }
 
     /**
@@ -216,7 +223,7 @@ EOF;
         try {
             $result = $client->SendMessage(['Message' => $message]);
             $items = simplexml_load_string(str_replace("utf-16", "utf-8", $result->SendMessageResult));
-//            dump($message, $result);
+            dump($message, $result);
             if ($items !== false && ($keyword !== 'null' || $makeId !== 'null' || $isSkroutz === '1')) {
                 $itemsArr = $this->initializeProducts($items->GetDataRows->GetItemsRow);
             } else {
@@ -257,7 +264,8 @@ EOF;
                     'overAvailability' => $pr->OverAvailability,
                     'maxByOrder' => $pr->MaxByOrder,
                     'hasMainImage' => $pr->HasMainPhoto,
-                    'imageUrl' => ($pr->HasMainPhoto) ? 'https://caron.cloudsystems.gr/FOeshopAPIWeb/DF.aspx?' . str_replace('[Serial]', '01102459200617', str_replace('&amp;', '&', $pr->MainPhotoUrl)) : ''
+                    'imageUrl' => ($pr->HasMainPhoto) ? 'https://caron.cloudsystems.gr/FOeshopAPIWeb/DF.aspx?' . str_replace('[Serial]', '01102459200617', str_replace('&amp;', '&', $pr->MainPhotoUrl)) : '',
+                    'categories' => $this->getProductCategories($pr->AllCategoryIDs)
                 );
             }
             $imagesArr = $this->getItemPhotos($pr->ID);
@@ -269,6 +277,13 @@ EOF;
             $this->logger->error(__METHOD__ . ' -> {message}', ['message' => $e->getMessage()]);
             throw $e;
         }
+    }
+
+    private function getProductCategories($ctgArr)
+    {
+        $categories = $this->em->getRepository(Category::class)->findBy(['s1id' => $ctgArr]);
+        dump($categories);
+        return $categories;
     }
 
     private function getItemPhotos($id)
@@ -371,10 +386,10 @@ EOF;
         }
     }
 
-    public function getReferer($httpReferer)
-    {
-        $refererArr = explode('/', $httpReferer);
-        dump($refererArr);
-        return $refererArr;
-    }
+//    public function getReferer($httpReferer)
+//    {
+//        $refererArr = explode('/', $httpReferer);
+//        dump($refererArr);
+//        return $refererArr;
+//    }
 }

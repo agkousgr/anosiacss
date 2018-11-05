@@ -25,9 +25,10 @@ class CartController extends MainController
                 foreach ($this->cartItems as $item) {
                     $totalCartPrice += floatval($item['webPrice']);
                 }
-                $cartProposals = $cartService->getCartItems('null', array(), 8, $totalCartPrice);
+                $cartProposals = $cartService->getRelevantItems(39 - $totalCartPrice);
             }
-
+            $couponDiscount = (!empty($this->session->get('couponDisc'))) ? $this->session->get('couponDisc') : 0;
+            dump($couponDiscount);
             return ($this->render('orders/cart.html.twig', [
                 'categories' => $this->categories,
                 'cartItems' => $this->cartItems,
@@ -40,7 +41,9 @@ class CartController extends MainController
                 'loggedName' => $this->loggedName,
                 'hideCart' => true,
                 'loginUrl' => $this->loginUrl,
-                'totalCartPrice' => $totalCartPrice
+                'totalCartPrice' => $totalCartPrice,
+                'cartProposals' => $cartProposals,
+                'couponDiscount' => $couponDiscount
             ]));
         } catch (\Exception $e) {
             throw $e;
