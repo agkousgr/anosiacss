@@ -1,50 +1,59 @@
 <div class="section" style="background:#009836;">
     <div class="container">
-        <div class="section-heading section-heading-white row wow flipInX" data-wow-delay="0.4s">
-            <div class="col-sm-8 col-sm-offset-2">
-                <h3>ΣΥΝΑΡΠΑΣΤΙΚΕΣ ΠΡΟΣΦΟΡΕΣ</h3>
-                <h2>ΕΠΩΦΕΛΕΙΘΕΙΤΕ ΑΠΟ ΤΙΣ ΠΡΟΣΦΟΡΕΣ ΜΑΣ</h2>
-                <p>Στο AnosiaPharmacy.gr θα βρείτε τις καλύτερες προσφορές στις μεγαλύτερες εταιρείες!</p>
-            </div>
-        </div>
+        {#<div class="section-heading section-heading-white row wow flipInX" data-wow-delay="0.4s">#}
+        {#<div class="col-sm-8 col-sm-offset-2">#}
+        {#<h3>ΣΥΝΑΡΠΑΣΤΙΚΕΣ ΠΡΟΣΦΟΡΕΣ</h3>#}
+        {#<h2>ΕΠΩΦΕΛΕΙΘΕΙΤΕ ΑΠΟ ΤΙΣ ΠΡΟΣΦΟΡΕΣ ΜΑΣ</h2>#}
+        {#<p>Στο AnosiaPharmacy.gr θα βρείτε τις καλύτερες προσφορές στις μεγαλύτερες εταιρείες!</p>#}
+        {#</div>#}
+        {#</div>#}
 
-        <div class="owl-carousel owl-theme OfferCarousel">
-            {% for pr in featured %}
-                <div class="item">
-                    <div class="offer-box">
-                        <div class="row">
-                            <div class="col-sm-4 col-md-5 col-lg-4 offer-img">
-                                <img src="{{ pr.imageUrl }}"
-                                        alt="{{ pr.name }}">
-                            </div>
-                            <div class="col-sm-8 col-md-7 col-lg-8">
-                                <div class="offer-name">{{ pr.name }}</div>
-                                {#<div class="star"><i class="fa fa-star"></i><i class="fa fa-star"></i><i#}
-                                            {#class="fa fa-star"></i><i class="fa fa-star"></i><i#}
-                                            {#class="fa fa-star"></i><i#}
-                                            {#class="fa fa-star-o"></i></div>#}
-                                <div class="product-price-span">{{  pr.webPrice }}€
-                                    <del>{{ pr.retailPrice }}€</del>
+        <div class="col-lg-3">
+            <h3 style="color: #fff;">ΣΥΝΑΡΠΑΣΤΙΚΕΣ ΠΡΟΣΦΟΡΕΣ<br><br>
+            ΕΠΩΦΕΛΕΙΘΕΙΤΕ ΑΠΟ ΤΙΣ ΠΡΟΣΦΟΡΕΣ ΜΑΣ</h3>
+            <p style="color: #fff;">Στο AnosiaPharmacy.gr θα βρείτε τις καλύτερες προσφορές στις μεγαλύτερες
+                εταιρείες!</p>
+        </div>
+        <div class="col-lg-9">
+            <div class="owl-carousel owl-theme OfferCarousel">
+                {% for pr in featured %}
+                    <div class="item">
+                        <div class="offer-box">
+                            <div class="row">
+                                <div class="col-sm-4 col-md-5 col-lg-4 offer-img">
+                                    <img src="{{ pr.imageUrl }}"
+                                         alt="{{ pr.name }}">
                                 </div>
-                                <div>
-                                    <button type="button">
-                                        <i class="fa fa-cart-plus"></i>
-                                        <span>ΚΑΛΑΘΙ</span>
-                                    </button>
+                                <div class="col-sm-8 col-md-7 col-lg-8">
+                                    <div class="offer-name">{{ pr.name }}</div>
+                                    {#<div class="star"><i class="fa fa-star"></i><i class="fa fa-star"></i><i#}
+                                    {#class="fa fa-star"></i><i class="fa fa-star"></i><i#}
+                                    {#class="fa fa-star"></i><i#}
+                                    {#class="fa fa-star-o"></i></div>#}
+                                    <div class="product-price-span">{{ pr.webPrice }}€
+                                        <del>{{ pr.retailPrice }}€</del>
+                                    </div>
+                                    <div>
+                                        <button type="button" class="add-to-cart"
+                                                data-id="{{ pr.id }}"
+                                                data-name="{{ pr.name }}">
+                                            <i class="fa fa-cart-plus"></i>
+                                            <span>ΚΑΛΑΘΙ</span>
+                                        </button>
+                                    </div>
+                                    <h6>Η ΠΡΟΣΦΟΡΑ ΛΗΓΕΙ ΣΕ:</h6>
+                                    <ul>
+                                        <li>5ώρες</li>
+                                        <li>15 Λεπτά</li>
+                                        {#<li>25 Mins</li>#}
+                                    </ul>
                                 </div>
-                                <h6>Η ΠΡΟΣΦΟΡΑ ΛΗΓΕΙ ΣΕ:</h6>
-                                <ul>
-                                    <li>5ώρες</li>
-                                    <li>15 Λεπτά</li>
-                                    {#<li>25 Mins</li>#}
-                                </ul>
                             </div>
                         </div>
+                        <div class="shadow-sm"></div>
                     </div>
-                    <div class="shadow-sm"></div>
-                </div>
-            {% endfor %}
+                {% endfor %}
+            </div>
         </div>
-
     </div>
 </div>

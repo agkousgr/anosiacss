@@ -3,12 +3,29 @@
 <head>
     <meta charset="UTF-8">
     <title>Anosia Pharmacy{% block title %}{% endblock %}</title>
+    {% block meta_og %}
+    <meta property="og:title"
+          content="Anosia Pharmacy "/>
+    <meta property="og:description"
+          content='BLK Audiovisual LTD - Professional & TV Equipment - Cameras - Videos - Recorders'/>
+    <meta property="og:image" content="{{ app.request.uri ~ asset('images/logo.png') }}"/>
+    {% endblock %}
     {% block stylesheets %}
         {% include 'partials/stylesheets.html.twig' %}
     {% endblock %}
 </head>
 <body id="{% block bodyId %}{% endblock %}" class="{% block bodyClass %}{% endblock %}">
+
 <div id="fb-root"></div>
+
+<!-- Your customer chat code -->
+<div class="fb-customerchat"
+     attribution=setup_tool
+     page_id="292956054170320"
+     theme_color="#019A36"
+     logged_in_greeting="Γεια σας! Πώς μπορούμε να σας εξυπηρετήσουμε;"
+     logged_out_greeting="Γεια σας! Πώς μπορούμε να σας εξυπηρετήσουμε;">
+</div>
 <div class="fb-customerchat"
      page_id="<PAGE_ID>">
 </div>
@@ -23,15 +40,25 @@
         FB.CustomerChat.show();
     };
 
-    (function (d, s, id) {
-        var js, fjs = d.getElementsByTagName(s)[0];
-        if (d.getElementById(id)) return;
-        js = d.createElement(s);
-        js.id = id;
-        // js.src = 'https://connect.facebook.net/el_GR/sdk.js#xfbml=1&version=v3.0&appId=605092459847380&autoLogAppEvents=1';
-        js.src = 'https://connect.facebook.net/el_GR/sdk/xfbml.customerchat.js#xfbml=1&version=v3.0&appId=605092459847380&autoLogAppEvents=1';
-        fjs.parentNode.insertBefore(js, fjs);
-    }(document, 'script', 'facebook-jssdk'));
+    // (function (d, s, id) {
+    //     var js, fjs = d.getElementsByTagName(s)[0];
+    //     if (d.getElementById(id)) return;
+    //     js = d.createElement(s);
+    //     js.id = id;
+    //     // js.src = 'https://connect.facebook.net/el_GR/sdk.js#xfbml=1&version=v3.0&appId=605092459847380&autoLogAppEvents=1';
+    //     js.src = 'https://connect.facebook.net/el_GR/sdk/xfbml.customerchat.js#xfbml=1&version=v3.0&appId=605092459847380&autoLogAppEvents=1';
+    //     fjs.parentNode.insertBefore(js, fjs);
+    // }(document, 'script', 'facebook-jssdk'));
+
+        (function(d, s, id) {
+            var js, fjs = d.getElementsByTagName(s)[0];
+            if (d.getElementById(id)) return;
+            js = d.createElement(s); js.id = id;
+            js.src = 'https://connect.facebook.net/el_GR/sdk/xfbml.customerchat.js#xfbml=1&version=v3.0&appId=605092459847380&autoLogAppEvents=1';
+            fjs.parentNode.insertBefore(js, fjs);
+        }(document, 'script', 'facebook-jssdk'));
+
+
 
     // (function(d, s, id) {
     //     var js, fjs = d.getElementsByTagName(s)[0];

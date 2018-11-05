@@ -4,6 +4,7 @@ namespace App\Controller;
 
 use App\Entity\{Category,Slider,ProductViews};
 use App\Service\BrandsService;
+use App\Service\ProductService;
 use Doctrine\ORM\EntityManagerInterface;
 use Knp\Component\Pager\PaginatorInterface;
 use Symfony\Component\HttpFoundation\Request;
@@ -125,9 +126,10 @@ class ProductController extends MainController
         }
     }
 
-    public function viewProduct(int $id, EntityManagerInterface $em)
+    public function viewProduct(Request $request, int $id, EntityManagerInterface $em, ProductService $productService)
     {
         try {
+            $getReferrer = $productService->getReferer($request->server->get('HTTP_REFERER'));
             $product = $this->productService->getItems($id, 'null', 1);
             dump($product);
             $productId = intval($product["id"]);

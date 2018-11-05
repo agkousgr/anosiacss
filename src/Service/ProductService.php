@@ -184,7 +184,7 @@ EOF;
      * @return array
      * @throws \Exception
      */
-    public function getItems($id = 'null', $keyword = 'null', $pagesize, $sortBy = 'null', $isSkroutz = -1, $makeId = 'null', $priceRange='null')
+    public function getItems($id = 'null', $keyword = 'null', $pagesize, $sortBy = 'null', $isSkroutz = -1, $makeId = 'null', $priceRange = 'null')
     {
         $client = new \SoapClient('https://caron.cloudsystems.gr/FOeshopWS/ForeignOffice.FOeshop.API.FOeshopSvc.svc?singleWsdl', ['trace' => true, 'exceptions' => true,]);
 
@@ -216,7 +216,7 @@ EOF;
         try {
             $result = $client->SendMessage(['Message' => $message]);
             $items = simplexml_load_string(str_replace("utf-16", "utf-8", $result->SendMessageResult));
-            dump($message, $result);
+//            dump($message, $result);
             if ($items !== false && ($keyword !== 'null' || $makeId !== 'null' || $isSkroutz === '1')) {
                 $itemsArr = $this->initializeProducts($items->GetDataRows->GetItemsRow);
             } else {
@@ -294,7 +294,7 @@ EOF;
             $imagesArr = array();
             $result = $client->SendMessage(['Message' => $message]);
             $items = simplexml_load_string(str_replace("utf-16", "utf-8", $result->SendMessageResult));
-            dump($message, $result);
+//            dump($message, $result);
             if (intval($items->RowsCount) > 0) {
                 $imagesArr = $this->initializeImages($items->GetDataRows->GetItemPhotosRow);
             }
@@ -320,7 +320,6 @@ EOF;
                     'isMain' => $image->IsMain,
                     'imageUrl' => 'https://caron.cloudsystems.gr/FOeshopAPIWeb/DF.aspx?' . str_replace('[Serial]', '01102459200617', str_replace('&amp;', '&', $image->PhotoUrl))
                 );
-                dump($image);
             }
             return $imagesArr;
         } catch (\Exception $e) {
@@ -372,5 +371,10 @@ EOF;
         }
     }
 
-
+    public function getReferer($httpReferer)
+    {
+        $refererArr = explode('/', $httpReferer);
+        dump($refererArr);
+        return $refererArr;
+    }
 }

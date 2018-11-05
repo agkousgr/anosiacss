@@ -189,7 +189,7 @@ $(document).ready(function () {
     let owl = $('.OfferCarousel');
     owl.owlCarousel({
         margin: 30,
-        nav: false,
+        nav: true,
         loop: true,
         responsive: {
             0: {items: 1},
@@ -265,12 +265,6 @@ $(document).ready(function () {
         }
         $.post(Routing.generate('delete_top_cart_item'), data, function (result) {
             if (result.success) {
-                swal({
-                    title: 'Καλάθι',
-                    html: '<div style="font-size:17px;">Το προϊόν ' + result.prName + ' διαγράφηκε με επιτυχία!</div>',
-                    type: 'success',
-                    timer: 5000
-                });
                 if (result.totalCartItems == 0) {
                     $('#cart-total-items').css('display', 'none');
                 }
