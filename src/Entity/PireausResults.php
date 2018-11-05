@@ -80,16 +80,6 @@ class PireausResults
     }
 
     /**
-     * @param int $id
-     * @return PireausResults
-     */
-    public function setId(int $id): PireausResults
-    {
-        $this->id = $id;
-        return $this;
-    }
-
-    /**
      * @return int
      */
     public function getCliendId(): int

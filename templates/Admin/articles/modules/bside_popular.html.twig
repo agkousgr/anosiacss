@@ -22,7 +22,7 @@
                 </div>
             </div>
             <ul>
-                <li><i class="fa fa-calendar-o"></i><a href="#">November</a> 11, 2016</li>
+                <li><i class="fa fa-calendar-o"></i>{{ article.createdAt|date('d-m-Y') }}</li>
                 {#<li><i class="fa fa-comments-o"></i><a href="#">5 comment(s)</a></li>#}
             </ul>
         </div>

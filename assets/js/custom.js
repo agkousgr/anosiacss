@@ -121,6 +121,38 @@ $(document).ready(function () {
 })
 
 $(document).ready(function () {
+    let owl = $('.ProductRelatedScroll');
+    owl.owlCarousel({
+        margin: 30,
+        nav: true,
+        loop: false,
+        responsive: {
+            0: {items: 1},
+            480: {items: 2},
+            768: {items: 2},
+            992: {items: 3},
+            1200: {items: 4}
+        }
+    })
+})
+
+$(document).ready(function () {
+    let owl = $('.CartScroll');
+    owl.owlCarousel({
+        margin: 30,
+        nav: true,
+        loop: false,
+        responsive: {
+            0: {items: 1},
+            480: {items: 2},
+            768: {items: 2},
+            992: {items: 3},
+            1200: {items: 4}
+        }
+    })
+})
+
+$(document).ready(function () {
     let owl = $('.ProductScrollTab');
     owl.owlCarousel({
         margin: 30,
@@ -221,7 +253,7 @@ $(document).ready(function () {
 $("#blue-mobile-menu").blueMobileMenu();
 
 $(document).ready(function () {
-    $('#nl-gender').select2();
+    // $('#nl-gender').select2();
 
     let cartContainer = $('#collapseCart');
 
@@ -253,7 +285,7 @@ $(document).ready(function () {
                 });
             }
         });
-    })
+    });
 
     $('#collapseCart').load(Routing.generate('load_top_cart'));
     if ($('input[name="cart"]').val() == 1) {
@@ -415,6 +447,9 @@ $('.add-to-cart').on('click', function (e) {
             $('#cart-total-items').html(result.totalCartItems);
             $("#sidebar-cart-wrapper").toggleClass("active");
             $('#collapseCart').load(Routing.generate('load_top_cart'));
+            setTimeout( function(){
+                $("#sidebar-cart-wrapper").toggleClass("active")
+            }  , 3000 );
         } else if (result.success && result.exist === true) {
             swal({
                 title: 'Ουπς',

@@ -5,9 +5,9 @@
                 <div class="col-sm-4 footmenu">
                     <h6>ΠΛΗΡΟΦΟΡΙΕΣ</h6>
                     <ul>
-                        <li><a href="#">Blog</a></li>
-                        <li><a href="#">ΠΡΟΦΙΛ</a></li>
-                        <li><a href="#">ΟΡΟΙ & ΠΡΟΫΠΟΘΕΣΕΙΣ</a></li>
+                        {#<li><a href="{{ path('blog_list') }}">Blog</a></li>#}
+                        <li><a href="{{ path('blog_view', {'slug': 'about'}) }}">ΠΡΟΦΙΛ</a></li>
+                        <li><a href="{{ path('blog_view', {'slug': 'terms-of-use'}) }}">ΟΡΟΙ & ΠΡΟΫΠΟΘΕΣΕΙΣ</a></li>
                         <li><a href="#">ΠΡΟΣΤΑΣΙΑ ΙΔΙΩΤΙΚΟΤΗΤΑΣ</a></li>
                     </ul>
                 </div>
@@ -15,9 +15,10 @@
                 <div class="col-sm-4 footmenu">
                     <h6>ΥΠΗΡΕΣΙΕΣ</h6>
                     <ul>
-                        <li><a href="#">ΕΠΙΣΤΡΟΦΕΣ ΠΡΟΪΟΝΤΩΝ</a></li>
-                        <li><a href="#">ΤΡΟΠΟΙ ΠΛΗΡΩΜΗΣ</a></li>
-                        <li><a href="#">ΤΡΟΠΟΙ ΑΠΟΣΤΟΛΗΣ</a></li>
+                        <li><a href="{{ path('blog_view', {'slug': 'προγραμμα-επιβραβευσης-πελατων'}) }}">ΠΡΟΓΡΑΜΜΑ ΕΠΙΒΡΑΒΕΥΣΗΣ ΠΕΛΑΤΩΝ</a></li>
+                        <li><a href="{{ path('blog_view', {'slug': 'privacy'}) }}">ΕΠΙΣΤΡΟΦΕΣ ΠΡΟΪΟΝΤΩΝ</a></li>
+                        <li><a href="{{ path('blog_view', {'slug': 'τρόποι-πληρωμης'}) }}">ΤΡΟΠΟΙ ΠΛΗΡΩΜΗΣ</a></li>
+                        <li><a href="{{ path('blog_view', {'slug': 'τροποι-αποστολης'}) }}">ΤΡΟΠΟΙ ΑΠΟΣΤΟΛΗΣ</a></li>
                     </ul>
                 </div>
 
@@ -27,7 +28,7 @@
                         <li><a href="#">Ο ΛΟΓΑΡΙΑΣΜΟΣ ΜΟΥ</a></li>
                         <li><a href="#">ΛΙΣΤΑ ΕΠΙΘΥΜΙΩΝ</a></li>
                         <li><a href="#">ΠΛΗΡΩΜΗ</a></li>
-                        <li><a href="#">ΚΑΛΑΘΙ</a></li>
+                        <li><a class="toggle-cart-sidebar" href="javascript:void(0);">ΚΑΛΑΘΙ</a></li>
                         <li><a href="#">ΟΙ ΠΟΝΤΟΙ ΜΟΥ</a></li>
                     </ul>
                 </div>

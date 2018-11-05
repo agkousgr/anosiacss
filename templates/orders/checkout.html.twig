@@ -6,6 +6,13 @@
 {% block stylesheets %}
     {{ parent() }}
     <link href="{{ asset('build/css/orders.css') }}" rel="stylesheet"/>
+    <style>
+        #cart-info {
+            position: -webkit-sticky;
+            position: sticky;
+            top: 160px;
+        }
+    </style>
 {% endblock %}
 {% block breadcrumb %}
 
@@ -42,6 +49,195 @@
                             <div class="row">
                                 <div class="col-md-8">
 
+                                    <ul class="nav nav-tabs" role="tablist">
+                                        <li role="presentation" class="active">
+                                            <a href="#tab-1" aria-controls="Description" role="tab" data-toggle="tab"><i class="fa fa-info-circle"></i>Περιγραφη</a>
+                                        </li>
+                                        <li role="presentation">
+                                            <a href="#tab-2" aria-controls="Information" role="tab" data-toggle="tab"><i class="fa fa-file-text-o"></i>Συμπτωματολογια</a>
+                                        </li>
+                                        <li role="presentation">
+                                            <a href="#tab-3" aria-controls="Sizing" role="tab" data-toggle="tab"><i class="fa fa-align-center"></i>Sizing Guide</a>
+                                        </li>
+                                        {#<li role="presentation"><a href="#Reviews" aria-controls="Reviews" role="tab" data-toggle="tab"><i class="fa fa-comments"></i>Reviews (0)</a></li>#}
+                                    </ul>
+
+                                    <div class="tab-content">
+                                        <div role="tabpanel" class="tab-pane active" id="tab-1">
+                                            {% set step1class = '' %}
+                                            {% if curStep == 1 %}
+                                                {% set step1class = '-current js-current-step' %}
+                                                {% set step1AreaHidden = '' %}
+                                            {% elseif curStep > 1 %}
+                                                {% set step1class = '-complete' %}
+                                            {% endif %}
+                                            {% if loggedUser is empty %}
+                                                {#<ul class="nav nav-inline my-2" role="tablist">#}
+                                                {#<li class="nav-item">#}
+                                                <section class="checkout-step">
+                                                    <div>
+                                                        {#<a class="nav-link active" data-toggle="tab"#}
+                                                        {#href="#checkout-guest-form" role="tab"#}
+                                                        {#aria-controls="checkout-guest-form"#}
+                                                        {#aria-selected="true">#}
+                                                        Ολοκλήρωση ως επισκέπτης
+                                                        {#</a>#}
+                                                        {#</li>#}
+                                                        {#<li class="nav-item">#}
+                                                        <span href="nav-separator"> | </span>
+                                                        {#</li>#}
+                                                        {#<li class="nav-item">#}
+                                                        <a class="nav-link toggle-sidebar"
+                                                           data-link-action="show-login-form"
+                                                           data-toggle="tab"
+                                                           href="" role="tab"
+                                                           aria-controls="checkout-login-form">
+                                                            Είσοδος
+                                                        </a>
+                                                        {#</li>#}
+                                                        {#</ul>#}
+                                                    </div>
+                                                </section>
+                                            {% endif %}
+                                            <section id="checkout-personal-information-step"
+                                                     class="checkout-step {{ step1class }} -reachable">
+                                                <h1 class="step-title h3">
+                                                    <i class="material-icons rtl-no-flip done"></i>
+                                                    <span class="step-number">1</span>
+                                                    Προσωπικά στοιχεία
+                                                    <a href="{{ path('checkout', {'step': 1}) }}">
+                                                        <span id="1" class="step-edit text-muted">
+                                                            <i class="material-icons edit">mode_edit</i>
+                                                            Επεξεργασία
+                                                        </span>
+                                                    </a>
+                                                </h1>
+                                                <div class="content">
+                                                    <div class="tab-content">
+                                                        <div class="tab-pane active"
+                                                             id="checkout-guest-form" role="tabpanel">
+                                                            {{ form_start(step1Form) }}
+                                                            <section>
+                                                                <div class="form-group row ">
+                                                                    {{ form_label(step1Form.firstname, 'Όνομα', {'label_attr': {'class': 'col-md-3 form-control-label required'}}) }}
+                                                                    <div class="col-md-6">
+                                                                        {{ form_widget(step1Form.firstname, {'attr': {'class': 'form-control'}}) }}
+                                                                    </div>
+                                                                    <div class="col-md-3 form-control-comment">
+                                                                    </div>
+                                                                </div>
+
+                                                                <div class="form-group row ">
+                                                                    {{ form_label(step1Form.lastname, 'Επώνυμο', {'label_attr': {'class': 'col-md-3 form-control-label required'}}) }}
+                                                                    <div class="col-md-6">
+                                                                        {{ form_widget(step1Form.lastname, {'attr': {'class': 'form-control'}}) }}
+                                                                    </div>
+                                                                    <div class="col-md-3 form-control-comment">
+                                                                    </div>
+                                                                </div>
+                                                                <div class="form-group row ">
+                                                                    {{ form_label(step1Form.email, 'E-mail', {'label_attr': {'class': 'col-md-3 form-control-label required'}}) }}
+                                                                    <div class="col-md-6">
+                                                                        {{ form_widget(step1Form.email, {'attr': {'class': 'form-control'}}) }}
+                                                                    </div>
+                                                                    <div class="col-md-3 form-control-comment">
+                                                                    </div>
+                                                                </div>
+
+                                                                <div class="clearfix"></div>
+                                                                <div class="form-group row ">
+                                                                    <div class="col-md-12">
+                                                                        {{ form_widget(step1Form.newsletter) }}
+                                                                        {{ form_label(step1Form.newsletter, 'Εγγραφή στο newsletter. Μπορείτε να διαγραφείτε οποιαδήποτε στιγμή επιθυμείτε.') }}
+                                                                    </div>
+                                                                </div>
+
+                                                                {#<div class="form-group row ">#}
+                                                                {#<label class="col-md-3 form-control-label">#}
+                                                                {#</label>#}
+                                                                {#<div class="col-md-6">#}
+                                                                {#<span class="custom-checkbox">#}
+                                                                {#{{ form_widget(registerForm.special_offers) }}#}
+                                                                {#<span><i class="material-icons rtl-no-flip checkbox-checked"></i></span>#}
+                                                                {#<label>Να λαμβάνω προσφορές από το κατάστημα</label>#}
+                                                                {#</span>#}
+                                                                {#</div>#}
+                                                                {#<div class="col-md-3 form-control-comment">#}
+                                                                {#</div>#}
+                                                                {#</div>#}
+
+                                                                {#<div class="form-group row ">#}
+                                                                {#<label class="col-md-3 form-control-label">#}
+                                                                {#</label>#}
+                                                                {#<div class="col-md-6">#}
+                                                                {#<span class="custom-checkbox">#}
+                                                                {#{{ form_widget(registerForm.newsletter) }}#}
+                                                                {#<span><i class="material-icons rtl-no-flip checkbox-checked"></i></span>#}
+                                                                {#<label>Εγγραφή στο newsletter<br>#}
+                                                                {#<em>Μπορείτε να διαγραφείτε οποιαδήποτε στιγμή#}
+                                                                {#επιθυμείτε.</em>#}
+                                                                {#</label>#}
+                                                                {#</span>#}
+                                                                {#</div>#}
+
+                                                                {#<div class="col-md-3 form-control-comment">#}
+                                                                {#</div>#}
+                                                                {#</div>#}
+                                                            </section>
+                                                            <footer class="form-footer clearfix">
+                                                                <input name="submitAddress" value="1"
+                                                                       type="hidden">
+                                                                <button id="confirm-addresses" type="submit"
+                                                                        class="continue btn btn-primary float-xs-right"
+                                                                        name="confirm-addresses" value="1">
+                                                                    Επόμενο
+                                                                </button>
+                                                            </footer>
+                                                            {{ form_end(step1Form) }}
+                                                        </div>
+                                                        <div class="tab-pane " id="checkout-login-form"
+                                                             role="tabpanel"
+                                                             aria-hidden="true">
+
+
+                                                            <form id="login-form"
+                                                                  action="https://demo.templatetrip.com/Prestashop/PRS06/PRS176_gym/en/order"
+                                                                  method="post">
+                                                                <section>
+
+                                                                    <div class="forgot-password">
+                                                                        <a href="https://demo.templatetrip.com/Prestashop/PRS06/PRS176_gym/en/password-recovery"
+                                                                           rel="nofollow">
+                                                                            Forgot your password?
+                                                                        </a>
+                                                                    </div>
+                                                                </section>
+                                                                <footer class="form-footer text-sm-center clearfix">
+                                                                    <input name="submitLogin" value="1"
+                                                                           type="hidden">
+                                                                    <button class="continue btn btn-primary float-xs-right"
+                                                                            name="continue"
+                                                                            data-link-action="sign-in"
+                                                                            type="submit" value="1">
+                                                                        Continue
+                                                                    </button>
+                                                                </footer>
+                                                            </form>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                            </section>
+                                        </div>
+                                        <div role="tabpanel" class="tab-pane" id="tab-2">
+                                            tab2
+                                        </div>
+                                        <div role="tabpanel" class="tab-pane" id="tab-3">
+                                            tab3
+                                        </div>
+                                        {#<div role="tabpanel" class="tab-pane" id="Sizing">Sizing Guide</div>#}
+                                        {#<div role="tabpanel" class="tab-pane" id="Reviews">Reviews</div>#}
+                                    </div>
+
                                     {% set step1class = '' %}
                                     {% if curStep == 1 %}
                                         {% set step1class = '-current js-current-step' %}
@@ -52,83 +248,83 @@
                                     {% if loggedUser is empty %}
                                         {#<ul class="nav nav-inline my-2" role="tablist">#}
                                         {#<li class="nav-item">#}
-                                        <section class="checkout-step">
-                                            <div>
+                                        {#<section class="checkout-step">#}
+                                            {#<div>#}
                                                 {#<a class="nav-link active" data-toggle="tab"#}
                                                 {#href="#checkout-guest-form" role="tab"#}
                                                 {#aria-controls="checkout-guest-form"#}
                                                 {#aria-selected="true">#}
-                                                Ολοκλήρωση ως επισκέπτης
+                                                {#Ολοκλήρωση ως επισκέπτης#}
                                                 {#</a>#}
                                                 {#</li>#}
                                                 {#<li class="nav-item">#}
-                                                <span href="nav-separator"> | </span>
+                                                {#<span href="nav-separator"> | </span>#}
                                                 {#</li>#}
                                                 {#<li class="nav-item">#}
-                                                <a class="nav-link toggle-sidebar"
-                                                   data-link-action="show-login-form"
-                                                   data-toggle="tab"
-                                                   href="" role="tab"
-                                                   aria-controls="checkout-login-form">
-                                                    Είσοδος
-                                                </a>
+                                                {#<a class="nav-link toggle-sidebar"#}
+                                                   {#data-link-action="show-login-form"#}
+                                                   {#data-toggle="tab"#}
+                                                   {#href="" role="tab"#}
+                                                   {#aria-controls="checkout-login-form">#}
+                                                    {#Είσοδος#}
+                                                {#</a>#}
                                                 {#</li>#}
                                                 {#</ul>#}
-                                            </div>
-                                        </section>
+                                            {#</div>#}
+                                        {#</section>#}
                                     {% endif %}
-                                    <section id="checkout-personal-information-step"
-                                             class="checkout-step {{ step1class }} -reachable">
-                                        <h1 class="step-title h3">
-                                            <i class="material-icons rtl-no-flip done"></i>
-                                            <span class="step-number">1</span>
-                                            Προσωπικά στοιχεία
-                                            <a href="{{ path('checkout', {'step': 1}) }}">
-                                                <span id="1" class="step-edit text-muted">
-                                                    <i class="material-icons edit">mode_edit</i>
-                                                    Επεξεργασία
-                                                </span>
-                                            </a>
-                                        </h1>
-                                        <div class="content">
-                                            <div class="tab-content">
-                                                <div class="tab-pane active"
-                                                     id="checkout-guest-form" role="tabpanel">
-                                                    {{ form_start(step1Form) }}
-                                                    <section>
-                                                        <div class="form-group row ">
-                                                            {{ form_label(step1Form.firstname, 'Όνομα', {'label_attr': {'class': 'col-md-3 form-control-label required'}}) }}
-                                                            <div class="col-md-6">
-                                                                {{ form_widget(step1Form.firstname, {'attr': {'class': 'form-control'}}) }}
-                                                            </div>
-                                                            <div class="col-md-3 form-control-comment">
-                                                            </div>
-                                                        </div>
+                                    {#<section id="checkout-personal-information-step"#}
+                                             {#class="checkout-step {{ step1class }} -reachable">#}
+                                        {#<h1 class="step-title h3">#}
+                                            {#<i class="material-icons rtl-no-flip done"></i>#}
+                                            {#<span class="step-number">1</span>#}
+                                            {#Προσωπικά στοιχεία#}
+                                            {#<a href="{{ path('checkout', {'step': 1}) }}">#}
+                                                {#<span id="1" class="step-edit text-muted">#}
+                                                    {#<i class="material-icons edit">mode_edit</i>#}
+                                                    {#Επεξεργασία#}
+                                                {#</span>#}
+                                            {#</a>#}
+                                        {#</h1>#}
+                                        {#<div class="content">#}
+                                            {#<div class="tab-content">#}
+                                                {#<div class="tab-pane active"#}
+                                                     {#id="checkout-guest-form" role="tabpanel">#}
+                                                    {#{{ form_start(step1Form) }}#}
+                                                    {#<section>#}
+                                                        {#<div class="form-group row ">#}
+                                                            {#{{ form_label(step1Form.firstname, 'Όνομα', {'label_attr': {'class': 'col-md-3 form-control-label required'}}) }}#}
+                                                            {#<div class="col-md-6">#}
+                                                                {#{{ form_widget(step1Form.firstname, {'attr': {'class': 'form-control'}}) }}#}
+                                                            {#</div>#}
+                                                            {#<div class="col-md-3 form-control-comment">#}
+                                                            {#</div>#}
+                                                        {#</div>#}
 
-                                                        <div class="form-group row ">
-                                                            {{ form_label(step1Form.lastname, 'Επώνυμο', {'label_attr': {'class': 'col-md-3 form-control-label required'}}) }}
-                                                            <div class="col-md-6">
-                                                                {{ form_widget(step1Form.lastname, {'attr': {'class': 'form-control'}}) }}
-                                                            </div>
-                                                            <div class="col-md-3 form-control-comment">
-                                                            </div>
-                                                        </div>
-                                                        <div class="form-group row ">
-                                                            {{ form_label(step1Form.email, 'E-mail', {'label_attr': {'class': 'col-md-3 form-control-label required'}}) }}
-                                                            <div class="col-md-6">
-                                                                {{ form_widget(step1Form.email, {'attr': {'class': 'form-control'}}) }}
-                                                            </div>
-                                                            <div class="col-md-3 form-control-comment">
-                                                            </div>
-                                                        </div>
+                                                        {#<div class="form-group row ">#}
+                                                            {#{{ form_label(step1Form.lastname, 'Επώνυμο', {'label_attr': {'class': 'col-md-3 form-control-label required'}}) }}#}
+                                                            {#<div class="col-md-6">#}
+                                                                {#{{ form_widget(step1Form.lastname, {'attr': {'class': 'form-control'}}) }}#}
+                                                            {#</div>#}
+                                                            {#<div class="col-md-3 form-control-comment">#}
+                                                            {#</div>#}
+                                                        {#</div>#}
+                                                        {#<div class="form-group row ">#}
+                                                            {#{{ form_label(step1Form.email, 'E-mail', {'label_attr': {'class': 'col-md-3 form-control-label required'}}) }}#}
+                                                            {#<div class="col-md-6">#}
+                                                                {#{{ form_widget(step1Form.email, {'attr': {'class': 'form-control'}}) }}#}
+                                                            {#</div>#}
+                                                            {#<div class="col-md-3 form-control-comment">#}
+                                                            {#</div>#}
+                                                        {#</div>#}
 
-                                                        <div class="clearfix"></div>
-                                                        <div class="form-group row ">
-                                                            <div class="col-md-12">
-                                                                {{ form_widget(step1Form.newsletter) }}
-                                                                {{ form_label(step1Form.newsletter, 'Εγγραφή στο newsletter. Μπορείτε να διαγραφείτε οποιαδήποτε στιγμή επιθυμείτε.') }}
-                                                            </div>
-                                                        </div>
+                                                        {#<div class="clearfix"></div>#}
+                                                        {#<div class="form-group row ">#}
+                                                            {#<div class="col-md-12">#}
+                                                                {#{{ form_widget(step1Form.newsletter) }}#}
+                                                                {#{{ form_label(step1Form.newsletter, 'Εγγραφή στο newsletter. Μπορείτε να διαγραφείτε οποιαδήποτε στιγμή επιθυμείτε.') }}#}
+                                                            {#</div>#}
+                                                        {#</div>#}
 
                                                         {#<div class="form-group row ">#}
                                                         {#<label class="col-md-3 form-control-label">#}
@@ -161,50 +357,50 @@
                                                         {#<div class="col-md-3 form-control-comment">#}
                                                         {#</div>#}
                                                         {#</div>#}
-                                                    </section>
-                                                    <footer class="form-footer clearfix">
-                                                        <input name="submitAddress" value="1"
-                                                               type="hidden">
-                                                        <button id="confirm-addresses" type="submit"
-                                                                class="continue btn btn-primary float-xs-right"
-                                                                name="confirm-addresses" value="1">
-                                                            Επόμενο
-                                                        </button>
-                                                    </footer>
-                                                    {{ form_end(step1Form) }}
-                                                </div>
-                                                <div class="tab-pane " id="checkout-login-form"
-                                                     role="tabpanel"
-                                                     aria-hidden="true">
+                                                    {#</section>#}
+                                                    {#<footer class="form-footer clearfix">#}
+                                                        {#<input name="submitAddress" value="1"#}
+                                                               {#type="hidden">#}
+                                                        {#<button id="confirm-addresses" type="submit"#}
+                                                                {#class="continue btn btn-primary float-xs-right"#}
+                                                                {#name="confirm-addresses" value="1">#}
+                                                            {#Επόμενο#}
+                                                        {#</button>#}
+                                                    {#</footer>#}
+                                                    {#{{ form_end(step1Form) }}#}
+                                                {#</div>#}
+                                                {#<div class="tab-pane " id="checkout-login-form"#}
+                                                     {#role="tabpanel"#}
+                                                     {#aria-hidden="true">#}
 
 
-                                                    <form id="login-form"
-                                                          action="https://demo.templatetrip.com/Prestashop/PRS06/PRS176_gym/en/order"
-                                                          method="post">
-                                                        <section>
+                                                    {#<form id="login-form"#}
+                                                          {#action="https://demo.templatetrip.com/Prestashop/PRS06/PRS176_gym/en/order"#}
+                                                          {#method="post">#}
+                                                        {#<section>#}
 
-                                                            <div class="forgot-password">
-                                                                <a href="https://demo.templatetrip.com/Prestashop/PRS06/PRS176_gym/en/password-recovery"
-                                                                   rel="nofollow">
-                                                                    Forgot your password?
-                                                                </a>
-                                                            </div>
-                                                        </section>
-                                                        <footer class="form-footer text-sm-center clearfix">
-                                                            <input name="submitLogin" value="1"
-                                                                   type="hidden">
-                                                            <button class="continue btn btn-primary float-xs-right"
-                                                                    name="continue"
-                                                                    data-link-action="sign-in"
-                                                                    type="submit" value="1">
-                                                                Continue
-                                                            </button>
-                                                        </footer>
-                                                    </form>
-                                                </div>
-                                            </div>
-                                        </div>
-                                    </section>
+                                                            {#<div class="forgot-password">#}
+                                                                {#<a href="https://demo.templatetrip.com/Prestashop/PRS06/PRS176_gym/en/password-recovery"#}
+                                                                   {#rel="nofollow">#}
+                                                                    {#Forgot your password?#}
+                                                                {#</a>#}
+                                                            {#</div>#}
+                                                        {#</section>#}
+                                                        {#<footer class="form-footer text-sm-center clearfix">#}
+                                                            {#<input name="submitLogin" value="1"#}
+                                                                   {#type="hidden">#}
+                                                            {#<button class="continue btn btn-primary float-xs-right"#}
+                                                                    {#name="continue"#}
+                                                                    {#data-link-action="sign-in"#}
+                                                                    {#type="submit" value="1">#}
+                                                                {#Continue#}
+                                                            {#</button>#}
+                                                        {#</footer>#}
+                                                    {#</form>#}
+                                                {#</div>#}
+                                            {#</div>#}
+                                        {#</div>#}
+                                    {#</section>#}
 
 
                                     {% set step2class = '' %}
@@ -547,7 +743,7 @@
                                 {% for pr in cartItems %}
                                     {% set cartSubTotal = cartSubTotal + (pr.webPrice|number_format(2, '.', ','))*pr.quantity %}
                                 {% endfor %}
-                                <div class="col-md-4">
+                                <div id="cart-info" class="col-md-4 hidden-sm hidden-xs">
                                     <section id="js-checkout-summary" class="card js-cart">
                                         <div class="card-block">
 

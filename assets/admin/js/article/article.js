@@ -8,7 +8,9 @@ require('select2');
 
 $(document).ready(function () {
 
-    $('#articles').DataTable();
+    $('#articles').DataTable({
+        "order": [[ 3, "desc" ]]
+    });
 
     $('.card-body').on('click', '#delete-article', function (e) {
         e.preventDefault();

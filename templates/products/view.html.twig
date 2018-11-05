@@ -1,3 +1,15 @@
+{% macro create_breadcrumb(ctg, bc) %}
+    {% import _self as macros %}
+    {#{% if ctg.parent == null %}#}
+        {#<a style="color: #fff;"#}
+           {#href="{{ path('products_list', {'id':ctg.id}) }}">{{ ctg.name }}</a> {{ bc|raw }}#}
+    {#{% else %}#}
+        {% set bc = ' / <a style="color: #fff;" href="' ~ path('products_list', {'id':ctg.id}) ~ '">' ~ ctg.name ~ '</a>' ~ bc %}
+        {{ macros.create_breadcrumb(ctg.parent, bc) }}
+    {#{% endif %}#}
+{% endmacro %}
+{% import _self as func %}
+
 {% extends 'layout.html.twig' %}
 
 {% block bodyId %}category{% endblock %}
@@ -19,7 +31,9 @@
         <div class="page-header">
             <div class="container">
                 <div class="row">
-                    <div class="col-md-12"><h1>{{ pr.name }}</h1></div>
+                    <div class="col-md-12">
+                        {#{{ func.create_breadcrumb(ctgInfo, '') }}#}
+                    </div>
                 </div>
             </div>
         </div>

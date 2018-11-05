@@ -3,10 +3,6 @@
 {% block bodyId %}category{% endblock %}
 {% block title %} | Το Blog μας{% endblock %}
 {% block slider %}{% endblock %}
-{% block stylesheets %}
-    {{ parent() }}
-    <link href="{{ asset('build/css/orders.css') }}" rel="stylesheet"/>
-{% endblock %}
 {% block breadcrumb %}
 
 {% endblock %}
@@ -30,11 +26,13 @@
                 <div class="col-sm-8 col-md-9">
                     <div class="blog-details">
                         <h2>{{ article.name }}</h2>
-                        <div>
-                            <img src="{{ asset('uploads/articles/' ~ article.image) }}">
-                        </div>
+                        {% if article.image|length > 0 %}
+                            <div>
+                                <img src="{{ asset('uploads/articles/' ~ article.image) }}">
+                            </div>
+                        {% endif %}
                         <ul class="meta">
-                            <li><i class="fa fa-calendar"></i>12 february, <a href="#">2015</a></li>
+                            <li><i class="fa fa-calendar"></i>{{ article.createdAt|date('d-m-Y') }}</li>
                             {#<li><i class="fa fa-comments"></i><a href="#">23 comments</a></li>#}
                             {#<li><i class="fa fa-user-circle-o"></i>by <a href="#">Admin</a></li>#}
                         </ul>
@@ -45,19 +43,9 @@
                         {#<li><i class="fa fa-tags"></i><a href="#">Tag3</a></li>#}
                         {#</ul>#}
 
-                        <div class="share-article">
-                            <div class="row">
-                                <div class="col-sm-5"><p>Share this Article</p></div>
-                                <div class="col-sm-7">
-                                    <ul>
-                                        <li><a href="#" class="facebook"><i class="fa fa-facebook"></i></a></li>
-                                        <li><a href="#" class="twitter"><i class="fa fa-twitter"></i></a></li>
-                                        <li><a href="#" class="gplus"><i class="fa fa-google-plus"></i></a></li>
-                                        <li><a href="#" class="instagram"><i class="fa fa-instagram"></i></a></li>
-                                        <li><a href="#" class="pinterest"><i class="fa fa-pinterest"></i></a></li>
-                                    </ul>
-                                </div>
-                            </div>
+                        <div class="share">
+                            <div class="sharethis-inline-share-buttons"></div>
+                            {#<img src="{{ asset('images/share.jpg') }}" alt="">#}
                         </div>
 
                         <div class="post-content">
@@ -67,14 +55,14 @@
                     </div>
                 </div>
                 <div class="col-sm-4 col-md-3 right-col">
-                    <div class="widget-box">
-                        <div class="blog-search">
-                            <form method="post" action="#">
-                                <input placeholder="Search Blog" class="form-control" type="text">
-                                <button type="submit"><i class="fas fa-search"></i></button>
-                            </form>
-                        </div>
-                    </div>
+                    {#<div class="widget-box">#}
+                    {#<div class="blog-search">#}
+                    {#<form method="post" action="#">#}
+                    {#<input placeholder="Search Blog" class="form-control" type="text">#}
+                    {#<button type="submit"><i class="fas fa-search"></i></button>#}
+                    {#</form>#}
+                    {#</div>#}
+                    {#</div>#}
 
                     {#<div class="widget-box">#}
                     {#<h3>Categories</h3>#}
@@ -93,18 +81,18 @@
 
                     {% include('Admin/articles/modules/bside_popular.html.twig') %}
 
-                    <div class="widget-box">
-                        <h3>tags</h3>
-                        <ul class="tags">
-                            <li><a href="#">Trekking</a></li>
-                            <li><a href="#">Hikking</a></li>
-                            <li><a href="#">Climbing</a></li>
-                            <li><a href="#">Biking</a></li>
-                            <li><a href="#">Expedition</a></li>
-                        </ul>
-                    </div>
+                    {#<div class="widget-box">#}
+                    {#<h3>tags</h3>#}
+                    {#<ul class="tags">#}
+                    {#<li><a href="#">Trekking</a></li>#}
+                    {#<li><a href="#">Hikking</a></li>#}
+                    {#<li><a href="#">Climbing</a></li>#}
+                    {#<li><a href="#">Biking</a></li>#}
+                    {#<li><a href="#">Expedition</a></li>#}
+                    {#</ul>#}
+                    {#</div>#}
 
-                    {% include('products/modules/aside_best_sellers.html.twig') %}
+                    {#{% include('products/modules/aside_best_sellers.html.twig') %}#}
 
                     <div class="widget-box">
                         <div class="fb-page" data-href="#" data-tabs="timeline" data-height="648"
@@ -121,5 +109,12 @@
         {#{% include 'home_page_modules/15_social.html.twig' %}#}
         {% include 'partials/footer.html.twig' %}
     </div>
+{% endblock %}
+
+{% block javascripts %}
+    {{ parent() }}
+    <script type='text/javascript'
+            src='//platform-api.sharethis.com/js/sharethis.js#property=5bd33569ee8c700011929ddd&product=inline-share-buttons'
+            async='async'></script>
 {% endblock %}
 

@@ -72,8 +72,8 @@
                             <tr>
                                 <td>{{ article.name }}</td>
                                 <td>{{ article.category.name }}</td>
-                                <td>{{ article.createdAt|date('d-m-Y') }}</td>
-                                <td>{{ article.updatedAt|date('d-m-Y') }}</td>
+                                <td>{{ article.createdAt|date('Y-m-d') }}</td>
+                                <td>{{ article.updatedAt|date('Y-m-d') }}</td>
                                 <td>{{ article.createdBy.username }}</td>
                                 <td>{{ article.updatedBy.username }}</td>
                                 <td>

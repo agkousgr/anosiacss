@@ -39,6 +39,7 @@ Encore
     .addEntry('js/cart', './assets/js/cart.js')
     .addEntry('js/user-google-address', './assets/js/user-google-address.js')
     .addEntry('js/pireaus', './assets/js/pireaus.js')
+    .addEntry('js/blog-list', './assets/js/blog-list.js')
 
     // Admin javascripts
     .addEntry('admin/js/bootstrap.min', './assets/admin/js/bootstrap.min.js')

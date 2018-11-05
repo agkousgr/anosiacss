@@ -24,6 +24,18 @@ require('bootstrap');
 
 $(document).ready(function () {
 
+    $('#confirm-addresses').on('click', function (e) {
+        e.preventDefault();
+        // $('#tab-2').trigger('click');
+
+        let form = $('#checkout-personal-information-step').find('form');
+        let formData = form.serialize();
+        $.post(Routing.generate('checkout'), formData, function(response) {
+
+        });
+    });
+
+
     $('[data-toggle="popover"]').popover();
 
     $('input[name="address"]').on('click', function () {

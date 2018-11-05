@@ -1,10 +1,12 @@
 <div class="related-product">
     <h2 style="text-transform: none;">Προσθέστε στο καλάθι σας για να κερδίσετε δωρεάν μεταφορικά:</h2>
-    <div class="owl-carousel owl-theme ProductScroll product-main-slider">
+    <div class="owl-carousel owl-theme CartScroll product-main-slider">
         {% for pr in proposals %}
             <div class="item">
                 <div class="product-case">
-                    <div class="tag tag-green"><span>new</span></div>
+                    {#<div class="tag tag-green">#}
+                        {#<span>new</span>#}
+                    {#</div>#}
                     <div class="product-img">
                         <div class="hover-img">
                             <img src="{{ pr.imageUrl }}" alt="">

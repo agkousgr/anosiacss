@@ -2,7 +2,9 @@
 
 namespace App\Controller;
 
+use App\Entity\AdminCategory;
 use App\Entity\Article;
+use App\Entity\User;
 use App\Service\{
     ProductService, SoftoneLogin, CategoryService
 };
@@ -13,10 +15,16 @@ use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 
 class BlogController extends MainController
 {
-    public function listBlog(EntityManagerInterface $em)
+    public function listBlog(EntityManagerInterface $em, int $page)
     {
         try {
-            $articles = $em->getRepository(Article::class)->findBy(['category' => 1], ['createdAt' => 'DESC']);
+            $pagesize = 16;
+            $articles = $em->getRepository(Article::class)->findBy(
+                ['category' => 1, 'isPublished' => 1],
+                ['createdAt' => 'DESC'],
+                $pagesize,
+                ($page-1) * $pagesize);
+            $blogCount = $em->getRepository(Article::class)->count(['isPublished' => 1]);
             $popularArticles = $em->getRepository(Article::class)->findBy(
                 ['category' => 1],
                 ['views' => 'DESC'],
@@ -31,7 +39,10 @@ class BlogController extends MainController
                 'loggedUser' => $this->loggedUser,
                 'articles' => $articles,
                 'popularArticles' => $popularArticles,
-                'loginUrl' => $this->loginUrl
+                'loginUrl' => $this->loginUrl,
+                'pagesize' => $pagesize,
+                'blogCount' => $blogCount,
+                'page' => $page
             ]);
         } catch (\Exception $e) {
             $this->logger->error(__METHOD__ . ' -> {message}', ['message' => $e->getMessage()]);
@@ -44,6 +55,8 @@ class BlogController extends MainController
         try {
             $article = $em->getRepository(Article::class)->findOneBy(['slug' => $slug]);
             $article->setViews($article->getViews() + 1);
+            $user = $em->getRepository(User::class)->find(1);
+            $article->setUpdatedBy($user);
             $em->flush();
             $popularArticles = $em->getRepository(Article::class)->findBy(
                 ['category' => 1],

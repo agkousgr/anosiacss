@@ -46,7 +46,7 @@ class UploadListener
 
     public function postLoad(LifecycleEventArgs $args)
     {
-        if (empty($this->tokenStorage->getToken())) {
+        if (empty($this->tokenStorage->getToken()) || null === $this->tokenStorage->getToken()) {
             $entity = $args->getEntity();
             switch (true) {
                 case $entity instanceof Article:

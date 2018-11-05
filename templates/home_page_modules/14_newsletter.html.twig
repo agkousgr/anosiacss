@@ -7,10 +7,12 @@
                 <div class="col-sm-6">
                     <h2>Εγγραφείτε στο Newsletter μας</h2>
                     <p class="newsletter-p">
-                        <i class="fas fa-circle-o-notch fa-spin"></i>
+                        {#<i class="fas fa-circle-o-notch fa-spin"></i>#}
                         Oι προσφορές και τα νέα μας στο email σας. Γίνετε μέλος της παρέας μας και
                         ενημερωθείτε πρώτοι για τα νέα και τις προσφορές μας, κερδίστε ειδικά
-                        εκπτωτικά κουπόνια μόνο για εσάς!</p>
+                        εκπτωτικά κουπόνια μόνο για εσάς!<br><br>
+                        Πείτε μας το φύλο και την ηλικία σας για να λαμβάνετε νέα & προσφορές που ταιριάζουν αποκλειστικά σε εσάς!
+                    </p>
                     {#<p class="newsletter-p nlsdescr"><i class="fa fa-circle-o-notch fa-spin"></i>* Συμπληρώστε την ηλικία και το φύλο σας για να σας αποστέλλουμε μόνο προσφορές και νέα που απευθύνονται σε εσάς!</p>#}
                 </div>
                 <!-- </div>-->
@@ -49,13 +51,16 @@
                         </div>
                         <br/><br/>
                         <div class="gy-gdpr-consents">
-                            <input id="newsletter-chk" type="checkbox" name="check" value="">
-                            <label>Επιθυμώ να ενημερώνομαι για προσφορές & νέα!</label>
+                            <label>
+                                <input id="newsletter-chk" type="checkbox" name="check" value="">
+                                Επιθυμώ να ενημερώνομαι για προσφορές & νέα!
+                            </label>
                         </div>
                         <br/><br/>
                         <div class="col-sm-8 col-sm-offset-2 col-md-6 col-md-offset-0 form-group wow flipInY"
                              data-wow-delay="0.4s">
-                            <input id="newsletter-btn" type="button" disabled="" value="ΕΓΓΡΑΦΗ" class="btn btn-primary btn-block btn-lg">
+                            <input id="newsletter-btn" type="button" disabled="" value="ΕΓΓΡΑΦΗ"
+                                   class="btn btn-primary btn-block btn-lg">
                         </div>
                     </form>
                 </div>

@@ -1,0 +1,48 @@
+{% set totalPages = (blogCount / pagesize)|round(0, 'ceil') %}
+{% set start = max(page - (5 / 2)|round, 1) %}
+{% set end = start + 5 - 1 %}
+{% if (end > totalPages) %}
+    {% set end = totalPages %}
+    {% set loopEnd = totalPages %}
+{% else %}
+    {% set loopEnd = end %}
+{% endif %}
+{% set urlQuery = '' %}
+{% if (app.request.server.get('QUERY_STRING')|length > 0) %}
+    {% set urlQuery = '?' ~ app.request.server.get('QUERY_STRING') %}
+{% endif %}
+
+<ul class="pagination" style="text-align: center;">
+    {% if page != 1 %}
+        <li>
+            <a href="{{ path('blog_list', {'page':page-1}) }}{{ urlQuery }}" aria-label="Προηγούμενη">
+                <span aria-hidden="true">&laquo;</span>
+            </a>
+        </li>
+    {% endif %}
+    {% if start > 1 %}
+        <li><a href="{{ path('blog_list', {'page':1}) }}{{ urlQuery }}">1</a></li>
+        <span> ... </span>
+    {% endif %}
+
+    {% for i in start..loopEnd %}
+        {% if i == page %}
+            <li class="active"><a href="javascript:void(0);">{{ i }}</a></li>
+        {% else %}
+            <li><a href="{{ path('blog_list', {'page':i}) }}{{ urlQuery }}">{{ i }}</a></li>
+        {% endif %}
+    {% endfor %}
+
+    {% if totalPages > end %}
+        <span> ... </span>
+        <li><a href="{{ path('blog_list', {'page':totalPages}) }}{{ urlQuery }}">{{ totalPages }}</a></li>
+    {% endif %}
+
+    {% if page < totalPages %}
+        <li>
+            <a href="{{ path('blog_list', {'page':page+1}) }}{{ urlQuery }}" aria-label="Επόμενη">
+                <span aria-hidden="true">&raquo;</span>
+            </a>
+        </li>
+    {% endif %}
+</ul>

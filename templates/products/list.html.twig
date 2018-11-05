@@ -244,7 +244,7 @@
                                 {% endif %}
                                 {#{{ dump(productsCount) }}#}
                                 {#{{ dump(page*pagesize) }}#}
-                                {% if productsCount > (page*pagesize) %}
+                                {% if productsCount > pagesize %}
                                     <nav aria-label="Page navigation">
                                         {{ include('products/modules/pagination.html.twig') }}
                                     </nav>

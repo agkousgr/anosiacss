@@ -49,6 +49,7 @@ class ArticleType extends AbstractType
             ])
             ->add('image', FileType::class, [
                 'required' => false,
+                'data_class' => null
             ]);
     }
 
