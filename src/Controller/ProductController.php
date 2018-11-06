@@ -2,7 +2,7 @@
 
 namespace App\Controller;
 
-use App\Entity\{Category,Slider,ProductViews};
+use App\Entity\{AlsoViewedProducts, Category, Slider, ProductViews};
 use App\Service\BrandsService;
 use App\Service\ProductService;
 use Doctrine\ORM\EntityManagerInterface;
@@ -130,6 +130,7 @@ class ProductController extends MainController
     {
         try {
 //            $getReferrer = $productService->getReferer($request->server->get('HTTP_REFERER'));
+            $alsoViewed = new AlsoViewedProducts();
             $product = $this->productService->getItems($id, 'null', 1);
             dump($product);
             $productId = intval($product["id"]);

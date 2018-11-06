@@ -26,46 +26,89 @@
         {#<span class="sr-only">Next</span>#}
     {#</a>#}
 {#</div>#}
+<style>
+    .blog-img {
+        position: relative;
+    }
+    .blog-img > a > p {
+        font-size: 15px;
+    }
+    .blog-img > a {
+        position: absolute;
+        margin: 0;
+        bottom: 0;
+        left: 0;
+        line-height: 1.4em;
+        padding: 10px;
+        width: 100%;
+        color: #FFF;
+        background-color: rgba(0, 0, 0, .6);
+    }
+</style>
 
 <div class="site-banner">
     <div class="fullwidthbanner-container">
         <div class="fullwidthbanner black">
             {% for slide in slider %}
                 <div class="col-lg-3" style="padding: 0 1px">
-                    <img src="{{ asset('images/woman-category.jpg') }}" alt=""/>
+                    <div class="blog-img">
+                        <img src="{{ asset('uploads/slider/' ~ slide.image) }}" alt="{{ slide.name }}"/>
+                        <a href="{{ slide.url }}">
+                            <h4>{{ slide.name }}</h4>
+                            <h5>{{ slide.description }}</h5>
+                        </a>
+                    </div>
                 </div>
                 <div class="col-lg-3" style="padding: 0 1px">
-                    <img src="{{ asset('images/woman-category.jpg') }}" alt=""/>
+                    <div class="blog-img">
+                        <img src="{{ asset('uploads/slider/' ~ slide.image) }}" alt="{{ slide.name }}"/>
+                        <a href="{{ slide.url }}">
+                            <h4>Αντιηλιακα</h4>
+                            <h5>Εκτπώσεις έως και -58%</h5>
+                        </a>
+                    </div>
                 </div>
                 <div class="col-lg-3" style="padding: 0 1px">
-                    <img src="{{ asset('images/woman-category.jpg') }}" alt=""/>
+                    <div class="blog-img">
+                        <img src="{{ asset('uploads/slider/' ~ slide.image) }}" alt="{{ slide.name }}"/>
+                        <a href="{{ slide.url }}">
+                            <h4>{{ slide.name }}</h4>
+                            <h5>{{ slide.description }}</h5>
+                        </a>
+                    </div>
                 </div>
                 <div class="col-lg-3" style="padding: 0 1px">
-                    <img src="{{ asset('images/woman-category.jpg') }}" alt=""/>
+                    <div class="blog-img">
+                        <img src="{{ asset('uploads/slider/' ~ slide.image) }}" alt="{{ slide.name }}"/>
+                        <a href="{{ slide.url }}">
+                            <h4>{{ slide.name }}</h4>
+                            <h5>{{ slide.description }}</h5>
+                        </a>
+                    </div>
                 </div>
             {% endfor %}
 
             {#<ul>#}
-                {#{% for slide in slider %}#}
-                    {#<li>#}
-                        {#<img src="{{ asset('uploads/slider/' ~ slide.image) }}" alt="{{ slide.name }}"/>#}
-                        {#<div class="caption randomrotate" data-x="950" data-y="0" data-speed="600" data-start="1100"#}
-                        {#data-easing="easeOutExpo"><img src="{{ asset('images/tag.png') }}" alt=""/></div>#}
-                        {#<div class="caption medium_black_text sfr" data-x="30" data-y="340" data-speed="1000"#}
-                        {#data-start="300" data-easing="easeInOutQuint">Summer Sale On#}
-                        {#</div>#}
-                        {#<div class="caption medium_white_bg sfr" data-x="30" data-y="400" data-speed="1000"#}
-                        {#data-start="800" data-easing="easeInOutQuint">Woman Clothing#}
-                        {#</div>#}
-                        {#<div class="caption small_fade_text sfr" data-x="30" data-y="500" data-speed="1300"#}
-                        {#data-start="1500" data-easing="easeOutExpo">up to <strong>50% off</strong> on <br>new#}
-                        {#upcoming collection#}
-                        {#</div>#}
-                        {#<div class="caption sfb" data-x="30" data-y="580" data-speed="1000" data-start="2000"#}
-                        {#data-easing="easeInOutQuint"><a href="#" class="button orange big">SHOP NOW</a>#}
-                        {#</div>#}
-                    {#</li>#}
-                {#{% endfor %}#}
+            {#{% for slide in slider %}#}
+            {#<li>#}
+            {#<img src="{{ asset('uploads/slider/' ~ slide.image) }}" alt="{{ slide.name }}"/>#}
+            {#<div class="caption randomrotate" data-x="950" data-y="0" data-speed="600" data-start="1100"#}
+            {#data-easing="easeOutExpo"><img src="{{ asset('images/tag.png') }}" alt=""/></div>#}
+            {#<div class="caption medium_black_text sfr" data-x="30" data-y="340" data-speed="1000"#}
+            {#data-start="300" data-easing="easeInOutQuint">Summer Sale On#}
+            {#</div>#}
+            {#<div class="caption medium_white_bg sfr" data-x="30" data-y="400" data-speed="1000"#}
+            {#data-start="800" data-easing="easeInOutQuint">Woman Clothing#}
+            {#</div>#}
+            {#<div class="caption small_fade_text sfr" data-x="30" data-y="500" data-speed="1300"#}
+            {#data-start="1500" data-easing="easeOutExpo">up to <strong>50% off</strong> on <br>new#}
+            {#upcoming collection#}
+            {#</div>#}
+            {#<div class="caption sfb" data-x="30" data-y="580" data-speed="1000" data-start="2000"#}
+            {#data-easing="easeInOutQuint"><a href="#" class="button orange big">SHOP NOW</a>#}
+            {#</div>#}
+            {#</li>#}
+            {#{% endfor %}#}
             {#</ul>#}
         </div>
     </div>

@@ -180,7 +180,6 @@ class MainController extends AbstractController
             }
             $cartIds = substr($cartIds, 0, -1);
         }
-        dump($cartIds, $cartArr);
         return ($cartIds) ? $this->cart->getCartItems($cartIds, $cartArr, count($cartArr)) : '';
     }
 

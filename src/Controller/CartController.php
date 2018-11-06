@@ -24,8 +24,9 @@ class CartController extends MainController
             if ($this->cartItems) {
                 foreach ($this->cartItems as $item) {
                     $totalCartPrice += floatval($item['webPrice']);
+                    $excludeIds = $item['id'] . ',';
                 }
-                $cartProposals = $cartService->getRelevantItems(39 - $totalCartPrice);
+                $cartProposals = $cartService->getRelevantItems(substr($excludeIds, 0 ,-1),39 - $totalCartPrice);
             }
             $couponDiscount = (!empty($this->session->get('couponDisc'))) ? $this->session->get('couponDisc') : 0;
             dump($couponDiscount);

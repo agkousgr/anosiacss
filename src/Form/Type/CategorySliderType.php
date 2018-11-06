@@ -43,7 +43,8 @@ class CategorySliderType extends AbstractType
                 'label' => 'Δημοσίευση'
             ))
             ->add('image', FileType::class, [
-                'required' => false
+                'required' => false,
+                'data_class' => null
             ]);
     }
 

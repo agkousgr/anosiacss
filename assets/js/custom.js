@@ -472,7 +472,7 @@ $('.add-to-cart-inner').on('click', function (e) {
     }
     $.post(Routing.generate('add_to_cart'), data, function (result) {
         if (result.success && result.exist === false) {
-            Routing.generate('cart_view');
+            location.reload();
         } else if (result.success && result.exist === true) {
             swal({
                 title: 'Ουπς',

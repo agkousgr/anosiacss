@@ -24,6 +24,7 @@
     "fastclick": "^1.0.6",
     "ion-rangeslider": "^2.2.0",
     "jquery": "^3.3.1",
+    "jquery-autocomplete": "^1.2.8",
     "jquery-mousewheel": "^3.1.13",
     "jquery-plugin-components": "^2.0.0",
     "jquery.nicescroll": "^3.7.6",

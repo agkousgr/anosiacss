@@ -1,8 +1,12 @@
 // let apex = require('./jquery.apex-slider.js');
 // let apexslider = apex.apexSlider();
-
+require('jquery-autocomplete');
 $(document).ready(function () {
 
+    $("#anosia-keyword").autocomplete({
+        source: Routing.generate('search_for_anosia', {'keyword': $(this).val()}),
+        minLength: 3
+    });
 
     // let api;
     // $(document).ready(function () {
@@ -65,7 +69,6 @@ $(document).ready(function () {
 
     // $('body').startComponents();
 });
-
 
 
 // function generate(type, Message) {

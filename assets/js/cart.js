@@ -13,7 +13,7 @@ $(document).ready(function () {
         // console.log(coupon);
         $.post(Routing.generate('check_coupon'), data, function (result) {
             if (result.success === true) {
-                Routing.generate('cart_view');
+                location.reload();
             } else {
                 swal({
                     title: 'Ουπς',

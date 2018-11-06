@@ -8,15 +8,12 @@
                 </div>
                 <div class="col-xs-12 col-md-8">
                     <div class="search">
-                        <form action="/anosia/public/index.php/product/anosia/search" method="post">
                             <div class="textbox">
-                                <input name="keyword" required="" class="form-control" type="text"
+                                <input id="anosia-keyword" name="anosia-keyword" required="" class="form-control" type="text"
                                        placeholder="π.χ. πονοκέφαλο, αλλεργία, κρυολόγημα"
                                        style="width: 100%;background: #f3f3f3;">
                             </div>
-                            <button type="submit"><i class="fas fa-search"></i>
-                            </button>
-                        </form>
+                            <button id="search-for-anosia" type="button"><i class="fas fa-search"></i></button>
                     </div>
                 </div>
                 {#<ul>#}

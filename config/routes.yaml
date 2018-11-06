@@ -6,6 +6,19 @@ index:
     path: /404-not-found
     controller: App\Controller\DefaultController::notFound
 
+# Home page search
+search_for_anosia:
+    path: /search/anosia
+    controller: App\Controller\AjaxSearchController::searchForAnosia
+    methods: [POST]
+    options:
+        expose: true
+search:
+    path: /search/website
+    controller: App\Controller\AjaxSearchController::search
+    methods: [POST]
+    options:
+        expose: true
 # Cron Jobs
 create_categories:
     path: /create-categories

@@ -77,7 +77,7 @@ EOF;
         try {
             $result = $client->SendMessage(['Message' => $message]);
             $items = simplexml_load_string(str_replace("utf-16", "utf-8", $result->SendMessageResult));
-            dump($message, $result);
+//            dump($message, $result);
             $itemsArr = $this->initializeProducts($items->GetDataRows->GetItemsRow, $cartArr);
 
             return $itemsArr;
@@ -86,7 +86,7 @@ EOF;
         }
     }
 
-    public function getRelevantItems($highPrice = -1)
+    public function getRelevantItems($excludeIds = -1, $highPrice = -1)
     {
         $client = new \SoapClient('https://caron.cloudsystems.gr/FOeshopWS/ForeignOffice.FOeshop.API.FOeshopSvc.svc?singleWsdl', ['trace' => true, 'exceptions' => true,]);
 // Todo: replace categoryId with cart items relative categories
@@ -98,14 +98,15 @@ EOF;
     <Domain>pharmacyone</Domain>
     <AuthID>$this->authId</AuthID>
     <AppID>157</AppID>
-    <CategoryID>-1</CategoryID>
     <CompanyID>1000</CompanyID>
+    <CategoryID>-1</CategoryID>
     <ItemID>100357</ItemID>
-    <IncludeChildCategories>0</IncludeChildCategories>
+    <IncludeChildCategories>1</IncludeChildCategories>
     <IsRandom>1</IsRandom>
     <IsPopular>0</IsPopular>
     <LowPrice>1</LowPrice>
     <HighPrice>$highPrice</HighPrice>
+    <ExcludeItemID>$excludeIds</ExcludeItemID>
 </ClientGetRelevantItemsRequest>
 EOF;
         try {
