@@ -1,11 +1,18 @@
 // let apex = require('./jquery.apex-slider.js');
 // let apexslider = apex.apexSlider();
-require('jquery-autocomplete');
+require('webpack-jquery-ui/autocomplete');
+// require('jquery-autocomplete');
 $(document).ready(function () {
 
     $("#anosia-keyword").autocomplete({
-        source: Routing.generate('search_for_anosia', {'keyword': $(this).val()}),
+        // source: ['test', 'zong'],
+        source: Routing.generate('search_for_anosia'),
         minLength: 3
+    });
+
+    $("#anosia-keyword").on('change', function(e) {
+        e.preventDefault();
+        window.location(Routing.generate('product_list', {'id':}));
     });
 
     // let api;

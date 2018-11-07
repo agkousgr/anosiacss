@@ -4,7 +4,9 @@
 namespace App\Repository;
 
 
-class AnosiaSearchKeywordsRepository
+use Doctrine\ORM\EntityRepository;
+
+class AnosiaSearchKeywordsRepository extends EntityRepository
 {
 //$result = $em->getRepository("Orders")->createQueryBuilder('o')
 //->where('o.OrderEmail = :email')
@@ -13,4 +15,15 @@ class AnosiaSearchKeywordsRepository
 //->setParameter('product', 'My Products%')
 //->getQuery()
 //->getResult();
+    public function getAnosiaSearchResult($keyword)
+    {
+
+        return $this->createQueryBuilder('ask')
+            ->where('ask.keyword LIKE :value')
+            ->setParameter('value', '%' . $keyword . '%')
+            ->orderBy('ask.keyword', 'ASC')
+            ->setMaxResults(10)
+            ->getQuery()
+            ->getResult();
+    }
 }

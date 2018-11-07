@@ -4,7 +4,7 @@ Encore
     // the project directory where compiled assets will be stored
     .setOutputPath('public/build/')
     // the public path used by the web server to access the previous directory
-    .setPublicPath('/anosia/public/build')
+    .setPublicPath('/public/build')
     .cleanupOutputBeforeBuild()
     .enableSourceMaps(!Encore.isProduction())
     // uncomment to create hashed filenames (e.g. app.abc123.css)
@@ -63,6 +63,7 @@ Encore
 
 
 
+    .addStyleEntry('css/jquery-ui', './assets/css/jquery-ui.css')
     .addStyleEntry('css/style', './assets/css/style.css')
     .addStyleEntry('css/apex-slider', './assets/css/apex-slider.css')
     .addStyleEntry('css/orders', './assets/css/orders.css')

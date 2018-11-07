@@ -17,9 +17,9 @@ class AnosiaSearchKeywords
     private $keyword;
 
     /**
-     * @var Category
+     * @var int
      */
-    private $category;
+    private $category_id;
 
     /**
      * @return int
@@ -48,22 +48,21 @@ class AnosiaSearchKeywords
     }
 
     /**
-     * @return Category
+     * @return int
      */
-    public function getCategory(): Category
+    public function getCategoryId(): int
     {
-        return $this->category;
+        return $this->category_id;
     }
 
     /**
-     * @param Category $category
+     * @param int $category_id
      * @return AnosiaSearchKeywords
      */
-    public function setCategory(Category $category): AnosiaSearchKeywords
+    public function setCategoryId(int $category_id): AnosiaSearchKeywords
     {
-        $this->category = $category;
+        $this->category_id = $category_id;
         return $this;
     }
-
 
 }
