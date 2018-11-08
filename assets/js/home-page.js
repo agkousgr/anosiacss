@@ -7,13 +7,18 @@ $(document).ready(function () {
     $("#anosia-keyword").autocomplete({
         // source: ['test', 'zong'],
         source: Routing.generate('search_for_anosia'),
+        select: function (event, ui) {
+            $("#anosia-keyword").val(ui.item.label);
+            let url = Routing.generate('products_list', {'id': ui.item.value});
+            window.location.assign(url);
+        },
         minLength: 3
     });
 
-    $("#anosia-keyword").on('change', function(e) {
-        e.preventDefault();
-        window.location(Routing.generate('product_list', {'id':}));
-    });
+    // $("#anosia-keyword").on('change', function(e) {
+    //     e.preventDefault();
+    //     window.location(Routing.generate('product_list', {'id':}));
+    // });
 
     // let api;
     // $(document).ready(function () {
@@ -22,7 +27,7 @@ $(document).ready(function () {
     //         startHeight: 893,
     //         transition: "random",
     //         thumbWidth: 100,
-    //         thumbHeight: 47,
+    //         thumbHeight: 47,`
     //         thumbAmount: 0,
     //         navType: "both",
     //         navStyle: "round",

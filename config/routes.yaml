@@ -33,6 +33,7 @@ products_list:
     requirements:
         id: \d+
         page: \d+
+    methods: [GET,POST]
     options:
         expose: true
 #brand_products_list:
