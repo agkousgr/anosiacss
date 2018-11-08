@@ -162,23 +162,29 @@ class ProductController extends MainController
         }
     }
 
-    public function searchResults(Request $request, int $page, PaginatorInterface $paginator)
+    public function searchResults(Request $request, int $page)
     {
         try {
             dump($request);
             $keyword = strip_tags(trim($request->request->get('keyword')));
             $s1Keyword = preg_replace('!\s+!', ',', $keyword);
-            $products = $this->productService->getItems('null', $s1Keyword, 1000);
-            $paginatedProducts = $paginator->paginate(
-                $products,
-                $page /*page number*/,
-                12/*limit per page*/
-            );
-            $paginatedProducts->setUsedRoute('product_search');
-            $paginatedProducts->setTemplate('paginator_template/override_template.html.twig');
-            $paginatedProducts->setSortableTemplate('paginator_template/override_sortable.html.twig');
+
+            $pagesize = ($request->query->get('pagesize')) ? preg_replace('/[^A-Za-z0-9\-]/', '', $request->query->get('pagesize')) : 12;
+            $sortBy = ($request->query->get('sortBy')) ?: 'NameAsc';
+            $makeId = ($request->query->get('brands')) ? str_replace('-', ',', $request->query->get('brands')) : 'null';
+            $priceRange = ($request->query->get('priceRange')) ?: 'null';
+
+
+            $productsCount = $this->productService->getItemsCount($s1Keyword, $makeId, $priceRange);
+            if ($productsCount > $pagesize * $page) {
+                $products = $this->productService->getItems('null', $s1Keyword, $pagesize, $sortBy, -1, $makeId, $priceRange);
+            } else {
+                $products = $this->productService->getItems('null', $s1Keyword, $pagesize, $sortBy, -1, $makeId, $priceRange);
+            }
+
+
             return $this->render('products/search.html.twig', [
-                'products' => $paginatedProducts,
+                'products' => $products,
                 'categories' => $this->categories,
                 'popular' => $this->popular,
                 'featured' => $this->featured,
@@ -188,7 +194,8 @@ class ProductController extends MainController
                 'loggedUser' => $this->loggedUser,
                 'loggedName' => $this->loggedName,
                 'keyword' => $keyword,
-                'loginUrl' => $this->loginUrl
+                'loginUrl' => $this->loginUrl,
+                'productsCount' => $productsCount
             ]);
         } catch (\Exception $e) {
             $this->logger->error(__METHOD__ . ' -> {message}', ['message' => $e->getMessage()]);

@@ -30,126 +30,203 @@
                 <div class="row reverse-row">
                     <div class="col-md-9 column">
                         <div class="product-list">
-                            <h2>Αποτελεσματα αναζητησης
-                                <span>(Showing 1 – 60 products of 1,070 products)</span>
-                            </h2>
-                            <div class="sorting-head clearfix">
-                                <div class="row">
-                                    <div class="col-sm-6 col-md-5">
-                                        <div class="row">
-                                            <div class="col-xs-6">
-                                                <select class="c-select">
-                                                    <option>Price Low to High</option>
-                                                    <option>Price - high to low</option>
-                                                    <option>Highest rated</option>
-                                                </select>
+                            {#<h2>Αποτελεσματα αναζητησης#}
+                                {#<span>(Showing 1 – 60 products of 1,070 products)</span>#}
+                            {#</h2>#}
+                            {% if (productsCount > 0 or products is defined) %}
+                                <div class="sorting-head clearfix">
+                                    <div class="row">
+                                        <div class="col-sm-6 col-md-7 visible-lg visible-md  visible-sm">
+                                            <div class="btn-group">
+                                                <a href="#" id="list"
+                                                   class="btn btn-default btn-sm"><i
+                                                            class="fas fa-th-large"></i></a>
+                                                <a href="#" id="grid"
+                                                   class="btn btn-default btn-sm"><i
+                                                            class="fas fa-th-list"></i></a>
                                             </div>
-                                            <div class="col-xs-6">
-                                                <select class="c-select">
-                                                    <option>15 Items Per Page</option>
-                                                    <option>18 Items Per Page</option>
-                                                    <option>21 Items Per Page</option>
-                                                    <option>24 Items Per Page</option>
-                                                </select>
+                                        </div>
+                                        <div class="col-sm-6 col-md-5">
+                                            <div class="row">
+                                                <div class="col-xs-6 pull-right"> {# <== pull right tbd #}
+                                                    <select name="sorting" id="sorting"
+                                                            class="c-select">
+                                                        {% set sortArr = {
+                                                            'Όνομα Α->Ω':'NameAsc',
+                                                            'Όνομα Ω->Α':'NameDesc',
+                                                            'Τιμή Αύξουσα':'WebPriceAsc',
+                                                            'Τιμή Φθίνουσα':'WebPriceDesc',
+                                                        } %}
+                                                        {% for key, value in sortArr %}
+                                                            {% if sortBy == value %}
+                                                                {% set selected='selected' %}
+                                                            {% else %}
+                                                                {% set selected='' %}
+                                                            {% endif %}
+                                                            <option {{ selected }}
+                                                                    value="{{ value }}">{{ key }}</option>
+                                                        {% endfor %}
+                                                    </select>
+                                                </div>
+                                                <div class="col-xs-6">
+                                                    <select id="maxItemPerPage"
+                                                            name="maxItemPerPage" class="c-select">
+                                                        {% set paginationArr = [12, 18, 24, 30] %}
+                                                        {% for value in paginationArr %}
+                                                            {% if pagesize == value %}
+                                                                {% set selected='selected' %}
+                                                            {% else %}
+                                                                {% set selected='' %}
+                                                            {% endif %}
+                                                            <option {{ selected }}
+                                                                    value="{{ value }}">{{ value }}
+                                                                προϊόντα
+                                                            </option>
+                                                        {% endfor %}
+
+                                                    </select>
+                                                </div>
                                             </div>
                                         </div>
                                     </div>
                                 </div>
-                            </div>
-                            <div id="products" class="row list-group list-products">
-                                {% for pr in products %}
-                                    <div class="item col-lg-4 col-md-6 col-sm-6 wow fadeIn grid-group-item"
-                                         data-wow-delay="0.4s">
-                                        <div class="product-case">
-                                            <div class="tag tag-green"><span>new</span></div>
-                                            <div class="product-img">
-                                                <div class="hover-img"><img src="{{ pr.imageUrl }}"
-                                                                            alt="{{ pr.name }}">
-                                                </div>
-                                                <a href="{{ path('product_view', {'id':pr.id}) }}"><img
-                                                            src="{{ pr.imageUrl }}"
-                                                            alt="{{ pr.name }}"></a>
-                                            </div>
-                                            <div class="hover-info">
-                                                <div class="product-short-info">
-                                                    <div class="product-name"><a
-                                                                href="{{ path('product_view', {'id':pr.id}) }}">{{ pr.name }}</a>
+                                <div id="products" class="row list-group list-products">
+                                    {#{% set minPrice = 100 %}#}
+                                    {#{% set maxPrice = 1 %}#}
+                                    {% for pr in products %}
+                                        <div class="item col-lg-4 col-md-6 col-sm-6 wow fadeIn"
+                                             data-wow-delay="0.4s">
+                                            <div class="product-case">
+                                                {% if pr.isNew == 'new' %}
+                                                    <div class="tag tag-green"><span>new</span>
                                                     </div>
-                                                    {#<div class="star"><i class="fa fa-star"></i><i#}
-                                                    {#class="fa fa-star"></i><i#}
+                                                {% endif %}
+                                                <div class="product-img">
+                                                    <div class="hover-img"><img
+                                                                src="{{ pr.imageUrl }}"
+                                                                alt="{{ pr.name }}">
+                                                    </div>
+                                                    <a href="{{ path('product_view', {'id':pr.id}) }}"><img
+                                                                src="{{ pr.imageUrl }}"
+                                                                alt="{{ pr.name }}"></a>
+                                                </div>
+                                                <div class="hover-info">
+                                                    <div class="product-short-info">
+                                                        <div class="product-name"><a
+                                                                    href="{{ path('product_view', {'id':pr.id}) }}">{{ pr.name }}</a>
+                                                        </div>
+                                                        {#<div class="star"><i class="fa fa-star"></i><i#}
+                                                        {#class="fa fa-star"></i><i#}
+                                                        {#class="fa fa-star"></i><i class="fa fa-star"></i><i#}
+                                                        {#class="fa fa-star"></i><i class="fa fa-star-o"></i>#}
+                                                        {#</div>#}
+                                                        <div class="product-price">
+                                                            <div class="product-price-span">{{ pr.webPrice|number_format(2, ',', '.') }}
+                                                                €
+                                                                <del>{{ pr.retailPrice|number_format(2, ',', '.') }}
+                                                                    €
+                                                                </del>
+                                                            </div>
+                                                        </div>
+                                                        {% if pr.outOfStock == "false" %}
+                                                            <button type="button"
+                                                                    class="add-to-cart"
+                                                                    data-id="{{ pr.id }}"
+                                                                    data-name="{{ pr.name }}">
+                                                                <i class="fas fa-cart-plus"></i><span>στο καλαθι</span>
+                                                            </button>
+                                                        {% endif %}
+                                                    </div>
+                                                </div>
+                                                <div class="product-short-info">
+                                                    <div class="product-name">
+                                                        <a href="{{ path('product_view', {'id':pr.id}) }}">{{ pr.name }}</a>
+                                                    </div>
+                                                    {#<div class="star"><i class="fa fa-star"></i><i class="fa fa-star"></i><i#}
                                                     {#class="fa fa-star"></i><i class="fa fa-star"></i><i#}
-                                                    {#class="fa fa-star"></i><i class="fa fa-star-o"></i>#}
-                                                    {#</div>#}
+                                                    {#class="fa fa-star"></i><i class="fa fa-star-o"></i></div>#}
                                                     <div class="product-price">
-                                                        <div class="product-price-span">{{ pr.webPrice }}
+                                                        <div class="product-price-span">{{ pr.webPrice|number_format(2, ',', '.') }}
                                                             €
-                                                            <del>{{ pr.retailPrice }}€</del>
+                                                            <del>{{ pr.retailPrice|number_format(2, ',', '.') }}
+                                                                €
+                                                            </del>
                                                         </div>
                                                     </div>
-                                                    {% if pr.outOfStock == "false" %}
-                                                        <button type="button" class="add-to-cart" data-id="{{ pr.id }}" data-name="{{ pr.name }}">
-                                                            <i class="fa fa-cart-plus"></i><span>καλαθι</span>
-                                                        </button>
-                                                    {% endif %}
-                                                </div>
-                                            </div>
-                                            <div class="product-short-info">
-                                                <div class="product-name">
-                                                    <a href="{{ path('product_view', {'id':pr.id}) }}">{{ pr.name }}</a>
-                                                </div>
-                                                {#<div class="star"><i class="fa fa-star"></i><i class="fa fa-star"></i><i#}
-                                                {#class="fa fa-star"></i><i class="fa fa-star"></i><i#}
-                                                {#class="fa fa-star"></i><i class="fa fa-star-o"></i></div>#}
-                                                <div class="product-price">
-                                                    <div class="product-price-span">{{ pr.webPrice }}
-                                                        €
-                                                        <del>{{ pr.retailPrice }}€</del>
+                                                    <div>
+                                                        <span itemprop="offers" itemscope=""
+                                                              itemtype="https://schema.org/Offer"
+                                                              class="availability">
+                                                            {% if (pr.remainNotReserved > "0" or pr.webFree == "true") and pr.outOfStock == "false" %}
+                                                                <span class="available-now">
+                                                                    <link itemprop="availability"
+                                                                          href="https://schema.org/InStock">
+                                                                    In Stock
+                                                                </span>
+                                                            {% else %}
+                                                                <span class="out-of-stock">
+                                                                    <link itemprop="availability"
+                                                                          href="https://schema.org/InStock">
+                                                                    Out of Stock
+                                                                </span>
+                                                            {% endif %}
+                                                        </span>
                                                     </div>
+                                                    <button type="button">
+                                                        <i class="fa fa-cart-plus"></i>
+                                                        <span>Add to Cart</span>
+                                                    </button>
                                                 </div>
-                                                <div>
-                                                    <span itemprop="offers" itemscope=""
-                                                          itemtype="https://schema.org/Offer"
-                                                          class="availability">
-                                                        {% if (pr.remainNotReserved > "0" or pr.webFree == "true") and pr.outOfStock == "false" %}
-                                                            <span class="available-now">
-                                                                <link itemprop="availability"
-                                                                      href="https://schema.org/InStock">
-                                                                In Stock
-                                                            </span>
-                                                        {% else %}
-                                                            <span class="out-of-stock">
-                                                                <link itemprop="availability"
-                                                                      href="https://schema.org/InStock">
-                                                                Out of Stock
-                                                            </span>
-                                                        {% endif %}
-                                                    </span>
-                                                </div>
-                                                <button type="button">
-                                                    <i class="fa fa-cart-plus"></i>
-                                                    <span>Add to Cart</span>
-                                                </button>
                                             </div>
                                         </div>
-                                    </div>
-                                {% endfor %}
-                            </div>
-                            <nav aria-label="Page navigation" style="text-align: center;">
-                                {{ knp_pagination_render(products) }}
-                            </nav>
+                                        {#{% if minPrice > pr.webPrice %}#}
+                                        {#{% set minPrice = pr.webPrice|round %}#}
+                                        {#{% endif %}#}
+                                        {#{% if maxPrice < pr.webPrice %}#}
+                                        {#{% set maxPrice = pr.webPrice|round %}#}
+                                        {#{% endif %}#}
+                                    {% endfor %}
+                                </div>
+                                {#<input type="hidden" name="minPrice" value="{{ minPrice }}">#}
+                                {#<input type="hidden" name="maxPrice" value="{{ maxPrice }}">#}
+                                {% if priceRange == 'null' %}
+                                    <input type="hidden" name="lowPrice" value="1">
+                                    <input type="hidden" name="highPrice" value="250">
+                                {% else %}
+                                    {% set priceRangeArr = priceRange|split('-') %}
+                                    <input type="hidden" name="lowPrice"
+                                           value="{{ priceRangeArr.0 }}">
+                                    <input type="hidden" name="highPrice"
+                                           value="{{ priceRangeArr.1 }}">
+                                {% endif %}
+                                {#{{ dump(productsCount) }}#}
+                                {#{{ dump(page*pagesize) }}#}
+                                {% if productsCount > pagesize %}
+                                    <nav aria-label="Page navigation">
+                                        {{ include('products/modules/pagination.html.twig') }}
+                                    </nav>
+                                {% endif %}
+                            {% else %}
+                                <div class="col-12">
+                                    Δεν υπάρχουν προϊόντα.
+                                </div>
+                            {% endif %}
                         </div>
                     </div>
                     <div class="col-md-3 column">
-                        {% include 'products/modules/aside_price_filter.html.twig' %}
-                        {% include 'products/modules/aside_shop_by_brand.html.twig' %}
+                        <div class="filter-widget">
+                            <h3 style="font-size: 16px; text-transform: none;">Αριθμός προϊόντων: {{ productsCount }}</h3>
+                        </div>
+                        {#{% include 'products/modules/aside_price_filter.html.twig' %}#}
+                        {#{% include 'products/modules/aside_shop_by_brand.html.twig' %}#}
                         {#{% include 'products/modules/aside_color_filter.html.twig' %}#}
                         {#{% include 'products/modules/aside_size.html.twig' %}#}
-                        {% include 'products/modules/aside_discount.html.twig' %}
-                        {% include 'products/modules/aside_clearance_sale.html.twig' %}
-                        {% include 'products/modules/aside_best_sellers.html.twig' %}
+                        {#{% include 'products/modules/aside_discount.html.twig' %}#}
+                        {#{% include 'products/modules/aside_clearance_sale.html.twig' %}#}
+                        {#{% include 'products/modules/aside_best_sellers.html.twig' %}#}
                     </div>
                 </div>
-                {% include 'products/modules/bottom_product_tabs.html.twig' %}
+                {#{% include 'products/modules/bottom_product_tabs.html.twig' %}#}
                 {#{% include 'products/modules/bottom_gallery_and_brands.html.twig' %}#}
                 {#{% include 'products/modules/bottom_banners.html.twig' %}#}
             </div>

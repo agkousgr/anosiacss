@@ -111,7 +111,7 @@ EOF;
     <AuthID>$this->authId</AuthID>
     <AppID>157</AppID>
     <CompanyID>1000</CompanyID>
-    <pagesize>1000</pagesize>
+    <pagesize>100</pagesize>
     <pagenumber>0</pagenumber>
     <CategoryID>$ctgId</CategoryID>
     <SearchToken>null</SearchToken>
@@ -236,6 +236,48 @@ EOF;
         }
     }
 
+
+    public function getItemsCount($keyword = 'null', $makeId = 'null', $priceRange = 'null')
+    {
+        $client = new \SoapClient('https://caron.cloudsystems.gr/FOeshopWS/ForeignOffice.FOeshop.API.FOeshopSvc.svc?singleWsdl', ['trace' => true, 'exceptions' => true,]);
+
+        $priceRangeArr = ($priceRange != 'null') ? explode('-', $priceRange) : -1;
+        $lowPrice = ($priceRangeArr === -1) ? -1 : $priceRangeArr[0];
+        $highPrice = ($priceRangeArr === -1) ? -1 : $priceRangeArr[1];
+
+        $message = <<<EOF
+<?xml version="1.0" encoding="utf-16"?>
+<ClientGetItemsCountRequest>
+    <Type>1005</Type>
+    <Kind>1</Kind>
+    <Domain>pharmacyone</Domain>
+    <AuthID>$this->authId</AuthID>
+    <AppID>157</AppID>
+    <CompanyID>1000</CompanyID>
+    <pagesize>100</pagesize>
+    <pagenumber>0</pagenumber>
+    <ItemID>null</ItemID>
+    <ItemCode>null</ItemCode>
+    <MakeID>$makeId</MakeID>
+    <IsSkroutz>-1</IsSkroutz>
+    <SearchToken>$keyword</SearchToken>
+    <OrderBy>null</OrderBy>
+    <LowPrice>$lowPrice</LowPrice>
+    <HighPrice>$highPrice</HighPrice>
+</ClientGetItemsCountRequest>
+EOF;
+
+        try {
+            $result = $client->SendMessage(['Message' => $message]);
+            dump($message, $result);
+            $items = simplexml_load_string(str_replace("utf-16", "utf-8", $result->SendMessageResult));
+            return (int)$items->GetDataRows->GetItemsCountRow->Count;
+        } catch (\SoapFault $sf) {
+            echo $sf->faultstring;
+        }
+
+    }
+
     /**
      * @param $pr
      * @return array
@@ -340,49 +382,6 @@ EOF;
         } catch (\Exception $e) {
             $this->logger->error(__METHOD__ . ' -> {message}', ['message' => $e->getMessage()]);
             throw $e;
-        }
-    }
-
-    /**
-     * @param $id
-     * @param $keyword
-     * @param $pagesize
-     * @param $sortBy
-     * @param $isSkroutz
-     *
-     * @return int
-     */
-    public function getItemsCount($id, $keyword = 'null', $isSkroutz = -1, $makeId = 'null')
-    {
-        $client = new \SoapClient('https://caron.cloudsystems.gr/FOeshopWS/ForeignOffice.FOeshop.API.FOeshopSvc.svc?singleWsdl', ['trace' => true, 'exceptions' => true,]);
-
-        $message = <<<EOF
-<?xml version="1.0" encoding="utf-16"?>
-<ClientGetItemsRequest>
-    <Type>1005</Type>
-    <Kind>1</Kind>
-    <Domain>pharmacyone</Domain>
-    <AuthID>$this->authId</AuthID>
-    <AppID>157</AppID>
-    <CompanyID>1000</CompanyID>
-    <pagesize></pagesize>
-    <pagenumber>0</pagenumber>
-    <ItemID>$id</ItemID>
-    <ItemCode>null</ItemCode>
-    <MakeID>$makeId</MakeID>
-    <IsSkroutz>$isSkroutz</IsSkroutz>
-    <SearchToken>$keyword</SearchToken>
-    <OrderBy></OrderBy>
-    <LowPrice>-1</LowPrice>
-    <HighPrice>-1</HighPrice>
-</ClientGetItemsRequest>
-EOF;
-        try {
-            $result = $client->SendMessage(['Message' => $message]);
-            $items = simplexml_load_string(str_replace("utf-16", "utf-8", $result->SendMessageResult));
-            return (int)$items->GetDataRows->GetItemsCountRow->Count;
-        } catch (\SoapFault $sf) {
-            echo $sf->faultstring;
         }
     }
 
