@@ -404,3 +404,6 @@ homepage_modules_priority:
 csv_import:
     path: /csv/import
     controller: App\Controller\CsvImport::importData
+update_s1:
+    path: /update-s1
+    controller: App\Controller\MigrateController::updateS1
