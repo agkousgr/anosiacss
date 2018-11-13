@@ -30,12 +30,36 @@ class ProductService
      */
     private $authId;
 
-    public function __construct(LoggerInterface $logger, EntityManagerInterface $em, SessionInterface $session)
+    /**
+     * @var string
+     */
+    private $kind;
+    
+    /**
+     * @var string
+     */
+    private $domain;
+    
+    /**
+     * @var string
+     */
+    private $appId;
+    
+    /**
+     * @var string
+     */
+    private $companyId;
+
+    public function __construct(LoggerInterface $logger, EntityManagerInterface $em, SessionInterface $session, $s1Credentials)
     {
         $this->logger = $logger;
         $this->em = $em;
         $this->session = $session;
         $this->authId = $this->session->get("authID");
+        $this->kind = $s1Credentials['kind'];
+        $this->domain = $s1Credentials['domain'];
+        $this->appId = $s1Credentials['appId'];
+        $this->companyId = $s1Credentials['companyId'];
     }
 
     /**
@@ -59,11 +83,11 @@ class ProductService
 <?xml version="1.0" encoding="utf-16"?>
 <ClientGetCategoryItemsRequest>
     <Type>1011</Type>
-    <Kind>1</Kind>
-    <Domain>pharmacyone</Domain>
+    <Kind>$this->kind</Kind>
+    <Domain>$this->domain</Domain>
     <AuthID>$this->authId</AuthID>
-    <AppID>157</AppID>
-    <CompanyID>1000</CompanyID>
+    <AppID>$this->appId</AppID>
+    <CompanyID>$this->companyId</CompanyID>
     <pagesize>$pagesize</pagesize>
     <pagenumber>$page</pagenumber>
     <CategoryID>$ctgId</CategoryID>
@@ -106,11 +130,11 @@ EOF;
 <?xml version="1.0" encoding="utf-16"?>
 <ClientGetCategoryItemsCountRequest>
     <Type>1040</Type>
-    <Kind>1</Kind>
-    <Domain>pharmacyone</Domain>
+    <Kind>$this->kind</Kind>
+    <Domain>$this->domain</Domain>
     <AuthID>$this->authId</AuthID>
-    <AppID>157</AppID>
-    <CompanyID>1000</CompanyID>
+    <AppID>$this->appId</AppID>
+    <CompanyID>$this->companyId</CompanyID>
     <pagesize>100</pagesize>
     <pagenumber>0</pagenumber>
     <CategoryID>$ctgId</CategoryID>
@@ -203,11 +227,11 @@ EOF;
 <?xml version="1.0" encoding="utf-16"?>
 <ClientGetItemsRequest>
     <Type>1005</Type>
-    <Kind>1</Kind>
-    <Domain>pharmacyone</Domain>
+    <Kind>$this->kind</Kind>
+    <Domain>$this->domain</Domain>
     <AuthID>$this->authId</AuthID>
-    <AppID>157</AppID>
-    <CompanyID>1000</CompanyID>
+    <AppID>$this->appId</AppID>
+    <CompanyID>$this->companyId</CompanyID>
     <pagesize>$pagesize</pagesize>
     <pagenumber>0</pagenumber>
     <ItemID>$id</ItemID>
@@ -249,11 +273,11 @@ EOF;
 <?xml version="1.0" encoding="utf-16"?>
 <ClientGetItemsCountRequest>
     <Type>1005</Type>
-    <Kind>1</Kind>
-    <Domain>pharmacyone</Domain>
+    <Kind>$this->kind</Kind>
+    <Domain>$this->domain</Domain>
     <AuthID>$this->authId</AuthID>
-    <AppID>157</AppID>
-    <CompanyID>1000</CompanyID>
+    <AppID>$this->appId</AppID>
+    <CompanyID>$this->companyId</CompanyID>
     <pagesize>100</pagesize>
     <pagenumber>0</pagenumber>
     <ItemID>null</ItemID>
@@ -336,11 +360,11 @@ EOF;
 <?xml version="1.0" encoding="utf-16"?>
 <ClientGetItemPhotosRequest>
     <Type>1044</Type>
-    <Kind>1</Kind>
-    <Domain>pharmacyone</Domain>
+    <Kind>$this->kind</Kind>
+    <Domain>$this->domain</Domain>
     <AuthID>$this->authId</AuthID>
-    <AppID>157</AppID>
-    <CompanyID>1000</CompanyID>
+    <AppID>$this->appId</AppID>
+    <CompanyID>$this->companyId</CompanyID>
     <pagesize>10</pagesize>
     <pagenumber>0</pagenumber>
     <ItemID>$id</ItemID>

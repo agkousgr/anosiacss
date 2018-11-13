@@ -1,0 +1,23 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<doctrine-mapping xmlns="http://doctrine-project.org/schemas/orm/doctrine-mapping">
+
+    <entity name="App\Entity\MigrationProducts"  repository-class="App\Repository\MigrationProductsRepository">
+        <id name="id" type="integer">
+            <generator strategy="AUTO"/>
+        </id>
+        <field name="s1id" type="integer" />
+        <field name="name" type="text" />
+        <field name="sku" length="100" />
+        <field name="smallDescription" type="text" nullable="true" />
+        <field name="largeDescription" type="text" nullable="true" />
+        <field name="ingredients" type="text" nullable="true" />
+        <field name="instructions" type="text" nullable="true" />
+        <field name="oldSlug" length="250" nullable="true" />
+        <field name="slug" length="250" />
+        <field name="seoTitle" type="text" nullable="true" />
+        <field name="seoKeywords" type="text" nullable="true" />
+        <field name="manufacturer" length="100" nullable="true" />
+        <field name="images" type="text" nullable="true" />
+    </entity>
+
+</doctrine-mapping>

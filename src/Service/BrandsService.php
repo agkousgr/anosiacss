@@ -1,10 +1,4 @@
 <?php
-/**
- * Created by PhpStorm.
- * User: john
- * Date: 5/8/2018
- * Time: 3:41 μμ
- */
 
 namespace App\Service;
 
@@ -19,9 +13,39 @@ class BrandsService
      */
     private $authId;
 
-    public function __construct(SessionInterface $session)
+    /**
+     * @var string
+     */
+    private $kind;
+
+    /**
+     * @var string
+     */
+    private $domain;
+
+    /**
+     * @var string
+     */
+    private $appId;
+
+    /**
+     * @var string
+     */
+    private $client;
+
+    /**
+     * @var string
+     */
+    private $companyId;
+
+    public function __construct(SessionInterface $session, $s1Credentials)
     {
         $this->authId = $session->get("authID");
+        $this->kind = $s1Credentials['kind'];
+        $this->domain = $s1Credentials['domain'];
+        $this->appId = $s1Credentials['appId'];
+        $this->companyId = $s1Credentials['companyId'];
+        $this->client = new \SoapClient('https://caron.cloudsystems.gr/FOeshopWS/ForeignOffice.FOeshop.API.FOeshopSvc.svc?singleWsdl', ['trace' => true, 'exceptions' => true,]);
     }
 
     /**
@@ -32,17 +56,16 @@ class BrandsService
      */
     public function getBrands($slug)
     {
-        $client = new \SoapClient('https://caron.cloudsystems.gr/FOeshopWS/ForeignOffice.FOeshop.API.FOeshopSvc.svc?singleWsdl', ['trace' => true, 'exceptions' => true,]);
 
         $message = <<<EOF
 <?xml version="1.0" encoding="utf-16"?>
 <ClientGetMakeRequest>
     <Type>1032</Type>
-    <Kind>1</Kind>
-    <Domain>pharmacyone</Domain>
+    <Kind>$this->kind</Kind>
+    <Domain>$this->domain</Domain>
     <AuthID>$this->authId</AuthID>
-    <AppID>157</AppID>
-    <CompanyID>1000</CompanyID>
+    <AppID>$this->appId</AppID>
+    <CompanyID>$this->companyId</CompanyID>
     <pagesize>1000</pagesize>
     <pagenumber>0</pagenumber>
     <MakeID>-1</MakeID>
@@ -50,7 +73,7 @@ class BrandsService
 </ClientGetMakeRequest>
 EOF;
         try {
-            $result = $client->SendMessage(['Message' => $message]);
+            $result = $this->client->SendMessage(['Message' => $message]);
             $resultXML = simplexml_load_string(str_replace("utf-16", "utf-8", $result->SendMessageResult));
             dump($message, $result);
             $brands = $this->initializeBrands($resultXML->GetDataRows->GetMakeRow);

@@ -400,10 +400,23 @@ homepage_modules_priority:
     requirements:
         id: \d+
 
-# Csv Import
+# Csv Import & MIGRATIONS
 csv_import:
     path: /csv/import
     controller: App\Controller\CsvImport::importData
+csv_import_products:
+    path: /csv/import-products
+    controller: App\Controller\CsvImport::importProducts
+csv_import_seo:
+    path: /csv/import-seo
+    controller: App\Controller\CsvImport::importSeo
+csv_import_old_slugs:
+    path: /csv/import-old-slugs
+    controller: App\Controller\CsvImport::importOldSlugs
+
+get_images:
+    path: /migrate/images
+    controller: App\Controller\MigrateController::migrateImages
 update_s1:
     path: /update-s1
     controller: App\Controller\MigrateController::updateS1

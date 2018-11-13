@@ -23,15 +23,39 @@ class NewsletterService
     private $authId;
 
     /**
+     * @var string
+     */
+    private $kind;
+
+    /**
+     * @var string
+     */
+    private $domain;
+
+    /**
+     * @var string
+     */
+    private $appId;
+
+    /**
+     * @var string
+     */
+    private $companyId;
+
+    /**
      * UserAccountService constructor.
      * @param LoggerInterface $logger
      * @param SessionInterface $session
      */
-    public function __construct(LoggerInterface $logger, SessionInterface $session)
+    public function __construct(LoggerInterface $logger, SessionInterface $session, $s1Credentials)
     {
         $this->logger = $logger;
         $this->session = $session;
         $this->authId = $session->get("authID");
+        $this->kind = $s1Credentials['kind'];
+        $this->domain = $s1Credentials['domain'];
+        $this->appId = $s1Credentials['appId'];
+        $this->companyId = $s1Credentials['companyId'];
     }
 
     /**
@@ -48,11 +72,11 @@ class NewsletterService
 <?xml version="1.0" encoding="utf-16"?>
 <ClientGetNewsletterRequest>
     <Type>1013</Type>
-    <Kind>1</Kind>
-    <Domain>pharmacyone</Domain>
+    <Kind>$this->kind</Kind>
+    <Domain>$this->domain</Domain>
     <AuthID>$this->authId</AuthID>
-    <AppID>157</AppID>
-    <CompanyID>1000</CompanyID>
+    <AppID>$this->appId</AppID>
+    <CompanyID>$this->companyId</CompanyID>
     <pagesize>10</pagesize>
     <pagenumber>0</pagenumber>
     <Email>$email</Email>
@@ -101,12 +125,12 @@ EOF;
 <?xml version="1.0" encoding="utf-16"?>
 <ClientSetNewsletterRequest>
     <Type>1020</Type>
-    <Kind>1</Kind>
-    <Domain>pharmacyone</Domain>
+    <Kind>$this->kind</Kind>
+    <Domain>$this->domain</Domain>
     <Key>$key</Key>
     <AuthID>$this->authId</AuthID>
-    <AppID>157</AppID>
-    <CompanyID>1000</CompanyID>
+    <AppID>$this->appId</AppID>
+    <CompanyID>$this->companyId</CompanyID>
     <Email>$email</Email>
     <Name>$name</Name>
     <Allow>$allow</Allow>

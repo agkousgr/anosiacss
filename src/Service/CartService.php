@@ -1,10 +1,4 @@
 <?php
-/**
- * Created by PhpStorm.
- * User: john
- * Date: 17/6/2018
- * Time: 10:47 μμ
- */
 
 namespace App\Service;
 
@@ -29,17 +23,46 @@ class CartService
     private $authId;
 
     /**
+     * @var string
+     */
+    private $kind;
+
+    /**
+     * @var string
+     */
+    private $domain;
+
+    /**
+     * @var string
+     */
+    private $appId;
+
+    /**
+     * @var string
+     */
+    private $companyId;
+
+    /**
+     * @var string
+     */
+    private $client;
+
+    /**
      * CategoryService constructor.
      *
      * @param LoggerInterface $logger
      * @param EntityManagerInterface $em
      */
-    public function __construct(LoggerInterface $logger, SessionInterface $session)
+    public function __construct(LoggerInterface $logger, SessionInterface $session, $s1Credentials)
     {
         $this->logger = $logger;
-//        $this->em = $em;
         $this->session = $session;
         $this->authId = $session->get("authID");
+        $this->kind = $s1Credentials['kind'];
+        $this->domain = $s1Credentials['domain'];
+        $this->appId = $s1Credentials['appId'];
+        $this->companyId = $s1Credentials['companyId'];
+        $this->client = new \SoapClient('https://caron.cloudsystems.gr/FOeshopWS/ForeignOffice.FOeshop.API.FOeshopSvc.svc?singleWsdl', ['trace' => true, 'exceptions' => true,]);
     }
 
     /**
@@ -51,17 +74,16 @@ class CartService
      */
     public function getCartItems($ids, $cartArr, $pagesize, $highPrice = -1)
     {
-        $client = new \SoapClient('https://caron.cloudsystems.gr/FOeshopWS/ForeignOffice.FOeshop.API.FOeshopSvc.svc?singleWsdl', ['trace' => true, 'exceptions' => true,]);
 
         $message = <<<EOF
 <?xml version="1.0" encoding="utf-16"?>
 <ClientGetItemsRequest>
     <Type>1005</Type>
-    <Kind>1</Kind>
-    <Domain>pharmacyone</Domain>
+    <Kind>$this->kind</Kind>
+    <Domain>$this->domain</Domain>
     <AuthID>$this->authId</AuthID>
-    <AppID>157</AppID>
-    <CompanyID>1000</CompanyID>
+    <AppID>$this->appId</AppID>
+    <CompanyID>$this->companyId</CompanyID>
     <pagesize>$pagesize</pagesize>
     <pagenumber>0</pagenumber>
     <ItemID>$ids</ItemID>
@@ -75,7 +97,7 @@ class CartService
 </ClientGetItemsRequest>
 EOF;
         try {
-            $result = $client->SendMessage(['Message' => $message]);
+            $result = $this->client->SendMessage(['Message' => $message]);
             $items = simplexml_load_string(str_replace("utf-16", "utf-8", $result->SendMessageResult));
 //            dump($message, $result);
             $itemsArr = $this->initializeProducts($items->GetDataRows->GetItemsRow, $cartArr);
@@ -88,17 +110,16 @@ EOF;
 
     public function getRelevantItems($excludeIds = -1, $highPrice = -1)
     {
-        $client = new \SoapClient('https://caron.cloudsystems.gr/FOeshopWS/ForeignOffice.FOeshop.API.FOeshopSvc.svc?singleWsdl', ['trace' => true, 'exceptions' => true,]);
 // Todo: replace categoryId with cart items relative categories
         $message = <<<EOF
 <?xml version="1.0" encoding="utf-16"?>
 <ClientGetRelevantItemsRequest>
     <Type>1056</Type>
-    <Kind>1</Kind>
-    <Domain>pharmacyone</Domain>
+    <Kind>$this->kind</Kind>
+    <Domain>$this->domain</Domain>
     <AuthID>$this->authId</AuthID>
-    <AppID>157</AppID>
-    <CompanyID>1000</CompanyID>
+    <AppID>$this->appId</AppID>
+    <CompanyID>$this->companyId</CompanyID>
     <CategoryID>-1</CategoryID>
     <ItemID>100357</ItemID>
     <IncludeChildCategories>1</IncludeChildCategories>
@@ -110,7 +131,7 @@ EOF;
 </ClientGetRelevantItemsRequest>
 EOF;
         try {
-            $result = $client->SendMessage(['Message' => $message]);
+            $result = $this->client->SendMessage(['Message' => $message]);
             $items = simplexml_load_string(str_replace("utf-16", "utf-8", $result->SendMessageResult));
             dump($message, $result);
             $itemsArr = $this->initializeProposalProducts($items->GetDataRows->GetRelevantItemsRow);

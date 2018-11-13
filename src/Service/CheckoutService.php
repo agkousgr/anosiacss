@@ -29,6 +29,26 @@ class CheckoutService
     /**
      * @var string
      */
+    private $kind;
+
+    /**
+     * @var string
+     */
+    private $domain;
+
+    /**
+     * @var string
+     */
+    private $appId;
+
+    /**
+     * @var string
+     */
+    private $companyId;
+
+    /**
+     * @var string
+     */
     private $username;
 
     /**
@@ -61,11 +81,15 @@ class CheckoutService
      * @param LoggerInterface $logger
      * @param SessionInterface $session
      */
-    public function __construct(LoggerInterface $logger, SessionInterface $session, \Swift_Mailer $mailer, Environment $twig)
+    public function __construct(LoggerInterface $logger, SessionInterface $session, \Swift_Mailer $mailer, Environment $twig, $s1Credentials)
     {
         $this->logger = $logger;
         $this->session = $session;
         $this->authId = $session->get("authID");
+        $this->kind = $s1Credentials['kind'];
+        $this->domain = $s1Credentials['domain'];
+        $this->appId = $s1Credentials['appId'];
+        $this->companyId = $s1Credentials['companyId'];
         $this->username = $session->get('anosiaUser');
         $this->curOrder = $session->get('curOrder');
         $this->client = new \SoapClient('http://caron.cloudsystems.gr/FOeshopWS/ForeignOffice.FOeshop.API.FOeshopSvc.svc?singleWsdl', ['trace' => true, 'exceptions' => true,]);
@@ -109,11 +133,11 @@ class CheckoutService
 <?xml version="1.0" encoding="utf-16"?>
 <ClientGetUsersRequest>
     <Type>1015</Type>
-    <Kind>1</Kind>
-    <Domain>pharmacyone</Domain>
+    <Kind>$this->kind</Kind>
+    <Domain>$this->domain</Domain>
     <AuthID>$this->authId</AuthID>
-    <AppID>157</AppID>
-    <CompanyID>1000</CompanyID>
+    <AppID>$this->appId</AppID>
+    <CompanyID>$this->companyId</CompanyID>
     <pagesize>20</pagesize>
     <pagenumber>0</pagenumber>
     <Username>$this->username</Username>
@@ -151,11 +175,11 @@ EOF;
 <?xml version="1.0" encoding="utf-16"?>
 <ClientGetClientsRequest>
     <Type>1042</Type>
-    <Kind>1</Kind>
-    <Domain>pharmacyone</Domain>
+    <Kind>$this->kind</Kind>
+    <Domain>$this->domain</Domain>
     <AuthID>$this->authId</AuthID>
-    <AppID>157</AppID>
-    <CompanyID>1000</CompanyID>
+    <AppID>$this->appId</AppID>
+    <CompanyID>$this->companyId</CompanyID>
     <pagesize>1</pagesize>
     <pagenumber>0</pagenumber>
     <ClientID>-1</ClientID>
@@ -204,11 +228,11 @@ EOF;
 <?xml version="1.0" encoding="utf-16"?>
 <ClientGetShipAddressRequest>
     <Type>1034</Type>
-    <Kind>1</Kind>
-    <Domain>pharmacyone</Domain>
+    <Kind>$this->kind</Kind>
+    <Domain>$this->domain</Domain>
     <AuthID>$this->authId</AuthID>
-    <AppID>157</AppID>
-    <CompanyID>1000</CompanyID>
+    <AppID>$this->appId</AppID>
+    <CompanyID>$this->companyId</CompanyID>
     <ClientID>$clientId</ClientID>
     <ID></ID>
     <ShipAddressID>$id</ShipAddressID>
@@ -243,11 +267,11 @@ EOF;
 <?xml version="1.0" encoding="utf-16"?>
 <ClientGetNewsletterRequest>
     <Type>1013</Type>
-    <Kind>1</Kind>
-    <Domain>pharmacyone</Domain>
+    <Kind>$this->kind</Kind>
+    <Domain>$this->domain</Domain>
     <AuthID>$this->authId</AuthID>
-    <AppID>157</AppID>
-    <CompanyID>1000</CompanyID>
+    <AppID>$this->appId</AppID>
+    <CompanyID>$this->companyId</CompanyID>
     <pagesize>1</pagesize>
     <pagenumber>0</pagenumber>
     <Email>$this->username</Email>
@@ -321,11 +345,11 @@ EOF;
 <?xml version="1.0" encoding="utf-16"?>
 <ClientGetUsersRequest>
     <Type>1015</Type>
-    <Kind>1</Kind>
-    <Domain>pharmacyone</Domain>
+    <Kind>$this->kind</Kind>
+    <Domain>$this->domain</Domain>
     <AuthID>$this->authId</AuthID>
-    <AppID>157</AppID>
-    <CompanyID>1000</CompanyID>
+    <AppID>$this->appId</AppID>
+    <CompanyID>$this->companyId</CompanyID>
     <pagesize>1</pagesize>
     <pagenumber>0</pagenumber>
     <Username>$username</Username>
@@ -376,13 +400,13 @@ EOF;
 <?xml version="1.0" encoding="utf-16"?>
 <ClientSetOrderRequest>
     <Type>1024</Type>
-    <Kind>1</Kind>
-    <Domain>pharmacyone</Domain>
+    <Kind>$this->kind</Kind>
+    <Domain>$this->domain</Domain>
     $expenses
     $items
     <AuthID>$this->authId</AuthID>
-    <AppID>157</AppID>
-    <CompanyID>1000</CompanyID>
+    <AppID>$this->appId</AppID>
+    <CompanyID>$this->companyId</CompanyID>
     <Key></Key>
     <Series>$series</Series>
     <Number>*</Number>
@@ -508,11 +532,11 @@ EOF;
 <?xml version="1.0" encoding="utf-16"?>
 <ClientGetUsersRequest>
     <Type>1048</Type>
-    <Kind>1</Kind>
-    <Domain>pharmacyone</Domain>
+    <Kind>$this->kind</Kind>
+    <Domain>$this->domain</Domain>
     <AuthID>$this->authId</AuthID>
-    <AppID>157</AppID>
-    <CompanyID>1000</CompanyID>
+    <AppID>$this->appId</AppID>
+    <CompanyID>$this->companyId</CompanyID>
     <CustomerID>$clientId</CustomerID>
     <OrderID>null</OrderID>
     <Number>null</Number>

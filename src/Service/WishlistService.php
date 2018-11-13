@@ -29,17 +29,41 @@ class WishlistService
     private $authId;
 
     /**
+     * @var string
+     */
+    private $kind;
+
+    /**
+     * @var string
+     */
+    private $domain;
+
+    /**
+     * @var string
+     */
+    private $appId;
+
+    /**
+     * @var string
+     */
+    private $companyId;
+
+    /**
      * CategoryService constructor.
      *
      * @param LoggerInterface $logger
      * @param EntityManagerInterface $em
      */
-    public function __construct(LoggerInterface $logger, SessionInterface $session)
+    public function __construct(LoggerInterface $logger, SessionInterface $session, $s1Credentials)
     {
         $this->logger = $logger;
 //        $this->em = $em;
         $this->session = $session;
         $this->authId = $session->get("authID");
+        $this->kind = $s1Credentials['kind'];
+        $this->domain = $s1Credentials['domain'];
+        $this->appId = $s1Credentials['appId'];
+        $this->companyId = $s1Credentials['companyId'];
     }
 
     /**
@@ -57,11 +81,11 @@ class WishlistService
 <?xml version="1.0" encoding="utf-16"?>
 <ClientGetItemsRequest>
     <Type>1005</Type>
-    <Kind>1</Kind>
-    <Domain>pharmacyone</Domain>
+    <Kind>$this->kind</Kind>
+    <Domain>$this->domain</Domain>
     <AuthID>$this->authId</AuthID>
-    <AppID>157</AppID>
-    <CompanyID>1000</CompanyID>
+    <AppID>$this->appId</AppID>
+    <CompanyID>$this->companyId</CompanyID>
     <pagesize>10</pagesize>
     <pagenumber>0</pagenumber>
     <ItemID>$ids</ItemID>

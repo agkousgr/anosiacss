@@ -30,17 +30,40 @@ class UserAccountService
     private $productService;
 
     /**
+     * @var string
+     */
+    private $kind;
+
+    /**
+     * @var string
+     */
+    private $domain;
+
+    /**
+     * @var string
+     */
+    private $appId;
+
+    /**
+     * @var string
+     */
+    private $companyId;
+    /**
      * UserAccountService constructor.
      * @param LoggerInterface $logger
      * @param SessionInterface $session
      * @param ProductService $productService
      */
-    public function __construct(LoggerInterface $logger, SessionInterface $session, ProductService $productService)
+    public function __construct(LoggerInterface $logger, SessionInterface $session, ProductService $productService, $s1Credentials)
     {
         $this->logger = $logger;
         $this->session = $session;
         $this->authId = $session->get("authID");
         $this->productService = $productService;
+        $this->kind = $s1Credentials['kind'];
+        $this->domain = $s1Credentials['domain'];
+        $this->appId = $s1Credentials['appId'];
+        $this->companyId = $s1Credentials['companyId'];
     }
 
     /**
@@ -85,11 +108,11 @@ class UserAccountService
 <?xml version="1.0" encoding="utf-16"?>
 <ClientSetClientRequest>
     <Type>1028</Type>
-    <Kind>1</Kind>
-    <Domain>pharmacyone</Domain>
+    <Kind>$this->kind</Kind>
+    <Domain>$this->domain</Domain>
     <AuthID>$this->authId</AuthID>
-    <AppID>157</AppID>
-    <CompanyID>1000</CompanyID>
+    <AppID>$this->appId</AppID>
+    <CompanyID>$this->companyId</CompanyID>
     <CODE>C*</CODE>
     <NAME>$name</NAME>
     <BRANCH>1000</BRANCH>
@@ -140,12 +163,12 @@ EOF;
 <?xml version="1.0" encoding="utf-16"?>
 <ClientSetClientRequest>
     <Type>1028</Type>
-    <Kind>1</Kind>
-    <Domain>pharmacyone</Domain>
+    <Kind>$this->kind</Kind>
+    <Domain>$this->domain</Domain>
     <Key>$clientId</Key>
     <AuthID>$this->authId</AuthID>
-    <AppID>157</AppID>
-    <CompanyID>1000</CompanyID>
+    <AppID>$this->appId</AppID>
+    <CompanyID>$this->companyId</CompanyID>
     <CODE>C*</CODE>
     <NAME>$name</NAME>
     <BRANCH>1000</BRANCH>
@@ -195,12 +218,12 @@ EOF;
 <?xml version="1.0" encoding="utf-16"?>
 <ClientSetUserRequest>
     <Type>1022</Type>
-    <Kind>1</Kind>
-    <Domain>pharmacyone</Domain>
+    <Kind>$this->kind</Kind>
+    <Domain>$this->domain</Domain>
     <Key></Key>
     <AuthID>$this->authId</AuthID>
-    <AppID>157</AppID>
-    <CompanyID>1000</CompanyID>
+    <AppID>$this->appId</AppID>
+    <CompanyID>$this->companyId</CompanyID>
     <Username>$username</Username>
     <Password>$password</Password>
     <ClientID>$userId</ClientID>
@@ -240,12 +263,12 @@ EOF;
 <?xml version="1.0" encoding="utf-16"?>
 <ClientSetNewsletterRequest>
     <Type>1020</Type>
-    <Kind>1</Kind>
-    <Domain>pharmacyone</Domain>
+    <Kind>$this->kind</Kind>
+    <Domain>$this->domain</Domain>
     <Key>$key</Key>
     <AuthID>$this->authId</AuthID>
-    <AppID>157</AppID>
-    <CompanyID>1000</CompanyID>
+    <AppID>$this->appId</AppID>
+    <CompanyID>$this->companyId</CompanyID>
     <Email>$username</Email>
     <Name>$name</Name>
     <Allow>true</Allow>
@@ -285,12 +308,12 @@ EOF;
 <?xml version="1.0" encoding="utf-16"?>
 <ClientSetNewsletterRequest>
     <Type>1020</Type>
-    <Kind>1</Kind>
-    <Domain>pharmacyone</Domain>
+    <Kind>$this->kind</Kind>
+    <Domain>$this->domain</Domain>
     <Key></Key>
     <AuthID>$this->authId</AuthID>
-    <AppID>157</AppID>
-    <CompanyID>1000</CompanyID>
+    <AppID>$this->appId</AppID>
+    <CompanyID>$this->companyId</CompanyID>
     <Email>$username</Email>
     <Name>$name</Name>
 </ClientSetNewsletterRequest>
@@ -317,11 +340,11 @@ EOF;
 <?xml version="1.0" encoding="utf-16"?>
 <ClientGetNewsletterRequest>
     <Type>1013</Type>
-    <Kind>1</Kind>
-    <Domain>pharmacyone</Domain>
+    <Kind>$this->kind</Kind>
+    <Domain>$this->domain</Domain>
     <AuthID>$this->authId</AuthID>
-    <AppID>157</AppID>
-    <CompanyID>1000</CompanyID>
+    <AppID>$this->appId</AppID>
+    <CompanyID>$this->companyId</CompanyID>
     <pagesize>1</pagesize>
     <pagenumber>0</pagenumber>
     <Email>$username</Email>
@@ -361,11 +384,11 @@ EOF;
 <?xml version="1.0" encoding="utf-16"?>
 <ClientGetShipAddressRequest>
     <Type>1034</Type>
-    <Kind>1</Kind>
-    <Domain>pharmacyone</Domain>
+    <Kind>$this->kind</Kind>
+    <Domain>$this->domain</Domain>
     <AuthID>$this->authId</AuthID>
-    <AppID>157</AppID>
-    <CompanyID>1000</CompanyID>
+    <AppID>$this->appId</AppID>
+    <CompanyID>$this->companyId</CompanyID>
     <ClientID>$clientId</ClientID>
     <ID></ID>
     <ShipAddressID>$id</ShipAddressID>
@@ -413,11 +436,11 @@ EOF;
 <?xml version="1.0" encoding="utf-16"?>
 <ClientGetShipAddressRequest>
     <Type>1034</Type>
-    <Kind>1</Kind>
-    <Domain>pharmacyone</Domain>
+    <Kind>$this->kind</Kind>
+    <Domain>$this->domain</Domain>
     <AuthID>$this->authId</AuthID>
-    <AppID>157</AppID>
-    <CompanyID>1000</CompanyID>
+    <AppID>$this->appId</AppID>
+    <CompanyID>$this->companyId</CompanyID>
     <ClientID>$clientId</ClientID>
     <ID></ID>
     <ShipAddressID>-1</ShipAddressID>
@@ -472,11 +495,11 @@ EOF;
 <?xml version="1.0" encoding="utf-16"?>
 <ClientSetShipAddressRequest>
     <Type>1036</Type>
-    <Kind>1</Kind>
-    <Domain>pharmacyone</Domain>
+    <Kind>$this->kind</Kind>
+    <Domain>$this->domain</Domain>
     <AuthID>$this->authId</AuthID>
-    <AppID>157</AppID>
-    <CompanyID>1000</CompanyID>
+    <AppID>$this->appId</AppID>
+    <CompanyID>$this->companyId</CompanyID>
     <Key>$id</Key>
     <ClientID>$clientId</ClientID>
     <Address>$address</Address>
@@ -513,11 +536,11 @@ EOF;
 <?xml version="1.0" encoding="utf-16"?>
 <ClientDelShipAddressRequest>
     <Type>1052</Type>
-    <Kind>1</Kind>
-    <Domain>pharmacyone</Domain>
+    <Kind>$this->kind</Kind>
+    <Domain>$this->domain</Domain>
     <AuthID>$this->authId</AuthID>
-    <AppID>157</AppID>
-    <CompanyID>1000</CompanyID>
+    <AppID>$this->appId</AppID>
+    <CompanyID>$this->companyId</CompanyID>
     <Key>$id</Key>
 </ClientDelShipAddressRequest>
 EOF;
@@ -547,11 +570,11 @@ EOF;
 <?xml version="1.0" encoding="utf-16"?>
 <ClientGetUsersRequest>
     <Type>1015</Type>
-    <Kind>1</Kind>
-    <Domain>pharmacyone</Domain>
+    <Kind>$this->kind</Kind>
+    <Domain>$this->domain</Domain>
     <AuthID>$this->authId</AuthID>
-    <AppID>157</AppID>
-    <CompanyID>1000</CompanyID>
+    <AppID>$this->appId</AppID>
+    <CompanyID>$this->companyId</CompanyID>
     <pagesize>1</pagesize>
     <pagenumber>0</pagenumber>
     <Username>$username</Username>
@@ -596,11 +619,11 @@ EOF;
 <?xml version="1.0" encoding="utf-16"?>
 <ClientGetUsersRequest>
     <Type>1015</Type>
-    <Kind>1</Kind>
-    <Domain>pharmacyone</Domain>
+    <Kind>$this->kind</Kind>
+    <Domain>$this->domain</Domain>
     <AuthID>$this->authId</AuthID>
-    <AppID>157</AppID>
-    <CompanyID>1000</CompanyID>
+    <AppID>$this->appId</AppID>
+    <CompanyID>$this->companyId</CompanyID>
     <pagesize>20</pagesize>
     <pagenumber>0</pagenumber>
     <Username>$username</Username>
@@ -705,11 +728,11 @@ EOF;
 <?xml version="1.0" encoding="utf-16"?>
 <ClientGetClientsRequest>
     <Type>1042</Type>
-    <Kind>1</Kind>
-    <Domain>pharmacyone</Domain>
+    <Kind>$this->kind</Kind>
+    <Domain>$this->domain</Domain>
     <AuthID>$this->authId</AuthID>
-    <AppID>157</AppID>
-    <CompanyID>1000</CompanyID>
+    <AppID>$this->appId</AppID>
+    <CompanyID>$this->companyId</CompanyID>
     <pagesize>1</pagesize>
     <pagenumber>0</pagenumber>
     <ClientID>$clientId</ClientID>
@@ -757,11 +780,11 @@ EOF;
 <?xml version="1.0" encoding="utf-16"?>
 <ClientGetClientsRequest>
     <Type>1042</Type>
-    <Kind>1</Kind>
-    <Domain>pharmacyone</Domain>
+    <Kind>$this->kind</Kind>
+    <Domain>$this->domain</Domain>
     <AuthID>$this->authId</AuthID>
-    <AppID>157</AppID>
-    <CompanyID>1000</CompanyID>
+    <AppID>$this->appId</AppID>
+    <CompanyID>$this->companyId</CompanyID>
     <pagesize>1</pagesize>
     <pagenumber>0</pagenumber>
     <ClientID>-1</ClientID>
@@ -801,11 +824,11 @@ EOF;
 <?xml version="1.0" encoding="utf-16"?>
 <ClientGetUsersRequest>
     <Type>1015</Type>
-    <Kind>1</Kind>
-    <Domain>pharmacyone</Domain>
+    <Kind>$this->kind</Kind>
+    <Domain>$this->domain</Domain>
     <AuthID>$this->authId</AuthID>
-    <AppID>157</AppID>
-    <CompanyID>1000</CompanyID>
+    <AppID>$this->appId</AppID>
+    <CompanyID>$this->companyId</CompanyID>
     <pagesize>1</pagesize>
     <pagenumber>0</pagenumber>
     <Username>$username</Username>
@@ -875,11 +898,11 @@ EOF;
 <?xml version="1.0" encoding="utf-16"?>
 <ClientGetUsersRequest>
     <Type>1015</Type>
-    <Kind>1</Kind>
-    <Domain>pharmacyone</Domain>
+    <Kind>$this->kind</Kind>
+    <Domain>$this->domain</Domain>
     <AuthID>$this->authId</AuthID>
-    <AppID>157</AppID>
-    <CompanyID>1000</CompanyID>
+    <AppID>$this->appId</AppID>
+    <CompanyID>$this->companyId</CompanyID>
     <pagesize>1</pagesize>
     <pagenumber>0</pagenumber>
     <Username>$username</Username>
@@ -910,11 +933,11 @@ EOF;
 <?xml version="1.0" encoding="utf-16"?>
 <ClientGetNewsletterRequest>
     <Type>1013</Type>
-    <Kind>1</Kind>
-    <Domain>pharmacyone</Domain>
+    <Kind>$this->kind</Kind>
+    <Domain>$this->domain</Domain>
     <AuthID>$this->authId</AuthID>
-    <AppID>157</AppID>
-    <CompanyID>1000</CompanyID>
+    <AppID>$this->appId</AppID>
+    <CompanyID>$this->companyId</CompanyID>
     <pagesize>100</pagesize>
     <pagenumber>0</pagenumber>
     <FilterEmail>null</FilterEmail>
@@ -941,11 +964,11 @@ EOF;
 <?xml version="1.0" encoding="utf-16"?>
 <ClientGetOrdersRequest>
     <Type>1048</Type>
-    <Kind>1</Kind>
-    <Domain>pharmacyone</Domain>
+    <Kind>$this->kind</Kind>
+    <Domain>$this->domain</Domain>
     <AuthID>$this->authId</AuthID>
-    <AppID>157</AppID>
-    <CompanyID>1000</CompanyID>
+    <AppID>$this->appId</AppID>
+    <CompanyID>$this->companyId</CompanyID>
     <CustomerID>$clientId</CustomerID>
     <OrderID>null</OrderID>
     <Number>null</Number>
@@ -975,11 +998,11 @@ EOF;
 <?xml version="1.0" encoding="utf-16"?>
 <ClientGetOrderRequest>
     <Type>1050</Type>
-    <Kind>1</Kind>
-    <Domain>pharmacyone</Domain>
+    <Kind>$this->kind</Kind>
+    <Domain>$this->domain</Domain>
     <AuthID>$this->authId</AuthID>
-    <AppID>157</AppID>
-    <CompanyID>1000</CompanyID>
+    <AppID>$this->appId</AppID>
+    <CompanyID>$this->companyId</CompanyID>
     <CustomerID>$clientId</CustomerID>
     <OrderID>$orderId</OrderID>
     <Number>null</Number>

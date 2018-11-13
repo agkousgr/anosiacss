@@ -47,17 +47,47 @@ class CategoryService
     private $authId;
 
     /**
+     * @var string
+     */
+    private $kind;
+
+    /**
+     * @var string
+     */
+    private $domain;
+
+    /**
+     * @var string
+     */
+    private $appId;
+
+    /**
+     * @var string
+     */
+    private $companyId;
+
+    /**
+     * @var string
+     */
+    private $client;
+
+    /**
      * CategoryService constructor.
      *
      * @param LoggerInterface $logger
      * @param EntityManagerInterface $em
      */
-    public function __construct(LoggerInterface $logger, EntityManagerInterface $em, SessionInterface $session)
+    public function __construct(LoggerInterface $logger, EntityManagerInterface $em, SessionInterface $session, $s1Credentials)
     {
         $this->logger = $logger;
         $this->em = $em;
         $this->session = $session;
         $this->authId = $session->get("authID");
+        $this->kind = $s1Credentials['kind'];
+        $this->domain = $s1Credentials['domain'];
+        $this->appId = $s1Credentials['appId'];
+        $this->companyId = $s1Credentials['companyId'];
+        $this->client = new \SoapClient('https://caron.cloudsystems.gr/FOeshopWS/ForeignOffice.FOeshop.API.FOeshopSvc.svc?singleWsdl', ['trace' => true, 'exceptions' => true,]);
 //        $encoders = array(new XmlEncoder());
 //        $normalizers = array(new ObjectNormalizer());
 //        $this->serializer = new Serializer($normalizers, $encoders);
@@ -70,17 +100,16 @@ class CategoryService
      */
     public function getCategoryInfo($ctg)
     {
-        $client = new \SoapClient('https://caron.cloudsystems.gr/FOeshopWS/ForeignOffice.FOeshop.API.FOeshopSvc.svc?singleWsdl', ['trace' => true, 'exceptions' => true,]);
 
         $message = <<<EOF
 <?xml version="1.0" encoding="utf-16"?>
 <ClientGetCategoriesRequest>
     <Type>1007</Type>
-    <Kind>1</Kind>
-    <Domain>pharmacyone</Domain>
+    <Kind>$this->kind</Kind>
+    <Domain>$this->domain</Domain>
     <AuthID>$this->authId</AuthID>
-    <AppID>157</AppID>
-    <CompanyID>1000</CompanyID>
+    <AppID>$this->appId</AppID>
+    <CompanyID>$this->companyId</CompanyID>
     <IsTopLevel>-1</IsTopLevel>
     <IsVisible>1</IsVisible>
     <CategoryID>$ctg</CategoryID>
@@ -88,7 +117,7 @@ class CategoryService
 </ClientGetCategoriesRequest>
 EOF;
         try {
-            $result = $client->SendMessage(['Message' => $message]);
+            $result = $this->client->SendMessage(['Message' => $message]);
             $resultXML = simplexml_load_string(str_replace("utf-16", "utf-8", $result->SendMessageResult));
             $category = $resultXML->GetDataRows->GetCategoriesRow;
             $categoryInfo = array(
@@ -117,17 +146,16 @@ EOF;
      */
     public function getCategoriesFromS1($authId)
     {
-        $client = new \SoapClient('https://caron.cloudsystems.gr/FOeshopWS/ForeignOffice.FOeshop.API.FOeshopSvc.svc?singleWsdl', ['trace' => true, 'exceptions' => true,]);
 
         $message = <<<EOF
 <?xml version="1.0" encoding="utf-16"?>
 <ClientGetCategoriesRequest>
     <Type>1007</Type>
-    <Kind>1</Kind>
-    <Domain>pharmacyone</Domain>
+    <Kind>$this->kind</Kind>
+    <Domain>$this->domain</Domain>
     <AuthID>$authId</AuthID>
-    <AppID>157</AppID>
-    <CompanyID>1000</CompanyID>
+    <AppID>$this->appId</AppID>
+    <CompanyID>$this->companyId</CompanyID>
     <IsTopLevel>1</IsTopLevel>
     <IsVisible>-1</IsVisible>
     <CategoryID>-1</CategoryID>
@@ -135,7 +163,7 @@ EOF;
 </ClientGetCategoriesRequest>
 EOF;
         try {
-            $result = $client->SendMessage(['Message' => $message]);
+            $result = $this->client->SendMessage(['Message' => $message]);
             $resultXML = simplexml_load_string(str_replace("utf-16", "utf-8", $result->SendMessageResult));
             $categories = $this->initializeCategories($resultXML->GetDataRows->GetCategoriesRow, $authId);
 
@@ -223,23 +251,22 @@ EOF;
 
     public function getSubCategories($ctgId, $authId)
     {
-        $client = new \SoapClient('https://caron.cloudsystems.gr/FOeshopWS/ForeignOffice.FOeshop.API.FOeshopSvc.svc?singleWsdl', ['trace' => true, 'exceptions' => true,]);
 
         $message = <<<EOF
 <?xml version="1.0" encoding="utf-16"?>
 <ClientGetCategoryChildrenRequest>
     <Type>1009</Type>
-    <Kind>1</Kind>
-    <Domain>pharmacyone</Domain>
+    <Kind>$this->kind</Kind>
+    <Domain>$this->domain</Domain>
     <AuthID>$authId</AuthID>
-    <AppID>157</AppID>
-    <CompanyID>1000</CompanyID>
+    <AppID>$this->appId</AppID>
+    <CompanyID>$this->companyId</CompanyID>
     <CategoryID>$ctgId</CategoryID>
     <Slug>null</Slug>
 </ClientGetCategoryChildrenRequest>
 EOF;
         try {
-            $result = $client->SendMessage(['Message' => $message]);
+            $result = $this->client->SendMessage(['Message' => $message]);
 //            dump($message, $result);
 //            return $result->SendMessageResult;
 //            return str_replace("utf-16", "utf-8", $result->SendMessageResult);
@@ -251,17 +278,16 @@ EOF;
 
     public function getCategoryItemsCount($ctgId)
     {
-        $client = new \SoapClient('https://caron.cloudsystems.gr/FOeshopWS/ForeignOffice.FOeshop.API.FOeshopSvc.svc?singleWsdl', ['trace' => true, 'exceptions' => true,]);
 
         $message = <<<EOF
 <?xml version="1.0" encoding="utf-16"?>
 <ClientGetCategoryItemsCountRequest>
     <Type>1011</Type>
-    <Kind>1</Kind>
-    <Domain>pharmacyone</Domain>
+    <Kind>$this->kind</Kind>
+    <Domain>$this->domain</Domain>
     <AuthID>$this->authId</AuthID>
-    <AppID>157</AppID>
-    <CompanyID>1000</CompanyID>
+    <AppID>$this->appId</AppID>
+    <CompanyID>$this->companyId</CompanyID>
     <pagesize>10</pagesize>
     <pagenumber>0</pagenumber>
     <CategoryID>$ctgId</CategoryID>
@@ -273,7 +299,7 @@ EOF;
 </ClientGetCategoryItemsCountRequest>
 EOF;
         try {
-            $result = $client->SendMessage(['Message' => $message]);
+            $result = $this->client->SendMessage(['Message' => $message]);
             dump($message, $result);
 //            return $result->SendMessageResult;
 //            return str_replace("utf-16", "utf-8", $result->SendMessageResult);

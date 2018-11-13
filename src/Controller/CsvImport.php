@@ -4,6 +4,7 @@ namespace App\Controller;
 
 use App\Entity\AdminCategory;
 use App\Entity\Article;
+use App\Entity\MigrationProducts;
 use App\Entity\User;
 use League\Csv\Reader;
 use League\Csv\Statement;
@@ -20,11 +21,11 @@ class CsvImport extends MainController
         $csv->setHeaderOffset(0);
 
         $stmt = (new Statement())
-            ->limit(500);
+            ->limit(10);
 
         $records = $stmt->process($csv);
         foreach ($records as $record) {
-        $article = new Article();
+            $article = new Article();
             $article->setName($record['name']);
             $article->setDescription($record['description']);
             $category = $em->getRepository(AdminCategory::class)->find(1);
@@ -45,9 +46,95 @@ class CsvImport extends MainController
             $article->setIsPublished($isPublished);
             dump($article);
             $em->persist($article);
-        $em->flush();
+            $em->flush();
         }
         return;
 
     }
+
+    public function importProducts(EntityManagerInterface $em)
+    {
+        $csv = Reader::createFromPath($this->getParameter('kernel.project_dir') . '/public/csv/products-import.csv', 'r');
+        $csv->setDelimiter("\t");
+        $csv->setHeaderOffset(0);
+
+        $stmt = (new Statement())
+            ->offset(11963)
+            ->limit(5000);
+
+        $records = $stmt->process($csv);
+        foreach ($records as $record) {
+            dump($record);
+            $pr = new MigrationProducts();
+            $pr->setS1id(intval($record['s1id']));
+            $pr->setName($record['name']);
+            $pr->setSku($record['sku']);
+            $pr->setSmallDescription($record['smallDescription']);
+            $pr->setLargeDescription($record['largeDescription']);
+            $pr->setIngredients($record['ingredients']);
+            $pr->setInstructions($record['instructions']);
+//            $pr->setOldSlug($record['oldSlug']);
+            $pr->setSlug($record['Slug']);
+//            $pr->setSeoTitle($record['seoTitle']);
+//            $pr->setSeoKeywords($record['seoKeywords']);
+            $pr->setManufacturer($record['manufacturer']);
+            $em->persist($pr);
+            $em->flush();
+        }
+        return;
+    }
+
+    public function importSeo(EntityManagerInterface $em)
+    {
+        $csv = Reader::createFromPath($this->getParameter('kernel.project_dir') . '/public/csv/SEO.csv', 'r');
+        $csv->setDelimiter("\t");
+        $csv->setHeaderOffset(0);
+
+        $stmt = (new Statement())
+            ->offset(0)
+            ->limit(10000);
+
+        $records = $stmt->process($csv);
+        foreach ($records as $record) {
+//            dump($record);
+            $pr = $em->getRepository(MigrationProducts::class)->findOneBy(['sku' => $record['SKU']]);
+            if ($pr) {
+//                dump($pr);
+                $pr->setSeoTitle(strval($record['seo_title']));
+                $pr->setSeoKeywords($record['keywords']);
+                $em->persist($pr);
+                $em->flush();
+            }
+        }
+        return;
+//        $pr = $em->
+    }
+
+
+    public function importOldSlugs(EntityManagerInterface $em)
+    {
+        $csv = Reader::createFromPath($this->getParameter('kernel.project_dir') . '/public/csv/old_slugs.csv', 'r');
+        $csv->setDelimiter("\t");
+        $csv->setHeaderOffset(0);
+
+        $stmt = (new Statement())
+            ->offset(0)
+            ->limit(10000);
+
+        $records = $stmt->process($csv);
+        foreach ($records as $record) {
+//            dump($record);
+            $pr = $em->getRepository(MigrationProducts::class)->findOneBy(['s1id' => $record['id']]);
+            if ($pr) {
+//                dump($pr);
+                $pr->setImages(strval($record['imageUrl']));
+                $pr->setOldSlug($record['Slug']);
+                $em->persist($pr);
+                $em->flush();
+            }
+        }
+        return;
+//        $pr = $em->
+    }
+
 }

@@ -5,6 +5,23 @@ parameters:
     upload_dirs:
         articles_image_directory: '%kernel.project_dir%/public/uploads/articles'
         slider_image_directory: '%kernel.project_dir%/public/uploads/slider'
+    s1_credentials:
+        kind: '1'
+        domain: 'anosiaph'
+        appId: '1001'
+        companyId: '1001'
+        refId: '10'
+        userId: '10'
+        username: 'webadmin'
+        password: '2018@#AnosiaP'
+#        kind: '1'
+#        domain: 'pharmacyone'
+#        appId: '157'
+#        companyId: '1000'
+#        refId: '1'
+#        userId: '1'
+#        username: 'webuser'
+#        password: 'password'
 
 #    beelab_paypal:
 #        username: "sales@anosiapharmacy.gr"
@@ -17,8 +34,8 @@ services:
         autowire: true      # Automatically injects dependencies in your services.
         autoconfigure: true # Automatically registers your services as commands, event subscribers, etc.
         public: false       # Allows optimizing the container by removing unused services; this also means
-                            # fetching services directly from the container via $container->get() won't work.
-                            # The best practice is to be explicit about your dependencies anyway.
+          # fetching services directly from the container via $container->get() won't work.
+        # The best practice is to be explicit about your dependencies anyway.
 
     # makes classes in src/ available to be used as services
     # this creates a service per class whose id is the fully-qualified class name
@@ -38,13 +55,45 @@ services:
     # database session storage
     Symfony\Component\HttpFoundation\Session\Storage\Handler\PdoSessionHandler:
         arguments:
-            - 'mysql:dbname=anosia_sessions'
-            - {db_username: '%env(SESSION_DATABASE_USER)%', db_password: '%env(SESSION_DATABASE_PASSWORD)%'}
+        - 'mysql:dbname=anosia_sessions'
+        - {db_username: '%env(SESSION_DATABASE_USER)%', db_password: '%env(SESSION_DATABASE_PASSWORD)%'}
 
     # Admin File Uploaders
     App\Service\FileUploader:
         arguments:
             $targetDirectory: '%upload_dirs%'
+
+    # Get data from S1 services
+    App\Service\BrandsService:
+        arguments:
+            $s1Credentials: '%s1_credentials%'
+    App\Service\CartService:
+        arguments:
+            $s1Credentials: '%s1_credentials%'
+    App\Service\CategoryService:
+        arguments:
+            $s1Credentials: '%s1_credentials%'
+    App\Service\CheckoutService:
+        arguments:
+            $s1Credentials: '%s1_credentials%'
+    App\Service\NewsletterService:
+        arguments:
+            $s1Credentials: '%s1_credentials%'
+    App\Service\ProductService:
+        arguments:
+            $s1Credentials: '%s1_credentials%'
+    App\Service\SkroutzService:
+        arguments:
+            $s1Credentials: '%s1_credentials%'
+    App\Service\SoftoneLogin:
+        arguments:
+            $s1Credentials: '%s1_credentials%'
+    App\Service\UserAccountService:
+        arguments:
+            $s1Credentials: '%s1_credentials%'
+    App\Service\WishlistService:
+        arguments:
+            $s1Credentials: '%s1_credentials%'
 
     # Subsctribers
     App\Form\Subscriber\CheckoutSubscriber:
