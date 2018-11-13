@@ -164,6 +164,7 @@ EOF;
 EOF;
         try {
             $result = $this->client->SendMessage(['Message' => $message]);
+            dump($message, $result);
             $resultXML = simplexml_load_string(str_replace("utf-16", "utf-8", $result->SendMessageResult));
             $categories = $this->initializeCategories($resultXML->GetDataRows->GetCategoriesRow, $authId);
 

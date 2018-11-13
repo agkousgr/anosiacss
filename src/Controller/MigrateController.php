@@ -5,54 +5,22 @@ namespace App\Controller;
 
 
 use App\Entity\MigrationProducts;
+use App\Service\MigrationService;
+use App\Service\ProductService;
 use Doctrine\ORM\EntityManagerInterface;
 
 class MigrateController extends MainController
 {
-    public function updateS1()
+    public function updateS1(EntityManagerInterface $em, MigrationService $migrationService)
     {
-        $client = new \SoapClient('https://caron.cloudsystems.gr/FOeshopWS/ForeignOffice.FOeshop.API.FOeshopSvc.svc?singleWsdl', ['trace' => true, 'exceptions' => true,]);
-
-        $authId = $this->session->get("authID");
-
-        $body = '&lt;Body&gt;&lt;h1&gt;Ingredients&lt;/h1&gt;&lt;/body&gt;';
-
-        $message = <<<EOF
-<?xml version="1.0" encoding="utf-16"?>
-<ClientSetItemSEORequest>
-    <Type>1060</Type>
-    <Kind>1</Kind>
-    <Domain>pharmacyone</Domain>
-    <AuthID>$authId</AuthID>
-    <AppID>157</AppID>
-    <CompanyID>1000</CompanyID>
-    <ItemID>29246</ItemID>
-    <Slug>slug</Slug>
-    <SEOTitle>SEO Title</SEOTitle>
-    <SEODescription>SEO Description</SEODescription>
-    <SEOKeywords>SEO Keywords</SEOKeywords>
-    <OldSlug>old slug</OldSlug>
-    <Ingredients>$body</Ingredients>
-    <Instructions>$body</Instructions>
-    <MakeID></MakeID>
-    <CategoryIDs></CategoryIDs>
-    <Summary>$body</Summary>
-    <ManufacturID>1001</ManufacturID>
-</ClientSetItemSEORequest>
-EOF;
-        try {
-            $itemsArr = array();
-            $result = $client->SendMessage(['Message' => $message]);
-            $items = simplexml_load_string(str_replace("utf-16", "utf-8", $result->SendMessageResult));
-            dump($message, $result);
-
-            return;
-        } catch (\SoapFault $sf) {
-            echo $sf->faultstring;
+        $products = $em->getRepository(MigrationProducts::class)->findBy([], [], 1500, 11500);
+        foreach ($products as $pr) {
+            $migrationService->updateProducts($pr->getId(), $pr->getSlug(), $pr->getOldSlug(), $pr->getSeoTitle(), '', $pr->getSeoKeywords(), $pr->getIngredients(), $pr->getInstructions(), $pr->getSmallDescription(), $pr->getLargeDescription());
         }
+
     }
 
-    public function migrateImages(EntityManagerInterface $em)
+    public function migrateImages(EntityManagerInterface $em, MigrationService $migrationService, ProductService $productService)
     {
 //       Save Path: FOSO/[Serial]/[CompanyID]/[TableName]/[sodtype]/[sosource]/[TableID]
 //      [Serial] ο αριθμός της εγκατάστασης του SoftOne
@@ -61,22 +29,40 @@ EOF;
 //      [sodtype] η τιμή του sodtype αν υπάρχει, διαφορετικά ‘-’  (για τα είδη 51)
 //      [sosource] η τιμή του sosource αν υπάρχει, διαφορετικά ‘-’ (για τα είδη δεν υπάρχει)
 //      [TableID] το ID του είδους
+        $s1ProductData = $productService->getItems('null', $keyword = 'null', 10, $sortBy = 'null', $isSkroutz = -1, $makeId = 'null', $priceRange = 'null');
+
+        dump($s1ProductData);
+        return;
         try {
-            $products = $em->getRepository(MigrationProducts::class)->findBy([], [], 1500, 11500);
+            $products = $em->getRepository(MigrationProducts::class)->findBy([], [], 1, 0);
             foreach ($products as $product) {
                 if ($product->getImages()) {
                     $imagesArr = explode('|', $product->getImages());
+                    $isMain = 'true';
                     foreach ($imagesArr as $image) {
-                        $file_headers = get_headers($image);
-                        if (strpos($file_headers[0], '404') === false) {
-                            $imageName = explode('/', $image);
-                            if (!is_dir('/home/john/Downloads/anosia-images/FOSO/Serial/1001/mtrl/51/-/' . $product->getS1id())) {
-                                mkdir('/home/john/Downloads/anosia-images/FOSO/Serial/1001/mtrl/51/-/' . $product->getS1id());
-                            }
-                            $img = '/home/john/Downloads/anosia-images/FOSO/Serial/1001/mtrl/51/-/' . $product->getS1id() . '/' . end($imageName);
-                            file_put_contents($img, file_get_contents($image));
-
+                        // SAVE IMAGES TO S1
+                        $imageName = explode('/', $image);
+                        $result = $migrationService->saveImage(end($imageName), $isMain, $product->getS1id());
+                        if ($result === false) {
+                            $pr = $em->getRepository(MigrationProducts::class)->find($product->getId());
+                            $pr->setImageUpdateError('1');
+                            $em->persist($pr);
+                            $em->flush();
                         }
+//                        dump(end($imageName), $isMain, $product->getS1id());
+                        $isMain = 'false';
+
+                        // SAVE IMAGES LOCALHOST
+//                        $file_headers = get_headers($image);
+//                        if (strpos($file_headers[0], '404') === false) {
+//                            $imageName = explode('/', $image);
+//                            if (!is_dir('/home/john/Downloads/anosia-images/FOSO/Serial/1001/mtrl/51/-/' . $product->getS1id())) {
+//                                mkdir('/home/john/Downloads/anosia-images/FOSO/Serial/1001/mtrl/51/-/' . $product->getS1id());
+//                            }
+//                            $img = '/home/john/Downloads/anosia-images/FOSO/Serial/1001/mtrl/51/-/' . $product->getS1id() . '/' . end($imageName);
+//                            file_put_contents($img, file_get_contents($image));
+//
+//                        }
                     }
                 }
 

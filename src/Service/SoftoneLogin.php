@@ -84,14 +84,14 @@ class SoftoneLogin
     <CompanyID>$this->companyId</CompanyID>
     <BranchID>1000</BranchID>
     <ModuleID>0</ModuleID>
-    <RefID>10</RefID>
-    <UserID>10</UserID>
+    <RefID>$this->refId</RefID>
+    <UserID>$this->userId</UserID>
 </ClientSingleLoginRequest>
 EOF;
         try {
             $result = $client->SendMessage(['Message' => $message]);
             $s1result = simplexml_load_string(str_replace("utf-16", "utf-8", $result->SendMessageResult));
-            dump($result);
+            dump($message, $result);
             return (string)$s1result->AuthID;
         } catch (\SoapFault $sf) {
             echo $sf->faultstring;

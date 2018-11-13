@@ -77,6 +77,11 @@ class MigrationProducts
     private $images;
 
     /**
+     * @var string|null
+     */
+    private $imageUpdateError;
+
+    /**
      * @return int
      */
     public function getId(): int
@@ -315,6 +320,24 @@ class MigrationProducts
     public function setImages(?string $images): MigrationProducts
     {
         $this->images = $images;
+        return $this;
+    }
+
+    /**
+     * @return null|string
+     */
+    public function getImageUpdateError(): ?string
+    {
+        return $this->imageUpdateError;
+    }
+
+    /**
+     * @param null|string $imageUpdateError
+     * @return MigrationProducts
+     */
+    public function setImageUpdateError(?string $imageUpdateError): MigrationProducts
+    {
+        $this->imageUpdateError = $imageUpdateError;
         return $this;
     }
 
