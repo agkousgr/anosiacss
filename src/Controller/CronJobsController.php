@@ -15,7 +15,7 @@ use Doctrine\ORM\EntityManagerInterface;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Session\SessionInterface;
 
-class CreateCategoriesController extends AbstractController
+class CronJobsController extends AbstractController
 {
     /**
      * @var CategoryService

@@ -148,6 +148,7 @@ EOF;
                         'id' => $pr->ID,
                         'name' => $pr->Name2,
                         'slug' => $this->slugify($pr->Name2),
+                        'oldID' => $pr->OldItemID,
                         'summary' => $pr->SmallDescriptionHTML,
                         'body' => $pr->LargeDescriptionHTML,
                         'extraInfo' => $pr->InstructionsHTML,

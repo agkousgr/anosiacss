@@ -27,47 +27,47 @@ class MigrationProducts
     private $sku;
 
     /**
-     * @var string
+     * @var string|null
      */
     private $smallDescription;
 
     /**
-     * @var string
+     * @var string|null
      */
     private $largeDescription;
 
     /**
-     * @var string
+     * @var string|null
      */
     private $ingredients;
 
     /**
-     * @var string
+     * @var string|null
      */
     private $instructions;
 
     /**
-     * @var string
+     * @var string|null
      */
     private $oldSlug;
 
     /**
-     * @var string
+     * @var string|null
      */
     private $slug;
 
     /**
-     * @var string
+     * @var string|null
      */
     private $seoTitle;
 
     /**
-     * @var string
+     * @var string|null
      */
     private $seoKeywords;
 
     /**
-     * @var string
+     * @var string|null
      */
     private $manufacturer;
 
@@ -144,162 +144,162 @@ class MigrationProducts
     }
 
     /**
-     * @return string
+     * @return null|string
      */
-    public function getSmallDescription(): string
+    public function getSmallDescription(): ?string
     {
         return $this->smallDescription;
     }
 
     /**
-     * @param string $smallDescription
+     * @param null|string $smallDescription
      * @return MigrationProducts
      */
-    public function setSmallDescription(string $smallDescription): MigrationProducts
+    public function setSmallDescription(?string $smallDescription): MigrationProducts
     {
         $this->smallDescription = $smallDescription;
         return $this;
     }
 
     /**
-     * @return string
+     * @return null|string
      */
-    public function getLargeDescription(): string
+    public function getLargeDescription(): ?string
     {
         return $this->largeDescription;
     }
 
     /**
-     * @param string $largeDescription
+     * @param null|string $largeDescription
      * @return MigrationProducts
      */
-    public function setLargeDescription(string $largeDescription): MigrationProducts
+    public function setLargeDescription(?string $largeDescription): MigrationProducts
     {
         $this->largeDescription = $largeDescription;
         return $this;
     }
 
     /**
-     * @return string
+     * @return null|string
      */
-    public function getIngredients(): string
+    public function getIngredients(): ?string
     {
         return $this->ingredients;
     }
 
     /**
-     * @param string $ingredients
+     * @param null|string $ingredients
      * @return MigrationProducts
      */
-    public function setIngredients(string $ingredients): MigrationProducts
+    public function setIngredients(?string $ingredients): MigrationProducts
     {
         $this->ingredients = $ingredients;
         return $this;
     }
 
     /**
-     * @return string
+     * @return null|string
      */
-    public function getInstructions(): string
+    public function getInstructions(): ?string
     {
         return $this->instructions;
     }
 
     /**
-     * @param string $instructions
+     * @param null|string $instructions
      * @return MigrationProducts
      */
-    public function setInstructions(string $instructions): MigrationProducts
+    public function setInstructions(?string $instructions): MigrationProducts
     {
         $this->instructions = $instructions;
         return $this;
     }
 
     /**
-     * @return string
+     * @return null|string
      */
-    public function getOldSlug(): string
+    public function getOldSlug(): ?string
     {
         return $this->oldSlug;
     }
 
     /**
-     * @param string $oldSlug
+     * @param null|string $oldSlug
      * @return MigrationProducts
      */
-    public function setOldSlug(string $oldSlug): MigrationProducts
+    public function setOldSlug(?string $oldSlug): MigrationProducts
     {
         $this->oldSlug = $oldSlug;
         return $this;
     }
 
     /**
-     * @return string
+     * @return null|string
      */
-    public function getSlug(): string
+    public function getSlug(): ?string
     {
         return $this->slug;
     }
 
     /**
-     * @param string $slug
+     * @param null|string $slug
      * @return MigrationProducts
      */
-    public function setSlug(string $slug): MigrationProducts
+    public function setSlug(?string $slug): MigrationProducts
     {
         $this->slug = $slug;
         return $this;
     }
 
     /**
-     * @return string
+     * @return null|string
      */
-    public function getSeoTitle(): string
+    public function getSeoTitle(): ?string
     {
         return $this->seoTitle;
     }
 
     /**
-     * @param string $seoTitle
+     * @param null|string $seoTitle
      * @return MigrationProducts
      */
-    public function setSeoTitle(string $seoTitle): MigrationProducts
+    public function setSeoTitle(?string $seoTitle): MigrationProducts
     {
         $this->seoTitle = $seoTitle;
         return $this;
     }
 
     /**
-     * @return string
+     * @return null|string
      */
-    public function getSeoKeywords(): string
+    public function getSeoKeywords(): ?string
     {
         return $this->seoKeywords;
     }
 
     /**
-     * @param string $seoKeywords
+     * @param null|string $seoKeywords
      * @return MigrationProducts
      */
-    public function setSeoKeywords(string $seoKeywords): MigrationProducts
+    public function setSeoKeywords(?string $seoKeywords): MigrationProducts
     {
         $this->seoKeywords = $seoKeywords;
         return $this;
     }
 
     /**
-     * @return string
+     * @return null|string
      */
-    public function getManufacturer(): string
+    public function getManufacturer(): ?string
     {
         return $this->manufacturer;
     }
 
     /**
-     * @param string $manufacturer
+     * @param null|string $manufacturer
      * @return MigrationProducts
      */
-    public function setManufacturer(string $manufacturer): MigrationProducts
+    public function setManufacturer(?string $manufacturer): MigrationProducts
     {
         $this->manufacturer = $manufacturer;
         return $this;

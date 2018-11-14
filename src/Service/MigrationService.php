@@ -81,6 +81,7 @@ EOF;
             $result = $this->client->SendMessage(['Message' => $message]);
             $response = simplexml_load_string(str_replace("utf-16", "utf-8", $result->SendMessageResult));
             dump($message, $result);
+//            return true;
             return ((string)$response->IsValid === 'true') ? true : false;
         } catch (\SoapFault $sf) {
             echo $sf->faultstring;
@@ -91,9 +92,13 @@ EOF;
     public function updateProducts($id, $slug, $oldSlug, $seoTitle, $seoDescription, $seoKeywords, $ingredients, $instructions, $smallDescription, $largeDescription)
     {
 
-        $s1ProductData = $this->productService->getItems($id, $keyword = 'null', 1, $sortBy = 'null', $isSkroutz = -1, $makeId = 'null', $priceRange = 'null');
+//        $s1ProductData = $this->productService->getItems($id, $keyword = 'null', 1, $sortBy = 'null', $isSkroutz = -1, $makeId = 'null', $priceRange = 'null');
 
-        dump($s1ProductData);
+        $smallDescription = htmlspecialchars('<body>' . $smallDescription . '</body>');
+        $largeDescription = htmlspecialchars('<body>' . $largeDescription . '</body>');
+        $ingredients = htmlspecialchars('<body>' . $ingredients . '</body>');
+        $instructions = htmlspecialchars('<body>' . $instructions . '</body>');
+        dump($largeDescription);
 
         $message = <<<EOF
 <?xml version="1.0" encoding="utf-16"?>
@@ -123,7 +128,7 @@ EOF;
 //            $itemsArr = array();
 //            $result = $this->client->SendMessage(['Message' => $message]);
 //            $items = simplexml_load_string(str_replace("utf-16", "utf-8", $result->SendMessageResult));
-//            dump($message, $result);
+            dump($message);
 
             return;
         } catch (\SoapFault $sf) {

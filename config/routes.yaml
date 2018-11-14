@@ -19,10 +19,6 @@ search:
     methods: [POST]
     options:
         expose: true
-# Cron Jobs
-create_categories:
-    path: /create-categories
-    controller: App\Controller\CreateCategoriesController::createCategories
 
 # Products
 products_list:
@@ -420,3 +416,11 @@ get_images:
 update_s1:
     path: /update-s1
     controller: App\Controller\MigrateController::updateS1
+
+# Cron Jobs
+create_categories:
+    path: /synchronize/categories
+    controller: App\Controller\CronJobsController::synchronizeCategories
+syncronize_products:
+    path: /synchronize/products
+    controller: App\Controller\CronJobsController::synchronizeProducts

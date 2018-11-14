@@ -4,11 +4,14 @@
     <meta charset="UTF-8">
     <title>Anosia Pharmacy{% block title %}{% endblock %}</title>
     {% block meta_og %}
+        <meta property="og:locale" content="el_GR" />
         <meta property="og:title"
               content="Anosia Pharmacy "/>
         <meta property="og:description"
-              content='BLK Audiovisual LTD - Professional & TV Equipment - Cameras - Videos - Recorders'/>
+              content=''/>
+        <meta property="og:site_name" content="Anosia Pharmacy" />
         <meta property="og:image" content="{{ app.request.uri ~ asset('images/logo.png') }}"/>
+        <meta property="og:url" content="{{ path(app.request.attributes.get('_route'), app.request.attributes.get('_route_params')) }}" />
     {% endblock %}
     {% block stylesheets %}
         {% include 'partials/stylesheets.html.twig' %}
