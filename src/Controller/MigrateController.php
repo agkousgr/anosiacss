@@ -13,13 +13,18 @@ class MigrateController extends MainController
 {
     public function updateS1(EntityManagerInterface $em, MigrationService $migrationService, ProductService $productService)
     {
-        $products = $em->getRepository(MigrationProducts::class)->findBy([], [], 1, 0);
+        $products = $em->getRepository(MigrationProducts::class)->findBy([], [], 500, 13500);
+//        $products = $em->getRepository(MigrationProducts::class)->findBy(['sku' => '22']);
+
         foreach ($products as $pr) {
-            $s1ProductData = $productService->getItems('null', $keyword = 'null', 2000, $sortBy = 'PriceDesc', $isSkroutz = -1, $makeId = 'null', $priceRange = 'null', $pr->getSku());
-//            dump($s1ProductData, $s1ProductData['id']);
-            $migrationService->updateProducts($s1ProductData['id'], $pr->getSlug(), $pr->getOldSlug(), $pr->getSeoTitle(), '', $pr->getSeoKeywords(), $pr->getIngredients(), $pr->getInstructions(), $pr->getSmallDescription(), $pr->getLargeDescription());
+            $s1ProductData = $productService->getItems('null', $keyword = 'null', 1, $sortBy = 'PriceDesc', $isSkroutz = -1, $makeId = 'null', $priceRange = 'null', '22');
+            dump($pr->getSku());
+//            dump($s1ProductData);
+            if ($s1ProductData) {
+            $migrationService->updateProducts($s1ProductData['id'], $pr->getSlug(), $pr->getOldSlug(), $pr->getSeoTitle(), '', $pr->getSeoKeywords(), $pr->getIngredients(), $pr->getInstructions(), $pr->getSmallDescription(), $pr->getLargeDescription(), $s1ProductData['manufacturerId']);
+            }
         }
-return;
+        return;
     }
 
     public function migrateImages(EntityManagerInterface $em, MigrationService $migrationService, ProductService $productService)
@@ -76,7 +81,6 @@ return;
             return;
         } catch (\Exception $e) {
             $this->logger->error(__METHOD__ . ' -> {message}', ['message' => $e->getMessage()]);
-            dump($product->getS1id());
         }
     }
 }

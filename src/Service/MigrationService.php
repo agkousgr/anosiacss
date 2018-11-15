@@ -89,7 +89,7 @@ EOF;
     }
 
 
-    public function updateProducts($id, $slug, $oldSlug, $seoTitle, $seoDescription, $seoKeywords, $ingredients, $instructions, $smallDescription, $largeDescription)
+    public function updateProducts($id, $slug, $oldSlug, $seoTitle, $seoDescription, $seoKeywords, $ingredients, $instructions, $smallDescription, $largeDescription, $manufacturerId)
     {
 
 //        $s1ProductData = $this->productService->getItems($id, $keyword = 'null', 1, $sortBy = 'null', $isSkroutz = -1, $makeId = 'null', $priceRange = 'null');
@@ -98,7 +98,6 @@ EOF;
         $largeDescription = htmlspecialchars('<body>' . $largeDescription . '</body>');
         $ingredients = htmlspecialchars('<body>' . $ingredients . '</body>');
         $instructions = htmlspecialchars('<body>' . $instructions . '</body>');
-        dump($largeDescription);
 
         $message = <<<EOF
 <?xml version="1.0" encoding="utf-16"?>
@@ -119,16 +118,15 @@ EOF;
     <Instructions>$instructions</Instructions>
     <MakeID></MakeID>
     <CategoryIDs></CategoryIDs>
-    <ManufacturID>1001</ManufacturID>
+    <ManufacturID>$manufacturerId</ManufacturID>
     <SmallDescription>$smallDescription</SmallDescription>
     <LargeDescription>$largeDescription</LargeDescription>
 </ClientSetItemSEORequest>
 EOF;
         try {
-//            $itemsArr = array();
-//            $result = $this->client->SendMessage(['Message' => $message]);
+            $result = $this->client->SendMessage(['Message' => $message]);
 //            $items = simplexml_load_string(str_replace("utf-16", "utf-8", $result->SendMessageResult));
-            dump($message);
+//            dump($message, $result);
 
             return;
         } catch (\SoapFault $sf) {

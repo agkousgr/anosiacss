@@ -248,15 +248,14 @@ EOF;
             $itemsArr = [];
             $result = $client->SendMessage(['Message' => $message]);
             $items = simplexml_load_string(str_replace("utf-16", "utf-8", $result->SendMessageResult));
-            $idArr = explode(',', $id);
-//            dump($message, $result);
-//            if ($items !== false && $id !== 'null'  count($idArr) )
-            if ($items !== false && ($keyword !== 'null' || $makeId !== 'null' || $isSkroutz === '1' || ($id === 'null' && $itemCode === 'null'))) {
-                $itemsArr = $this->initializeProducts($items->GetDataRows->GetItemsRow);
-            } else if ($items !== false) {
-                $itemsArr = $this->initializeProduct($items->GetDataRows->GetItemsRow);
+//            dump($message, $result, $items);
+            if (intval($items->RowsCount) > 0) {
+                if ($items !== false && ($keyword !== 'null' || $makeId !== 'null' || $isSkroutz === '1' || ($id === 'null' && $itemCode === 'null'))) {
+                    $itemsArr = $this->initializeProducts($items->GetDataRows->GetItemsRow);
+                } else if ($items !== false) {
+                    $itemsArr = $this->initializeProduct($items->GetDataRows->GetItemsRow);
+                }
             }
-
             return $itemsArr;
         } catch (\SoapFault $sf) {
             echo $sf->faultstring;
@@ -321,10 +320,10 @@ EOF;
                     'slug' => $pr->Slug,
                     'summary' => strip_tags($pr->SmallDescriptionHTML),
                     'body' => strip_tags($pr->LargeDescriptionHTML),
-                    'instructions' => ($pr->InstructionsHTML) ?: '',
-                    'ingredients' => ($pr->IngredientsHTML) ?: '',
-                    'seoTitle' => ($pr->SEOTitle) ?: '',
-                    'seoKeywords' => ($pr->SEOKeywords) ?: '',
+                    'instructions' => $pr->InstructionsHTML,
+                    'ingredients' => $pr->IngredientsHTML,
+                    'seoTitle' => $pr->SEOTitle,
+                    'seoKeywords' => $pr->SEOKeywords,
                     'retailPrice' => $pr->RetailPrice,
                     'discount' => $pr->WebDiscountPerc,
                     'mainBarcode' => $pr->MainBarcode,
@@ -333,12 +332,14 @@ EOF;
                     'isNew' => $this->checkIfProductIsNew($pr->InsertDT),
                     'outOfStock' => $pr->OutOfStock,
                     'remainNotReserved' => $pr->Remain,
+                    'manufacturerId' => $pr->ManufacturID,
                     'webFree' => $pr->WebFree,
                     'overAvailability' => $pr->OverAvailability,
                     'maxByOrder' => $pr->MaxByOrder,
                     'hasMainImage' => $pr->HasMainPhoto,
                     'imageUrl' => (strval($pr->HasMainPhoto) !== 'false') ? 'https://caron.cloudsystems.gr/FOeshopAPIWeb/DF.aspx?' . str_replace('[Serial]', '01102459200617', str_replace('&amp;', '&', $pr->MainPhotoUrl)) : '',
-                    'categories' => $this->getProductCategories($pr->AllCategoryIDs)
+//                    'categories' => $this->getProductCategories($pr->AllCategoryIDs)
+                    'categories' => $pr->AllCategoryIDs
                 );
             }
             $imagesArr = $this->getItemPhotos($pr->ID);
@@ -355,7 +356,7 @@ EOF;
     private function getProductCategories($ctgArr)
     {
         $categories = $this->em->getRepository(Category::class)->findBy(['s1id' => $ctgArr]);
-        dump($categories);
+//        dump($categories);
         return $categories;
     }
 
@@ -382,7 +383,7 @@ EOF;
             $imagesArr = array();
             $result = $client->SendMessage(['Message' => $message]);
             $items = simplexml_load_string(str_replace("utf-16", "utf-8", $result->SendMessageResult));
-            dump($message, $result);
+//            dump($message, $result);
             if (intval($items->RowsCount) > 0) {
                 $imagesArr = $this->initializeImages($items->GetDataRows->GetItemPhotosRow);
             }

@@ -10,6 +10,7 @@ namespace App\Controller;
 
 use App\Entity\Category;
 use App\Service\CategoryService;
+use App\Service\CronJobsService;
 use App\Service\SoftoneLogin;
 use Doctrine\ORM\EntityManagerInterface;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
@@ -39,34 +40,35 @@ class CronJobsController extends AbstractController
         $this->softoneLogin = $softoneLogin;
     }
 
-    public function createCategories()
+    public function synchronizeCategories(CronJobsService $cronJobsService, SoftoneLogin $softoneLogin)
     {
-        $authID = $this->softoneLogin->login();
-        $categories = $this->categoryService->getCategories($authID);
+        $authID = $softoneLogin->login();
+        $categories = $cronJobsService->synchronizeCategories($authID);
         dump($categories);
-        foreach ($categories as $val) {
-            $categoryExists = $this->em->getRepository(Category::class)->find($val["id"]);
-            if ($categoryExists) {
-                $category = $categoryExists;
-            } else {
-                $category = new Category();
-            }
-            $isVisible = ((string)$val["isVisible"] === '1') ? true : false;
-            $category->setId((int)$val["id"]);
-            $category->setName($val["name"]);
-            $category->setSlug($val["slug"]);
-            $category->setPriority($val["priority"]);
-            $category->setS1id((int)$val["id"]);
-            $category->setDescription($val["description"]);
-            $category->setImageUrl($val["imageUrl"]);
-            $category->setIsVisible($isVisible);
-            $this->em->persist($category);
-            $this->em->flush();
-            if (!empty($val["children"])) {
-                $this->createChild($val["children"], (int)$val["id"]);
-            }
-        }
-        dump($category);
+//        foreach ($categories as $val) {
+//            $categoryExists = $this->em->getRepository(Category::class)->find($val["id"]);
+//            if ($categoryExists) {
+//                $category = $categoryExists;
+//            } else {
+//                $category = new Category();
+//            }
+//            $isVisible = ((string)$val["isVisible"] === '1') ? true : false;
+//            $category->setId((int)$val["id"]);
+//            $category->setName($val["name"]);
+//            $category->setSlug($val["slug"]);
+//            $category->setPriority($val["priority"]);
+//            $category->setS1id((int)$val["id"]);
+//            $category->setDescription($val["description"]);
+//            $category->setImageUrl($val["imageUrl"]);
+//            $category->setIsVisible($isVisible);
+//            $category->setItemsCount(0);
+//            $this->em->persist($category);
+//            $this->em->flush();
+//            if (!empty($val["children"])) {
+//                $this->createChild($val["children"], (int)$val["id"]);
+//            }
+//        }
+//        dump($category);
         return;
     }
 
@@ -91,8 +93,13 @@ class CronJobsController extends AbstractController
             $category->setDescription($val["description"]);
             $category->setImageUrl($val["imageUrl"]);
             $category->setIsVisible($isVisible);
+            $category->setItemsCount(0);
             $this->em->persist($category);
             $this->em->flush();
+            if (!empty($val["children"])) {
+                $this->createChild($val["children"], (int)$val["id"]);
+            }
         }
+        return;
     }
 }
