@@ -17,7 +17,6 @@ $(document).ready(function () {
 
     $('.delete-slide').on('click', function (e) {
         e.preventDefault();
-        alert('zong');
         displayDeleteModal('slider_delete', $(this).data('id'));
     });
 
@@ -40,7 +39,7 @@ $(document).ready(function () {
     function displayDeleteModal(route, id) {
         modalBody.empty()
             .load(Routing.generate(route, {'id': id}));
-        modalTitle.text('Διαγραφή κατηγορίας');
+        modalTitle.text('Διαγραφή slide');
         modal.modal('show');
         $('.modal-header').css('background-color', '#e65b5b');
     }

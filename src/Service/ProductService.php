@@ -97,6 +97,7 @@ class ProductService
     <MakeID>$makeId</MakeID>
     <LowPrice>$lowPrice</LowPrice>
     <HighPrice>$highPrice</HighPrice>
+    <IsVisibleCategory>-1</IsVisibleCategory>
 </ClientGetCategoryItemsRequest>
 EOF;
         try {
@@ -143,6 +144,7 @@ EOF;
     <MakeID>$makeId</MakeID>
     <LowPrice>$lowPrice</LowPrice>
     <HighPrice>$highPrice</HighPrice>
+    <IsVisibleCategory>-1</IsVisibleCategory>
 </ClientGetCategoryItemsCountRequest>
 EOF;
         try {
@@ -183,7 +185,7 @@ EOF;
                         'overAvailability' => $pr->OverAvailability,
                         'maxByOrder' => $pr->MaxByOrder,
                         'hasMainImage' => $pr->HasMainPhoto,
-                        'imageUrl' => ($pr->HasMainPhoto) ? 'https://caron.cloudsystems.gr/FOeshopAPIWeb/DF.aspx?' . str_replace('[Serial]', '01102459200617', str_replace('&amp;', '&', $pr->MainPhotoUrl)) : ''
+                        'imageUrl' => (strval($pr->HasMainPhoto) !== 'false') ? 'https://caron.cloudsystems.gr/FOeshopAPIWeb/DF.aspx?' . str_replace('[Serial]', '01102459200617', str_replace('&amp;', '&', $pr->MainPhotoUrl)) : ''
                     );
                 }
             }
@@ -250,12 +252,14 @@ EOF;
             $items = simplexml_load_string(str_replace("utf-16", "utf-8", $result->SendMessageResult));
 //            dump($message, $result, $items);
             if (intval($items->RowsCount) > 0) {
-                if ($items !== false && ($keyword !== 'null' || $makeId !== 'null' || $isSkroutz === '1' || ($id === 'null' && $itemCode === 'null'))) {
+//                if ($items !== false && ($keyword !== 'null' || $makeId !== 'null' || $isSkroutz === '1' || ($id === 'null' && $itemCode === 'null'))) { THIS IS FOR MIGRATING PRODUCTS
+                if ($items !== false && ($keyword !== 'null' || $makeId !== 'null' || $isSkroutz === '1')) {
                     $itemsArr = $this->initializeProducts($items->GetDataRows->GetItemsRow);
                 } else if ($items !== false) {
                     $itemsArr = $this->initializeProduct($items->GetDataRows->GetItemsRow);
                 }
             }
+//            dump($itemsArr);
             return $itemsArr;
         } catch (\SoapFault $sf) {
             echo $sf->faultstring;
@@ -313,6 +317,7 @@ EOF;
     {
         try {
             $prArr = [];
+            $imagesArr = [];
             if ((string)$pr->WebVisible !== 'false') {
                 $prArr = array(
                     'id' => $pr->ID,
@@ -327,6 +332,7 @@ EOF;
                     'retailPrice' => $pr->RetailPrice,
                     'discount' => $pr->WebDiscountPerc,
                     'mainBarcode' => $pr->MainBarcode,
+                    'prCode' => $pr->Code,
                     'isVisible' => $pr->WebVisible,
                     'webPrice' => $pr->WebPrice,
                     'isNew' => $this->checkIfProductIsNew($pr->InsertDT),
@@ -338,11 +344,11 @@ EOF;
                     'maxByOrder' => $pr->MaxByOrder,
                     'hasMainImage' => $pr->HasMainPhoto,
                     'imageUrl' => (strval($pr->HasMainPhoto) !== 'false') ? 'https://caron.cloudsystems.gr/FOeshopAPIWeb/DF.aspx?' . str_replace('[Serial]', '01102459200617', str_replace('&amp;', '&', $pr->MainPhotoUrl)) : '',
-//                    'categories' => $this->getProductCategories($pr->AllCategoryIDs)
-                    'categories' => $pr->AllCategoryIDs
+                    'categories' => $this->getProductCategories($pr->AllCategoryIDs)
+//                    'categories' => $pr->AllCategoryIDs
                 );
+                $imagesArr = $this->getItemPhotos($pr->ID);
             }
-            $imagesArr = $this->getItemPhotos($pr->ID);
 //            dump($prArr);
 //            'manufacturer' => $pr->ManufactorName
 //            return new Response(dump(print_r($this->prCategories)));
@@ -360,7 +366,7 @@ EOF;
         return $categories;
     }
 
-    private function getItemPhotos($id)
+    public function getItemPhotos($id)
     {
         $client = new \SoapClient('https://caron.cloudsystems.gr/FOeshopWS/ForeignOffice.FOeshop.API.FOeshopSvc.svc?singleWsdl', ['trace' => true, 'exceptions' => true,]);
 

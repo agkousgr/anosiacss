@@ -21,7 +21,7 @@ class MigrateController extends MainController
             dump($pr->getSku());
 //            dump($s1ProductData);
             if ($s1ProductData) {
-            $migrationService->updateProducts($s1ProductData['id'], $pr->getSlug(), $pr->getOldSlug(), $pr->getSeoTitle(), '', $pr->getSeoKeywords(), $pr->getIngredients(), $pr->getInstructions(), $pr->getSmallDescription(), $pr->getLargeDescription(), $s1ProductData['manufacturerId']);
+                $migrationService->updateProducts($s1ProductData['id'], $pr->getSlug(), $pr->getOldSlug(), $pr->getSeoTitle(), '', $pr->getSeoKeywords(), $pr->getIngredients(), $pr->getInstructions(), $pr->getSmallDescription(), $pr->getLargeDescription(), $s1ProductData['manufacturerId']);
             }
         }
         return;
@@ -39,48 +39,123 @@ class MigrateController extends MainController
 
 
         try {
-            $products = $em->getRepository(MigrationProducts::class)->findBy([], [], 1, 0);
+            $data = [];
+            $errorData = [];
+            $existingImages = [];
+            $damagedFiles = [];
+            $imageCounter = 0;
+            $counter = 0;
+            $products = $em->getRepository(MigrationProducts::class)->findBy([], ['id' => 'ASC'], 14000, 0);
+//            dump($products);
             foreach ($products as $product) {
                 if ($product->getImages()) {
+                    $counter++;
+//                    dump($product->getSku());
                     $s1ProductData = $productService->getItems('null', $keyword = 'null', 1, $sortBy = 'PriceDesc', $isSkroutz = -1, $makeId = 'null', $priceRange = 'null', $product->getSku());
-                    dump($s1ProductData);
-                    $imagesArr = explode('|', $product->getImages());
-                    $isMain = 'true';
-                    foreach ($imagesArr as $image) {
-                        // SAVE IMAGES TO S1
-                        $imageName = explode('/', $image);
-                        $result = $migrationService->saveImage(end($imageName), $isMain, $s1ProductData['id']);
-                        if ($result === false) {
-                            $pr = $em->getRepository(MigrationProducts::class)->find($product->getId());
-                            $pr->setImageUpdateError('1');
-                            $em->persist($pr);
-                            $em->flush();
-                        }
-//                        dump(end($imageName), $isMain, $product->getS1id());
-                        $isMain = 'false';
+//                    dump($s1ProductData);
+                    if (isset($s1ProductData['id'])) {
+                        $imagesArr = explode('|', $product->getImages());
+                        dump($s1ProductData['id']);
+                        $isMain = 'true';
+                        $prImages = $productService->getItemPhotos($s1ProductData['id']);
+                        foreach ($imagesArr as $image) {
+                            $prId = (isset($s1ProductData['id'])) ? $s1ProductData['id'] : 'error Id on productCode: ' . $product->getSku();
 
-                        // SAVE IMAGES LOCALHOST
-                        $file_headers = get_headers($image);
-                        if (strpos($file_headers[0], '404') === false) {
+//                            dump($image);
                             $imageName = explode('/', $image);
-                            if (!is_dir('/home/john/Downloads/anosia-images/FOSO/Serial/1001/mtrl/51/-/' . $s1ProductData['id'])) {
-                                mkdir('/home/john/Downloads/anosia-images/FOSO/Serial/1001/mtrl/51/-/' . $s1ProductData['id']);
+                            if (!$prImages) {
+                                // SAVE IMAGES TO S1
+                                $result = $migrationService->saveImage(end($imageName), $isMain, $s1ProductData['id']);
+                                if ($result === false) {
+                                    $pr = $em->getRepository(MigrationProducts::class)->find($product->getId());
+                                    $pr->setImageUpdateError('1');
+                                    $em->persist($pr);
+                                    $em->flush();
+                                }else{
+                                    $imageCounter++;
+                                }
+                            } else {
+                                $imageNotExists = true;
+                                foreach ($prImages['extraImages'] as $s1image) {
+                                    $imageFilename = explode('=', $s1image['imageUrl']);
+                                    if (end($imageName) !== end($imageFilename)) {
+                                        $imageNotExists = false;
+                                    }
+                                }
+                                if (true === $imageNotExists) {
+                                    $result = $migrationService->saveImage(end($imageName), $isMain, $s1ProductData['id']);
+                                    if ($result === false) {
+                                        $pr = $em->getRepository(MigrationProducts::class)->find($product->getId());
+                                        $pr->setImageUpdateError('1');
+                                        $em->persist($pr);
+                                        $em->flush();
+                                    }else{
+                                        $imageCounter++;
+                                    }
+
+                                } else {
+                                    $existingImages[] = [
+                                        'imageName' => end($imageName),
+                                        'isMain' => $isMain,
+                                        'prName' => $product->getName(),
+                                        'id' => $prId
+                                    ];
+                                }
                             }
-                            $img = '/home/john/Downloads/anosia-images/FOSO/Serial/1001/mtrl/51/-/' . $s1ProductData['id'] . '/' . end($imageName);
-                            file_put_contents($img, file_get_contents($image));
+//                        dump(end($imageName), $isMain, $product->getS1id());
+                            $data[] = [
+                                'imageName' => end($imageName),
+                                'isMain' => $isMain,
+                                'prName' => $product->getName(),
+                                'id' => $prId
+                            ];
+                            // SAVE IMAGES LOCALHOST
+                            $file_headers = get_headers($image);
+                            if (strpos($file_headers[0], '404') === false) {
+                                $imageName = explode('/', $image);
+                                if (!is_dir('/home/john/Downloads/anosia-images/' . $s1ProductData['id'])) {
+                                    mkdir('/home/john/Downloads/anosia-images/' . $s1ProductData['id']);
+                                }
+                                $img = '/home/john/Downloads/anosia-images/' . $s1ProductData['id'] . '/' . end($imageName);
+                                file_put_contents($img, file_get_contents($image));
 
+                            }else{
+                                $damagedFiles[] = [
+                                    'imageName' => end($imageName),
+                                    'isMain' => $isMain,
+                                    'prName' => $product->getName(),
+                                    'id' => $prId
+                                ];
+                            }
+                            $isMain = 'false';
                         }
+                    } else {
+                        $errorData[] = [
+                            'prName' => $product->getName(),
+                            'prCode' => $product->getSku()
+                        ];
                     }
+                } else {
+                    $data[] = [
+                        'imageName' => '',
+                        'isMain' => '',
+                        'prName' => $product->getName(),
+                        'id' => ''
+                    ];
                 }
-
-//            $url =
             }
-//        $url = 'http://example.com/image.php';
-//        $img = '/home/john/Downloads//flower.gif';
-//        file_put_contents($img, file_get_contents($url));
-            return;
+            return $this->render('migrations/images.html.twig', [
+                'data' => $data,
+                'counter' => $counter,
+                'errorData' => $errorData,
+                'existingImages' => $existingImages,
+                'damagedFiles' => $damagedFiles,
+                'imageCounter' => $imageCounter
+            ]);
+
         } catch (\Exception $e) {
             $this->logger->error(__METHOD__ . ' -> {message}', ['message' => $e->getMessage()]);
+            throw $e;
         }
     }
 }

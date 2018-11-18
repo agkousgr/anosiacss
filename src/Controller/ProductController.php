@@ -22,8 +22,10 @@ class ProductController extends MainController
             $priceRange = ($request->query->get('priceRange')) ?: 'null';
             $brands = $brandsService->getBrands('null');
             $ctgInfo = $this->em->getRepository(Category::class)->find($id);
-//            dump($this->categories);
-//            dump($this->categories->getParent());
+
+            dump($ctgInfo->getChildren());
+            $subCategories = $this->em->getRepository(Category::class)->findBy(['parent' => $ctgInfo]);
+//            dump($subCategories);
             $slider = $this->em->getRepository(Slider::class)->findBy(['category' => $id]);
             $productsCount = $this->productService->getCategoryItemsCount($id, $makeId, $priceRange);
             if ($productsCount > $pagesize * $page) {
@@ -51,7 +53,8 @@ class ProductController extends MainController
                 'sortBy' => $sortBy,
                 'brand' => $makeId,
                 'priceRange' => $priceRange,
-                'loginUrl' => $this->loginUrl
+                'loginUrl' => $this->loginUrl,
+                'subCategories' => $subCategories
             ]);
         } catch (\Exception $e) {
             $this->logger->error(__METHOD__ . ' -> {message}', ['message' => $e->getMessage()]);

@@ -349,6 +349,8 @@ category_slider_delete:
     controller: App\Controller\Admin\CategorySliderController::delete
     requirements:
         id: \d+
+    options:
+        expose: true
 category_slider_priority:
     path: /admin/category-slider-priority/{id}/{direction}
     controller: App\Controller\Admin\CategorySliderController::changePriority

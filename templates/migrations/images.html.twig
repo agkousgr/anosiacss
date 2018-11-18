@@ -1,0 +1,83 @@
+<html>
+<head>
+    <link href="{{ asset('build/admin/css/bootstrap.min.css') }}" rel="stylesheet" type="text/css"/>
+</head>
+<body>
+
+
+{% if existingImages|length > 0 %}
+    <h4>Οι παρακάτω φωτογραφίες υπάρχουν ήδη στο Softone</h4>
+    <div class="table-responsive">
+        <table id="articles" class="table table-bordered table-hover display">
+            <thead>
+            <tr>
+                <th>Image</th>
+                <th>Is Main</th>
+                <th>Product Name</th>
+                <th>Product Id</th>
+            </tr>
+            </thead>
+            {% for val in existingImages %}
+                <tr>
+                    <td>{{ val.imageName }}</td>
+                    <td>{{ val.isMain }}</td>
+                    <td>{{ val.prName }}</td>
+                    <td>{{ val.id }}</td>
+                </tr>
+            {% endfor %}
+            <tbody>
+
+            </tbody>
+        </table>
+    </div>
+{% endif %}
+
+{% if errorData|length > 0 %}
+    <h4>προϊόντα με σφαλμα</h4>
+    <div class="table-responsive">
+        <table id="articles" class="table table-bordered table-hover display">
+            <thead>
+            <tr>
+                <th>Product Name</th>
+                <th>Product Code</th>
+            </tr>
+            </thead>
+            {% for val in errorData %}
+                <tr>
+                    <td>{{ val.prName }}</td>
+                    <td>{{ val.prCode }}</td>
+                </tr>
+            {% endfor %}
+            <tbody>
+
+            </tbody>
+        </table>
+    </div>
+{% endif %}
+
+<h4>{{ counter }} προϊόντα με σύνολο {{ imageCounter }} φωτογραφίες</h4>
+<div class="table-responsive">
+    <table id="articles" class="table table-bordered table-hover display">
+        <thead>
+        <tr>
+            <th>Image</th>
+            <th>Is Main</th>
+            <th>Product Name</th>
+            <th>Product Id</th>
+        </tr>
+        </thead>
+        {% for val in data %}
+            <tr>
+                <td>{{ val.imageName }}</td>
+                <td>{{ val.isMain }}</td>
+                <td>{{ val.prName }}</td>
+                <td>{{ val.id }}</td>
+            </tr>
+        {% endfor %}
+        <tbody>
+
+        </tbody>
+    </table>
+</div>
+</body>
+</html>

@@ -45,11 +45,11 @@ class CategorySliderController extends AbstractController
                 'notice',
                 'Παρουσιάστηκε σφάλμα κατά την εγγραφή! Παρακαλώ δοκιμάστε ξανά.'
             );
-            return $this->render('Admin/slider/list.html.twig');
+            return $this->render('Admin/category_slider/list.html.twig');
         }
     }
 
-    public function create(Request $request, EntityManagerInterface $em)
+    public function create(Request $request, EntityManagerInterface $em, LoggerInterface $logger)
     {
         try {
             $id = $request->query->getInt('id');
@@ -75,18 +75,15 @@ class CategorySliderController extends AbstractController
                     'success',
                     'Η προσθήκη ολοκληρώθηκε με επιτυχία!'
                 );
-                return $this->redirectToRoute('category_slider_list');
+                return $this->redirectToRoute('category_slider_list', ['id' => $request->request->get('category_slider')['category']]);
             }
             return $this->render('Admin/category_slider/category_slider_form.html.twig', [
                 'form' => $form->createView()
             ]);
 
         } catch (\Exception $e) {
-            $this->addFlash(
-                'notice',
-                'Παρουσιάστηκε σφάλμα κατά την εγγραφή! Παρακαλώ δοκιμάστε ξανά.'
-            );
-            return $this->render('Admin/slider/list.html.twig');
+            $logger->error(__METHOD__ . ' -> {message}', ['message' => $e->getMessage()]);
+            throw $e;
         }
     }
 
@@ -152,6 +149,29 @@ class CategorySliderController extends AbstractController
                 'Παρουσιάστηκε σφάλμα κατά την εγγραφή! Παρακαλώ δοκιμάστε ξανά.'
             );
             return $this->redirectToRoute('category_slider_list', ['id' => $id]);
+        }
+    }
+
+    public function delete(Request $request, EntityManagerInterface $em, int $id, LoggerInterface $logger)
+    {
+        try {
+            $slider = $em->getRepository(Slider::class)->find($id);
+            if ($request->request->get('delete')) {
+                $em->remove($slider);
+                $em->flush();
+                $this->addFlash(
+                    'success',
+                    'Η διαγραφή ολοκληρώθηκε με επιτυχία!'
+                );
+            } else {
+                return $this->render('Admin/category_slider/delete.html.twig', [
+                    'slider' => $slider
+                ]);
+            }
+            return $this->redirectToRoute('category_slider_list', ['id' => $slider->getCategory()->getId()]);
+        } catch (\Exception $e) {
+            $logger->error(__METHOD__ . ' -> {message}', ['message' => $e->getMessage()]);
+            throw $e;
         }
     }
 }

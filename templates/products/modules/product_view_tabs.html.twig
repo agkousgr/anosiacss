@@ -3,7 +3,8 @@
         <!-- Nav tabs -->
         <ul class="nav nav-tabs" role="tablist">
             <li role="presentation" class="active"><a href="#Description" aria-controls="Description" role="tab" data-toggle="tab"><i class="fas fa-info-circle"></i>Περιγραφη</a></li>
-            <li role="presentation"><a href="#Information" aria-controls="Information" role="tab" data-toggle="tab"><i class="fas fa-file-text"></i>Συμπτωματολογια</a></li>
+            <li role="presentation"><a href="#Instructions" aria-controls="Information" role="tab" data-toggle="tab"><i class="fas fa-file-text"></i>Οδηγίες</a></li>
+            <li role="presentation"><a href="#Ingredients" aria-controls="Information" role="tab" data-toggle="tab"><i class="fas fa-file-text"></i>Συστατικά</a></li>
             {#<li role="presentation"><a href="#Sizing" aria-controls="Sizing" role="tab" data-toggle="tab"><i class="fa fa-align-center"></i>Sizing Guide</a></li>#}
             {#<li role="presentation"><a href="#Reviews" aria-controls="Reviews" role="tab" data-toggle="tab"><i class="fa fa-comments"></i>Reviews (0)</a></li>#}
         </ul>
@@ -13,8 +14,11 @@
             <div role="tabpanel" class="tab-pane active" id="Description">
                 {{ pr.body }}
             </div>
-            <div role="tabpanel" class="tab-pane" id="Information">
-                {{ pr.extraInfo }}
+            <div role="tabpanel" class="tab-pane" id="Instructions">
+                {{ pr.instructions }}
+            </div>
+            <div role="tabpanel" class="tab-pane" id="Ingredients">
+                {{ pr.ingredients }}
             </div>
             {#<div role="tabpanel" class="tab-pane" id="Sizing">Sizing Guide</div>#}
             {#<div role="tabpanel" class="tab-pane" id="Reviews">Reviews</div>#}

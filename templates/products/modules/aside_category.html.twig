@@ -2,15 +2,14 @@
     <h3>κατηγοριεσ</h3>
 
     <div class="content">
-        {% for ctg in categories %}
-            {% if ctg.id|number_format == ctgInfo.id|number_format %}
-                {% for subctg in ctg.__children %}
-                    <div class="custom-cr">
-                            <a href="{{ path('products_list', {'id': subctg.id}) }}" <span>{{ subctg.name }}</span>
-                    </div>
-                {% endfor %}
-            {% endif %}
+        {#{{ dump(ctgInfo.__children) }}#}
+
+        {% for subctg in subCategories %}
+            <div class="custom-cr">
+                <a href="{{ path('products_list', {'id': subctg.id}) }}"> <span>{{ subctg.name }}</span></a>
+            </div>
         {% endfor %}
+
         {#<div class="text-right">#}
         {#<button type="button" class="btn btn-xs btn-default">ΕΦΑΡΜΟΓΗ</button>#}
         {#</div>#}

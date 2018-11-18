@@ -18867,8 +18867,9 @@ figure.effect-apollo:hover figcaption::before {
 .post-header-wrap .navbar-nav>li>a {
     color: #171717;
     line-height: 60px;
+    font-size: 14px;
     /*line-height: 82px;*/
-    padding: 0 20px;
+    padding: 0 8px;
     text-transform: uppercase
 }
 

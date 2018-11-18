@@ -13,6 +13,16 @@ $(document).ready(function () {
         displayModal('category_slider_add', $(this).data('id'));
     });
 
+    $('.edit-slide').on('click', function (e) {
+        e.preventDefault();
+        displayEditModal('category_slider_update', $(this).data('id'));
+    });
+
+    $('.delete-slide').on('click', function (e) {
+        e.preventDefault();
+        displayDeleteModal('category_slider_delete', $(this).data('id'));
+    });
+
     $('.card-body').on('click', '#edit-slide', function (e) {
         e.preventDefault();
         displayEditModal('category_slider_update', $(this).data('id'));
@@ -44,7 +54,7 @@ $(document).ready(function () {
     function displayDeleteModal(route, id) {
         modalBody.empty()
             .load(Routing.generate(route, {'id': id}));
-        modalTitle.text('Διαγραφή κατηγορίας');
+        modalTitle.text('Διαγραφή slide');
         modal.modal('show');
         $('.modal-header').css('background-color', '#e65b5b');
     }

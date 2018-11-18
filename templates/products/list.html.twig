@@ -17,7 +17,7 @@
     <style>
         .product-case .product-name {
             font-size: 14px;
-            min-height: 40px;
+            min-height: 80px;
         }
 
         .irs-from, .irs-to, .irs-single {
@@ -263,7 +263,7 @@
                         {#{% if (ctgInfo.children is not empty and ctgInfo.lvl > 2) %}#}
                             {#{% include 'products/modules/aside_category.html.twig' %}#}
                         {#{% endif %}#}
-                        {% if (ctgInfo.children is not empty) %}
+                        {% if (subCategories is not empty) %}
                             {% include 'products/modules/aside_category.html.twig' %}
                         {% endif %}
                         {% include 'products/modules/aside_shop_by_brand.html.twig' %}

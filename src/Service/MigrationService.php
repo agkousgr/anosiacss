@@ -80,14 +80,13 @@ EOF;
         try {
             $result = $this->client->SendMessage(['Message' => $message]);
             $response = simplexml_load_string(str_replace("utf-16", "utf-8", $result->SendMessageResult));
-            dump($message, $result);
+//            dump($message, $result);
 //            return true;
             return ((string)$response->IsValid === 'true') ? true : false;
         } catch (\SoapFault $sf) {
             echo $sf->faultstring;
         }
     }
-
 
     public function updateProducts($id, $slug, $oldSlug, $seoTitle, $seoDescription, $seoKeywords, $ingredients, $instructions, $smallDescription, $largeDescription, $manufacturerId)
     {

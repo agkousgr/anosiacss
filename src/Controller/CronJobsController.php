@@ -40,34 +40,37 @@ class CronJobsController extends AbstractController
         $this->softoneLogin = $softoneLogin;
     }
 
-    public function synchronizeCategories(CronJobsService $cronJobsService, SoftoneLogin $softoneLogin)
+    public function synchronizeCategories(CronJobsService $cronJobsService, EntityManagerInterface $em, SoftoneLogin $softoneLogin)
     {
         $authID = $softoneLogin->login();
         $categories = $cronJobsService->synchronizeCategories($authID);
-        dump($categories);
-//        foreach ($categories as $val) {
-//            $categoryExists = $this->em->getRepository(Category::class)->find($val["id"]);
-//            if ($categoryExists) {
-//                $category = $categoryExists;
-//            } else {
-//                $category = new Category();
-//            }
-//            $isVisible = ((string)$val["isVisible"] === '1') ? true : false;
-//            $category->setId((int)$val["id"]);
-//            $category->setName($val["name"]);
-//            $category->setSlug($val["slug"]);
-//            $category->setPriority($val["priority"]);
-//            $category->setS1id((int)$val["id"]);
-//            $category->setDescription($val["description"]);
-//            $category->setImageUrl($val["imageUrl"]);
-//            $category->setIsVisible($isVisible);
-//            $category->setItemsCount(0);
-//            $this->em->persist($category);
-//            $this->em->flush();
-//            if (!empty($val["children"])) {
-//                $this->createChild($val["children"], (int)$val["id"]);
-//            }
-//        }
+        foreach ($categories as $val) {
+            $categoryExists = $this->em->getRepository(Category::class)->find($val["id"]);
+            if ($categoryExists) {
+                $category = $categoryExists;
+            } else {
+                $category = new Category();
+            }
+            $isVisible = ((string)$val["isVisible"] === '1') ? true : false;
+            $category->setId((int)$val["id"]);
+            $category->setName($val["name"]);
+            $category->setSlug($val["slug"]);
+            $category->setPriority($val["priority"]);
+            $category->setS1id((int)$val["id"]);
+            $category->setDescription($val["description"]);
+            $category->setImageUrl($val["imageUrl"]);
+            if ($val['parentId'] > 0) {
+                $parent = $em->getRepository(Category::class)->find($val['parentId']);
+                $category->setParent($parent);
+            }
+            $category->setIsVisible($isVisible);
+            $category->setItemsCount(0);
+            $this->em->persist($category);
+            $this->em->flush();
+            if (!empty($val["children"])) {
+                $this->createChild($val["children"], (int)$val["id"]);
+            }
+        }
 //        dump($category);
         return;
     }
