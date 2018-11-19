@@ -99,7 +99,7 @@ EOF;
                     'name' => $brand->Name,
                     'slug' => $brand->Slug,
                     'hasMainImage' => $brand->HasMainPhoto,
-                    'imageUrl' => ($brand->HasMainPhoto) ? 'https://caron.cloudsystems.gr/FOeshopAPIWeb/DF.aspx?' . str_replace('[Serial]', '01102459200617', str_replace('&amp;', '&', $brand->MainPhotoUrl)) : ''
+                    'imageUrl' => ($brand->HasMainPhoto) ? 'https://caron.cloudsystems.gr/FOeshopAPIWeb/DF.aspx?' . str_replace('[Serial]', '01102472475217', str_replace('&amp;', '&', $brand->MainPhotoUrl)) : ''
                 );
 //            }
             }

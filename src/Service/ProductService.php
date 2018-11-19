@@ -185,7 +185,7 @@ EOF;
                         'overAvailability' => $pr->OverAvailability,
                         'maxByOrder' => $pr->MaxByOrder,
                         'hasMainImage' => $pr->HasMainPhoto,
-                        'imageUrl' => (strval($pr->HasMainPhoto) !== 'false') ? 'https://caron.cloudsystems.gr/FOeshopAPIWeb/DF.aspx?' . str_replace('[Serial]', '01102459200617', str_replace('&amp;', '&', $pr->MainPhotoUrl)) : ''
+                        'imageUrl' => (strval($pr->HasMainPhoto) !== 'false') ? 'https://caron.cloudsystems.gr/FOeshopAPIWeb/DF.aspx?' . str_replace('[Serial]', '01102472475217', str_replace('&amp;', '&', $pr->MainPhotoUrl)) : ''
                     );
                 }
             }
@@ -343,7 +343,7 @@ EOF;
                     'overAvailability' => $pr->OverAvailability,
                     'maxByOrder' => $pr->MaxByOrder,
                     'hasMainImage' => $pr->HasMainPhoto,
-                    'imageUrl' => (strval($pr->HasMainPhoto) !== 'false') ? 'https://caron.cloudsystems.gr/FOeshopAPIWeb/DF.aspx?' . str_replace('[Serial]', '01102459200617', str_replace('&amp;', '&', $pr->MainPhotoUrl)) : '',
+                    'imageUrl' => (strval($pr->HasMainPhoto) !== 'false') ? 'https://caron.cloudsystems.gr/FOeshopAPIWeb/DF.aspx?' . str_replace('[Serial]', '01102472475217', str_replace('&amp;', '&', $pr->MainPhotoUrl)) : '',
                     'categories' => $this->getProductCategories($pr->AllCategoryIDs)
 //                    'categories' => $pr->AllCategoryIDs
                 );
@@ -413,7 +413,7 @@ EOF;
                     'id' => $image->ID,
                     'name' => $image->PhotoFileName,
                     'isMain' => $image->IsMain,
-                    'imageUrl' => 'https://caron.cloudsystems.gr/FOeshopAPIWeb/DF.aspx?' . str_replace('[Serial]', '01102459200617', str_replace('&amp;', '&', $image->PhotoUrl))
+                    'imageUrl' => 'https://caron.cloudsystems.gr/FOeshopAPIWeb/DF.aspx?' . str_replace('[Serial]', '01102472475217', str_replace('&amp;', '&', $image->PhotoUrl))
                 );
             }
             return $imagesArr;

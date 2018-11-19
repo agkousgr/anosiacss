@@ -114,7 +114,7 @@ EOF;
                     'slug' => $category->Slug,
 //                'itemsCount' => $this->getCategoryItemsCount($category->ID),
                     'hasMainImage' => $category->HasMainPhoto,
-                    'imageUrl' => (strval($category->HasMainPhoto) !== 'false') ? 'https://caron.cloudsystems.gr/FOeshopAPIWeb/DF.aspx?' . str_replace('[Serial]', '01102459200617', str_replace('&amp;', '&', $category->MainPhotoUrl)) : ''
+                    'imageUrl' => (strval($category->HasMainPhoto) !== 'false') ? 'https://caron.cloudsystems.gr/FOeshopAPIWeb/DF.aspx?' . str_replace('[Serial]', '01102472475217', str_replace('&amp;', '&', $category->MainPhotoUrl)) : ''
                 );
                 $this->getSubCategories($category->ID, $authId, $category->ID);
 //            }

@@ -129,7 +129,7 @@ EOF;
                 'isVisible' => $category->IsVisible,
                 'slug' => $category->Slug,
                 'hasMainImage' => $category->HasMainPhoto,
-                'imageUrl' => ($category->HasMainPhoto) ? 'https://caron.cloudsystems.gr/FOeshopAPIWeb/DF.aspx?' . str_replace('[Serial]', '01102459200617', str_replace('&amp;', '&', $category->MainPhotoUrl)) : ''
+                'imageUrl' => ($category->HasMainPhoto) ? 'https://caron.cloudsystems.gr/FOeshopAPIWeb/DF.aspx?' . str_replace('[Serial]', '01102472475217', str_replace('&amp;', '&', $category->MainPhotoUrl)) : ''
             );
             dump($categoryInfo);
 
@@ -198,7 +198,7 @@ EOF;
                         'slug' => $category->Slug,
                         'itemsCount' => $this->getCategoryItemsCount($category->ID),
                         'hasMainImage' => $category->HasMainPhoto,
-                        'imageUrl' => ($category->HasMainPhoto) ? 'https://caron.cloudsystems.gr/FOeshopAPIWeb/DF.aspx?' . str_replace('[Serial]', '01102459200617', str_replace('&amp;', '&', $category->MainPhotoUrl)) : ''
+                        'imageUrl' => ($category->HasMainPhoto) ? 'https://caron.cloudsystems.gr/FOeshopAPIWeb/DF.aspx?' . str_replace('[Serial]', '01102472475217', str_replace('&amp;', '&', $category->MainPhotoUrl)) : ''
                     );
                     $subCtgs = $this->getSubCategories($category->ID, $authId);
 
@@ -213,7 +213,7 @@ EOF;
                             'slug' => $child->Slug,
                             'itemsCount' => $this->getCategoryItemsCount($category->ID),
                             'hasMainImage' => $child->HasMainPhoto,
-                            'imageUrl' => ($child->HasMainPhoto) ? 'https://caron.cloudsystems.gr/FOeshopAPIWeb/DF.aspx?' . str_replace('[Serial]', '01102459200617', str_replace('&amp;', '&', $child->MainPhotoUrl)) : ''
+                            'imageUrl' => ($child->HasMainPhoto) ? 'https://caron.cloudsystems.gr/FOeshopAPIWeb/DF.aspx?' . str_replace('[Serial]', '01102472475217', str_replace('&amp;', '&', $child->MainPhotoUrl)) : ''
                         );
                         array_multisort(array_column($childArr, "priority"), $childArr);
                         $this->prCategories[$i]['children'] = $childArr;
