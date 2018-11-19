@@ -3,7 +3,7 @@
         <ul class="nav navbar-nav pull-left">
             {#<li><a href="{{ path('index') }}"><i class="fas fa-home active"></i>Αρχικη</a></li>#}
             {% for ctg in categories %}
-                <li class="dropdown mega-dropdown">
+                <li class="dropdown  {# mega-dropdown-menu #}">
                     {% set mainCtgUrl = '#' %}
                     {% set dataToggle = 'class="dropdown-toggle" data-toggle="dropdown"' %}
                     {% if ctg.__children|length == 0 %}
@@ -12,7 +12,19 @@
                     {% endif %}
                     <a href="{{ mainCtgUrl }}" {{ dataToggle }}>{{ ctg.name }}</a>
                     {% if ctg.__children %}
-                        <div class="dropdown-menu mega-dropdown-menu">
+                        <ul class="dropdown-menu" role="menu">
+                            {% for subCtg in ctg.__children %}
+                                {% if subCtg.isVisible == true %}
+                                    <li><a href="{{ path('products_list', {'id':subCtg.id}) }}">{{ subCtg.name }}</a>
+                                    </li>
+                                {% endif %}
+                            {% endfor %}
+
+                        </ul>
+                    {% endif %}
+                    {#{% if ctg.__children %}#}
+                    {% if dataToggle == 'dummy' %}
+                        <div class="dropdown-menu {# mega-dropdown-menu #}">
                             <div class="menu-block">
                                 <div class="row">
                                     <div class="col-sm-5">
@@ -44,50 +56,50 @@
                                         </div>
                                     </div>
 
-                                    <div class="col-sm-4">
-                                        <div class="menu-product-list">
-                                            {% for pr in featured|slice(0, 4) %}
-                                                <div class="media">
-                                                    <div class="media-left">
-                                                        <a href="{{ path('product_view', {'id':pr.id}) }}">
-                                                            <img class="media-object"
-                                                                 src="{{ asset(pr.imageUrl) }}"
-                                                                 alt="{{ pr.name }}">
-                                                        </a>
-                                                    </div>
-                                                    <div class="media-body">
-                                                        <a href="{{ path('product_view', {'id':pr.id}) }}">
-                                                            <h5>{{ pr.name }}</h5>
-                                                        </a>
-                                                        {#<div class="star-rating"><i#}
-                                                        {#class="fa fa-star"></i><i#}
-                                                        {#class="fa fa-star"></i><i#}
-                                                        {#class="fa fa-star"></i><i#}
-                                                        {#class="fa fa-star"></i><i#}
-                                                        {#class="fa fa-star-o"></i></div>#}
-                                                        <div class="item-price">
-                                                            <del>{{ pr.retailPrice }}€</del>
-                                                            {{ pr.webPrice }}€
-                                                        </div>
-                                                        {#<a href="{{ path('product_view', {'id':pr.id}) }}" class="details-btn">ΠΕΡΙΣΣΟΤΕΡΑ</a>#}
-                                                    </div>
-                                                </div>
-                                            {% endfor %}
+                                    {#<div class="col-sm-4">#}
+                                    {#<div class="menu-product-list">#}
+                                    {#{% for pr in featured|slice(0, 4) %}#}
+                                    {#<div class="media">#}
+                                    {#<div class="media-left">#}
+                                    {#<a href="{{ path('product_view', {'id':pr.id}) }}">#}
+                                    {#<img class="media-object"#}
+                                    {#src="{{ asset(pr.imageUrl) }}"#}
+                                    {#alt="{{ pr.name }}">#}
+                                    {#</a>#}
+                                    {#</div>#}
+                                    {#<div class="media-body">#}
+                                    {#<a href="{{ path('product_view', {'id':pr.id}) }}">#}
+                                    {#<h5>{{ pr.name }}</h5>#}
+                                    {#</a>#}
+                                    {#<div class="star-rating"><i#}
+                                    {#class="fa fa-star"></i><i#}
+                                    {#class="fa fa-star"></i><i#}
+                                    {#class="fa fa-star"></i><i#}
+                                    {#class="fa fa-star"></i><i#}
+                                    {#class="fa fa-star-o"></i></div>#}
+                                    {#<div class="item-price">#}
+                                    {#<del>{{ pr.retailPrice }}€</del>#}
+                                    {#{{ pr.webPrice }}€#}
+                                    {#</div>#}
+                                    {#<a href="{{ path('product_view', {'id':pr.id}) }}" class="details-btn">ΠΕΡΙΣΣΟΤΕΡΑ</a>#}
+                                    {#</div>#}
+                                    {#</div>#}
+                                    {#{% endfor %}#}
 
-                                        </div>
-                                    </div>
-                                    <div class="col-sm-3">
-                                        <ul class="menu-banner">
-                                            <li><a href="#">
-                                                    <img src="{{ asset('images/brands/1.png') }}" alt="">
-                                                </a>
-                                            </li>
-                                            <li><a href="#">
-                                                    <img src="{{ asset('images/brands/2.png') }}" alt="">
-                                                </a>
-                                            </li>
-                                        </ul>
-                                    </div>
+                                    {#</div>#}
+                                    {#</div>#}
+                                    {#<div class="col-sm-3">#}
+                                    {#<ul class="menu-banner">#}
+                                    {#<li><a href="#">#}
+                                    {#<img src="{{ asset('images/brands/1.png') }}" alt="">#}
+                                    {#</a>#}
+                                    {#</li>#}
+                                    {#<li><a href="#">#}
+                                    {#<img src="{{ asset('images/brands/2.png') }}" alt="">#}
+                                    {#</a>#}
+                                    {#</li>#}
+                                    {#</ul>#}
+                                    {#</div>#}
 
                                 </div>
                             </div>
@@ -95,8 +107,11 @@
                     {% endif %}
                 </li>
             {% endfor %}
-            <li class=""><a href="{{ path('blog_list') }}"><i class="fab fa-blogger-b"></i>Blog</a></li>
-
+            <li class="">
+                <a href="{{ path('blog_list') }}">
+                    {#<i class="fab fa-blogger-b"></i>#}
+                    Blog</a>
+            </li>
         </ul>
     </div>
 </nav>

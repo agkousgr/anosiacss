@@ -45,8 +45,9 @@ class MigrateController extends MainController
             $damagedFiles = [];
             $imageCounter = 0;
             $counter = 0;
-            $products = $em->getRepository(MigrationProducts::class)->findBy([], ['id' => 'ASC'], 14000, 0);
+            $products = $em->getRepository(MigrationProducts::class)->findBy([], ['id' => 'ASC'], 2000, 1000);
 //            dump($products);
+//            die();
             foreach ($products as $product) {
                 if ($product->getImages()) {
                     $counter++;
