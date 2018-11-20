@@ -103,6 +103,8 @@ class ProductService
     <LowPrice>$lowPrice</LowPrice>
     <HighPrice>$highPrice</HighPrice>
     <IsVisibleCategory>-1</IsVisibleCategory>
+    <WebVisible>-1</WebVisible>
+    <IsActive>-1</IsActive>    
 </ClientGetCategoryItemsRequest>
 EOF;
         try {
@@ -149,6 +151,8 @@ EOF;
     <LowPrice>$lowPrice</LowPrice>
     <HighPrice>$highPrice</HighPrice>
     <IsVisibleCategory>-1</IsVisibleCategory>
+    <WebVisible>-1</WebVisible>
+    <IsActive>-1</IsActive>  
 </ClientGetCategoryItemsCountRequest>
 EOF;
         try {
@@ -247,6 +251,8 @@ EOF;
     <OrderBy>$sortBy</OrderBy>
     <LowPrice>$lowPrice</LowPrice>
     <HighPrice>$highPrice</HighPrice>
+    <WebVisible>-1</WebVisible>
+    <IsActive>-1</IsActive>
 </ClientGetItemsRequest>
 EOF;
         try {
@@ -296,6 +302,8 @@ EOF;
     <OrderBy>null</OrderBy>
     <LowPrice>$lowPrice</LowPrice>
     <HighPrice>$highPrice</HighPrice>
+    <WebVisible>-1</WebVisible>
+    <IsActive>-1</IsActive>  
 </ClientGetItemsCountRequest>
 EOF;
 
