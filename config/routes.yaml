@@ -426,3 +426,6 @@ create_categories:
 syncronize_products:
     path: /synchronize/products
     controller: App\Controller\CronJobsController::synchronizeProducts
+synchronize_availability_types:
+    path: /synchronize/availability-types
+    controller: App\Controller\CronJobsController::synchronizeAvailabilityTypes

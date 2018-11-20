@@ -50,6 +50,11 @@ class ProductService
      */
     private $companyId;
 
+    /**
+     * @var \SoapClient
+     */
+    private $client;
+
     public function __construct(LoggerInterface $logger, EntityManagerInterface $em, SessionInterface $session, $s1Credentials)
     {
         $this->logger = $logger;
@@ -60,6 +65,7 @@ class ProductService
         $this->domain = $s1Credentials['domain'];
         $this->appId = $s1Credentials['appId'];
         $this->companyId = $s1Credentials['companyId'];
+        $this->client = new \SoapClient('https://caron.cloudsystems.gr/FOeshopWS/ForeignOffice.FOeshop.API.FOeshopSvc.svc?singleWsdl', ['trace' => true, 'exceptions' => true,]);
     }
 
     /**
@@ -73,7 +79,6 @@ class ProductService
      */
     public function getCategoryItems($ctgId, $page, $pagesize, $sortBy = 'NameAsc', $makeId = 'null', $priceRange = 'null')
     {
-        $client = new \SoapClient('https://caron.cloudsystems.gr/FOeshopWS/ForeignOffice.FOeshop.API.FOeshopSvc.svc?singleWsdl', ['trace' => true, 'exceptions' => true,]);
 
         $priceRangeArr = ($priceRange != 'null') ? explode('-', $priceRange) : -1;
         $lowPrice = ($priceRangeArr === -1) ? -1 : $priceRangeArr[0];
@@ -102,7 +107,7 @@ class ProductService
 EOF;
         try {
             $itemsArr = array();
-            $result = $client->SendMessage(['Message' => $message]);
+            $result = $this->client->SendMessage(['Message' => $message]);
             $items = simplexml_load_string(str_replace("utf-16", "utf-8", $result->SendMessageResult));
             dump($message, $items);
             if ($items !== false) {
@@ -121,7 +126,6 @@ EOF;
      */
     public function getCategoryItemsCount($ctgId, $makeId = 'null', $priceRange = 'null')
     {
-        $client = new \SoapClient('https://caron.cloudsystems.gr/FOeshopWS/ForeignOffice.FOeshop.API.FOeshopSvc.svc?singleWsdl', ['trace' => true, 'exceptions' => true,]);
 
         $priceRangeArr = ($priceRange != 'null') ? explode('-', $priceRange) : -1;
         $lowPrice = ($priceRangeArr === -1) ? -1 : $priceRangeArr[0];
@@ -148,7 +152,7 @@ EOF;
 </ClientGetCategoryItemsCountRequest>
 EOF;
         try {
-            $result = $client->SendMessage(['Message' => $message]);
+            $result = $this->client->SendMessage(['Message' => $message]);
             $items = simplexml_load_string(str_replace("utf-16", "utf-8", $result->SendMessageResult));
             dump($message, $result);
             return (int)$items->GetDataRows->GetCategoryItemsCountRow->Count;
@@ -219,7 +223,6 @@ EOF;
      */
     public function getItems($id = 'null', $keyword = 'null', $pagesize, $sortBy = 'null', $isSkroutz = -1, $makeId = 'null', $priceRange = 'null', $itemCode = 'null')
     {
-        $client = new \SoapClient('https://caron.cloudsystems.gr/FOeshopWS/ForeignOffice.FOeshop.API.FOeshopSvc.svc?singleWsdl', ['trace' => true, 'exceptions' => true,]);
 
         $priceRangeArr = ($priceRange != 'null') ? explode('-', $priceRange) : -1;
         $lowPrice = ($priceRangeArr === -1) ? -1 : $priceRangeArr[0];
@@ -248,9 +251,9 @@ EOF;
 EOF;
         try {
             $itemsArr = [];
-            $result = $client->SendMessage(['Message' => $message]);
+            $result = $this->client->SendMessage(['Message' => $message]);
             $items = simplexml_load_string(str_replace("utf-16", "utf-8", $result->SendMessageResult));
-//            dump($message, $result, $items);
+            dump($message, $result);
             if (intval($items->RowsCount) > 0) {
 //                if ($items !== false && ($keyword !== 'null' || $makeId !== 'null' || $isSkroutz === '1' || ($id === 'null' && $itemCode === 'null'))) { THIS IS FOR MIGRATING PRODUCTS
                 if ($items !== false && ($keyword !== 'null' || $makeId !== 'null' || $isSkroutz === '1')) {
@@ -269,7 +272,6 @@ EOF;
 
     public function getItemsCount($keyword = 'null', $makeId = 'null', $priceRange = 'null')
     {
-        $client = new \SoapClient('https://caron.cloudsystems.gr/FOeshopWS/ForeignOffice.FOeshop.API.FOeshopSvc.svc?singleWsdl', ['trace' => true, 'exceptions' => true,]);
 
         $priceRangeArr = ($priceRange != 'null') ? explode('-', $priceRange) : -1;
         $lowPrice = ($priceRangeArr === -1) ? -1 : $priceRangeArr[0];
@@ -298,7 +300,7 @@ EOF;
 EOF;
 
         try {
-            $result = $client->SendMessage(['Message' => $message]);
+            $result = $this->client->SendMessage(['Message' => $message]);
 //            dump($message, $result);
             $items = simplexml_load_string(str_replace("utf-16", "utf-8", $result->SendMessageResult));
             return (int)$items->GetDataRows->GetItemsCountRow->Count;
@@ -368,7 +370,6 @@ EOF;
 
     public function getItemPhotos($id)
     {
-        $client = new \SoapClient('https://caron.cloudsystems.gr/FOeshopWS/ForeignOffice.FOeshop.API.FOeshopSvc.svc?singleWsdl', ['trace' => true, 'exceptions' => true,]);
 
         $message = <<<EOF
 <?xml version="1.0" encoding="utf-16"?>
@@ -387,7 +388,7 @@ EOF;
 EOF;
         try {
             $imagesArr = array();
-            $result = $client->SendMessage(['Message' => $message]);
+            $result = $this->client->SendMessage(['Message' => $message]);
             $items = simplexml_load_string(str_replace("utf-16", "utf-8", $result->SendMessageResult));
 //            dump($message, $result);
             if (intval($items->RowsCount) > 0) {
@@ -422,6 +423,7 @@ EOF;
             throw $e;
         }
     }
+
 
 //    public function getReferer($httpReferer)
 //    {

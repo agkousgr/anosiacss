@@ -44,6 +44,11 @@ class CronJobsService
      */
     private $companyId;
 
+    /**
+     * @var ProductService
+     */
+    private $productService;
+
     public function __construct(EntityManagerInterface $em, $s1Credentials)
     {
         $this->em = $em;
@@ -52,6 +57,7 @@ class CronJobsService
         $this->appId = $s1Credentials['appId'];
         $this->companyId = $s1Credentials['companyId'];
         $this->counter = 0;
+        $this->client = new \SoapClient('https://caron.cloudsystems.gr/FOeshopWS/ForeignOffice.FOeshop.API.FOeshopSvc.svc?singleWsdl', ['trace' => true, 'exceptions' => true,]);
     }
 
     public function synchronizeCategories($authId)
@@ -67,7 +73,6 @@ class CronJobsService
      */
     private function getCategoriesFromS1($authId)
     {
-        $client = new \SoapClient('http://caron.cloudsystems.gr/FOeshopWS/ForeignOffice.FOeshop.API.FOeshopSvc.svc?singleWsdl', ['trace' => true, 'exceptions' => true,]);
 
         $message = <<<EOF
 <?xml version="1.0" encoding="utf-16"?>
@@ -85,7 +90,7 @@ class CronJobsService
 </ClientGetCategoriesRequest>
 EOF;
         try {
-            $result = $client->SendMessage(['Message' => $message]);
+            $result = $this->client->SendMessage(['Message' => $message]);
             $resultXML = simplexml_load_string(str_replace("utf-16", "utf-8", $result->SendMessageResult));
 //            dump($message, $result);
 //            die();
@@ -126,8 +131,6 @@ EOF;
     public function getSubCategories($ctgId, $authId, $parentId)
     {
 
-        $client = new \SoapClient('http://caron.cloudsystems.gr/FOeshopWS/ForeignOffice.FOeshop.API.FOeshopSvc.svc?singleWsdl', ['trace' => true, 'exceptions' => true,]);
-
         $message = <<<EOF
 <?xml version="1.0" encoding="utf-16"?>
 <ClientGetCategoryChildrenRequest>
@@ -142,7 +145,7 @@ EOF;
 </ClientGetCategoryChildrenRequest>
 EOF;
         try {
-            $result = $client->SendMessage(['Message' => $message]);
+            $result = $this->client->SendMessage(['Message' => $message]);
             $items = simplexml_load_string(str_replace("utf-16", "utf-8", $result->SendMessageResult));
             $this->counter++;
             if ($items !== false) {
@@ -155,5 +158,35 @@ EOF;
         } catch (\SoapFault $sf) {
             echo $sf->faultstring;
         }
+    }
+
+    public function getAvailabilityTypes($typeId = -1, $authId)
+    {
+
+        $message = <<<EOF
+<?xml version="1.0" encoding="utf-16"?>
+<ClientGetAvailabilityTypeRequest>
+    <Type>1068</Type>
+    <Kind>$this->kind</Kind>
+    <Domain>$this->domain</Domain>
+    <AuthID>$authId</AuthID>
+    <AppID>$this->appId</AppID>
+    <CompanyID>$this->companyId</CompanyID>
+    <AvailabilityTypeID>-1</AvailabilityTypeID>
+</ClientGetAvailabilityTypeRequest>
+EOF;
+
+        try {
+            $result = $this->client->SendMessage(['Message' => $message]);
+            $items = simplexml_load_string(str_replace("utf-16", "utf-8", $result->SendMessageResult));
+            dump($message, $result, $items->GetDataRows->GetAvailabilityTypeRow);
+            if ((int)$items->RowsCount > 0) {
+                return $items->GetDataRows->GetAvailabilityTypeRow;
+            }
+            return [];
+        } catch (\SoapFault $sf) {
+            echo $sf->faultstring;
+        }
+
     }
 }

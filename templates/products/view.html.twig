@@ -59,17 +59,20 @@
                                         <div class="main-image">
                                             <ul class="bxslider">
                                                 {% for image in pr.extraImages %}
-                                                    <li><img src="{{ image.imageUrl }}" alt="{{ pr.name }}"/></li>
+                                                    <li><img src="{{ image.imageUrl }}"
+                                                             alt="{{ pr.name }}"/></li>
                                                 {% endfor %}
                                             </ul>
                                         </div>
                                         <div class="owl-carousel owl-theme" id="bx-pager">
                                             {% for image in pr.extraImages %}
                                                 <div class="item" style="text-align: center">
-                                                    <a data-slide-index="{{ loop.index - 1 }}" href=""
+                                                    <a data-slide-index="{{ loop.index - 1 }}"
+                                                       href=""
                                                        style="border: 1px solid #d8d8d8;">
                                                         <img style="max-height: 95px; border:none;"
-                                                             src="{{ image.imageUrl }}" alt="{{ pr.name }}"/>
+                                                             src="{{ image.imageUrl }}"
+                                                             alt="{{ pr.name }}"/>
                                                     </a>
                                                 </div>
                                             {% endfor %}
@@ -93,7 +96,8 @@
                                 {#<li><a href="#">Write a Review </a></li>#}
                                 {#</ul>#}
 
-                                <div class="product-id">Κωδ. Προϊόντος : <span>{{ pr.prCode }}</span>
+                                <div class="product-id">Κωδ. Προϊόντος :
+                                    <span>{{ pr.prCode }}</span>
                                 </div>
                                 <div class="product-price">{{ pr.webPrice|number_format(2, ',', '.') }}
                                     €
@@ -108,7 +112,8 @@
                                     <span itemprop="offers" itemscope=""
                                           itemtype="https://schema.org/Offer"
                                           class="availability">
-                                        {% if (pr.remainNotReserved > "0" or pr.webFree == "true") and pr.outOfStock == "false" %}
+                                        {#{% if (pr.remainNotReserved > "0" or pr.webFree == "true") and pr.outOfStock == "false" %}#}
+                                        {% if pr.outOfStock == "false" or pr.webFree == "true" %}
                                         <span class="available-now">
                                             <link itemprop="availability"
                                                   href="https://schema.org/InStock">
