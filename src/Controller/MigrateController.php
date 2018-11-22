@@ -37,6 +37,7 @@ class MigrateController extends MainController
             $item = $em->getRepository(TempImages::class)->findBy(['s1id' => $pr->getS1id()]);
             if ($item) {
                 $pr->setImages($item[0]->getImages());
+                $pr->setImageUpdateError(1);
                 $em->persist($pr);
                 $em->flush();
             dump($item);
