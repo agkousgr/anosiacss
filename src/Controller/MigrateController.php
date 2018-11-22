@@ -5,6 +5,7 @@ namespace App\Controller;
 
 
 use App\Entity\MigrationProducts;
+use App\Entity\TempImages;
 use App\Service\MigrationService;
 use App\Service\ProductService;
 use Doctrine\ORM\EntityManagerInterface;
@@ -25,6 +26,25 @@ class MigrateController extends MainController
             }
         }
         return;
+    }
+
+    public function updateFromTempImages(EntityManagerInterface $em)
+    {
+        $products = $em->getRepository(MigrationProducts::class)->findBy(['images' => null], ['id' => 'DESC'], 500, 0);
+
+        foreach ($products as $pr) {
+//            dump($pr);
+            $item = $em->getRepository(TempImages::class)->findBy(['s1id' => $pr->getS1id()]);
+            if ($item) {
+                $pr->setImages($item[0]->getImages());
+                $em->persist($pr);
+                $em->flush();
+            dump($item);
+            }
+        }
+//        dump($products);
+        return;
+
     }
 
     public function migrateImages(EntityManagerInterface $em, MigrationService $migrationService, ProductService $productService)

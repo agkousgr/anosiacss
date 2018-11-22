@@ -418,6 +418,10 @@ get_images:
 update_s1:
     path: /update-s1
     controller: App\Controller\MigrateController::updateS1
+updateFromTempImages:
+    path: /migrate/temp-images
+    controller: App\Controller\MigrateController::updateFromTempImages
+
 
 # Cron Jobs
 create_categories:
