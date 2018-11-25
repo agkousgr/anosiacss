@@ -94,6 +94,8 @@ class CartService
     <MakeID>null</MakeID>
     <LowPrice>5</LowPrice>
     <HighPrice>$highPrice</HighPrice>
+    <WebVisible>-1</WebVisible>
+    <IsActive>-1</IsActive>
 </ClientGetItemsRequest>
 EOF;
         try {
@@ -108,7 +110,7 @@ EOF;
         }
     }
 
-    public function getRelevantItems($excludeIds = -1, $highPrice = -1)
+    public function getRelevantItems($excludeIds = -1, $highPrice = -1, $webVisible = 1)
     {
 // Todo: replace categoryId with cart items relative categories
         $message = <<<EOF
@@ -121,13 +123,15 @@ EOF;
     <AppID>$this->appId</AppID>
     <CompanyID>$this->companyId</CompanyID>
     <CategoryID>-1</CategoryID>
-    <ItemID>100357</ItemID>
+    <ItemID>-1</ItemID>
     <IncludeChildCategories>1</IncludeChildCategories>
     <IsRandom>1</IsRandom>
     <IsPopular>0</IsPopular>
     <LowPrice>1</LowPrice>
     <HighPrice>$highPrice</HighPrice>
     <ExcludeItemID>$excludeIds</ExcludeItemID>
+    <WebVisible>$webVisible</WebVisible>
+    <IsActive>-1</IsActive>  
 </ClientGetRelevantItemsRequest>
 EOF;
         try {

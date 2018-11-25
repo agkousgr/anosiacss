@@ -421,7 +421,15 @@ update_s1:
 updateFromTempImages:
     path: /migrate/temp-images
     controller: App\Controller\MigrateController::updateFromTempImages
-
+getProductsWithNoImage:
+    path: /migrate/products-no-images
+    controller: App\Controller\MigrateController::getProductsWithNoImage
+updateMigratedProductsWithS1Id:
+    path: /migrate/s1id
+    controller: App\Controller\MigrateController::updateMigratedProductsWithS1Id
+getProductsWithNoImageFromS1:
+    path: /migrate/images-from-s1
+    controller: App\Controller\MigrateController::getProductsWithNoImageFromS1
 
 # Cron Jobs
 create_categories:

@@ -14,6 +14,11 @@ class MigrationProducts
     /**
      * @var int
      */
+    private $oldId;
+
+    /**
+     * @var int|null
+     */
     private $s1id;
 
     /**
@@ -92,16 +97,34 @@ class MigrationProducts
     /**
      * @return int
      */
-    public function getS1id(): int
+    public function getOldId(): int
+    {
+        return $this->oldId;
+    }
+
+    /**
+     * @param int $oldId
+     * @return MigrationProducts
+     */
+    public function setOldId(int $oldId): MigrationProducts
+    {
+        $this->oldId = $oldId;
+        return $this;
+    }
+
+    /**
+     * @return int|null
+     */
+    public function getS1id(): ?int
     {
         return $this->s1id;
     }
 
     /**
-     * @param int $s1id
+     * @param int|null $s1id
      * @return MigrationProducts
      */
-    public function setS1id(int $s1id): MigrationProducts
+    public function setS1id(?int $s1id): MigrationProducts
     {
         $this->s1id = $s1id;
         return $this;

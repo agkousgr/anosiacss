@@ -16,7 +16,7 @@
                     <div class="hover-info">
                         <div class="product-short-info">
                             <div class="product-name">
-                                <a href="#">{{ pr.name }}</a>
+                                <a href="{{ path('product_view', {'id': pr.id}) }}">{{ pr.name }}</a>
                             </div>
                             {#<div class="star"><i class="fa fa-star"></i><i#}
                             {#class="fa fa-star"></i><i#}
@@ -30,18 +30,22 @@
                                     <del>{{ pr.retailPrice }}€</del>
                                 </div>
                             </div>
-                            <button type="button"><i
-                                        class="fa fa-cart-plus"></i><span>Add to Cart</span>
+                            <button href="#"
+                                    class="add-to-cart"
+                                    data-id="{{ pr.id }}"
+                                    data-name="{{ pr.name }}"
+                                    type="button">
+                                <i class="fa fa-cart-plus"></i><span>στο καλαθι</span>
                             </button>
                         </div>
                     </div>
                     <div class="product-short-info">
-                        <div class="product-name"><a href="#">{{ pr.name }}</a>
+                        <div class="product-name"><a href="{{ path('product_view', {'id': pr.id}) }}">{{ pr.name }}</a>
                         </div>
                         {#<div class="star"><i class="fa fa-star"></i><i#}
-                                    {#class="fa fa-star"></i><i class="fa fa-star"></i><i#}
-                                    {#class="fa fa-star"></i><i class="fa fa-star"></i><i#}
-                                    {#class="fa fa-star-o"></i></div>#}
+                        {#class="fa fa-star"></i><i class="fa fa-star"></i><i#}
+                        {#class="fa fa-star"></i><i class="fa fa-star"></i><i#}
+                        {#class="fa fa-star-o"></i></div>#}
                         <div class="product-price">
                             <div class="product-price-span">{{ pr.webPrice }}€
                                 <del>{{ pr.retailPrice }}€</del>

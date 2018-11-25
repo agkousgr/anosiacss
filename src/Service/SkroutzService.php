@@ -119,6 +119,8 @@ class SkroutzService
     <OrderBy>NameAsc</OrderBy>
     <LowPrice>-1</LowPrice>
     <HighPrice>-1</HighPrice>
+    <WebVisible>-1</WebVisible>
+    <IsActive>-1</IsActive>
 </ClientGetItemsRequest>
 EOF;
         try {

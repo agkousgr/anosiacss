@@ -5,7 +5,8 @@
         <id name="id" type="integer">
             <generator strategy="AUTO"/>
         </id>
-        <field name="s1id" type="integer" />
+        <field name="oldId" type="integer" />
+        <field name="s1id" type="integer" nullable="true" />
         <field name="name" type="text" />
         <field name="sku" length="100" />
         <field name="smallDescription" type="text" nullable="true" />

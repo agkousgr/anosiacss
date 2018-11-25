@@ -111,4 +111,33 @@ EOF;
         }
     }
 
+    public function getManufacturers($slug)
+    {
+        $message = <<<EOF
+<?xml version="1.0" encoding="utf-16"?>
+<ClientGetManufactorRequest>
+    <Type>1066</Type>
+    <Kind>$this->kind</Kind>
+    <Domain>$this->domain</Domain>
+    <AuthID>$this->authId</AuthID>
+    <AppID>$this->appId</AppID>
+    <CompanyID>$this->companyId</CompanyID>
+    <pagesize>1000</pagesize>
+    <pagenumber>0</pagenumber>
+    <ManufactorID>-1</ManufactorID>
+    <Slug>$slug</Slug>
+</ClientGetManufactorRequest>
+EOF;
+        try {
+            $result = $this->client->SendMessage(['Message' => $message]);
+            $resultXML = simplexml_load_string(str_replace("utf-16", "utf-8", $result->SendMessageResult));
+            dump($message, $result);
+            $brands = $this->initializeBrands($resultXML->GetDataRows->GetMakeRow);
+            return $brands;
+
+        } catch (\SoapFault $sf) {
+            throw $sf->faultstring;
+        }
+    }
+
 }

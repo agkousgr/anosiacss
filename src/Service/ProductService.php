@@ -77,7 +77,7 @@ class ProductService
      * @return array
      * @throws \Exception
      */
-    public function getCategoryItems($ctgId, $page, $pagesize, $sortBy = 'NameAsc', $makeId = 'null', $priceRange = 'null')
+    public function getCategoryItems($ctgId, $page, $pagesize, $sortBy = 'NameAsc', $makeId = 'null', $priceRange = 'null', $webVisible = 1)
     {
 
         $priceRangeArr = ($priceRange != 'null') ? explode('-', $priceRange) : -1;
@@ -103,7 +103,7 @@ class ProductService
     <LowPrice>$lowPrice</LowPrice>
     <HighPrice>$highPrice</HighPrice>
     <IsVisibleCategory>-1</IsVisibleCategory>
-    <WebVisible>-1</WebVisible>
+    <WebVisible>$webVisible</WebVisible>
     <IsActive>-1</IsActive>    
 </ClientGetCategoryItemsRequest>
 EOF;
@@ -126,7 +126,7 @@ EOF;
      * @param $makeId
      * @return int
      */
-    public function getCategoryItemsCount($ctgId, $makeId = 'null', $priceRange = 'null')
+    public function getCategoryItemsCount($ctgId, $makeId = 'null', $priceRange = 'null', $webVisible = 1)
     {
 
         $priceRangeArr = ($priceRange != 'null') ? explode('-', $priceRange) : -1;
@@ -151,7 +151,7 @@ EOF;
     <LowPrice>$lowPrice</LowPrice>
     <HighPrice>$highPrice</HighPrice>
     <IsVisibleCategory>-1</IsVisibleCategory>
-    <WebVisible>-1</WebVisible>
+    <WebVisible>$webVisible</WebVisible>
     <IsActive>-1</IsActive>  
 </ClientGetCategoryItemsCountRequest>
 EOF;
@@ -183,6 +183,7 @@ EOF;
                         'body' => $pr->LargeDescriptionHTML,
                         'extraInfo' => $pr->InstructionsHTML,
                         'isVisible' => $pr->WebVisible,
+                        'prCode' => $pr->Code,
                         'retailPrice' => $pr->RetailPrice,
                         'discount' => $pr->WebDiscountPerc,
                         'webPrice' => $pr->WebPrice,
@@ -225,7 +226,7 @@ EOF;
      * @return array
      * @throws \Exception
      */
-    public function getItems($id = 'null', $keyword = 'null', $pagesize, $sortBy = 'null', $isSkroutz = -1, $makeId = 'null', $priceRange = 'null', $itemCode = 'null')
+    public function getItems($id = 'null', $keyword = 'null', $pagesize, $sortBy = 'null', $isSkroutz = -1, $makeId = 'null', $priceRange = 'null', $itemCode = 'null', $webVisible = 1)
     {
 
         $priceRangeArr = ($priceRange != 'null') ? explode('-', $priceRange) : -1;
@@ -251,7 +252,7 @@ EOF;
     <OrderBy>$sortBy</OrderBy>
     <LowPrice>$lowPrice</LowPrice>
     <HighPrice>$highPrice</HighPrice>
-    <WebVisible>-1</WebVisible>
+    <WebVisible>$webVisible</WebVisible>
     <IsActive>-1</IsActive>
 </ClientGetItemsRequest>
 EOF;
@@ -259,10 +260,10 @@ EOF;
             $itemsArr = [];
             $result = $this->client->SendMessage(['Message' => $message]);
             $items = simplexml_load_string(str_replace("utf-16", "utf-8", $result->SendMessageResult));
-            dump($message, $result);
+//            dump($message, $result);
             if (intval($items->RowsCount) > 0) {
-//                if ($items !== false && ($keyword !== 'null' || $makeId !== 'null' || $isSkroutz === '1' || ($id === 'null' && $itemCode === 'null'))) { THIS IS FOR MIGRATING PRODUCTS
-                if ($items !== false && ($keyword !== 'null' || $makeId !== 'null' || $isSkroutz === '1')) {
+                if ($items !== false && ($keyword !== 'null' || $makeId !== 'null' || $isSkroutz === '1' || ($id === 'null' && $itemCode === 'null'))) { // THIS IS FOR MIGRATING PRODUCTS
+//                if ($items !== false && ($keyword !== 'null' || $makeId !== 'null' || $isSkroutz === '1')) {
                     $itemsArr = $this->initializeProducts($items->GetDataRows->GetItemsRow);
                 } else if ($items !== false) {
                     $itemsArr = $this->initializeProduct($items->GetDataRows->GetItemsRow);
@@ -276,7 +277,7 @@ EOF;
     }
 
 
-    public function getItemsCount($keyword = 'null', $makeId = 'null', $priceRange = 'null')
+    public function getItemsCount($keyword = 'null', $makeId = 'null', $priceRange = 'null', $webVisible = 1)
     {
 
         $priceRangeArr = ($priceRange != 'null') ? explode('-', $priceRange) : -1;
@@ -302,14 +303,14 @@ EOF;
     <OrderBy>null</OrderBy>
     <LowPrice>$lowPrice</LowPrice>
     <HighPrice>$highPrice</HighPrice>
-    <WebVisible>-1</WebVisible>
+    <WebVisible>$webVisible</WebVisible>
     <IsActive>-1</IsActive>  
 </ClientGetItemsCountRequest>
 EOF;
 
         try {
             $result = $this->client->SendMessage(['Message' => $message]);
-//            dump($message, $result);
+            dump($message, $result);
             $items = simplexml_load_string(str_replace("utf-16", "utf-8", $result->SendMessageResult));
             return (int)$items->GetDataRows->GetItemsCountRow->Count;
         } catch (\SoapFault $sf) {

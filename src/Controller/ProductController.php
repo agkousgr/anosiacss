@@ -20,7 +20,7 @@ class ProductController extends MainController
             $sortBy = ($request->query->get('sortBy')) ?: 'NameAsc';
             $makeId = ($request->query->get('brands')) ? str_replace('-', ',', $request->query->get('brands')) : 'null';
             $priceRange = ($request->query->get('priceRange')) ?: 'null';
-            $brands = $brandsService->getBrands('null');
+            $brands = $brandsService->getManufacturers('null');
             $ctgInfo = $this->em->getRepository(Category::class)->find($id);
 
             dump($ctgInfo->getChildren());
@@ -64,7 +64,7 @@ class ProductController extends MainController
 
     public function listBrands(Request $request, int $page, BrandsService $brandsService, PaginatorInterface $paginator)
     {
-        $brands = $brandsService->getBrands('null');
+        $brands = $brandsService->getManufacturers('null');
         $paginatedBrands = $paginator->paginate(
             $brands,
             $page /*page number*/,
@@ -93,7 +93,7 @@ class ProductController extends MainController
     {
         try {
 //            $ctgInfo = $this->categoryService->getCategoryInfo($id);
-            $brandInfo = $brands = $brandsService->getBrands($slug);
+            $brandInfo = $brands = $brandsService->getManufacturers($slug);
             dump($brandInfo);
 //            $slider = $this->em->getRepository(Slider::class)->findBy(['category' => $id]);
             $products = $this->productService->getItems('null', 'null', 1000, 'null', '-1', $brandInfo[0]["id"]);
