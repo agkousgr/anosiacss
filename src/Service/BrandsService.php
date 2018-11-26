@@ -75,7 +75,7 @@ EOF;
         try {
             $result = $this->client->SendMessage(['Message' => $message]);
             $resultXML = simplexml_load_string(str_replace("utf-16", "utf-8", $result->SendMessageResult));
-            dump($message, $result);
+//            dump($message, $result);
             $brands = $this->initializeBrands($resultXML->GetDataRows->GetMakeRow);
             return $brands;
 
@@ -94,12 +94,13 @@ EOF;
         try {
             $brandsArr = [];
             foreach ($brands as $brand) {
+//                if ($brand->) Todo: get only IsActive when ready by Sotiris
                 $brandsArr[] = array(
                     'id' => $brand->ID,
                     'name' => $brand->Name,
                     'slug' => $brand->Slug,
                     'hasMainImage' => $brand->HasMainPhoto,
-                    'imageUrl' => ($brand->HasMainPhoto) ? 'https://caron.cloudsystems.gr/FOeshopAPIWeb/DF.aspx?' . str_replace('[Serial]', '01102472475217', str_replace('&amp;', '&', $brand->MainPhotoUrl)) : ''
+//                    'imageUrl' => ($brand->HasMainPhoto) ? 'https://caron.cloudsystems.gr/FOeshopAPIWeb/DF.aspx?' . str_replace('[Serial]', '01102472475217', str_replace('&amp;', '&', $brand->MainPhotoUrl)) : ''
                 );
 //            }
             }
@@ -122,7 +123,7 @@ EOF;
     <AuthID>$this->authId</AuthID>
     <AppID>$this->appId</AppID>
     <CompanyID>$this->companyId</CompanyID>
-    <pagesize>1000</pagesize>
+    <pagesize>20</pagesize>
     <pagenumber>0</pagenumber>
     <ManufactorID>-1</ManufactorID>
     <Slug>$slug</Slug>
@@ -131,8 +132,8 @@ EOF;
         try {
             $result = $this->client->SendMessage(['Message' => $message]);
             $resultXML = simplexml_load_string(str_replace("utf-16", "utf-8", $result->SendMessageResult));
-            dump($message, $result);
-            $brands = $this->initializeBrands($resultXML->GetDataRows->GetMakeRow);
+//            dump($message, $result);
+            $brands = $this->initializeBrands($resultXML->GetDataRows->GetManufactorRow);
             return $brands;
 
         } catch (\SoapFault $sf) {

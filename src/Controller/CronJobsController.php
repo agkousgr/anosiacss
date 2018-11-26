@@ -54,7 +54,12 @@ class CronJobsController extends AbstractController
         $this->authId = $softoneLogin->login();
     }
 
-    public function synchronizeCategories(EntityManagerInterface $em)
+    public function synchronizeProducts()
+    {
+
+    }
+
+    public function synchronizeCategories()
     {
         try {
             // Todo: Check how to remove deleted category from S1
@@ -75,7 +80,7 @@ class CronJobsController extends AbstractController
                 $category->setDescription($val["description"]);
                 $category->setImageUrl($val["imageUrl"]);
                 if ($val['parentId'] > 0) {
-                    $parent = $em->getRepository(Category::class)->find($val['parentId']);
+                    $parent = $this->em->getRepository(Category::class)->find($val['parentId']);
                     $category->setParent($parent);
                 }
                 $category->setIsVisible($isVisible);

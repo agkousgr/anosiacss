@@ -1,0 +1,10 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<doctrine-mapping xmlns="http://doctrine-project.org/schemas/orm/doctrine-mapping">
+
+    <entity name="App\Entity\Products">
+        <id name="id" type="integer" />
+        <field name="productName" length="200" />
+        <field name="views" type="integer" nullable="true" />
+    </entity>
+
+</doctrine-mapping>
