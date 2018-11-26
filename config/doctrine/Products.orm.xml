@@ -3,7 +3,9 @@
 
     <entity name="App\Entity\Products">
         <id name="id" type="integer" />
-        <field name="productName" length="200" />
+        <field name="slug" length="200" />
+        <field name="prCode" length="50" />
+        <field name="productName" type="text" />
         <field name="views" type="integer" nullable="true" />
     </entity>
 

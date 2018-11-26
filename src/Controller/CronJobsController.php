@@ -10,8 +10,10 @@ namespace App\Controller;
 
 use App\Entity\AvailabilityTypes;
 use App\Entity\Category;
+use App\Entity\Products;
 use App\Service\CategoryService;
 use App\Service\CronJobsService;
+use App\Service\ProductService;
 use App\Service\SoftoneLogin;
 use Doctrine\ORM\EntityManagerInterface;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
@@ -24,6 +26,11 @@ class CronJobsController extends AbstractController
      * @var CategoryService
      */
     private $categoryService;
+
+    /**
+     * @var ProductService
+     */
+    private $productService;
 
     /**
      * @var EntityManagerInterface
@@ -45,9 +52,10 @@ class CronJobsController extends AbstractController
      */
     private $logger;
 
-    public function __construct(CronJobsService $cronJobsService, CategoryService $categoryService, EntityManagerInterface $em, SoftoneLogin $softoneLogin, LoggerInterface $logger)
+    public function __construct(CronJobsService $cronJobsService, ProductService $productService, CategoryService $categoryService, EntityManagerInterface $em, SoftoneLogin $softoneLogin, LoggerInterface $logger)
     {
         $this->categoryService = $categoryService;
+        $this->productService = $productService;
         $this->em = $em;
         $this->cronJobsService = $cronJobsService;
         $this->logger = $logger;
@@ -56,7 +64,36 @@ class CronJobsController extends AbstractController
 
     public function synchronizeProducts()
     {
-
+//        $cmd = $this->em->getClassMetadata($pr);
+        $connection = $this->em->getConnection();
+        $connection->beginTransaction();
+        try {
+            $s1products = $this->productService->getItems('null', 'null', 10, 'null', -1, 'null', 'null', 'null', 1);
+            if ($s1products) {
+                $connection->query('SET FOREIGN_KEY_CHECKS=0');
+                $connection->query('DELETE FROM products');
+                // Beware of ALTER TABLE here--it's another DDL statement and will cause
+                // an implicit commit.
+                $connection->query('SET FOREIGN_KEY_CHECKS=1');
+                $connection->commit();
+                dump($s1products);
+                foreach ($s1products as $s1product) {
+                    $pr = new Products();
+                    $pr->setId(intval($s1product['id']));
+                    $pr->setSlug(strval($s1product['slug']));
+                    $pr->setPrCode(strval($s1product['prCode']));
+                    $pr->setProductName(strval($s1product['name']));
+                    $this->em->persist($pr);
+                    $this->em->flush();
+//                    dump($pr);
+                }
+            }
+            return;
+        } catch (\Exception $e) {
+            $this->logger->error(__METHOD__ . ' -> {message}', ['message' => $e->getMessage()]);
+            throw $e;
+            $connection->rollback();
+        }
     }
 
     public function synchronizeCategories()

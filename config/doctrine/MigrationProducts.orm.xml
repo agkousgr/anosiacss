@@ -20,6 +20,7 @@
         <field name="manufacturer" length="100" nullable="true" />
         <field name="images" type="text" nullable="true" />
         <field name="imageUpdateError" length="1" nullable="true" />
+        <field name="webVisible" length="1" nullable="true" />
     </entity>
 
 </doctrine-mapping>

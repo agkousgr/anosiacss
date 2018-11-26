@@ -87,6 +87,11 @@ class MigrationProducts
     private $imageUpdateError;
 
     /**
+     * @var string|null
+     */
+    private $webVisible;
+
+    /**
      * @return int
      */
     public function getId(): int
@@ -361,6 +366,24 @@ class MigrationProducts
     public function setImageUpdateError(?string $imageUpdateError): MigrationProducts
     {
         $this->imageUpdateError = $imageUpdateError;
+        return $this;
+    }
+
+    /**
+     * @return string|null
+     */
+    public function getWebVisible(): ?string
+    {
+        return $this->webVisible;
+    }
+
+    /**
+     * @param string|null $webVisible
+     * @return MigrationProducts
+     */
+    public function setWebVisible(?string $webVisible): MigrationProducts
+    {
+        $this->webVisible = $webVisible;
         return $this;
     }
 
