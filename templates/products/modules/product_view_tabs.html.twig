@@ -23,13 +23,13 @@
         <!-- Tab panes -->
         <div class="tab-content">
             <div role="tabpanel" class="tab-pane active" id="Description">
-                {{ pr.body }}
+                {{ pr.body|raw }}
             </div>
             <div role="tabpanel" class="tab-pane" id="Instructions">
-                {{ pr.instructions }}
+                {{ pr.instructions|raw }}
             </div>
             <div role="tabpanel" class="tab-pane" id="Ingredients">
-                {{ pr.ingredients }}
+                {{ pr.ingredients|raw }}
             </div>
             {#<div role="tabpanel" class="tab-pane" id="Sizing">Sizing Guide</div>#}
             {#<div role="tabpanel" class="tab-pane" id="Reviews">Reviews</div>#}

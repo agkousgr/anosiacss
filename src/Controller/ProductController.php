@@ -25,9 +25,12 @@ class ProductController extends MainController
 
             dump($ctgInfo->getChildren());
             $subCategories = $this->em->getRepository(Category::class)->findBy(['parent' => $ctgInfo]);
-//            dump($subCategories);
             $slider = $this->em->getRepository(Slider::class)->findBy(['category' => $id]);
-            $productsCount = $this->productService->getCategoryItemsCount($id, $makeId, $priceRange);
+            $productsCountArr = $this->productService->getCategoryItemsCount($id, $makeId, $priceRange);
+//            dump($productsCountArr);
+            $productsCount = intval($productsCountArr->Count);
+            $minPrice = intval($productsCountArr->MinPrice);
+            $maxPrice = intval($productsCountArr->MaxPrice);
             if ($productsCount > $pagesize * $page) {
                 $products = $this->productService->getCategoryItems($id, $page - 1, $pagesize, $sortBy, $makeId, $priceRange);
             } else {
@@ -47,6 +50,8 @@ class ProductController extends MainController
                 'loggedName' => $this->loggedName,
                 'slider' => $slider,
                 'productsCount' => $productsCount,
+                'minPrice' => $minPrice,
+                'maxPrice' => $maxPrice,
                 'brands' => $brands,
                 'page' => $page,
                 'pagesize' => $pagesize,

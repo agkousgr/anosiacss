@@ -29,10 +29,10 @@ $(document).ready(function () {
 
     $("#range_slider").ionRangeSlider({
         type: "double",
-        min: 1,
-        max: 250,
-        // min: $('input[name="minPrice"]').val(),
-        // max: $('input[name="maxPrice"]').val(),
+        // min: 1,
+        // max: 250,
+        min: $('input[name="minPrice"]').val(),
+        max: $('input[name="maxPrice"]').val(),
         from: $('input[name="lowPrice"]').val(),
         to: $('input[name="highPrice"]').val(),
         prefix: "",

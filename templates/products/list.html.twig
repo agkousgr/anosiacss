@@ -58,7 +58,7 @@
             {% include 'products/modules/category_slider.html.twig' %}
         {% endif %}
         {#{% if (ctgInfo.children is not empty) %}#}
-            {#{% include 'products/modules/top_categories.html.twig' %}#}
+        {#{% include 'products/modules/top_categories.html.twig' %}#}
         {#{% endif %}#}
         <div class="section" style="background-image:url({{ asset('images/bg-5.jpg') }});">
             <div class="container">
@@ -134,29 +134,36 @@
                                     </div>
                                 </div>
                                 <div id="products" class="row list-group list-products">
-                                    {#{% set minPrice = 100 %}#}
-                                    {#{% set maxPrice = 1 %}#}
+                                    {#{% set minPrice = minPrice %}#}
+                                    {#{% set maxPrice = maxPrice %}#}
                                     {% for pr in products %}
                                         <div class="item col-lg-4 col-md-6 col-sm-6 wow fadeIn"
                                              data-wow-delay="0.4s">
                                             <div class="product-case">
                                                 {% if pr.isNew == 'new' %}
-                                                    <div class="tag tag-green"><span>new</span>
+                                                    <div class="tag tag-green">
+                                                        <span>new</span>
                                                     </div>
                                                 {% endif %}
                                                 <div class="product-img">
-                                                    <div class="hover-img"><img
-                                                                src="{{ pr.imageUrl }}"
-                                                                alt="{{ pr.name }}">
-                                                    </div>
+                                                    {#<div class="hover-img"><a href="{{ path('product_view', {'id':pr.id}) }}"><img#}
+                                                    {#src="{{ pr.imageUrl }}"#}
+                                                    {#alt="{{ pr.name }}"></a>#}
+                                                    {#</div>#}
                                                     <a href="{{ path('product_view', {'id':pr.id}) }}"><img
                                                                 src="{{ pr.imageUrl }}"
                                                                 alt="{{ pr.name }}"></a>
                                                 </div>
                                                 <div class="hover-info">
                                                     <div class="product-short-info">
-                                                        <div class="product-name"><a
-                                                                    href="{{ path('product_view', {'id':pr.id}) }}">{{ pr.name }}</a>
+                                                        <div class="product-name">
+                                                            {% if pr.summary|length > 0 %}
+                                                                {#{% set text = pr.summary|render %}#}
+                                                                {% set hoverText = pr.summary|truncate(110, true)|raw %}
+                                                            {% else %}
+                                                                {% set hoverText = pr.name|title|truncate(100, true)|raw %}
+                                                            {% endif %}
+                                                            <a href="{{ path('product_view', {'id':pr.id}) }}">{{ hoverText }}</a>
                                                         </div>
                                                         {#<div class="star"><i class="fa fa-star"></i><i#}
                                                         {#class="fa fa-star"></i><i#}
@@ -183,7 +190,7 @@
                                                 </div>
                                                 <div class="product-short-info">
                                                     <div class="product-name">
-                                                        <a href="{{ path('product_view', {'id':pr.id}) }}">{{ pr.name }}</a>
+                                                        <a href="{{ path('product_view', {'id':pr.id}) }}">{{ pr.name|title }}</a>
                                                     </div>
                                                     {#<div class="star"><i class="fa fa-star"></i><i class="fa fa-star"></i><i#}
                                                     {#class="fa fa-star"></i><i class="fa fa-star"></i><i#}
@@ -231,11 +238,11 @@
                                         {#{% endif %}#}
                                     {% endfor %}
                                 </div>
-                                {#<input type="hidden" name="minPrice" value="{{ minPrice }}">#}
-                                {#<input type="hidden" name="maxPrice" value="{{ maxPrice }}">#}
+                                <input type="hidden" name="minPrice" value="{{ minPrice|round }}">
+                                <input type="hidden" name="maxPrice" value="{{ maxPrice|round }}">
                                 {% if priceRange == 'null' %}
-                                    <input type="hidden" name="lowPrice" value="1">
-                                    <input type="hidden" name="highPrice" value="250">
+                                    <input type="hidden" name="lowPrice" value="{{ minPrice|round }}">
+                                    <input type="hidden" name="highPrice" value="{{ maxPrice|round }}">
                                 {% else %}
                                     {% set priceRangeArr = priceRange|split('-') %}
                                     <input type="hidden" name="lowPrice"
@@ -259,10 +266,11 @@
                     </div>
                     <div class="col-md-3 column">
                         <div class="filter-widget">
-                            <h3 style="font-size: 16px; text-transform: none;">Αριθμός προϊόντων: {{ productsCount }}</h3>
+                            <h3 style="font-size: 16px; text-transform: none;">Αριθμός
+                                προϊόντων: {{ productsCount }}</h3>
                         </div>
                         {#{% if (ctgInfo.children is not empty and ctgInfo.lvl > 2) %}#}
-                            {#{% include 'products/modules/aside_category.html.twig' %}#}
+                        {#{% include 'products/modules/aside_category.html.twig' %}#}
                         {#{% endif %}#}
                         {% if (subCategories is not empty) %}
                             {% include 'products/modules/aside_category.html.twig' %}

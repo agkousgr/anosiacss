@@ -111,3 +111,8 @@ services:
         - { name: doctrine.event_listener, event: prePersist }
         - { name: doctrine.event_listener, event: preUpdate }
         - { name: doctrine.event_listener, event: postLoad }
+
+    twig.extension.text:
+        class: Twig_Extensions_Extension_Text
+        tags:
+            - { name: twig.extension }

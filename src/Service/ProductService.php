@@ -159,7 +159,7 @@ EOF;
             $result = $this->client->SendMessage(['Message' => $message]);
             $items = simplexml_load_string(str_replace("utf-16", "utf-8", $result->SendMessageResult));
             dump($message, $result);
-            return (int)$items->GetDataRows->GetCategoryItemsCountRow->Count;
+            return $items->GetDataRows->GetCategoryItemsCountRow;
         } catch (\SoapFault $sf) {
             echo $sf->faultstring;
         }

@@ -16,7 +16,7 @@ search_for_anosia:
 search:
     path: /search/website
     controller: App\Controller\AjaxSearchController::search
-    methods: [POST]
+    methods: [GET]
     options:
         expose: true
 

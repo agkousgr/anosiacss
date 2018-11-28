@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="UTF-8" ?>
 <doctrine-mapping xmlns="http://doctrine-project.org/schemas/orm/doctrine-mapping">
 
-    <entity name="App\Entity\Products">
+    <entity name="App\Entity\Products" repository-class="App\Repository\ProductsRepository">
         <id name="id" type="integer" />
         <field name="slug" length="200" />
         <field name="prCode" length="50" />

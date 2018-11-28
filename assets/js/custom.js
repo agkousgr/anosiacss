@@ -1,4 +1,5 @@
 // JavaScript Document
+require('webpack-jquery-ui/autocomplete');
 require('owl.carousel');
 require('select2');
 
@@ -8,6 +9,16 @@ $mainWrapper.on('show.bs.collapse', '.collapse', function () {
 });
 
 $(document).ready(function () {
+    $("#keyword").autocomplete({
+        source: Routing.generate('search'),
+        select: function (event, ui) {
+            $("#keyword").val(ui.item.label);
+            // let url = Routing.generate('products_list', {'id': ui.item.value});
+            // window.location.assign(url);
+        },
+        minLength: 3
+    });
+
     $(".dropdown").hover(
         function () {
             $('.dropdown-menu', this).stop(true, true).fadeToggle("500");
