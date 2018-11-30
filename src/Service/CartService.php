@@ -92,6 +92,7 @@ class CartService
     <SearchToken>null</SearchToken>
     <OrderBy>null</OrderBy>
     <MakeID>null</MakeID>
+    <ManufacturID>null</ManufacturID>
     <LowPrice>5</LowPrice>
     <HighPrice>$highPrice</HighPrice>
     <WebVisible>-1</WebVisible>

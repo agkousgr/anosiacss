@@ -194,4 +194,10 @@ class CronJobsController extends AbstractController
             throw $e;
         }
     }
+
+    public function test()
+    {
+        dump('xong');
+        return;
+    }
 }

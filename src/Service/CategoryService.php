@@ -295,6 +295,7 @@ EOF;
     <SearchToken>null</SearchToken>
     <IncludeChildCategories>1</IncludeChildCategories>
     <MakeID>null</MakeID>
+    <ManufacturID>null</ManufacturID>
     <LowPrice>-1</LowPrice>
     <HighPrice>-1</HighPrice>
 </ClientGetCategoryItemsCountRequest>

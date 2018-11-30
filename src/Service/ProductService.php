@@ -77,7 +77,7 @@ class ProductService
      * @return array
      * @throws \Exception
      */
-    public function getCategoryItems($ctgId, $page, $pagesize, $sortBy = 'NameAsc', $makeId = 'null', $priceRange = 'null', $webVisible = 1)
+    public function getCategoryItems($ctgId, $page, $pagesize, $sortBy = 'NameAsc', $makeId = 'null', $priceRange = 'null', $webVisible = 1, $manufacturerId = 'null')
     {
 
         $priceRangeArr = ($priceRange != 'null') ? explode('-', $priceRange) : -1;
@@ -100,6 +100,7 @@ class ProductService
     <IncludeChildCategories>1</IncludeChildCategories>
     <OrderBy>$sortBy</OrderBy>
     <MakeID>$makeId</MakeID>
+    <ManufacturID>$manufacturerId</ManufacturID>
     <LowPrice>$lowPrice</LowPrice>
     <HighPrice>$highPrice</HighPrice>
     <IsVisibleCategory>-1</IsVisibleCategory>
@@ -126,7 +127,7 @@ EOF;
      * @param $makeId
      * @return int
      */
-    public function getCategoryItemsCount($ctgId, $makeId = 'null', $priceRange = 'null', $webVisible = 1)
+    public function getCategoryItemsCount($ctgId, $makeId = 'null', $priceRange = 'null', $webVisible = 1, $manufacturerId = 'null')
     {
 
         $priceRangeArr = ($priceRange != 'null') ? explode('-', $priceRange) : -1;
@@ -147,7 +148,8 @@ EOF;
     <CategoryID>$ctgId</CategoryID>
     <SearchToken>null</SearchToken>
     <IncludeChildCategories>1</IncludeChildCategories>
-    <MakeID>$makeId</MakeID>
+    <MakeID>$makeId</MakeID> 
+    <ManufacturID>$manufacturerId</ManufacturID>
     <LowPrice>$lowPrice</LowPrice>
     <HighPrice>$highPrice</HighPrice>
     <IsVisibleCategory>-1</IsVisibleCategory>
@@ -227,7 +229,7 @@ EOF;
      * @return array
      * @throws \Exception
      */
-    public function getItems($id = 'null', $keyword = 'null', $pagesize, $sortBy = 'null', $isSkroutz = -1, $makeId = 'null', $priceRange = 'null', $itemCode = 'null', $webVisible = 1)
+    public function getItems($id = 'null', $keyword = 'null', $pagesize, $sortBy = 'null', $isSkroutz = -1, $makeId = 'null', $priceRange = 'null', $itemCode = 'null', $webVisible = 1, $manufacturerId = 'null')
     {
 
         $priceRangeArr = ($priceRange != 'null') ? explode('-', $priceRange) : -1;
@@ -248,6 +250,7 @@ EOF;
     <ItemID>$id</ItemID>
     <ItemCode>$itemCode</ItemCode>
     <MakeID>$makeId</MakeID>
+    <ManufacturID>$manufacturerId</ManufacturID>
     <IsSkroutz>$isSkroutz</IsSkroutz>
     <SearchToken>$keyword</SearchToken>
     <OrderBy>$sortBy</OrderBy>
@@ -278,7 +281,7 @@ EOF;
     }
 
 
-    public function getItemsCount($keyword = 'null', $makeId = 'null', $priceRange = 'null', $webVisible = 1)
+    public function getItemsCount($keyword = 'null', $makeId = 'null', $priceRange = 'null', $webVisible = 1, $manufacturerId = 'null')
     {
 
         $priceRangeArr = ($priceRange != 'null') ? explode('-', $priceRange) : -1;
@@ -288,7 +291,7 @@ EOF;
         $message = <<<EOF
 <?xml version="1.0" encoding="utf-16"?>
 <ClientGetItemsCountRequest>
-    <Type>1005</Type>
+    <Type>1038</Type>
     <Kind>$this->kind</Kind>
     <Domain>$this->domain</Domain>
     <AuthID>$this->authId</AuthID>
@@ -299,6 +302,7 @@ EOF;
     <ItemID>null</ItemID>
     <ItemCode>null</ItemCode>
     <MakeID>$makeId</MakeID>
+    <ManufacturID>$manufacturerId</ManufacturID>
     <IsSkroutz>-1</IsSkroutz>
     <SearchToken>$keyword</SearchToken>
     <OrderBy>null</OrderBy>

@@ -114,6 +114,7 @@ class SkroutzService
     <ItemID>null</ItemID>
     <ItemCode>null</ItemCode>
     <MakeID>null</MakeID>
+    <ManufacturID>null</ManufacturID>
     <IsSkroutz>1</IsSkroutz>
     <SearchToken>null</SearchToken>
     <OrderBy>NameAsc</OrderBy>

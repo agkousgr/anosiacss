@@ -441,3 +441,7 @@ syncronize_products:
 synchronize_availability_types:
     path: /synchronize/availability-types
     controller: App\Controller\CronJobsController::synchronizeAvailabilityTypes
+
+test:
+    path: /test
+    controller: App\Controller\CronJobsController::test

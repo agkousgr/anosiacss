@@ -94,6 +94,7 @@ class WishlistService
     <SearchToken>null</SearchToken>
     <OrderBy>null</OrderBy>
     <MakeID>null</MakeID>
+    <ManufacturID>null</ManufacturID>
     <LowPrice>-1</LowPrice>
     <HighPrice>-1</HighPrice>
     <WebVisible>-1</WebVisible>

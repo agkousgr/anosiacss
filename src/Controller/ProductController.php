@@ -20,7 +20,7 @@ class ProductController extends MainController
             $sortBy = ($request->query->get('sortBy')) ?: 'NameAsc';
             $makeId = ($request->query->get('brands')) ? str_replace('-', ',', $request->query->get('brands')) : 'null';
             $priceRange = ($request->query->get('priceRange')) ?: 'null';
-            $brands = $brandsService->getManufacturers('null');
+            $brands = $brandsService->getCategoryManufacturers($id);
             $ctgInfo = $this->em->getRepository(Category::class)->find($id);
 
             dump($ctgInfo->getChildren());
