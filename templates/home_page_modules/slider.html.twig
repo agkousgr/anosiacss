@@ -30,9 +30,11 @@
     .blog-img {
         position: relative;
     }
+
     .blog-img > a > p {
         font-size: 15px;
     }
+
     .blog-img > a {
         position: absolute;
         margin: 0;
@@ -52,34 +54,8 @@
             {% for slide in slider %}
                 <div class="col-lg-3" style="padding: 0 1px">
                     <div class="blog-img">
-                        <img src="{{ asset('uploads/slider/' ~ slide.image) }}" alt="{{ slide.name }}"/>
-                        <a href="{{ slide.url }}">
-                            <h4>{{ slide.name }}</h4>
-                            <h5>{{ slide.description }}</h5>
-                        </a>
-                    </div>
-                </div>
-                <div class="col-lg-3" style="padding: 0 1px">
-                    <div class="blog-img">
-                        <img src="{{ asset('uploads/slider/' ~ slide.image) }}" alt="{{ slide.name }}"/>
-                        <a href="{{ slide.url }}">
-                            <h4>Αντιηλιακα</h4>
-                            <h5>Εκτπώσεις έως και -58%</h5>
-                        </a>
-                    </div>
-                </div>
-                <div class="col-lg-3" style="padding: 0 1px">
-                    <div class="blog-img">
-                        <img src="{{ asset('uploads/slider/' ~ slide.image) }}" alt="{{ slide.name }}"/>
-                        <a href="{{ slide.url }}">
-                            <h4>{{ slide.name }}</h4>
-                            <h5>{{ slide.description }}</h5>
-                        </a>
-                    </div>
-                </div>
-                <div class="col-lg-3" style="padding: 0 1px">
-                    <div class="blog-img">
-                        <img src="{{ asset('uploads/slider/' ~ slide.image) }}" alt="{{ slide.name }}"/>
+                        <img src="{{ asset('uploads/slider/' ~ slide.image) }}"
+                             alt="{{ slide.name }}"/>
                         <a href="{{ slide.url }}">
                             <h4>{{ slide.name }}</h4>
                             <h5>{{ slide.description }}</h5>
@@ -87,6 +63,8 @@
                     </div>
                 </div>
             {% endfor %}
+
+
 
             {#<ul>#}
             {#{% for slide in slider %}#}

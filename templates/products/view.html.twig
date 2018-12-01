@@ -2,9 +2,9 @@
     {% import _self as macros %}
     {% if ctg.parent == null %}
         <a style="color: #fff;"
-           href="{{ path('products_list', {'id':ctg.id}) }}">{{ ctg.name }}</a> {{ bc|raw }}
+           href="{{ path('products_list', {'slug':ctg.slug}) }}">{{ ctg.name }}</a> {{ bc|raw }}
     {% else %}
-        {% set bc = ' / <a style="color: #fff;" href="' ~ path('products_list', {'id':ctg.id}) ~ '">' ~ ctg.name ~ '</a>' ~ bc %}
+        {% set bc = ' / <a style="color: #fff;" href="' ~ path('products_list', {'slug':ctg.slug}) ~ '">' ~ ctg.name ~ '</a>' ~ bc %}
         {{ macros.create_breadcrumb(ctg.parent, bc) }}
     {% endif %}
 {% endmacro %}
@@ -84,7 +84,7 @@
                             <div class="col-sm-8 wow fadeIn" data-wow-delay="0.3s">
                                 <p>Κατηγορίες που ανήκει το προϊόν:
                                     {% for ctg in pr.categories %}
-                                        <a href="{{ path('products_list', {'id': pr.id}) }}"><b>{{ ctg.name }}</b></a>
+                                        <a href="{{ path('products_list', {'slug': ctg.slug}) }}"><b>{{ ctg.name }}</b></a>
                                     {% endfor %}
                                 </p>
                                 <h2>{{ pr.name }}</h2>
