@@ -12,12 +12,37 @@ $(document).ready(function () {
     $("#keyword").autocomplete({
         source: Routing.generate('search'),
         select: function (event, ui) {
+            event.preventDefault();
             $("#keyword").val(ui.item.label);
-            // let url = Routing.generate('products_list', {'id': ui.item.value});
+            // let url = Routing.generate('search');
             // window.location.assign(url);
+        },
+        focus: function (event, ui) {
+            event.preventDefault();
+            $("#keyword").val(ui.item.label);
         },
         minLength: 3
     });
+
+    $("#keyword").keypress(function (e) {
+        if (e.which == 13) {
+            let data = {
+                'term': $(this).val()
+            };
+            let url = Routing.generate('search', data);
+            window.location.assign(url);
+        }
+    });
+
+    $("#search-button").on('click', function (e) {
+        e.preventDefault();
+        let data = {
+            'term': $("#keyword").val()
+        };
+        let url = Routing.generate('search', data);
+        window.location.assign(url);
+    });
+
 
     $(".dropdown").hover(
         function () {
@@ -30,7 +55,6 @@ $(document).ready(function () {
         }
     );
 });
-
 
 
 // MENU TOGGLE
@@ -72,8 +96,7 @@ $("#menu-toggle").click(function (e) {
                 if ($(this).parent().hasClass("closed")) {
 //$(this).attr("src", "fa fa-chevron-down");
                     $(this).parent().removeClass("closed").addClass("open");
-                }
-                else {
+                } else {
                     $(this).parent().removeClass("open").addClass("closed");
                 }
                 e.stopPropagation();
@@ -473,9 +496,9 @@ $('.add-to-cart').on('click', function (e) {
             $('#cart-total-items').html(result.totalCartItems);
             $("#sidebar-cart-wrapper").toggleClass("active");
             $('#collapseCart').load(Routing.generate('load_top_cart'));
-            setTimeout( function(){
+            setTimeout(function () {
                 $("#sidebar-cart-wrapper").toggleClass("active")
-            }  , 3000 );
+            }, 3000);
         } else if (result.success && result.exist === true) {
             swal({
                 title: 'Ουπς',

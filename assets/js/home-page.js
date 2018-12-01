@@ -8,9 +8,14 @@ $(document).ready(function () {
         // source: ['test', 'zong'],
         source: Routing.generate('search_for_anosia'),
         select: function (event, ui) {
+            event.preventDefault();
             $("#anosia-keyword").val(ui.item.label);
-            let url = Routing.generate('products_list', {'id': ui.item.value});
-            window.location.assign(url);
+            // let url = Routing.generate('products_list', {'id': ui.item.value});
+            // window.location.assign(url);
+        },
+        focus: function(event, ui) {
+            event.preventDefault();
+            $("#anosia-keyword").val(ui.item.label);
         },
         minLength: 3
     });

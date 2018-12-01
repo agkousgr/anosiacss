@@ -68,7 +68,7 @@ class CronJobsController extends AbstractController
         $connection = $this->em->getConnection();
         $connection->beginTransaction();
         try {
-            $s1products = $this->productService->getItems('null', 'null', 10, 'null', -1, 'null', 'null', 'null', 1);
+            $s1products = $this->productService->getItems('null', 'null', 1000, 'NameAsc', -1, 'null', 'null', 'null', 1);
             if ($s1products) {
                 $connection->query('SET FOREIGN_KEY_CHECKS=0');
                 $connection->query('DELETE FROM products');
@@ -76,16 +76,22 @@ class CronJobsController extends AbstractController
                 // an implicit commit.
                 $connection->query('SET FOREIGN_KEY_CHECKS=1');
                 $connection->commit();
-                dump($s1products);
                 foreach ($s1products as $s1product) {
-                    $pr = new Products();
-                    $pr->setId(intval($s1product['id']));
-                    $pr->setSlug(strval($s1product['slug']));
-                    $pr->setPrCode(strval($s1product['prCode']));
-                    $pr->setProductName(strval($s1product['name']));
-                    $this->em->persist($pr);
-                    $this->em->flush();
+                    dump(strval($s1product['id']));
+                    if (intval($s1product['id']) === 14953) {
+                        dump($s1product);
+                    }
+
+                    if (strval($s1product['id']) !== '') {
+                        $pr = new Products();
+                        $pr->setId(intval($s1product['id']));
+                        $pr->setSlug(strval($s1product['slug']));
+                        $pr->setPrCode(strval($s1product['prCode']));
+                        $pr->setProductName(strval($s1product['name']));
+                        $this->em->persist($pr);
+                        $this->em->flush();
 //                    dump($pr);
+                    }
                 }
             }
             return;

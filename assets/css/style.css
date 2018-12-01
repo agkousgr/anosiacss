@@ -3161,7 +3161,8 @@ fieldset[disabled] a.btn {
 
 .ui-autocomplete,
 .ui-menu .ui-menu {
-    position: absolute
+    position: absolute;
+    z-index: 9999;
 }
 
 .ui-accordion .ui-accordion-content {

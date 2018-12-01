@@ -47,7 +47,7 @@ class AjaxSearchController extends AbstractController
                 foreach ($result as $val) {
                     $resultArr[] = [
                         'value' => $val->getCategoryId(),
-                        'label' => $val->getKeyword()
+                        'label' => $val->getKeyword() . '(' . $val->getPrCode() .')'
                     ];
                 }
                 return $this->json($resultArr);
