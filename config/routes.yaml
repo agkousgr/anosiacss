@@ -22,25 +22,24 @@ search:
 
 # Products
 products_list:
-    path: /products/{id}/{page}
+    path: /products/{slug}/{page}
     controller: App\Controller\ProductController::listProducts
     defaults:
         page: 1
     requirements:
-        id: \d+
         page: \d+
     methods: [GET,POST]
     options:
         expose: true
-#brand_products_list:
-#    path: /products/{slug}/{page}
-#    controller: App\Controller\ProductController::listBrandProducts
-#    defaults: { page: 1 }
-#    methods: [POST]
-#    options:
-#        expose: true
-#    requirements:
-#        page: \d+
+brand_products_list:
+    path: /brand/{slug}/{page}
+    controller: App\Controller\ProductController::listBrandProducts
+    defaults: { page: 1 }
+    methods: [POST]
+    options:
+        expose: true
+    requirements:
+        page: \d+
 brands_list:
     path: /brands/{page}
     controller: App\Controller\ProductController::listBrands

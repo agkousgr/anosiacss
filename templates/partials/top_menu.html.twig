@@ -7,7 +7,7 @@
                     {% set mainCtgUrl = '#' %}
                     {% set dataToggle = 'class="dropdown-toggle" data-toggle="dropdown"' %}
                     {% if ctg.__children|length == 0 %}
-                        {% set mainCtgUrl = path('products_list', {'id': ctg.id}) %}
+                        {% set mainCtgUrl = path('products_list', {'slug': ctg.slug}) %}
                         {% set dataToggle = '' %}
                     {% endif %}
                     <a href="{{ mainCtgUrl }}" {{ dataToggle }}>{{ ctg.name }}</a>
@@ -15,7 +15,7 @@
                         <ul class="dropdown-menu" role="menu">
                             {% for subCtg in ctg.__children %}
                                 {% if subCtg.isVisible == true %}
-                                    <li><a href="{{ path('products_list', {'id':subCtg.id}) }}">{{ subCtg.name }}</a>
+                                    <li><a href="{{ path('products_list', {'slug':subCtg.slug}) }}">{{ subCtg.name }}</a>
                                     </li>
                                 {% endif %}
                             {% endfor %}
@@ -34,7 +34,7 @@
                                                     <div class="col-sm-6">
                                                         <div class="sub-menu">
                                                             <h4>
-                                                                <a href="{{ path('products_list', {'id':subCtg.id}) }}">{{ subCtg.name }}</a>
+                                                                <a href="{{ path('products_list', {'slug':subCtg.slug}) }}">{{ subCtg.name }}</a>
                                                             </h4>
                                                             {% if subCtg.__children %}
                                                                 <ul>

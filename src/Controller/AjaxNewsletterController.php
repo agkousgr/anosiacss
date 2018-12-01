@@ -16,6 +16,8 @@ class AjaxNewsletterController extends AbstractController
             try {
                 $name = $request->request->get('name');
                 $email = $request->request->get('email');
+                $gender = $request->request->get('gender');
+                $age = $request->request->get('age');
                 if (!$name OR !$email) {
                     return $this->json([
                         'success' => 'empty',

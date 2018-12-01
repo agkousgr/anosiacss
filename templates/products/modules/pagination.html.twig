@@ -15,13 +15,13 @@
 <ul class="pagination" style="text-align: center;">
     {% if page != 1 %}
         <li>
-            <a href="{{ path('products_list', {'id':ctgInfo.id, 'page':page-1}) }}{{ urlQuery }}" aria-label="Προηγούμενη">
+            <a href="{{ path('products_list', {'slug':ctgInfo.slug, 'page':page-1}) }}{{ urlQuery }}" aria-label="Προηγούμενη">
                 <span aria-hidden="true">&laquo;</span>
             </a>
         </li>
     {% endif %}
     {% if start > 1 %}
-        <li><a href="{{ path('products_list', {'id':ctgInfo.id, 'page':1}) }}{{ urlQuery }}">1</a></li>
+        <li><a href="{{ path('products_list', {'slug':ctgInfo.slug, 'page':1}) }}{{ urlQuery }}">1</a></li>
         <span> ... </span>
     {% endif %}
 
@@ -29,18 +29,18 @@
         {% if i == page %}
             <li class="active"><a href="javascript:void(0);">{{ i }}</a></li>
         {% else %}
-            <li><a href="{{ path('products_list', {'id':ctgInfo.id, 'page':i}) }}{{ urlQuery }}">{{ i }}</a></li>
+            <li><a href="{{ path('products_list', {'slug':ctgInfo.slug, 'page':i}) }}{{ urlQuery }}">{{ i }}</a></li>
         {% endif %}
     {% endfor %}
 
     {% if totalPages > end %}
         <span> ... </span>
-        <li><a href="{{ path('products_list', {'id':ctgInfo.id, 'page':totalPages}) }}{{ urlQuery }}">{{ totalPages }}</a></li>
+        <li><a href="{{ path('products_list', {'slug':ctgInfo.slug, 'page':totalPages}) }}{{ urlQuery }}">{{ totalPages }}</a></li>
     {% endif %}
 
     {% if page < totalPages %}
         <li>
-            <a href="{{ path('products_list', {'id':ctgInfo.id, 'page':page+1}) }}{{ urlQuery }}" aria-label="Επόμενη">
+            <a href="{{ path('products_list', {'slug':ctgInfo.slug, 'page':page+1}) }}{{ urlQuery }}" aria-label="Επόμενη">
                 <span aria-hidden="true">&raquo;</span>
             </a>
         </li>

@@ -65,6 +65,8 @@ fieldset[disabled] a.btn {
     /*src: url(../fonts/geosans-light/ACGeosansLight.eot) format('embedded-opentype'), url(../fonts/geosans-light/GeosansLight.ttf) format('truetype'), url(../fonts/geosans-light/ACGeosansLight.woff) format('woff2');*/
 /*}*/
 
+@font-face { font-family: "acgeosanslight"; src: local("acgeosanslight"), url("https://amoradastyling.gr/wp-content/uploads/useanyfont/180608114447ACGeosansLight.eot") format("embedded-opentype"), url("https://amoradastyling.gr/wp-content/uploads/useanyfont/180608114447ACGeosansLight.woff") format("woff"); font-style: normal; }
+
 @font-face { font-family: "GeosansLight"; src: local("GeosansLight"), url("https://www.amoradastyling.gr/wp-content/uploads/useanyfont/180608114447ACGeosansLight.eot") format("embedded-opentype"), url("https://www.amoradastyling.gr/wp-content/uploads/useanyfont/180608114447ACGeosansLight.woff") format("woff"); font-style: normal; }
 
 .fa {
@@ -18588,6 +18590,7 @@ figure.effect-apollo:hover figcaption::before {
 .pre-header-right ul li a, .pre-header-left ul li a {
     display: block;
     padding-right: 32px;
+    padding-top: 8px;
     color: #171717
 }
 

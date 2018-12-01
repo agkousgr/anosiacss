@@ -51,6 +51,8 @@ class NewsletterService
     {
         $this->logger = $logger;
         $this->session = $session;
+        dump($session->get("authID"));
+        die();
         $this->authId = $session->get("authID");
         $this->kind = $s1Credentials['kind'];
         $this->domain = $s1Credentials['domain'];
@@ -65,7 +67,7 @@ class NewsletterService
      *
      * @return array
      */
-    public function getNewsletter($name, $email, $referrer)
+    public function getNewsletter($name, $email, $referrer, $gender, $age)
     {
         $client = new \SoapClient('http://caron.cloudsystems.gr/FOeshopWS/ForeignOffice.FOeshop.API.FOeshopSvc.svc?singleWsdl', ['trace' => true, 'exceptions' => true,]);
         $message = <<<EOF
@@ -85,18 +87,18 @@ EOF;
         try {
             $result = $client->SendMessage(['Message' => $message]);
             $newsletterData = simplexml_load_string(str_replace("utf-16", "utf-8", $result->SendMessageResult));
-//            dump($message, $result);
+            dump($message, $result);
             $success = false;
             $exist = false;
             if ((int)$newsletterData->RowsCount > 0) {
                 if ((string)$newsletterData->GetDataRows->GetNewsletterRow->Allow === 'false') {
-                    $this->setNewsletter($name, $email, intval($newsletterData->GetDataRows->GetNewsletterRow->ID), 'true', $referrer);
+                    $this->setNewsletter($name, $email, intval($newsletterData->GetDataRows->GetNewsletterRow->ID), 'true', $referrer, $gender, $age);
                     //                 When sotiris return key in getNewsletter send it with email
                     $success = true;
                     $exist = true;
                 }
             } else {
-                if ($this->setNewsletter($name, $email, '', '', $referrer)) {
+                if ($this->setNewsletter($name, $email, '', '', $referrer, $gender, $age)) {
                     $success = true;
                 }
             }
@@ -112,12 +114,15 @@ EOF;
     /**
      * @param $name
      * @param $email
-     * @param $key
-     * @param $allow
+     * @param string $key
+     * @param string $allow
+     * @param $referrer
+     * @param string $gender
+     * @param string $age
      *
-     * @return true|false
+     * @return bool
      */
-    public function setNewsletter($name, $email, $key = '', $allow = 'true', $referrer)
+    public function setNewsletter($name, $email, $key = '', $allow = 'true', $referrer, $gender = '', $age = '')
     {
         $client = new \SoapClient('http://caron.cloudsystems.gr/FOeshopWS/ForeignOffice.FOeshop.API.FOeshopSvc.svc?singleWsdl', ['trace' => true, 'exceptions' => true,]);
 
@@ -133,6 +138,8 @@ EOF;
     <CompanyID>$this->companyId</CompanyID>
     <Email>$email</Email>
     <Name>$name</Name>
+    <Age>$age</Age>
+    <Gender>$gender</Gender>
     <Allow>$allow</Allow>
     <Referrer>$referrer</Referrer>
 </ClientSetNewsletterRequest>

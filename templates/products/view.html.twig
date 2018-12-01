@@ -56,27 +56,27 @@
                             <div class="col-sm-4">
                                 <div class="product-main-slider">
                                     <div class="slider">
-                                        {#<div class="main-image">#}
-                                            {#<ul class="bxslider">#}
-                                                {#{% for image in pr.extraImages %}#}
-                                                    {#<li><img src="{{ image.imageUrl }}"#}
-                                                             {#alt="{{ pr.name }}"/></li>#}
-                                                {#{% endfor %}#}
-                                            {#</ul>#}
-                                        {#</div>#}
-                                        {#<div class="owl-carousel owl-theme" id="bx-pager">#}
-                                            {#{% for image in pr.extraImages %}#}
-                                                {#<div class="item" style="text-align: center">#}
-                                                    {#<a data-slide-index="{{ loop.index - 1 }}"#}
-                                                       {#href=""#}
-                                                       {#style="border: 1px solid #d8d8d8;">#}
-                                                        {#<img style="max-height: 95px; border:none;"#}
-                                                             {#src="{{ image.imageUrl }}"#}
-                                                             {#alt="{{ pr.name }}"/>#}
-                                                    {#</a>#}
-                                                {#</div>#}
-                                            {#{% endfor %}#}
-                                        {#</div>#}
+                                        <div class="main-image">
+                                            <ul class="bxslider">
+                                                {% for image in pr.extraImages %}
+                                                    <li><img src="{{ image.imageUrl }}"
+                                                             alt="{{ pr.name }}"/></li>
+                                                {% endfor %}
+                                            </ul>
+                                        </div>
+                                        <div class="owl-carousel owl-theme" id="bx-pager">
+                                            {% for image in pr.extraImages %}
+                                                <div class="item" style="text-align: center">
+                                                    <a data-slide-index="{{ loop.index - 1 }}"
+                                                       href=""
+                                                       style="border: 1px solid #d8d8d8;">
+                                                        <img style="max-height: 95px; border:none;"
+                                                             src="{{ image.imageUrl }}"
+                                                             alt="{{ pr.name }}"/>
+                                                    </a>
+                                                </div>
+                                            {% endfor %}
+                                        </div>
                                     </div>
                                 </div>
                             </div>

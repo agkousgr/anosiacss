@@ -46,7 +46,7 @@
                         </div>
                     </div>
                     <div class="product-short-info">
-                        <div class="product-name"><a href="{{ path('product_view', {'id': pr.id}) }}">{{ pr.name|title }}</a>
+                        <div class="product-name"><a href="{{ path('product_view', {'id': pr.id}) }}">{{ pr.name|title|preplace("σ", "ς") }}</a>
                         </div>
                         {#<div class="star"><i class="fa fa-star"></i><i#}
                         {#class="fa fa-star"></i><i class="fa fa-star"></i><i#}

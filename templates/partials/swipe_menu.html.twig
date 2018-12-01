@@ -16,7 +16,7 @@
                                 {% for subctg in ctg.__children %}
                                     {% if subctg.isVisible == "1" %}
                                         <li>
-                                            <a href="{{ path('products_list', {'id':subctg.id}) }}">{{ subctg.name }}</a>
+                                            <a href="{{ path('products_list', {'slug':subctg.slug}) }}">{{ subctg.name }}</a>
                                         </li>
                                     {% endif %}
                                 {% endfor %}

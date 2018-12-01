@@ -12,31 +12,33 @@ use Symfony\Component\HttpFoundation\Request;
 class ProductController extends MainController
 {
 
-    public function listProducts(Request $request, int $page, int $id, BrandsService $brandsService)
+    public function listProducts(Request $request, int $page, string $slug, BrandsService $brandsService)
     {
         try {
 
             $pagesize = ($request->query->get('pagesize')) ? preg_replace('/[^A-Za-z0-9\-]/', '', $request->query->get('pagesize')) : 12;
             $sortBy = ($request->query->get('sortBy')) ?: 'NameAsc';
-            $makeId = ($request->query->get('brands')) ? str_replace('-', ',', $request->query->get('brands')) : 'null';
+            $mnufacturerId = ($request->query->get('brands')) ? str_replace('-', ',', $request->query->get('brands')) : 'null';
             $priceRange = ($request->query->get('priceRange')) ?: 'null';
-            $brands = $brandsService->getCategoryManufacturers($id);
-            $ctgInfo = $this->em->getRepository(Category::class)->find($id);
-
+            $ctgInfo = $this->em->getRepository(Category::class)->findOneBy(['slug' => $slug]);
+            dump($ctgInfo);
+            $brands = $brandsService->getCategoryManufacturers($ctgInfo->getS1id());
             dump($ctgInfo->getChildren());
-            $subCategories = $this->em->getRepository(Category::class)->findBy(['parent' => $ctgInfo]);
-            $slider = $this->em->getRepository(Slider::class)->findBy(['category' => $id]);
-            $productsCountArr = $this->productService->getCategoryItemsCount($id, $makeId, $priceRange);
+            $subCategories = $this->em->getRepository(Category::class)->findBy(['parent' => $ctgInfo->getS1id()]);
+            $slider = $this->em->getRepository(Slider::class)->findBy(['category' => $ctgInfo]);
+            dump($slider);
+//            die();
+            $productsCountArr = $this->productService->getCategoryItemsCount($ctgInfo->getS1id(), 'null', $priceRange, 1, $mnufacturerId);
 //            dump($productsCountArr);
             $productsCount = intval($productsCountArr->Count);
             $minPrice = intval($productsCountArr->MinPrice);
             $maxPrice = intval($productsCountArr->MaxPrice);
             if ($productsCount > $pagesize * $page) {
-                $products = $this->productService->getCategoryItems($id, $page - 1, $pagesize, $sortBy, $makeId, $priceRange);
+                $products = $this->productService->getCategoryItems($ctgInfo->getS1id(), $page - 1, $pagesize, $sortBy, 'null', $priceRange, 1, $mnufacturerId);
             } else {
-                $products = $this->productService->getCategoryItems($id, 0, $pagesize, $sortBy, $makeId, $priceRange);
+                $products = $this->productService->getCategoryItems($ctgInfo->getS1id(), 0, $pagesize, $sortBy, 'null', $priceRange, 1, $mnufacturerId);
             }
-            dump($makeId, $products);
+            dump($mnufacturerId, $products);
             return $this->render('products/list.html.twig', [
                 'products' => $products,
                 'ctgInfo' => $ctgInfo,
@@ -56,7 +58,7 @@ class ProductController extends MainController
                 'page' => $page,
                 'pagesize' => $pagesize,
                 'sortBy' => $sortBy,
-                'brand' => $makeId,
+                'brand' => $mnufacturerId,
                 'priceRange' => $priceRange,
                 'loginUrl' => $this->loginUrl,
                 'subCategories' => $subCategories

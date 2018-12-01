@@ -6,7 +6,7 @@
 
         {% for subctg in subCategories %}
             <div class="custom-cr">
-                <a href="{{ path('products_list', {'id': subctg.id}) }}"> <span>{{ subctg.name }}</span></a>
+                <a href="{{ path('products_list', {'slug': subctg.slug}) }}"> <span>{{ subctg.name }}</span></a>
             </div>
         {% endfor %}
 

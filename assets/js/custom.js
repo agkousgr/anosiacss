@@ -309,6 +309,9 @@ $(document).ready(function () {
     $('#newsletter-btn').on('click', function () {
         let email = $('#newsletter-email').val();
         let name = $('#newsletter-name').val();
+        let gender = $('#nl-gender').val();
+        let age = $('#age').val();
+
         if (name === "") {
             swal({
                 title: 'Ουπς',
@@ -330,6 +333,20 @@ $(document).ready(function () {
                 type: 'error',
                 timer: 5000
             });
+        } else if (gender === '') {
+            swal({
+                title: 'Ουπς',
+                html: '<div style="font-size:17px;">Παρακαλώ συμπληρώστε το φύλο σας!</div>',
+                type: 'error',
+                timer: 5000
+            });
+        } else if (age === '') {
+            swal({
+                title: 'Ουπς',
+                html: '<div style="font-size:17px;">Παρακαλώ συμπληρώστε την ηλικία σας!</div>',
+                type: 'error',
+                timer: 5000
+            });
         } else if ($('#newsletter-chk').is(':checked') !== true) {
             swal({
                 title: 'Ουπς',
@@ -340,7 +357,9 @@ $(document).ready(function () {
         } else {
             let data = {
                 'email': email,
-                'name': name
+                'name': name,
+                'gender': gender,
+                'age': age
             }
             $.post(Routing.generate('newsletter_registration'), data, function (result) {
                 if (result.success && result.exist === false) {
@@ -352,6 +371,8 @@ $(document).ready(function () {
                     });
                     $('#newsletter-email').val('');
                     $('#newsletter-name').val('');
+                    $('#nl-gender').val('');
+                    $('#nl-age').val('');
                     $('#newsletter-btn').attr('disabled', 'disabled');
                     $('#newsletter-chk').removeAttr('checked');
                     // $('#collapseCart').load(Routing.generate('load_top_wishlist'));

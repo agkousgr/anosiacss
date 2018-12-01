@@ -2,9 +2,9 @@
     {% import _self as macros %}
     {% if ctg.parent == null %}
         <a style="color: #fff;"
-           href="{{ path('products_list', {'id':ctg.id}) }}">{{ ctg.name }}</a> {{ bc|raw }}
+           href="{{ path('products_list', {'slug':ctg.slug}) }}">{{ ctg.name }}</a> {{ bc|raw }}
     {% else %}
-        {% set bc = ' / <a style="color: #fff;" href="' ~ path('products_list', {'id':ctg.id}) ~ '">' ~ ctg.name ~ '</a>' ~ bc %}
+        {% set bc = ' / <a style="color: #fff;" href="' ~ path('products_list', {'slug':ctg.slug}) ~ '">' ~ ctg.name ~ '</a>' ~ bc %}
         {{ macros.create_breadcrumb(ctg.parent, bc) }}
     {% endif %}
 {% endmacro %}
@@ -171,12 +171,15 @@
                                                         {#class="fa fa-star"></i><i class="fa fa-star-o"></i>#}
                                                         {#</div>#}
                                                         <div class="product-price">
-                                                            <div class="product-price-span">{{ pr.webPrice|number_format(2, ',', '.') }}
-                                                                €
-                                                                <del>{{ pr.retailPrice|number_format(2, ',', '.') }}
-                                                                    €
-                                                                </del>
+                                                            <div class="product-price-span">
+                                                                Κωδ. {{ pr.prCode }}
                                                             </div>
+                                                            {#<div class="product-price-span">{{ pr.webPrice|number_format(2, ',', '.') }}#}
+                                                            {#€#}
+                                                            {#<del>{{ pr.retailPrice|number_format(2, ',', '.') }}#}
+                                                            {#€#}
+                                                            {#</del>#}
+                                                            {#</div>#}
                                                         </div>
                                                         {% if pr.outOfStock == "false" %}
                                                             <button type="button"

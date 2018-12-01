@@ -160,11 +160,39 @@ EOF;
             $result = $this->client->SendMessage(['Message' => $message]);
             $resultXML = simplexml_load_string(str_replace("utf-16", "utf-8", $result->SendMessageResult));
             dump($message, $result);
-            $brands = $this->initializeBrands($resultXML->GetDataRows->GetManufactorRow);
+            $brands = $this->initializeManufacturers($resultXML->GetDataRows->GetCategoryManufacturRow);
             return $brands;
 
         } catch (\SoapFault $sf) {
             throw $sf->faultstring;
+        }
+    }
+
+    /**
+     * @param $manufacturers
+     * @return array
+     * @throws \Exception
+     */
+    private function initializeManufacturers($manufacturers)
+    {
+        try {
+            $manufacturersArr = [];
+            foreach ($manufacturers as $manufacturer) {
+//                if ($brand->) Todo: get only IsActive when ready by Sotiris
+                $manufacturersArr[] = array(
+                    'id' => $manufacturer->ManufacturID,
+                    'name' => $manufacturer->ManufacturName,
+//                    'slug' => $brand->Slug,
+//                    'hasMainImage' => $brand->HasMainPhoto,
+//                    'imageUrl' => ($brand->HasMainPhoto) ? 'https://caron.cloudsystems.gr/FOeshopAPIWeb/DF.aspx?' . str_replace('[Serial]', '01102472475217', str_replace('&amp;', '&', $brand->MainPhotoUrl)) : ''
+                );
+//            }
+            }
+            dump($manufacturersArr);
+            return $manufacturersArr;
+        } catch (\Exception $e) {
+            $this->logger->error(__METHOD__ . ' -> {message}', ['message' => $e->getMessage()]);
+            throw $e;
         }
     }
 
