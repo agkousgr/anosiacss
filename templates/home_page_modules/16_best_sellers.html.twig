@@ -4,235 +4,28 @@
             <div class="col-md-4 col-lg-3">
                 <div class="product-media-scroll">
                     <h3>Best <span>Sellers</span></h3>
-                    <div class="owl-carousel owl-theme ProductScrollMedia">
-                        {% set count = 1 %}
-                        {% for pr in featured %}
-                            {% if count == 1 %}
-                                <div class="item">
-                            {% endif %}
-                            <div class="product-box">
-                                <div class="media">
-                                    <div class="media-left">
-                                        <a href="{{ path('product_view', {'id':pr.id}) }}">
-                                            <img class="media-object" src="{{ pr.imageUrl }}" alt="{{ pr.name }}">
-                                        </a>
-                                    </div>
-                                    <div class="media-body">
-                                        <h5><a href="{{ path('product_view', {'id':pr.id}) }}">{{ pr.name }}</a></h5>
-                                        {#<div class="star-rating"><i class="fa fa-star"></i><i#}
-                                        {#class="fa fa-star"></i><i class="fa fa-star"></i><i#}
-                                        {#class="fa fa-star"></i><i class="fa fa-star-o"></i></div>#}
-                                        <div class="product-price-span">{{ pr.webPrice }}€
-                                            <del>{{ pr.retailPrice }}€</del>
-                                        </div>
-                                        <button type="button" class="btn btn-primary btn-xs">ΚΑΛΑΘΙ
-                                        </button>
-                                    </div>
-                                </div>
-                            </div>
-
-                            {% if count == 3 %}
-                                </div>
-                            {% endif %}
-                            {% set count = count + 1 %}
-                            {% if count == 4 %}
-                                {% set count = 1 %}
-                            {% endif %}
-                        {% endfor %}
-                    </div>
+                    {% for ctg in categories %}
+                        <h5>
+                            <a href="#" data-id="{{ ctg.id }}" class="best-sellers-category">{{ ctg.name }}</a>
+                        </h5>
+                    {% endfor %}
                 </div>
             </div>
 
 
-            <div class="col-md-8 col-lg-9">
+            <div id="best-sellers-container" class="col-md-8 col-lg-9">
                 <div class="ProductTab">
                     <ul class="resp-tabs-list hor_1">
-                        <li>ΠΡΟΣΦΟΡΕΣ</li>
-                        <li>ΓΥΝΑΙΚΑ</li>
-                        <li>ΠΑΙΔΙ</li>
+                        {% for ctg in categories|slice(0,1) %}
+                            {% for subCtg in ctg.__children %}
+                                {% if subCtg.isVisible == true %}
+                                    <li>{{ subCtg.name }}</li>
+                                {% endif %}
+                            {% endfor %}
+                        {% endfor %}
                     </ul>
-                    <div class="resp-tabs-container hor_1">
-                        <div id="men_id">
-                            <div class="owl-carousel owl-theme ProductScrollTab product-main-slider">
-                                {% for pr in popular %}
-                                    <div class="item">
-                                        <div class="product-case">
-                                            <div class="tag tag-green"><span>new</span></div>
-                                            <div class="product-img">
-                                                <div class="hover-img">
-                                                    <a href="{{ path('product_view', {'id':pr.id}) }}"><img src="{{ pr.imageUrl }}" alt="{{ pr.name }}"></a>
-                                                </div>
-                                                <a href="{{ path('product_view', {'id':pr.id}) }}"><img src="{{ pr.imageUrl }}" alt="{{ pr.name }}"></a>
-                                            </div>
-                                            <div class="hover-info">
-                                                <div class="product-short-info">
-                                                    <div class="product-name">
-                                                        {% if pr.summary|length > 0 %}
-                                                            {#{% set text = pr.summary|render %}#}
-                                                            {% set hoverText = pr.summary|truncate(110, true)|raw %}
-                                                        {% else %}
-                                                            {% set hoverText = pr.name|title|truncate(100, true)|raw %}
-                                                        {% endif %}
-                                                        <a href="{{ path('product_view', {'id':pr.id}) }}">{{ hoverText }}</a>
-                                                    </div>
-                                                    {#<div class="star"><i class="fa fa-star"></i><i#}
-                                                    {#class="fa fa-star"></i><i class="fa fa-star"></i><i#}
-                                                    {#class="fa fa-star"></i><i class="fa fa-star"></i><i#}
-                                                    {#class="fa fa-star-o"></i></div>#}
-                                                    <div class="product-price">
-                                                        <div class="product-price-span">
-                                                            Κωδ. {{ pr.prCode }}
-                                                        </div>
-                                                        {#<div class="product-price-span">{{ pr.webPrice }}€#}
-                                                            {#<del>{{ pr.retailPrice }}€</del>#}
-                                                        {#</div>#}
-                                                    </div>
-                                                    <button type="button"><i class="fa fa-cart-plus"></i>
-                                                        <span>Καλάθι</span>
-                                                    </button>
-                                                </div>
-                                            </div>
-                                            <div class="product-short-info">
-                                                <div class="product-name">
-                                                    <a href="{{ path('product_view', {'id':pr.id}) }}">{{ pr.name|title }}</a>
-                                                </div>
-                                                {#<div class="star"><i class="fa fa-star"></i><i#}
-                                                {#class="fa fa-star"></i><i#}
-                                                {#class="fa fa-star"></i><i class="fa fa-star"></i><i#}
-                                                {#class="fa fa-star"></i><i class="fa fa-star-o"></i>#}
-                                                {#</div>#}
-                                                <div class="product-price">
-                                                    <div class="product-price-span">{{ pr.webPrice }}€
-                                                        <del>{{ pr.retailPrice }}€</del>
-                                                    </div>
-                                                </div>
-                                            </div>
-                                        </div>
-                                    </div>
-                                {% endfor %}
-                            </div>
-                        </div>
-
-
-                        <div id="women_id">
-                            <div class="owl-carousel owl-theme ProductScrollTab product-main-slider">
-                                {% for pr in popular %}
-                                    <div class="item">
-                                        <div class="product-case">
-                                            <div class="tag tag-green"><span>new</span></div>
-                                            <div class="product-img">
-                                                <div class="hover-img">
-                                                    <a href="{{ path('product_view', {'id':pr.id}) }}"><img src="{{ pr.imageUrl }}" alt="{{ pr.name }}"></a>
-                                                </div>
-                                                <a href="{{ path('product_view', {'id':pr.id}) }}"><img src="{{ pr.imageUrl }}" alt="{{ pr.name }}"></a>
-                                            </div>
-                                            <div class="hover-info">
-                                                <div class="product-short-info">
-                                                    <div class="product-name">
-                                                        {% if pr.summary|length > 0 %}
-                                                            {#{% set text = pr.summary|render %}#}
-                                                            {% set hoverText = pr.summary|truncate(110, true)|raw %}
-                                                        {% else %}
-                                                            {% set hoverText = pr.name|title|truncate(100, true)|raw %}
-                                                        {% endif %}
-                                                        <a href="{{ path('product_view', {'id':pr.id}) }}">{{ hoverText }}</a>
-                                                    </div>
-                                                    {#<div class="star"><i class="fa fa-star"></i><i#}
-                                                    {#class="fa fa-star"></i><i class="fa fa-star"></i><i#}
-                                                    {#class="fa fa-star"></i><i class="fa fa-star"></i><i#}
-                                                    {#class="fa fa-star-o"></i></div>#}
-                                                    <div class="product-price">
-                                                        <div class="product-price-span">{{ pr.webPrice }}€
-                                                            <del>{{ pr.retailPrice }}€</del>
-                                                        </div>
-                                                    </div>
-                                                    <button type="button"><i class="fa fa-cart-plus"></i>
-                                                        <span>Καλάθι</span>
-                                                    </button>
-                                                </div>
-                                            </div>
-                                            <div class="product-short-info">
-                                                <div class="product-name">
-                                                    <a href="#">{{ pr.name }}</a>
-                                                </div>
-                                                {#<div class="star"><i class="fa fa-star"></i><i#}
-                                                {#class="fa fa-star"></i><i#}
-                                                {#class="fa fa-star"></i><i class="fa fa-star"></i><i#}
-                                                {#class="fa fa-star"></i><i class="fa fa-star-o"></i>#}
-                                                {#</div>#}
-                                                <div class="product-price">
-                                                    <div class="product-price-span">{{ pr.webPrice }}€
-                                                        <del>{{ pr.retailPrice }}€</del>
-                                                    </div>
-                                                </div>
-                                            </div>
-                                        </div>
-                                    </div>
-                                {% endfor %}
-                            </div>
-                        </div>
-
-
-                        <div id="acce_id">
-                            <div class="owl-carousel owl-theme ProductScrollTab product-main-slider">
-                                {% for pr in popular %}
-                                    <div class="item">
-                                        <div class="product-case">
-                                            <div class="tag tag-green"><span>new</span></div>
-                                            <div class="product-img">
-                                                <div class="hover-img">
-                                                    <a href="{{ path('product_view', {'id':pr.id}) }}"><img src="{{ pr.imageUrl }}" alt="{{ pr.name }}"></a>
-                                                </div>
-                                                <a href="{{ path('product_view', {'id':pr.id}) }}"><img src="{{ pr.imageUrl }}" alt="{{ pr.name }}"></a>
-                                            </div>
-                                            <div class="hover-info">
-                                                <div class="product-short-info">
-                                                    <div class="product-name">
-                                                        {% if pr.summary|length > 0 %}
-                                                            {#{% set text = pr.summary|render %}#}
-                                                            {% set hoverText = pr.summary|truncate(110, true)|raw %}
-                                                        {% else %}
-                                                            {% set hoverText = pr.name|title|truncate(100, true)|raw %}
-                                                        {% endif %}
-                                                        <a href="{{ path('product_view', {'id':pr.id}) }}">{{ hoverText }}</a>
-                                                    </div>
-                                                    {#<div class="star"><i class="fa fa-star"></i><i#}
-                                                    {#class="fa fa-star"></i><i class="fa fa-star"></i><i#}
-                                                    {#class="fa fa-star"></i><i class="fa fa-star"></i><i#}
-                                                    {#class="fa fa-star-o"></i></div>#}
-                                                    <div class="product-price">
-                                                        <div class="product-price-span">{{ pr.webPrice }}€
-                                                            <del>{{ pr.retailPrice }}€</del>
-                                                        </div>
-                                                    </div>
-                                                    <button type="button"><i class="fa fa-cart-plus"></i>
-                                                        <span>Καλάθι</span>
-                                                    </button>
-                                                </div>
-                                            </div>
-                                            <div class="product-short-info">
-                                                <div class="product-name">
-                                                    <a href="#">{{ pr.name }}</a>
-                                                </div>
-                                                {#<div class="star"><i class="fa fa-star"></i><i#}
-                                                {#class="fa fa-star"></i><i#}
-                                                {#class="fa fa-star"></i><i class="fa fa-star"></i><i#}
-                                                {#class="fa fa-star"></i><i class="fa fa-star-o"></i>#}
-                                                {#</div>#}
-                                                <div class="product-price">
-                                                    <div class="product-price-span">{{ pr.webPrice }}€
-                                                        <del>{{ pr.retailPrice }}€</del>
-                                                    </div>
-                                                </div>
-                                            </div>
-                                        </div>
-                                    </div>
-                                {% endfor %}
-
-                            </div>
-                        </div>
-
-
+                    <div id="best-seller-products" class="resp-tabs-container hor_1">
+                        {#{% include 'home_page_modules/ajax_best_seller.html.twig' %}#}
                     </div>
                 </div>
             </div>

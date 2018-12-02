@@ -16,6 +16,11 @@
     {% block stylesheets %}
         {% include 'partials/stylesheets.html.twig' %}
     {% endblock %}
+    <style>
+        .resp-tabs-list li {
+            font-size: 14px;
+        }
+    </style>
 </head>
 <body id="{% block bodyId %}{% endblock %}" class="{% block bodyClass %}{% endblock %}">
 
@@ -99,6 +104,7 @@
 
         {% include 'home_page_modules/parallax_categories.html.twig' %}
         {% include 'home_page_modules/parallax_categories2.html.twig' %}
+        {% include 'home_page_modules/parallax_categories3.html.twig' %}
 
         {% include 'home_page_modules/01_blog.html.twig' %}
 

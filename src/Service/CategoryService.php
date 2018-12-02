@@ -242,7 +242,7 @@ EOF;
 //            }else{
 //                $rootCategories = $this->getCategoriesFromS1($this->session->get("authID"));
 //            }
-            $rootCategories = $this->getCategoriesFromS1($authId);
+            $rootCategories = $this->getCategoriesFromS1($this->authId);
             return $rootCategories;
         } catch (\Exception $e) {
             $this->logger->error(__METHOD__ . ' -> {message}', ['message' => $e->getMessage()]);
@@ -308,6 +308,36 @@ EOF;
             return simplexml_load_string(str_replace("utf-16", "utf-8", $result->SendMessageResult));
         } catch (\SoapFault $sf) {
             echo $sf->faultstring;
+        }
+    }
+
+    public function getChildrenCategories($ctgId)
+    {
+        $message = <<<EOF
+<?xml version="1.0" encoding="utf-16"?>
+<ClientGetCategoriesRequest>
+    <Type>1007</Type>
+    <Kind>$this->kind</Kind>
+    <Domain>$this->domain</Domain>
+    <AuthID>$this->authId</AuthID>
+    <AppID>$this->appId</AppID>
+    <CompanyID>$this->companyId</CompanyID>
+    <IsTopLevel>1</IsTopLevel>
+    <IsVisible>-1</IsVisible>
+    <CategoryID>$ctgId</CategoryID>
+    <Slug>null</Slug>
+</ClientGetCategoriesRequest>
+EOF;
+        try {
+            $result = $this->client->SendMessage(['Message' => $message]);
+            dump($message, $result);
+            $resultXML = simplexml_load_string(str_replace("utf-16", "utf-8", $result->SendMessageResult));
+//            $categories = $this->initializeCategories($resultXML->GetDataRows->GetCategoriesRow, $authId);
+
+            return strval($resultXML->GetDataRows->GetCategoriesRow->ChildIDs);
+
+        } catch (\SoapFault $sf) {
+            throw $sf->faultstring;
         }
     }
 }

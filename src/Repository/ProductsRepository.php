@@ -13,6 +13,7 @@ class ProductsRepository extends EntityRepository
         return $this->createQueryBuilder('p')
             ->where('p.productName LIKE :value')
             ->orWhere('p.prCode LIKE :value')
+            ->orWhere('p.barcode LIKE :value')
             ->setParameter('value', '%' . $keyword . '%')
             ->orderBy('p.productName', 'ASC')
             ->setMaxResults(10)

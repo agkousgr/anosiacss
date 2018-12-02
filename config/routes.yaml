@@ -51,18 +51,30 @@ product_view:
     controller: App\Controller\ProductController::viewProduct
     requirements:
         id: \d+
+    methods: [GET]
+    options:
+        expose: true
 product_search:
     path: /product/search/{page}
     controller: App\Controller\ProductController::searchResults
     defaults: { page: 1 }
     requirements:
         page: \d+
+    methods: [GET]
+    options:
+        expose: true
 product_search_anosia:
     path: /product/search/anosia/{page}
     controller: App\Controller\ProductController::searchAnosiaResults
     defaults: { page: 1 }
     requirements:
         page: \d+
+home_best_seller:
+    path: /best-seller
+    controller: App\Controller\AjaxHomePageController::bestSellers
+    methods: [GET]
+    options:
+        expose: true
 
 # Orders / Cart
 cart_view:

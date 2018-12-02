@@ -24,6 +24,11 @@ class Products
     /**
      * @var string|null
      */
+    private $barcode;
+
+    /**
+     * @var string|null
+     */
     private $productName;
 
     /**
@@ -82,6 +87,24 @@ class Products
     public function setPrCode(?string $prCode): Products
     {
         $this->prCode = $prCode;
+        return $this;
+    }
+
+    /**
+     * @return string|null
+     */
+    public function getBarcode(): ?string
+    {
+        return $this->barcode;
+    }
+
+    /**
+     * @param string|null $barcode
+     * @return Products
+     */
+    public function setBarcode(?string $barcode): Products
+    {
+        $this->barcode = $barcode;
         return $this;
     }
 

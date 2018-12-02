@@ -53,13 +53,15 @@
         <div class="fullwidthbanner black">
             {% for slide in slider %}
                 <div class="col-lg-3" style="padding: 0 1px">
+                    <div>
+                        <a href="{{ slide.url }}"><img src="{{ asset('uploads/slider/' ~ slide.image) }}"
+                             alt="{{ slide.name }}"/></a>
                     <div class="blog-img">
-                        <img src="{{ asset('uploads/slider/' ~ slide.image) }}"
-                             alt="{{ slide.name }}"/>
                         <a href="{{ slide.url }}">
                             <h4>{{ slide.name }}</h4>
                             <h5>{{ slide.description }}</h5>
                         </a>
+                    </div>
                     </div>
                 </div>
             {% endfor %}

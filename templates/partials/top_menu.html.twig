@@ -3,51 +3,52 @@
         <ul class="nav navbar-nav pull-left">
             {#<li><a href="{{ path('index') }}"><i class="fas fa-home active"></i>Αρχικη</a></li>#}
             {% for ctg in categories %}
-                <li class="dropdown  {# mega-dropdown-menu #}">
-                    {% set mainCtgUrl = '#' %}
+                {#<li class="dropdown  #}{# mega-dropdown-menu #}{#">#}
+                <li class="dropdown mega-dropdown">
+                    {#{% set mainCtgUrl = '#' %}#}
+                    {% set mainCtgUrl = path('products_list', {'slug': ctg.slug}) %}
                     {% set dataToggle = 'class="dropdown-toggle" data-toggle="dropdown"' %}
                     {% if ctg.__children|length == 0 %}
-                        {% set mainCtgUrl = path('products_list', {'slug': ctg.slug}) %}
                         {% set dataToggle = '' %}
                     {% endif %}
                     <a href="{{ mainCtgUrl }}" {{ dataToggle }}>{{ ctg.name }}</a>
-                    {% if ctg.__children %}
-                        <ul class="dropdown-menu" role="menu">
-                            {% for subCtg in ctg.__children %}
-                                {% if subCtg.isVisible == true %}
-                                    <li><a href="{{ path('products_list', {'slug':subCtg.slug}) }}">{{ subCtg.name }}</a>
-                                    </li>
-                                {% endif %}
-                            {% endfor %}
-
-                        </ul>
-                    {% endif %}
                     {#{% if ctg.__children %}#}
-                    {% if dataToggle == 'dummy' %}
-                        <div class="dropdown-menu {# mega-dropdown-menu #}">
+                        {#<ul class="dropdown-menu" role="menu">#}
+                            {#{% for subCtg in ctg.__children %}#}
+                                {#{% if subCtg.isVisible == true %}#}
+                                    {#<li><a href="{{ path('products_list', {'slug':subCtg.slug}) }}">{{ subCtg.name }}</a>#}
+                                    {#</li>#}
+                                {#{% endif %}#}
+                            {#{% endfor %}#}
+
+                        {#</ul>#}
+                    {#{% endif %}#}
+                    {% if ctg.__children %}
+                    {#{% if dataToggle == 'dummy' %}#}
+                        <div class="dropdown-menu mega-dropdown-menu">
                             <div class="menu-block">
                                 <div class="row">
-                                    <div class="col-sm-5">
+                                    <div class="col-sm-4">
                                         <div class="row">
                                             {% for subCtg in ctg.__children %}
                                                 {% if subCtg.isVisible == true %}
-                                                    <div class="col-sm-6">
+                                                    <div class="col-sm-12">
                                                         <div class="sub-menu">
                                                             <h4>
                                                                 <a href="{{ path('products_list', {'slug':subCtg.slug}) }}">{{ subCtg.name }}</a>
                                                             </h4>
-                                                            {% if subCtg.__children %}
-                                                                <ul>
-                                                                    {% for sub2ctg in subCtg.__children %}
-                                                                        {% if sub2ctg.isVisible == "1" %}
-                                                                            <li>
-                                                                                <a href="{{ path('products_list', {'id':sub2ctg.id}) }}">{{ sub2ctg.name }}</a>
-                                                                            </li>
-                                                                        {% endif %}
-                                                                    {% endfor %}
+                                                            {#{% if subCtg.__children %}#}
+                                                                {#<ul>#}
+                                                                    {#{% for sub2ctg in subCtg.__children %}#}
+                                                                        {#{% if sub2ctg.isVisible == "1" %}#}
+                                                                            {#<li>#}
+                                                                                {#<a href="{{ path('products_list', {'slug':sub2ctg.slug}) }}">{{ sub2ctg.name }}</a>#}
+                                                                            {#</li>#}
+                                                                        {#{% endif %}#}
+                                                                    {#{% endfor %}#}
 
-                                                                </ul>
-                                                            {% endif %}
+                                                                {#</ul>#}
+                                                            {#{% endif %}#}
                                                         </div>
                                                     </div>
                                                 {% endif %}
@@ -56,38 +57,40 @@
                                         </div>
                                     </div>
 
-                                    {#<div class="col-sm-4">#}
-                                    {#<div class="menu-product-list">#}
-                                    {#{% for pr in featured|slice(0, 4) %}#}
-                                    {#<div class="media">#}
-                                    {#<div class="media-left">#}
-                                    {#<a href="{{ path('product_view', {'id':pr.id}) }}">#}
-                                    {#<img class="media-object"#}
-                                    {#src="{{ asset(pr.imageUrl) }}"#}
-                                    {#alt="{{ pr.name }}">#}
-                                    {#</a>#}
-                                    {#</div>#}
-                                    {#<div class="media-body">#}
-                                    {#<a href="{{ path('product_view', {'id':pr.id}) }}">#}
-                                    {#<h5>{{ pr.name }}</h5>#}
-                                    {#</a>#}
-                                    {#<div class="star-rating"><i#}
-                                    {#class="fa fa-star"></i><i#}
-                                    {#class="fa fa-star"></i><i#}
-                                    {#class="fa fa-star"></i><i#}
-                                    {#class="fa fa-star"></i><i#}
-                                    {#class="fa fa-star-o"></i></div>#}
-                                    {#<div class="item-price">#}
-                                    {#<del>{{ pr.retailPrice }}€</del>#}
-                                    {#{{ pr.webPrice }}€#}
-                                    {#</div>#}
-                                    {#<a href="{{ path('product_view', {'id':pr.id}) }}" class="details-btn">ΠΕΡΙΣΣΟΤΕΡΑ</a>#}
-                                    {#</div>#}
-                                    {#</div>#}
-                                    {#{% endfor %}#}
+                                    <div class="col-sm-8">
+                                        <div class="menu-product-list">
+                                            {% for pr in featured|slice(0, 4) %}
+                                                <div class="media">
+                                                    <div class="media-left">
+                                                        <a href="{{ path('product_view', {'id':pr.id}) }}">
+                                                            <img class="media-object"
+                                                                 src="{{ asset(pr.imageUrl) }}"
+                                                                 alt="{{ pr.name }}">
+                                                        </a>
+                                                    </div>
+                                                    <div class="media-body">
+                                                        <a href="{{ path('product_view', {'id':pr.id}) }}">
+                                                            <h5>{{ pr.name }}</h5>
+                                                        </a>
+                                                        <div class="star-rating"><i
+                                                                    class="fa fa-star"></i><i
+                                                                    class="fa fa-star"></i><i
+                                                                    class="fa fa-star"></i><i
+                                                                    class="fa fa-star"></i><i
+                                                                    class="fa fa-star-o"></i></div>
+                                                        <div class="item-price">
+                                                            <del>{{ pr.retailPrice }}€</del>
+                                                            {{ pr.webPrice }}€
+                                                        </div>
+                                                        <a href="{{ path('product_view', {'id':pr.id}) }}"
+                                                           class="details-btn">ΠΕΡΙΣΣΟΤΕΡΑ</a>
+                                                    </div>
+                                                </div>
+                                            {% endfor %}
 
-                                    {#</div>#}
-                                    {#</div>#}
+                                        </div>
+                                    </div>
+
                                     {#<div class="col-sm-3">#}
                                     {#<ul class="menu-banner">#}
                                     {#<li><a href="#">#}

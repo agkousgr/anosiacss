@@ -87,6 +87,7 @@ class CronJobsController extends AbstractController
                         $pr->setId(intval($s1product['id']));
                         $pr->setSlug(strval($s1product['slug']));
                         $pr->setPrCode(strval($s1product['prCode']));
+                        $pr->setBarcode(strval($s1product['mainBarcode']));
                         $pr->setProductName(strval($s1product['name']));
                         $this->em->persist($pr);
                         $this->em->flush();

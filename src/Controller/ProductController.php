@@ -176,20 +176,23 @@ class ProductController extends MainController
     {
         try {
             dump($request);
-            $keyword = strip_tags(trim($request->request->get('keyword')));
+            $keyword = strip_tags(trim($request->query->get('keyword')));
             $s1Keyword = preg_replace('!\s+!', ',', $keyword);
 
             $pagesize = ($request->query->get('pagesize')) ? preg_replace('/[^A-Za-z0-9\-]/', '', $request->query->get('pagesize')) : 12;
             $sortBy = ($request->query->get('sortBy')) ?: 'NameAsc';
-            $makeId = ($request->query->get('brands')) ? str_replace('-', ',', $request->query->get('brands')) : 'null';
+            $mnufacturerId = ($request->query->get('brands')) ? str_replace('-', ',', $request->query->get('brands')) : 'null';
             $priceRange = ($request->query->get('priceRange')) ?: 'null';
+//            $ctgInfo = $this->em->getRepository(Category::class)->findOneBy(['slug' => $slug]);
 
 
-            $productsCount = $this->productService->getItemsCount($s1Keyword, $makeId, $priceRange);
+            $productsCount = $this->productService->getItemsCount($keyword, 'null', $priceRange, 1, 'null');
+//            dump($productsCountArr);
+//            $productsCount = intval($productsCountArr);
             if ($productsCount > $pagesize * $page) {
-                $products = $this->productService->getItems('null', $s1Keyword, $pagesize, $sortBy, -1, $makeId, $priceRange);
+                $products = $this->productService->getItems('null', $keyword, $pagesize, $sortBy, '-1','null', $priceRange,'null', 1, 'null',  $page - 1);
             } else {
-                $products = $this->productService->getItems('null', $s1Keyword, $pagesize, $sortBy, -1, $makeId, $priceRange);
+                $products = $this->productService->getItems('null', $keyword, $pagesize, $sortBy, '-1', 'null', $priceRange,'null', 1, 'null',  0);
             }
 
 
@@ -205,7 +208,11 @@ class ProductController extends MainController
                 'loggedName' => $this->loggedName,
                 'keyword' => $keyword,
                 'loginUrl' => $this->loginUrl,
-                'productsCount' => $productsCount
+                'productsCount' => $productsCount,
+                'page' => $page,
+                'pagesize' => $pagesize,
+                'sortBy' => $sortBy,
+                'priceRange' => $priceRange,
             ]);
         } catch (\Exception $e) {
             $this->logger->error(__METHOD__ . ' -> {message}', ['message' => $e->getMessage()]);

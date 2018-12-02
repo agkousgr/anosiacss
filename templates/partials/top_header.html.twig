@@ -41,7 +41,7 @@
                     <li><a data-toggle="collapse" href="#collapseTimetable" aria-expanded="false"
                            aria-controls="collapseTimetable"
                            style="margin-top: 8px; padding: 0 5px 0 15px;" class="cart-link"
-                           title="Καλάθι">
+                           title="Ωράριο Λειτουργίας">
                             <i class="far fa-clock"></i>
                         </a></li>
                     <li><a class="phone-link" href="tel:2109402027"><i class="fas fa-phone"></i> 210 94 02 027</a></li>
@@ -53,9 +53,9 @@
                 </ul>
                 <div class="timetable-dropdown collapse" id="collapseTimetable" style="padding: 10px;">
                     <h4>ΩΡΑΡΙΟ ΛΕΙΤΟΥΡΓΙΑΣ</h4>
-                    <div>Δε - Τε: 09:00 - 15:00</div>
-                    <div>Τρ - Πε - Πα: 09:00 - 15:00</div>
-                    <div>Σα: 09:00 - 15:00</div>
+                    <div>Δε & Τε: 08:00 - 14:30</div>
+                    <div>Τρ-Πε-Πα: 08:00 - 14:00 </div>
+                    <div>17:00 - 20:00</div>
                 </div>
             </div>
             <div class="pre-header-left visible-xs">
@@ -185,23 +185,23 @@
                 <div class="row">
                     <div class="col-sm-10 col-sm-offset-1 col-md-8 col-md-offset-2">
                         <div class="search">
-                            <form action="{{ path('product_search') }}" method="post">
-                                <div class="textbox">
-                                    <input name="keyword" required class="form-control" type="text"
-                                           placeholder="Αναζητήστε βάσει κωδικού, ονόματος ή μάρκας">
-                                </div>
-                                {#<div class="option-box">#}
-                                {#<select class="c-select">#}
-                                {#<option>All</option>#}
-                                {#<option>Women</option>#}
-                                {#<option>Men</option>#}
-                                {#<option>Juniors</option>#}
-                                {#<option>Kids</option>#}
-                                {#<option>Accessories</option>#}
-                                {#</select>#}
-                                {#</div>#}
-                                <button type="submit"><i class="fas fa-search"></i></button>
-                            </form>
+                            {#<form action="{{ path('product_search') }}" method="post">#}
+                            <div class="textbox">
+                                <input name="keyword" required class="form-control" type="text"
+                                       placeholder="Αναζητήστε βάσει ονόματος, κωδικού ή barcode">
+                            </div>
+                            {#<div class="option-box">#}
+                            {#<select class="c-select">#}
+                            {#<option>All</option>#}
+                            {#<option>Women</option>#}
+                            {#<option>Men</option>#}
+                            {#<option>Juniors</option>#}
+                            {#<option>Kids</option>#}
+                            {#<option>Accessories</option>#}
+                            {#</select>#}
+                            {#</div>#}
+                            <button type="submit"><i class="fas fa-search"></i></button>
+                            {#</form>#}
                         </div>
                     </div>
                 </div>

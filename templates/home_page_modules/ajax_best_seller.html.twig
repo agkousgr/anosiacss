@@ -1,0 +1,67 @@
+{#<div id="men_id">#}
+{% for i in 0..3 %}
+    <div id="pr_id_">
+        <div class="owl-carousel owl-theme ProductScrollTab product-main-slider">
+            {% for pr in bestSellers %}
+                <div class="item">
+                    <div class="product-case">
+                        <div class="tag tag-green"><span>new</span></div>
+                        <div class="product-img">
+                            <div class="hover-img">
+                                <a href="{{ path('product_view', {'id':pr.id}) }}"><img
+                                            src="{{ pr.imageUrl }}" alt="{{ pr.name }}"></a>
+                            </div>
+                            <a href="{{ path('product_view', {'id':pr.id}) }}"><img
+                                        src="{{ pr.imageUrl }}" alt="{{ pr.name }}"></a>
+                        </div>
+                        <div class="hover-info">
+                            <div class="product-short-info">
+                                <div class="product-name">
+                                    {% if pr.summary|length > 0 %}
+                                        {#{% set text = pr.summary|render %}#}
+                                        {% set hoverText = pr.summary|truncate(110, true)|raw %}
+                                    {% else %}
+                                        {% set hoverText = pr.name|title|truncate(100, true)|raw %}
+                                    {% endif %}
+                                    <a href="{{ path('product_view', {'id':pr.id}) }}">{{ hoverText }}</a>
+                                </div>
+                                {#<div class="star"><i class="fa fa-star"></i><i#}
+                                {#class="fa fa-star"></i><i class="fa fa-star"></i><i#}
+                                {#class="fa fa-star"></i><i class="fa fa-star"></i><i#}
+                                {#class="fa fa-star-o"></i></div>#}
+                                <div class="product-price">
+                                    <div class="product-price-span">
+                                        Κωδ. {{ pr.prCode }}
+                                    </div>
+                                    {#<div class="product-price-span">{{ pr.webPrice }}€#}
+                                    {#<del>{{ pr.retailPrice }}€</del>#}
+                                    {#</div>#}
+                                </div>
+                                <button type="button"><i class="fa fa-cart-plus"></i>
+                                    <span>Καλάθι</span>
+                                </button>
+                            </div>
+                        </div>
+                        <div class="product-short-info">
+                            <div class="product-name">
+                                <a href="{{ path('product_view', {'id':pr.id}) }}">{{ pr.name|title }}</a>
+                            </div>
+                            {#<div class="star"><i class="fa fa-star"></i><i#}
+                            {#class="fa fa-star"></i><i#}
+                            {#class="fa fa-star"></i><i class="fa fa-star"></i><i#}
+                            {#class="fa fa-star"></i><i class="fa fa-star-o"></i>#}
+                            {#</div>#}
+                            <div class="product-price">
+                                <div class="product-price-span">{{ pr.webPrice }}€
+                                    <del>{{ pr.retailPrice }}€</del>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            {% endfor %}
+        </div>
+    </div>
+{% endfor %}
+
+

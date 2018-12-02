@@ -23,7 +23,7 @@ class AjaxSearchController extends AbstractController
                 foreach ($result as $val) {
                     $resultArr[] = [
                         'value' => $val->getId(),
-                        'label' => $val->getProductName()
+                        'label' => $val->getProductName() . ' (Κωδ: ' . $val->getPrCode() .')'
                     ];
                 }
                 return $this->json($resultArr);
@@ -47,7 +47,7 @@ class AjaxSearchController extends AbstractController
                 foreach ($result as $val) {
                     $resultArr[] = [
                         'value' => $val->getCategoryId(),
-                        'label' => $val->getKeyword() . '(' . $val->getPrCode() .')'
+                        'label' => $val->getKeyword()
                     ];
                 }
                 return $this->json($resultArr);

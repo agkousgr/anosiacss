@@ -188,6 +188,7 @@ EOF;
                         'isVisible' => $pr->WebVisible,
                         'prCode' => $pr->Code,
                         'retailPrice' => $pr->RetailPrice,
+                        'mainBarcode' => $pr->MainBarcode,
                         'discount' => $pr->WebDiscountPerc,
                         'webPrice' => $pr->WebPrice,
                         'outOfStock' => $pr->OutOfStock,
@@ -229,7 +230,7 @@ EOF;
      * @return array
      * @throws \Exception
      */
-    public function getItems($id = 'null', $keyword = 'null', $pagesize, $sortBy = 'null', $isSkroutz = -1, $makeId = 'null', $priceRange = 'null', $itemCode = 'null', $webVisible = 1, $manufacturerId = 'null')
+    public function getItems($id = 'null', $keyword = 'null', $pagesize, $sortBy = 'null', $isSkroutz = -1, $makeId = 'null', $priceRange = 'null', $itemCode = 'null', $webVisible = 1, $manufacturerId = 'null', $page = 0)
     {
 
         $priceRangeArr = ($priceRange != 'null') ? explode('-', $priceRange) : -1;
@@ -246,7 +247,7 @@ EOF;
     <AppID>$this->appId</AppID>
     <CompanyID>$this->companyId</CompanyID>
     <pagesize>$pagesize</pagesize>
-    <pagenumber>0</pagenumber>
+    <pagenumber>$page</pagenumber>
     <ItemID>$id</ItemID>
     <ItemCode>$itemCode</ItemCode>
     <MakeID>$makeId</MakeID>
@@ -264,7 +265,7 @@ EOF;
             $itemsArr = [];
             $result = $this->client->SendMessage(['Message' => $message]);
             $items = simplexml_load_string(str_replace("utf-16", "utf-8", $result->SendMessageResult));
-//            dump($message, $result);
+            dump($message, $result);
             if (intval($items->RowsCount) > 0) {
                 if ($items !== false && ($keyword !== 'null' || $makeId !== 'null' || $isSkroutz === '1' || ($id === 'null' && $itemCode === 'null'))) { // THIS IS FOR MIGRATING PRODUCTS
 //                if ($items !== false && ($keyword !== 'null' || $makeId !== 'null' || $isSkroutz === '1')) {
@@ -437,6 +438,30 @@ EOF;
             throw $e;
         }
     }
+
+/*    public function getCategoryChildren($ctgId)
+    {
+        $message = <<<EOF
+<?xml version="1.0" encoding="utf-16"?>
+<ClientGetCategoryChildrenRequest>
+    <Type>1009</Type>
+    <Kind>$this->kind</Kind>
+    <Domain>$this->domain</Domain>
+    <AuthID>$this->authId</AuthID>
+    <AppID>$this->appId</AppID>
+    <CompanyID>$this->companyId</CompanyID>
+    <CategoryID>$ctgId</CategoryID>
+</ClientGetCategoryChildrenRequest>
+EOF;
+        try {
+            $result = $this->client->SendMessage(['Message' => $message]);
+            $items = simplexml_load_string(str_replace("utf-16", "utf-8", $result->SendMessageResult));
+            dump($message, $result);
+            return $items->GetDataRows->GetCategoryChildrenRow;
+        } catch (\SoapFault $sf) {
+            echo $sf->faultstring;
+        }
+    } */
 
 
 //    public function getReferer($httpReferer)

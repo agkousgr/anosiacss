@@ -1,7 +1,8 @@
 <div class="filter-widget">
     <h3>ΚΑΤΑΣΚΕΥΑΣΤΕΣ</h3>
     <div class="content">
-        <div class="brand-list clearfix">
+        <div class="brand-list clearfix" style="height: 500px; overflow-y: scroll;">
+            <input name="filter-man" class="form-control" id="filter-man" style="width:96%; background-color:#fff;" placeholder="Αναζήτηση" type="text">
             {% for brand in brands %}
                 {#<label class="btn btn-primary brand-lbl">#}
                 {#<input id="{{ brand.id }}" name="brands" class="brand-chk" type="checkbox" autocomplete="off">#}

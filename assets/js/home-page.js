@@ -1,7 +1,18 @@
 // let apex = require('./jquery.apex-slider.js');
 // let apexslider = apex.apexSlider();
+let bestSellersContainer = $('#best-sellers-container');
 require('webpack-jquery-ui/autocomplete');
 // require('jquery-autocomplete');
+$(document).ready(function () {
+    // console.log('ok');
+    let data = {
+        'ctgId': 1728
+    };
+    $('#best-seller-products').load(Routing.generate('home_best_seller', data, function(html) {
+        console.log(html);
+    }));
+});
+
 $(document).ready(function () {
 
     $("#anosia-keyword").autocomplete({
@@ -19,6 +30,17 @@ $(document).ready(function () {
         },
         minLength: 3
     });
+
+    // bestSellersContainer.on('click', '.best-sellers-subctg', function (e) {
+    //     e.preventDefault();
+    //     console.log($(this).data('id'));
+    //     let data = {
+    //         'ctgId': $(this).data('id')
+    //     };
+    //     $('#best-seller-products').load(Routing.generate('home_best_seller', data, function() {
+    //         $('.owl-carousel').addClass('owl-loaded owl-drag');
+    //     }));
+    // });
 
     // $("#anosia-keyword").on('change', function(e) {
     //     e.preventDefault();

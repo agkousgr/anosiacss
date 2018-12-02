@@ -2,11 +2,12 @@
 <doctrine-mapping xmlns="http://doctrine-project.org/schemas/orm/doctrine-mapping">
 
     <entity name="App\Entity\Products" repository-class="App\Repository\ProductsRepository">
-        <id name="id" type="integer" />
-        <field name="slug" length="200" />
-        <field name="prCode" length="50" />
-        <field name="productName" type="text" />
-        <field name="views" type="integer" nullable="true" />
+        <id name="id" type="integer"/>
+        <field name="slug" length="200"/>
+        <field name="prCode" length="50"/>
+        <field name="productName" type="text"/>
+        <field name="views" type="integer" nullable="true"/>
+        <field name="barcode" length="50" nullable="true"/>
     </entity>
 
 </doctrine-mapping>

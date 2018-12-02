@@ -12,10 +12,11 @@ $(document).ready(function () {
     $("#keyword").autocomplete({
         source: Routing.generate('search'),
         select: function (event, ui) {
+            console.log(ui);
             event.preventDefault();
             $("#keyword").val(ui.item.label);
-            // let url = Routing.generate('search');
-            // window.location.assign(url);
+            let url = Routing.generate('product_view', {'id':ui.item.value});
+            window.location.assign(url);
         },
         focus: function (event, ui) {
             event.preventDefault();
@@ -27,9 +28,9 @@ $(document).ready(function () {
     $("#keyword").keypress(function (e) {
         if (e.which == 13) {
             let data = {
-                'term': $(this).val()
+                'keyword': $(this).val()
             };
-            let url = Routing.generate('search', data);
+            let url = Routing.generate('product_search', data);
             window.location.assign(url);
         }
     });
@@ -37,9 +38,9 @@ $(document).ready(function () {
     $("#search-button").on('click', function (e) {
         e.preventDefault();
         let data = {
-            'term': $("#keyword").val()
+            'keyword': $("#keyword").val()
         };
-        let url = Routing.generate('search', data);
+        let url = Routing.generate('product_search', data);
         window.location.assign(url);
     });
 

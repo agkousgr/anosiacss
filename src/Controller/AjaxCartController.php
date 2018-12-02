@@ -33,10 +33,10 @@ class AjaxCartController extends AbstractController
                 }
 
                 $cartItems = ($cartIds) ? $cartService->getCartItems($cartIds, $cartArr, $totalCartItems) : '';
-                return ($this->render('partials/top_cart.html.twig', [
+                return $this->render('partials/top_cart.html.twig', [
                     'cartItems' => $cartItems,
                     'totalCartItems' => $totalCartItems
-                ]));
+                ]);
             } catch (\Exception $e) {
                 throw $e;
                 //throw $this->createNotFoundException('The resource you are looking for could not be found.');

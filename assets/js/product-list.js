@@ -1,6 +1,19 @@
 require('ion-rangeslider');
 
 $(document).ready(function () {
+    $('#filter-man').keyup(function () {
+        let filter = $(this).val();
+        $('.custom-cr').each(function () {
+            let length = $(this).find("span").text().length > 0;
+
+            if (length && $(this).find("span").text().search(new RegExp(filter, "i")) < 0) {
+                $(this).hide();
+            } else {
+                $(this).show();
+            }
+        });
+    });
+
     let queryParameters = {}, queryString = location.search.substring(1),
         re = /([^&=]+)=([^&]*)/g, m;
 
