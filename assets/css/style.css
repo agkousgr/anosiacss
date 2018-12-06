@@ -59,15 +59,11 @@ fieldset[disabled] a.btn {
     font-style: normal
 }
 
-/*@font-face {*/
-    /*font-family: 'GeosansLight';*/
-    /*src: url(../fonts/geosans-light/ACGeosansLight.eot);*/
-    /*src: url(../fonts/geosans-light/ACGeosansLight.eot) format('embedded-opentype'), url(../fonts/geosans-light/GeosansLight.ttf) format('truetype'), url(../fonts/geosans-light/ACGeosansLight.woff) format('woff2');*/
-/*}*/
-
-@font-face { font-family: "acgeosanslight"; src: local("acgeosanslight"), url("https://amoradastyling.gr/wp-content/uploads/useanyfont/180608114447ACGeosansLight.eot") format("embedded-opentype"), url("https://amoradastyling.gr/wp-content/uploads/useanyfont/180608114447ACGeosansLight.woff") format("woff"); font-style: normal; }
-
-@font-face { font-family: "GeosansLight"; src: local("GeosansLight"), url("https://www.amoradastyling.gr/wp-content/uploads/useanyfont/180608114447ACGeosansLight.eot") format("embedded-opentype"), url("https://www.amoradastyling.gr/wp-content/uploads/useanyfont/180608114447ACGeosansLight.woff") format("woff"); font-style: normal; }
+@font-face {
+    font-family: 'GeosansLight';
+    src: url(../fonts/geosans-light/ACGeosansLight.eot);
+    src: url(../fonts/geosans-light/ACGeosansLight.eot) format('embedded-opentype'), url(../fonts/geosans-light/ACGeosansLight.woff) format('woff');
+}
 
 .fa {
     font: normal normal normal 14px/1 FontAwesome;

@@ -60,6 +60,7 @@ Encore
     .addEntry('admin/js/article', './assets/admin/js/article/article.js')
     .addEntry('admin/js/article_form', './assets/admin/js/article/article_form.js')
     .addEntry('admin/js/category-slider', './assets/admin/js/category-slider/category-slider.js')
+    .addEntry('admin/js/category-slider-list', './assets/admin/js/category-slider/category-slider-list.js')
 
 
 

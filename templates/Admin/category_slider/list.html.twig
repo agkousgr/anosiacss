@@ -70,6 +70,9 @@
                 </div>
 
                 <div class="card-body">
+                    <div class="col-md-3">
+                        <input name="filter-categories" class="form-control" id="filter-categories" style="width:96%; padding:5px; background-color:#fff;" placeholder="Αναζήτηση" type="text">
+                    </div>
                     {% if categories|length > 0 %}
                         <ol class="wtree">
                             {% for category in categories %}
@@ -94,5 +97,5 @@
     <script src="{{ path('fos_js_routing_js', { callback: 'fos.Router.setData' }) }}"></script>
 
     <script src="{{ asset('build/admin/js/jstree.min.js') }}"></script>
-    {#<script src="{{ asset('build/admin/js/category.js') }}"></script>#}
+    <script src="{{ asset('build/admin/js/category-slider-list.js') }}"></script>
 {% endblock %}

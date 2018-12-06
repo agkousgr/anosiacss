@@ -32,7 +32,7 @@
             <div class="container">
                 <div class="row">
                     <div class="col-md-12">
-                        {{ dump(pr.categories.name) }}
+                        {#{{ dump(pr.categories.name) }}#}
                         {#{% for ctg in pr.categories|slice(0,1) %}#}
                         <a style="color: #fff;" href="{{ path('index') }}">Αρχική
                             / </a> {{ func.create_breadcrumb(pr.categories.0, '') }} / {{ pr.name }}
@@ -60,6 +60,7 @@
                                             <ul class="bxslider">
                                                 {% for image in pr.extraImages %}
                                                     <li><img src="{{ image.imageUrl }}"
+                                                             class="product-photo"
                                                              alt="{{ pr.name }}"/></li>
                                                 {% endfor %}
                                             </ul>
@@ -72,6 +73,7 @@
                                                        style="border: 1px solid #d8d8d8;">
                                                         <img style="max-height: 95px; border:none;"
                                                              src="{{ image.imageUrl }}"
+                                                             data-zoom="{{ image.imageUrl }}"
                                                              alt="{{ pr.name }}"/>
                                                     </a>
                                                 </div>
