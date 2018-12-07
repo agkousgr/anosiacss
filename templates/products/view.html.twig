@@ -32,7 +32,7 @@
             <div class="container">
                 <div class="row">
                     <div class="col-md-12">
-                        {#{{ dump(pr.categories.name) }}#}
+                        {#{{ dump(pr.categories) }}#}
                         {#{% for ctg in pr.categories|slice(0,1) %}#}
                         <a style="color: #fff;" href="{{ path('index') }}">Αρχική
                             / </a> {{ func.create_breadcrumb(pr.categories.0, '') }} / {{ pr.name }}

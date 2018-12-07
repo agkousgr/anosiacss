@@ -27,6 +27,31 @@ class Products
     private $barcode;
 
     /**
+     * @var int|null
+     */
+    private $menuId;
+
+    /**
+     * @var string|null
+     */
+    private $image;
+
+    /**
+     * @var string|null
+     */
+    private $retailPrice;
+
+    /**
+     * @var string|null
+     */
+    private $webPrice;
+
+    /**
+     * @var int|null
+     */
+    private $discount;
+
+    /**
      * @var string|null
      */
     private $productName;
@@ -141,6 +166,96 @@ class Products
     public function setViews(?int $views): Products
     {
         $this->views = $views;
+        return $this;
+    }
+
+    /**
+     * @return int|null
+     */
+    public function getMenuId(): ?int
+    {
+        return $this->menuId;
+    }
+
+    /**
+     * @param int|null $menuId
+     * @return Products
+     */
+    public function setMenuId(?int $menuId): Products
+    {
+        $this->menuId = $menuId;
+        return $this;
+    }
+
+    /**
+     * @return string|null
+     */
+    public function getImage(): ?string
+    {
+        return $this->image;
+    }
+
+    /**
+     * @param string|null $image
+     * @return Products
+     */
+    public function setImage(?string $image): Products
+    {
+        $this->image = $image;
+        return $this;
+    }
+
+    /**
+     * @return string|null
+     */
+    public function getRetailPrice(): ?string
+    {
+        return $this->retailPrice;
+    }
+
+    /**
+     * @param string|null $retailPrice
+     * @return Products
+     */
+    public function setRetailPrice(?string $retailPrice): Products
+    {
+        $this->retailPrice = $retailPrice;
+        return $this;
+    }
+
+    /**
+     * @return string|null
+     */
+    public function getWebPrice(): ?string
+    {
+        return $this->webPrice;
+    }
+
+    /**
+     * @param string|null $webPrice
+     * @return Products
+     */
+    public function setWebPrice(?string $webPrice): Products
+    {
+        $this->webPrice = $webPrice;
+        return $this;
+    }
+
+    /**
+     * @return int|null
+     */
+    public function getDiscount(): ?int
+    {
+        return $this->discount;
+    }
+
+    /**
+     * @param int|null $discount
+     * @return Products
+     */
+    public function setDiscount(?int $discount): Products
+    {
+        $this->discount = $discount;
         return $this;
     }
 

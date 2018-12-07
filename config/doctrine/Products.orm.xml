@@ -8,6 +8,11 @@
         <field name="productName" type="text"/>
         <field name="views" type="integer" nullable="true"/>
         <field name="barcode" length="50" nullable="true"/>
+        <field name="menuId" type="integer" nullable="true"/>
+        <field name="image" type="text" nullable="true"/>
+        <field name="retailPrice" type="decimal"/>
+        <field name="webPrice" type="decimal"/>
+        <field name="discount" type="integer" nullable="true"/>
     </entity>
 
 </doctrine-mapping>
