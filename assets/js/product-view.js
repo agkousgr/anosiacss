@@ -7,6 +7,7 @@ $(document).ready(function () {
         auto: false,
     });
 
+    let url;
     $('.product-photo')
         .wrap('<span style="display:inline-block"></span>')
         .css('display', 'block')

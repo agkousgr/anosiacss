@@ -439,6 +439,72 @@ EOF;
         }
     }
 
+    public function getRelevantItems($excludeIds = -1, $highPrice = -1, $webVisible = 1, $isRandom = 1, $isPopular = 0, $categoryId = -1)
+    {
+// Todo: replace categoryId with cart items relative categories
+        $message = <<<EOF
+<?xml version="1.0" encoding="utf-16"?>
+<ClientGetRelevantItemsRequest>
+    <Type>1056</Type>
+    <Kind>$this->kind</Kind>
+    <Domain>$this->domain</Domain>
+    <AuthID>$this->authId</AuthID>
+    <AppID>$this->appId</AppID>
+    <CompanyID>$this->companyId</CompanyID>
+    <CategoryID>$categoryId</CategoryID>
+    <ItemID>-1</ItemID>
+    <IncludeChildCategories>1</IncludeChildCategories>
+    <IsRandom>$isRandom</IsRandom>
+    <IsPopular>$isPopular</IsPopular>
+    <LowPrice>1</LowPrice>
+    <HighPrice>$highPrice</HighPrice>
+    <ExcludeItemID>$excludeIds</ExcludeItemID>
+    <WebVisible>$webVisible</WebVisible>
+    <IsActive>-1</IsActive>  
+</ClientGetRelevantItemsRequest>
+EOF;
+        try {
+            $result = $this->client->SendMessage(['Message' => $message]);
+            $items = simplexml_load_string(str_replace("utf-16", "utf-8", $result->SendMessageResult));
+            dump($message, $result);
+            $itemsArr = $this->initializeProposalProducts($items->GetDataRows->GetRelevantItemsRow);
+            dump($itemsArr);
+            return $itemsArr;
+        } catch (\SoapFault $sf) {
+            echo $sf->faultstring;
+        }
+    }
+
+    private function initializeProposalProducts($products)
+    {
+        try {
+            $prArr = array();
+            $i = 0;
+            foreach ($products as $pr) {
+                $prArr[] = array(
+                    'id' => $pr->ID,
+                    'name' => $pr->Name2,
+                    'isVisible' => $pr->WebVisible,
+                    'retailPrice' => $pr->RetailPrice,
+                    'discount' => $pr->WebDiscountPerc,
+                    'webPrice' => $pr->WebPrice,
+                    'outOfStock' => $pr->OutOfStock,
+                    'remainNotReserved' => $pr->Remain,
+                    'webFree' => $pr->WebFree,
+                    'overAvailability' => $pr->OverAvailability,
+                    'maxByOrder' => $pr->MaxByOrder,
+                    'hasMainImage' => $pr->HasMainPhoto,
+                    'imageUrl' => ($pr->HasMainPhoto) ? 'https://caron.cloudsystems.gr/FOeshopAPIWeb/DF.aspx?' . str_replace('[Serial]', '01102472475217', str_replace('&amp;', '&', $pr->MainPhotoUrl)) : ''
+                );
+            }
+
+            return $prArr;
+        } catch (\Exception $e) {
+            $this->logger->error(__METHOD__ . ' -> {message}', ['message' => $e->getMessage()]);
+            throw $e;
+        }
+    }
+
 /*    public function getCategoryChildren($ctgId)
     {
         $message = <<<EOF

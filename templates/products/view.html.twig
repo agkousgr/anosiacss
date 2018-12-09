@@ -60,6 +60,7 @@
                                             <ul class="bxslider">
                                                 {% for image in pr.extraImages %}
                                                     <li><img src="{{ image.imageUrl }}"
+                                                             data-zoom="{{ image.imageUrl }}"
                                                              class="product-photo"
                                                              alt="{{ pr.name }}"/></li>
                                                 {% endfor %}
@@ -73,7 +74,6 @@
                                                        style="border: 1px solid #d8d8d8;">
                                                         <img style="max-height: 95px; border:none;"
                                                              src="{{ image.imageUrl }}"
-                                                             data-zoom="{{ image.imageUrl }}"
                                                              alt="{{ pr.name }}"/>
                                                     </a>
                                                 </div>

@@ -4,6 +4,7 @@ namespace App\Controller;
 
 use App\Entity\{Cart, Category, Wishlist};
 use Doctrine\ORM\EntityManagerInterface;
+use phpDocumentor\Reflection\Types\This;
 use Psr\Log\LoggerInterface;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Session\SessionInterface;
@@ -154,6 +155,12 @@ class MainController extends AbstractController
         $this->featured = $productService->getCategoryItems(1867, 0, 15, 'null', 'null');
 //        $this->popular = [];
 //        $this->featured = [];
+//        $mainCategoriesArr = [];
+//        foreach ($this->categories as $category) {
+//            $mainCategories[$category['s1id']][] = $this->productService->getRelevantItems(-1, 300, 1, 1, 1, 1922);
+//        }
+//        dump($mainCategories);
+//        $manuItems = $this->productService->getRelevantItems(-1, -1, 1, 1, 1);
         $this->loggedUser = ($this->session->get("anosiaUser")) ?: null;
         $this->loggedName = ($this->session->get("anosiaName")) ?: null;
         $this->loggedClientId = ($this->session->get("anosiaClientId")) ?: null;

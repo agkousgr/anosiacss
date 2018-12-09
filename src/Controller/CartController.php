@@ -4,13 +4,14 @@ namespace App\Controller;
 
 use App\Entity\Cart;
 use App\Service\CartService;
+use App\Service\ProductService;
 use Doctrine\ORM\EntityManagerInterface;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Session\SessionInterface;
 
 class CartController extends MainController
 {
-    public function viewCart(CartService $cartService)
+    public function viewCart(ProductService $productService)
     {
         try {
             $totalCartPrice = 0;
@@ -20,7 +21,7 @@ class CartController extends MainController
                     $totalCartPrice += floatval($item['webPrice']);
                     $excludeIds = $item['id'] . ',';
                 }
-                $cartProposals = $cartService->getRelevantItems(substr($excludeIds, 0 ,-1),39 - $totalCartPrice);
+                $cartProposals = $productService->getRelevantItems(substr($excludeIds, 0 ,-1),39 - $totalCartPrice);
             }
             $couponDiscount = (!empty($this->session->get('couponDisc'))) ? $this->session->get('couponDisc') : 0;
             dump($couponDiscount);
