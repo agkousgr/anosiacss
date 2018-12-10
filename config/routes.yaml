@@ -422,6 +422,9 @@ csv_import_seo:
 csv_import_old_slugs:
     path: /csv/import-old-slugs
     controller: App\Controller\CsvImport::importOldSlugs
+csv_import_alternative_categories:
+    path: /csv/import-alternative-categories
+    controller: App\Controller\CsvImport::importAlternativeCategories
 
 get_images:
     path: /migrate/images

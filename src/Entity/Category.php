@@ -50,7 +50,7 @@ class Category
     /**
      * @var string|null
      */
-    private $relevantCategories;
+    private $alternativeCategories;
 
     /**
      * @var \Doctrine\Common\Collections\Collection
@@ -373,18 +373,18 @@ class Category
     /**
      * @return string|null
      */
-    public function getRelevantCategories(): ?string
+    public function getAlternativeCategories(): ?string
     {
-        return $this->relevantCategories;
+        return $this->alternativeCategories;
     }
 
     /**
-     * @param string|null $relevantCategories
+     * @param string|null $alternativeCategories
      * @return Category
      */
-    public function setRelevantCategories(?string $relevantCategories): Category
+    public function setAlternativeCategories(?string $alternativeCategories): Category
     {
-        $this->relevantCategories = $relevantCategories;
+        $this->alternativeCategories = $alternativeCategories;
         return $this;
     }
 

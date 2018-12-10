@@ -4,6 +4,7 @@ namespace App\Controller;
 
 use App\Entity\AdminCategory;
 use App\Entity\Article;
+use App\Entity\Category;
 use App\Entity\MigrationProducts;
 use App\Entity\User;
 use League\Csv\Reader;
@@ -50,6 +51,62 @@ class CsvImport extends MainController
         }
         return;
 
+    }
+
+    public function importAlternativeCategories(EntityManagerInterface $em)
+    {
+        $csv = Reader::createFromPath($this->getParameter('kernel.project_dir') . '/public/csv/alternative-categories.csv', 'r');
+//        $csv->setDelimiter("\t");
+//        $csv->setHeaderOffset(0);
+
+        $stmt = (new Statement())
+            ->offset(10)
+            ->limit(650);
+
+        $records = $stmt->process($csv);
+        foreach ($records as $record) {
+            $altCategory = '';
+            $category = $em->getRepository(Category::class)->findOneBy(['s1id' => $record[1]]);
+            if (!$category) {
+                dump($record[1]);
+                die();
+            }
+            if ($category->getAlternativeCategories()) {
+                continue;
+            }
+            if (!$record[2] && !$record[3] && !$record[4] && !$record[5]) {
+                $category->setAlternativeCategories($record[1]);
+                $em->persist($category);
+                $em->flush();
+                continue;
+            }
+            $altCategory = $record[2];
+            if (!$record[3]) {
+                $category->setAlternativeCategories($altCategory);
+                $em->persist($category);
+                $em->flush();
+                continue;
+            }
+            if (!$record[4]) {
+                $altCategory .= ',' . $record[3];
+                $category->setAlternativeCategories($altCategory);
+                $em->persist($category);
+                $em->flush();
+                continue;
+            }
+            if (!$record[5]) {
+                $altCategory .= ',' . $record[3] . ',' . $record[4];
+                $category->setAlternativeCategories($altCategory);
+                $em->persist($category);
+                $em->flush();
+                continue;
+            }
+            $altCategory .= ',' . $record[3] . ',' . $record[4] . ',' . $record[5];
+            $category->setAlternativeCategories($altCategory);
+                $em->persist($category);
+                $em->flush();
+        }
+        return;
     }
 
     public function importProducts(EntityManagerInterface $em)
