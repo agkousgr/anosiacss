@@ -46,7 +46,7 @@ class AjaxSearchController extends AbstractController
                 $result = $em->getRepository(AnosiaSearchKeywords::class)->getAnosiaSearchResult($keyword);
                 foreach ($result as $val) {
                     $resultArr[] = [
-                        'value' => $val->getCategoryId(),
+                        'value' => $val->getSlug(),
                         'label' => $val->getKeyword()
                     ];
                 }

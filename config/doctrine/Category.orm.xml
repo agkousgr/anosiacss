@@ -14,6 +14,7 @@
         <field name="itemsCount" type="integer" nullable="true" />
         <field name="isVisible" type="boolean"/>
         <field name="priority" type="decimal" precision="4"/>
+        <field name="relevantCategories" length="50" nullable="true"/>
         <field name="lft" type="integer">
             <gedmo:tree-left/>
         </field>

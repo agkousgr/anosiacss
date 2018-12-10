@@ -4,6 +4,8 @@
 namespace App\Controller;
 
 
+use App\Entity\AnosiaSearchKeywords;
+use App\Entity\Category;
 use App\Entity\MigrationProducts;
 use App\Entity\TempImages;
 use App\Service\MigrationService;
@@ -72,7 +74,7 @@ class MigrateController extends MainController
                     $em->flush();
                 } else {
 //                    if ($counter < 6000) {
-                        $noExistingProducts[] = $s1pr['prCode'];
+                    $noExistingProducts[] = $s1pr['prCode'];
 //                    }
                 }
             }
@@ -369,6 +371,22 @@ class MigrateController extends MainController
             $this->logger->error(__METHOD__ . ' -> {message}', ['message' => $e->getMessage()]);
             throw $e;
         }
+    }
+
+    public function updateAnosiaKeywordsSlug(EntityManagerInterface $em)
+    {
+        $categories = $em->getRepository(AnosiaSearchKeywords::class)->findAll();
+        foreach ($categories as $category) {
+            if (!$category->getSlug()) {
+                $s1ctg = $em->getRepository(Category::class)->findOneBy(['s1id' => $category->getCategoryId()]);
+                if ($s1ctg && $s1ctg->getSlug()) {
+                    $category->setSlug($s1ctg->getSlug());
+                    $em->persist($category);
+                    $em->flush();
+                }
+            }
+        }
+        return;
     }
 
 }

@@ -12,7 +12,6 @@ $(document).ready(function () {
     $("#keyword").autocomplete({
         source: Routing.generate('search'),
         select: function (event, ui) {
-            console.log(ui);
             event.preventDefault();
             $("#keyword").val(ui.item.label);
             let url = Routing.generate('product_view', {'id':ui.item.value});

@@ -21,8 +21,8 @@ $(document).ready(function () {
         select: function (event, ui) {
             event.preventDefault();
             $("#anosia-keyword").val(ui.item.label);
-            // let url = Routing.generate('products_list', {'id': ui.item.value});
-            // window.location.assign(url);
+            let url = Routing.generate('products_list', {'slug': ui.item.value});
+            window.location.assign(url);
         },
         focus: function(event, ui) {
             event.preventDefault();

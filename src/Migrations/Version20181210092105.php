@@ -8,14 +8,14 @@ use Doctrine\Migrations\AbstractMigration;
 /**
  * Auto-generated Migration: Please modify to your needs!
  */
-final class Version20181206213114 extends AbstractMigration
+final class Version20181210092105 extends AbstractMigration
 {
     public function up(Schema $schema) : void
     {
         // this up() migration is auto-generated, please modify it to your needs
         $this->abortIf($this->connection->getDatabasePlatform()->getName() !== 'mysql', 'Migration can only be executed safely on \'mysql\'.');
 
-        $this->addSql('ALTER TABLE products ADD menu_id INT DEFAULT NULL, ADD image LONGTEXT DEFAULT NULL, ADD retail_price NUMERIC(7, 2) NOT NULL, ADD web_price NUMERIC(7, 2) NOT NULL, ADD discount INT DEFAULT NULL');
+        $this->addSql('ALTER TABLE anosia_search_keywords ADD slug VARCHAR(150) NOT NULL');
     }
 
     public function down(Schema $schema) : void
@@ -23,6 +23,6 @@ final class Version20181206213114 extends AbstractMigration
         // this down() migration is auto-generated, please modify it to your needs
         $this->abortIf($this->connection->getDatabasePlatform()->getName() !== 'mysql', 'Migration can only be executed safely on \'mysql\'.');
 
-        $this->addSql('ALTER TABLE products DROP menu_id, DROP image, DROP retail_price, DROP web_price, DROP discount');
+        $this->addSql('ALTER TABLE anosia_search_keywords DROP slug');
     }
 }

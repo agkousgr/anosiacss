@@ -7,6 +7,7 @@
         </id>
         <field name="keyword" length="100" />
         <field name="category_id" type="integer" />
+        <field name="slug" length="150" />
     </entity>
 
 </doctrine-mapping>

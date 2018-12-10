@@ -441,6 +441,9 @@ updateMigratedProductsWithS1Id:
 getProductsWithNoImageFromS1:
     path: /migrate/images-from-s1
     controller: App\Controller\MigrateController::getProductsWithNoImageFromS1
+updateAnosiaKeywordsSlug:
+    path: /update/anosia-keywords/slug
+    controller: App\Controller\MigrateController::updateAnosiaKeywordsSlug
 
 # Cron Jobs
 create_categories:

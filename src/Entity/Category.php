@@ -48,6 +48,11 @@ class Category
     private $priority;
 
     /**
+     * @var string|null
+     */
+    private $relevantCategories;
+
+    /**
      * @var \Doctrine\Common\Collections\Collection
      */
     private $children;
@@ -363,6 +368,24 @@ class Category
     public function setPriority(int $priority): void
     {
         $this->priority = $priority;
+    }
+
+    /**
+     * @return string|null
+     */
+    public function getRelevantCategories(): ?string
+    {
+        return $this->relevantCategories;
+    }
+
+    /**
+     * @param string|null $relevantCategories
+     * @return Category
+     */
+    public function setRelevantCategories(?string $relevantCategories): Category
+    {
+        $this->relevantCategories = $relevantCategories;
+        return $this;
     }
 
 }
