@@ -221,6 +221,12 @@ user-order:
     requirements:
         id: \d+
 
+# Courier voucher tracker
+courier_tracker:
+    path: /courier/tracker/{voucher}
+    controller: App\Controller\CourierTrackerController::trackVoucher
+    options:
+        expose: true
 # login logout
 login:
     path: /login

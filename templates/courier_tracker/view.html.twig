@@ -1,0 +1,38 @@
+{% extends 'layout.html.twig' %}
+
+{% block bodyId %}voucher{% endblock %}
+{% block title %} | Voucher tracker{% endblock %}
+{% block slider %}{% endblock %}
+{% block breadcrumb %}
+
+{% endblock %}
+
+{% block body %}
+    {% include 'partials/sidebar_login.html.twig' %}
+    {% include 'partials/sidebar_cart.html.twig' %}
+    {% include 'partials/swipe_menu.html.twig' %}
+    {% include 'partials/site_header.html.twig' %}
+    <div class="page-header">
+        <div class="container">
+            <div class="row">
+                <div class="col-md-6"><h1>Αναζητήστε την παραγγελία σας</h1></div>
+            </div>
+        </div>
+    </div>
+    <div class="section" style="background-image:url({{ asset('images/bg-5.jpg') }});">
+        <div class="container">
+
+            <div class="row">
+                <iframe id="speedex-iframe" style="width: 100%;" height="700" src="http://speedex.gr/isapohi.asp?voucher_code={{ voucher }}&searcggo=Submit" frameborder="0" allowfullscreen></iframe>
+            </div>
+        </div>
+        {% include 'home_page_modules/14_newsletter.html.twig' %}
+        {% include 'partials/footer.html.twig' %}
+    </div>
+{% endblock %}
+
+{% block javascripts %}
+    {{ parent() }}
+    <script src="{{ asset('build/js/courier-tracker.js') }}"></script>
+{% endblock %}
+

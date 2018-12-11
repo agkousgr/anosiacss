@@ -6,11 +6,16 @@
                 <!-- Wrapper for slides -->
                 <div class="carousel-inner" role="listbox">
                     {% for slide in slider %}
-                    <div class="item active">
-                        <a href="{{ slide.url }}">
-                            <img src="{{ asset('uploads/slider/' ~ slide.image) }}" alt="">
-                        </a>
-                    </div>
+                        {% if loop.index == 1 %}
+                            {% set active = 'active' %}
+                        {% else %}
+                            {% set active = '' %}
+                        {% endif %}
+                        <div class="item {{ active }}">
+                            <a href="{{ slide.url }}">
+                                <img src="{{ asset('uploads/slider/' ~ slide.image) }}" alt="">
+                            </a>
+                        </div>
                     {% endfor %}
                 </div>
                 <!-- Controls -->

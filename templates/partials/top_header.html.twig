@@ -54,7 +54,7 @@
                 <div class="timetable-dropdown collapse" id="collapseTimetable" style="padding: 10px;">
                     <h4>ΩΡΑΡΙΟ ΛΕΙΤΟΥΡΓΙΑΣ</h4>
                     <div>Δε & Τε: 08:00 - 14:30</div>
-                    <div>Τρ-Πε-Πα: 08:00 - 14:00 </div>
+                    <div>Τρ-Πε-Πα: 08:00 - 14:00</div>
                     <div>17:00 - 20:00</div>
                 </div>
             </div>
@@ -108,8 +108,10 @@
                         </a>
                     </li>
                     <li>
-                        <a href="#" class="tracking-link"
+                        <a data-toggle="collapse" href="#collapseVoucher" aria-expanded="false"
+                           aria-controls="collapseVoucher"
                            style="margin-top: 8px; padding: 0 5px 0 15px;"
+                           class="cart-link"
                            title=" Παρακολούθηση Παραγγελίας">
                             <i class="fas fa-truck-moving trucking-link"></i>
                             <span class="link-text" style="visibility:hidden">.</span>
@@ -135,7 +137,14 @@
                     </li>
                 </ul>
 
-
+                <div class="cart-dropdown collapse" id="collapseVoucher">
+                    <div class="well" style="padding: 10px;">
+                        Εισάγετε τον κωδικό voucher για να δείτε που βρίσκεται η παραγγελία σας.
+                        <input id="voucher-input" class="form-control" style="background-color: #FFFFFF;" type="text" placeholder="Εισάγετε το voucher">
+                        <button id="voucher-track-button" type="submit"><i class="fas fa-search"></i>
+                        </button>
+                    </div>
+                </div>
                 {#<div class="cart-dropdown collapse" id="collapseCart">#}
                 {#{% include 'partials/top_cart.html.twig' %}#}
                 {#</div>#}

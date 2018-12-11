@@ -11292,7 +11292,7 @@ html {
 
 body {
     font-family: 'GeosansLight' !important;
-    font-size: 16px;
+    font-size: 17px;
     line-height: 1.42857143;
     font-weight: 300
 }
@@ -18870,7 +18870,8 @@ figure.effect-apollo:hover figcaption::before {
     font-size: 14px;
     /*line-height: 82px;*/
     padding: 0 7px;
-    text-transform: uppercase
+    text-transform: uppercase;
+    font-weight: bold;
 }
 
 .post-header-wrap .navbar-nav>li>a>i {
@@ -19052,7 +19053,7 @@ figure.effect-apollo:hover figcaption::before {
 }
 
 .menu-product-list .media h5 {
-    margin: 0 0 2px;
+    margin: 2px 0;
     font-size: 13px;
     font-family: inherit;
 }
@@ -21243,7 +21244,7 @@ h3.resp-accordion {
 }
 
 .product-case .product-name {
-    font-size: 15px
+    font-size: 16px
 }
 
 .product-case .star {
@@ -23145,7 +23146,7 @@ h3.resp-accordion:first-child {
 .single-product-details .tab-content {
     padding: 15px;
     border: 1px solid #d8d8d8;
-    font-size: 15px;
+    font-size: 17px;
     background: #fff
 }
 

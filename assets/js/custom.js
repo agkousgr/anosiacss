@@ -9,6 +9,13 @@ $mainWrapper.on('show.bs.collapse', '.collapse', function () {
 });
 
 $(document).ready(function () {
+    $('#voucher-track-button').on('click', function (e) {
+        e.preventDefault();
+        let url = Routing.generate('courier_tracker', {'voucher': $('#voucher-input').val()});
+        console.log(url);
+        window.location.assign(url);
+    });
+
     $("#keyword").autocomplete({
         source: Routing.generate('search'),
         select: function (event, ui) {
