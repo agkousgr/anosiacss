@@ -399,7 +399,9 @@ seasonpromo_delete:
 home_page_modules:
     path: /admin/home-page-modules
     controller: App\Controller\Admin\HomePageModulesController::list
-
+home_page_module:
+    path: /admin/home-page-module/{slug}
+    controller: App\Controller\Admin\HomePageModulesController::update
 
 #fb callback login
 fb_callback:

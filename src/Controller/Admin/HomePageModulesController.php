@@ -18,6 +18,11 @@ class HomePageModulesController extends AbstractController
         ]);
     }
 
+    public function update(string $slug)
+    {
+        return $this->render('Admin/homepage_modules/' . $slug . '/view.html.twig');
+    }
+
     public function changePriority(int $id, string $direction, EntityManagerInterface $em, LoggerInterface $logger)
     {
         try {

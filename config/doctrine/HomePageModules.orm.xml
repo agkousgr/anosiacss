@@ -3,13 +3,14 @@
 
     <entity name="App\Entity\HomePageModules" repository-class="App\Repository\HomePageModulesRepository">
         <id name="id" type="integer">
-            <generator strategy="AUTO" />
+            <generator strategy="AUTO"/>
         </id>
-        <field name="name" length="150" />
-        <field name="priority" type="integer" />
-        <field name="isPublished" type="boolean" />
-        <field name="url" length="150" nullable="true" />
-
+        <field name="name" length="150"/>
+        <field name="slug" length="100" nullable="true"/>
+        <field name="priority" type="integer"/>
+        <field name="isPublished" type="boolean"/>
+        <field name="url" length="150" nullable="true"/>
+        <field name="isEditable" type="boolean"/>
 
     </entity>
 

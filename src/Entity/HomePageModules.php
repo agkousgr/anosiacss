@@ -16,6 +16,11 @@ class HomePageModules
     private $name;
 
     /**
+     * @var string|null
+     */
+    private $slug;
+
+    /**
      * @var int
      */
     private $priority;
@@ -29,6 +34,11 @@ class HomePageModules
      * @var string
      */
     private $url;
+
+    /**
+     * @var bool
+     */
+    private $isEditable = false;
 
     /**
      * @return int
@@ -52,6 +62,14 @@ class HomePageModules
     public function setName(string $name): void
     {
         $this->name = $name;
+    }
+
+    /**
+     * @return string|null
+     */
+    public function getSlug(): ?string
+    {
+        return $this->slug;
     }
 
     /**
@@ -100,6 +118,14 @@ class HomePageModules
     public function setUrl(?string $url): void
     {
         $this->url = $url;
+    }
+
+    /**
+     * @return bool
+     */
+    public function isEditable(): bool
+    {
+        return $this->isEditable;
     }
 
 }

@@ -1,0 +1,43 @@
+{% extends 'Admin/layout.html.twig' %}
+
+{% block stylesheet %}
+    {{ parent() }}
+    <!-- BEGIN CSS for this page -->
+    <link href="{{ asset('build/admin/css/switchery.min.css') }}" rel="stylesheet" type="text/css"/>
+    <style>
+        .bigfonts {
+            font-size: 30px;
+            color: #4e4e4e;
+        }
+    </style>
+    <!-- END CSS for this page -->
+{% endblock %}
+
+{% block title %}| Slider{% endblock %}
+
+{% block breadcrumb %}
+    <div class="row">
+        <div class="col-xl-12">
+            <div class="breadcrumb-holder">
+                <h1 class="main-title float-left">Slider</h1>
+                <ol class="breadcrumb float-right">
+                    <li class="breadcrumb-item">Home</li>
+                    <li class="breadcrumb-item active">Slider</li>
+                </ol>
+                <div class="clearfix"></div>
+            </div>
+        </div>
+    </div>
+    <!-- end row -->
+{% endblock %}
+
+{% block body %}
+
+{% endblock %}
+
+{% block javascripts %}
+    {{ parent() }}
+    {#<script src="{{ asset('bundles/fosjsrouting/js/router.js') }}"></script>#}
+    {#<script src="{{ path('fos_js_routing_js', { callback: 'fos.Router.setData' }) }}"></script>#}
+    {#<script src="{{ asset('build/admin/js/slider.js') }}"></script>#}
+{% endblock %}

@@ -19,10 +19,10 @@
     <div class="row">
         <div class="col-xl-12">
             <div class="breadcrumb-holder">
-                <h1 class="main-title float-left">Slider</h1>
+                <h1 class="main-title float-left">Home Page Modules</h1>
                 <ol class="breadcrumb float-right">
                     <li class="breadcrumb-item">Home</li>
-                    <li class="breadcrumb-item active">Slider</li>
+                    <li class="breadcrumb-item active">Home Page Modules</li>
                 </ol>
                 <div class="clearfix"></div>
             </div>
@@ -55,13 +55,7 @@
             <div class="card mb-3">
 
                 <div class="card-header">
-                    <span class="pull-right">
-                        <button id="add-slide" class="btn btn-primary btn-sm">
-                            <i class="fa fa-plus" aria-hidden="true"></i> Προσθήκη νέου slide
-                        </button>
-                    </span>
-
-                    <h3><i class="fa fa-image"></i> Slider</h3>
+                    <h3><i class="fa fa-image"></i> Modules</h3>
                 </div>
                 <!-- end card-header -->
 
@@ -109,9 +103,11 @@
                                         </td>
 
                                         <td>
-                                            <a id="edit-slide" data-id="1" href="#" class="btn btn-primary btn-sm">
+                                            {% if module.editable == true %}
+                                            <a id="edit-slide" data-id="1" href="{{ path('home_page_module', {'slug': module.slug}) }}" class="btn btn-primary btn-sm">
                                                 <i class="fa fa-pencil" aria-hidden="true"></i>
                                             </a>
+                                            {% endif %}
                                         </td>
                                     </tr>
                                 {% endfor %}
@@ -135,7 +131,7 @@
 
 {% block javascripts %}
     {{ parent() }}
-    <script src="{{ asset('bundles/fosjsrouting/js/router.js') }}"></script>
-    <script src="{{ path('fos_js_routing_js', { callback: 'fos.Router.setData' }) }}"></script>
-    <script src="{{ asset('build/admin/js/slider.js') }}"></script>
+    {#<script src="{{ asset('bundles/fosjsrouting/js/router.js') }}"></script>#}
+    {#<script src="{{ path('fos_js_routing_js', { callback: 'fos.Router.setData' }) }}"></script>#}
+    {#<script src="{{ asset('build/admin/js/slider.js') }}"></script>#}
 {% endblock %}
