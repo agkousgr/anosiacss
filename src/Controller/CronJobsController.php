@@ -1,10 +1,4 @@
 <?php
-/**
- * Created by PhpStorm.
- * User: john
- * Date: 4/8/2018
- * Time: 11:51 μμ
- */
 
 namespace App\Controller;
 
@@ -67,8 +61,10 @@ class CronJobsController extends AbstractController
 //        $cmd = $this->em->getClassMetadata($pr);
         $connection = $this->em->getConnection();
         $connection->beginTransaction();
+        $prevName = '';
+        $duplicates = [];
         try {
-            $s1products = $this->productService->getItems('null', 'null', 1000, 'NameAsc', -1, 'null', 'null', 'null', 1);
+            $s1products = $this->productService->getItems('null', 'null', 6000, 'NameAsc', -1, 'null', 'null', 'null', 1, 'null', 1);
             if ($s1products) {
                 $connection->query('SET FOREIGN_KEY_CHECKS=0');
                 $connection->query('DELETE FROM products');
@@ -77,10 +73,18 @@ class CronJobsController extends AbstractController
                 $connection->query('SET FOREIGN_KEY_CHECKS=1');
                 $connection->commit();
                 foreach ($s1products as $s1product) {
-                    dump(strval($s1product['id']));
-                    if (intval($s1product['id']) === 14953) {
-                        dump($s1product);
+                    if ($prevName === strval($s1product['name'])) {
+                        $duplicates[] = strval($s1product['name']);
+                        continue;
+                    } else {
+                        $prevName = strval($s1product['name']);
                     }
+
+
+//                    dump(strval($s1product['id']));
+//                    if (intval($s1product['id']) === 14953) {
+//                        dump($s1product);
+//                    }
 
                     if (strval($s1product['id']) !== '') {
                         $pr = new Products();
@@ -95,6 +99,7 @@ class CronJobsController extends AbstractController
                     }
                 }
             }
+            dump($duplicates);
             return;
         } catch (\Exception $e) {
             $this->logger->error(__METHOD__ . ' -> {message}', ['message' => $e->getMessage()]);

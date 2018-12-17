@@ -14,13 +14,20 @@
         <field name="ingredients" type="text" nullable="true" />
         <field name="instructions" type="text" nullable="true" />
         <field name="oldSlug" length="250" nullable="true" />
+        <field name="barcode" length="50" nullable="true"/>
         <field name="slug" length="250" />
+        <field name="retailPrice" type="decimal" precision="7" scale="2"/>
+        <field name="webPrice" type="decimal" precision="7" scale="2"/>
+        <field name="discount" type="integer" nullable="true"/>
         <field name="seoTitle" type="text" nullable="true" />
         <field name="seoKeywords" type="text" nullable="true" />
         <field name="manufacturer" length="100" nullable="true" />
+        <field name="manufacturerId" type="integer" nullable="true" />
         <field name="images" type="text" nullable="true" />
         <field name="imageUpdateError" length="1" nullable="true" />
         <field name="webVisible" length="1" nullable="true" />
+        <field name="categoryIds" length="50"/>
+
     </entity>
 
 </doctrine-mapping>

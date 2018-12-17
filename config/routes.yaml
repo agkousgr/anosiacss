@@ -433,6 +433,9 @@ csv_import_old_slugs:
 csv_import_alternative_categories:
     path: /csv/import-alternative-categories
     controller: App\Controller\CsvImport::importAlternativeCategories
+csv_import_product_categories:
+    path: /csv/import-product-categories
+    controller: App\Controller\CsvImport::importProductCategories
 
 get_images:
     path: /migrate/images
@@ -455,6 +458,9 @@ getProductsWithNoImageFromS1:
 updateAnosiaKeywordsSlug:
     path: /update/anosia-keywords/slug
     controller: App\Controller\MigrateController::updateAnosiaKeywordsSlug
+updateProductsFromS1:
+    path: /migrate/update-products-from-s1
+    controller: App\Controller\MigrateController::updateProductsFromS1
 
 # Cron Jobs
 create_categories:

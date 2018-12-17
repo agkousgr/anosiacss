@@ -53,6 +53,65 @@ class CsvImport extends MainController
 
     }
 
+    public function importProductCategories(EntityManagerInterface $em)
+    {
+        try {
+            $csv = Reader::createFromPath($this->getParameter('kernel.project_dir') . '/public/csv/product-categories.csv', 'r');
+            $csv->setDelimiter("\t");
+//        $csv->setHeaderOffset(0);
+
+            $stmt = (new Statement())
+                ->offset(9000)
+                ->limit(2000);
+            $errors = [];
+            $records = $stmt->process($csv);
+            foreach ($records as $record) {
+                $pr = $em->getRepository(MigrationProducts::class)->findOneBy(['sku' => $record[0]]);
+                if ($pr) {
+                    $categoryIds = $record[2];
+                    if (!$record[3]) {
+                        $pr->setName($record[1]);
+                        $pr->setCategoryIds($categoryIds);
+                        $em->persist($pr);
+                        $em->flush();
+                        continue;
+                    }
+                    if (!$record[4]) {
+                        $categoryIds .= ',' . $record[3];
+                        $pr->setName($record[1]);
+                        $pr->setCategoryIds($categoryIds);
+                        $em->persist($pr);
+                        $em->flush();
+                        continue;
+                    }
+                    if (!$record[5]) {
+                        $categoryIds .= ',' . $record[3] . ',' . $record[4];
+                        $pr->setName($record[1]);
+                        $pr->setCategoryIds($categoryIds);
+                        $em->persist($pr);
+                        $em->flush();
+                        continue;
+                    }
+                    $categoryIds .= ',' . $record[3] . ',' . $record[4] . ',' . $record[5];
+                    $pr->setName($record[1]);
+                    $pr->setCategoryIds($categoryIds);
+                    $em->persist($pr);
+                    $em->flush();
+                } else {
+                    $errors[] = $record;
+                }
+            }
+            dump($errors);
+            return;
+        } catch (\Exception $e) {
+            if ($record) {
+                dump($record);
+            }
+            $this->logger->error(__METHOD__ . ' -> {message}', ['message' => $e->getMessage()]);
+            throw $e;
+        }
+    }
+
     public function importAlternativeCategories(EntityManagerInterface $em)
     {
         $csv = Reader::createFromPath($this->getParameter('kernel.project_dir') . '/public/csv/alternative-categories.csv', 'r');
@@ -103,8 +162,8 @@ class CsvImport extends MainController
             }
             $altCategory .= ',' . $record[3] . ',' . $record[4] . ',' . $record[5];
             $category->setAlternativeCategories($altCategory);
-                $em->persist($category);
-                $em->flush();
+            $em->persist($category);
+            $em->flush();
         }
         return;
     }

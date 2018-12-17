@@ -64,6 +64,26 @@ class MigrationProducts
     /**
      * @var string|null
      */
+    private $barcode;
+
+    /**
+     * @var string|null
+     */
+    private $retailPrice;
+
+    /**
+     * @var string|null
+     */
+    private $webPrice;
+
+    /**
+     * @var int|null
+     */
+    private $discount;
+
+    /**
+     * @var string|null
+     */
     private $seoTitle;
 
     /**
@@ -75,6 +95,11 @@ class MigrationProducts
      * @var string|null
      */
     private $manufacturer;
+
+    /**
+     * @var int|null
+     */
+    private $manufacturerId;
 
     /**
      * @var string|null
@@ -90,6 +115,11 @@ class MigrationProducts
      * @var string|null
      */
     private $webVisible;
+
+    /**
+     * @var string|null
+     */
+    private $categoryIds;
 
     /**
      * @return int
@@ -280,6 +310,78 @@ class MigrationProducts
     }
 
     /**
+     * @return string|null
+     */
+    public function getBarcode(): ?string
+    {
+        return $this->barcode;
+    }
+
+    /**
+     * @param string|null $barcode
+     * @return MigrationProducts
+     */
+    public function setBarcode(?string $barcode): MigrationProducts
+    {
+        $this->barcode = $barcode;
+        return $this;
+    }
+
+    /**
+     * @return string|null
+     */
+    public function getRetailPrice(): ?string
+    {
+        return $this->retailPrice;
+    }
+
+    /**
+     * @param string|null $retailPrice
+     * @return MigrationProducts
+     */
+    public function setRetailPrice(?string $retailPrice): MigrationProducts
+    {
+        $this->retailPrice = $retailPrice;
+        return $this;
+    }
+
+    /**
+     * @return string|null
+     */
+    public function getWebPrice(): ?string
+    {
+        return $this->webPrice;
+    }
+
+    /**
+     * @param string|null $webPrice
+     * @return MigrationProducts
+     */
+    public function setWebPrice(?string $webPrice): MigrationProducts
+    {
+        $this->webPrice = $webPrice;
+        return $this;
+    }
+
+    /**
+     * @return int|null
+     */
+    public function getDiscount(): ?int
+    {
+        return $this->discount;
+    }
+
+    /**
+     * @param int|null $discount
+     * @return MigrationProducts
+     */
+    public function setDiscount(?int $discount): MigrationProducts
+    {
+        $this->discount = $discount;
+        return $this;
+    }
+
+    /**
      * @return null|string
      */
     public function getSeoTitle(): ?string
@@ -334,6 +436,24 @@ class MigrationProducts
     }
 
     /**
+     * @return int|null
+     */
+    public function getManufacturerId(): ?int
+    {
+        return $this->manufacturerId;
+    }
+
+    /**
+     * @param int|null $manufacturerId
+     * @return MigrationProducts
+     */
+    public function setManufacturerId(?int $manufacturerId): MigrationProducts
+    {
+        $this->manufacturerId = $manufacturerId;
+        return $this;
+    }
+
+    /**
      * @return null|string
      */
     public function getImages(): ?string
@@ -384,6 +504,24 @@ class MigrationProducts
     public function setWebVisible(?string $webVisible): MigrationProducts
     {
         $this->webVisible = $webVisible;
+        return $this;
+    }
+
+    /**
+     * @return string|null
+     */
+    public function getCategoryIds(): ?string
+    {
+        return $this->categoryIds;
+    }
+
+    /**
+     * @param string|null $categoryIds
+     * @return MigrationProducts
+     */
+    public function setCategoryIds(?string $categoryIds): MigrationProducts
+    {
+        $this->categoryIds = $categoryIds;
         return $this;
     }
 
