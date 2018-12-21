@@ -56,16 +56,20 @@ class MigrateController extends MainController
         $nullMnf = '';
         $prevName = '';
         $duplicates = '';
-        $s1ProductData = $productService->getItems('null', $keyword = 'null', 4000, $sortBy = 'NameDesc', $isSkroutz = -1, $makeId = 'null', $priceRange = 'null', 'null', 1, 'null', 0);
+        $s1ProductData = $productService->getItems('null', $keyword = 'null', 15000, $sortBy = 'NameAsc', $isSkroutz = -1, $makeId = 'null', $priceRange = 'null', 'null', 1, 'null', 0);
         foreach ($s1ProductData as $s1pr) {
 //            dump($s1pr);
 //continue;
             if ($prevName === strval($s1pr['name'])) {
                 $duplicates .= strval($s1pr['id']) . ',';
+                dump($duplicates);
+                die();
                 continue;
             } else {
                 $prevName = strval($s1pr['name']);
             }
+            dump($s1pr);
+            die();
             $pr = $em->getRepository(MigrationProducts::class)->findOneBy(['s1id' => $s1pr['id']]);
 //            dump($pr->getWebPrice());
             if ($pr) {

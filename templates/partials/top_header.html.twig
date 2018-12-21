@@ -1,71 +1,70 @@
 <div class="pre-header">
     <div class="container nopaddings">
         <div class="pre-header-wrap clearfix">
-            {#<div class="pre-header-left">#}
-            {#<ul>#}
-            {#<li>#}
-            {#<select class="c-select">#}
-            {#<option>USD</option>#}
-            {#<option>INR</option>#}
-            {#<option>GBP</option>#}
-            {#<option>EURO</option>#}
-            {#</select>#}
-            {#</li>#}
-            {#<li>#}
-            {#<select class="c-select">#}
-            {#<option>ENG</option>#}
-            {#<option>ESP</option>#}
-            {#<option>RUS</option>#}
-            {#<option>FR</option>#}
-            {#</select>#}
-            {#</li>#}
-            {#</ul>#}
-            {#</div>#}
-
-
-            {#<div class="news-ticker visible-lg visible-md">#}
-            {#<div class="ticker">#}
-            {#<div class="label-back">LATEST</div>#}
-            {#<div id="carousel-example-generic" class="carousel slide" data-ride="carousel">#}
-            {#<!-- Wrapper for slides -->#}
-            {#<div class="carousel-inner" role="listbox">#}
-            {#<div class="item active">Congue admodum dissentiet</div>#}
-            {#<div class="item">Congue admodum dissentiet</div>#}
-            {#</div>#}
-            {#</div>#}
-            {#</div>#}
-            {#</div>#}
 
             <div class="pre-header-left hidden-xs">
                 <ul>
-                    <li><a data-toggle="collapse" href="#collapseTimetable" aria-expanded="false"
+                    <li style="max-width: 50px;">
+                        <a data-toggle="collapse" href="#collapseTimetable"
+                           aria-expanded="false"
                            aria-controls="collapseTimetable"
-                           style="margin-top: 8px; padding: 0 5px 0 15px;" class="cart-link"
+                           style="margin-top: 8px; padding: 0 5px 0 15px;"
+                           class="cart-link"
                            title="Ωράριο Λειτουργίας">
                             <i class="far fa-clock"></i>
-                        </a></li>
-                    <li><a class="phone-link" href="tel:2109402027"><i class="fas fa-phone"></i> 210 94 02 027</a></li>
+                        </a>
+                    </li>
+                    <li><a class="phone-link" href="tel:2109402027"><i class="fas fa-phone"></i> 210
+                            94 02 027</a></li>
                     <li>
-                        <div style="padding-top: 8px;">
-                            <i class="fas fa-truck"></i> ΔΩΡΕΑΝ ΜΕΤΑΦΟΡΙΚΑ ΓΙΑ ΠΑΡΑΓΓΕΛΙΕΣ ΑΝΩ ΤΩΝ 39€
+                        <div style="padding-top: 8px; text-align: center;">
+                            {#<i class="fas fa-truck"></i> #} ΔΩΡΕΑΝ ΜΕΤΑΦΟΡΙΚΑ ΓΙΑ ΠΑΡΑΓΓΕΛΙΕΣ ΑΝΩ
+                            ΤΩΝ 39€
                         </div>
                     </li>
                 </ul>
-                <div class="timetable-dropdown collapse" id="collapseTimetable" style="padding: 10px;">
+                <div class="timetable-dropdown collapse" id="collapseTimetable"
+                     style="padding: 10px;">
                     <h4>ΩΡΑΡΙΟ ΛΕΙΤΟΥΡΓΙΑΣ</h4>
                     <div>Δε & Τε: 08:00 - 14:30</div>
                     <div>Τρ-Πε-Πα: 08:00 - 14:00</div>
                     <div>17:00 - 20:00</div>
                 </div>
             </div>
-            <div class="pre-header-left visible-xs">
-                <ul>
-                    <li><a><i class="far fa-clock"></i> </a></li>
-                    <li><a href="tel:2109402027"><i class="fas fa-phone"></i> 210 94 02 027</a></li>
-                    <li style="width: 100%;"><i class="fa fa-truck"></i> ΔΩΡΕΑΝ ΜΕΤΑΦΟΡΙΚΑ ΓΙΑ
-                        ΠΑΡΑΓΓΕΛΙΕΣ ΑΝΩ ΤΩΝ 39€
-                    </li>
-                </ul>
+            <div class="pre-header-left visible-xs" style="background-color: #4fa56e; padding-top: 10px; color:#ffffff;">
+                {#<ul>#}
+                <div class="col-12" style="text-align: center; padding-bottom: 10px;">
+                    <h4>ΩΡΑΡΙΟ ΛΕΙΤΟΥΡΓΙΑΣ</h4>
+                    <div>Δε & Τε: 08:00 - 14:30<br>Τρ-Πε-Πα: 08:00 - 14:00 & 17:00 - 20:00
+                    </div>
+                    <div>
+                        <a href="tel:2109402027" style="color:#ffffff;">
+                            <i class="fas fa-phone" style="color:#ffffff;"></i>
+                        210 94 02 027</a>
+                    </div>
+                </div>
+                <div class="row" style="margin-right: auto; margin-left: auto; background-color: #ffffff; padding: 10px; text-align: center">
+                    <a href="https://www.facebook.com/AnosiaPharmacy" target="_blank">
+                        <i class="fab fa-facebook-square social-top"></i>
+                    </a>
+                    <a href="https://www.instagram.com/anosiapharmacy.gr/" target="_blank">
+                        <i class="fab fa-instagram social-top"></i>
+                    </a>
+                    <a href="https://twitter.com/AnosiaPharmacy" target="_blank">
+                        <i class="fab fa-twitter-square social-top"></i>
+                    </a>
+                    <a href="https://plus.google.com/u/0/118177816495130950018" target="_blank">
+                        <i class="fab fa-google-plus-square social-top"></i>
+                    </a>
+                    <a href="mailto:info@anosiapharmacy.gr" target="_blank">
+                        <i class="fas fa-envelope-square social-top"></i>
+                    </a>
+                </div>
+                <div class="col-12" style="padding: 10px; text-align: center;">
+                    {#<i class="fa fa-truck"></i>#}
+                    ΔΩΡΕΑΝ ΜΕΤΑΦΟΡΙΚΑ ΓΙΑ ΠΑΡΑΓΓΕΛΙΕΣ ΑΝΩ ΤΩΝ 39€
+                </div>
+                {#</ul>#}
             </div>
 
             <div class="pre-header-right">
@@ -142,7 +141,8 @@
                         Εισάγετε τον κωδικό voucher για να δείτε που βρίσκεται η παραγγελία σας.
                         <div class="search">
                             <div class="textbox">
-                                <input id="voucher-input" class="form-control" style="background-color: #FFFFFF;padding: 6px 12px;"
+                                <input id="voucher-input" class="form-control"
+                                       style="background-color: #FFFFFF;padding: 6px 12px;"
                                        type="text" placeholder="Εισάγετε το voucher">
                             </div>
                             <button id="voucher-track-button" type="submit">
@@ -151,47 +151,11 @@
                         </div>
                     </div>
                 </div>
-                {#<div class="cart-dropdown collapse" id="collapseCart">#}
-                {#{% include 'partials/top_cart.html.twig' %}#}
-                {#</div>#}
-
             </div>
-            {# <div class="well"> #}
-            {# <div class="container nopaddings">
-                <div class="search-wrap" style="margin-bottom: 15px;">
-                    <a data-toggle="collapse" href="#collapseSearch" aria-expanded="false"
-                    aria-controls="collapseSearch"
-                    class="close-btn visible-lg visible-md visible-sm">Search</a>
-                    <div class="row">
-                        <div class="col-sm-10 col-sm-offset-1 col-md-8 col-md-offset-2">
-                            <div class="search">
-                                <form action="{{ path('product_search') }}" method="post">
-                                    <div class="textbox">
-                                        <input name="keyword" required class="form-control" type="text" placeholder="Αναζητήστε βάσει κωδικού, ονόματος ή μάρκας" style="width: 100%;">
-                                    </div>
-                                    {#<div class="option-box">#}
-            {#<select class="c-select">#}
-            {#<option>All</option>#}
-            {#<option>Women</option>#}
-            {#<option>Men</option>#}
-            {#<option>Juniors</option>#}
-            {#<option>Kids</option>#}
-            {#<option>Accessories</option>#}
-            {#</select>#}
-            {#</div>#}
-            {# <button type="submit"><i class="fa fa-search"></i></button>
-        </form>
-    </div>
-</div>
-</div>
-</div>
-</div> #}
-            {# </div> #}
         </div>
     </div>
 
     <div class="search-collapse collapse" id="collapseSearch">
-        {# <div class="well"> #}
         <div class="container">
             <div class="search-wrap">
                 <a data-toggle="collapse" href="#collapseSearch" aria-expanded="false"
@@ -200,29 +164,16 @@
                 <div class="row">
                     <div class="col-sm-10 col-sm-offset-1 col-md-8 col-md-offset-2">
                         <div class="search">
-                            {#<form action="{{ path('product_search') }}" method="post">#}
                             <div class="textbox">
                                 <input name="keyword" required class="form-control" type="text"
                                        placeholder="Αναζητήστε βάσει ονόματος, κωδικού ή barcode">
                             </div>
-                            {#<div class="option-box">#}
-                            {#<select class="c-select">#}
-                            {#<option>All</option>#}
-                            {#<option>Women</option>#}
-                            {#<option>Men</option>#}
-                            {#<option>Juniors</option>#}
-                            {#<option>Kids</option>#}
-                            {#<option>Accessories</option>#}
-                            {#</select>#}
-                            {#</div>#}
                             <button type="submit"><i class="fas fa-search"></i></button>
-                            {#</form>#}
                         </div>
                     </div>
                 </div>
             </div>
         </div>
-        {# </div> #}
     </div>
 
 </div>

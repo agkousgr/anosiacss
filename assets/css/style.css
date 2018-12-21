@@ -18596,11 +18596,17 @@ figure.effect-apollo:hover figcaption::before {
 }
 
 .pre-header-right ul li a.cart-link {
-    font-size: 30px;
+    font-size: 24px;
+    /*background: url(images/cart-icon.png) right no-repeat*/
+}
+
+.pre-header-right ul li a.account-link {
+    font-size: 24px;
     /*background: url(images/cart-icon.png) right no-repeat*/
 }
 
 .pre-header-right ul li a.wishlist-link {
+    font-size: 24px;
     /*background: url(images/wishlist-icon.png) right no-repeat*/
 }
 

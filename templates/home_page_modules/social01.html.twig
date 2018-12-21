@@ -1,0 +1,90 @@
+<style>
+    .product-main-slider .owl-next, .product-main-slider .owl-prev {
+        top: 20%;
+    }
+
+    .fb-rating {
+        color: #fff;
+        font-size: 24px;
+        height: 54px;
+        width: 54px;
+        margin-left: auto;
+        margin-right: auto;
+        align-items: center;
+        border: 2px white solid;
+        border-radius: 50%;
+        display: flex;
+        justify-content: center;
+        word-wrap: break-word;
+        background-color: rgb(66, 103, 178);
+    }
+
+    .offer-box {
+        min-height: 200px;
+    }
+
+    .offer-box .offer-name {
+        font-size: 18px;
+    }
+</style>
+<div class="section" style="background:#fff;">
+    <div class="container">
+        <div class="section-heading row wow flipInX" data-wow-delay="0.4s">
+            <div class="col-sm-8 col-sm-offset-2">
+                {#<h3>SOCIAL MEDIA</h3>#}
+                <h2>Τα σχόλιά σας στο Facebook</h2>
+                {#<p>Ακολουθήστε μας στα Social Media για να ενημερώνεστε για τα τελευταία νέα μας, τις καθημερινές προσφορές μας, να συμμετέχετε σε διαγωνισμούς και να μαθαίνετε συμβουλές για καλύτερη υγεία. Γίνετε μέλος της μεγάλης παρέας μας.</p>#}
+            </div>
+        </div>
+    </div>
+    <div class="container">
+        {#<div class="section-heading section-heading-white row wow flipInX" data-wow-delay="0.4s">#}
+        {#<div class="col-sm-8 col-sm-offset-2">#}
+        {#<h3>ΣΥΝΑΡΠΑΣΤΙΚΕΣ ΠΡΟΣΦΟΡΕΣ</h3>#}
+        {#<h2>ΕΠΩΦΕΛΕΙΘΕΙΤΕ ΑΠΟ ΤΙΣ ΠΡΟΣΦΟΡΕΣ ΜΑΣ</h2>#}
+        {#<p>Στο AnosiaPharmacy.gr θα βρείτε τις καλύτερες προσφορές στις μεγαλύτερες εταιρείες!</p>#}
+        {#</div>#}
+        {#</div>#}
+
+        <div class="col-lg-3">
+            <div class="col-sm-12">
+                <div class="offer-box" style="text-align: center;">
+                    <div class="fb-rating">4.9</div>
+                    <div style="padding-top: 10px;"><strong>4.9 με άριστα το 5</strong></div>
+                    <div>Βασισμένη στην βαθμολογία που μας έδωσαν XXX επισκέπτες</div>
+                </div>
+            </div>
+        </div>
+        <div class="col-lg-9">
+            <div class="owl-carousel owl-theme OfferCarousel product-main-slider">
+                {% for post in reviews.data | slice(1, 9) %}
+                    <div class="item">
+                        {#{{ dump(post) }}#}
+                        <div class="offer-box">
+                            <div class="row">
+                                <div class="col-sm-4 col-md-5 col-lg-4 offer-img">
+                                </div>
+                                <div class="col-sm-12"
+                                     style="padding-left:35px; padding-right:35px;">
+
+                                    {#<div class="star">#}
+                                    {#<i class="fa fa-star"></i>#}
+                                    {#<i class="fa fa-star"></i>#}
+                                    {#<i class="fa fa-star"></i>#}
+                                    {#<i class="fa fa-star"></i>#}
+                                    {#<i class="fa fa-star"></i>#}
+                                    {#<i class="fa fa-star-o"></i>#}
+                                    {#</div>#}
+                                    <div>{{ post.created_time|date("d/m/Y") }}</div>
+                                    <div class="offer-name">{{ post.review_text }}</div>
+
+                                </div>
+                            </div>
+                        </div>
+                        <div class="shadow-sm"></div>
+                    </div>
+                {% endfor %}
+            </div>
+        </div>
+    </div>
+</div>

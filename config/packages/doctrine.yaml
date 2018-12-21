@@ -27,3 +27,7 @@ doctrine:
                 dir: '%kernel.project_dir%/config/doctrine'
                 prefix: 'App\Entity'
                 alias: App
+        dql:
+            string_functions:
+                # Match agains should have the path to the MatchAgainst class created in the previous step
+                MATCH_AGAINST: App\Extensions\Doctrine\MatchAgainst

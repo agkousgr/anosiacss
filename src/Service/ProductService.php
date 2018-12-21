@@ -266,7 +266,8 @@ EOF;
             $itemsArr = [];
             $result = $this->client->SendMessage(['Message' => $message]);
             $items = simplexml_load_string(str_replace("utf-16", "utf-8", $result->SendMessageResult), 'SimpleXMLElement', LIBXML_COMPACT | LIBXML_PARSEHUGE);
-//            dump($message, $result);
+//            dump($message);
+            dump($message);
 //            die();
             if (intval($items->RowsCount) > 0) {
                 if ($items !== false && ($keyword !== 'null' || $makeId !== 'null' || $isSkroutz === '1' || ($id === 'null' && $itemCode === 'null'))) { // THIS IS FOR MIGRATING PRODUCTS
