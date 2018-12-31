@@ -56,6 +56,7 @@ Encore
     .addEntry('admin/js/switchery.min', './assets/admin/js/switchery/switchery.min.js')
     .addEntry('admin/js/jquery.scrollTo.min', './assets/admin/js/jquery.scrollTo.min.js')
     .addEntry('admin/js/slider', './assets/admin/js/slider/slider.js')
+    .addEntry('admin/js/our-corner', './assets/admin/js/home-page-modules/our-corner.js')
     .addEntry('admin/js/jstree.min', './assets/admin/plugins/jstree/jstree.min.js')
     .addEntry('admin/js/category', './assets/admin/js/category/category.js')
     .addEntry('admin/js/article', './assets/admin/js/article/article.js')

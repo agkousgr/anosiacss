@@ -5,6 +5,7 @@ parameters:
     upload_dirs:
         articles_image_directory: '%kernel.project_dir%/public/uploads/articles'
         slider_image_directory: '%kernel.project_dir%/public/uploads/slider'
+        our_corner_image_directory: '%kernel.project_dir%/public/uploads/our-corner'
     s1_credentials:
         kind: '1'
         domain: 'anosiaph'

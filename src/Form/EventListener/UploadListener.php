@@ -2,12 +2,11 @@
 
 namespace App\Form\EventListener;
 
-use App\Entity\Article;
+use App\Entity\{Article, Slider, HomePageOurCorner};
 use Symfony\Component\HttpFoundation\File\UploadedFile;
 use Symfony\Component\HttpFoundation\File\File;
 use Doctrine\ORM\Event\LifecycleEventArgs;
 use Doctrine\ORM\Event\PreUpdateEventArgs;
-use App\Entity\Slider;
 use App\Service\FileUploader;
 use Symfony\Component\Security\Core\Authentication\Token\Storage\TokenStorageInterface;
 use Symfony\Component\Security\Core\Security;
@@ -57,6 +56,10 @@ class UploadListener
                     $filePath = 'slider_image_directory';
                     break;
 
+                case $entity instanceof HomePageOurCorner:
+                    $filePath = 'our_corner_image_directory';
+                    break;
+
                 default:
                     return;
                     break;
@@ -71,6 +74,7 @@ class UploadListener
     private function uploadFile($entity)
     {
         // upload only works for existing entities
+        dump($entity);
         switch (true) {
             case $entity instanceof Article:
                 $file = $entity->getImage();
@@ -82,17 +86,25 @@ class UploadListener
                 $filePath = 'slider_image_directory';
                 break;
 
+            case $entity instanceof HomePageOurCorner:
+                $file = $entity->getImage();
+                $filePath = 'our_corner_image_directory';
+                break;
+
             default:
                 return;
                 break;
 
         }
-
+        dump($file);
         // only upload new files
         if ($file instanceof UploadedFile) {
+            die();
             $fileName = $this->uploader->upload($file, $filePath);
             $entity->setImage($fileName);
         } elseif ($file instanceof File) {
+            dump('zong');
+            die();
             // prevents the full file path being saved on updates
             // as the path is set on the postLoad listener
             $entity->setImage($file->getFilename());

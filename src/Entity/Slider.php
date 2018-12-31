@@ -5,7 +5,6 @@ namespace App\Entity;
 use App\Traits\{
     BasicDbFieldsTrait, BlameableTrait, TimestampableTrait
 };
-use Symfony\Component\Validator\Constraints as Assert;
 
 class Slider
 {
