@@ -62,6 +62,11 @@ class Products
     private $views;
 
     /**
+     * @var \DateTime|null
+     */
+    private $latestOffer;
+
+    /**
      * @return int
      */
     public function getId(): int
@@ -256,6 +261,24 @@ class Products
     public function setDiscount(?int $discount): Products
     {
         $this->discount = $discount;
+        return $this;
+    }
+
+    /**
+     * @return \DateTime|null
+     */
+    public function getLatestOffer(): ?\DateTime
+    {
+        return $this->latestOffer;
+    }
+
+    /**
+     * @param \DateTime|null $latestOffer
+     * @return Products
+     */
+    public function setLatestOffer(?\DateTime $latestOffer): Products
+    {
+        $this->latestOffer = $latestOffer;
         return $this;
     }
 

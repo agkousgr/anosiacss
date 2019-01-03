@@ -469,9 +469,9 @@ EOF;
         try {
             $result = $this->client->SendMessage(['Message' => $message]);
             $items = simplexml_load_string(str_replace("utf-16", "utf-8", $result->SendMessageResult));
-            dump($message, $result);
+//            dump($message, $result);
             $itemsArr = $this->initializeProposalProducts($items->GetDataRows->GetRelevantItemsRow);
-            dump($itemsArr);
+//            dump($itemsArr);
             return $itemsArr;
         } catch (\SoapFault $sf) {
             echo $sf->faultstring;
@@ -487,6 +487,8 @@ EOF;
                 $prArr[] = array(
                     'id' => $pr->ID,
                     'name' => $pr->Name2,
+                    'summary' => strip_tags($pr->SmallDescriptionHTML),
+                    'prCode' => $pr->Code,
                     'isVisible' => $pr->WebVisible,
                     'retailPrice' => $pr->RetailPrice,
                     'discount' => $pr->WebDiscountPerc,

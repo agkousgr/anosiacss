@@ -74,7 +74,6 @@ class UploadListener
     private function uploadFile($entity)
     {
         // upload only works for existing entities
-        dump($entity);
         switch (true) {
             case $entity instanceof Article:
                 $file = $entity->getImage();
@@ -96,15 +95,11 @@ class UploadListener
                 break;
 
         }
-        dump($file);
         // only upload new files
         if ($file instanceof UploadedFile) {
-            die();
             $fileName = $this->uploader->upload($file, $filePath);
             $entity->setImage($fileName);
         } elseif ($file instanceof File) {
-            dump('zong');
-            die();
             // prevents the full file path being saved on updates
             // as the path is set on the postLoad listener
             $entity->setImage($file->getFilename());

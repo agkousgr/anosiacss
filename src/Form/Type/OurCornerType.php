@@ -24,7 +24,7 @@ class OurCornerType extends AbstractType
             ])
             ->add('category', EntityType::class, [
                 'class' => 'App\Entity\Category',
-                'choice_label' => 'name',
+                'choice_label' => 'slug',
                 'query_builder' => function (EntityRepository $er) {
                     return $er->createQueryBuilder('c')
                         ->orderBy('c.id');

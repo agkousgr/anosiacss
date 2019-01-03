@@ -11,6 +11,7 @@ use App\Service\ProductService;
 use App\Service\SoftoneLogin;
 use Doctrine\ORM\EntityManagerInterface;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
+use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\HttpFoundation\Session\SessionInterface;
 use Psr\Log\LoggerInterface;
 
@@ -141,7 +142,7 @@ class CronJobsController extends AbstractController
                 }
             }
 //        dump($category);
-            return;
+            return new Response('Categories synchronization completed');
         } catch (\Exception $e) {
             $this->logger->error(__METHOD__ . ' -> {message}', ['message' => $e->getMessage()]);
             throw $e;

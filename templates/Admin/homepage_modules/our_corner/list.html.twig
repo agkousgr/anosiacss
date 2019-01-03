@@ -3,10 +3,9 @@
 {% block stylesheet %}
     {{ parent() }}
     <link href="{{ asset('build/admin/css/plugins/select2.min.css') }}" rel="stylesheet" type="text/css"/>
-    <link href="{{ asset('build/admin/css/category.css') }}" rel="stylesheet" type="text/css"/>
 {% endblock %}
 
-{% block title %}| Κατηγορίες{% endblock %}
+{% block title %}| Our Corner{% endblock %}
 
 {% block breadcrumb %}
     <div class="row">
@@ -72,7 +71,7 @@
                                         </th>
 
                                         <td>
-                                            {{ category.category.name }}
+                                            {{ category.category.slug }}
                                         </td>
                                         <td>
                                             <span style="float: left; margin-right:10px;">
@@ -118,6 +117,5 @@
     <script src="{{ asset('bundles/fosjsrouting/js/router.js') }}"></script>
     <script src="{{ path('fos_js_routing_js', { callback: 'fos.Router.setData' }) }}"></script>
 
-    <script src="{{ asset('build/admin/js/jstree.min.js') }}"></script>
     <script src="{{ asset('build/admin/js/our-corner.js') }}"></script>
 {% endblock %}

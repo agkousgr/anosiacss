@@ -2,7 +2,7 @@
 
 namespace App\Controller;
 
-use App\Entity\{Article, Slider};
+use App\Entity\{Article, HomePageOurCorner, Slider};
 use Doctrine\ORM\EntityManagerInterface;
 use Vinkla\Instagram\Instagram;
 use Facebook\Facebook;
@@ -15,7 +15,14 @@ class DefaultController extends MainController
 // Load categories from XML format to array
 //        $ctgEntity = $prCategories->InitializeCategories($categoriesXML, $session->get("authID"));
 //        $latest = $pr->getItems(-1, $session->get("authID"));
-
+            $ourCornerProducts = [];
+            $ourCorner = $em->getRepository(HomePageOurCorner::class)->findAll();
+            foreach ($ourCorner as $item) {
+                $ourCornerProducts[] = [
+                  'products' => $this->productService->getRelevantItems(-1, -1, 1, 0, 1, $item->getCategory()->getS1id())
+                ];
+            }
+            dump($ourCornerProducts);
             $bestSellers = $this->productService->getCategoryItems('1868', 0, 9, 'null', 'null', 'null', 1, 'null');
             $articles = $em->getRepository(Article::class)->findBy(['category' => 1], ['createdAt' => 'DESC'], 3);
             // Create a new instagram instance.
@@ -47,7 +54,9 @@ class DefaultController extends MainController
                 'homepage' => 1,
                 'loginUrl' => $this->loginUrl,
                 'articles' => $articles,
-                'bestSellers' => $bestSellers
+                'bestSellers' => $bestSellers,
+                'ourCorner' => $ourCorner,
+                'ourCornerProducts' => $ourCornerProducts
             ]);
         } catch (\Exception $e) {
             $this->logger->error(__METHOD__ . ' -> {message}', ['message' => $e->getMessage()]);

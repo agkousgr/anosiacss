@@ -4,6 +4,7 @@ namespace App\Controller\Admin;
 
 use App\Entity\HomePageModules;
 use App\Entity\HomePageOurCorner;
+use App\Entity\Products;
 use App\Form\Type\OurCornerType;
 use Doctrine\ORM\EntityManagerInterface;
 use Symfony\Component\HttpFoundation\Request;
@@ -62,6 +63,32 @@ class HomePageModulesController extends AbstractController
             $logger->error(__METHOD__ . ' -> {message}', ['message' => $e->getMessage()]);
             throw $e;
             return $this->redirectToRoute('slider_list');
+        }
+    }
+
+    public function latestOffers(EntityManagerInterface $em, LoggerInterface $logger)
+    {
+        try {
+            $offers = $em->getRepository(Products::class)->getLatestOffers();
+            return $this->render('Admin/homepage_modules/latest_offers/list.html.twig', [
+                'offers' => $offers
+            ]);
+        } catch (\Exception $e) {
+            $logger->error(__METHOD__ . ' -> {message}', ['message' => $e->getMessage()]);
+            throw $e;
+        }
+    }
+
+    public function latestOffersUpdate(EntityManagerInterface $em, LoggerInterface $logger)
+    {
+        try {
+            $offers = $em->getRepository(Products::class)->getLatestOffers();
+            return $this->render('Admin/homepage_modules/latest_offers/list.html.twig', [
+                'offers' => $offers
+            ]);
+        } catch (\Exception $e) {
+            $logger->error(__METHOD__ . ' -> {message}', ['message' => $e->getMessage()]);
+            throw $e;
         }
     }
 

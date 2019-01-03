@@ -32,21 +32,20 @@ class HomePageOurCorner
     private $category;
 
     /**
-     * @return string|null
+     * @return null
      */
-    public function getImage(): ?string
+    public function getImage()
     {
         return $this->image;
     }
 
     /**
-     * @param string|null $image
-     * @return HomePageOurCorner
+     * @param $image
+     *
      */
-    public function setImage(?string $image): HomePageOurCorner
+    public function setImage($image): void
     {
         $this->image = $image;
-        return $this;
     }
 
     /**

@@ -15,7 +15,8 @@ class FileUploader
 
     public function upload(UploadedFile $file, $targetPath)
     {
-        $fileName = md5(uniqid()).'.'.$file->guessExtension();
+        $extension = ($file->guessExtension() === 'jpeg') ? 'jpg' : $file->guessExtension();
+        $fileName = md5(uniqid()).'.'.$extension;
         $file->move($this->getTargetDirectory()[$targetPath], $fileName);
 
         return $fileName;

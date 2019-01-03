@@ -37,4 +37,12 @@ class ProductsRepository extends EntityRepository
             ->getQuery()
             ->getResult();
     }
+
+    public function getLatestOffers()
+    {
+        return $this->createQueryBuilder('p')
+            ->where('p.latestOffer IS NOT NULL')
+            ->getQuery()
+            ->getResult();
+    }
 }

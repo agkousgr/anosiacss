@@ -17953,18 +17953,28 @@ option {
 
 .owl-next,
 .owl-prev {
-    background-color: #000;
+    /*background-color: #000;*/
     color: #fff;
-    border-radius: 4px;
-    /*text-indent: -9999px;*/
-    height: 27px;
-    width: 27px;
+    /*border-radius: 4px;*/
+    /*!*text-indent: -9999px;*!*/
+    /*height: 27px;*/
+    /*width: 27px;*/
     display: inline-block;
-    -webkit-transition: .2s;
-    -moz-transition: .2s;
-    -o-transition: .2s;
-    transition: .2s;
-    margin: 0 2px
+    /*-webkit-transition: .2s;*/
+    /*-moz-transition: .2s;*/
+    /*-o-transition: .2s;*/
+    /*transition: .2s;*/
+    margin: 0 2px;
+    height: 30px;
+    width: 30px;
+    /*position: absolute;*/
+    /*top: 50%;*/
+    /*margin-top: -15px;*/
+    border-radius: 0;
+    border: none;
+    background-color: #009635;
+    /*margin-left: 0;*/
+    /*margin-right: 0*/
 }
 
 .owl-prev {

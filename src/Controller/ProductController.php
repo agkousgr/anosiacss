@@ -2,7 +2,7 @@
 
 namespace App\Controller;
 
-use App\Entity\{AlsoViewedProducts, Category, Slider, ProductViews};
+use App\Entity\{AlsoViewedProducts, Category, Products, Slider, ProductViews};
 use App\Service\BrandsService;
 use App\Service\ProductService;
 use Doctrine\ORM\EntityManagerInterface;
@@ -152,6 +152,11 @@ class ProductController extends MainController
                 $em->persist($productView);
             } else {
                 $productView->setViews($productView->getViews() + 1);
+            }
+            $pr = $em->getRepository(Products::class)->find($product["id"]);
+            if ($pr) {
+                $pr->setViews($pr->getViews() + 1);
+                $em->persist($pr);
             }
             $em->flush();
             return $this->render('products/view.html.twig', [

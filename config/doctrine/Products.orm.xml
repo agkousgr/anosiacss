@@ -13,6 +13,7 @@
         <field name="retailPrice" type="decimal" precision="7" scale="2"/>
         <field name="webPrice" type="decimal" precision="7" scale="2"/>
         <field name="discount" type="integer" nullable="true"/>
+        <field name="latestOffer" type="datetime" nullable="true"/>
     </entity>
 
 </doctrine-mapping>
