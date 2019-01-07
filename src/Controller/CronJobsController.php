@@ -65,14 +65,14 @@ class CronJobsController extends AbstractController
         $prevName = '';
         $duplicates = [];
         try {
-            $s1products = $this->productService->getItems('null', 'null', 6000, 'NameAsc', -1, 'null', 'null', 'null', 1, 'null', 1);
+            $s1products = $this->productService->getItems('null', 'null', 4000, 'NameDesc', -1, 'null', 'null', 'null', 1, 'null', 0);
             if ($s1products) {
-                $connection->query('SET FOREIGN_KEY_CHECKS=0');
-                $connection->query('DELETE FROM products');
-                // Beware of ALTER TABLE here--it's another DDL statement and will cause
-                // an implicit commit.
-                $connection->query('SET FOREIGN_KEY_CHECKS=1');
-                $connection->commit();
+//                $connection->query('SET FOREIGN_KEY_CHECKS=0');
+//                $connection->query('DELETE FROM products');
+//                // Beware of ALTER TABLE here--it's another DDL statement and will cause
+//                // an implicit commit.
+//                $connection->query('SET FOREIGN_KEY_CHECKS=1');
+//                $connection->commit();
                 foreach ($s1products as $s1product) {
                     if ($prevName === strval($s1product['name'])) {
                         $duplicates[] = strval($s1product['name']);
@@ -87,16 +87,28 @@ class CronJobsController extends AbstractController
 //                        dump($s1product);
 //                    }
 
-                    if (strval($s1product['id']) !== '') {
-                        $pr = new Products();
-                        $pr->setId(intval($s1product['id']));
+                    $pr = $this->em->getRepository(Products::class)->find(intval($s1product['id']));
+                    if ($pr) {
                         $pr->setSlug(strval($s1product['slug']));
                         $pr->setPrCode(strval($s1product['prCode']));
                         $pr->setBarcode(strval($s1product['mainBarcode']));
                         $pr->setProductName(strval($s1product['name']));
+                        $pr->setImage(strval($s1product['imageUrl']));
                         $this->em->persist($pr);
                         $this->em->flush();
+                    } else {
+                        if (strval($s1product['id']) !== '') {
+                            $pr = new Products();
+                            $pr->setId(intval($s1product['id']));
+                            $pr->setSlug(strval($s1product['slug']));
+                            $pr->setPrCode(strval($s1product['prCode']));
+                            $pr->setBarcode(strval($s1product['mainBarcode']));
+                            $pr->setProductName(strval($s1product['name']));
+                            $pr->setImage(strval($s1product['imageUrl']));
+                            $this->em->persist($pr);
+                            $this->em->flush();
 //                    dump($pr);
+                        }
                     }
                 }
             }

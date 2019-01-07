@@ -57,6 +57,7 @@ Encore
     .addEntry('admin/js/jquery.scrollTo.min', './assets/admin/js/jquery.scrollTo.min.js')
     .addEntry('admin/js/slider', './assets/admin/js/slider/slider.js')
     .addEntry('admin/js/our-corner', './assets/admin/js/home-page-modules/our-corner.js')
+    .addEntry('admin/js/latest-offers', './assets/admin/js/home-page-modules/latest-offers.js')
     .addEntry('admin/js/jstree.min', './assets/admin/plugins/jstree/jstree.min.js')
     .addEntry('admin/js/category', './assets/admin/js/category/category.js')
     .addEntry('admin/js/article', './assets/admin/js/article/article.js')
@@ -88,6 +89,7 @@ Encore
     .addStyleEntry('admin/css/login/ace.min', './assets/admin/css/login/ace.min.css')
     .addStyleEntry('admin/css/login/ace-rtl.min', './assets/admin/css/login/ace-rtl.min.css')
     .addStyleEntry('admin/css/plugins/select2.min', './assets/admin/css/plugins/select2/select2.min.css')
+    .addStyleEntry('admin/css/daterangepicker', './assets/admin/css/daterangepicker.css')
 
     // uncomment if you use Sass/SCSS files
     // .enableSassLoader()

@@ -266,8 +266,8 @@ EOF;
             $itemsArr = [];
             $result = $this->client->SendMessage(['Message' => $message]);
             $items = simplexml_load_string(str_replace("utf-16", "utf-8", $result->SendMessageResult), 'SimpleXMLElement', LIBXML_COMPACT | LIBXML_PARSEHUGE);
-//            dump($message);
             dump($message);
+//            dump($result);
 //            die();
             if (intval($items->RowsCount) > 0) {
                 if ($items !== false && ($keyword !== 'null' || $makeId !== 'null' || $isSkroutz === '1' || ($id === 'null' && $itemCode === 'null'))) { // THIS IS FOR MIGRATING PRODUCTS
@@ -459,7 +459,7 @@ EOF;
     <IncludeChildCategories>1</IncludeChildCategories>
     <IsRandom>$isRandom</IsRandom>
     <IsPopular>$isPopular</IsPopular>
-    <LowPrice>1</LowPrice>
+    <LowPrice>0</LowPrice>
     <HighPrice>$highPrice</HighPrice>
     <ExcludeItemID>$excludeIds</ExcludeItemID>
     <WebVisible>$webVisible</WebVisible>

@@ -25,4 +25,32 @@ $(document).ready(function () {
         })
     });
 
+    $('.add-to-cart-inner').on('click', function (e) {
+        e.preventDefault();
+        let quantity = 1;
+        let data = {
+            'id': $(this).data('id'),
+            'quantity': quantity,
+            'name': $(this).data('name')
+        }
+        $.post(Routing.generate('add_to_cart'), data, function (result) {
+            if (result.success && result.exist === false) {
+                location.reload();
+            } else if (result.success && result.exist === true) {
+                swal({
+                    title: 'Ουπς',
+                    html: '<div style="font-size:17px;">Το προϊόν ' + result.prName + ' υπάρχει ήδη στο καλάθι σας!</div>',
+                    type: 'info',
+                    timer: 5000
+                });
+            } else {
+                swal({
+                    title: 'Ουπς',
+                    html: '<div style="font-size:17px;">Κάποια σφάλμα παρουσιάστηκε!</div>',
+                    type: 'error',
+                    timer: 5000
+                });
+            }
+        });
+    });
 })

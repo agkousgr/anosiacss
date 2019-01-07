@@ -93,7 +93,7 @@ class CartService
     <OrderBy>null</OrderBy>
     <MakeID>null</MakeID>
     <ManufacturID>null</ManufacturID>
-    <LowPrice>5</LowPrice>
+    <LowPrice>-1</LowPrice>
     <HighPrice>$highPrice</HighPrice>
     <WebVisible>-1</WebVisible>
     <IsActive>-1</IsActive>
@@ -154,12 +154,34 @@ EOF;
         }
     }
 
-    public function checkCoupon($coupon)
+    public function checkCoupon($voucherId = -1, $voucherCode = 'null')
     {
-        if ($coupon === 'COUPON') {
-            $this->session->set('couponDisc', 10);
-            return true;
+        $message = <<<EOF
+<?xml version="1.0" encoding="utf-16"?>
+<ClientGetVoucherRequest>
+    <Type>1072</Type>
+    <Kind>$this->kind</Kind>
+    <Domain>$this->domain</Domain>
+    <AuthID>$this->authId</AuthID>
+    <AppID>$this->appId</AppID>
+    <CompanyID>$this->companyId</CompanyID>
+    <VoucherID>$voucherId</VoucherID>
+    <Code>$voucherCode</Code>
+</ClientGetVoucherRequest>
+EOF;
+        try {
+            $result = $this->client->SendMessage(['Message' => $message]);
+            $items = simplexml_load_string(str_replace("utf-16", "utf-8", $result->SendMessageResult));
+            dump($message, $result);
+            if ($voucherCode === 'COUPON') {
+                $this->session->set('couponDisc', 10);
+                return true;
+            }
+//        return false;
+
+            return $items->GetDataRows->GetVoucherRow;;
+        } catch (\SoapFault $sf) {
+            echo $sf->faultstring;
         }
-        return false;
     }
 }

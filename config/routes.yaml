@@ -416,11 +416,15 @@ our_corner_update:
 latest_offers:
     path: /admin/home-page-module/latest-offers
     controller: App\Controller\Admin\HomePageModulesController::latestOffers
-latest_offers_update:
-    path: /admin/home-page-module/latest-offers-update/{id}
-    controller: App\Controller\Admin\HomePageModulesController::latestOffersUpdate
-    requirements:
-        id: \d+
+latest_offer_add:
+    path: /admin/home-page-module/latest-offers-add
+    controller: App\Controller\Admin\HomePageModulesController::latestOfferAdd
+    methods: [GET,POST]
+    options:
+        expose: true
+latest_offer_update:
+    path: /admin/home-page-module/latest-offers-update
+    controller: App\Controller\Admin\HomePageModulesController::latestOfferUpdate
     methods: [GET,POST]
     options:
         expose: true

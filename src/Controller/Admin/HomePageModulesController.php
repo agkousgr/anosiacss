@@ -79,7 +79,31 @@ class HomePageModulesController extends AbstractController
         }
     }
 
-    public function latestOffersUpdate(EntityManagerInterface $em, LoggerInterface $logger)
+    public function latestOfferAdd(Request $request, EntityManagerInterface $em, LoggerInterface $logger)
+    {
+        try {
+            $prId = $request->query->get('id');
+
+            if ($prId) {
+                $pr = $em->getRepository(Products::class)->find($prId);
+
+                $pr->setLatestOffer();
+                $em->persist($pr);
+                $em->flush();
+                $this->addFlash(
+                    'success',
+                    'Η προσθήκη ολοκληρώθηκε με επιτυχία!'
+                );
+                return $this->redirectToRoute('latest_offers');
+            }
+            return $this->render('Admin/homepage_modules/latest_offers/form.html.twig');
+        } catch (\Exception $e) {
+            $logger->error(__METHOD__ . ' -> {message}', ['message' => $e->getMessage()]);
+            throw $e;
+        }
+    }
+
+    public function latestOfferUpdate(EntityManagerInterface $em, LoggerInterface $logger)
     {
         try {
             $offers = $em->getRepository(Products::class)->getLatestOffers();
