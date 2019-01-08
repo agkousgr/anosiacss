@@ -41,6 +41,7 @@ Encore
     .addEntry('js/pireaus', './assets/js/pireaus.js')
     .addEntry('js/blog-list', './assets/js/blog-list.js')
     .addEntry('js/courier-tracker', './assets/js/courier-tracker.js')
+    .addEntry('js/jquery.validate.min', './assets/js/jquery.validate.min.js')
 
     // Admin javascripts
     .addEntry('admin/js/bootstrap.min', './assets/admin/js/bootstrap.min.js')

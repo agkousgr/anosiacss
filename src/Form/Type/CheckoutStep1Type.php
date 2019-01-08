@@ -5,7 +5,7 @@ namespace App\Form\Type;
 use App\Entity\Checkout;
 use App\Form\Subscriber\CheckoutSubscriber;
 use Symfony\Component\Form\AbstractType;
-use Symfony\Component\Form\Extension\Core\Type\{CheckboxType, EmailType, HiddenType, TextType};
+use Symfony\Component\Form\Extension\Core\Type\{CheckboxType, EmailType, HiddenType, TextType, ChoiceType, TextareaType};
 use Symfony\Component\Form\FormBuilderInterface;
 use Symfony\Component\HttpFoundation\Session\SessionInterface;
 use Symfony\Component\OptionsResolver\OptionsResolver;
@@ -37,8 +37,52 @@ class CheckoutStep1Type extends AbstractType
             ))
             ->add('newsletter', CheckboxType::class, array(
                 'required' => false,
-            ));
+            ))
+            ->add('series', ChoiceType::class, array(
+                'choices' => array(
+                    'Απόδειξη' => 7021,
+                    'Τιμολόγιο' => 7023,
+                ),
+                'multiple'=>false,
+                'expanded'=>true
+            ))
+            ->add('afm', TextType::class, array(
+                'data' => 'No Invoice'
+            ))
+            ->add('irs', TextType::class, array(
+                'data' => 'No Invoice'
+            ))
+            ->add('shipAddress', TextType::class, [
+                'required' => false
+            ])
+            ->add('shipZip', TextType::class, [
+                'required' => false
+            ])
+            ->add('shipCity', TextType::class, [
+                'required' => false
+            ])
+            ->add('shipDistrict', TextType::class, [
+                'required' => false
+            ])
+            ->add('shippingType', ChoiceType::class, array(
+                'choices' => Checkout::SHIPPING_TYPES,
+                'multiple'=>false,
+                'expanded'=>true
+            ))
+            ->add('comments', TextareaType::class, array(
+                'required' => false
+            ))
+            ->add('paymentType', ChoiceType::class, array(
+                'choices' => Checkout::PAYMENT_TYPES,
+                'multiple'=>false,
+                'expanded'=>true
+            ))
+            ->add('agreeTerms', CheckboxType::class, array(
+                'label' => 'Έχω διαβάσει και αποδέχομαι ανεπιφύλακτα τους Όρους Χρήσης'
+            ))
+        ;
 
+        $builder->addEventSubscriber(new CheckoutSubscriber($options, $this->session));
 //        $builder->addEventSubscriber(new CheckoutSubscriber($options, $this->session));
 
     }
