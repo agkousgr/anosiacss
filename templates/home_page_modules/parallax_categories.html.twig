@@ -29,7 +29,7 @@
                     <div class="owl-carousel owl-theme ProductScroll">
                         {#{{ dump(ourCornerProducts[loop.index-1].products[0]) }}#}
                         {% for pr in ourCornerProducts[loop.index-1].products|slice(0,4) %}
-                            <div class="item">
+                            <div class="item wow flipInY animated" data-wow-delay="0.4s" style="visibility: visible; animation-delay: 0.4s; animation-name: flipInY;">
                                 <div class="product-case">
                                     {#<div class="tag tag-green"><span>new</span></div>#}
                                     <div class="product-img">

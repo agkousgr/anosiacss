@@ -42,6 +42,7 @@ Encore
     .addEntry('js/blog-list', './assets/js/blog-list.js')
     .addEntry('js/courier-tracker', './assets/js/courier-tracker.js')
     .addEntry('js/jquery.validate.min', './assets/js/jquery.validate.min.js')
+    .addEntry('js/back-to-top', './assets/js/back-to-top.js')
 
     // Admin javascripts
     .addEntry('admin/js/bootstrap.min', './assets/admin/js/bootstrap.min.js')

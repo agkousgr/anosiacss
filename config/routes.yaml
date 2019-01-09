@@ -116,6 +116,12 @@ check_coupon:
     methods: [GET,POST]
     options:
         expose: true
+remove_coupon:
+    path: /cart/remove-coupon
+    controller: App\Controller\AjaxCartController::removeCoupon
+    methods: [GET,POST]
+    options:
+        expose: true
 
 # Orders Checkout
 checkout:

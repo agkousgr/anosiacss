@@ -25,6 +25,17 @@ $(document).ready(function () {
         })
     });
 
+    $('#remove-coupon').on('click', function (e) {
+        e.preventDefault();
+        let data = {
+            'coupon': $('#coupon-name').text()
+        }
+        // console.log(coupon);
+        $.post(Routing.generate('remove_coupon'), data, function () {
+            location.reload();
+        })
+    })
+
     $('.add-to-cart-inner').on('click', function (e) {
         e.preventDefault();
         let quantity = 1;

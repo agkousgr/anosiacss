@@ -637,7 +637,7 @@ EOF;
             if ($userResponse === false) {
                 return;
             }
-//            dump($message, $result);
+            dump($message, $result);
             $userXML = $userResponse->GetDataRows->GetUsersRow;
             if (null !== $address) {
                 $address->setClient($userXML->ClientID);
@@ -746,7 +746,7 @@ EOF;
             if ($clientResponse === false) {
                 return;
             }
-//            dump($message, $result);
+            dump($message, $result);
             $userXML = $clientResponse->GetDataRows->GetClientsRow;
             list($firstname, $lastname) = explode(' ', $userXML->NAME);
             $user->setFirstname($firstname);

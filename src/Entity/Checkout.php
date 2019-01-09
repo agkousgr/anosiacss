@@ -96,6 +96,16 @@ class Checkout extends WebUser
     private $shipDistrict;
 
     /**
+     * $var string|null
+     */
+    private $couponDisc;
+
+    /**
+     * $var string|null
+     */
+    private $couponName;
+
+    /**
      * @var string|null
      */
     private $pireausResultCode;
@@ -367,6 +377,42 @@ class Checkout extends WebUser
     public function setShipDistrict($shipDistrict)
     {
         $this->shipDistrict = $shipDistrict;
+        return $this;
+    }
+
+    /**
+     * @return mixed
+     */
+    public function getCouponDisc()
+    {
+        return $this->couponDisc;
+    }
+
+    /**
+     * @param mixed $couponDisc
+     * @return Checkouts
+     */
+    public function setCouponDisc($couponDisc)
+    {
+        $this->couponDisc = $couponDisc;
+        return $this;
+    }
+
+    /**
+     * @return mixed
+     */
+    public function getCouponName()
+    {
+        return $this->couponName;
+    }
+
+    /**
+     * @param mixed $couponName
+     * @return Checkout
+     */
+    public function setCouponName($couponName)
+    {
+        $this->couponName = $couponName;
         return $this;
     }
 

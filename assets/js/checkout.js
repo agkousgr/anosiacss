@@ -24,7 +24,12 @@ require('bootstrap');
 require('jquery-validation');
 
 $(document).ready(function () {
+    if ($('#total-cost').data('cost') <= 0) {
+        $('#checkout-footer').text('Για να ολοκληρώσετε την παραγγελία σας, θα πρέπει να προσθέσετε στο καλάθι σας προϊόντα αξίας ίσης η μεγαλύτερης των ' + Math.abs($('#total-cost').data('cost')) + '€');
+        $('#checkout-footer').addClass('flash-notice');
+    }
 
+    $('#checkout_step2_paymentType_0').prop('checked', true);
     // $('form[name="checkout_step1"]').validate();
 
     // validate signup form on keyup and submit
@@ -49,6 +54,11 @@ $(document).ready(function () {
                 required: true,
                 email: true
             },
+            'checkout_step1[address]': 'required',
+            'checkout_step1[zip]': 'required',
+            'checkout_step1[city]': 'required',
+            'checkout_step1[district]': 'required',
+            'checkout_step1[phone01]': 'required',
             // checkout_step1_newsletter: {
             //     required: "#newsletter:checked",
             //     minlength: 2
@@ -78,7 +88,12 @@ $(document).ready(function () {
     });
 
     $('#confirm-addresses').on('click', function (e) {
-        // e.preventDefault();
+        e.preventDefault();
+        $('#checkout-personal-information-step').addClass('hidden');
+        $('#checkout-payment-step').removeClass('hidden');
+        $('#checkoutStep2').removeClass('disabled');
+        $("html, body").animate({scrollTop: 0}, 1000);
+        return false;
         // // $('#tab-2').trigger('click');
         //
         // let form = $('#checkout-personal-information-step').find('form');
@@ -87,6 +102,15 @@ $(document).ready(function () {
         //
         // });
     });
+
+    $('#checkoutStep1').on('click', function (e) {
+        e.preventDefault();
+        $('#checkout-personal-information-step').removeClass('hidden');
+        $('#checkout-payment-step').addClass('hidden');
+        $('#checkoutStep2').addClass('disabled');
+        $("html, body").animate({scrollTop: 0}, 1000);
+        return false;
+    })
 
 
     $('[data-toggle="popover"]').popover();
@@ -101,7 +125,7 @@ $(document).ready(function () {
                 $('#checkout_step1_shipZip').val(response.address["zip"]);
                 $('#checkout_step1_shipCity').val(response.address["city"]);
                 $('#checkout_step1_shipDistrict').val(response.address["district"]);
-            }else{
+            } else {
                 swal({
                     title: 'Σφάλμα!',
                     text: "Παρουσιάστηκε σφάλμα κατά την επιλογή υπάρχουσας διεύθυνσης!",
@@ -126,15 +150,25 @@ $(document).ready(function () {
 
     $('input[name="checkout_step1[shippingType]"]').on('change', function () {
         let totalCost = 0;
+        let couponDisc = 0;
+        if ($('#coupon-discount').length > 0) {
+            couponDisc = $('#coupon-discount').data('discount');
+        }
         if ($('#checkout_step1_shippingType_0').is(':checked')) {
-            $('#shipping-cost').data('cost', 2.00);
-            $('#shipping-cost').html('2,00');
-            totalCost = $('#cart-cost').data('cost') + 2;
+            if ($('#cart-cost').data('cost') - couponDisc <= 39) {
+                $('#shipping-cost').data('cost', 2.00);
+                $('#shipping-cost').html('2,00');
+                totalCost = $('#cart-cost').data('cost') + 2 - couponDisc;
+            } else {
+                $('#shipping-cost').data('cost', 0.00);
+                $('#shipping-cost').html('0,00');
+                totalCost = $('#cart-cost').data('cost') - couponDisc;
+            }
             $('.checkout_step1_shippingType_1').addClass('hidden');
         } else {
             $('#shipping-cost').data('cost', 0.00);
             $('#shipping-cost').html('0,00');
-            totalCost = $('#cart-cost').data('cost');
+            totalCost = $('#cart-cost').data('cost') - couponDisc;
             $('.checkout_step1_shippingType_1').removeClass('hidden');
             $('[for="checkout_step1_paymentType_4"]').addClass('hidden');
         }
@@ -144,24 +178,33 @@ $(document).ready(function () {
         $('#total-cost').html(newTotalCostString);
     });
 
-    $('input[name="checkout_step1[paymentType]"]').on('change', function () {
+    $('input[name="checkout_step2[paymentType]"]').on('change', function () {
         let i = 0;
-        $('input[name="checkout_step4[paymentType]"]').each(function () {
-            if ($('#checkout_step1_paymentType_' + i).is(':checked')) {
-                $('.checkout_step1_paymentType_' + i).removeClass('hidden');
+        $('input[name="checkout_step2[paymentType]"]').each(function () {
+            if ($('#checkout_step2_paymentType_' + i).is(':checked')) {
+                $('.checkout_step2_paymentType_' + i).removeClass('hidden');
             } else {
-                $('.checkout_step1_paymentType_' + i).addClass('hidden');
+                $('.checkout_step2_paymentType_' + i).addClass('hidden');
             }
             i = i + 1;
         })
         let totalCost = 0;
-        let shippingCost = parseFloat($('#shipping-cost').data('cost'));
-        if ($('#checkout_step1_paymentType_4').is(':checked')) {
-            $('#cart-subtotal-pay-on-delivery').removeClass('hidden');
-            totalCost = $('#cart-cost').data('cost') + 1.5 + shippingCost;
+        let shippingCost = 0;
+        let couponDisc = 0;
+        let antikatavoliCost = 0;
+        if ($('#coupon-discount').length > 0) {
+            couponDisc = parseFloat($('#coupon-discount').data('discount'));
+        }
+        if ($('#checkout_step2_paymentType_4').is(':checked')) {
+            if ($('#cart-cost').data('cost') - couponDisc <= 39) {
+                $('#cart-subtotal-pay-on-delivery').removeClass('hidden');
+                antikatavoliCost = 1.5;
+                shippingCost = parseFloat($('#shipping-cost').data('cost'));
+            }
+            totalCost = $('#cart-cost').data('cost') + antikatavoliCost + shippingCost - couponDisc;
         } else {
             $('#cart-subtotal-pay-on-delivery').addClass('hidden');
-            totalCost = $('#cart-cost').data('cost') + shippingCost;
+            totalCost = $('#cart-cost').data('cost') + shippingCost - couponDisc;
         }
         $('#total-cost').data('cost', totalCost.toFixed(2));
         let totalCostString = totalCost.toFixed(2);
@@ -170,18 +213,18 @@ $(document).ready(function () {
 
     });
 
-    $('#checkout_step2_series_0').attr('checked', 'checked');
+    $('#checkout_step1_series_0').attr('checked', 'checked');
     // $('#checkout_step4_paymentType_0').attr('checked', 'checked');
     initializePaymentInfos();
     calculateAntikatovoli();
-    if ($('#checkout_step3_shippingType_1').is(':checked')) {
-        $('[for="checkout_step1_paymentType_4"]').parent('div').addClass('hidden');
+    if ($('#checkout_step1_shippingType_1').is(':checked')) {
+        $('[for="checkout_step2_paymentType_4"]').parent('div').addClass('hidden');
     }
 
     $('#use_same_address').on('click', function () {
         if ($('#use_same_address').is(':checked') === false) {
             $('#ship-address').removeClass('hidden');
-        }else{
+        } else {
             $('#ship-address').addClass('hidden');
         }
     });
@@ -189,34 +232,42 @@ $(document).ready(function () {
 });
 
 function initializePaymentInfos() {
+    // $('#checkout_step1_shippingType_1').html('Για να δεσμευτεί μια παραγγελία έτσι ώστε να είναι δυνατή η παραλαβή της από το Φαρμακείο απαιτεί χρόνο τριών εως πέντε ωρών.\n' +
+    //     'Μόλις η παραγγελία σας είναι διαθέσιμη στο κατάστημα, θα επικοινωνήσουμε μαζί σας τηλεφωνικά για να περάσετε να παραλάβετε.');
+    // $('#checkout_step2_paymentType').css({'padding-top': '0'});
+    // $('#checkout_step2_paymentType_0').removeClass('hidden');
+    // $('#checkout_step2_paymentType_0').html('Παρακαλούμε καταθέστε το ακριβές τελικό ποσό της παραγγελίας σας στην Εθνική Τράπεζα, GR 11 0110 1740 0000 1744 0073 280 (Αρ. Λογαριασμού: 1744 0073 280), ή στην Τράπεζα Πειραιώς, GR 42 0172 0850 0050 8503 9845 834 (Αρ. Λογαριασμού: 5085 039845 834), ή στη Eurobank, GR 23 0260 0100 0004 8010 0400 234 (Αρ. Λογαριασμού: 0026.0010.48.0100400234).');
+    // $('#checkout_step2_paymentType_1').html('Η πληρωμή θα γίνει με μετρητά κατά την παραλαβή από το κατάστημα.');
+    // $('.checkout_step1_paymentType_2').html('Πληρώστε χρησιμοποιώντας την πιστωτική ή χρεωστική σας κάρτα');
+    // $('.checkout_step1_paymentType_3').html('<img src="http://anosia.democloudon.cloud/public/images/paypal.png" alt="Λογότυπο Αποδοχής PayPal"><br><a href="https://www.paypal.com/gr/webapps/mpp/paypal-popup" target="_blank">Τι είναι το PayPal;</a> <br>Πληρώστε με ασφάλεια μέσω PayPal.');
+    // $('.checkout_step1_paymentType_4').html('Έξοδα αντικαταβολής (1,5€) χρεώνονται μόνο σε παραγγελίες μικρότερες των 39€.\n' +
+    //     'Για παραγγελίες μεγαλύτερες των 39€ δεν χρεώνονται ούτε έξοδα αντικαταβολής, ούτε μεταφορικά.');
+
     $('.checkout_step1_shippingType_1').html('Για να δεσμευτεί μια παραγγελία έτσι ώστε να είναι δυνατή η παραλαβή της από το Φαρμακείο απαιτεί χρόνο τριών εως πέντε ωρών.\n' +
         'Μόλις η παραγγελία σας είναι διαθέσιμη στο κατάστημα, θα επικοινωνήσουμε μαζί σας τηλεφωνικά για να περάσετε να παραλάβετε.');
-    $('#checkout_step1_paymentType').css({'padding-top': '0'});
-    $('.checkout_step1_paymentType_0').removeClass('hidden');
-    $('.checkout_step1_paymentType_0').html('Παρακαλούμε καταθέστε το ακριβές τελικό ποσό της παραγγελίας σας στην Εθνική Τράπεζα, GR 11 0110 1740 0000 1744 0073 280 (Αρ. Λογαριασμού: 1744 0073 280), ή στην Τράπεζα Πειραιώς, GR 42 0172 0850 0050 8503 9845 834 (Αρ. Λογαριασμού: 5085 039845 834), ή στη Eurobank, GR 23 0260 0100 0004 8010 0400 234 (Αρ. Λογαριασμού: 0026.0010.48.0100400234).');
-    $('.checkout_step1_paymentType_1').html('Η πληρωμή θα γίνει με μετρητά κατά την παραλαβή από το κατάστημα.');
-    $('.checkout_step1_paymentType_2').html('Πληρώστε χρησιμοποιώντας την πιστωτική ή χρεωστική σας κάρτα');
-    $('.checkout_step1_paymentType_3').html('<img src="http://anosia.democloudon.cloud/public/images/paypal.png" alt="Λογότυπο Αποδοχής PayPal"><br><a href="https://www.paypal.com/gr/webapps/mpp/paypal-popup" target="_blank">Τι είναι το PayPal;</a> <br>Πληρώστε με ασφάλεια μέσω PayPal.');
-    $('.checkout_step1_paymentType_4').html('Έξοδα αντικαταβολής (1,5€) χρεώνονται μόνο σε παραγγελίες μικρότερες των 39€.\n' +
+    $('#checkout_step2_paymentType').css({'padding-top': '0'});
+    $('.checkout_step2_paymentType_0').removeClass('hidden');
+    $('.checkout_step2_paymentType_0').html('Παρακαλούμε καταθέστε το ακριβές τελικό ποσό της παραγγελίας σας στην Εθνική Τράπεζα, GR 11 0110 1740 0000 1744 0073 280 (Αρ. Λογαριασμού: 1744 0073 280), ή στην Τράπεζα Πειραιώς, GR 42 0172 0850 0050 8503 9845 834 (Αρ. Λογαριασμού: 5085 039845 834), ή στη Eurobank, GR 23 0260 0100 0004 8010 0400 234 (Αρ. Λογαριασμού: 0026.0010.48.0100400234).');
+    $('.checkout_step2_paymentType_1').html('Η πληρωμή θα γίνει με μετρητά κατά την παραλαβή από το κατάστημα.');
+    $('.checkout_step2_paymentType_2').html('Πληρώστε χρησιμοποιώντας την πιστωτική ή χρεωστική σας κάρτα');
+    $('.checkout_step2_paymentType_3').html('<img width="51" style="width: 51px;" src="http://anosia.democloudon.cloud/public/images/paypal.png" alt="Λογότυπο Αποδοχής PayPal"><br><a href="https://www.paypal.com/gr/webapps/mpp/paypal-popup" target="_blank">Τι είναι το PayPal;</a> <br>Πληρώστε με ασφάλεια μέσω PayPal.');
+    $('.checkout_step2_paymentType_4').html('Έξοδα αντικαταβολής (1,5€) χρεώνονται μόνο σε παραγγελίες μικρότερες των 39€.\n' +
         'Για παραγγελίες μεγαλύτερες των 39€ δεν χρεώνονται ούτε έξοδα αντικαταβολής, ούτε μεταφορικά.');
-
-    // $('.checkout_step3_shippingType_1').html('Για να δεσμευτεί μια παραγγελία έτσι ώστε να είναι δυνατή η παραλαβή της από το Φαρμακείο απαιτεί χρόνο τριών εως πέντε ωρών.\n' +
-    //     'Μόλις η παραγγελία σας είναι διαθέσιμη στο κατάστημα, θα επικοινωνήσουμε μαζί σας τηλεφωνικά για να περάσετε να παραλάβετε.');
-    // $('#checkout_step4_paymentType').css({'padding-top': '0'});
-    // $('.checkout_step4_paymentType_0').removeClass('hidden');
-    // $('.checkout_step4_paymentType_0').html('Παρακαλούμε καταθέστε το ακριβές τελικό ποσό της παραγγελίας σας στην Εθνική Τράπεζα, GR 11 0110 1740 0000 1744 0073 280 (Αρ. Λογαριασμού: 1744 0073 280), ή στην Τράπεζα Πειραιώς, GR 42 0172 0850 0050 8503 9845 834 (Αρ. Λογαριασμού: 5085 039845 834), ή στη Eurobank, GR 23 0260 0100 0004 8010 0400 234 (Αρ. Λογαριασμού: 0026.0010.48.0100400234).');
-    // $('.checkout_step4_paymentType_1').html('Η πληρωμή θα γίνει με μετρητά κατά την παραλαβή από το κατάστημα.');
-    // $('.checkout_step4_paymentType_2').html('Πληρώστε χρησιμοποιώντας την πιστωτική ή χρεωστική σας κάρτα');
-    // $('.checkout_step4_paymentType_3').html('<img src="http://anosia.democloudon.cloud/public/images/paypal.png" alt="Λογότυπο Αποδοχής PayPal"><br><a href="https://www.paypal.com/gr/webapps/mpp/paypal-popup" target="_blank">Τι είναι το PayPal;</a> <br>Πληρώστε με ασφάλεια μέσω PayPal.');
-    // $('.checkout_step4_paymentType_4').html('Έξοδα αντικαταβολής (1,5€) χρεώνονται μόνο σε παραγγελίες μικρότερες των 39€.\n' +
-    //     'Για παραγγελίες μεγαλύτερες των 39€ δεν χρεώνονται ούτε έξοδα αντικαταβολής, ούτε μεταφορικά.');
 }
 
 function calculateAntikatovoli() {
     if ($('#checkout_step4_paymentType_4').is(':checked')) {
-        let shippingCost = parseFloat($('#shipping-cost').data('cost'));
+        let shippingCost = 0;
+        let couponDisc = 0;
+        if ($('#coupon-discount').length > 0) {
+            couponDisc = $('#coupon-discount').data('discount');
+        }
+        if ($('#cart-cost').data('cost') - couponDisc <= 39) {
+            shippingCost = parseFloat($('#shipping-cost').data('cost'));
+            $('#shipping-cost').html('0,00');
+        }
         $('#cart-subtotal-pay-on-delivery').removeClass('hidden');
-        totalCost = $('#cart-cost').data('cost') + 1.5 + shippingCost;
+        totalCost = $('#cart-cost').data('cost') + 1.5 + shippingCost - couponDisc;
         $('#total-cost').data('cost', totalCost.toFixed(2));
         let totalCostString = totalCost.toFixed(2);
         let newTotalCostString = totalCostString.replace('.', ',');

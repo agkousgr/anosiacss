@@ -1,8 +1,33 @@
+const WOW = require('wowjs');
 // let apex = require('./jquery.apex-slider.js');
 // let apexslider = apex.apexSlider();
 let bestSellersContainer = $('#best-sellers-container');
 require('webpack-jquery-ui/autocomplete');
 // require('jquery-autocomplete');
+
+
+window.wow = new WOW.WOW({
+    live: false,
+    animateClass: 'animated',
+    offset: 100,
+    callback: function (box) {
+        console.log("WOW: animating <" + box.tagName.toLowerCase() + ">")
+    }
+});
+
+window.wow.init();
+
+// wow = new WOW(
+//     {
+//         animateClass: 'animated',
+//         offset: 100,
+//         callback: function (box) {
+//             console.log("WOW: animating <" + box.tagName.toLowerCase() + ">")
+//         }
+//     }
+// );
+// wow.init();
+
 $(document).ready(function () {
     // console.log('ok');
     let data = {

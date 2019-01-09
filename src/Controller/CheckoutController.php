@@ -38,6 +38,10 @@ class CheckoutController extends MainController
             if (null !== $this->loggedUser) {
                 $addresses = $userAccountService->getAddresses($this->loggedClientId);
             }
+            if ($this->session->has('couponDisc') === true) {
+                $checkout->setCouponDisc($this->session->get('couponDisc'));
+                $checkout->setCouponName($this->session->get('couponName'));
+            }
             dump($checkout);
             $step1Form = $this->createForm(CheckoutStep1Type::class, $checkout, [
                 'loggedUser' => $this->loggedUser
@@ -74,7 +78,7 @@ class CheckoutController extends MainController
                 $curStep = 4;
             }
 
-            if ($step4Form->isSubmitted() && $step4Form->isValid()) {
+            if ($step4Form->isSubmitted() && $step2Form->isValid()) {
                 if (null === $this->loggedUser && 'Success' !== $createUserResult = $userAccountService->createUser($checkout)) {
                     $curStep = 4;
                     $this->addFlash(

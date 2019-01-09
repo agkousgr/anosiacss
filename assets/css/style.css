@@ -11337,9 +11337,15 @@ a:hover {
 .thumbnail a>img,
 .thumbnail>img,
 img {
-    width: 100%;
-    /*max-width: 100%;*/
+    /*width: 100%;*/
+    max-width: 100%;
     height: auto
+}
+
+#instagram .thumbnail a>img,
+.thumbnail>img,
+img {
+    width: 100%;
 }
 
 .bottom-buttons img { width: 80%;  }
@@ -13045,9 +13051,9 @@ input[type=radio] {
 
 .form-control,
 output {
-    font-size: 15px;
+    font-size: 16px;
     line-height: 1.42857143;
-    color: #555;
+    color: #212121;
     display: block
 }
 
@@ -24478,15 +24484,15 @@ ul.product_list .availability span.out-of-stock {
 .flash-notice {
     padding:20px;
     margin-bottom: 40px;
-    font-size: 14px;
+    font-size: 16px;
     background-color: #fef1f1;
     border: 1px #fde2e2 solid;
-    color: #f56b6b;
+    color: #f62b2b;
 }
 .flash-success {
     padding:20px;
     margin-bottom: 40px;
-    font-size: 14px;
+    font-size: 16px;
     background-color: #ecf3e6;
     border: 1px #749957 solid;
     color: #8fbb6c;
@@ -24509,4 +24515,47 @@ ul.product_list .availability span.out-of-stock {
     -ms-filter: grayscale(100%);
     -o-filter: grayscale(100%);
     filter: grayscale(100%);
+}
+.cd-top {
+    display:inline-block;
+    height:40px;
+    width:40px;
+    position:fixed;
+    bottom:40px;
+    right:10px;-webkit-box-shadow:0 0 10px rgba(0,0,0,.05);
+    box-shadow:0 0 10px rgba(0,0,0,.05);
+    overflow:hidden;
+    text-indent:100%;
+    white-space:nowrap;
+    /*background:rgba(232,98,86,.8) url(../img/cd-top-arrow.svg) no-repeat center 50%;*/
+    visibility:hidden;
+    opacity:0;-webkit-transition:opacity .3s 0s,visibility 0s .3s,background-color .3s 0s;
+    transition:opacity .3s 0s,visibility 0s .3s,background-color .3s 0s
+}
+.cd-top.cd-top--show,.cd-top.cd-top--fade-out,.cd-top:hover {
+    -webkit-transition:opacity .3s 0s,visibility 0s 0s,background-color .3s 0s;
+    transition:opacity .3s 0s,visibility 0s 0s,background-color .3s 0s
+}
+.cd-top.cd-top--show {
+    visibility:visible;opacity:1
+}
+.cd-top.cd-top--fade-out {
+    opacity:.5
+}
+.cd-top:hover {
+    background-color:#e86256;opacity:1
+}
+@media only screen and (min-width:768px) {
+    .cd-top{
+        right:20px;
+        bottom:20px
+    }
+}
+@media only screen and (min-width:1024px) {
+    .cd-top {
+        height:60px;
+        width:60px;
+        right:30px;
+        bottom:30px
+    }
 }

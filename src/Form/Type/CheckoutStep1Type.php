@@ -72,14 +72,6 @@ class CheckoutStep1Type extends AbstractType
             ->add('comments', TextareaType::class, array(
                 'required' => false
             ))
-            ->add('paymentType', ChoiceType::class, array(
-                'choices' => Checkout::PAYMENT_TYPES,
-                'multiple'=>false,
-                'expanded'=>true
-            ))
-            ->add('agreeTerms', CheckboxType::class, array(
-                'label' => 'Έχω διαβάσει και αποδέχομαι ανεπιφύλακτα τους Όρους Χρήσης'
-            ))
         ;
 
         $builder->addEventSubscriber(new CheckoutSubscriber($options, $this->session));

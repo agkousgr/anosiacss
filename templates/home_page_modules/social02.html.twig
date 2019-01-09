@@ -10,7 +10,7 @@
     <div class="row no-margin">
         <div class="col-md-6 col-sm-6 no-padding news-post">
             <h2>Instagram</h2>
-            <div class="row">
+            <div class="row" id="instagram">
                 {% for post in instagramfeed | slice(1, 8) %}
                     <div class="col-md-3 col-sm-4 col-xs-6 no-padding" style="padding-left: 1px; padding-right: 1px;">
                         <a href="{{ post.link }}" target="_blank">

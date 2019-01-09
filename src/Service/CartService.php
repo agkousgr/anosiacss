@@ -172,14 +172,27 @@ EOF;
         try {
             $result = $this->client->SendMessage(['Message' => $message]);
             $items = simplexml_load_string(str_replace("utf-16", "utf-8", $result->SendMessageResult));
-            dump($message, $result);
-            if ($voucherCode === 'COUPON') {
-                $this->session->set('couponDisc', 10);
-                return true;
+//            dump($message, $result);
+            if ($items->GetDataRows->GetVoucherRow) {
+                $fromDt = new \DateTime($items->GetDataRows->GetVoucherRow->FromDT);
+                $toDt = new \DateTime($items->GetDataRows->GetVoucherRow->ToDT);
+                $today = new \DateTime();
+                $today->setTimezone(new \DateTimeZone('Europe/Athens'));
+                if ($fromDt > $today || $today > $toDt) {
+                    return false;
+                }
+                if (intval($items->GetDataRows->GetVoucherRow->Value) > 0) {
+                    $this->session->set('couponDisc', strval($items->GetDataRows->GetVoucherRow->Value));
+                    $this->session->set('couponName', $voucherCode);
+                    return true;
+                } elseif (intval($items->GetDataRows->GetVoucherRow->Percentage) > 0) {
+                    $this->session->set('couponDisc', $items->GetDataRows->GetVoucherRow->Percentage . '%');
+                    return true;
+                } else {
+                    return false;
+                }
             }
-//        return false;
-
-            return $items->GetDataRows->GetVoucherRow;;
+            return false;
         } catch (\SoapFault $sf) {
             echo $sf->faultstring;
         }
