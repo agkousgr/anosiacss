@@ -16,7 +16,7 @@ class DefaultController extends MainController
 //        $ctgEntity = $prCategories->InitializeCategories($categoriesXML, $session->get("authID"));
 //        $latest = $pr->getItems(-1, $session->get("authID"));
             $ourCornerProducts = [];
-            $ourCorner = $em->getRepository(HomePageOurCorner::class)->findAll();
+            $ourCorner = $em->getRepository(HomePageOurCorner::class)->findBy(['isPublished' => true]);
             foreach ($ourCorner as $item) {
                 $ourCornerProducts[] = [
                   'products' => $this->productService->getRelevantItems(-1, -1, 1, 0, 1, $item->getCategory()->getS1id())
