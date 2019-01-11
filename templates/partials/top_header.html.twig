@@ -11,13 +11,16 @@
                            style="margin-top: 8px; padding: 0 5px 0 15px;"
                            class="cart-link"
                            title="Ωράριο Λειτουργίας">
-                            <i class="far fa-clock"></i>
+                            <i style="color:#ffffff" class="far fa-clock"></i>
                         </a>
                     </li>
-                    <li><a class="phone-link" href="tel:2109402027"><i class="fas fa-phone"></i> 210
-                            94 02 027</a></li>
                     <li>
-                        <div style="padding-top: 8px; text-align: center;">
+                        <a style="color:#ffffff; font-weight: bold;" class="phone-link" href="javascript:void(0)">
+                            <i style="color:#ffffff" class="fas fa-phone"></i>
+                            210 94 02 027</a>
+                    </li>
+                    <li>
+                        <div style="padding-top: 8px; text-align: center; color: #ffffff; font-weight: bold;">
                             {#<i class="fas fa-truck"></i> #} ΔΩΡΕΑΝ ΜΕΤΑΦΟΡΙΚΑ ΓΙΑ ΠΑΡΑΓΓΕΛΙΕΣ ΑΝΩ
                             ΤΩΝ 39€
                         </div>
@@ -60,7 +63,7 @@
                         <i class="fas fa-envelope-square social-top"></i>
                     </a>
                 </div>
-                <div class="col-12" style="padding: 10px; text-align: center;">
+                <div class="col-12" style="padding: 10px; text-align: center; color: #ffffff;">
                     {#<i class="fa fa-truck"></i>#}
                     ΔΩΡΕΑΝ ΜΕΤΑΦΟΡΙΚΑ ΓΙΑ ΠΑΡΑΓΓΕΛΙΕΣ ΑΝΩ ΤΩΝ 39€
                 </div>
@@ -76,7 +79,7 @@
                             <a href="#" class="account-link toggle-sidebar"
                                style="margin-top: 8px; padding: 0 5px 0 15px;"
                                title=" Ο λογαριασμός μου">
-                                <i class="fas fa-user account-link"></i>
+                                <i style="color:#ffffff" class="fas fa-user account-link"></i>
                                 <span class="link-text" style="visibility:hidden">.</span>
                             </a>
                         {% else %}
@@ -87,7 +90,7 @@
                                aria-controls="collapseUser"
                                style="margin-top: 8px; padding: 0 5px 0 15px;"
                                title=" Ο λογαριασμός μου">
-                                <i class="fas fa-user account-link"></i>
+                                <i style="color:#ffffff" class="fas fa-user account-link"></i>
                                 <span class="link-text" style="visibility:hidden">.</span>
                             </a>
                         {% endif %}
@@ -95,7 +98,7 @@
                     <li>
                         <a href="{{ path('wishlist_view') }}" class="wishlist-link"
                            style="margin-top: 8px; padding: 0 5px 0 15px;" title=" Wishlist">
-                            <i class="fas fa-heart wishlist-link"></i>
+                            <i style="color:#ffffff" class="fas fa-heart wishlist-link"></i>
                             <span class="link-text" style="visibility:hidden">.</span>
                             {% if (totalWishlistItems > 0) %}
                                 {% set display = 'inline' %}
@@ -114,7 +117,7 @@
                            style="margin-top: 8px; padding: 0 5px 0 15px;"
                            class="cart-link"
                            title=" Παρακολούθηση Παραγγελίας">
-                            <i class="fas fa-truck-moving trucking-link"></i>
+                            <i style="color:#ffffff" class="fas fa-truck-moving trucking-link"></i>
                             <span class="link-text" style="visibility:hidden">.</span>
                         </a>
                     </li>
@@ -123,7 +126,7 @@
                         <a href="#" style="margin-top: 8px; padding: 0 5px 0 15px;"
                            class="cart-link toggle-cart-sidebar"
                            title="Καλάθι">
-                            <i class="fas fa-shopping-cart cart-link"></i>
+                            <i style="color:#ffffff" class="fas fa-shopping-cart cart-link"></i>
                             <span class="link-text" style="visibility:hidden">.</span>
                             {% if (totalCartItems > 0) %}
                                 {% set display = 'inline' %}

@@ -18550,7 +18550,7 @@ figure.effect-apollo:hover figcaption::before {
 .pre-header {
     margin: 0;
     padding: 0;
-    background: #e5e5e5
+    background: #000000;
 }
 
 .pre-header-left {
@@ -18561,11 +18561,11 @@ figure.effect-apollo:hover figcaption::before {
     margin: 0;
     padding: 0;
     list-style: none;
-    border-right: 1px solid #ccc
+    /*border-right: 1px solid #ccc*/
 }
 
 .pre-header-left ul li {
-    border-left: 1px solid #d8d8d8;
+    /*border-left: 1px solid #d8d8d8;*/
     float: left;
     position: relative;
     padding: 0
@@ -18588,11 +18588,11 @@ figure.effect-apollo:hover figcaption::before {
     margin: 0;
     padding: 0;
     list-style: none;
-    border-right: 1px solid #ccc
+    /*border-right: 1px solid #ccc*/
 }
 
 .pre-header-right ul li, .pre-header-left ul li {
-    border-left: 1px solid #d8d8d8;
+    /*border-left: 1px solid #d8d8d8;*/
     float: left;
     position: relative;
     line-height: 53px;

@@ -20,10 +20,11 @@ class AjaxSearchController extends AbstractController
                 $keyword = $request->query->get('term');
 //                $result = $em->getRepository(AnosiaSearchKeywords::class)->getAnosiaSearchResult($keyword);
                 $result = $em->getRepository(Products::class)->search($keyword);
+                dump($result);
                 foreach ($result as $val) {
                     $resultArr[] = [
-                        'value' => $val->getId(),
-                        'label' => $val->getProductName() . ' (Κωδ: ' . $val->getPrCode() .')'
+                        'value' => $val['id'],
+                        'label' => $val['product_name'] . ' (Κωδ: ' . $val['pr_code'] .')'
                     ];
                 }
                 return $this->json($resultArr);
