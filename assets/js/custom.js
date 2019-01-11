@@ -545,11 +545,17 @@ $('.owl-dots').css('display', 'none');
 $(".toggle-sidebar").click(function (e) {
     e.preventDefault();
     $("#sidebar-wrapper").toggleClass("active");
+    if ($('#sidebar-cart-wrapper').hasClass('active')) {
+        $("#sidebar-cart-wrapper").toggleClass("active");
+    }
 });
 
 $(".toggle-cart-sidebar").click(function (e) {
     e.preventDefault();
     $("#sidebar-cart-wrapper").toggleClass("active");
+    if ($('#sidebar-wrapper').hasClass('active')) {
+        $("#sidebar-wrapper").toggleClass("active");
+    }
 });
 
 
@@ -576,7 +582,9 @@ $('.btn-signin').on('click', function (e) {
                     type: 'success',
                     timer: 10000
                 });
-                location.reload();
+                let url = Routing.generate('index');
+                console.log(url);
+                window.location.assign(url);
             } else {
                 swal({
                     title: 'Είσοδος χρήστη',

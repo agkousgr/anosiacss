@@ -207,7 +207,8 @@
                                             {#{{ dump(address) }}#}
                                             <div class="col-lg-4 col-md-6 col-sm-6 extra-addresses"
                                                  style="padding-bottom:15px;">
-                                                <article id="address-9" class="address" data-id-address="9">
+                                                <article id="address-9" class="address"
+                                                         data-id-address="9">
                                                     <div class="address-body">
 
                                                         <h4>{{ address["name"] }}
@@ -338,9 +339,9 @@
                                                         <i class="fa fa-eye"></i>
                                                     </a>
                                                     {#{% if order.Status == 100 %}#}
-                                                        {#<a href="{{ path('user-order', {'id':order.ID}) }}">#}
-                                                            {#<i class="fa fa-pencil"></i>#}
-                                                        {#</a>#}
+                                                    {#<a href="{{ path('user-order', {'id':order.ID}) }}">#}
+                                                    {#<i class="fa fa-pencil"></i>#}
+                                                    {#</a>#}
                                                     {#{% endif %}#}
                                                 </td>
                                                 <td>{{ order.EshopNumber }}</td>
@@ -364,15 +365,16 @@
                             {#</span>#}
                             {#</a>#}
                         </div>
+                        <div class="text-sm-center">
+                            <h4>
+                                <a href="{{ path('logout') }}">
+                                    <i class="fas fa-sign-out-alt"></i>
+                                    Αποσύνδεση
+                                </a>
+                            </h4>
+                        </div>
                     </div>
                 </section>
-                <footer class="page-footer">
-                    <div class="text-sm-center">
-                        <a class="btn-primary" href="{{ path('logout') }}">
-                            Αποσύνδεση
-                        </a>
-                    </div>
-                </footer>
             </section>
         </div>
     </div>

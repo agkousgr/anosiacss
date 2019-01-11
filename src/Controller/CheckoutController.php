@@ -65,12 +65,12 @@ class CheckoutController extends MainController
                         );
                     }
                 }
-            } elseif ($step2Form->isSubmitted() && $step2Form->isValid()) {
-                if ($this->session->get("addAddress")) {
-                    $userAccountService->updateUserInfo($checkout);
-                    $this->session->remove('addAddress');
-                }
-                $curStep = 3;
+//            } elseif ($step2Form->isSubmitted() && $step2Form->isValid()) {
+//                if ($this->session->get("addAddress")) {
+//                    $userAccountService->updateUserInfo($checkout);
+//                    $this->session->remove('addAddress');
+//                }
+//                $curStep = 3;
             } elseif ($step3Form->isSubmitted() && $step3Form->isValid()) {
                 if ($step3Form->get('shippingType')->getData() === '1000') {
                     $checkout->setShippingCost(2.00);
@@ -78,7 +78,7 @@ class CheckoutController extends MainController
                 $curStep = 4;
             }
 
-            if ($step4Form->isSubmitted() && $step2Form->isValid()) {
+            if ($step2Form->isSubmitted() && $step2Form->isValid()) {
                 if (null === $this->loggedUser && 'Success' !== $createUserResult = $userAccountService->createUser($checkout)) {
                     $curStep = 4;
                     $this->addFlash(
@@ -183,6 +183,8 @@ class CheckoutController extends MainController
             throw $e;
         }
     }
+
+
 
     public function guestCheckout(int $step, Request $request, CheckoutService $checkoutService, UserAccountService $userAccountService, EntityManagerInterface $em, PaypalService $paypalService)
     {

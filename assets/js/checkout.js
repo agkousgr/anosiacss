@@ -33,7 +33,10 @@ $(document).ready(function () {
     // $('form[name="checkout_step1"]').validate();
 
     // validate signup form on keyup and submit
-    $('form[name="checkout_step1"]').validate({
+
+    $('form[name="checkout_step1"]').submit(function (e) {
+        e.preventDefault();
+    }).validate({
         rules: {
             'checkout_step1[firstname]': "required",
             'checkout_step1[lastname]': "required",
@@ -68,6 +71,11 @@ $(document).ready(function () {
         messages: {
             'checkout_step1[firstname]': "Παρακαλώ συμπληρώστε το όνομά σας",
             'checkout_step1[lastname]': "Παρακαλώ συμπληρώστε το επώνυμό σας",
+            'checkout_step1[address]': "Παρακαλώ συμπληρώστε τη διεύθυνσή σας",
+            'checkout_step1[zip]': "Παρακαλώ συμπληρώστε τον ταχυδρομικό σας κώδικα",
+            'checkout_step1[city]': "Παρακαλώ συμπληρώστε την πόλη σας",
+            'checkout_step1[district]': "Παρακαλώ συμπληρώστε την περιοχή σας",
+            'checkout_step1[phone01]': "Παρακαλώ συμπληρώστε το τηλέφωνό σας",
             // username: {
             //     required: "Please enter a username",
             //     minlength: "Your username must consist of at least 2 characters"
@@ -84,24 +92,50 @@ $(document).ready(function () {
             'checkout_step1[email]': "Παρακαλώ εισάγεται μια έγκυρη διεύθυνση email",
             // agree: "Please accept our policy",
             // topic: "Please select at least 2 topics"
+        },
+        submitHandler: function() {
+            console.log(form);
+            $('#checkout-personal-information-step').addClass('hidden');
+            $('#checkout-payment-step').removeClass('hidden');
+            $('#checkoutStep2').removeClass('disabled');
+            $("html, body").animate({scrollTop: 0}, 1000);
+            let form = $('#checkout-personal-information-step').find('form');
+            let formData = form.serialize();
+            $.post(Routing.generate('step1_submit'), formData, function (response) {
+
+            });
         }
     });
 
-    $('#confirm-addresses').on('click', function (e) {
+    $('form[name="checkout_step2"]').submit(function (e) {
         e.preventDefault();
-        $('#checkout-personal-information-step').addClass('hidden');
-        $('#checkout-payment-step').removeClass('hidden');
-        $('#checkoutStep2').removeClass('disabled');
-        $("html, body").animate({scrollTop: 0}, 1000);
-        return false;
-        // // $('#tab-2').trigger('click');
-        //
-        // let form = $('#checkout-personal-information-step').find('form');
-        // let formData = form.serialize();
-        // $.post(Routing.generate('checkout'), formData, function(response) {
-        //
-        // });
+    }).validate({
+        rules: {
+            'checkout_step2[agreeTerms]': "required",
+        },
+        messages: {
+            'checkout_step2[agreeTerms]': "Για να ολοκληρωθεί η παραγγελία σας, αποδεχτείτε τους όρους χρήσης του site",
+        },
+        submitHandler: function(form) {
+
+        }
     });
+    // $('#confirm-addresses').on('click', function (e) {
+    //     // e.preventDefault();
+    //     $('#checkout-personal-information-step').addClass('hidden');
+    //     $('#checkout-payment-step').removeClass('hidden');
+    //     $('#checkoutStep2').removeClass('disabled');
+    //     $("html, body").animate({scrollTop: 0}, 1000);
+    //     // return false;
+    //     //
+    //     // // // $('#tab-2').trigger('click');
+    //     // //
+    //     // let form = $('#checkout-personal-information-step').find('form');
+    //     // let formData = form.serialize();
+    //     // $.post(Routing.generate('checkout'), formData, function(response) {
+    //     //
+    //     // });
+    // });
 
     $('#checkoutStep1').on('click', function (e) {
         e.preventDefault();

@@ -48,6 +48,7 @@ class UserAccountService
      * @var string
      */
     private $companyId;
+
     /**
      * UserAccountService constructor.
      * @param LoggerInterface $logger
@@ -206,10 +207,10 @@ EOF;
     {
         $client = new \SoapClient('http://caron.cloudsystems.gr/FOeshopWS/ForeignOffice.FOeshop.API.FOeshopSvc.svc?singleWsdl', ['trace' => true, 'exceptions' => true,]);
         if ($userData instanceof Checkout) {
-            $password = 'guest#$';
+            $password = password_hash('guest#$', PASSWORD_DEFAULT);
             $username = $userData->getUsername();
         } else {
-            $password = $userData["password"];
+            $password = password_hash($userData["password"], PASSWORD_DEFAULT);
             $username = $userData["username"];
         }
         $lastLogin = date('Y-m-d') . 'T' . date('H:i:s');
@@ -578,25 +579,29 @@ EOF;
     <pagesize>1</pagesize>
     <pagenumber>0</pagenumber>
     <Username>$username</Username>
-    <Password>$password</Password>
+    <Password>null</Password>
     <Email>null</Email>
 </ClientGetUsersRequest>
 EOF;
         try {
             $result = $client->SendMessage(['Message' => $message]);
             $userData = simplexml_load_string(str_replace("utf-16", "utf-8", $result->SendMessageResult));
-//            dump($message, $result);
+//            dump($message, $result, strval($userData->GetDataRows->GetUsersRow->Password));
             if ((int)$userData->RowsCount === 0) {
                 return '';
 //            } else if ($password === 'null') {
 //                return false;
             } else {
+                if (password_verify($password, strval($userData->GetDataRows->GetUsersRow->Password))) {
+                    $this->session->set('anosiaClientId', (int)$userData->GetDataRows->GetUsersRow->ClientID);
+                    return $username;
+                } else {
+                    return '';
+                }
 //                $clientData = $this->getClient($username);
 //                dump($clientData["name"]);
 //                dump($userData->GetDataRows->GetUsersRow->ClientID);
 //                $this->session->set('anosiaName', $clientData["name"]);
-                $this->session->set('anosiaClientId', (int)$userData->GetDataRows->GetUsersRow->ClientID);
-                return $username;
             }
         } catch (\SoapFault $sf) {
             echo $sf->faultstring;
@@ -1071,7 +1076,7 @@ EOF;
                         'quantity' => $item->ItemQuantity,
                         'itemPrice' => $item->ItemPrice
                     );
-                    $itemData = $this->productService->getItems($item->ItemID, $keyword = 'null', 1, $sortBy = 'null', $isSkroutz = -1, $makeId = 'null', $priceRange='null');
+                    $itemData = $this->productService->getItems($item->ItemID, $keyword = 'null', 1, $sortBy = 'null', $isSkroutz = -1, $makeId = 'null', $priceRange = 'null');
                     dump($itemsArr, $itemsOrder);
                     $itemsArr[] = array_merge($itemData, $itemsOrder);
                     dump($itemsArr);

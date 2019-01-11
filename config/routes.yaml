@@ -133,6 +133,13 @@ checkout:
     methods: [GET,POST]
     options:
         expose: true
+step1_submit:
+    path: /order/checkout-step1
+    controller: App\Controller\AjaxCheckoutController::step1Submit
+    methods: [GET,POST]
+    options:
+        expose: true
+
 #guest_checkout: #Todo: to be deleted possible with get address
 #    path: /checkout/guest/{step}
 #    controller: App\Controller\CheckoutController::guestCheckout

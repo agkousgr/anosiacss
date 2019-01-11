@@ -14,6 +14,11 @@
         <field name="webPrice" type="decimal" precision="7" scale="2"/>
         <field name="discount" type="integer" nullable="true"/>
         <field name="latestOffer" type="datetime" nullable="true"/>
+        <indexes>
+            <index name="nameIdx" columns="product_name" flags="fulltext"></index>
+            <index name="codeIdx" columns="pr_code" flags="fulltext"></index>
+            <index name="barcodeIdx" columns="barcode" flags="fulltext"></index>
+        </indexes>
     </entity>
 
 </doctrine-mapping>

@@ -18,24 +18,24 @@ class ProductsRepository extends EntityRepository
 //            ->getQuery()
 //            ->getResult();
 
-//        return $this->createQueryBuilder('p')
-//            ->addSelect("MATCH_AGAINST (p.productName, p.prCode, p.barcode, :searchterm 'IN NATURAL MODE') as score")
-//            ->add('where', 'MATCH_AGAINST(p.productName, p.prCode, p.barcode, :searchterm) > 0.8')
-//            ->setParameter('searchterm', $keyword)
-//            ->orderBy('score', 'desc')
-//            ->setMaxResults(10)
-//            ->getQuery()
-//            ->getResult();
-
         return $this->createQueryBuilder('p')
-            ->where('p.productName LIKE :value')
-            ->orWhere('p.prCode LIKE :value')
-            ->orWhere('p.barcode LIKE :value')
-            ->setParameter('value', '%' . $keyword . '%')
-            ->orderBy('p.productName', 'ASC')
+            //->addSelect("MATCH_AGAINST (p.productName, p.prCode, p.barcode, :searchterm 'IN NATURAL MODE') as score")
+            ->add('where', 'MATCH_AGAINST(p.productName, :searchterm) > 0.8')
+            ->setParameter('searchterm', $keyword)
+            //->orderBy('score', 'desc')
             ->setMaxResults(10)
             ->getQuery()
             ->getResult();
+
+//        return $this->createQueryBuilder('p')
+//            ->where('p.productName LIKE :value')
+//            ->orWhere('p.prCode LIKE :value')
+//            ->orWhere('p.barcode LIKE :value')
+//            ->setParameter('value', '%' . $keyword . '%')
+//            ->orderBy('p.productName', 'ASC')
+//            ->setMaxResults(10)
+//            ->getQuery()
+//            ->getResult();
     }
 
     public function getLatestOffers()

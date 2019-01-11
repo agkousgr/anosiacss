@@ -33,9 +33,9 @@ $(document).ready(function () {
     let data = {
         'ctgId': 1728
     };
-    $('#best-seller-products').load(Routing.generate('home_best_seller', data, function(html) {
-        console.log(html);
-    }));
+    // $('#best-seller-products').load(Routing.generate('home_best_seller', data, function (html) {
+    //     console.log(html);
+    // }));
 });
 
 $(document).ready(function () {
@@ -49,11 +49,25 @@ $(document).ready(function () {
             let url = Routing.generate('products_list', {'slug': ui.item.value});
             window.location.assign(url);
         },
-        focus: function(event, ui) {
+        focus: function (event, ui) {
             event.preventDefault();
             $("#anosia-keyword").val(ui.item.label);
         },
         minLength: 3
+    });
+
+    $('.best-sellers-category').on('click', function (e) {
+        e.preventDefault();
+        let curId = $(this).data('id');
+        console.log(curId);
+        $('.resp-tabs-list').each(function () {
+            console.log($(this).data('id'));
+            if (curId == $(this).data('id')) {
+                $(this).removeClass('hidden');
+            }else{
+                $(this).addClass('hidden');
+            }
+        })
     });
 
     // bestSellersContainer.on('click', '.best-sellers-subctg', function (e) {

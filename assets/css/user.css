@@ -18,7 +18,7 @@ dt, kbd kbd, label {
     padding-top: 20px;
 }
 .btn-primary {
-    font-size: 14px;
+    font-size: 16px;
     letter-spacing: 1px;
     line-height: 24px;
     padding: 6px 20px;
@@ -395,7 +395,7 @@ dt, kbd kbd, label {
 }
 .form-control {
     background: #ffffff;
-    color: #777777;
+    color: #333333;
     border: 1px solid #e9e9e9;
     padding: 0.5rem 1rem;
 }
@@ -412,7 +412,7 @@ dt, kbd kbd, label {
     -moz-box-shadow: none;
     -webkit-box-shadow: none;
     color: #ffffff;
-    font-size: 14px;
+    font-size: 16px;
     font-weight: normal;
     margin-left: 0;
     padding: 0.65625rem 1rem;
@@ -557,7 +557,7 @@ dt, kbd kbd, label {
     -ms-flex-pack: start
 }
 #my-account #content .links a {
-    color: #777;
+    color: #333;
     display: inline-block;
     float: left;
     font-size: 1rem;
@@ -595,7 +595,7 @@ dt, kbd kbd, label {
     vertical-align: top
 }
 #my-account #content .links a:hover {
-    color: #414141
+    color: #222222;
 }
 #my-account #content .links a:hover i {
     color: #000
