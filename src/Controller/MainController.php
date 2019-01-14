@@ -147,9 +147,18 @@ class MainController extends AbstractController
         $permissions = ['email']; // Optional permissions
         $this->loginUrl = $helper->getLoginUrl('https://new.anosiapharmacy.gr/fb-callback', $permissions);
 
-        $this->categories = $this->em->getRepository(Category::class)->childrenHierarchy();
-        if ($this->categories) {
+        if (!$this->session->get('categories')) {
+            dump('no categories');
+            $this->categories = $this->categoryService->getCategoriesFromS1();
+            dump($this->categories);
+//            die();
             array_multisort(array_column($this->categories, "priority"), $this->categories);
+            $this->session->set('categories', $this->categories);
+        }
+
+//        $this->categories = $this->em->getRepository(Category::class)->childrenHierarchy();
+        $this->categories = $this->session->get('categories');
+        if ($this->categories) {
         }
         $this->popular = $productService->getCategoryItems(1867, 0, 15, 'null', 'null');
         $this->featured = $productService->getCategoryItems(1867, 0, 15, 'null', 'null');

@@ -154,6 +154,7 @@ class CronJobsController extends AbstractController
                 }
             }
 //        dump($category);
+            return;
             return new Response('Categories synchronization completed');
         } catch (\Exception $e) {
             $this->logger->error(__METHOD__ . ' -> {message}', ['message' => $e->getMessage()]);

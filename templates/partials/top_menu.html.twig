@@ -8,7 +8,7 @@
                     {#{% set mainCtgUrl = '#' %}#}
                     {% set mainCtgUrl = path('products_list', {'slug': ctg.slug}) %}
                     {% set dataToggle = 'class="dropdown-toggle" data-toggle="dropdown"' %}
-                    {% if ctg.__children|length == 0 %}
+                    {% if ctg.children|length == 0 %}
                         {% set dataToggle = '' %}
                     {% endif %}
                     <a href="{{ mainCtgUrl }}" {{ dataToggle }}>{{ ctg.name }}</a>
@@ -23,14 +23,14 @@
 
                         {#</ul>#}
                     {#{% endif %}#}
-                    {% if ctg.__children %}
+                    {% if ctg.children %}
                     {#{% if dataToggle == 'dummy' %}#}
                         <div class="dropdown-menu mega-dropdown-menu">
                             <div class="menu-block">
                                 <div class="row">
                                     <div class="col-sm-4">
                                         <div class="row">
-                                            {% for subCtg in ctg.__children %}
+                                            {% for subCtg in ctg.children %}
                                                 {% if subCtg.isVisible == true %}
                                                     <div class="col-sm-12">
                                                         <div class="sub-menu">

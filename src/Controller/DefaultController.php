@@ -23,7 +23,8 @@ class DefaultController extends MainController
                 ];
             }
             dump($ourCornerProducts);
-            $bestSellers = $this->productService->getCategoryItems('1868', 0, 9, 'null', 'null', 'null', 1, 'null');
+            $bestSellers = $this->productService->getCategoryItems('1012', 0, 9, 'null', 'null', 'null', 1, 'null');
+//            $bestSellers = $this->productService->getCategoryItems('1868', 0, 9, 'null', 'null', 'null', 1, 'null');
             $articles = $em->getRepository(Article::class)->findBy(['category' => 1], ['createdAt' => 'DESC'], 3);
             // Create a new instagram instance.
             $slider = $this->em->getRepository(Slider::class)->findBy(['category' => null]);

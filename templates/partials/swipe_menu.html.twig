@@ -11,9 +11,9 @@
                 {% for ctg in categories %}
                     {% if ctg.isVisible == "1" %}
                         <li><a href="#">{{ ctg.name }}</a></li>
-                        {% if ctg.__children %}
+                        {% if ctg.children %}
                             <ul>
-                                {% for subctg in ctg.__children %}
+                                {% for subctg in ctg.children %}
                                     {% if subctg.isVisible == "1" %}
                                         <li>
                                             <a href="{{ path('products_list', {'slug':subctg.slug}) }}">{{ subctg.name }}</a>
