@@ -24,7 +24,8 @@ class ProductController extends MainController
             dump($ctgInfo);
             $brands = $brandsService->getCategoryManufacturers($ctgInfo->getS1id());
             dump($ctgInfo->getChildren());
-            $subCategories = $this->em->getRepository(Category::class)->findBy(['parent' => $ctgInfo->getS1id()], ['priority' => 'ASC']);
+//            $subCategories = $this->em->getRepository(Category::class)->findBy(['parent' => $ctgInfo->getS1id()], ['priority' => 'ASC']);
+            $subCategories = $this->categoryService->getSubCategories($ctgInfo->getS1id());
             $slider = $this->em->getRepository(Slider::class)->findBy(['category' => $ctgInfo]);
             dump($slider);
 //            die();
