@@ -583,7 +583,6 @@ $('.btn-signin').on('click', function (e) {
                     timer: 10000
                 });
                 let url = Routing.generate('index');
-                console.log(url);
                 window.location.assign(url);
             } else {
                 swal({

@@ -1,6 +1,9 @@
 index:
     path: /
     controller: App\Controller\DefaultController::index
+    methods: [GET]
+    options:
+        expose: true
 
 404:
     path: /404-not-found

@@ -87,7 +87,7 @@ class CheckoutController extends MainController
                     );
                 } else {
                     $onlinePaymentError = false;
-                    if ($step4Form->get('paymentType')->getData() === '1003') {
+                    if ($step2Form->get('paymentType')->getData() === '1003') {
                         $checkout->setAntikatavoliCost(1.50);
                     } else {
                         $checkout->setAntikatavoliCost(0);

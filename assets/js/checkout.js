@@ -94,12 +94,12 @@ $(document).ready(function () {
             // topic: "Please select at least 2 topics"
         },
         submitHandler: function() {
-            console.log(form);
             $('#checkout-personal-information-step').addClass('hidden');
             $('#checkout-payment-step').removeClass('hidden');
             $('#checkoutStep2').removeClass('disabled');
             $("html, body").animate({scrollTop: 0}, 1000);
             let form = $('#checkout-personal-information-step').find('form');
+            console.log(form);
             let formData = form.serialize();
             $.post(Routing.generate('step1_submit'), formData, function (response) {
 
@@ -116,8 +116,12 @@ $(document).ready(function () {
         messages: {
             'checkout_step2[agreeTerms]': "Για να ολοκληρωθεί η παραγγελία σας, αποδεχτείτε τους όρους χρήσης του site",
         },
-        submitHandler: function(form) {
+        submitHandler: function() {
+            let form = $('#checkout-payment-step').find('form');
+            let formData = form.serialize();
+            $.post(Routing.generate('checkout'), formData, function (response) {
 
+            });
         }
     });
     // $('#confirm-addresses').on('click', function (e) {

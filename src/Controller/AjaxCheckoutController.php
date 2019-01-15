@@ -51,14 +51,29 @@ class AjaxCheckoutController extends AbstractController
 //                    }
 //                }
                 $checkout = $session->get('curOrder');
-                $checkout->setComments($request->request->get('checkout_step1')['comments']);
                 if ($session->get("addAddress")) {
                     $userAccountService->updateUserInfo($checkout);
                     $session->remove('addAddress');
                 }
+                $checkout->setFirstname($request->request->get('checkout_step1')['firstname']);
+                $checkout->setLastname($request->request->get('checkout_step1')['lastname']);
+                $checkout->setEmail($request->request->get('checkout_step1')['email']);
+                $checkout->setAfm($request->request->get('checkout_step1')['afm']);
+                $checkout->setIrs($request->request->get('checkout_step1')['irs']);
+                if ($request->request->get('checkout_step1')['shipAddress']) {
+                    $checkout->setShipAddress($request->request->get('checkout_step1')['shipAddress']);
+                    $checkout->setShipZip($request->request->get('checkout_step1')['shipZip']);
+                    $checkout->setShipCity($request->request->get('checkout_step1')['shipCity']);
+                    $checkout->setShipDistrict($request->request->get('checkout_step1')['shipDistrict']);
+                }
+                $checkout->setShippingType($request->request->get('checkout_step1')['shippingType']);
+                if ($request->request->get('checkout_step1')['shippingType'] === '1000') {
+                    $checkout->setShippingCost(2.00);
+                }
+                $checkout->setComments($request->request->get('checkout_step1')['comments']);
                 $session->set('curOrder', $checkout);
 //                $id = $request->request->getInt('id');
-                dump($request, $request->request->get('checkout_step1'));
+                dump($request, $session->get('curOrder'), $request->request->get('checkout_step1'));
                 return $this->json(['success' => true]);
             } catch (\Exception $e) {
                 $logger->error(__METHOD__ . ' -> {message}', ['message' => $e->getMessage()]);
