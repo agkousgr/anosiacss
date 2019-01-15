@@ -199,7 +199,7 @@ EOF;
 
         try {
             $result = $this->client->SendMessage(['Message' => $message]);
-            dump($message, $result);
+//            dump($message, $result);
             $resultXML = simplexml_load_string(str_replace("utf-16", "utf-8", $result->SendMessageResult));
             $categories = $this->initializeCategories($resultXML->GetDataRows->GetFullCategoriesTreeRow);
 
@@ -236,7 +236,6 @@ EOF;
                     'imageUrl' => (strval($category->HasMainPhoto) !== 'false') ? 'https://caron.cloudsystems.gr/FOeshopAPIWeb/DF.aspx?' . str_replace('[Serial]', '01102472475217', str_replace('&amp;', '&', $category->MainPhotoUrl)) : ''
                 );
                 $subCtgs = $this->getSubCategories($category->CategoryID);
-                dump($subCtgs);
                 if ($subCtgs) {
                     $childArr = array();
                     foreach ($subCtgs->GetDataRows->GetFullCategoriesTreeRow as $category) {
@@ -287,7 +286,7 @@ EOF;
         }
     }
 
-    public function getSubCategories($ctgId)
+    public function getSubCategories($ctgId, $initialize = 0)
     {
 
         /*    $message = <<<EOF
@@ -322,13 +321,15 @@ EOF;
 
         try {
             $result = $this->client->SendMessage(['Message' => $message]);
-            dump($message, $result);
+//            dump($message, $result);
 //            return $result->SendMessageResult;
 //            return str_replace("utf-16", "utf-8", $result->SendMessageResult);
             $resultXML = simplexml_load_string(str_replace("utf-16", "utf-8", $result->SendMessageResult));
-//            $subCategories = $this->initializeSubCategories($resultXML->GetDataRows->GetFullCategoriesTreeRow);
-
+            if ($initialize) {
+                return $this->initializeSubCategories($resultXML->GetDataRows->GetFullCategoriesTreeRow);
+            }
             return $resultXML;
+
         } catch (\Exception $e) {
             $this->logger->error(__METHOD__ . ' -> {message}', ['message' => $e->getMessage()]);
             throw $e;

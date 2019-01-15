@@ -24559,3 +24559,19 @@ ul.product_list .availability span.out-of-stock {
         bottom:30px
     }
 }
+.social-header img {
+    width: 38px;
+    float: right;
+    margin: 9px 2px 0;
+}
+.social-header img:hover {
+    opacity: 0.8;
+}
+.mobile-social-container img {
+    width: 38px;
+    /*float: right;*/
+    margin: 9px 2px 0;
+}
+.mobile-social-container img:hover {
+    opacity: 0.8;
+}

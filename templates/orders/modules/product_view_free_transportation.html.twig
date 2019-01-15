@@ -27,9 +27,9 @@
                             {#class="fa fa-star"></i><i#}
                             {#class="fa fa-star-o"></i></div>#}
                             <div class="product-price">
-                                <div class="product-price-span">{{ pr.webPrice }}
+                                <div class="product-price-span">{{ pr.webPrice|number_format(2, ',', '.') }}
                                     €
-                                    <del>{{ pr.retailPrice }}€</del>
+                                    <del>{{ pr.retailPrice|number_format(2, ',', '.') }}€</del>
                                 </div>
                             </div>
                             <button type="button" class="add-to-cart-inner"
@@ -47,15 +47,13 @@
                                     {#class="fa fa-star"></i><i class="fa fa-star"></i><i#}
                                     {#class="fa fa-star-o"></i></div>#}
                         <div class="product-price">
-                            <div class="product-price-span">{{ pr.webPrice }}€
-                                <del>{{ pr.retailPrice }}€</del>
+                            <div class="product-price-span">{{ pr.webPrice|number_format(2, ',', '.') }}€
+                                <del>{{ pr.retailPrice|number_format(2, ',', '.') }}€</del>
                             </div>
                         </div>
                     </div>
                 </div>
             </div>
         {% endfor %}
-
-
     </div>
 </div>

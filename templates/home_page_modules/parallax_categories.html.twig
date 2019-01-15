@@ -74,8 +74,8 @@
                                         {#class="fa fa-star"></i><i#}
                                         {#class="fa fa-star-o"></i></div>#}
                                         <div class="product-price">
-                                            <div class="product-price-span">{{ pr.webPrice }}€
-                                                <del>{{ pr.retailPrice }}€</del>
+                                            <div class="product-price-span">{{ pr.webPrice|number_format(2, ',', '.') }}€
+                                                <del>{{ pr.retailPrice|number_format(2, ',', '.') }}€</del>
                                             </div>
                                         </div>
                                     </div>

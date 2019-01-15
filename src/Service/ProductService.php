@@ -277,7 +277,7 @@ EOF;
                     $itemsArr = $this->initializeProduct($items->GetDataRows->GetItemsRow);
                 }
             }
-//            dump($itemsArr);
+            dump($itemsArr);
             return $itemsArr;
         } catch (\SoapFault $sf) {
             echo $sf->faultstring;

@@ -57,21 +57,25 @@
             <div class="post-header-wrap col-xs-12 col-md-8" style="padding: 0;">
                 {% include 'partials/top_menu.html.twig' %}
             </div>
-            <div class="col-xs-12 col-md-4 hidden-xs" style="vertical-align: middle; text-align: right; padding-left: 0;">
-                <a href="https://www.facebook.com/AnosiaPharmacy" target="_blank">
-                    <i class="fab fa-facebook-square social-top"></i>
-                </a>
-                <a href="https://www.instagram.com/anosiapharmacy.gr/" target="_blank">
-                    <i class="fab fa-instagram social-top"></i>
-                </a>
+            <div class="col-xs-12 col-md-4 hidden-xs social-header" style="vertical-align: middle; text-align: right; padding-left: 0;">
+                {#<a href="https://plus.google.com/u/0/118177816495130950018" target="_blank">#}
+                    {#<i class="fab fa-google-plus-square social-top"></i>#}
+                {#</a>#}
                 <a href="https://twitter.com/AnosiaPharmacy" target="_blank">
-                    <i class="fab fa-twitter-square social-top"></i>
-                </a>
-                <a href="https://plus.google.com/u/0/118177816495130950018" target="_blank">
-                    <i class="fab fa-google-plus-square social-top"></i>
+                    <img src="{{ asset('images/icons/twitter-green.png') }}" />
+                    {#<i class="fab fa-twitter-square social-top"></i>#}
                 </a>
                 <a href="mailto:info@anosiapharmacy.gr" target="_blank">
-                    <i class="fas fa-envelope-square social-top"></i>
+                    <img src="{{ asset('images/icons/mail-green.png') }}" />
+                    {#<i class="fas fa-envelope-square social-top"></i>#}
+                </a>
+                <a href="https://www.instagram.com/anosiapharmacy.gr/" target="_blank">
+                    <img src="{{ asset('images/icons/instagram-green.png') }}" />
+                    {#<i class="fab fa-instagram social-top"></i>#}
+                </a>
+                <a href="https://www.facebook.com/AnosiaPharmacy" target="_blank">
+                    <img src="{{ asset('images/icons/fb-green.png') }}" />
+                    {#<i class="fab fa-facebook-square social-top"></i>#}
                 </a>
             </div>
         </div>
