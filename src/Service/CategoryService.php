@@ -236,22 +236,24 @@ EOF;
                     'imageUrl' => (strval($category->HasMainPhoto) !== 'false') ? 'https://caron.cloudsystems.gr/FOeshopAPIWeb/DF.aspx?' . str_replace('[Serial]', '01102472475217', str_replace('&amp;', '&', $category->MainPhotoUrl)) : ''
                 );
                 $subCtgs = $this->getSubCategories($category->CategoryID);
-
-                $childArr = array();
-                foreach ($subCtgs->GetDataRows->GetFullCategoriesTreeRow as $category) {
-                    $childArr[] = array(
-                        'id' => intval($category->CategoryID),
-                        'name' => strval($category->CategoryName),
-                        'description' => strval($category->Description),
-                        'priority' => (int)$category->Priority,
-                        'isVisible' => strval($category->IsVisible),
-                        'slug' => strval($category->Slug),
-                        'itemsCount' => $this->getCategoryItemsCount($category->CategoryID),
-                        'hasMainImage' => strval($category->HasMainPhoto),
-                        'imageUrl' => (strval($category->HasMainPhoto) !== 'false') ? 'https://caron.cloudsystems.gr/FOeshopAPIWeb/DF.aspx?' . str_replace('[Serial]', '01102472475217', str_replace('&amp;', '&', $category->MainPhotoUrl)) : ''
-                    );
-                    array_multisort(array_column($childArr, "priority"), $childArr);
-                    $this->prCategories[$i]['children'] = $childArr;
+                dump($subCtgs);
+                if ($subCtgs) {
+                    $childArr = array();
+                    foreach ($subCtgs->GetDataRows->GetFullCategoriesTreeRow as $category) {
+                        $childArr[] = array(
+                            'id' => intval($category->CategoryID),
+                            'name' => strval($category->CategoryName),
+                            'description' => strval($category->Description),
+                            'priority' => (int)$category->Priority,
+                            'isVisible' => strval($category->IsVisible),
+                            'slug' => strval($category->Slug),
+                            'itemsCount' => $this->getCategoryItemsCount($category->CategoryID),
+                            'hasMainImage' => strval($category->HasMainPhoto),
+                            'imageUrl' => (strval($category->HasMainPhoto) !== 'false') ? 'https://caron.cloudsystems.gr/FOeshopAPIWeb/DF.aspx?' . str_replace('[Serial]', '01102472475217', str_replace('&amp;', '&', $category->MainPhotoUrl)) : ''
+                        );
+                        array_multisort(array_column($childArr, "priority"), $childArr);
+                        $this->prCategories[$i]['children'] = $childArr;
+                    }
                 }
                 $i++;
             }
@@ -324,9 +326,9 @@ EOF;
 //            return $result->SendMessageResult;
 //            return str_replace("utf-16", "utf-8", $result->SendMessageResult);
             $resultXML = simplexml_load_string(str_replace("utf-16", "utf-8", $result->SendMessageResult));
-            $subCategories = $this->initializeSubCategories($resultXML->GetDataRows->GetFullCategoriesTreeRow);
+//            $subCategories = $this->initializeSubCategories($resultXML->GetDataRows->GetFullCategoriesTreeRow);
 
-            return $subCategories;
+            return $resultXML;
         } catch (\Exception $e) {
             $this->logger->error(__METHOD__ . ' -> {message}', ['message' => $e->getMessage()]);
             throw $e;
