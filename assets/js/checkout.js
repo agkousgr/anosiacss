@@ -33,10 +33,7 @@ $(document).ready(function () {
     // $('form[name="checkout_step1"]').validate();
 
     // validate signup form on keyup and submit
-
-    $('form[name="checkout_step1"]').submit(function (e) {
-        e.preventDefault();
-    }).validate({
+    $('form[name="checkout_step1"]').validate({
         rules: {
             'checkout_step1[firstname]': "required",
             'checkout_step1[lastname]': "required",
@@ -71,11 +68,6 @@ $(document).ready(function () {
         messages: {
             'checkout_step1[firstname]': "Παρακαλώ συμπληρώστε το όνομά σας",
             'checkout_step1[lastname]': "Παρακαλώ συμπληρώστε το επώνυμό σας",
-            'checkout_step1[address]': "Παρακαλώ συμπληρώστε τη διεύθυνσή σας",
-            'checkout_step1[zip]': "Παρακαλώ συμπληρώστε τον ταχυδρομικό σας κώδικα",
-            'checkout_step1[city]': "Παρακαλώ συμπληρώστε την πόλη σας",
-            'checkout_step1[district]': "Παρακαλώ συμπληρώστε την περιοχή σας",
-            'checkout_step1[phone01]': "Παρακαλώ συμπληρώστε το τηλέφωνό σας",
             // username: {
             //     required: "Please enter a username",
             //     minlength: "Your username must consist of at least 2 characters"
@@ -146,8 +138,8 @@ $(document).ready(function () {
         $('#checkout-personal-information-step').removeClass('hidden');
         $('#checkout-payment-step').addClass('hidden');
         $('#checkoutStep2').addClass('disabled');
-        $("html, body").animate({scrollTop: 0}, 1000);
-        return false;
+        // $("html, body").animate({scrollTop: 0}, 1000);
+        // return false;
     })
 
 
@@ -203,13 +195,20 @@ $(document).ready(function () {
                 totalCost = $('#cart-cost').data('cost') - couponDisc;
             }
             $('.checkout_step1_shippingType_1').addClass('hidden');
+            $('.checkout_step2_paymentType_1').addClass('hidden');
+            $('[for="checkout_step2_paymentType_4"]').removeClass('hidden');
+            $('[for="checkout_step2_paymentType_1"]').addClass('hidden');
         } else {
             $('#shipping-cost').data('cost', 0.00);
             $('#shipping-cost').html('0,00');
             totalCost = $('#cart-cost').data('cost') - couponDisc;
             $('.checkout_step1_shippingType_1').removeClass('hidden');
-            $('[for="checkout_step1_paymentType_4"]').addClass('hidden');
+            $('[for="checkout_step2_paymentType_1"]').removeClass('hidden');
+            $('.checkout_step2_paymentType_4').addClass('hidden');
+            $('[for="checkout_step2_paymentType_4"]').addClass('hidden');
         }
+        $('#checkout_step2_paymentType_0').prop('checked', true);
+        $('.checkout_step2_paymentType_0').removeClass('hidden');
         $('#total-cost').data('cost', totalCost.toFixed(2));
         let totalCostString = totalCost.toFixed(2);
         let newTotalCostString = totalCostString.replace('.', ',');
@@ -280,6 +279,7 @@ function initializePaymentInfos() {
     // $('.checkout_step1_paymentType_3').html('<img src="http://anosia.democloudon.cloud/public/images/paypal.png" alt="Λογότυπο Αποδοχής PayPal"><br><a href="https://www.paypal.com/gr/webapps/mpp/paypal-popup" target="_blank">Τι είναι το PayPal;</a> <br>Πληρώστε με ασφάλεια μέσω PayPal.');
     // $('.checkout_step1_paymentType_4').html('Έξοδα αντικαταβολής (1,5€) χρεώνονται μόνο σε παραγγελίες μικρότερες των 39€.\n' +
     //     'Για παραγγελίες μεγαλύτερες των 39€ δεν χρεώνονται ούτε έξοδα αντικαταβολής, ούτε μεταφορικά.');
+    $('[for="checkout_step2_paymentType_1"]').addClass('hidden');
 
     $('.checkout_step1_shippingType_1').html('Για να δεσμευτεί μια παραγγελία έτσι ώστε να είναι δυνατή η παραλαβή της από το Φαρμακείο απαιτεί χρόνο τριών εως πέντε ωρών.\n' +
         'Μόλις η παραγγελία σας είναι διαθέσιμη στο κατάστημα, θα επικοινωνήσουμε μαζί σας τηλεφωνικά για να περάσετε να παραλάβετε.');
@@ -294,21 +294,27 @@ function initializePaymentInfos() {
 }
 
 function calculateAntikatovoli() {
-    if ($('#checkout_step4_paymentType_4').is(':checked')) {
-        let shippingCost = 0;
-        let couponDisc = 0;
-        if ($('#coupon-discount').length > 0) {
-            couponDisc = $('#coupon-discount').data('discount');
-        }
-        if ($('#cart-cost').data('cost') - couponDisc <= 39) {
-            shippingCost = parseFloat($('#shipping-cost').data('cost'));
-            $('#shipping-cost').html('0,00');
-        }
-        $('#cart-subtotal-pay-on-delivery').removeClass('hidden');
-        totalCost = $('#cart-cost').data('cost') + 1.5 + shippingCost - couponDisc;
-        $('#total-cost').data('cost', totalCost.toFixed(2));
-        let totalCostString = totalCost.toFixed(2);
-        let newTotalCostString = totalCostString.replace('.', ',');
-        $('#total-cost').html(newTotalCostString);
+    let shippingCost = 0;
+    let couponDisc = 0;
+    let antikatavoliCost = 0;
+    if ($('#coupon-discount').length > 0) {
+        couponDisc = $('#coupon-discount').data('discount');
     }
+    if ($('#cart-cost').data('cost') - couponDisc <= 39) {
+        shippingCost = 0;
+        $('#shipping-cost').html('0,00');
+    } else {
+        shippingCost = parseFloat($('#shipping-cost').data('cost'));
+    }
+    if ($('#checkout_step4_paymentType_4').is(':checked')) {
+        antikatavoliCost = 1.5;
+        $('#cart-subtotal-pay-on-delivery').removeClass('hidden');
+    } else {
+        $('#cart-subtotal-pay-on-delivery').addClass('hidden');
+    }
+    totalCost = $('#cart-cost').data('cost') + antikatavoliCost + shippingCost - couponDisc;
+    $('#total-cost').data('cost', totalCost.toFixed(2));
+    let totalCostString = totalCost.toFixed(2);
+    let newTotalCostString = totalCostString.replace('.', ',');
+    $('#total-cost').html(newTotalCostString);
 }

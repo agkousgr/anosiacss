@@ -485,18 +485,17 @@
                                         <div class="card-block">
 
                                             <div class="cart-summary-products">
-
-                                                <h5>
-                                                    <a href="#" data-toggle="collapse"
-                                                       data-target="#cart-summary-product-list">
-                                                        Λεπτομέρειες καλαθιού <span style="">{{ totalCartItems }}
-                                                            {% if totalCartItems == 1 %}
-                                                                προϊόν
-                                                            {% else %}
-                                                                προϊόντα
-                                                            {% endif %}</span>
-                                                    </a>
-                                                </h5>
+                                                <a href="#" data-toggle="collapse"
+                                                   style="font-size: 20px;"
+                                                   data-target="#cart-summary-product-list">
+                                                    Λεπτομέρειες καλαθιού
+                                                </a>
+                                                ({{ totalCartItems }}
+                                                {% if totalCartItems == 1 %}
+                                                    προϊόν)
+                                                {% else %}
+                                                    προϊόντα)
+                                                {% endif %}
                                                 <div class="collapse"
                                                      id="cart-summary-product-list">
                                                     <ul class="media-list">
