@@ -142,6 +142,12 @@ step1_submit:
     methods: [GET,POST]
     options:
         expose: true
+check_if_user_exists:
+    path: /order/check-if-user-exists
+    controller: App\Controller\AjaxCheckoutController::checkIfUserExists
+    methods: [GET,POST]
+    options:
+        expose: true
 
 #guest_checkout: #Todo: to be deleted possible with get address
 #    path: /checkout/guest/{step}

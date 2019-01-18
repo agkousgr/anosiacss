@@ -283,8 +283,7 @@
                                                                            value="1"
                                                                            checked=""
                                                                            type="checkbox">
-                                                                    <label>Ίδια διεύθυνση για το
-                                                                        τιμολόγιο</label>
+                                                                    <label>Ίδια διεύθυνση αποστολής</label>
                                                                 </div>
                                                             </div>
                                                             <div id="ship-address" class="hidden">
@@ -314,6 +313,21 @@
                                                                         {% endif %}
                                                                     </div>
                                                                 {% endif %}
+                                                                <div class="form-group row ">
+                                                                    <label class="col-md-3 form-control-label required control-label"
+                                                                           for="autocomplete">Συμπληρώστε τη διεύθυσνή
+                                                                        σας</label>
+
+                                                                    <div class="col-md-6">
+                                                                        <input id="autocomplete"
+                                                                               class="form-control form-control"
+                                                                               placeholder="Enter your address"
+                                                                               type="text"/>
+                                                                    </div>
+                                                                    <div class="col-md-3 form-control-comment">
+                                                                    </div>
+                                                                </div>
+
                                                                 <div class="form-group row ">
                                                                     {{ form_label(step1Form.shipAddress, 'Διεύθυνση', {'label_attr': {'class': 'col-md-3 form-control-label required'}}) }}
                                                                     <div class="col-md-6">
@@ -631,5 +645,7 @@
 {% block javascripts %}
     {{ parent() }}
     <script src="{{ asset('build/js/jquery.validate.min.js') }}"></script>
+    <script src="{{ asset('build/js/google-address.js') }}"></script>
+    <script src="https://maps.googleapis.com/maps/api/js?key=AIzaSyCVgV2sJEAZFJAAMKf2nhnH7BxtMmQnnis&libraries=places&callback=initAutocomplete"></script>
     <script src="{{ asset('build/js/checkout.js') }}"></script>
 {% endblock %}

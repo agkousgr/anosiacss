@@ -43,6 +43,7 @@ Encore
     .addEntry('js/courier-tracker', './assets/js/courier-tracker.js')
     .addEntry('js/jquery.validate.min', './assets/js/jquery.validate.min.js')
     .addEntry('js/back-to-top', './assets/js/back-to-top.js')
+    .addEntry('js/google-address', './assets/js/google-address.js')
 
     // Admin javascripts
     .addEntry('admin/js/bootstrap.min', './assets/admin/js/bootstrap.min.js')

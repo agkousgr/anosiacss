@@ -30,6 +30,7 @@ $(document).ready(function () {
     }
 
     $('#checkout_step2_paymentType_0').prop('checked', true);
+    $('#checkout_step1_shippingType_0').prop('checked', true);
     // $('form[name="checkout_step1"]').validate();
 
     // validate signup form on keyup and submit
@@ -82,21 +83,54 @@ $(document).ready(function () {
             //     equalTo: "Please enter the same password as above"
             // },
             'checkout_step1[email]': "Παρακαλώ εισάγεται μια έγκυρη διεύθυνση email",
+            'checkout_step1[address]': 'Παρακαλώ συμπληρώστε τη διεύθυνσή σας',
+            'checkout_step1[zip]': 'required',
+            'checkout_step1[city]': 'required',
+            'checkout_step1[district]': 'required',
+            'checkout_step1[phone01]': 'required',
             // agree: "Please accept our policy",
             // topic: "Please select at least 2 topics"
         },
-        submitHandler: function() {
-            $('#checkout-personal-information-step').addClass('hidden');
-            $('#checkout-payment-step').removeClass('hidden');
-            $('#checkoutStep2').removeClass('disabled');
-            $("html, body").animate({scrollTop: 0}, 1000);
+        submitHandler: function () {
             let form = $('#checkout-personal-information-step').find('form');
             console.log(form);
             let formData = form.serialize();
             $.post(Routing.generate('step1_submit'), formData, function (response) {
-
+                if (response.success == false) {
+                    swal({
+                        title: 'Είσοδος χρήστη',
+                        html: '<div style="font-size:17px;">' + response.errorMsg + '</div>',
+                        type: 'error',
+                        timer: 5000
+                    });
+                } else {
+                    $('#checkout-personal-information-step').addClass('hidden');
+                    $('#checkout-payment-step').removeClass('hidden');
+                    $('#checkoutStep2').removeClass('disabled');
+                    $("html, body").animate({scrollTop: 0}, 1000);
+                }
             });
         }
+    });
+
+    $('#checkout_step1_email').focusout(function() {
+        let data = {
+            'email': $(this).val()
+        };
+        $.post(Routing.generate('check_if_user_exists'), data, function (response) {
+            if (response.success == false) {
+                swal({
+                    title: 'Σφάλμα email',
+                    html: '<div style="font-size:17px;">' + response.errorMsg + '</div>',
+                    type: 'error',
+                    timer: 5000
+                });
+                $('#confirm-addresses').attr('disabled', 'disabled');
+            }else{
+                $('#confirm-addresses').removeAttr('disabled');
+            }
+        });
+
     });
 
     $('form[name="checkout_step2"]').submit(function (e) {
@@ -108,7 +142,7 @@ $(document).ready(function () {
         messages: {
             'checkout_step2[agreeTerms]': "Για να ολοκληρωθεί η παραγγελία σας, αποδεχτείτε τους όρους χρήσης του site",
         },
-        submitHandler: function() {
+        submitHandler: function () {
             let form = $('#checkout-payment-step').find('form');
             let formData = form.serialize();
             $.post(Routing.generate('checkout'), formData, function (response) {
@@ -285,7 +319,7 @@ function initializePaymentInfos() {
         'Μόλις η παραγγελία σας είναι διαθέσιμη στο κατάστημα, θα επικοινωνήσουμε μαζί σας τηλεφωνικά για να περάσετε να παραλάβετε.');
     $('#checkout_step2_paymentType').css({'padding-top': '0'});
     $('.checkout_step2_paymentType_0').removeClass('hidden');
-    $('.checkout_step2_paymentType_0').html('Παρακαλούμε καταθέστε το ακριβές τελικό ποσό της παραγγελίας σε οποιοδήποτε από τους παρακάτω λογαριασμούς: <br>Εθνική Τράπεζα, GR1101101740000017440073280 (Αρ. Λογαριασμού: 1744 0073 280)<br>Τράπεζα Πειραιώς, GR4201720850005085039845834 (Αρ. Λογαριασμού: 5085 039845 834)<br>Eurobank, GR2302600100000480100400234 (Αρ. Λογαριασμού: 0026.0010.48.0100400234).');
+    $('.checkout_step2_paymentType_0').html('Παρακαλούμε καταθέστε το ακριβές τελικό ποσό της παραγγελίας σε οποιοδήποτε από τους παρακάτω λογαριασμούς: <br>Εθνική Τράπεζα, GR1101101740000017440073280<br>Τράπεζα Πειραιώς, GR4201720850005085039845834<br>Eurobank, GR2302600100000480100400234.');
     $('.checkout_step2_paymentType_1').html('Η πληρωμή θα γίνει με μετρητά κατά την παραλαβή από το κατάστημα.');
     $('.checkout_step2_paymentType_2').html('Πληρώστε χρησιμοποιώντας την πιστωτική ή χρεωστική σας κάρτα');
     $('.checkout_step2_paymentType_3').html('<img width="51" style="width: 51px;" src="http://anosia.democloudon.cloud/public/images/paypal.png" alt="Λογότυπο Αποδοχής PayPal"><br><a href="https://www.paypal.com/gr/webapps/mpp/paypal-popup" target="_blank">Τι είναι το PayPal;</a> <br>Πληρώστε με ασφάλεια μέσω PayPal.');

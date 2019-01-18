@@ -35,21 +35,22 @@ class AjaxCheckoutController extends AbstractController
         }
     }
 
-    public function step1Submit(Request $request, CheckoutService $checkoutService, UserAccountService $userAccountService, LoggerInterface $logger, SessionInterface $session)
+    public function checkIfUserExists(Request $request, SessionInterface $session, UserAccountService $userAccountService)
+    {
+        if (null === $session->get("anosiaUser")) {
+            $userExist = $userAccountService->checkIfUserExist($request->request->get('email'));
+            if ($userExist) {
+                return $this->json(['success' => false, 'errorMsg' => 'Υπάρχει ήδη χρήστης με το email που εισάγατε. Αν έχετε ήδη λογαριασμό κάντε login!']);
+            }
+            return $this->json(['success' => true]);
+        }
+    }
+
+    public function step1Submit(Request $request, UserAccountService $userAccountService, LoggerInterface $logger, SessionInterface $session)
     {
         if ($request->isXmlHttpRequest()) {
             try {
-                // Todo: check for existing user on username lost focus
-//                if (null === $this->loggedUser) {
-//                    $userExist = $userAccountService->checkIfUserExist($checkout->getEmail());
-//                    if ($userExist) {
-//                        $curStep = 1;
-//                        $this->addFlash(
-//                            'notice',
-//                            'Υπάρχει ήδη χρήστης με το email που εισάγατε. Αν έχετε ήδη λογαριασμό κάντε login!'
-//                        );
-//                    }
-//                }
+
                 $checkout = $session->get('curOrder');
                 if ($session->get("addAddress")) {
                     $userAccountService->updateUserInfo($checkout);
