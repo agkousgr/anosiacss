@@ -179,6 +179,9 @@ pireaus_cancel:
 pireaus_failure:
     path: /checkout/failure
     controller: App\Controller\PireausController::failure
+pireaus_iframe:
+    path: /checkout/online-payment
+    controller: App\Controller\PireausController::pireausIframe
 
 # Wishlist
 wishlist_view:

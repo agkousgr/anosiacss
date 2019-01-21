@@ -3,8 +3,7 @@
 namespace App\Controller;
 
 
-use App\Entity\Checkout;
-use App\Entity\OrdersWebId;
+use App\Entity\{Checkout, OrdersWebId};
 use App\Form\Type\{
     CheckoutStep1Type,
     CheckoutStep2Type,
@@ -13,6 +12,7 @@ use App\Form\Type\{
 };
 use App\Service\{CheckoutService, PireausRedirection, UserAccountService, PaypalService};
 use Doctrine\ORM\EntityManagerInterface;
+use Psr\Log\LoggerInterface;
 use Symfony\Component\HttpFoundation\Request;
 
 class CheckoutController extends MainController
@@ -185,7 +185,6 @@ class CheckoutController extends MainController
     }
 
 
-
     public function guestCheckout(int $step, Request $request, CheckoutService $checkoutService, UserAccountService $userAccountService, EntityManagerInterface $em, PaypalService $paypalService)
     {
         try {
@@ -299,4 +298,5 @@ class CheckoutController extends MainController
             throw $e;
         }
     }
+
 }

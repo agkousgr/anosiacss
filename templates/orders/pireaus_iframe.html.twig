@@ -1,0 +1,20 @@
+{% extends 'layout.html.twig' %}
+
+{% block bodyId %}checkout{% endblock %}
+{% block title %} | Checkout{% endblock %}
+{% block slider %}{% endblock %}
+
+{% block breadcrumb %}
+
+{% endblock %}
+
+
+
+{% block body %}
+    {% include 'partials/sidebar_login.html.twig' %}
+    {% include 'partials/sidebar_cart.html.twig' %}
+    {% include 'partials/swipe_menu.html.twig' %}
+    {% include 'partials/site_header.html.twig' %}
+
+    <iframe width="800" height="455" src="https://paycenter.piraeusbank.gr/redirection/pay.aspx"></iframe>
+{% endblock %}

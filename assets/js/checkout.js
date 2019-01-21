@@ -60,6 +60,8 @@ $(document).ready(function () {
             'checkout_step1[city]': 'required',
             'checkout_step1[district]': 'required',
             'checkout_step1[phone01]': 'required',
+            'checkout_step1[afm]': 'required',
+            'checkout_step1[irs]': 'required',
             // checkout_step1_newsletter: {
             //     required: "#newsletter:checked",
             //     minlength: 2
@@ -84,10 +86,12 @@ $(document).ready(function () {
             // },
             'checkout_step1[email]': "Παρακαλώ εισάγεται μια έγκυρη διεύθυνση email",
             'checkout_step1[address]': 'Παρακαλώ συμπληρώστε τη διεύθυνσή σας',
-            'checkout_step1[zip]': 'required',
-            'checkout_step1[city]': 'required',
-            'checkout_step1[district]': 'required',
-            'checkout_step1[phone01]': 'required',
+            'checkout_step1[zip]': 'Παρακαλώ συμπληρώστε τον ταχυδρομικό σας κώδικα',
+            'checkout_step1[city]': 'Παρακαλώ συμπληρώστε την πόλη σας',
+            'checkout_step1[district]': 'Παρακαλώ συμπληρώστε την περιοχή σας',
+            'checkout_step1[phone01]': 'Παρακαλώ συμπληρώστε το τηλέφωνό σας',
+            'checkout_step1[afm]': 'Παρακαλώ συμπληρώστε το ΑΦΜ σας',
+            'checkout_step1[irs]': 'Παρακαλώ συμπληρώστε τη ΔΟΥ σας',
             // agree: "Please accept our policy",
             // topic: "Please select at least 2 topics"
         },
@@ -322,7 +326,7 @@ function initializePaymentInfos() {
     $('.checkout_step2_paymentType_0').html('Παρακαλούμε καταθέστε το ακριβές τελικό ποσό της παραγγελίας σε οποιοδήποτε από τους παρακάτω λογαριασμούς: <br>Εθνική Τράπεζα, GR1101101740000017440073280<br>Τράπεζα Πειραιώς, GR4201720850005085039845834<br>Eurobank, GR2302600100000480100400234.');
     $('.checkout_step2_paymentType_1').html('Η πληρωμή θα γίνει με μετρητά κατά την παραλαβή από το κατάστημα.');
     $('.checkout_step2_paymentType_2').html('Πληρώστε χρησιμοποιώντας την πιστωτική ή χρεωστική σας κάρτα');
-    $('.checkout_step2_paymentType_3').html('<img width="51" style="width: 51px;" src="http://anosia.democloudon.cloud/public/images/paypal.png" alt="Λογότυπο Αποδοχής PayPal"><br><a href="https://www.paypal.com/gr/webapps/mpp/paypal-popup" target="_blank">Τι είναι το PayPal;</a> <br>Πληρώστε με ασφάλεια μέσω PayPal.');
+    $('.checkout_step2_paymentType_3').html('<img width="51" style="width: 51px;" src="https://anosia.democloudon.cloud/public/images/paypal.png" alt="Λογότυπο Αποδοχής PayPal"><br><a href="https://www.paypal.com/gr/webapps/mpp/paypal-popup" target="_blank">Τι είναι το PayPal;</a> <br>Πληρώστε με ασφάλεια μέσω PayPal.');
     $('.checkout_step2_paymentType_4').html('Έξοδα αντικαταβολής (1,5€) χρεώνονται μόνο σε παραγγελίες μικρότερες των 39€.\n' +
         'Για παραγγελίες μεγαλύτερες των 39€ δεν χρεώνονται ούτε έξοδα αντικαταβολής, ούτε μεταφορικά.');
 }

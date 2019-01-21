@@ -1,7 +1,8 @@
 {#{% extends 'layout.html.twig' %}#}
 
 {#{% block body %}#}
-    <form id="pireaus-post" action="https://paycenter.piraeusbank.gr/redirection/pay.aspx" method="post">
+    {#<form id="pireaus-post" action="https://paycenter.piraeusbank.gr/redirection/pay.aspx" method="post">#}
+    <form id="pireaus-post" action="{{ path('pireaus_iframe') }}" method="post">
         <input type="hidden" name="AcquirerId" value="{{ bankConfig.AcquirerId }}">
         <input type="hidden" name="MerchantId" value="{{ bankConfig.MerchantId }}">
         <input type="hidden" name="PosId" value="{{ bankConfig.PosId }}">

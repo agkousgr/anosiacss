@@ -102,4 +102,14 @@ class PireausController extends MainController
         );
         return $this->redirectToRoute('checkout');
     }
+
+    public function pireausIframe(Request $request)
+    {
+        try {
+            return $this->render('orders/pireaus_iframe.html.twig');
+        } catch (\Exception $e) {
+            $this->logger->error(__METHOD__ . ' -> {message}', ['message' => $e->getMessage()]);
+            throw $e;
+        }
+    }
 }
