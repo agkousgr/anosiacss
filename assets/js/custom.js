@@ -243,22 +243,6 @@ $(document).ready(function () {
 })
 
 $(document).ready(function () {
-    let owl = $('.OfferCarousel');
-    owl.owlCarousel({
-        margin: 30,
-        nav: true,
-        loop: true,
-        responsive: {
-            0: {items: 1},
-            480: {items: 1},
-            768: {items: 1},
-            992: {items: 3},
-            1200: {items: 3}
-        }
-    })
-})
-
-$(document).ready(function () {
     let owl = $('.CatCarousel');
     owl.owlCarousel({
         margin: 30,

@@ -56,6 +56,11 @@
                             <div class="col-sm-4">
                                 <div class="product-main-slider">
                                     <div class="slider">
+                                        {% if pr.discount %}
+                                            <div class="ellipse">
+                                                <span>-{{ pr.discount }}%</span>
+                                            </div>
+                                        {% endif %}
                                         <div class="main-image">
                                             <ul class="bxslider">
                                                 {% for image in pr.extraImages %}
@@ -101,12 +106,16 @@
                                 <div class="product-id">Κωδ. Προϊόντος :
                                     <span>{{ pr.prCode }}</span>
                                 </div>
+                                {% if pr.discount %}
+                                    <div>από
+                                        <del style="color: #da4644; font-weight: bold;">{{ pr.retailPrice|number_format(2, ',', '.') }}€</del>
+                                    </div>
+                                {% endif %}
                                 <div class="product-price">{{ pr.webPrice|number_format(2, ',', '.') }}
                                     €
-                                    <del>{{ pr.retailPrice|number_format(2, ',', '.') }}€</del>
-                                    {% if pr.discount %}
-                                        <div class="discount">-{{ pr.discount }}%</div>
-                                    {% endif %}
+                                    {#{% if pr.discount %}#}
+                                    {#<div class="discount">-{{ pr.discount }}%</div>#}
+                                    {#{% endif %}#}
                                 </div>
                                 <!-- content availability -->
                                 <div class="product_attributes clearfix">
@@ -146,7 +155,7 @@
                                                 <input id="add-quantity"
                                                        class="form-control stepper" type="number"
                                                        value="1" min="1"
-                                                       {#max="{{ maxItems }}"#}
+                                                        {#max="{{ maxItems }}"#}
                                                 />
                                             </div>
                                         </div>

@@ -1,4 +1,4 @@
-<div class="section" style="background-image:url({{ asset('images/bg-4.jpg') }});">
+<div class="section" style="background-color: #4fa56e;">
     <div class="container">
         <div class="section-heading row wow flipInX" data-wow-delay="0.4s">
             <div class="col-sm-8 col-sm-offset-2">
@@ -8,7 +8,7 @@
             </div>
         </div>
 
-        <div class="owl-carousel owl-theme ProductScroll">
+        <div class="owl-carousel owl-theme LatestProductsScroll">
             {% for pr in featured %}
                 <div class="item">
                     <div class="product-case">
@@ -19,18 +19,24 @@
                         </div>
                         <div class="hover-info">
                             <div class="product-short-info">
-                                <div class="product-name"><a href="{{ path('product_view', {'id':pr.id}) }}">{{ pr.name }}</a></div>
-                                {#<div class="star"><i class="fa fa-star"></i><i class="fa fa-star"></i><i#}
-                                            {#class="fa fa-star"></i><i class="fa fa-star"></i><i#}
-                                            {#class="fa fa-star"></i><i#}
-                                            {#class="fa fa-star-o"></i></div>#}
-                                <div class="product-price">
-                                    <div class="product-price-span">{{ pr.webPrice }}€
-                                        <del>{{ pr.retailPrice }}€</del>
-                                    </div>
+                                <div class="product-name">
+                                    {% if pr.summary|length > 0 %}
+                                        {#{% set text = pr.summary|render %}#}
+                                        {% set hoverText = pr.summary|truncate(110, true)|raw %}
+                                    {% else %}
+                                        {% set hoverText = pr.name|title|truncate(100, true)|raw %}
+                                    {% endif %}
+                                    <a href="{{ path('product_view', {'id':pr.id}) }}">{{ hoverText }}</a>
                                 </div>
-                                <button type="button" class="add-to-cart" data-id="{{ pr.id }}">
-                                    <i class="fa fa-cart-plus"></i>
+                                <div class="product-price">
+                                    <div class="product-price-span">
+                                        Κωδ. {{ pr.prCode }}
+                                    </div>
+                                    {#<div class="product-price-span">{{ pr.webPrice }}€#}
+                                    {#<del>{{ pr.retailPrice }}€</del>#}
+                                    {#</div>#}
+                                </div>
+                                <button type="button"><i class="fa fa-cart-plus"></i>
                                     <span>Καλάθι</span>
                                 </button>
                             </div>

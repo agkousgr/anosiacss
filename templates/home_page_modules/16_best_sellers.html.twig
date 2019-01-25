@@ -19,7 +19,7 @@
                 <div class="ProductTab">
                     <ul class="resp-tabs-list hor_1" data-id="1728">
                         {% for ctg in categories|slice(0,1) %}
-                            {% for subCtg in ctg.__children %}
+                            {% for subCtg in ctg.children %}
                                 {% if subCtg.isVisible == true %}
                                     <li>{{ subCtg.name }}</li>
                                 {% endif %}
@@ -28,7 +28,7 @@
                     </ul>
                     <ul class="resp-tabs-list hor_1 hidden" data-id="1801">
                         {% for ctg in categories|slice(1,1) %}
-                            {% for subCtg in ctg.__children %}
+                            {% for subCtg in ctg.children %}
                                 {% if subCtg.isVisible == true %}
                                     <li>{{ subCtg.name }}</li>
                                 {% endif %}
@@ -37,7 +37,7 @@
                     </ul>
                     <ul class="resp-tabs-list hor_1 hidden" data-id="1929">
                         {% for ctg in categories|slice(2,1) %}
-                            {% for subCtg in ctg.__children %}
+                            {% for subCtg in ctg.children %}
                                 {% if subCtg.isVisible == true %}
                                     <li>{{ subCtg.name }}</li>
                                 {% endif %}
@@ -46,7 +46,7 @@
                     </ul>
                     <ul class="resp-tabs-list hor_1 hidden" data-id="1867">
                         {% for ctg in categories|slice(3,1) %}
-                            {% for subCtg in ctg.__children %}
+                            {% for subCtg in ctg.children %}
                                 {% if subCtg.isVisible == true %}
                                     <li>{{ subCtg.name }}</li>
                                 {% endif %}
@@ -55,7 +55,7 @@
                     </ul>
                     <ul class="resp-tabs-list hor_1 hidden" data-id="1896">
                         {% for ctg in categories|slice(4,1) %}
-                            {% for subCtg in ctg.__children %}
+                            {% for subCtg in ctg.children %}
                                 {% if subCtg.isVisible == true %}
                                     <li>{{ subCtg.name }}</li>
                                 {% endif %}

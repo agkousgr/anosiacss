@@ -1,4 +1,5 @@
 const WOW = require('wowjs');
+require('owl.carousel');
 // let apex = require('./jquery.apex-slider.js');
 // let apexslider = apex.apexSlider();
 let bestSellersContainer = $('#best-sellers-container');
@@ -27,6 +28,38 @@ window.wow.init();
 //     }
 // );
 // wow.init();
+
+$(document).ready(function () {
+    let owl = $('.LatestProductsScroll');
+    owl.owlCarousel({
+        margin: 30,
+        nav: true,
+        loop: true,
+        responsive: {
+            0: {items: 1},
+            480: {items: 1},
+            768: {items: 1},
+            992: {items: 3},
+            1200: {items: 4}
+        }
+    })
+})
+
+$(document).ready(function () {
+    let owl = $('.OfferCarousel');
+    owl.owlCarousel({
+        margin: 30,
+        nav: true,
+        loop: true,
+        responsive: {
+            0: {items: 1},
+            480: {items: 1},
+            768: {items: 1},
+            992: {items: 3},
+            1200: {items: 3}
+        }
+    })
+})
 
 $(document).ready(function () {
     // console.log('ok');
@@ -64,7 +97,7 @@ $(document).ready(function () {
             console.log($(this).data('id'));
             if (curId == $(this).data('id')) {
                 $(this).removeClass('hidden');
-            }else{
+            } else {
                 $(this).addClass('hidden');
             }
         })
