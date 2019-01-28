@@ -75,7 +75,7 @@ product_search_anosia:
 home_best_seller:
     path: /best-seller
     controller: App\Controller\AjaxHomePageController::bestSellers
-    methods: [GET]
+    methods: [POST]
     options:
         expose: true
 

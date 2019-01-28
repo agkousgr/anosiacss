@@ -62,13 +62,18 @@ $(document).ready(function () {
 })
 
 $(document).ready(function () {
-    // console.log('ok');
+
+    $('.best-sellers-tab').on('click', function () {
+        let data = {
+            'ctgId': $(this).data('id')
+        };
+        loadBestSeller(data);
+    });
     let data = {
-        'ctgId': 1728
+        'ctgId': 1578
     };
-    // $('#best-seller-products').load(Routing.generate('home_best_seller', data, function (html) {
-    //     console.log(html);
-    // }));
+    loadBestSeller(data);
+
 });
 
 $(document).ready(function () {
@@ -92,9 +97,7 @@ $(document).ready(function () {
     $('.best-sellers-category').on('click', function (e) {
         e.preventDefault();
         let curId = $(this).data('id');
-        console.log(curId);
         $('.resp-tabs-list').each(function () {
-            console.log($(this).data('id'));
             if (curId == $(this).data('id')) {
                 $(this).removeClass('hidden');
             } else {
@@ -102,41 +105,6 @@ $(document).ready(function () {
             }
         })
     });
-
-    // bestSellersContainer.on('click', '.best-sellers-subctg', function (e) {
-    //     e.preventDefault();
-    //     console.log($(this).data('id'));
-    //     let data = {
-    //         'ctgId': $(this).data('id')
-    //     };
-    //     $('#best-seller-products').load(Routing.generate('home_best_seller', data, function() {
-    //         $('.owl-carousel').addClass('owl-loaded owl-drag');
-    //     }));
-    // });
-
-    // $("#anosia-keyword").on('change', function(e) {
-    //     e.preventDefault();
-    //     window.location(Routing.generate('product_list', {'id':}));
-    // });
-
-    // let api;
-    // $(document).ready(function () {
-    //     api = $(".fullwidthbanner").apexslider({
-    //         startWidth: 1170,
-    //         startHeight: 893,
-    //         transition: "random",
-    //         thumbWidth: 100,
-    //         thumbHeight: 47,`
-    //         thumbAmount: 0,
-    //         navType: "both",
-    //         navStyle: "round",
-    //         navArrow: "visible",
-    //         showNavOnHover: true,
-    //         timerAlign: "bottom",
-    //         shadow: 0,
-    //         fullWidth: true
-    //     });
-    // });
 
     // FACEBOOK
     // FB.getLoginStatus(function (response) {
@@ -181,7 +149,25 @@ $(document).ready(function () {
     // $('body').startComponents();
 });
 
-
+function loadBestSeller(data) {
+    $.post(Routing.generate('home_best_seller'), data, function (html) {
+        $('#best-seller-products').empty().html(html);
+        $('.product-main-slider').show();
+        let owl = $('.ProductScrollTab');
+        owl.owlCarousel({
+            margin: 30,
+            nav: true,
+            loop: true,
+            responsive: {
+                0: {items: 1},
+                480: {items: 1},
+                768: {items: 1},
+                992: {items: 3},
+                1200: {items: 3}
+            }
+        })
+    });
+}
 // function generate(type, Message) {
 //     var n = noty({
 //         text: Message,

@@ -19,7 +19,8 @@
             }
             //Variables
             var options = $.extend(defaults, options);
-            var opt = options, jtype = opt.type, jfit = opt.fit, jwidth = opt.width, vtabs = 'vertical', accord = 'accordion';
+            var opt = options, jtype = opt.type, jfit = opt.fit, jwidth = opt.width, vtabs = 'vertical',
+                accord = 'accordion';
             var hash = window.location.hash;
             var historyApi = !!(window.history && history.replaceState);
 
@@ -47,13 +48,14 @@
                 $respTabs.find('.resp-tabs-container.' + options.tabidentify).css('border-color', options.active_content_border_color);
                 $respTabs.find('.resp-tabs-container.' + options.tabidentify + ' > div').addClass('resp-tab-content').addClass(options.tabidentify);
                 jtab_options();
+
                 //Properties Function
                 function jtab_options() {
                     if (jtype == vtabs) {
                         $respTabs.addClass('resp-vtabs').addClass(options.tabidentify);
                     }
                     if (jfit == true) {
-                        $respTabs.css({ width: '100%', margin: '0px' });
+                        $respTabs.css({width: '100%', margin: '0px'});
                     }
                     if (jtype == accord) {
                         $respTabs.addClass('resp-easy-accordion').addClass(options.tabidentify);
@@ -135,7 +137,7 @@
                 }
                 //assign proper classes for when tabs mode is activated before making a selection in accordion mode
                 else {
-                   // $($respTabs.find('.resp-tab-content.' + options.tabidentify)[tabNum]).addClass('resp-accordion-closed'); //removed resp-tab-content-active
+                    // $($respTabs.find('.resp-tab-content.' + options.tabidentify)[tabNum]).addClass('resp-accordion-closed'); //removed resp-tab-content-active
                 }
 
                 //Tab Click action function
@@ -170,7 +172,7 @@
 
                             $respTabs.find('.resp-tab-content[aria-labelledby = ' + $tabAria + '].' + options.tabidentify).slideDown().addClass('resp-tab-content-active');
                         } else {
-                            console.log('here');
+                            // console.log('here');
                             $respTabs.find('.resp-tab-active.' + options.tabidentify).removeClass('resp-tab-active').css({
                                 'background-color': options.inactive_bg,
                                 'border-color': 'none'
@@ -198,12 +200,10 @@
                                 var re = new RegExp(respTabsId + "[0-9]+");
                                 if (currentHash.match(re) != null) {
                                     newHash = currentHash.replace(re, newHash);
-                                }
-                                else {
+                                } else {
                                     newHash = currentHash + "|" + newHash;
                                 }
-                            }
-                            else {
+                            } else {
                                 newHash = '#' + newHash;
                             }
 
@@ -221,15 +221,15 @@
         }
     });
 
-    $(document).ready(function() {
+    $(document).ready(function () {
         $('.ProductTab').easyResponsiveTabs({
             type: 'default', //Types: default, vertical, accordion
             width: 'auto', //auto or any width like 600px
             fit: true, // 100% fit in a container
             tabidentify: 'hor_1', // The tab groups identifier
-            activate: function(event) { // Callback function if tab is switched
+            activate: function (event) { // Callback function if tab is switched
                 var $tab = $(this);
-//var $info = $('#nested-tabInfo');
+                var $info = $('#nested-tabInfo');
                 var $name = $('span', $info);
                 $name.text($tab.text());
                 $info.show();

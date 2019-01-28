@@ -97,7 +97,7 @@
 
         {#{% include 'home_page_modules/latest_offers_new.html.twig' %}#}
 
-        {#{% include 'home_page_modules/03_promo.html.twig' %}#}
+        {% include 'home_page_modules/03_promo.html.twig' %}
         {#{% include 'home_page_modules/04_inside_slider.html.twig' %}#}
         {% include 'home_page_modules/05_new_products.html.twig' %}
         {#{% include 'home_page_modules/06_categories.html.twig' %}#}
@@ -125,7 +125,7 @@
     </div>
 
 {% endblock %}
-
+<a href="{{ path('products_list', {'slug': 'ΠΡΟΣΦΟΡΕΣ'}) }}" class="offers-bottom"><img style="width: 200px;" src="{{ asset('images/sales-badge-footer.png') }}"></a>
 <a href="#0" class="cd-top js-cd-top">Top</a>
 {% block javascripts %}
     {% include 'partials/javascripts.html.twig' %}

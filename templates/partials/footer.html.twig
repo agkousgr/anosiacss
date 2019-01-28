@@ -2,7 +2,10 @@
     <div class="footer-top">
         <div class="container">
             <div class="row">
-                <div class="col-sm-4 footmenu">
+                <div class="col-sm-3 footmenu">
+                    <a href="{{ path('products_list', {'slug': 'ΠΡΟΣΦΟΡΕΣ'}) }}"><img style="width: 200px;" src="{{ asset('images/sales-badge-footer.png') }}"></a>
+                </div>
+                <div class="col-sm-3 footmenu">
                     <h6>ΠΛΗΡΟΦΟΡΙΕΣ</h6>
                     <ul>
                         {#<li><a href="{{ path('blog_list') }}">Blog</a></li>#}
@@ -12,7 +15,7 @@
                     </ul>
                 </div>
 
-                <div class="col-sm-4 footmenu">
+                <div class="col-sm-3 footmenu">
                     <h6>ΥΠΗΡΕΣΙΕΣ</h6>
                     <ul>
                         <li><a href="{{ path('blog_view', {'slug': 'προγραμμα-επιβραβευσης-πελατων'}) }}">ΠΡΟΓΡΑΜΜΑ ΕΠΙΒΡΑΒΕΥΣΗΣ ΠΕΛΑΤΩΝ</a></li>
@@ -22,7 +25,7 @@
                     </ul>
                 </div>
 
-                <div class="col-sm-4 footmenu">
+                <div class="col-sm-3 footmenu">
                     <h6>ΛΟΓΑΡΙΑΣΜΟΣ</h6>
                     <ul>
                         <li><a href="#">Ο ΛΟΓΑΡΙΑΣΜΟΣ ΜΟΥ</a></li>
