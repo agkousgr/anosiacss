@@ -130,6 +130,7 @@
 {% block javascripts %}
     {% include 'partials/javascripts.html.twig' %}
     {% if homepage is defined %}
+        <script type="text/javascript" src="{{ asset('build/js/wow.js') }}"></script>
         <script src="{{ asset('build/js/home-page.js') }}"></script>
     {% endif %}
 

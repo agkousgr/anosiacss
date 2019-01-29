@@ -31,6 +31,7 @@
         }
     </style>
 {% endblock %}
+
 {% block breadcrumb %}
 
 {% endblock %}
@@ -656,9 +657,9 @@
 {% endblock %}
 
 {% block javascripts %}
-    {{ parent() }}
+    {#{{ parent() }}#}
     {#<script src="{{ asset('build/js/jquery.validate.min.js') }}"></script>#}
-    <script src="https://maps.googleapis.com/maps/api/js?key=AIzaSyCVgV2sJEAZFJAAMKf2nhnH7BxtMmQnnis&language=el&region=GR&libraries=places&callback=initAutocomplete"></script>
-    <script src="{{ asset('build/js/google-address.js') }}"></script>
-    <script src="{{ asset('build/js/checkout.js') }}"></script>
+    {#<script src="{{ asset('build/js/google-address.js') }}"></script>#}
+    {#<script src="https://maps.googleapis.com/maps/api/js?key=AIzaSyCVgV2sJEAZFJAAMKf2nhnH7BxtMmQnnis&language=el&region=GR&libraries=places"></script>#}
+    {#<script src="{{ asset('build/js/checkout.js') }}"></script>#}
 {% endblock %}

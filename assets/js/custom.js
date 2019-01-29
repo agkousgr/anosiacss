@@ -1,4 +1,6 @@
 // JavaScript Document
+import swal from 'sweetalert2';
+
 require('webpack-jquery-ui/autocomplete');
 require('owl.carousel');
 require('select2');
@@ -21,7 +23,7 @@ $(document).ready(function () {
         select: function (event, ui) {
             event.preventDefault();
             $("#keyword").val(ui.item.label);
-            let url = Routing.generate('product_view', {'id':ui.item.value});
+            let url = Routing.generate('product_view', {'id': ui.item.value});
             window.location.assign(url);
         },
         focus: function (event, ui) {
@@ -129,10 +131,10 @@ $(document).ready(function () {
     })
 })
 
-$(document).ready(function() {
+$(document).ready(function () {
     var owl = $('#bx-pager');
     owl.owlCarousel({
-        margin:10,
+        margin: 10,
         nav: true,
         loop: false,
         autoplay: false,

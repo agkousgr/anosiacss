@@ -8,31 +8,33 @@ $(document).ready(function () {
         componentRestrictions: {country: "gr"}
     };
 
-    new AddressAutocomplete('#autocomplete-main-address', options, (results) => {
-        const addressObject = results;
-        $('#checkout_step1_address').val(addressObject.streetName + ' ' + addressObject.streetNumber);
-        $('#checkout_step1_zip').val(addressObject.zipCode);
-        $('#checkout_step1_city').val(addressObject.cityName);
-        $('#checkout_step1_district').val(addressObject.cityName);
-    });
+    if ($('#autocomplete-main-address').length) {
+        new AddressAutocomplete('#autocomplete-main-address', options, (results) => {
+            const addressObject = results;
+            $('#checkout_step1_address').val(addressObject.streetName + ' ' + addressObject.streetNumber);
+            $('#checkout_step1_zip').val(addressObject.zipCode);
+            $('#checkout_step1_city').val(addressObject.cityName);
+            $('#checkout_step1_district').val(addressObject.cityName);
+        });
+    }
 
     new AddressAutocomplete('#autocomplete-ship-address', options, (results) => {
-        const addressObject = results;
+        const addressShipObject = results;
         // autocomplete.addListener('place_changed', fillInAddress);
-        $('#checkout_step1_shipAddress').val(addressObject.streetName + ' ' + addressObject.streetNumber);
-        $('#checkout_step1_shipZip').val(addressObject.zipCode);
-        $('#checkout_step1_shipCity').val(addressObject.cityName);
-        $('#checkout_step1_shipDistrict').val(addressObject.cityName);
-        console.log(addressObject);
+        $('#checkout_step1_shipAddress').val(addressShipObject.streetName + ' ' + addressShipObject.streetNumber);
+        $('#checkout_step1_shipZip').val(addressShipObject.zipCode);
+        $('#checkout_step1_shipCity').val(addressShipObject.cityName);
+        $('#checkout_step1_shipDistrict').val(addressShipObject.cityName);
+        console.log(addressShipObject);
     });
 
     $("#autocomplete-main-address").keypress(function (e) {
-        if (e.which == 13) {
-            e.preventDefault();
-            let data = {
-                'keyword': $(this).val()
-            };
-        }
+        // if (e.which == 13) {
+        //     e.preventDefault();
+        //     let data = {
+        //         'keyword': $(this).val()
+        //     };
+        // }
     });
 
 //     let componentForm = {

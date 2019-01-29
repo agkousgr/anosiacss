@@ -17,7 +17,7 @@ use Symfony\Component\HttpFoundation\Request;
 
 class CheckoutController extends MainController
 {
-    public function checkout(int $step, Request $request, CheckoutService $checkoutService, UserAccountService $userAccountService, EntityManagerInterface $em, PaypalService $paypalService, PireausRedirection $pireausRedirection)
+    public function checkout(Request $request, CheckoutService $checkoutService, UserAccountService $userAccountService, EntityManagerInterface $em, PaypalService $paypalService, PireausRedirection $pireausRedirection)
     {
         try {
             $addresses = array();
@@ -25,7 +25,7 @@ class CheckoutController extends MainController
             if ($this->totalCartItems === 0) {
                 return $this->redirectToRoute('cart_view');
             }
-            $curStep = ($request->request->get('currentStep')) ?: $step;
+            $curStep = ($request->request->get('currentStep')) ?: 1;
             if ($this->session->has('curOrder') === false) {
                 $checkout = new Checkout();
                 if (null !== $this->loggedUser) {
@@ -49,10 +49,10 @@ class CheckoutController extends MainController
             $step1Form->handleRequest($request);
             $step2Form = $this->createForm(CheckoutStep2Type::class, $checkout);
             $step2Form->handleRequest($request);
-            $step3Form = $this->createForm(CheckoutStep3Type::class, $checkout);
-            $step3Form->handleRequest($request);
-            $step4Form = $this->createForm(CheckoutStep4Type::class, $checkout);
-            $step4Form->handleRequest($request);
+//            $step3Form = $this->createForm(CheckoutStep3Type::class, $checkout);
+//            $step3Form->handleRequest($request);
+//            $step4Form = $this->createForm(CheckoutStep4Type::class, $checkout);
+//            $step4Form->handleRequest($request);
             if ($step1Form->isSubmitted() && $step1Form->isValid()) {
                 $curStep = 2;
                 if (null === $this->loggedUser) {
@@ -71,12 +71,13 @@ class CheckoutController extends MainController
 //                    $this->session->remove('addAddress');
 //                }
 //                $curStep = 3;
-            } elseif ($step3Form->isSubmitted() && $step3Form->isValid()) {
-                if ($step3Form->get('shippingType')->getData() === '1000') {
-                    $checkout->setShippingCost(2.00);
-                }
-                $curStep = 4;
             }
+//            elseif ($step3Form->isSubmitted() && $step3Form->isValid()) {
+//                if ($step3Form->get('shippingType')->getData() === '1000') {
+//                    $checkout->setShippingCost(2.00);
+//                }
+//                $curStep = 4;
+//            }
 
             if ($step2Form->isSubmitted() && $step2Form->isValid()) {
                 if (null === $this->loggedUser && 'Success' !== $createUserResult = $userAccountService->createUser($checkout)) {
@@ -173,8 +174,8 @@ class CheckoutController extends MainController
                 'checkout' => $checkout,
                 'step1Form' => $step1Form->createView(),
                 'step2Form' => $step2Form->createView(),
-                'step3Form' => $step3Form->createView(),
-                'step4Form' => $step4Form->createView(),
+//                'step3Form' => $step3Form->createView(),
+//                'step4Form' => $step4Form->createView(),
                 'curStep' => $curStep,
                 'loginUrl' => $this->loginUrl
             ]));
@@ -297,6 +298,11 @@ class CheckoutController extends MainController
             $this->logger->error(__METHOD__ . ' -> {message}', ['message' => $e->getMessage()]);
             throw $e;
         }
+    }
+
+    public function testCheckout()
+    {
+        return ($this->render('orders/checkout-new.html.twig'));
     }
 
 }
