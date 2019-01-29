@@ -104,6 +104,10 @@ $(document).ready(function () {
                 $(this).addClass('hidden');
             }
         })
+        let data = {
+            'ctgId': $(this).data('firstchild')
+        };
+        loadBestSeller(data);
     });
 
     // FACEBOOK
