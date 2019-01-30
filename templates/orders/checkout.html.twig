@@ -650,16 +650,16 @@
                 {% endif %}
             </section>
         </div>
-        {% include 'home_page_modules/14_newsletter.html.twig' %}
+        {#{% include 'home_page_modules/14_newsletter.html.twig' %}#}
         {#{% include 'home_page_modules/15_social.html.twig' %}#}
         {% include 'partials/footer.html.twig' %}
     </div>
 {% endblock %}
 
 {% block javascripts %}
-    {#{{ parent() }}#}
+    {{ parent() }}
     {#<script src="{{ asset('build/js/jquery.validate.min.js') }}"></script>#}
-    {#<script src="{{ asset('build/js/google-address.js') }}"></script>#}
-    {#<script src="https://maps.googleapis.com/maps/api/js?key=AIzaSyCVgV2sJEAZFJAAMKf2nhnH7BxtMmQnnis&language=el&region=GR&libraries=places"></script>#}
-    {#<script src="{{ asset('build/js/checkout.js') }}"></script>#}
+    <script src="{{ asset('build/js/google-address.js') }}"></script>
+    <script src="https://maps.googleapis.com/maps/api/js?key=AIzaSyCVgV2sJEAZFJAAMKf2nhnH7BxtMmQnnis&language=el&region=GR&libraries=places"></script>
+    <script src="{{ asset('build/js/checkout.js') }}"></script>
 {% endblock %}

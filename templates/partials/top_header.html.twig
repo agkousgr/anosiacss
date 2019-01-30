@@ -11,7 +11,8 @@
                            style="margin-top: 8px; padding: 0 5px 0 15px;"
                            class="cart-link"
                            title="Ωράριο Λειτουργίας">
-                            <i style="color:#ffffff" class="far fa-clock"></i>
+                            <img src="{{ asset('images/icons/clock.png') }}">
+                            {#<i style="color:#ffffff" class="far fa-clock"></i>#}
                         </a>
                     </li>
                     <li>
@@ -34,7 +35,8 @@
                     <div>17:00 - 20:00</div>
                 </div>
             </div>
-            <div class="pre-header-left visible-xs" style="background-color: #4fa56e; padding-top: 10px; color:#ffffff;">
+            <div class="pre-header-left visible-xs"
+                 style="background-color: #4fa56e; padding-top: 10px; color:#ffffff;">
                 {#<ul>#}
                 <div class="col-12" style="text-align: center; padding-bottom: 10px;">
                     <h4>ΩΡΑΡΙΟ ΛΕΙΤΟΥΡΓΙΑΣ</h4>
@@ -43,27 +45,28 @@
                     <div style="font-weight: bold;">
                         <a href="tel:2109402027" style="color:#ffffff;">
                             <i class="fas fa-phone" style="color:#ffffff;"></i>
-                        210 94 02 027</a>
+                            210 94 02 027</a>
                     </div>
                 </div>
-                <div class="row mobile-social-container" style="margin-right: auto; margin-left: auto; background-color: #ffffff; padding: 10px; text-align: center">
+                <div class="row mobile-social-container"
+                     style="margin-right: auto; margin-left: auto; background-color: #ffffff; padding: 10px; text-align: center">
                     <a href="https://www.facebook.com/AnosiaPharmacy" target="_blank">
-                        <img src="{{ asset('images/icons/fb-green.png') }}" />
+                        <img src="{{ asset('images/icons/fb-green.png') }}"/>
                         {#<i class="fab fa-facebook-square social-top"></i>#}
                     </a>
                     <a href="https://www.instagram.com/anosiapharmacy.gr/" target="_blank">
-                        <img src="{{ asset('images/icons/instagram-green.png') }}" />
+                        <img src="{{ asset('images/icons/instagram-green.png') }}"/>
                         {#<i class="fab fa-instagram social-top"></i>#}
                     </a>
                     <a href="https://twitter.com/AnosiaPharmacy" target="_blank">
-                        <img src="{{ asset('images/icons/twitter-green.png') }}" />
+                        <img src="{{ asset('images/icons/twitter-green.png') }}"/>
                         {#<i class="fab fa-twitter-square social-top"></i>#}
                     </a>
                     {#<a href="https://plus.google.com/u/0/118177816495130950018" target="_blank">#}
-                        {#<i class="fab fa-google-plus-square social-top"></i>#}
+                    {#<i class="fab fa-google-plus-square social-top"></i>#}
                     {#</a>#}
                     <a href="mailto:info@anosiapharmacy.gr" target="_blank">
-                        <img src="{{ asset('images/icons/mail-green.png') }}" />
+                        <img src="{{ asset('images/icons/mail-green.png') }}"/>
                         {#<i class="fas fa-envelope-square social-top"></i>#}
                     </a>
                 </div>
@@ -162,16 +165,16 @@
                 </div>
                 <div class="cart-dropdown collapse" id="collapseUser">
                     <div class="well" style="padding: 10px;">
-                            <div><a href="{{ path('user_account') }}">
-                                    <i class="fas fa-cog"></i>
-                                    Ο λογαριασμός μου
-                                </a>
-                            </div>
-                            <div><a href="{{ path('logout') }}">
-                                    <i class="fas fa-sign-out-alt"></i>
-                                    Αποσύνδεση
-                                </a>
-                            </div>
+                        <div><a href="{{ path('user_account') }}">
+                                <i class="fas fa-cog"></i>
+                                Ο λογαριασμός μου
+                            </a>
+                        </div>
+                        <div><a href="{{ path('logout') }}">
+                                <i class="fas fa-sign-out-alt"></i>
+                                Αποσύνδεση
+                            </a>
+                        </div>
                     </div>
                 </div>
             </div>

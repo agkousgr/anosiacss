@@ -145,7 +145,7 @@ class MainController extends AbstractController
         ]);
         $helper = $this->fb->getRedirectLoginHelper();
         $permissions = ['email']; // Optional permissions
-        $this->loginUrl = $helper->getLoginUrl('https://new.anosiapharmacy.gr/fb-callback', $permissions);
+        $this->loginUrl = $helper->getLoginUrl('https://new.anosiapharmacy.gr/public/fb-callback', $permissions);
 
         if (!$this->session->get('categories')) {
             dump('no categories');

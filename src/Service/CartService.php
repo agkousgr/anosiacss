@@ -2,6 +2,7 @@
 
 namespace App\Service;
 
+use App\Entity\Cart;
 use Psr\Log\LoggerInterface;
 use Symfony\Component\HttpFoundation\Session\SessionInterface;
 
@@ -197,4 +198,51 @@ EOF;
             echo $sf->faultstring;
         }
     }
+
+    public function assignSessionToUserCart($em, $username)
+    {
+        try {
+            $cartItems = $em->getRepository(Cart::class)->getCartBySession($this->session->getId());
+            if ($cartItems) {
+                foreach ($cartItems as $item) {
+                    $cartItem = $em->getRepository(Cart::class)->findOneBy(['product_id' => $item->getProductId(), 'username' => $username]);
+                    if ($cartItem) {
+                        $cartItem->setQuantity($item->getQuantity());
+                        $em->persist($cartItem);
+                        $em->remove($item);
+                        $em->flush();
+                    } else {
+                        $item->setUsername($username);
+                        $em->persist($item);
+                        $em->flush();
+                    }
+                }
+            }
+
+        } catch (\Exception $e) {
+            $this->logger->error(__METHOD__ . ' -> {message}', ['message' => $e->getMessage()]);
+            throw $e;
+        }
+    }
+
+    public function clearCart($em, $username)
+    {
+        try {
+            $cartItems = $em->getRepository(Cart::class)->getCartByUser($username);
+            if ($cartItems) {
+                foreach ($cartItems as $item) {
+                    dump($item);
+                    $item->setSessionId('');
+                    $em->persist($item);
+                    $em->flush();
+                    dump($item);
+                }
+            }
+
+        } catch (\Exception $e) {
+            $this->logger->error(__METHOD__ . ' -> {message}', ['message' => $e->getMessage()]);
+            throw $e;
+        }
+    }
+
 }

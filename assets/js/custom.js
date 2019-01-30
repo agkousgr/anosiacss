@@ -1,4 +1,3 @@
-// JavaScript Document
 import swal from 'sweetalert2';
 
 require('webpack-jquery-ui/autocomplete');

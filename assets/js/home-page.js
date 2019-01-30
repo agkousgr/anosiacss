@@ -1,3 +1,5 @@
+import swal from 'sweetalert2';
+
 const WOW = require('wowjs');
 require('owl.carousel');
 // let apex = require('./jquery.apex-slider.js');
@@ -108,6 +110,46 @@ $(document).ready(function () {
             'ctgId': $(this).data('firstchild')
         };
         loadBestSeller(data);
+    });
+
+    $('#best-seller-products').on('click', '.add-to-cart', function (e) {
+        e.preventDefault();
+        let data = {
+            'id': $(this).data('id'),
+            'quantity': 1,
+            'name': $(this).data('name')
+        }
+        $.post(Routing.generate('add_to_cart'), data, function (result) {
+            if (result.success && result.exist === false) {
+                // swal({
+                //     title: 'Καλάθι',
+                //     html: '<div style="font-size:17px;">Το προϊόν ' + result.prName + ' προστέθηκε με επιτυχία!</div>',
+                //     type: 'success',
+                //     timer: 5000
+                // });
+                $('#cart-total-items').css('display', 'inline');
+                $('#cart-total-items').html(result.totalCartItems);
+                $("#sidebar-cart-wrapper").toggleClass("active");
+                $('#collapseCart').load(Routing.generate('load_top_cart'));
+                setTimeout(function () {
+                    $("#sidebar-cart-wrapper").toggleClass("active")
+                }, 3000);
+            } else if (result.success && result.exist === true) {
+                swal({
+                    title: 'Ουπς',
+                    html: '<div style="font-size:17px;">Το προϊόν ' + result.prName + ' υπάρχει ήδη στο καλάθι σας!</div>',
+                    type: 'info',
+                    timer: 5000
+                });
+            } else {
+                swal({
+                    title: 'Ουπς',
+                    html: '<div style="font-size:17px;">Κάποια σφάλμα παρουσιάστηκε!</div>',
+                    type: 'error',
+                    timer: 5000
+                });
+            }
+        });
     });
 
     // FACEBOOK

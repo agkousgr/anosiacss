@@ -318,7 +318,7 @@
                                                 <th>Κόστος</th>
                                             </tr>
                                             {% for order in userOrders %}
-                                                {% if order.ShipmentTypeID == 1000 %}
+                                                {% if order.ShipmentTypeID is defined and order.ShipmentTypeID == 1000 %}
                                                     {% set shipmentType = 'Courier' %}
                                                 {% else %}
                                                     {% set shipmentType = 'Παραλαβή από το φαρμακείο' %}

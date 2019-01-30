@@ -38,7 +38,7 @@ class DefaultController extends MainController
 
             $reviews = $this->fb->get('/292956054170320/ratings')->getDecodedBody();
             $fbFeed = $this->fb->get('/292956054170320/feed')->getDecodedBody();
-            dump($this->fb->get('/292956054170320/feed'));
+            dump($reviews, $this->fb->get('/292956054170320/feed'));
 
             return $this->render('layout.html.twig', [
                 'categories' => $this->categories,
