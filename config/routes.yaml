@@ -454,6 +454,37 @@ latest_offer_update:
     methods: [GET,POST]
     options:
         expose: true
+promo_categories:
+    path: /admin/home-page-modules/promo-categories
+    controller: App\Controller\Admin\HomePageModulesController::promoCategoriesList
+promo_categories_add:
+    path: /admin/home-page-modules/promo-category-add
+    controller: App\Controller\Admin\HomePageModulesController::promoCategoriesCreate
+    methods: [GET,POST]
+    options:
+        expose: true
+promo_categories_update:
+    path: /admin/home-page-modules/promo-category-update/{id}
+    controller: App\Controller\Admin\HomePageModulesController::promoCategoriesUpdate
+    methods: [GET,POST]
+    options:
+        expose: true
+    requirements:
+        id: \d+
+promo_categories_delete:
+    path: /admin/home-page-modules/promo-category-delete/{id}
+    controller: App\Controller\Admin\HomePageModulesController::promoCategoriesDelete
+    methods: [GET,POST]
+    requirements:
+        id: \d+
+    options:
+        expose: true
+promo_categories_priority:
+    path: /admin/home-page-modules/promo-category/{id}/{direction}
+    controller: App\Controller\Admin\HomePageModulesController::promoCategoriesChangePriority
+    requirements:
+        id: \d+
+
 
 #fb callback login
 fb_callback:

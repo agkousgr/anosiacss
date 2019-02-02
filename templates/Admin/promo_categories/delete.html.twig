@@ -1,7 +1,7 @@
-<form action="{{ path('slider_delete', {'id':slider.id}) }}" method="post">
+<form action="{{ path('promo_categories_delete', {'id':slider.id}) }}" method="post">
     <div class="row">
         <div class="col-lg-12" style="padding-bottom: 30px">
-            Είστε σίγουρος ότι θέλετε να διαγράψετε το slide "{{ slider.name }}";
+            Είστε σίγουρος ότι θέλετε να διαγράψετε το banner "{{ slider.name }}";
         </div>
         <input type="hidden" name="delete" value="1">
     </div>
