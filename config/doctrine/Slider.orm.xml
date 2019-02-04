@@ -29,6 +29,9 @@
         <many-to-one target-entity="App\Entity\Category" field="category" inversed-by="slides">
             <join-column name="category_id" referenced-column-name="id" nullable="true" />
         </many-to-one>
+        <many-to-one target-entity="App\Entity\AdminCategory" field="adminCategory" inversed-by="slides">
+            <join-column name="admin_category_id" referenced-column-name="id" nullable="true" />
+        </many-to-one>
     </entity>
 
 </doctrine-mapping>

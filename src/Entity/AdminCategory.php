@@ -54,12 +54,18 @@ class AdminCategory
     private $articles;
 
     /**
+     * @var \Doctrine\Common\Collections\Collection
+     */
+    private $slides;
+
+    /**
      * Constructor
      */
     public function __construct()
     {
         $this->children = new \Doctrine\Common\Collections\ArrayCollection();
         $this->articles = new \Doctrine\Common\Collections\ArrayCollection();
+        $this->slides = new \Doctrine\Common\Collections\ArrayCollection();
     }
 
     /**
@@ -253,4 +259,39 @@ class AdminCategory
     {
         return $this->articles;
     }
+
+    /**
+     * Add slide
+     *
+     * @param \App\Entity\Slider $slide
+     *
+     * @return AdminCategory
+     */
+    public function addSlide(\App\Entity\Slider $slide)
+    {
+        $this->slides[] = $slide;
+
+        return $this;
+    }
+
+    /**
+     * Remove slide
+     *
+     * @param \App\Entity\Slider $slide
+     */
+    public function removeSlide(\App\Entity\Slider $slide)
+    {
+        $this->slides->removeElement($slide);
+    }
+
+    /**
+     * Get slides
+     *
+     * @return \Doctrine\Common\Collections\Collection
+     */
+    public function getSlides()
+    {
+        return $this->slides;
+    }
+
 }

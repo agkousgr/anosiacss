@@ -324,9 +324,9 @@ $(document).ready(function () {
     });
 
     $('#collapseCart').load(Routing.generate('load_top_cart'));
-    if ($('input[name="cart"]').val() == 1) {
-        $('#top-cart').css('display', 'none');
-    }
+    // if ($('input[name="cart"]').val() == 1) {
+    //     $('#top-cart').css('display', 'none');
+    // }
 
     // NEWSLETTER REGISTRATION
     $('#newsletter-chk').on('click', function () {

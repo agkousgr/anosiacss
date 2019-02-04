@@ -38,7 +38,7 @@
 
 {% block body %}
     {% include 'partials/sidebar_login.html.twig' %}
-    {% include 'partials/sidebar_cart.html.twig' %}
+    {#{% include 'partials/sidebar_cart.html.twig' %}#}
     {% include 'partials/swipe_menu.html.twig' %}
     {% include 'partials/site_header.html.twig' %}
     <div class="page-header">
@@ -102,17 +102,7 @@
                                         {% endif %}
                                         <section id="checkout-personal-information-step"
                                                  class="checkout-step -reachable -current js-current-step">
-                                            {#<h1 class="step-title h3">#}
-                                            {#<i class="material-icons rtl-no-flip done"></i>#}
-                                            {#<span class="step-number">1</span>#}
-                                            {#Προσωπικά στοιχεία#}
-                                            {#<a href="{{ path('checkout', {'step': 1}) }}">#}
-                                            {#<span id="1" class="step-edit text-muted">#}
-                                            {#<i class="material-icons edit">mode_edit</i>#}
-                                            {#Επεξεργασία#}
-                                            {#</span>#}
-                                            {#</a>#}
-                                            {#</h1>#}
+
                                             <div class="content">
                                                 <div class="tab-content">
                                                     <div class="tab-pane active"
@@ -155,37 +145,6 @@
                                                                 </div>
                                                             </div>
 
-                                                            {#<div class="form-group row ">#}
-                                                            {#<label class="col-md-3 form-control-label">#}
-                                                            {#</label>#}
-                                                            {#<div class="col-md-6">#}
-                                                            {#<span class="custom-checkbox">#}
-                                                            {#{{ form_widget(registerForm.special_offers) }}#}
-                                                            {#<span><i class="material-icons rtl-no-flip checkbox-checked"></i></span>#}
-                                                            {#<label>Να λαμβάνω προσφορές από το κατάστημα</label>#}
-                                                            {#</span>#}
-                                                            {#</div>#}
-                                                            {#<div class="col-md-3 form-control-comment">#}
-                                                            {#</div>#}
-                                                            {#</div>#}
-
-                                                            {#<div class="form-group row ">#}
-                                                            {#<label class="col-md-3 form-control-label">#}
-                                                            {#</label>#}
-                                                            {#<div class="col-md-6">#}
-                                                            {#<span class="custom-checkbox">#}
-                                                            {#{{ form_widget(registerForm.newsletter) }}#}
-                                                            {#<span><i class="material-icons rtl-no-flip checkbox-checked"></i></span>#}
-                                                            {#<label>Εγγραφή στο newsletter<br>#}
-                                                            {#<em>Μπορείτε να διαγραφείτε οποιαδήποτε στιγμή#}
-                                                            {#επιθυμείτε.</em>#}
-                                                            {#</label>#}
-                                                            {#</span>#}
-                                                            {#</div>#}
-
-                                                            {#<div class="col-md-3 form-control-comment">#}
-                                                            {#</div>#}
-                                                            {#</div>#}
                                                         </section>
                                                         <section class="form-fields">
                                                             <h4>Στοιχεία τιμολόγησης</h4>
@@ -407,35 +366,7 @@
                                                         </footer>
                                                         {{ form_end(step1Form) }}
                                                     </div>
-                                                    {#<div class="tab-pane " id="checkout-login-form"#}
-                                                    {#role="tabpanel"#}
-                                                    {#aria-hidden="true">#}
 
-
-                                                    {#<form id="login-form"#}
-                                                    {#action="https://demo.templatetrip.com/Prestashop/PRS06/PRS176_gym/en/order"#}
-                                                    {#method="post">#}
-                                                    {#<section>#}
-
-                                                    {#<div class="forgot-password">#}
-                                                    {#<a href="https://demo.templatetrip.com/Prestashop/PRS06/PRS176_gym/en/password-recovery"#}
-                                                    {#rel="nofollow">#}
-                                                    {#Forgot your password?#}
-                                                    {#</a>#}
-                                                    {#</div>#}
-                                                    {#</section>#}
-                                                    {#<footer class="form-footer text-sm-center clearfix">#}
-                                                    {#<input name="submitLogin" value="1"#}
-                                                    {#type="hidden">#}
-                                                    {#<button class="continue btn btn-primary float-xs-right"#}
-                                                    {#name="continue"#}
-                                                    {#data-link-action="sign-in"#}
-                                                    {#type="submit" value="1">#}
-                                                    {#Continue#}
-                                                    {#</button>#}
-                                                    {#</footer>#}
-                                                    {#</form>#}
-                                                    {#</div>#}
                                                 </div>
                                             </div>
                                         </section>
@@ -497,8 +428,6 @@
                                         <div role="tabpanel" class="tab-pane" id="tab-3">
                                             tab3
                                         </div>
-                                        {#<div role="tabpanel" class="tab-pane" id="Sizing">Sizing Guide</div>#}
-                                        {#<div role="tabpanel" class="tab-pane" id="Reviews">Reviews</div>#}
                                     </div>
 
                                 </div>
@@ -607,38 +536,6 @@
                                         </div>
                                     </section>
 
-                                    {#<div id="block-reassurance">#}
-                                    {#<ul>#}
-                                    {#<li>#}
-                                    {#<div class="block-reassurance-item">#}
-                                    {#<img src="https://demo.templatetrip.com/Prestashop/PRS06/PRS176_gym/modules/blockreassurance/img/ic_verified_user_black_36dp_1x.png"#}
-                                    {#alt="Security policy (edit with Customer reassurance module)">#}
-                                    {#<span class="h6">Security policy (edit with#}
-                                    {#Customer reassurance#}
-                                    {#module)</span>#}
-                                    {#</div>#}
-                                    {#</li>#}
-                                    {#<li>#}
-                                    {#<div class="block-reassurance-item">#}
-                                    {#<img src="https://demo.templatetrip.com/Prestashop/PRS06/PRS176_gym/modules/blockreassurance/img/ic_local_shipping_black_36dp_1x.png"#}
-                                    {#alt="Delivery policy (edit with Customer reassurance module)">#}
-                                    {#<span class="h6">Delivery policy (edit with#}
-                                    {#Customer reassurance#}
-                                    {#module)</span>#}
-                                    {#</div>#}
-                                    {#</li>#}
-                                    {#<li>#}
-                                    {#<div class="block-reassurance-item">#}
-                                    {#<img src="https://demo.templatetrip.com/Prestashop/PRS06/PRS176_gym/modules/blockreassurance/img/ic_swap_horiz_black_36dp_1x.png"#}
-                                    {#alt="Return policy (edit with Customer reassurance module)">#}
-                                    {#<span class="h6">Return policy (edit with#}
-                                    {#Customer reassurance#}
-                                    {#module)</span>#}
-                                    {#</div>#}
-                                    {#</li>#}
-                                    {#</ul>#}
-                                    {#</div>#}
-
                                 </div>
                             </div>
                         </section>
@@ -650,8 +547,6 @@
                 {% endif %}
             </section>
         </div>
-        {#{% include 'home_page_modules/14_newsletter.html.twig' %}#}
-        {#{% include 'home_page_modules/15_social.html.twig' %}#}
         {% include 'partials/footer.html.twig' %}
     </div>
 {% endblock %}

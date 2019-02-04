@@ -1,9 +1,9 @@
-let modal = $('#modal_add_slide');
-let modalTitle = $('.modal-title');
-let modalBody = $('.modal-body');
 require('bootstrap');
 require('select2');
 require('sweetalert2');
+let modal = $('#modal_add_slide');
+let modalTitle = $('.modal-title');
+let modalBody = $('.modal-body');
 
 $(document).ready(function () {
     $('.card-body#category_slider_category').select2();

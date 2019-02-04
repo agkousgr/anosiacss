@@ -1,4 +1,4 @@
-let modal = $('#modal_add_slide');
+let modal = $('#modal_add_promo');
 let modalTitle = $('.modal-title');
 let modalBody = $('.modal-body');
 require('bootstrap');

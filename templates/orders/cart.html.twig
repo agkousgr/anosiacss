@@ -237,7 +237,8 @@
                                             <div class="cart-summary-line" id="cart-subtotal-products">
                                                 <a href="" title="Διαγραφή κουπονιού" id="remove-coupon"
                                                    rel="nofollow">
-                                                    <i style="vertical-align:middle" class="material-icons float-xs-left">delete</i>
+                                                    <i style="vertical-align:middle"
+                                                       class="material-icons float-xs-left">delete</i>
                                                     <span id="coupon-name">{{ couponName }}</span>
                                                 </a>
                                             </div>
@@ -268,7 +269,9 @@
                                         {% if cartTotal > 0 %}
                                             <a href="{{ path('checkout') }}" class="btn btn-primary">Ταμείο</a>
                                         {% else %}
-                                            <div class="flash-notice">Για να ολοκληρώσετε την παραγγελία σας, θα πρέπει να προσθέσετε στο καλάθι σας προϊόντα αξίας ίσης η μεγαλύτερης των {{ cartTotal|abs }}€
+                                            <div class="flash-notice">Για να ολοκληρώσετε την παραγγελία σας, θα πρέπει
+                                                να προσθέσετε στο καλάθι σας προϊόντα αξίας ίσης η μεγαλύτερης
+                                                των {{ cartTotal|abs }}€
                                             </div>
                                         {% endif %}
                                     </div>
@@ -279,6 +282,8 @@
                 </div>
                 {% if totalCartItems > 0 and freeCarriageFare >= 0 %}
                     {{ include('orders/modules/product_view_free_transportation.html.twig') }}
+                {% else %}
+                    {{ include('products/modules/product_also_view.html.twig') }}
                 {% endif %}
             </section>
         </div>

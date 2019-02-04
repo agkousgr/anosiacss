@@ -69,13 +69,14 @@ class CartService
     /**
      * @param $id
      * @param $authId
+     * @param $pagesize
      * @param $cartArr
      * @return array
      * @throws \Exception
      */
     public function getCartItems($ids, $cartArr, $pagesize, $highPrice = -1)
     {
-        $pagesize = ($pagesize !== 1) ?: 2 ;
+        $pagesize = ($pagesize !== 1) ? $pagesize : 2 ;
         $message = <<<EOF
 <?xml version="1.0" encoding="utf-16"?>
 <ClientGetItemsRequest>
@@ -173,7 +174,7 @@ EOF;
         try {
             $result = $this->client->SendMessage(['Message' => $message]);
             $items = simplexml_load_string(str_replace("utf-16", "utf-8", $result->SendMessageResult));
-//            dump($message, $result);
+            dump($message, $result);
             if ($items->GetDataRows->GetVoucherRow) {
                 $fromDt = new \DateTime($items->GetDataRows->GetVoucherRow->FromDT);
                 $toDt = new \DateTime($items->GetDataRows->GetVoucherRow->ToDT);

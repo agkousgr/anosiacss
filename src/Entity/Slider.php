@@ -41,6 +41,11 @@ class Slider
     private $category;
 
     /**
+     * @var AdminCategory
+     */
+    private $adminCategory;
+
+    /**
      * @return null
      */
     public function getImage()
@@ -140,4 +145,24 @@ class Slider
     {
         $this->category = $category;
     }
+
+    /**
+     * @return AdminCategory
+     */
+    public function getAdminCategory(): AdminCategory
+    {
+        return $this->adminCategory;
+    }
+
+    /**
+     * @param AdminCategory $adminCategory
+     * @return Slider
+     */
+    public function setAdminCategory(AdminCategory $adminCategory): Slider
+    {
+        $this->adminCategory = $adminCategory;
+        return $this;
+    }
+
+
 }

@@ -24,6 +24,8 @@ require('bootstrap');
 require('jquery-validation');
 
 $(document).ready(function () {
+    $('#top-cart').hide();
+
     if ($('#total-cost').data('cost') <= 0) {
         $('#checkout-footer').text('Για να ολοκληρώσετε την παραγγελία σας, θα πρέπει να προσθέσετε στο καλάθι σας προϊόντα αξίας ίσης η μεγαλύτερης των ' + Math.abs($('#total-cost').data('cost')) + '€');
         $('#checkout-footer').addClass('flash-notice');

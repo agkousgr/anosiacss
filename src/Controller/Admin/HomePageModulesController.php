@@ -2,11 +2,13 @@
 
 namespace App\Controller\Admin;
 
+use App\Entity\AdminCategory;
 use App\Entity\HomePageModules;
 use App\Entity\HomePageOurCorner;
 use App\Entity\Products;
 use App\Entity\Slider;
 use App\Form\Type\OurCornerType;
+use App\Form\Type\SliderType;
 use Doctrine\ORM\EntityManagerInterface;
 use Symfony\Component\HttpFoundation\Request;
 use Psr\Log\LoggerInterface;
@@ -148,7 +150,8 @@ class HomePageModulesController extends AbstractController
     public function promoCategoriesList(EntityManagerInterface $em, LoggerInterface $logger)
     {
         try {
-            $slides = $em->getRepository(Slider::class)->findBy(['category' => 5], ['priority' => 'ASC']);
+            $slides = $em->getRepository(Slider::class)->findBy(['adminCategory' => 5], ['priority' => 'ASC']);
+            dump($slides);
             return $this->render('Admin/promo_categories/list.html.twig', [
                 'slides' => $slides
             ]);
@@ -165,30 +168,31 @@ class HomePageModulesController extends AbstractController
             $form = $this->createForm(SliderType::class, $slider, [
                 'action' => $this->generateUrl('promo_categories_add'),
             ]);
+                dump($slider);
             $form->handleRequest($request);
             if ($form->isSubmitted() && $form->isValid()) {
-                $slider->setCategory(5);
-                dump($slider);
+                $ctg = $em->getRepository(AdminCategory::class)->find(5);
+                $slider->setAdminCategory($ctg);
 //
-//                $em->persist($slider);
-//                $em->flush();
+                $em->persist($slider);
+                $em->flush();
                 $this->addFlash(
                     'success',
                     'Η προσθήκη ολοκληρώθηκε με επιτυχία!'
                 );
-                return $this->redirectToRoute('promo_categories_list');
+                return $this->redirectToRoute('promo_categories');
             }
             return $this->render('Admin/promo_categories/form.html.twig', [
                 'form' => $form->createView()
             ]);
 
         } catch (\Exception $e) {
-            $this->addFlash(
-                'notice',
-                'Παρουσιάστηκε σφάλμα κατά την εγγραφή! Παρακαλώ δοκιμάστε ξανά.'
-            );
-//            $logger->error(__METHOD__ . ' -> {message}', ['message' => $e->getMessage()]);
-//            throw $e;
+//            $this->addFlash(
+//                'notice',
+//                'Παρουσιάστηκε σφάλμα κατά την εγγραφή! Παρακαλώ δοκιμάστε ξανά.'
+//            );
+            $logger->error(__METHOD__ . ' -> {message}', ['message' => $e->getMessage()]);
+            throw $e;
             return $this->redirectToRoute('slider_list');
         }
     }
@@ -199,7 +203,7 @@ class HomePageModulesController extends AbstractController
             $slider = $em->getRepository(Slider::class)->find($id);
             $prevImage = $slider->getImage();
             $form = $this->createForm(SliderType::class, $slider, [
-                'action' => $this->generateUrl('slider_update', ['id' => $id]),
+                'action' => $this->generateUrl('promo_categories_update', ['id' => $id]),
             ]);
             dump($slider);
             $form->handleRequest($request);
@@ -213,10 +217,10 @@ class HomePageModulesController extends AbstractController
                     'success',
                     'Η ενημέρωση ολοκληρώθηκε με επιτυχία!'
                 );
-                return $this->redirectToRoute('slider_list');
+                return $this->redirectToRoute('promo_categories');
             }
             dump('wtf');
-            return $this->render('Admin/slider/slider_form.html.twig', [
+            return $this->render('Admin/promo_categories/form.html.twig', [
                 'form' => $form->createView()
             ]);
 
@@ -246,16 +250,11 @@ class HomePageModulesController extends AbstractController
                 'Η ενημέρωση ολοκληρώθηκε με επιτυχία!'
             );
 
-            return $this->redirectToRoute('slider_list');
+            return $this->redirectToRoute('promo_categories');
 
         } catch (\Exception $e) {
             $logger->error(__METHOD__ . ' -> {message}', ['message' => $e->getMessage()]);
             throw $e;
-            $this->addFlash(
-                'notice',
-                'Παρουσιάστηκε σφάλμα κατά την εγγραφή! Παρακαλώ δοκιμάστε ξανά.'
-            );
-            return $this->redirectToRoute('slider_list');
         }
     }
 
@@ -271,11 +270,11 @@ class HomePageModulesController extends AbstractController
                     'Η διαγραφή ολοκληρώθηκε με επιτυχία!'
                 );
             } else {
-                return $this->render('Admin/slider/delete.html.twig', [
+                return $this->render('Admin/promo_categories/delete.html.twig', [
                     'slider' => $slider
                 ]);
             }
-            return $this->redirectToRoute('slider_list');
+            return $this->redirectToRoute('promo_categories');
         } catch (\Exception $e) {
             $logger->error(__METHOD__ . ' -> {message}', ['message' => $e->getMessage()]);
             throw $e;
