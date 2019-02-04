@@ -231,7 +231,7 @@ EOF;
      * @return array
      * @throws \Exception
      */
-    public function getItems($id = 'null', $keyword = 'null', $pagesize, $sortBy = 'null', $isSkroutz = -1, $makeId = 'null', $priceRange = 'null', $itemCode = 'null', $webVisible = 1, $manufacturerId = 'null', $page = 0)
+    public function getItems($id = 'null', $keyword = 'null', $pagesize, $sortBy = 'NameAsc', $isSkroutz = -1, $makeId = 'null', $priceRange = 'null', $itemCode = 'null', $webVisible = 1, $manufacturerId = 'null', $page = 0)
     {
 
         $priceRangeArr = ($priceRange != 'null') ? explode('-', $priceRange) : -1;
@@ -267,7 +267,7 @@ EOF;
             $result = $this->client->SendMessage(['Message' => $message]);
             $items = simplexml_load_string(str_replace("utf-16", "utf-8", $result->SendMessageResult), 'SimpleXMLElement', LIBXML_COMPACT | LIBXML_PARSEHUGE);
             dump($message);
-//            dump($result);
+            dump($result);
 //            die();
             if (intval($items->RowsCount) > 0) {
                 if ($items !== false && ($keyword !== 'null' || $makeId !== 'null' || $isSkroutz === '1' || ($id === 'null' && $itemCode === 'null'))) { // THIS IS FOR MIGRATING PRODUCTS

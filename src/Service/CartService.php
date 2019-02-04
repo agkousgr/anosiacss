@@ -75,7 +75,7 @@ class CartService
      */
     public function getCartItems($ids, $cartArr, $pagesize, $highPrice = -1)
     {
-
+        $pagesize = ($pagesize !== 1) ?: 2 ;
         $message = <<<EOF
 <?xml version="1.0" encoding="utf-16"?>
 <ClientGetItemsRequest>
