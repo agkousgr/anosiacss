@@ -392,6 +392,7 @@ EOF;
         $zip = $checkout->getZip();
         $district = $checkout->getDistrict();
         $city = $checkout->getCity();
+        $coupon = $checkout->getCouponId();
         $email = $checkout->getEmail();
 
         $checkout->setTotalOrderCost($this->cartItemsCost + $checkout->getShippingCost() + $checkout->getAntikatavoliCost());
@@ -422,6 +423,7 @@ EOF;
     <ShipDistrict>$district</ShipDistrict>
     <ShipCity>$city</ShipCity>
     <ShipCarrier>1</ShipCarrier>
+    <VoucherID>$coupon</VoucherID>
 </ClientSetOrderRequest>
 EOF;
         try {
@@ -499,14 +501,17 @@ EOF;
      * @throws \Twig_Error_Runtime
      * @throws \Twig_Error_Syntax
      */
-    public function sendOrderConfirmationEmail($checkout)
+    public function sendOrderConfirmationEmail($checkout, $cartItems)
     {
         $message = (new \Swift_Message('Anosiapharmacy - Νέα παραγγελία #' . $checkout->getOrderNo()))
             ->setFrom('demo@democloudon.cloud')
             ->setTo($checkout->getEmail())
             ->setBody(
                 $this->twig->render(
-                    'email_templates/order_completed.html.twig'
+                    'email_templates/order_completed.html.twig', [
+                        'checkout' => $checkout,
+                        'cartItems' => $cartItems
+                    ]
 //                    array('name' => $name)
                 ),
                 'text/html'

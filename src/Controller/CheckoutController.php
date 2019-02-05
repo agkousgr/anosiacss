@@ -41,6 +41,7 @@ class CheckoutController extends MainController
             if ($this->session->has('couponDisc') === true) {
                 $checkout->setCouponDisc($this->session->get('couponDisc'));
                 $checkout->setCouponName($this->session->get('couponName'));
+                $checkout->setCouponId($this->session->get('couponId'));
             }
             dump($checkout);
             $step1Form = $this->createForm(CheckoutStep1Type::class, $checkout, [
@@ -65,6 +66,10 @@ class CheckoutController extends MainController
                         );
                     }
                 }
+                if ($this->session->get("addAddress")) {
+                    $userAccountService->updateUserInfo($checkout);
+                    $this->session->remove('addAddress');
+                }
 //            } elseif ($step2Form->isSubmitted() && $step2Form->isValid()) {
 //                if ($this->session->get("addAddress")) {
 //                    $userAccountService->updateUserInfo($checkout);
@@ -87,77 +92,14 @@ class CheckoutController extends MainController
                         'Παρουσιάστηκε σφάλμα κατά την ολοκλήρωση της παραγγελίας σας. Κωδικός σφάλματος "' . $createUserResult . '"! Αν δεν είναι η πρώτη φορά που βλέπετε αυτό το σφάλμα παρακαλούμε επικοινωνείστε μαζί μας.'
                     );
                 } else {
-                    $onlinePaymentError = false;
-                    if ($step2Form->get('paymentType')->getData() === '1003') {
+                    $cartCost = $checkoutService->calculateCartCost($this->cartItems);
+                    if ($step2Form->get('paymentType')->getData() === '1003' && $cartCost < 39) {
                         $checkout->setAntikatavoliCost(1.50);
                     } else {
                         $checkout->setAntikatavoliCost(0);
                     }
                     $curStep = 4;
-                    $orderWebId = $em->getRepository(OrdersWebId::class)->find(1);
-                    $checkout->setOrderNo($orderWebId->getOrderNumber() + 1);
-                    if ($checkout->getPaymentType() === '1002') {
-                        $paypalService->sendToPaypal($checkout);
-
-//                        $onlinePaymentError = true;
-//                        die();
-                    } else if ($checkout->getPaymentType() === '1001') {
-                        $cartCost = $checkoutService->calculateCartCost($this->cartItems);
-                        $checkout->setTotalOrderCost($cartCost + $checkout->getAntikatavoliCost() + $checkout->getShippingCost());
-                        $checkout->setInstallments(0);
-                        $pireausRedirection->submitOrderToPireaus($checkout);
-                        if ($checkout->getPireausResultCode() !== "0") {
-                            $this->addFlash(
-                                'notice',
-                                $checkout->getPireausResultDescription() . ' ' . $checkout->getPireausResultAction()
-                            );
-                            $orderCompleted = false;
-                            $onlinePaymentError = true;
-                        } else {
-                            $this->session->set('curOrder', $checkout);
-                            $bank_config['AcquirerId'] = 14;
-                            $bank_config['MerchantId'] = 2137477493;
-                            $bank_config['PosId'] = 2141384532;
-                            $bank_config['User'] = 'AN895032';
-                            $bank_config['LanguageCode'] = 'el-GR';
-                            return $this->render('orders/pireaus_post.html.twig', [
-                                'checkout' => $checkout,
-                                'bankConfig' => $bank_config
-                            ]);
-                        }
-                    }
-                    if ($onlinePaymentError === false) {
-                        $orderResponse = $checkoutService->submitOrder($checkout, $this->cartItems);
-                        if ($orderResponse) {
-
-                            $this->addFlash(
-                                'success',
-                                'Η παραγγελία σας ολοκληρώθηκε με επιτυχία. Ένα αντίγραφο έχει αποσταλεί στο email σας ' . $checkout->getEmail() . '. Ευχαριστούμε που μας προτιμήσατε για τις αγορές σας!'
-                            );
-                            $checkoutService->sendOrderConfirmationEmail($checkout);
-//                    $checkoutService->emptyCart($this->cartItems, $em);
-                            $orderCompleted = true;
-                            // CLEAR curOrder SESSION
-                            return ($this->render('orders/order_completed.html.twig', [
-                                'categories' => $this->categories,
-                                'popular' => $this->popular,
-                                'featured' => $this->featured,
-                                'checkout' => $checkout,
-                                'loggedUser' => $this->loggedUser,
-                                'totalCartItems' => $this->totalCartItems,
-                                'totalWishlistItems' => $this->totalWishlistItems,
-                                'cartItems' => $this->cartItems,
-                                'orderCompleted' => $orderCompleted,
-                                'loginUrl' => $this->loginUrl
-                            ]));
-                        } else {
-                            $this->addFlash(
-                                'notice',
-                                'Ένα σφάλμα παρουσιάστηκε κατά την διαδικασία της παραγγελίας σας. Παρακαλούμε προσπαθήστε ξανά. Αν το πρόβλημα παραμείνει επικοινωνήστε μαζί μας!'
-                            );
-                            $orderCompleted = false;
-                        }
-                    }
+                    return $this->json(['success' => true]);
                 }
             }
             $this->session->set('curOrder', $checkout);
@@ -185,124 +127,83 @@ class CheckoutController extends MainController
         }
     }
 
-
-    public function guestCheckout(int $step, Request $request, CheckoutService $checkoutService, UserAccountService $userAccountService, EntityManagerInterface $em, PaypalService $paypalService)
+    public function completeCheckout(Request $request, CheckoutService $checkoutService, UserAccountService $userAccountService, EntityManagerInterface $em, PaypalService $paypalService, PireausRedirection $pireausRedirection)
     {
-        try {
-            $addresses = array();
-            if ($this->totalCartItems === 0) {
-                return $this->redirectToRoute('cart_view');
-            }
-            $curStep = ($request->request->get('currentStep')) ?: $step;
-            if ($this->session->has('curOrder') === false) {
-                $checkout = new Checkout();
-                if (null !== $this->loggedUser) {
-                    $checkoutService->getUserInfo($checkout);
-                }
-                $this->session->set('curOrder', $checkout);
-            } else {
-                $checkout = $this->session->get('curOrder');
-            }
-            if (null !== $this->loggedUser) {
-                $addresses = $userAccountService->getAddresses($this->loggedClientId);
-            }
-            dump($checkout);
-            $step1Form = $this->createForm(CheckoutStep1Type::class, $checkout, [
-                'loggedUser' => $this->loggedUser
-            ]);
-            $step1Form->handleRequest($request);
-            $step2Form = $this->createForm(CheckoutStep2Type::class, $checkout);
-            $step2Form->handleRequest($request);
-            $step3Form = $this->createForm(CheckoutStep3Type::class, $checkout);
-            $step3Form->handleRequest($request);
-            $step4Form = $this->createForm(CheckoutStep4Type::class, $checkout);
-            $step4Form->handleRequest($request);
-            if ($step1Form->isSubmitted() && $step1Form->isValid()) {
-                if (null !== $this->loggedUser) {
+        $onlinePaymentError = false;
+        $checkout = $this->session->get('curOrder');
+        $cartCost = $checkoutService->calculateCartCost($this->cartItems);
+        $orderWebId = $em->getRepository(OrdersWebId::class)->find(1);
+        $checkout->setOrderNo($orderWebId->getOrderNumber() + 1);
+        if ($checkout->getPaymentType() === '1002') {
+            $paypalService->sendToPaypal($checkout);
 
-                }
-                $curStep = 2;
-            } elseif ($step2Form->isSubmitted() && $step2Form->isValid()) {
-                $curStep = 3;
-            } elseif ($step3Form->isSubmitted() && $step3Form->isValid()) {
-                if ($step3Form->get('shippingType')->getData() === '1000') {
-                    $checkout->setShippingCost(2.00);
-                }
-                $curStep = 4;
-            }
-            $this->session->set('curOrder', $checkout);
-            if ($step4Form->isSubmitted() && $step4Form->isValid()) {
-                if ($step4Form->get('paymentType')->getData() === '1003') {
-                    $checkout->setAntikatavoliCost(1.50);
-                } else {
-                    $checkout->setAntikatavoliCost(0);
-                }
-                $curStep = 4;
-                $orderWebId = $em->getRepository(OrdersWebId::class)->find(1);
-                $checkout->setOrderNo($orderWebId->getOrderNumber() + 1);
-                $orderResponse = $checkoutService->submitOrder($checkout, $this->cartItems);
-                if ($orderResponse) {
-
-                    if ($checkout->getPaymentType() === '1002') {
-                        dump('zong');
-                        $paypalService->sendToPaypal($checkout);
+//                        $onlinePaymentError = true;
 //                        die();
-                    }
+        } else if ($checkout->getPaymentType() === '1001') {
+            $checkout->setTotalOrderCost($cartCost + $checkout->getAntikatavoliCost() + $checkout->getShippingCost());
+            $checkout->setInstallments(0);
+            $pireausRedirection->submitOrderToPireaus($checkout);
+            if ($checkout->getPireausResultCode() !== "0") {
+                $this->addFlash(
+                    'notice',
+                    $checkout->getPireausResultDescription() . ' ' . $checkout->getPireausResultAction()
+                );
+                $orderCompleted = false;
+                $onlinePaymentError = true;
+            } else {
+                $this->session->set('curOrder', $checkout);
+                $bank_config['AcquirerId'] = 14;
+                $bank_config['MerchantId'] = 2137477493;
+                $bank_config['PosId'] = 2141384532;
+                $bank_config['User'] = 'AN895032';
+                $bank_config['LanguageCode'] = 'el-GR';
 
-                    $this->addFlash(
-                        'success',
-                        'Η παραγγελία σας ολοκληρώθηκε με επιτυχία. Ένα αντίγραφο έχει αποσταλεί στο email σας ' . $checkout->getEmail() . '. Ευχαριστούμε που μας προτιμήσατε για τις αγορές σας!'
-                    );
-                    $checkoutService->sendOrderConfirmationEmail($checkout);
-//                    $checkoutService->emptyCart($this->cartItems, $em);
-                    $orderCompleted = true;
-                    // CLEAR curOrder SESSION
-                    return ($this->render('orders/order_completed.html.twig', [
-                        'categories' => $this->categories,
-                        'popular' => $this->popular,
-                        'featured' => $this->featured,
-                        'checkout' => $checkout,
-                        'loggedUser' => $this->loggedUser,
-                        'totalCartItems' => $this->totalCartItems,
-                        'totalWishlistItems' => $this->totalWishlistItems,
-                        'cartItems' => $this->cartItems,
-                        'orderCompleted' => $orderCompleted,
-                        'loginUrl' => $this->loginUrl
-                    ]));
-                } else {
-                    $this->addFlash(
-                        'notice',
-                        'Ένα σφάλμα παρουσιάστηκε κατά την διαδικασία της παραγγελίας σας. Παρακαλούμε προσπαθήστε ξανά. Αν το πρόβλημα παραμείνει επικοινωνήστε μαζί μας!'
-                    );
-                    $orderCompleted = false;
-                }
+                return $this->render('orders/pireaus_post.html.twig', [
+                    'checkout' => $checkout,
+                    'bankConfig' => $bank_config
+                ]);
             }
-            dump($addresses);
-            return ($this->render('orders/checkout.html.twig', [
-                'categories' => $this->categories,
-                'popular' => $this->popular,
-                'featured' => $this->featured,
-                'cartItems' => $this->cartItems,
-                'totalCartItems' => $this->totalCartItems,
-                'totalWishlistItems' => $this->totalWishlistItems,
-                'loggedUser' => $this->loggedUser,
-                'addresses' => $addresses,
-                'step1Form' => $step1Form->createView(),
-                'step2Form' => $step2Form->createView(),
-                'step3Form' => $step3Form->createView(),
-                'step4Form' => $step4Form->createView(),
-                'curStep' => $curStep,
-                'loginUrl' => $this->loginUrl
-            ]));
-        } catch (\Exception $e) {
-            $this->logger->error(__METHOD__ . ' -> {message}', ['message' => $e->getMessage()]);
-            throw $e;
+        }
+        if ($onlinePaymentError === false) {
+            $orderResponse = $checkoutService->submitOrder($checkout, $this->cartItems);
+            if ($orderResponse) {
+
+                $this->addFlash(
+                    'success',
+                    'Η παραγγελία σας ολοκληρώθηκε με επιτυχία. Ένα αντίγραφο έχει αποσταλεί στο email σας ' . $checkout->getEmail() . '. Ευχαριστούμε που μας προτιμήσατε για τις αγορές σας!'
+                );
+                $orderWebId->setOrderNumber($checkout->getOrderNo() + 1);
+                $em->flush();
+                $checkoutService->sendOrderConfirmationEmail($checkout, $this->cartItems);
+                $checkoutService->emptyCart($this->cartItems, $em);
+                $orderCompleted = true;
+                // CLEAR curOrder SESSION
+                $this->session->remove('curOrder');
+                $this->session->remove('couponDisc');
+                $this->session->remove('couponName');
+                $this->session->remove('couponId');
+
+                return ($this->render('orders/order_completed.html.twig', [
+                    'categories' => $this->categories,
+                    'popular' => $this->popular,
+                    'featured' => $this->featured,
+                    'checkout' => $checkout,
+                    'loggedUser' => $this->loggedUser,
+                    'totalCartItems' => $this->totalCartItems,
+                    'totalWishlistItems' => $this->totalWishlistItems,
+                    'cartItems' => $this->cartItems,
+                    'orderCompleted' => $orderCompleted,
+                    'loginUrl' => $this->loginUrl
+                ]));
+            } else {
+                $this->addFlash(
+                    'notice',
+                    'Ένα σφάλμα παρουσιάστηκε κατά την διαδικασία της παραγγελίας σας. Παρακαλούμε προσπαθήστε ξανά. Αν το πρόβλημα παραμείνει επικοινωνήστε μαζί μας!'
+                );
+                $orderCompleted = false;
+            }
         }
     }
 
-    public function testCheckout()
-    {
-        return ($this->render('orders/checkout-new.html.twig'));
-    }
 
 }

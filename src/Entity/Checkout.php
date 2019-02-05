@@ -106,6 +106,11 @@ class Checkout extends WebUser
     private $couponName;
 
     /**
+     * $var int|null
+     */
+    private $couponId;
+
+    /**
      * @var string|null
      */
     private $pireausResultCode;
@@ -413,6 +418,24 @@ class Checkout extends WebUser
     public function setCouponName($couponName)
     {
         $this->couponName = $couponName;
+        return $this;
+    }
+
+    /**
+     * @return mixed
+     */
+    public function getCouponId()
+    {
+        return $this->couponId;
+    }
+
+    /**
+     * @param mixed $couponId
+     * @return Checkout
+     */
+    public function setCouponId($couponId)
+    {
+        $this->couponId = $couponId;
         return $this;
     }
 

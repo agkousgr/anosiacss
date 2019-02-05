@@ -44,6 +44,7 @@ Encore
     .addEntry('js/jquery.validate.min', './assets/js/jquery.validate.min.js')
     .addEntry('js/back-to-top', './assets/js/back-to-top.js')
     .addEntry('js/google-address', './assets/js/google-address.js')
+    .addEntry('js/hide-top-cart', './assets/js/hide-top-cart.js')
 
     // Admin javascripts
     .addEntry('admin/js/bootstrap.min', './assets/admin/js/bootstrap.min.js')

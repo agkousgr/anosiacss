@@ -158,8 +158,9 @@ class AjaxCartController extends AbstractController
     {
         if ($request->isXmlHttpRequest()) {
             try {
-                $session->remove('couponName');
                 $session->remove('couponDisc');
+                $session->remove('couponName');
+                $session->remove('couponId');
 
                 return $this->json(['success' => true]);
             } catch (\Exception $e) {

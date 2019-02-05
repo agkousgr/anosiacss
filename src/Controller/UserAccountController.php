@@ -312,6 +312,7 @@ class UserAccountController extends MainController
         $this->session->remove('curOrder');
         $this->session->remove('couponDisc');
         $this->session->remove('couponName');
+        $this->session->remove('couponId');
         return $this->redirectToRoute('index');
     }
 

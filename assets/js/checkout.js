@@ -24,7 +24,6 @@ require('bootstrap');
 require('jquery-validation');
 
 $(document).ready(function () {
-    $('#top-cart').hide();
 
     if ($('#total-cost').data('cost') <= 0) {
         $('#checkout-footer').text('Για να ολοκληρώσετε την παραγγελία σας, θα πρέπει να προσθέσετε στο καλάθι σας προϊόντα αξίας ίσης η μεγαλύτερης των ' + Math.abs($('#total-cost').data('cost')) + '€');
@@ -119,7 +118,7 @@ $(document).ready(function () {
         }
     });
 
-    $('#checkout_step1_email').focusout(function() {
+    $('#checkout_step1_email').focusout(function () {
         let data = {
             'email': $(this).val()
         };
@@ -132,7 +131,7 @@ $(document).ready(function () {
                     timer: 5000
                 });
                 $('#confirm-addresses').attr('disabled', 'disabled');
-            }else{
+            } else {
                 $('#confirm-addresses').removeAttr('disabled');
             }
         });
@@ -149,10 +148,14 @@ $(document).ready(function () {
             'checkout_step2[agreeTerms]': "Για να ολοκληρωθεί η παραγγελία σας, αποδεχτείτε τους όρους χρήσης του site",
         },
         submitHandler: function () {
-            let form = $('#checkout-payment-step').find('form');
+            // $('form[name="checkout_step2"]').submit();
+            let form = $('form[name="checkout_step2"]');
             let formData = form.serialize();
-            $.post(Routing.generate('checkout'), formData, function (response) {
-
+            $.post(Routing.generate('checkout'), formData, function (result) {
+                if (result.success === true) {
+                    let url = Routing.generate('complete_checkout');
+                    window.location.assign(url);
+                }
             });
         }
     });
@@ -340,7 +343,7 @@ function calculateAntikatovoli() {
     if ($('#coupon-discount').length > 0) {
         couponDisc = $('#coupon-discount').data('discount');
     }
-    if ($('#cart-cost').data('cost') - couponDisc <= 39) {
+    if ($('#cart-cost').data('cost') - couponDisc >= 39) {
         shippingCost = 0;
         $('#shipping-cost').html('0,00');
     } else {

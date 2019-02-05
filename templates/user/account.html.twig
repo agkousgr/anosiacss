@@ -313,8 +313,8 @@
                                                 <th>Αρ. Παρ.</th>
                                                 <th>Κατάσταση</th>
                                                 <th>Ημερομηνία</th>
-                                                <th>Τρόπος πληρωμής</th>
                                                 <th>Τρόπος αποστολής</th>
+                                                <th>Τρόπος πληρωμής</th>
                                                 <th>Κόστος</th>
                                             </tr>
                                             {% for order in userOrders %}
@@ -334,22 +334,24 @@
                                                 {% elseif order.PayTypeID == 1004 %}
                                                     {% set paymentType = 'Κατάθεση σε τράπεζα' %}
                                                 {% endif %}
-                                                <td>
-                                                    <a href="{{ path('user-order', {'id':order.ID}) }}">
-                                                        <i class="fa fa-eye"></i>
-                                                    </a>
-                                                    {#{% if order.Status == 100 %}#}
-                                                    {#<a href="{{ path('user-order', {'id':order.ID}) }}">#}
-                                                    {#<i class="fa fa-pencil"></i>#}
-                                                    {#</a>#}
-                                                    {#{% endif %}#}
-                                                </td>
-                                                <td>{{ order.EshopNumber }}</td>
-                                                <td></td>
-                                                <td></td>
-                                                <td>{{ shipmentType }}</td>
-                                                <td>{{ paymentType }}</td>
-                                                <td></td>
+                                                <tr>
+                                                    <td>
+                                                        <a href="{{ path('user-order', {'id':order.ID}) }}">
+                                                            <i class="fa fa-eye"></i>
+                                                        </a>
+                                                        {#{% if order.Status == 100 %}#}
+                                                        {#<a href="{{ path('user-order', {'id':order.ID}) }}">#}
+                                                        {#<i class="fa fa-pencil"></i>#}
+                                                        {#</a>#}
+                                                        {#{% endif %}#}
+                                                    </td>
+                                                    <td>{{ order.EshopNumber }}</td>
+                                                    <td></td>
+                                                    <td></td>
+                                                    <td>{{ shipmentType }}</td>
+                                                    <td>{{ paymentType }}</td>
+                                                    <td></td>
+                                                </tr>
                                             {% endfor %}
                                         </table>
                                     {% else %}

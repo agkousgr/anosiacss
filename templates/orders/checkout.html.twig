@@ -453,33 +453,36 @@
                                                 {% else %}
                                                     προϊόντα)
                                                 {% endif %}
-                                                <div class="collapse"
-                                                     id="cart-summary-product-list">
-                                                    <ul class="media-list">
-                                                        {% set cartSubTotal = 0 %}
-                                                        {% set cartTotal = 0 %}
-                                                        {% for pr in cartItems %}
-                                                            <li class="media">
-                                                                <div class="media-left">
-                                                                    <a href="{{ path('product_view', {'id':pr.id}) }}"
-                                                                       title="{{ pr.name }}">
-                                                                        <img class="media-object"
-                                                                             src="{{ pr.imageUrl }}"
-                                                                             alt="{{ pr.name }}">
-                                                                    </a>
-                                                                </div>
-                                                                <div class="media-body">
-                                                                    <span class="product-name">{{ pr.name }}</span>
-                                                                    <span class="product-price float-xs-right pull-right">{{ ((pr.webPrice|number_format(2, '.', ','))*pr.quantity)|number_format(2, ',', '.') }}
-                                                                        €</span>
-                                                                    <span style="padding-right: 10px;"
-                                                                          class="product-quantity pull-right">x{{ pr.quantity }}</span>
-                                                                </div>
-                                                            </li>
-                                                            {% set cartSubTotal = cartSubTotal + (pr.webPrice|number_format(2, '.', ','))*pr.quantity %}
-                                                        {% endfor %}
-                                                    </ul>
-                                                </div>
+                                                <a title="Επιστροφή στο καλάθι" href="{{ path('cart_view') }}">
+                                                    <i class="fas fa-shopping-cart cart-link" style="color:#333333; font-size: 20px; float:right;"></i>
+                                                </a>
+                                            </div>
+                                            <div class="collapse"
+                                                 id="cart-summary-product-list">
+                                                <ul class="media-list">
+                                                    {% set cartSubTotal = 0 %}
+                                                    {% set cartTotal = 0 %}
+                                                    {% for pr in cartItems %}
+                                                        <li class="media">
+                                                            <div class="media-left">
+                                                                <a href="{{ path('product_view', {'id':pr.id}) }}"
+                                                                   title="{{ pr.name }}">
+                                                                    <img class="media-object"
+                                                                         src="{{ pr.imageUrl }}"
+                                                                         alt="{{ pr.name }}">
+                                                                </a>
+                                                            </div>
+                                                            <div class="media-body">
+                                                                <span class="product-name">{{ pr.name }}</span>
+                                                                <span class="product-price float-xs-right pull-right">{{ ((pr.webPrice|number_format(2, '.', ','))*pr.quantity)|number_format(2, ',', '.') }}
+                                                                    €</span>
+                                                                <span style="padding-right: 10px;"
+                                                                      class="product-quantity pull-right">x{{ pr.quantity }}</span>
+                                                            </div>
+                                                        </li>
+                                                        {% set cartSubTotal = cartSubTotal + (pr.webPrice|number_format(2, '.', ','))*pr.quantity %}
+                                                    {% endfor %}
+                                                </ul>
                                             </div>
 
                                             <div class="cart-summary-line cart-summary-subtotals"
@@ -493,7 +496,7 @@
                                                  id="cart-subtotal-shipping">
                                                 <span class="label">Μεταφορικά</span>
                                                 <span class="value">€</span>
-                                                {% if cartSubTotal > 39 %}
+                                                {% if cartSubTotal - checkout.couponDisc|number_format(2, '.', ',') > 39 %}
                                                     <span id="shipping-cost" data-cost="0.00"
                                                           class="value">0,00</span>
                                                 {% else %}
@@ -557,4 +560,5 @@
     <script src="{{ asset('build/js/google-address.js') }}"></script>
     <script src="https://maps.googleapis.com/maps/api/js?key=AIzaSyCVgV2sJEAZFJAAMKf2nhnH7BxtMmQnnis&language=el&region=GR&libraries=places"></script>
     <script src="{{ asset('build/js/checkout.js') }}"></script>
+    <script src="{{ asset('build/js/hide-top-cart.js') }}"></script>
 {% endblock %}

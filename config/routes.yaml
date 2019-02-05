@@ -136,6 +136,12 @@ checkout:
     methods: [GET,POST]
     options:
         expose: true
+complete_checkout:
+    path: /order/complete-checkout
+    controller: App\Controller\CheckoutController::completeCheckout
+    methods: [GET,POST]
+    options:
+        expose: true
 step1_submit:
     path: /order/checkout-step1
     controller: App\Controller\AjaxCheckoutController::step1Submit

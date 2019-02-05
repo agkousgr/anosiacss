@@ -86,7 +86,13 @@
                                                 <td>{{ checkout.antikatavoliCost|number_format(2, ',', '.') }}€</td>
                                             </tr>
                                             {% endif %}
-                                            {% set cartTotal = cartSubTotal + checkout.shippingCost + checkout.antikatavoliCost %}
+                                            {% if checkout.couponDisc > 0 %}
+                                                <tr>
+                                                    <td>Έκπτωση από κουπόνι</td>
+                                                    <td>{{ checkout.couponDisc|number_format(2, ',', '.') }}€</td>
+                                                </tr>
+                                            {% endif %}
+                                            {% set cartTotal = cartSubTotal + checkout.shippingCost + checkout.antikatavoliCost - checkout.couponDisc|number_format(2, '.', ',') %}
                                             <tr class="font-weight-bold">
                                                 <td><span class="text-uppercase">ΣΥΝΟΛΟ</span> (συμπ. ΦΠΑ)</td>
                                                 <td>{{ cartTotal|number_format(2, ',', '.') }}€</td>
@@ -136,7 +142,7 @@
     </div>
 {% endblock %}
 
-{#{% block javascripts %}#}
-    {#{{ parent() }}#}
-    {#<script src="{{ asset('build/js/checkout.js') }}"></script>#}
-{#{% endblock %}#}
+{% block javascripts %}
+    {{ parent() }}
+    <script src="{{ asset('build/js/hide-top-cart.js') }}"></script>
+{% endblock %}
