@@ -111,7 +111,7 @@ class CheckoutService
 //        $this->getAddress($checkout->getClientId(), $checkout);
         $this->getNewsletter($checkout);
         $checkout->setNextPage(1);
-        $checkout->setSeries('7021');
+        $checkout->setSeries('7023');
         $checkout->setShippingType('1000');
         $checkout->setPaymentType('1000');
         $checkout->setComments('');
