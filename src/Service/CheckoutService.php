@@ -487,6 +487,9 @@ EOF;
             <ItemID>$id</ItemID>
             <Quantity>$quantity</Quantity>
             <Price>$webPrice</Price>
+            <Discount1Perc></Discount1Perc>
+            <Discount2Perc></Discount2Perc>
+            <Discount3Perc></Discount3Perc>
         </ClientSetOrderItem>
 ";
             $count++;

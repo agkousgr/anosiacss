@@ -313,6 +313,7 @@ class UserAccountController extends MainController
         $this->session->remove('couponDisc');
         $this->session->remove('couponName');
         $this->session->remove('couponId');
+        $this->session->remove("addAddress");
         return $this->redirectToRoute('index');
     }
 
