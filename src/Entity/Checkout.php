@@ -6,7 +6,7 @@ namespace App\Entity;
 class Checkout extends WebUser
 {
     const PAYMENT_TYPES = [
-        'Κατάθεση σε τράπεζα' => '1004',
+        'Κατάθεση σε τράπεζα' => '1009',
         'Πληρωμή στο κατάστημα' => '1008',
         'Πιστωτική' => '1001',
         'Paypal' => '1006',

@@ -382,7 +382,7 @@ EOF;
 EOF;
         try {
             $result = $this->client->SendMessage(['Message' => $message]);
-            dump($message, $result);
+//            dump($message, $result);
 //            return $result->SendMessageResult;
 //            return str_replace("utf-16", "utf-8", $result->SendMessageResult);
             return simplexml_load_string(str_replace("utf-16", "utf-8", $result->SendMessageResult));

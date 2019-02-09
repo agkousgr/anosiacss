@@ -427,6 +427,7 @@ EOF;
 </ClientSetOrderRequest>
 EOF;
         try {
+//            dump($message);
             $result = $this->client->SendMessage(['Message' => $message]);
             $orderResult = simplexml_load_string(str_replace("utf-16", "utf-8", $result->SendMessageResult));
             dump($message, $result);
@@ -480,16 +481,15 @@ EOF;
         foreach ($cartItems as $cartItem) {
             $id = $cartItem['id'];
             $quantity = $cartItem['quantity'];
-            $webPrice = floatval($cartItem['webPrice']);
+            $webPrice = floatval($cartItem['retailPrice']);
+            $discount = floatval($cartItem['discount']);
             $this->cartItemsCost += number_format(($quantity * $webPrice), 2, '.', ',');
             $items .= "        <ClientSetOrderItem>
             <Number>$count</Number>
             <ItemID>$id</ItemID>
             <Quantity>$quantity</Quantity>
             <Price>$webPrice</Price>
-            <Discount1Perc></Discount1Perc>
-            <Discount2Perc></Discount2Perc>
-            <Discount3Perc></Discount3Perc>
+            <Discount1Perc>$discount</Discount1Perc>          
         </ClientSetOrderItem>
 ";
             $count++;

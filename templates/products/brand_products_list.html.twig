@@ -108,7 +108,7 @@
                                                             <del>{{ pr.retailPrice }}€</del>
                                                         </div>
                                                     </div>
-                                                    {% if pr.outOfStock == "false" %}
+                                                    {% if pr.outOfStock == "false" and (pr.remainNotReserved|number_format() > 0 or pr.webFree == "true") %}
                                                         <button type="button" class="add-to-cart" data-id="{{ pr.id }}"
                                                                 data-name="{{ pr.name }}">
                                                             <i class="fa fa-cart-plus"></i><span>καλαθι</span>
@@ -133,7 +133,7 @@
                                                     <span itemprop="offers" itemscope=""
                                                           itemtype="https://schema.org/Offer"
                                                           class="availability">
-                                                        {% if (pr.remainNotReserved > "0" or pr.webFree == "true") and pr.outOfStock == "false" %}
+                                                        {% if pr.outOfStock == "false" and (pr.remainNotReserved|number_format() > 0 or pr.webFree == "true") %}
                                                             <span class="available-now">
                                                                 <link itemprop="availability"
                                                                       href="https://schema.org/InStock">
@@ -143,7 +143,7 @@
                                                             <span class="out-of-stock">
                                                                 <link itemprop="availability"
                                                                       href="https://schema.org/InStock">
-                                                                Out of Stock
+                                                                Μη διαθέσιμο
                                                             </span>
                                                         {% endif %}
                                                     </span>

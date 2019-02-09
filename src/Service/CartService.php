@@ -104,7 +104,7 @@ EOF;
         try {
             $result = $this->client->SendMessage(['Message' => $message]);
             $items = simplexml_load_string(str_replace("utf-16", "utf-8", $result->SendMessageResult));
-            dump($message, $result);
+//            dump($message, $result);
             $itemsArr = $this->initializeProducts($items->GetDataRows->GetItemsRow, $cartArr);
 
             return $itemsArr;
@@ -132,10 +132,11 @@ EOF;
                     'name' => $pr->Name2,
                     'isVisible' => $pr->WebVisible,
                     'retailPrice' => $pr->RetailPrice,
-                    'discount' => $pr->WebDiscountPerc,
-                    'webPrice' => $pr->WebPrice,
+                    'discount' => $pr->Discount,
+                    'webDiscount' => $pr->WebDiscountPerc,
+                    'webPrice' => ($pr->Discount) ? floatval($pr->RetailPrice) / (floatval($pr->Discount)/100 + 1) : 0,
                     'outOfStock' => $pr->OutOfStock,
-                    'remainNotReserved' => $pr->Remain,
+                    'remainNotReserved' => $pr->RemainNotReserved,
                     'webFree' => $pr->WebFree,
                     'overAvailability' => $pr->OverAvailability,
                     'maxByOrder' => $pr->MaxByOrder,
