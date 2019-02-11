@@ -318,20 +318,20 @@
                                                 <th>Κόστος</th>
                                             </tr>
                                             {% for order in userOrders %}
-                                                {% if order.ShipmentTypeID is defined and order.ShipmentTypeID == 1000 %}
+                                                {% if order.ShipmentTypeID is defined and order.ShipmentTypeID == '104' %}
                                                     {% set shipmentType = 'Courier' %}
                                                 {% else %}
                                                     {% set shipmentType = 'Παραλαβή από το φαρμακείο' %}
                                                 {% endif %}
-                                                {% if order.PayTypeID == 1000 %}
+                                                {% if order.PayTypeID == '1008' %}
                                                     {% set paymentType = 'Πληρωμή στο κατάστημα' %}
-                                                {% elseif order.PayTypeID == 1001 %}
+                                                {% elseif order.PayTypeID == '1001' %}
                                                     {% set paymentType = 'Πιστωτική' %}
-                                                {% elseif order.PayTypeID == 1002 %}
+                                                {% elseif order.PayTypeID == '1006' %}
                                                     {% set paymentType = 'Paypal' %}
-                                                {% elseif order.PayTypeID == 1003 %}
+                                                {% elseif order.PayTypeID == '1007' %}
                                                     {% set paymentType = 'Αντικαταβολή' %}
-                                                {% elseif order.PayTypeID == 1004 %}
+                                                {% elseif order.PayTypeID == '1009' %}
                                                     {% set paymentType = 'Κατάθεση σε τράπεζα' %}
                                                 {% endif %}
                                                 <tr>

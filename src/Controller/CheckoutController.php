@@ -134,7 +134,7 @@ class CheckoutController extends MainController
         $cartCost = $checkoutService->calculateCartCost($this->cartItems);
         $orderWebId = $em->getRepository(OrdersWebId::class)->find(1);
         $checkout->setOrderNo($orderWebId->getOrderNumber() + 1);
-        if ($checkout->getPaymentType() === '1002') {
+        if ($checkout->getPaymentType() === '1006') {
             $paypalService->sendToPaypal($checkout);
 
 //                        $onlinePaymentError = true;
@@ -158,9 +158,17 @@ class CheckoutController extends MainController
                 $bank_config['User'] = 'AN895032';
                 $bank_config['LanguageCode'] = 'el-GR';
 
-                return $this->render('orders/pireaus_post.html.twig', [
+                return $this->render('orders/pireaus_iframe.html.twig', [
                     'checkout' => $checkout,
-                    'bankConfig' => $bank_config
+                    'bankConfig' => $bank_config,
+                    'categories' => $this->categories,
+                    'popular' => $this->popular,
+                    'featured' => $this->featured,
+                    'loggedUser' => $this->loggedUser,
+                    'totalCartItems' => $this->totalCartItems,
+                    'totalWishlistItems' => $this->totalWishlistItems,
+                    'cartItems' => $this->cartItems,
+                    'loginUrl' => $this->loginUrl
                 ]);
             }
         }
@@ -172,7 +180,7 @@ class CheckoutController extends MainController
                     'success',
                     'Η παραγγελία σας ολοκληρώθηκε με επιτυχία. Ένα αντίγραφο έχει αποσταλεί στο email σας ' . $checkout->getEmail() . '. Ευχαριστούμε που μας προτιμήσατε για τις αγορές σας!'
                 );
-                $orderWebId->setOrderNumber($checkout->getOrderNo() + 1);
+//                $orderWebId->setOrderNumber($checkout->getOrderNo() + 1);
                 $em->flush();
                 $checkoutService->sendOrderConfirmationEmail($checkout, $this->cartItems);
                 $checkoutService->emptyCart($this->cartItems, $em);

@@ -34,8 +34,18 @@
                     {{ message }}
                 </div>
             {% endfor %}
-            <section id="main">
-                <iframe width="800" height="455" src="https://paycenter.piraeusbank.gr/redirection/pay.aspx"></iframe>
+            <section id="main" style="text-align: center;">
+                <form action="{{ path('pireaus_iframe') }}" id="pireaus-post" target="pireaus_iframe" method="post">
+                    <input type="hidden" name="AcquirerId" value="{{ bankConfig.AcquirerId }}">
+                    <input type="hidden" name="MerchantId" value="{{ bankConfig.MerchantId }}">
+                    <input type="hidden" name="PosId" value="{{ bankConfig.PosId }}">
+                    <input type="hidden" name="User" value="{{ bankConfig.User }}">
+                    <input type="hidden" name="LanguageCode" value="{{ bankConfig.LanguageCode }}">
+                    <input type="hidden" name="MerchantReference" value="{{ checkout.orderNo }}">
+                    {#<input type="hidden" name="ParamBackLink" value="">#}
+                </form>
+                <iframe name="pireaus-iframe" width="800" height="455"
+                        src="https://paycenter.piraeusbank.gr/redirection/pay.aspx"></iframe>
             </section>
         </div>
         {% include 'partials/footer.html.twig' %}
@@ -44,5 +54,6 @@
 
 {% block javascripts %}
     {{ parent() }}
+    <script src="{{ asset('build/js/pireaus.js') }}"></script>
     <script src="{{ asset('build/js/hide-top-cart.js') }}"></script>
 {% endblock %}

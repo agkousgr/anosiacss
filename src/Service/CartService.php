@@ -134,7 +134,7 @@ EOF;
                     'retailPrice' => $pr->RetailPrice,
                     'discount' => $pr->Discount,
                     'webDiscount' => $pr->WebDiscountPerc,
-                    'webPrice' => ($pr->Discount) ? (floatval($pr->RetailPrice) * (100 - floatval($pr->Discount))/100) : 0,
+                    'webPrice' => ($pr->Discount) ? round((floatval($pr->RetailPrice) * (100 - floatval($pr->Discount))/100), 2) : 0,
                     'outOfStock' => $pr->OutOfStock,
                     'remainNotReserved' => $pr->RemainNotReserved,
                     'webFree' => $pr->WebFree,
