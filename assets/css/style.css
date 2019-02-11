@@ -21195,7 +21195,8 @@ h3.resp-accordion {
 .product-case {
     background: #fff;
     position: relative;
-    overflow: hidden
+    overflow: hidden;
+    border: 1px #efefef solid;
 }
 .ellipse {
     position: absolute;

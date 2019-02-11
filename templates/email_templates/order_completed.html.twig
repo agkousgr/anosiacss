@@ -71,27 +71,27 @@
                                         </table>
                                     </div>
                                 </div>
-                                {% if checkout.shippingType == '1000' %}
-                                    {% set shippintMethod = 'Courier' %}
+                                {% if checkout.shippingType == '104' %}
+                                    {% set shippingMethod = 'Courier' %}
                                 {% else %}
-                                    {% set shippintMethod = 'Παραλαβή από το φαρμακείο' %}
+                                    {% set shippingMethod = 'Παραλαβή από το φαρμακείο' %}
                                 {% endif %}
-                                {% if checkout.paymentType == '1000' %}
+                                {% if checkout.paymentType == '1008' %}
                                     {% set paymentMethod = 'Πληρωμή στο κατάστημα' %}
-                                {% elseif checkout.paymentType == '1001' %}
+                                {% elseif order.paymentType == '1001' %}
                                     {% set paymentMethod = 'Πιστωτική' %}
-                                {% elseif checkout.paymentType == '1002' %}
+                                {% elseif order.paymentType == '1006' %}
                                     {% set paymentMethod = 'Paypal' %}
-                                {% elseif checkout.paymentType == '1003' %}
+                                {% elseif order.paymentType == '1007' %}
                                     {% set paymentMethod = 'Αντικαταβολή' %}
-                                {% elseif checkout.paymentType == '1004' %}
+                                {% elseif order.paymentType == '1009' %}
                                     {% set paymentMethod = 'Κατάθεση σε τράπεζα' %}
                                 {% endif %}
                                 <div id="order-details" class="col-md-6">
                                     <h3 class="h3 card-title">Λεπτομέρειες παραγγελίας:</h3>
                                     <ul>
                                         <li>Κωδικός παραγγελίας: {{ checkout.orderNo }}</li>
-                                        <li>Τρόπος αποστολής: {{ shippintMethod }}</li>
+                                        <li>Τρόπος αποστολής: {{ shippingMethod }}</li>
                                         <li>
                                             Τρόπος πληρωμής: {{ paymentMethod }}<br>
                                             {#<em>Pick up in-store</em>#}
