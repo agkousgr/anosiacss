@@ -318,6 +318,8 @@
                                                 <th>Κόστος</th>
                                             </tr>
                                             {% for order in userOrders %}
+                                                {% set shipmentType = 'Σφάλμα από παλιά παραγγελία'  %}
+                                                {% set paymentType = 'Σφάλμα από παλιά παραγγελία'  %}
                                                 {% if order.ShipmentTypeID is defined and order.ShipmentTypeID == '104' %}
                                                     {% set shipmentType = 'Courier' %}
                                                 {% else %}
