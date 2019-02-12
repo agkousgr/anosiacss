@@ -29,6 +29,14 @@
             color: #c5c5c5;
             cursor: default;
         }
+        #checkout_step1_series label, #checkout_step1_shippingType label {
+            padding-right: 10px;
+            padding-left: 5px;
+        }
+        #checkout-personal-information-step h4 {
+            padding-top: 15px;
+            padding-bottom: 0;
+        }
     </style>
 {% endblock %}
 
@@ -65,8 +73,19 @@
                     <div class="columns_inner">
                         <section id="content">
                             <div class="row">
+                                <div id="pireaus_container" style="text-align: center; display:none;">
+                                    <form action="https://paycenter.piraeusbank.gr/redirection/pay.aspx" id="pireaus-post" target="pireaus-iframe" method="post">
+                                        <input type="hidden" name="AcquirerId" value="{{ bankConfig.AcquirerId }}">
+                                        <input type="hidden" name="MerchantId" value="{{ bankConfig.MerchantId }}">
+                                        <input type="hidden" name="PosId" value="{{ bankConfig.PosId }}">
+                                        <input type="hidden" name="User" value="{{ bankConfig.User }}">
+                                        <input type="hidden" name="LanguageCode" value="{{ bankConfig.LanguageCode }}">
+                                        <input type="hidden" name="MerchantReference" value="{{ checkout.orderNo }}">
+                                        {#<input type="hidden" name="ParamBackLink" value="">#}
+                                    </form>
+                                    <iframe id="pireaus_iframe" name="pireaus-iframe" width="800" height="455"></iframe>
+                                </div>
                                 <div class="col-md-8">
-
                                     <h5 id="checkoutStep1"><a href="">Στοιχεία πελάτη ></a></h5>
                                     <h5 id="checkoutStep2" class="disabled"><a href="">Τρόπος πληρωμής</a></h5>
                                     {#<h5 id="checkoutStep2" class="disabled"><a href="">Τρόπος πληρωμής ></a></h5>#}
@@ -108,33 +127,68 @@
                                                 <div class="tab-content">
                                                     <div class="tab-pane active"
                                                          id="checkout-guest-form" role="tabpanel">
-                                                        {% form_theme step1Form 'form_template/bootstrap_3_step3_checkout.html.twig' %}
+                                                        {#{% form_theme step1Form 'form_template/bootstrap_3_step3_checkout.html.twig' %}#}
                                                         {{ form_start(step1Form) }}
                                                         <section class="form-fields">
                                                             <h4>Προσωπικά στοιχεία</h4>
                                                             <div class="form-group row ">
-                                                                {{ form_label(step1Form.firstname, 'Όνομα', {'label_attr': {'class': 'col-md-3 form-control-label required'}}) }}
+                                                                {#{{ form_label(step1Form.firstname, 'Όνομα', {'label_attr': {'class': 'col-md-3 form-control-label required'}}) }}#}
                                                                 <div class="col-md-6">
-                                                                    {{ form_widget(step1Form.firstname, {'attr': {'class': 'form-control'}}) }}
+                                                                    {{ form_widget(step1Form.firstname, {'attr': {'class': 'form-control', 'placeholder': 'Όνομα'}}) }}
                                                                 </div>
-                                                                <div class="col-md-3 form-control-comment">
+                                                                {#<div class="col-md-3 form-control-comment">#}
+                                                                {#</div>#}
+                                                                {#</div>#}
+
+                                                                {#<div class="form-group row ">#}
+                                                                {#{{ form_label(step1Form.lastname, 'Επώνυμο', {'label_attr': {'class': 'col-md-3 form-control-label required'}}) }}#}
+                                                                <div class="col-md-6">
+                                                                    {{ form_widget(step1Form.lastname, {'attr': {'class': 'form-control', 'placeholder': 'Επώνυμο'}}) }}
+                                                                </div>
+                                                                {#<div class="col-md-3 form-control-comment">#}
+                                                                {#</div>#}
+                                                            </div>
+                                                            <div class="form-group row ">
+                                                                {#{{ form_label(step1Form.email, 'E-mail', {'label_attr': {'class': 'col-md-3 form-control-label required'}}) }}#}
+                                                                <div class="col-md-6">
+                                                                    {{ form_widget(step1Form.email, {'attr': {'class': 'form-control', 'placeholder': 'E-mail'}}) }}
+                                                                </div>
+                                                                <div class="col-md-6">
+                                                                    {{ form_widget(step1Form.phone01, {'attr': {'class': 'form-control', 'placeholder': 'Τηλέφωνο'}}) }}
+                                                                </div>
+                                                                {#<div class="col-md-3 form-control-comment">#}
+                                                                {#</div>#}
+                                                            </div>
+                                                            {% if loggedUser is empty %}
+                                                                <div class="form-group row "
+                                                                     style="background-color: #eee; padding:10px 0;">
+                                                                    {#<label class="col-md-6 form-control-label required control-label"#}
+                                                                    {#for="autocomplete-main-address">Συμπληρώστε#}
+                                                                    {#τη διεύθυσνή σας</label>#}
+
+                                                                    <div class="col-md-6">
+                                                                        <input id="autocomplete-main-address"
+                                                                               class="form-control form-control"
+                                                                               placeholder="Εισάγετε την διεύθυνσή σας εδώ"
+                                                                               type="text"/>
+                                                                    </div>
+                                                                </div>
+                                                            {% endif %}
+                                                            <div class="form-group row ">
+                                                                <div class="col-md-6">
+                                                                    {{ form_widget(step1Form.address, {'attr': {'class': 'form-control', 'placeholder': 'Διεύθυνση'}}) }}
+                                                                </div>
+                                                                <div class="col-md-6">
+                                                                    {{ form_widget(step1Form.zip, {'attr': {'class': 'form-control', 'placeholder': 'Τ.Κ.'}}) }}
                                                                 </div>
                                                             </div>
 
                                                             <div class="form-group row ">
-                                                                {{ form_label(step1Form.lastname, 'Επώνυμο', {'label_attr': {'class': 'col-md-3 form-control-label required'}}) }}
                                                                 <div class="col-md-6">
-                                                                    {{ form_widget(step1Form.lastname, {'attr': {'class': 'form-control'}}) }}
+                                                                    {{ form_widget(step1Form.city, {'attr': {'class': 'form-control', 'placeholder': 'Πόλη'}}) }}
                                                                 </div>
-                                                                <div class="col-md-3 form-control-comment">
-                                                                </div>
-                                                            </div>
-                                                            <div class="form-group row ">
-                                                                {{ form_label(step1Form.email, 'E-mail', {'label_attr': {'class': 'col-md-3 form-control-label required'}}) }}
                                                                 <div class="col-md-6">
-                                                                    {{ form_widget(step1Form.email, {'attr': {'class': 'form-control'}}) }}
-                                                                </div>
-                                                                <div class="col-md-3 form-control-comment">
+                                                                    {{ form_widget(step1Form.district, {'attr': {'class': 'form-control', 'placeholder': 'Περιοχή'}}) }}
                                                                 </div>
                                                             </div>
 
@@ -150,20 +204,20 @@
                                                         <section class="form-fields">
                                                             <h4>Στοιχεία τιμολόγησης</h4>
                                                             {% if loggedUser is not empty and checkout.address|length > 0 %}
-                                                                <article
-                                                                        class="address-item selected"
-                                                                        id="id-address-delivery-address-8">
-                                                                    <header class="h4">
-                                                                        <label class="radio-block">
-                                                                            <div class="address">
-                                                                                <span>{{ checkout.address }}</span>
-                                                                                <br>{{ checkout.zip }}
-                                                                                <br>{{ checkout.city }}
-                                                                                <br>{{ checkout.district }}
-                                                                            </div>
-                                                                        </label>
-                                                                    </header>
-                                                                </article>
+                                                                {#<article#}
+                                                                {#class="address-item selected"#}
+                                                                {#id="id-address-delivery-address-8">#}
+                                                                {#<header class="h4">#}
+                                                                {#<label class="radio-block">#}
+                                                                {#<div class="address">#}
+                                                                {#<span>{{ checkout.address }}</span>#}
+                                                                {#<br>{{ checkout.zip }}#}
+                                                                {#<br>{{ checkout.city }}#}
+                                                                {#<br>{{ checkout.district }}#}
+                                                                {#</div>#}
+                                                                {#</label>#}
+                                                                {#</header>#}
+                                                                {#</article>#}
                                                             {% else %}
                                                                 <div class="form-group row "
                                                                      style="background-color: #eee; padding-top:10px;">
@@ -174,7 +228,7 @@
                                                                     <div class="col-md-6">
                                                                         <input id="autocomplete-main-address"
                                                                                class="form-control form-control"
-                                                                               placeholder="Εισάγετε την διεύθυνσή σας"
+                                                                               placeholder="Εισάγετε την διεύθυνσή σας εδώ"
                                                                                type="text"/>
                                                                     </div>
                                                                 </div>
@@ -225,24 +279,15 @@
                                                             {% endif %}
                                                             <div id="invoice-fields" class="hidden">
                                                                 <div class="form-group row ">
-                                                                    {{ form_label(step1Form.afm, 'ΑΦΜ', {'label_attr': {'class': 'col-md-3 form-control-label required'}}) }}
                                                                     <div class="col-md-6 ">
-                                                                        {{ form_widget(step1Form.afm, {'attr': {'class': 'form-control'}}) }}
+                                                                        {{ form_widget(step1Form.afm, {'attr': {'class': 'form-control', 'placeholder': 'ΑΦΜ'}}) }}
                                                                     </div>
-                                                                    <div class="col-md-3 form-control-comment">
-                                                                    </div>
-                                                                </div>
-                                                                <div class="form-group row ">
-                                                                    {{ form_label(step1Form.irs, 'ΔΟΥ', {'label_attr': {'class': 'col-md-3 form-control-label required'}}) }}
                                                                     <div class="col-md-6 ">
-                                                                        {{ form_widget(step1Form.irs, {'attr': {'class': 'form-control'}}) }}
-                                                                    </div>
-                                                                    <div class="col-md-3 form-control-comment">
+                                                                        {{ form_widget(step1Form.irs, {'attr': {'class': 'form-control', 'placeholder': 'ΔΟΥ'}}) }}
                                                                     </div>
                                                                 </div>
                                                             </div>
                                                             <div class="form-group row ">
-                                                                {{ form_label(step1Form.series, 'Παραστατικό', {'label_attr': {'class': 'col-md-3 form-control-label required'}}) }}
                                                                 <div class="col-md-6">
                                                                     {{ form_widget(step1Form.series, {'attr': {'class': 'form-control no-border'}}) }}
                                                                 </div>
@@ -251,13 +296,12 @@
                                                             </div>
                                                             <h4>Διεύθυνση αποστολής</h4>
                                                             <div class="form-group row">
-                                                                <div class="col-md-9 col-md-offset-3">
+                                                                <div class="col-md-9">
                                                                     <input name="use_same_address"
                                                                            id="use_same_address"
                                                                            value="1"
-                                                                           checked=""
                                                                            type="checkbox">
-                                                                    <label>Ίδια διεύθυνση αποστολής</label>
+                                                                    <label>Αποστολή σε διαφορετικό παραλήπτη</label>
                                                                 </div>
                                                             </div>
                                                             <div id="ship-address" class="hidden">
@@ -287,62 +331,44 @@
                                                                         {% endif %}
                                                                     </div>
                                                                 {% endif %}
-                                                                <div class="form-group row " style="background-color: #eee; padding-top:10px;">
-                                                                    <label class="col-md-3 form-control-label required control-label"
-                                                                           for="autocomplete">Συμπληρώστε τη διεύθυσνή
-                                                                        σας</label>
-
+                                                                <div class="form-group row "
+                                                                     style="background-color: #eee; padding:10px 0;">
+                                                                    {#<label class="col-md-3 form-control-label required control-label"#}
+                                                                    {#for="autocomplete">Συμπληρώστε τη διεύθυσνή#}
+                                                                    {#σας</label>#}
                                                                     <div class="col-md-6">
                                                                         <input id="autocomplete-ship-address"
                                                                                class="form-control form-control"
-                                                                               placeholder="Εισάγετε την διεύθυνσή σας"
+                                                                               placeholder="Εισάγετε την διεύθυνσή παραλήπτη"
                                                                                type="text"/>
                                                                     </div>
-                                                                    <div class="col-md-3 form-control-comment">
+                                                                    {#<div class="col-md-3 form-control-comment">#}
+                                                                    {#</div>#}
+                                                                </div>
+
+                                                                <div class="form-group row ">
+                                                                    <div class="col-md-6">
+                                                                        {{ form_widget(step1Form.shipAddress, {'attr': {'class': 'form-control', 'placeholder': 'Διεύθυνση'}}) }}
+                                                                    </div>
+                                                                    <div class="col-md-6">
+                                                                        {{ form_widget(step1Form.shipZip, {'attr': {'class': 'form-control', 'placeholder': 'Τ.Κ.'}}) }}
                                                                     </div>
                                                                 </div>
 
                                                                 <div class="form-group row ">
-                                                                    {{ form_label(step1Form.shipAddress, 'Διεύθυνση', {'label_attr': {'class': 'col-md-3 form-control-label required'}}) }}
                                                                     <div class="col-md-6">
-                                                                        {{ form_widget(step1Form.shipAddress, {'attr': {'class': 'form-control'}}) }}
+                                                                        {{ form_widget(step1Form.shipCity, {'attr': {'class': 'form-control', 'placeholder': 'Πόλη'}}) }}
                                                                     </div>
-                                                                    <div class="col-md-3 form-control-comment">
+                                                                    <div class="col-md-6">
+                                                                        {{ form_widget(step1Form.shipDistrict, {'attr': {'class': 'form-control', 'placeholder': 'Περιοχή'}}) }}
                                                                     </div>
                                                                 </div>
-
-                                                                <div class="form-group row ">
-                                                                    {{ form_label(step1Form.shipZip, 'Τ.Κ.', {'label_attr': {'class': 'col-md-3 form-control-label required'}}) }}
-                                                                    <div class="col-md-6">
-                                                                        {{ form_widget(step1Form.shipZip, {'attr': {'class': 'form-control'}}) }}
-                                                                    </div>
-                                                                    <div class="col-md-3 form-control-comment">
-                                                                    </div>
-                                                                </div>
-
-                                                                <div class="form-group row ">
-                                                                    {{ form_label(step1Form.shipCity, 'Πόλη', {'label_attr': {'class': 'col-md-3 form-control-label required'}}) }}
-                                                                    <div class="col-md-6">
-                                                                        {{ form_widget(step1Form.shipCity, {'attr': {'class': 'form-control'}}) }}
-                                                                    </div>
-                                                                    <div class="col-md-3 form-control-comment">
-                                                                    </div>
-                                                                </div>
-
-                                                                <div class="form-group row ">
-                                                                    {{ form_label(step1Form.shipDistrict, 'Περιοχή', {'label_attr': {'class': 'col-md-3 form-control-label required'}}) }}
-                                                                    <div class="col-md-6">
-                                                                        {{ form_widget(step1Form.shipDistrict, {'attr': {'class': 'form-control'}}) }}
-                                                                    </div>
-                                                                    <div class="col-md-3 form-control-comment">
-                                                                    </div>
-                                                                </div>
-
                                                             </div>
                                                         </section>
                                                         <section class="form-fields">
+                                                            <h4>Τρόπος Αποστολής</h4>
                                                             <div class="form-group row ">
-                                                                {{ form_label(step1Form.shippingType, 'Τρόπος Αποστολής', {'label_attr': {'class': 'col-md-3 form-control-label required'}}) }}
+                                                                {#{{ form_label(step1Form.shippingType, 'Τρόπος Αποστολής', {'label_attr': {'class': 'col-md-3 form-control-label required'}}) }}#}
                                                                 <div class="col-md-9">
                                                                     {{ form_widget(step1Form.shippingType, {'attr': {'class': 'form-control no-border'}}) }}
                                                                 </div>
@@ -455,10 +481,11 @@
                                                     προϊόντα)
                                                 {% endif %}
                                                 <a title="Επιστροφή στο καλάθι" href="{{ path('cart_view') }}">
-                                                    <i class="fas fa-shopping-cart cart-link" style="color:#333333; font-size: 20px; float:right;"></i>
+                                                    <i class="fas fa-shopping-cart cart-link"
+                                                       style="color:#333333; font-size: 20px; float:right;"></i>
                                                 </a>
                                             </div>
-                                            <div class="collapse"
+                                            <div class="collapse" style="display:block"
                                                  id="cart-summary-product-list">
                                                 <ul class="media-list">
                                                     {% set cartSubTotal = 0 %}
