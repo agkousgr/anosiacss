@@ -40,7 +40,8 @@
                         </div>
                     </div>
                     <div class="product-short-info">
-                        <div class="product-name"><a href="#">{{ pr.name }}</a>
+                        <div class="product-name">
+                            <a href="#">{{ pr.name }}</a>
                         </div>
                         {#<div class="star"><i class="fa fa-star"></i><i#}
                                     {#class="fa fa-star"></i><i class="fa fa-star"></i><i#}
@@ -50,6 +51,26 @@
                             <div class="product-price-span">{{ pr.webPrice|number_format(2, ',', '.') }}€
                                 <del>{{ pr.retailPrice|number_format(2, ',', '.') }}€</del>
                             </div>
+                        </div>
+                        <div>
+                            <span itemprop="offers" itemscope=""
+                                  itemtype="https://schema.org/Offer"
+                                  class="availability">
+                                {#{% if (pr.remainNotReserved > "0" or pr.webFree == "true") and pr.outOfStock == "false" %}#}
+                                {% if pr.outOfStock == "false" and (pr.remainNotReserved|number_format() > 0 or pr.webFree == "true") %}
+                                    <span class="available-now">
+                                        <link itemprop="availability"
+                                              href="https://schema.org/InStock">
+                                        Διαθέσιμο
+                                    </span>
+                                {% else %}
+                                    <span class="out-of-stock">
+                                        <link itemprop="availability"
+                                              href="https://schema.org/InStock">
+                                        Μη διαθέσιμο
+                                    </span>
+                                {% endif %}
+                            </span>
                         </div>
                     </div>
                 </div>

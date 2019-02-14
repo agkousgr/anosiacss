@@ -96,7 +96,8 @@ class UserAccountController extends MainController
     public function viewOrder(int $id, UserAccountService $userAccountService)
     {
         $userOrder = $userAccountService->getOrder($this->loggedClientId, $id);
-//        dump($userOrders);
+        $voucherDisc = $userAccountService->getCoupon($userOrder['voucherId']);
+        dump($voucherDisc);
         return $this->render('user/view_order.html.twig', [
             'categories' => $this->categories,
             'popular' => $this->popular,
@@ -107,6 +108,7 @@ class UserAccountController extends MainController
             'loggedName' => $this->loggedName,
             'loggedUser' => $this->loggedUser,
             'order' => $userOrder,
+            'voucherDisc' => $voucherDisc
         ]);
     }
 
