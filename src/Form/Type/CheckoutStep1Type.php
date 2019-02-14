@@ -35,6 +35,11 @@ class CheckoutStep1Type extends AbstractType
             ->add('nextPage', HiddenType::class, array(
                 'data' => 2
             ))
+            ->add('address', TextType::class)
+            ->add('zip', TextType::class)
+            ->add('city', TextType::class)
+            ->add('district', TextType::class)
+            ->add('phone01', TextType::class)
             ->add('newsletter', CheckboxType::class, array(
                 'required' => false,
             ))
@@ -74,7 +79,7 @@ class CheckoutStep1Type extends AbstractType
             ))
         ;
 
-        $builder->addEventSubscriber(new CheckoutSubscriber($options, $this->session));
+//        $builder->addEventSubscriber(new CheckoutSubscriber($options, $this->session));
 //        $builder->addEventSubscriber(new CheckoutSubscriber($options, $this->session));
 
     }

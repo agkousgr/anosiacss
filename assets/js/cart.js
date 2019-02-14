@@ -1,5 +1,6 @@
-$(document).ready(function () {
+import swal from 'sweetalert2';
 
+$(document).ready(function () {
     $('#update-cart-btn').on('click', function (e) {
         e.preventDefault();
         $('form[name="cart-items"]').submit();

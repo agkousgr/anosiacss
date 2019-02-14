@@ -23,7 +23,8 @@ class DefaultController extends MainController
                 ];
             }
             dump($ourCornerProducts);
-            $bestSellers = $this->productService->getCategoryItems('1012', 0, 9, 'null', 'null', 'null', 1, 'null');
+            $bestSellers = $this->productService->getCategoryItems('1578', 0, 9, 'null', 'null', 'null', 1, 'null');
+            $latest = $this->productService->getCategoryItems(-1, 0, 9, 'IssueDateAsc', 'null', 'null', 1, 'null');
 //            $bestSellers = $this->productService->getCategoryItems('1868', 0, 9, 'null', 'null', 'null', 1, 'null');
             $articles = $em->getRepository(Article::class)->findBy(['category' => 1], ['createdAt' => 'DESC'], 3);
             // Create a new instagram instance.
@@ -38,7 +39,7 @@ class DefaultController extends MainController
 
             $reviews = $this->fb->get('/292956054170320/ratings')->getDecodedBody();
             $fbFeed = $this->fb->get('/292956054170320/feed')->getDecodedBody();
-            dump($this->fb->get('/292956054170320/feed'));
+            dump($reviews, $this->fb->get('/292956054170320/feed'));
 
             return $this->render('layout.html.twig', [
                 'categories' => $this->categories,

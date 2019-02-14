@@ -60,6 +60,26 @@
                                 <del>{{ pr.retailPrice }}€</del>
                             </div>
                         </div>
+                        <div>
+                            <span itemprop="offers" itemscope=""
+                                  itemtype="https://schema.org/Offer"
+                                  class="availability">
+                                {#{% if (pr.remainNotReserved > "0" or pr.webFree == "true") and pr.outOfStock == "false" %}#}
+                                {% if pr.outOfStock == "false" and (pr.remainNotReserved|number_format() > 0 or pr.webFree == "true") %}
+                                    <span class="available-now">
+                                        <link itemprop="availability"
+                                              href="https://schema.org/InStock">
+                                        Διαθέσιμο
+                                    </span>
+                                {% else %}
+                                    <span class="out-of-stock">
+                                        <link itemprop="availability"
+                                              href="https://schema.org/InStock">
+                                        Out of Stock
+                                    </span>
+                                {% endif %}
+                            </span>
+                        </div>
                     </div>
                 </div>
             </div>

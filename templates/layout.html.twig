@@ -90,16 +90,16 @@
         {% include 'home_page_modules/slider.html.twig' %}
         {#{% include 'home_page_modules/00_promo_categories.html.twig' %}#}
 
-        {#{% include 'home_page_modules/16_best_sellers.html.twig' %}#}
+        {% include 'home_page_modules/16_best_sellers.html.twig' %}
         {% include 'home_page_modules/search_for_anosia.twig' %}
         {% include 'home_page_modules/social01.html.twig' %}
-        {% include 'home_page_modules/10_latest_offers.html.twig' %}
+        {#{% include 'home_page_modules/10_latest_offers.html.twig' %}#}
 
         {#{% include 'home_page_modules/latest_offers_new.html.twig' %}#}
 
-        {#{% include 'home_page_modules/03_promo.html.twig' %}#}
+        {% include 'home_page_modules/03_promo.html.twig' %}
         {#{% include 'home_page_modules/04_inside_slider.html.twig' %}#}
-        {#{% include 'home_page_modules/05_new_products.html.twig' %}#}
+        {% include 'home_page_modules/05_new_products.html.twig' %}
         {#{% include 'home_page_modules/06_categories.html.twig' %}#}
         {#{% include 'home_page_modules/07_featured_products.html.twig' %}#}
 
@@ -125,7 +125,7 @@
     </div>
 
 {% endblock %}
-
+<a href="{{ path('products_list', {'slug': 'ΠΡΟΣΦΟΡΕΣ'}) }}" class="offers-bottom"><img style="width: 200px;" src="{{ asset('images/sales-badge-footer.png') }}"></a>
 <a href="#0" class="cd-top js-cd-top">Top</a>
 {% block javascripts %}
     {% include 'partials/javascripts.html.twig' %}

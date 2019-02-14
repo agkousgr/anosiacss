@@ -1,4 +1,4 @@
-<div class="section" style="background-image:url({{ asset('images/bg-4.jpg') }});">
+<div class="section" style="background-color: #4fa56e;">
     <div class="container">
         <div class="section-heading row wow flipInX" data-wow-delay="0.4s">
             <div class="col-sm-8 col-sm-offset-2">
@@ -8,30 +8,44 @@
             </div>
         </div>
 
-        <div class="owl-carousel owl-theme ProductScroll">
+        <div class="owl-carousel owl-theme LatestProductsScroll product-main-slider">
             {% for pr in featured %}
                 <div class="item">
                     <div class="product-case">
                         <div class="tag tag-green"><span>new</span></div>
                         <div class="product-img">
-                            <div class="hover-img"><img src="{{ pr.imageUrl }}" alt="{{ pr.name }}"></div>
-                            <a href="{{ path('product_view', {'id':pr.id}) }}"><img src="{{ pr.imageUrl }}" alt="{{ pr.name }}"></a>
+                            <div class="hover-img">
+                                <a href="{{ path('product_view', {'id':pr.id}) }}"><img src="{{ pr.imageUrl }}" alt=""></a>
+                            </div>
+                            <a href="#">
+                                <a href="{{ path('product_view', {'id':pr.id}) }}"><img src="{{ pr.imageUrl }}" alt=""></a>
+                            </a>
                         </div>
                         <div class="hover-info">
                             <div class="product-short-info">
-                                <div class="product-name"><a href="{{ path('product_view', {'id':pr.id}) }}">{{ pr.name }}</a></div>
-                                {#<div class="star"><i class="fa fa-star"></i><i class="fa fa-star"></i><i#}
-                                            {#class="fa fa-star"></i><i class="fa fa-star"></i><i#}
-                                            {#class="fa fa-star"></i><i#}
-                                            {#class="fa fa-star-o"></i></div>#}
-                                <div class="product-price">
-                                    <div class="product-price-span">{{ pr.webPrice }}€
-                                        <del>{{ pr.retailPrice }}€</del>
-                                    </div>
+                                <div class="product-name">
+                                    {% if pr.summary|length > 0 %}
+                                        {#{% set text = pr.summary|render %}#}
+                                        {% set hoverText = pr.summary|truncate(110, true)|raw %}
+                                    {% else %}
+                                        {% set hoverText = pr.name|title|truncate(100, true)|raw %}
+                                    {% endif %}
+                                    <a href="{{ path('product_view', {'id':pr.id}) }}">{{ hoverText }}</a>
                                 </div>
-                                <button type="button" class="add-to-cart" data-id="{{ pr.id }}">
-                                    <i class="fa fa-cart-plus"></i>
-                                    <span>Καλάθι</span>
+                                <div class="product-price">
+                                    <div class="product-price-span">
+                                        Κωδ. {{ pr.prCode }}
+                                    </div>
+                                    {#<div class="product-price-span">{{ pr.webPrice }}€#}
+                                    {#<del>{{ pr.retailPrice }}€</del>#}
+                                    {#</div>#}
+                                </div>
+                                <button href="#"
+                                        class="add-to-cart"
+                                        data-id="{{ pr.id }}"
+                                        data-name="{{ pr.name }}"
+                                        type="button">
+                                    <i class="fa fa-cart-plus"></i><span>στο καλαθι</span>
                                 </button>
                             </div>
                         </div>
@@ -45,6 +59,26 @@
                                 <div class="product-price-span">{{  pr.webPrice }}€
                                     <del>{{ pr.retailPrice }}€</del>
                                 </div>
+                            </div>
+                            <div>
+                                <span itemprop="offers" itemscope=""
+                                      itemtype="https://schema.org/Offer"
+                                      class="availability">
+                                    {#{% if (pr.remainNotReserved > "0" or pr.webFree == "true") and pr.outOfStock == "false" %}#}
+                                    {% if pr.outOfStock == "false" and (pr.remainNotReserved|number_format() > 0 or pr.webFree == "true") %}
+                                        <span class="available-now">
+                                            <link itemprop="availability"
+                                                  href="https://schema.org/InStock">
+                                            Διαθέσιμο
+                                        </span>
+                                    {% else %}
+                                        <span class="out-of-stock">
+                                            <link itemprop="availability"
+                                                  href="https://schema.org/InStock">
+                                            Out of Stock
+                                        </span>
+                                    {% endif %}
+                                </span>
                             </div>
                         </div>
                     </div>

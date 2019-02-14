@@ -127,6 +127,8 @@ class CronJobsController extends AbstractController
             // Todo: Check how to remove deleted category from S1
             $categories = $this->cronJobsService->synchronizeCategories($this->authId);
             foreach ($categories as $val) {
+                dump($val);
+//                continue;
                 $categoryExists = $this->em->getRepository(Category::class)->find($val["id"]);
                 if ($categoryExists) {
                     $category = $categoryExists;
@@ -165,8 +167,10 @@ class CronJobsController extends AbstractController
     private function createChild($subCategories, $parentId)
     {
         try {
-            foreach ($subCategories as $val) {
-                $categoryExists = $this->em->getRepository(Category::class)->find($val["id"]);
+            $subCtgsArr = explode(',', $subCategories);
+            foreach ($subCtgsArr as $val) {
+                dump($val);
+                $categoryExists = $this->em->getRepository(Category::class)->find((int)$val["id"]);
                 $parentCategory = $this->em->getRepository(Category::class)->find($parentId);
                 dump($categoryExists, $parentCategory);
                 if ($categoryExists) {

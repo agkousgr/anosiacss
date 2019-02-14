@@ -2,6 +2,7 @@
 
 namespace App\Service;
 
+use App\Entity\Cart;
 use Psr\Log\LoggerInterface;
 use Symfony\Component\HttpFoundation\Session\SessionInterface;
 
@@ -68,13 +69,14 @@ class CartService
     /**
      * @param $id
      * @param $authId
+     * @param $pagesize
      * @param $cartArr
      * @return array
      * @throws \Exception
      */
     public function getCartItems($ids, $cartArr, $pagesize, $highPrice = -1)
     {
-
+        $pagesize = ($pagesize !== 1) ? $pagesize : 2 ;
         $message = <<<EOF
 <?xml version="1.0" encoding="utf-16"?>
 <ClientGetItemsRequest>
@@ -102,7 +104,7 @@ EOF;
         try {
             $result = $this->client->SendMessage(['Message' => $message]);
             $items = simplexml_load_string(str_replace("utf-16", "utf-8", $result->SendMessageResult));
-            dump($message, $result);
+//            dump($message, $result);
             $itemsArr = $this->initializeProducts($items->GetDataRows->GetItemsRow, $cartArr);
 
             return $itemsArr;
@@ -130,10 +132,11 @@ EOF;
                     'name' => $pr->Name2,
                     'isVisible' => $pr->WebVisible,
                     'retailPrice' => $pr->RetailPrice,
-                    'discount' => $pr->WebDiscountPerc,
-                    'webPrice' => $pr->WebPrice,
+                    'discount' => $pr->Discount,
+                    'webDiscount' => $pr->WebDiscountPerc,
+                    'webPrice' => ($pr->Discount) ? round((floatval($pr->RetailPrice) * (100 - floatval($pr->Discount))/100), 2) : 0,
                     'outOfStock' => $pr->OutOfStock,
-                    'remainNotReserved' => $pr->Remain,
+                    'remainNotReserved' => $pr->RemainNotReserved,
                     'webFree' => $pr->WebFree,
                     'overAvailability' => $pr->OverAvailability,
                     'maxByOrder' => $pr->MaxByOrder,
@@ -172,7 +175,7 @@ EOF;
         try {
             $result = $this->client->SendMessage(['Message' => $message]);
             $items = simplexml_load_string(str_replace("utf-16", "utf-8", $result->SendMessageResult));
-//            dump($message, $result);
+            dump($message, $result);
             if ($items->GetDataRows->GetVoucherRow) {
                 $fromDt = new \DateTime($items->GetDataRows->GetVoucherRow->FromDT);
                 $toDt = new \DateTime($items->GetDataRows->GetVoucherRow->ToDT);
@@ -181,12 +184,15 @@ EOF;
                 if ($fromDt > $today || $today > $toDt) {
                     return false;
                 }
+                //Todo: put all coupon session in one variable
                 if (intval($items->GetDataRows->GetVoucherRow->Value) > 0) {
                     $this->session->set('couponDisc', strval($items->GetDataRows->GetVoucherRow->Value));
                     $this->session->set('couponName', $voucherCode);
+                    $this->session->set('couponId', intval($items->GetDataRows->GetVoucherRow->ID));
                     return true;
                 } elseif (intval($items->GetDataRows->GetVoucherRow->Percentage) > 0) {
                     $this->session->set('couponDisc', $items->GetDataRows->GetVoucherRow->Percentage . '%');
+                    $this->session->set('couponId', intval($items->GetDataRows->GetVoucherRow->ID));
                     return true;
                 } else {
                     return false;
@@ -197,4 +203,51 @@ EOF;
             echo $sf->faultstring;
         }
     }
+
+    public function assignSessionToUserCart($em, $username)
+    {
+        try {
+            $cartItems = $em->getRepository(Cart::class)->getCartBySession($this->session->getId());
+            if ($cartItems) {
+                foreach ($cartItems as $item) {
+                    $cartItem = $em->getRepository(Cart::class)->findOneBy(['product_id' => $item->getProductId(), 'username' => $username]);
+                    if ($cartItem) {
+                        $cartItem->setQuantity($item->getQuantity());
+                        $em->persist($cartItem);
+                        $em->remove($item);
+                        $em->flush();
+                    } else {
+                        $item->setUsername($username);
+                        $em->persist($item);
+                        $em->flush();
+                    }
+                }
+            }
+
+        } catch (\Exception $e) {
+            $this->logger->error(__METHOD__ . ' -> {message}', ['message' => $e->getMessage()]);
+            throw $e;
+        }
+    }
+
+    public function clearCart($em, $username)
+    {
+        try {
+            $cartItems = $em->getRepository(Cart::class)->getCartByUser($username);
+            if ($cartItems) {
+                foreach ($cartItems as $item) {
+                    dump($item);
+                    $item->setSessionId('');
+                    $em->persist($item);
+                    $em->flush();
+                    dump($item);
+                }
+            }
+
+        } catch (\Exception $e) {
+            $this->logger->error(__METHOD__ . ' -> {message}', ['message' => $e->getMessage()]);
+            throw $e;
+        }
+    }
+
 }

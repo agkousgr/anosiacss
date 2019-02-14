@@ -188,12 +188,13 @@ EOF;
                         'isVisible' => $pr->WebVisible,
                         'prCode' => $pr->Code,
                         'retailPrice' => $pr->RetailPrice,
+                        'discount' => $pr->Discount,
                         'mainBarcode' => $pr->MainBarcode,
-                        'discount' => $pr->WebDiscountPerc,
-                        'webPrice' => $pr->WebPrice,
+                        'webDiscount' => $pr->WebDiscountPerc,
+                        'webPrice' => ($pr->Discount) ? round((floatval($pr->RetailPrice) * (100 - floatval($pr->Discount))/100), 2) : 0,
                         'outOfStock' => $pr->OutOfStock,
                         'manufacturerId' => $pr->ManufacturID,
-                        'remainNotReserved' => $pr->Remain,
+                        'remainNotReserved' => $pr->RemainNotReserved,
                         'isNew' => $this->checkIfProductIsNew($pr->InsertDT),
                         'webFree' => $pr->WebFree,
                         'overAvailability' => $pr->OverAvailability,
@@ -231,7 +232,7 @@ EOF;
      * @return array
      * @throws \Exception
      */
-    public function getItems($id = 'null', $keyword = 'null', $pagesize, $sortBy = 'null', $isSkroutz = -1, $makeId = 'null', $priceRange = 'null', $itemCode = 'null', $webVisible = 1, $manufacturerId = 'null', $page = 0)
+    public function getItems($id = 'null', $keyword = 'null', $pagesize, $sortBy = 'NameAsc', $isSkroutz = -1, $makeId = 'null', $priceRange = 'null', $itemCode = 'null', $webVisible = 1, $manufacturerId = 'null', $page = 0)
     {
 
         $priceRangeArr = ($priceRange != 'null') ? explode('-', $priceRange) : -1;
@@ -267,7 +268,7 @@ EOF;
             $result = $this->client->SendMessage(['Message' => $message]);
             $items = simplexml_load_string(str_replace("utf-16", "utf-8", $result->SendMessageResult), 'SimpleXMLElement', LIBXML_COMPACT | LIBXML_PARSEHUGE);
             dump($message);
-//            dump($result);
+            dump($result);
 //            die();
             if (intval($items->RowsCount) > 0) {
                 if ($items !== false && ($keyword !== 'null' || $makeId !== 'null' || $isSkroutz === '1' || ($id === 'null' && $itemCode === 'null'))) { // THIS IS FOR MIGRATING PRODUCTS
@@ -350,14 +351,15 @@ EOF;
                     'seoTitle' => $pr->SEOTitle,
                     'seoKeywords' => $pr->SEOKeywords,
                     'retailPrice' => $pr->RetailPrice,
-                    'discount' => $pr->WebDiscountPerc,
+                    'discount' => $pr->Discount,
                     'mainBarcode' => $pr->MainBarcode,
                     'prCode' => $pr->Code,
                     'isVisible' => $pr->WebVisible,
-                    'webPrice' => $pr->WebPrice,
+                    'webPrice' => ($pr->Discount) ? round((floatval($pr->RetailPrice) * (100 - floatval($pr->Discount))/100), 2) : 0,
+                    'webDiscount' => $pr->WebDiscountPerc,
                     'isNew' => $this->checkIfProductIsNew($pr->InsertDT),
                     'outOfStock' => $pr->OutOfStock,
-                    'remainNotReserved' => $pr->Remain,
+                    'remainNotReserved' => $pr->RemainNotReserved,
                     'manufacturerId' => $pr->ManufacturID,
                     'webFree' => $pr->WebFree,
                     'overAvailability' => $pr->OverAvailability,
@@ -491,10 +493,11 @@ EOF;
                     'prCode' => $pr->Code,
                     'isVisible' => $pr->WebVisible,
                     'retailPrice' => $pr->RetailPrice,
-                    'discount' => $pr->WebDiscountPerc,
-                    'webPrice' => $pr->WebPrice,
+                    'discount' => $pr->Discount,
+                    'webDiscount' => $pr->WebDiscountPerc,
+                    'webPrice' => ($pr->Discount) ? round((floatval($pr->RetailPrice) * (100 - floatval($pr->Discount))/100), 2) : 0,
                     'outOfStock' => $pr->OutOfStock,
-                    'remainNotReserved' => $pr->Remain,
+                    'remainNotReserved' => $pr->RemainNotReserved,
                     'webFree' => $pr->WebFree,
                     'overAvailability' => $pr->OverAvailability,
                     'maxByOrder' => $pr->MaxByOrder,

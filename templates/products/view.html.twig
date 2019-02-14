@@ -56,6 +56,11 @@
                             <div class="col-sm-4">
                                 <div class="product-main-slider">
                                     <div class="slider">
+                                        {% if pr.discount %}
+                                            <div class="ellipse">
+                                                <span>-{{ pr.discount }}%</span>
+                                            </div>
+                                        {% endif %}
                                         <div class="main-image">
                                             <ul class="bxslider">
                                                 {% for image in pr.extraImages %}
@@ -101,12 +106,18 @@
                                 <div class="product-id">Κωδ. Προϊόντος :
                                     <span>{{ pr.prCode }}</span>
                                 </div>
+                                {% if pr.discount %}
+                                    <div>από
+                                        <del style="color: #da4644; font-weight: bold;">{{ pr.retailPrice|number_format(2, ',', '.') }}
+                                            €
+                                        </del>
+                                    </div>
+                                {% endif %}
                                 <div class="product-price">{{ pr.webPrice|number_format(2, ',', '.') }}
                                     €
-                                    <del>{{ pr.retailPrice|number_format(2, ',', '.') }}€</del>
-                                    {% if pr.discount %}
-                                        <div class="discount">-{{ pr.discount }}%</div>
-                                    {% endif %}
+                                    {#{% if pr.discount %}#}
+                                    {#<div class="discount">-{{ pr.discount }}%</div>#}
+                                    {#{% endif %}#}
                                 </div>
                                 <!-- content availability -->
                                 <div class="product_attributes clearfix">
@@ -115,7 +126,7 @@
                                           itemtype="https://schema.org/Offer"
                                           class="availability">
                                         {#{% if (pr.remainNotReserved > "0" or pr.webFree == "true") and pr.outOfStock == "false" %}#}
-                                        {% if pr.outOfStock == "false" or pr.webFree == "true" %}
+                                        {% if pr.outOfStock == "false" and (pr.remainNotReserved|number_format() > 0 or pr.webFree == "true") %}
                                         <span class="available-now">
                                             <link itemprop="availability"
                                                   href="https://schema.org/InStock">
@@ -125,7 +136,7 @@
                                         <span class="out-of-stock">
                                             <link itemprop="availability"
                                                   href="https://schema.org/InStock">
-                                            Out of Stock
+                                            Μη Διαθέσιμο
                                             {% endif %}
                                         </span>
                                     </span>
@@ -146,7 +157,7 @@
                                                 <input id="add-quantity"
                                                        class="form-control stepper" type="number"
                                                        value="1" min="1"
-                                                       {#max="{{ maxItems }}"#}
+                                                        {#max="{{ maxItems }}"#}
                                                 />
                                             </div>
                                         </div>
@@ -166,20 +177,22 @@
                                     </div>
                                 </div>
 
-                                <div class="option_button form-group">
-                                    <div class="row">
-                                        <div class="col-xs-12 col-sm-8 col-md-4">
-                                            <a href=""
-                                               class="btn btn-primary btn-block add-to-cart"
-                                               data-id="{{ pr.id }}"
-                                               data-name="{{ pr.name }}">ΠΡΟΣΘΗΚΗ ΣΤΟ ΚΑΛΑΘΙ</a>
+                                {% if pr.outOfStock == "false" and (pr.remainNotReserved|number_format() > 0 or pr.webFree == "true") %}
+                                    <div class="option_button form-group">
+                                        <div class="row">
+                                            <div class="col-xs-12 col-sm-8 col-md-4">
+                                                <a href=""
+                                                   class="btn btn-primary btn-block add-to-cart"
+                                                   data-id="{{ pr.id }}"
+                                                   data-name="{{ pr.name }}">ΠΡΟΣΘΗΚΗ ΣΤΟ ΚΑΛΑΘΙ</a>
+                                            </div>
+                                            {#<div class="col-xs-6">#}
+                                            {#<a href="#" class="btn btn-default btn-block">ΑΓΟΡΑΣΕ#}
+                                            {#ΤΩΡΑ</a>#}
+                                            {#</div>#}
                                         </div>
-                                        {#<div class="col-xs-6">#}
-                                        {#<a href="#" class="btn btn-default btn-block">ΑΓΟΡΑΣΕ#}
-                                        {#ΤΩΡΑ</a>#}
-                                        {#</div>#}
                                     </div>
-                                </div>
+                                {% endif %}
                                 <div class="share">
                                     <div class="sharethis-inline-share-buttons"></div>
                                     {#<img src="{{ asset('images/share.jpg') }}" alt="">#}

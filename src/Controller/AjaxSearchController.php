@@ -6,18 +6,20 @@ namespace App\Controller;
 
 use App\Entity\AnosiaSearchKeywords;
 use App\Entity\Products;
+use App\Service\TransliterateService;
 use Doctrine\ORM\EntityManagerInterface;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Request;
 
 class AjaxSearchController extends AbstractController
 {
-    public function search(Request $request, EntityManagerInterface $em)
+    public function search(Request $request, EntityManagerInterface $em, TransliterateService $transliterate)
     {
         if ($request->isXmlHttpRequest()) {
             try {
                 $resultArr = [];
-                $keyword = $request->query->get('term');
+                $keyword = $request->query->get('term') . ' ' . $transliterate->transGreek($request->query->get('term'));
+//                dump($transliterate->transGreek($keyword));
 //                $result = $em->getRepository(AnosiaSearchKeywords::class)->getAnosiaSearchResult($keyword);
                 $result = $em->getRepository(Products::class)->search($keyword);
                 dump($result);

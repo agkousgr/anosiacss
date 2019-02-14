@@ -3,6 +3,8 @@
 namespace App\Controller;
 
 use App\Security\User\WebserviceUserProvider;
+use App\Service\CartService;
+use Doctrine\ORM\EntityManagerInterface;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Request;
 use App\Service\UserAccountService;
@@ -12,7 +14,7 @@ use \Facebook;
 
 class AjaxLoginController extends AbstractController
 {
-    public function login(Request $request, UserAccountService $userAccountService, WebserviceUserProvider $provider, SessionInterface $session)
+    public function login(Request $request, CartService $cartService, UserAccountService $userAccountService, EntityManagerInterface $em, SessionInterface $session)
     {
         if ($request->isXmlHttpRequest()) {
             try {
@@ -20,6 +22,7 @@ class AjaxLoginController extends AbstractController
                 $password = $request->request->get('password');
 //                if ($userAccountService->login($username, $password)) {
 //                if ($provider->loadUserByUsername($username)) {
+                $cartService->assignSessionToUserCart($em, $username);
                 if ($userAccountService->login($username, $password) === $username) {
                     $session->set("anosiaUser", $username);
                     $session->remove('curOrder');
@@ -117,7 +120,7 @@ class AjaxLoginController extends AbstractController
 //        $_SESSION['fb_access_token'] = (string) $accessToken;
         $res = $fb->get('/me?fields=name,email', $accessToken);
 
-        print_r($res->getDecodedBody());
+        dump($res->getDecodedBody());
         // Todo: If button call is via ajax change return code
         if ($userAccountService->login($res->getDecodedBody()['email'], $res->getDecodedBody()['id']) === $res->getDecodedBody()['email']) {
             $session->set("anosiaUser", $res->getDecodedBody()['email']);

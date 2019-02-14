@@ -102,4 +102,24 @@ class PireausController extends MainController
         );
         return $this->redirectToRoute('checkout');
     }
+
+    public function pireausIframe(Request $request)
+    {
+        try {
+            return $this->render('orders/pireaus_iframe.html.twig', [
+                'categories' => $this->categories,
+                'popular' => $this->popular,
+                'featured' => $this->featured,
+                'checkout' => $this->session->get('curOrder'),
+                'loggedUser' => $this->loggedUser,
+                'totalCartItems' => $this->totalCartItems,
+                'totalWishlistItems' => $this->totalWishlistItems,
+                'cartItems' => $this->cartItems,
+                'loginUrl' => $this->loginUrl
+            ]);
+        } catch (\Exception $e) {
+            $this->logger->error(__METHOD__ . ' -> {message}', ['message' => $e->getMessage()]);
+            throw $e;
+        }
+    }
 }

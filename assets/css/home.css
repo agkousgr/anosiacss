@@ -81,7 +81,10 @@
 }
 
 .product-case .product-name {
-   min-height: 80px;
+   min-height: 115px;
+}
+.product-case .hover-info {
+    /*height: 100%;*/
 }
 
 .carousel-control.left {

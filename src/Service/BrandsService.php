@@ -132,7 +132,7 @@ EOF;
         try {
             $result = $this->client->SendMessage(['Message' => $message]);
             $resultXML = simplexml_load_string(str_replace("utf-16", "utf-8", $result->SendMessageResult));
-//            dump($message, $result);
+            dump($message, $result);
             $brands = $this->initializeBrands($resultXML->GetDataRows->GetManufactorRow);
             return $brands;
 

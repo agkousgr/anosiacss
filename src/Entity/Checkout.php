@@ -6,16 +6,16 @@ namespace App\Entity;
 class Checkout extends WebUser
 {
     const PAYMENT_TYPES = [
-        'Κατάθεση σε τράπεζα' => '1004',
-        'Πληρωμή στο κατάστημα' => '1000',
+        'Κατάθεση σε τράπεζα' => '1009',
+        'Πληρωμή στο κατάστημα' => '1008',
         'Πιστωτική' => '1001',
-        'Paypal' => '1002',
-        'Αντικαταβολή' => '1003',
+        'Paypal' => '1006',
+        'Αντικαταβολή' => '1007',
     ];
 
     const SHIPPING_TYPES = [
-        'Courier' => '1000',
-        'Παραλαβή από το φαρμακείο' => '1001',
+        'Courier' => '104',
+        'Παραλαβή από το φαρμακείο' => '105',
     ];
 
     /**
@@ -104,6 +104,11 @@ class Checkout extends WebUser
      * $var string|null
      */
     private $couponName;
+
+    /**
+     * $var int|null
+     */
+    private $couponId;
 
     /**
      * @var string|null
@@ -413,6 +418,24 @@ class Checkout extends WebUser
     public function setCouponName($couponName)
     {
         $this->couponName = $couponName;
+        return $this;
+    }
+
+    /**
+     * @return mixed
+     */
+    public function getCouponId()
+    {
+        return $this->couponId;
+    }
+
+    /**
+     * @param mixed $couponId
+     * @return Checkout
+     */
+    public function setCouponId($couponId)
+    {
+        $this->couponId = $couponId;
         return $this;
     }
 

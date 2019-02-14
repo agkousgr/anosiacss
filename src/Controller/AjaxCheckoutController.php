@@ -52,10 +52,6 @@ class AjaxCheckoutController extends AbstractController
             try {
 
                 $checkout = $session->get('curOrder');
-                if ($session->get("addAddress")) {
-                    $userAccountService->updateUserInfo($checkout);
-                    $session->remove('addAddress');
-                }
                 $checkout->setFirstname($request->request->get('checkout_step1')['firstname']);
                 $checkout->setLastname($request->request->get('checkout_step1')['lastname']);
                 $checkout->setEmail($request->request->get('checkout_step1')['email']);
@@ -68,6 +64,15 @@ class AjaxCheckoutController extends AbstractController
                     $checkout->setShipDistrict($request->request->get('checkout_step1')['shipDistrict']);
                 }
                 $checkout->setShippingType($request->request->get('checkout_step1')['shippingType']);
+//                if ($session->get("addAddress")) {
+                $checkout->setAddress($request->request->get('checkout_step1')['address']);
+                $checkout->setZip($request->request->get('checkout_step1')['zip']);
+                $checkout->setCity($request->request->get('checkout_step1')['city']);
+                $checkout->setDistrict($request->request->get('checkout_step1')['district']);
+                $checkout->setPhone01($request->request->get('checkout_step1')['phone01']);
+                $userAccountService->updateUserInfo($checkout);
+                $session->remove('addAddress');
+//                }
                 if ($request->request->get('checkout_step1')['shippingType'] === '1000') {
                     $checkout->setShippingCost(2.00);
                 }

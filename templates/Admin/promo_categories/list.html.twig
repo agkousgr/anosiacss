@@ -1,0 +1,151 @@
+{% extends 'Admin/layout.html.twig' %}
+
+{% block stylesheet %}
+    {{ parent() }}
+    <!-- BEGIN CSS for this page -->
+    <link href="{{ asset('build/admin/css/switchery.min.css') }}" rel="stylesheet" type="text/css"/>
+    <style>
+        .bigfonts {
+            font-size: 30px;
+            color: #4e4e4e;
+        }
+    </style>
+    <!-- END CSS for this page -->
+{% endblock %}
+
+{% block title %}| Home Page Promo Categories{% endblock %}
+
+{% block breadcrumb %}
+    <div class="row">
+        <div class="col-xl-12">
+            <div class="breadcrumb-holder">
+                <h1 class="main-title float-left">Home Page Promo Categories</h1>
+                <ol class="breadcrumb float-right">
+                    <li class="breadcrumb-item">Home</li>
+                    <li class="breadcrumb-item active">Home Page / Promo Categories</li>
+                </ol>
+                <div class="clearfix"></div>
+            </div>
+        </div>
+    </div>
+    <!-- end row -->
+{% endblock %}
+
+{% block body %}
+    {#MODAL#}
+    <div class="modal fade custom-modal" tabindex="-1" role="dialog" aria-labelledby="modal_add_promo"
+         aria-hidden="true"
+         id="modal_add_promo">
+        <div class="modal-dialog">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title"></h5>
+                    <button type="button" class="close" data-dismiss="modal"><span aria-hidden="true">×</span><span
+                                class="sr-only">Κλείσιμο</span></button>
+                </div>
+                <div class="modal-body"></div>
+            </div>
+        </div>
+    </div>
+
+    <div class="row">
+
+        <div class="col-xs-12 col-sm-12 col-md-12 col-lg-12 col-xl-12">
+
+            <div class="card mb-3">
+
+                <div class="card-header">
+                    <span class="pull-right">
+                        <button id="add-slide" class="btn btn-primary btn-sm">
+                            <i class="fa fa-plus" aria-hidden="true"></i> Προσθήκη νέου banner
+                        </button>
+                    </span>
+
+                    <h3><i class="fa fa-image"></i> Banners</h3>
+                </div>
+                <!-- end card-header -->
+
+                <div class="card-body">
+                    <div class="table-responsive">
+                        <table class="table table-bordered">
+                            <thead>
+                            <tr>
+                                <td style="width:20px">#</td>
+                                <td style="width:150px">Εικόνα</td>
+                                <td>Λεπτομέρειες Banner</td>
+                                <td>Ταξινόμηση</td>
+                                <td style="width:100px">Ενέργειες</td>
+                            </tr>
+                            </thead>
+                            <tbody>
+
+                            {% if slides|length > 0 %}
+                                {% for slide in slides %}
+                                    <tr>
+                                        <th>
+                                            {{ loop.index }}
+                                        </th>
+
+                                        <td>
+                                            <span style="float: left; margin-right:10px;">
+
+                                                <img alt="{{ slide.name }}" class="img-fluid" style="max-width:150px; height:auto;"
+                                                     src="{{ asset('uploads/slider/' ~ slide.image) }}">
+
+                                            </span>
+                                        </td>
+
+                                        <td>
+                                            <h4>{{ slide.name }}</h4>
+                                            <small>{{ slide.description }}
+                                            </small>
+                                            <br>
+                                            URl: <a target="_blank"
+                                                    href="{{ slide.url }}">{{ slide.url }}</a>
+                                        </td>
+
+                                        <td style="width: 10%; text-align: center">
+                                            <a href="{{ path('promo_categories_priority', {'id':slide.id, 'direction':'up'}) }}">
+                                                <img src="{{ asset('images/up-arrow.png') }}">
+                                            </a>
+                                            <a href="{{ path('promo_categories_priority', {'id':slide.id, 'direction':'down'}) }}">
+                                                <img style="margin-top: 15px;" src="{{ asset('images/down-arrow.png') }}">
+                                            </a>
+                                            {{ slide.priority }}
+                                        </td>
+
+                                        <td>
+                                            <a data-id="{{ slide.id }}" href="#" class="btn btn-primary btn-sm edit-slide">
+                                                <i class="fa fa-pencil" aria-hidden="true"></i>
+                                            </a>
+                                            <a data-id="{{ slide.id }}" href="" class="btn btn-danger btn-sm delete-slide"
+                                               data-placement="top" data-toggle="tooltip" data-title="Delete">
+                                                <i class="fa fa-trash-o" aria-hidden="true"></i>
+                                            </a>
+                                        </td>
+                                    </tr>
+                                {% endfor %}
+                            {% endif %}
+                            </tbody>
+                        </table>
+                    </div>
+
+
+                </div>
+                <!-- end card-body -->
+
+            </div>
+            <!-- end card -->
+
+        </div>
+        <!-- end col -->
+
+    </div>
+{% endblock %}
+
+{% block javascripts %}
+    {{ parent() }}
+    <script src="{{ asset('bundles/fosjsrouting/js/router.js') }}"></script>
+    <script src="{{ path('fos_js_routing_js', { callback: 'fos.Router.setData' }) }}"></script>
+    <script src="{{ asset('build/admin/js/promo-categories.js') }}"></script>
+{% endblock %}

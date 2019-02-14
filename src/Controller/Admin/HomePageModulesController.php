@@ -2,10 +2,13 @@
 
 namespace App\Controller\Admin;
 
+use App\Entity\AdminCategory;
 use App\Entity\HomePageModules;
 use App\Entity\HomePageOurCorner;
 use App\Entity\Products;
+use App\Entity\Slider;
 use App\Form\Type\OurCornerType;
+use App\Form\Type\SliderType;
 use Doctrine\ORM\EntityManagerInterface;
 use Symfony\Component\HttpFoundation\Request;
 use Psr\Log\LoggerInterface;
@@ -141,6 +144,140 @@ class HomePageModulesController extends AbstractController
                 'Παρουσιάστηκε σφάλμα κατά την εγγραφή! Παρακαλώ δοκιμάστε ξανά.'
             );
             return $this->redirectToRoute('home_page_modules');
+        }
+    }
+
+    public function promoCategoriesList(EntityManagerInterface $em, LoggerInterface $logger)
+    {
+        try {
+            $slides = $em->getRepository(Slider::class)->findBy(['adminCategory' => 5], ['priority' => 'ASC']);
+            dump($slides);
+            return $this->render('Admin/promo_categories/list.html.twig', [
+                'slides' => $slides
+            ]);
+        } catch (\Exception $e) {
+            $logger->error(__METHOD__ . ' -> {message}', ['message' => $e->getMessage()]);
+            throw $e;
+        }
+    }
+
+    public function promoCategoriesCreate(Request $request, EntityManagerInterface $em, LoggerInterface $logger)
+    {
+        try {
+            $slider = new Slider();
+            $form = $this->createForm(SliderType::class, $slider, [
+                'action' => $this->generateUrl('promo_categories_add'),
+            ]);
+                dump($slider);
+            $form->handleRequest($request);
+            if ($form->isSubmitted() && $form->isValid()) {
+                $ctg = $em->getRepository(AdminCategory::class)->find(5);
+                $slider->setAdminCategory($ctg);
+//
+                $em->persist($slider);
+                $em->flush();
+                $this->addFlash(
+                    'success',
+                    'Η προσθήκη ολοκληρώθηκε με επιτυχία!'
+                );
+                return $this->redirectToRoute('promo_categories');
+            }
+            return $this->render('Admin/promo_categories/form.html.twig', [
+                'form' => $form->createView()
+            ]);
+
+        } catch (\Exception $e) {
+//            $this->addFlash(
+//                'notice',
+//                'Παρουσιάστηκε σφάλμα κατά την εγγραφή! Παρακαλώ δοκιμάστε ξανά.'
+//            );
+            $logger->error(__METHOD__ . ' -> {message}', ['message' => $e->getMessage()]);
+            throw $e;
+            return $this->redirectToRoute('slider_list');
+        }
+    }
+
+    public function promoCategoriesUpdate(Request $request, int $id, EntityManagerInterface $em, LoggerInterface $logger)
+    {
+        try {
+            $slider = $em->getRepository(Slider::class)->find($id);
+            $prevImage = $slider->getImage();
+            $form = $this->createForm(SliderType::class, $slider, [
+                'action' => $this->generateUrl('promo_categories_update', ['id' => $id]),
+            ]);
+            dump($slider);
+            $form->handleRequest($request);
+
+            if ($form->isSubmitted() && $form->isValid()) {
+                if (empty($form->get('image')->getData())) {
+                    $slider->setImage($prevImage);
+                }
+                $em->flush();
+                $this->addFlash(
+                    'success',
+                    'Η ενημέρωση ολοκληρώθηκε με επιτυχία!'
+                );
+                return $this->redirectToRoute('promo_categories');
+            }
+            dump('wtf');
+            return $this->render('Admin/promo_categories/form.html.twig', [
+                'form' => $form->createView()
+            ]);
+
+        } catch (\Exception $e) {
+            $this->addFlash(
+                'notice',
+                'Παρουσιάστηκε σφάλμα κατά την εγγραφή! Παρακαλώ δοκιμάστε ξανά.'
+            );
+            $logger->error(__METHOD__ . ' -> {message}', ['message' => $e->getMessage()]);
+            throw $e;
+            return $this->redirectToRoute('slider_list');
+        }
+    }
+
+    public function promoCategoriesChangePriority(int $id, string $direction, EntityManagerInterface $em, LoggerInterface $logger)
+    {
+        try {
+            $slider = $em->getRepository(Slider::class)->find($id);
+            if ($direction === 'up') {
+                $slider->setPriority($slider->getPriority() - 1);
+            } else {
+                $slider->setPriority($slider->getPriority() + 1);
+            }
+            $em->flush();
+            $this->addFlash(
+                'success',
+                'Η ενημέρωση ολοκληρώθηκε με επιτυχία!'
+            );
+
+            return $this->redirectToRoute('promo_categories');
+
+        } catch (\Exception $e) {
+            $logger->error(__METHOD__ . ' -> {message}', ['message' => $e->getMessage()]);
+            throw $e;
+        }
+    }
+
+    public function promoCategoriesDelete(Request $request, EntityManagerInterface $em, int $id, LoggerInterface $logger)
+    {
+        try {
+            $slider = $em->getRepository(Slider::class)->find($id);
+            if ($request->request->get('delete')) {
+                $em->remove($slider);
+                $em->flush();
+                $this->addFlash(
+                    'success',
+                    'Η διαγραφή ολοκληρώθηκε με επιτυχία!'
+                );
+            } else {
+                return $this->render('Admin/promo_categories/delete.html.twig', [
+                    'slider' => $slider
+                ]);
+            }
+            return $this->redirectToRoute('promo_categories');
+        } catch (\Exception $e) {
+            $logger->error(__METHOD__ . ' -> {message}', ['message' => $e->getMessage()]);
+            throw $e;
         }
     }
 }

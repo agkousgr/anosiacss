@@ -1,4 +1,5 @@
-// JavaScript Document
+import swal from 'sweetalert2';
+
 require('webpack-jquery-ui/autocomplete');
 require('owl.carousel');
 require('select2');
@@ -21,7 +22,7 @@ $(document).ready(function () {
         select: function (event, ui) {
             event.preventDefault();
             $("#keyword").val(ui.item.label);
-            let url = Routing.generate('product_view', {'id':ui.item.value});
+            let url = Routing.generate('product_view', {'id': ui.item.value});
             window.location.assign(url);
         },
         focus: function (event, ui) {
@@ -129,10 +130,10 @@ $(document).ready(function () {
     })
 })
 
-$(document).ready(function() {
+$(document).ready(function () {
     var owl = $('#bx-pager');
     owl.owlCarousel({
-        margin:10,
+        margin: 10,
         nav: true,
         loop: false,
         autoplay: false,
@@ -243,22 +244,6 @@ $(document).ready(function () {
 })
 
 $(document).ready(function () {
-    let owl = $('.OfferCarousel');
-    owl.owlCarousel({
-        margin: 30,
-        nav: true,
-        loop: true,
-        responsive: {
-            0: {items: 1},
-            480: {items: 1},
-            768: {items: 1},
-            992: {items: 3},
-            1200: {items: 3}
-        }
-    })
-})
-
-$(document).ready(function () {
     let owl = $('.CatCarousel');
     owl.owlCarousel({
         margin: 30,
@@ -339,9 +324,9 @@ $(document).ready(function () {
     });
 
     $('#collapseCart').load(Routing.generate('load_top_cart'));
-    if ($('input[name="cart"]').val() == 1) {
-        $('#top-cart').css('display', 'none');
-    }
+    // if ($('input[name="cart"]').val() == 1) {
+    //     $('#top-cart').css('display', 'none');
+    // }
 
     // NEWSLETTER REGISTRATION
     $('#newsletter-chk').on('click', function () {

@@ -109,7 +109,7 @@ EOF;
         try {
             $result = $this->client->SendMessage(['Message' => $message]);
             $resultXML = simplexml_load_string(str_replace("utf-16", "utf-8", $result->SendMessageResult));
-            dump($message, $result);
+            dump($message, $resultXML);
 //            die();
             $this->initializeCategories($resultXML->GetDataRows->GetFullCategoriesTreeRow, $authId, 0);
 
@@ -120,25 +120,39 @@ EOF;
         }
     }
 
-    private function initializeCategories($categories, $authId, $parentId)
+    private function initializeCategories($categories, $authId, $parentId = 0)
     {
+
         foreach ($categories as $category) {
+            dump($category);
             $this->counter++;
 //            if ($this->counter < 150) {
 //                if ((int)$category->IsVisible === 1) {
+            $subCtgs = $this->getSubCategories((int)$category->CategoryID, $authId, $category->ID, 1);
+                dump($subCtgs);
+                die();
+            if ($this->counter === 2) {
+            }
+//            continue;
             $this->prCategories[] = array(
-                'id' => $category->CategoryID,
-                'name' => $category->Name,
-                'description' => $category->Description,
+                'id' => (int)$category->CategoryID,
+                'name' => (string)$category->CategoryName,
+                'description' => (string)$category->CategoryInternalName,
                 'priority' => (int)$category->Priority,
-                'isVisible' => $category->IsVisible,
-                'parentId' => $category->ParentID,
-                'slug' => $category->Slug,
+                'isVisible' => (int)$category->IsVisible,
+                'parentId' => (int)$parentId,
+                'slug' => (string)$category->Slug,
+                'children' => ($subCtgs) ? $this->initializeCategories($subCtgs, $authId, (int)$category->CategoryID) : '',
 //                'itemsCount' => $this->getCategoryItemsCount($category->ID),
-                'hasMainImage' => $category->HasMainPhoto,
+                'hasMainImage' => (string)$category->HasMainPhoto,
                 'imageUrl' => (strval($category->HasMainPhoto) !== 'false') ? 'https://caron.cloudsystems.gr/FOeshopAPIWeb/DF.aspx?' . str_replace('[Serial]', '01102472475217', str_replace('&amp;', '&', $category->MainPhotoUrl)) : ''
             );
-            $this->getSubCategories($category->CategoryID, $authId, $category->ID, 1);
+//            foreach ($subCtgs as $subCtg) {
+//                $this->initializeCategories()
+//            }
+//            if ($category->ChildIDs) {
+//                $subCtg = $this->getSubCategories($category->ChildIDs, $authId, $category->ID, 0);
+//            }
 //            }
         }
         return;
@@ -147,20 +161,6 @@ EOF;
 
     public function getSubCategories($ctgId, $authId, $parentId, $level)
     {
-
-        /*      $message = <<<EOF
-      <?xml version="1.0" encoding="utf-16"?>
-      <ClientGetCategoryChildrenRequest>
-          <Type>1009</Type>
-          <Kind>$this->kind</Kind>
-          <Domain>$this->domain</Domain>
-          <AuthID>$authId</AuthID>
-          <AppID>$this->appId</AppID>
-          <CompanyID>$this->companyId</CompanyID>
-          <CategoryID>$ctgId</CategoryID>
-          <Slug>null</Slug>
-      </ClientGetCategoryChildrenRequest>
-      EOF; */
 
         $message = <<<EOF
 <?xml version="1.0" encoding="utf-16"?>
@@ -171,7 +171,7 @@ EOF;
     <AuthID>$authId</AuthID>
     <AppID>$this->appId</AppID>
     <CompanyID>$this->companyId</CompanyID>
-    <Level>$level</Level>
+    <Level>1</Level>
     <IsVisible>-1</IsVisible>
     <CategoryID>$ctgId</CategoryID>
     <Slug>null</Slug>
@@ -180,16 +180,18 @@ EOF;
 
         try {
             $result = $this->client->SendMessage(['Message' => $message]);
-            $items = simplexml_load_string(str_replace("utf-16", "utf-8", $result->SendMessageResult));
+            $resultXML = simplexml_load_string(str_replace("utf-16", "utf-8", $result->SendMessageResult));
             $this->counter++;
-            dump($message, $result);
-            if ($items !== false) {
+            dump($message, $resultXML->GetDataRows->GetFullCategoriesTreeRow);
+            return $resultXML->GetDataRows->GetFullCategoriesTreeRow;
+            if ($items->GetDataRows->GetFullCategoriesTreeRow !== false) {
 //                    $this->tmpArr = [];
-                return $this->initializeCategories($items->GetDataRows->GetCategoryChildrenRow, $authId, $ctgId);
+                return $this->initializeCategories($items->GetDataRows->GetFullCategoriesTreeRow, $authId, $parentId);
             }
-//            return $result->SendMessageResult;
-//            return str_replace("utf-16", "utf-8", $result->SendMessageResult);
+
+
             return;
+
         } catch (\SoapFault $sf) {
             echo $sf->faultstring;
         }

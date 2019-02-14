@@ -1,5 +1,5 @@
 <style>
-    .product-main-slider .owl-next, .product-main-slider .owl-prev {
+    .social1-slider .owl-next, .social1-slider .owl-prev {
         top: 20%;
     }
 
@@ -56,7 +56,7 @@
             </div>
         </div>
         <div class="col-lg-9">
-            <div class="owl-carousel owl-theme OfferCarousel product-main-slider">
+            <div class="owl-carousel owl-theme OfferCarousel product-main-slider social1-slider">
                 {% for post in reviews.data | slice(1, 9) %}
                     <div class="item">
                         {#{{ dump(post) }}#}

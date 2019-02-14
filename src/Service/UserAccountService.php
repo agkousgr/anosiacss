@@ -50,6 +50,11 @@ class UserAccountService
     private $companyId;
 
     /**
+     * @var \SoapClient
+     */
+    private $client;
+
+    /**
      * UserAccountService constructor.
      * @param LoggerInterface $logger
      * @param SessionInterface $session
@@ -65,6 +70,7 @@ class UserAccountService
         $this->domain = $s1Credentials['domain'];
         $this->appId = $s1Credentials['appId'];
         $this->companyId = $s1Credentials['companyId'];
+        $this->client = new \SoapClient('https://caron.cloudsystems.gr/FOeshopWS/ForeignOffice.FOeshop.API.FOeshopSvc.svc?singleWsdl', ['trace' => true, 'exceptions' => true,]);
     }
 
     /**
@@ -186,7 +192,7 @@ EOF;
         try {
             $result = $client->SendMessage(['Message' => $message]);
             $userXML = simplexml_load_string(str_replace("utf-16", "utf-8", $result->SendMessageResult));
-//            dump($message, $result);
+            dump($message, $result);
             if ((string)$userXML->IsValid === 'false') {
                 return 0;
             } else {
@@ -294,8 +300,9 @@ EOF;
     {
 
         $client = new \SoapClient('http://caron.cloudsystems.gr/FOeshopWS/ForeignOffice.FOeshop.API.FOeshopSvc.svc?singleWsdl', ['trace' => true, 'exceptions' => true,]);
+        dump($userData);
         if ($userData instanceof Checkout) {
-            if ($userData->getNewsletter() === false) {
+            if ($userData->isNewsletter() === false or null === $userData->isNewsletter()) {
                 return true;
             }
             $name = $userData->getFirstname() . ' ' . $userData->getLastname();
@@ -1035,6 +1042,42 @@ EOF;
         }
     }
 
+
+    public function getCoupon($voucherId = -1, $voucherCode = 'null')
+    {
+        $message = <<<EOF
+<?xml version="1.0" encoding="utf-16"?>
+<ClientGetVoucherRequest>
+    <Type>1072</Type>
+    <Kind>$this->kind</Kind>
+    <Domain>$this->domain</Domain>
+    <AuthID>$this->authId</AuthID>
+    <AppID>$this->appId</AppID>
+    <CompanyID>$this->companyId</CompanyID>
+    <VoucherID>$voucherId</VoucherID>
+    <Code>$voucherCode</Code>
+</ClientGetVoucherRequest>
+EOF;
+        try {
+            dump($message);
+            $result = $this->client->SendMessage(['Message' => $message]);
+            $items = simplexml_load_string(str_replace("utf-16", "utf-8", $result->SendMessageResult));
+            dump($message, $result);
+            $couponDisc = 0;
+            if ($items->GetDataRows->GetVoucherRow) {
+                //Todo: put all coupon session in one variable
+                if (intval($items->GetDataRows->GetVoucherRow->Value) > 0) {
+                    $couponDisc = $items->GetDataRows->GetVoucherRow->Value;
+                } elseif (intval($items->GetDataRows->GetVoucherRow->Percentage) > 0) {
+                    $couponDisc = $items->GetDataRows->GetVoucherRow->Percentage . '%';
+                }
+            }
+            return $couponDisc;
+        } catch (\SoapFault $sf) {
+            echo $sf->faultstring;
+        }
+    }
+
     /**
      * @param $orderExpenseRow
      * @return array
@@ -1104,6 +1147,7 @@ EOF;
                 'shipDistrict' => $order->ShipDistrict,
                 'shipZip' => $order->ShipZip,
                 'comments' => (null !== $order->Comments) ? $order->Comments : '',
+                'voucherId' => $order->VoucherID
             );
 
             return $orderArr;

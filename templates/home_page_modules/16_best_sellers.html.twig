@@ -5,10 +5,10 @@
                 <div class="product-media-scroll">
                     <h3>Best <span>Sellers</span></h3>
                     {% for ctg in categories %}
-                        {% if ctg.id != 1867 %}
-                        <h5>
-                            <a href="#" data-id="{{ ctg.id }}" class="best-sellers-category">{{ ctg.name }}</a>
-                        </h5>
+                        {% if ctg.slug != 'ΠΡΟΣΦΟΡΕΣ' %}
+                            <h5>
+                                <a href="#" data-id="{{ ctg.id }}" data-firstchild="{{ ctg.children[0].id }}" class="best-sellers-category">{{ ctg.name }}</a>
+                            </h5>
                         {% endif %}
                     {% endfor %}
                 </div>
@@ -19,51 +19,62 @@
                 <div class="ProductTab">
                     <ul class="resp-tabs-list hor_1" data-id="1728">
                         {% for ctg in categories|slice(0,1) %}
-                            {% for subCtg in ctg.__children %}
+                            {% for subCtg in ctg.children %}
                                 {% if subCtg.isVisible == true %}
-                                    <li>{{ subCtg.name }}</li>
+                                    {% if loop.index == 1 %}
+                                        {% set activeLi = " resp-tab-active" %}
+                                    {% else %}
+                                        {% set activeLi = "" %}
+                                    {% endif %}
+                                    <li class=" {{ activeLi}}"><span class="best-sellers-tab" data-id="{{ subCtg.id }}">{{ subCtg.name }}</span></li>
                                 {% endif %}
                             {% endfor %}
                         {% endfor %}
                     </ul>
                     <ul class="resp-tabs-list hor_1 hidden" data-id="1801">
                         {% for ctg in categories|slice(1,1) %}
-                            {% for subCtg in ctg.__children %}
+                            {% for subCtg in ctg.children %}
                                 {% if subCtg.isVisible == true %}
-                                    <li>{{ subCtg.name }}</li>
+                                    {% if loop.index == 1 %}
+                                        {% set activeLi = " resp-tab-active" %}
+                                    {% else %}
+                                        {% set activeLi = "" %}
+                                    {% endif %}
+                                    <li class=" {{ activeLi}}"><span class="best-sellers-tab" data-id="{{ subCtg.id }}">{{ subCtg.name }}</span></li>
                                 {% endif %}
                             {% endfor %}
                         {% endfor %}
                     </ul>
                     <ul class="resp-tabs-list hor_1 hidden" data-id="1929">
                         {% for ctg in categories|slice(2,1) %}
-                            {% for subCtg in ctg.__children %}
+                            {% for subCtg in ctg.children %}
                                 {% if subCtg.isVisible == true %}
-                                    <li>{{ subCtg.name }}</li>
-                                {% endif %}
-                            {% endfor %}
-                        {% endfor %}
-                    </ul>
-                    <ul class="resp-tabs-list hor_1 hidden" data-id="1867">
-                        {% for ctg in categories|slice(3,1) %}
-                            {% for subCtg in ctg.__children %}
-                                {% if subCtg.isVisible == true %}
-                                    <li>{{ subCtg.name }}</li>
+                                    {% if loop.index == 1 %}
+                                        {% set activeLi = " resp-tab-active" %}
+                                    {% else %}
+                                        {% set activeLi = "" %}
+                                    {% endif %}
+                                    <li class=" {{ activeLi}}"><span class="best-sellers-tab" data-id="{{ subCtg.id }}">{{ subCtg.name }}</span></li>
                                 {% endif %}
                             {% endfor %}
                         {% endfor %}
                     </ul>
                     <ul class="resp-tabs-list hor_1 hidden" data-id="1896">
                         {% for ctg in categories|slice(4,1) %}
-                            {% for subCtg in ctg.__children %}
+                            {% for subCtg in ctg.children %}
                                 {% if subCtg.isVisible == true %}
-                                    <li>{{ subCtg.name }}</li>
+                                    {% if loop.index == 1 %}
+                                        {% set activeLi = " resp-tab-active" %}
+                                    {% else %}
+                                        {% set activeLi = "" %}
+                                    {% endif %}
+                                    <li class=" {{ activeLi}}"><span class="best-sellers-tab" data-id="{{ subCtg.id }}">{{ subCtg.name }}</span></li>
                                 {% endif %}
                             {% endfor %}
                         {% endfor %}
                     </ul>
                     <div id="best-seller-products" class="resp-tabs-container hor_1">
-                        {% include 'home_page_modules/ajax_best_seller.html.twig' %}
+                        {#{% include 'home_page_modules/ajax_best_seller.html.twig' %}#}
                     </div>
                 </div>
             </div>

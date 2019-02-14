@@ -1,4 +1,7 @@
+import swal from 'sweetalert2';
+
 const WOW = require('wowjs');
+require('owl.carousel');
 // let apex = require('./jquery.apex-slider.js');
 // let apexslider = apex.apexSlider();
 let bestSellersContainer = $('#best-sellers-container');
@@ -29,13 +32,50 @@ window.wow.init();
 // wow.init();
 
 $(document).ready(function () {
-    // console.log('ok');
+    let owl = $('.LatestProductsScroll');
+    owl.owlCarousel({
+        margin: 30,
+        nav: true,
+        loop: true,
+        responsive: {
+            0: {items: 1},
+            480: {items: 1},
+            768: {items: 1},
+            992: {items: 3},
+            1200: {items: 4}
+        }
+    })
+})
+
+$(document).ready(function () {
+    let owl = $('.OfferCarousel');
+    owl.owlCarousel({
+        margin: 30,
+        nav: true,
+        loop: true,
+        responsive: {
+            0: {items: 1},
+            480: {items: 1},
+            768: {items: 1},
+            992: {items: 3},
+            1200: {items: 3}
+        }
+    })
+})
+
+$(document).ready(function () {
+
+    $('.best-sellers-tab').on('click', function () {
+        let data = {
+            'ctgId': $(this).data('id')
+        };
+        loadBestSeller(data);
+    });
     let data = {
-        'ctgId': 1728
+        'ctgId': 1578
     };
-    // $('#best-seller-products').load(Routing.generate('home_best_seller', data, function (html) {
-    //     console.log(html);
-    // }));
+    loadBestSeller(data);
+
 });
 
 $(document).ready(function () {
@@ -59,51 +99,58 @@ $(document).ready(function () {
     $('.best-sellers-category').on('click', function (e) {
         e.preventDefault();
         let curId = $(this).data('id');
-        console.log(curId);
         $('.resp-tabs-list').each(function () {
-            console.log($(this).data('id'));
             if (curId == $(this).data('id')) {
                 $(this).removeClass('hidden');
-            }else{
+            } else {
                 $(this).addClass('hidden');
             }
         })
+        let data = {
+            'ctgId': $(this).data('firstchild')
+        };
+        loadBestSeller(data);
     });
 
-    // bestSellersContainer.on('click', '.best-sellers-subctg', function (e) {
-    //     e.preventDefault();
-    //     console.log($(this).data('id'));
-    //     let data = {
-    //         'ctgId': $(this).data('id')
-    //     };
-    //     $('#best-seller-products').load(Routing.generate('home_best_seller', data, function() {
-    //         $('.owl-carousel').addClass('owl-loaded owl-drag');
-    //     }));
-    // });
-
-    // $("#anosia-keyword").on('change', function(e) {
-    //     e.preventDefault();
-    //     window.location(Routing.generate('product_list', {'id':}));
-    // });
-
-    // let api;
-    // $(document).ready(function () {
-    //     api = $(".fullwidthbanner").apexslider({
-    //         startWidth: 1170,
-    //         startHeight: 893,
-    //         transition: "random",
-    //         thumbWidth: 100,
-    //         thumbHeight: 47,`
-    //         thumbAmount: 0,
-    //         navType: "both",
-    //         navStyle: "round",
-    //         navArrow: "visible",
-    //         showNavOnHover: true,
-    //         timerAlign: "bottom",
-    //         shadow: 0,
-    //         fullWidth: true
-    //     });
-    // });
+    $('#best-seller-products').on('click', '.add-to-cart', function (e) {
+        e.preventDefault();
+        let data = {
+            'id': $(this).data('id'),
+            'quantity': 1,
+            'name': $(this).data('name')
+        }
+        $.post(Routing.generate('add_to_cart'), data, function (result) {
+            if (result.success && result.exist === false) {
+                // swal({
+                //     title: 'Καλάθι',
+                //     html: '<div style="font-size:17px;">Το προϊόν ' + result.prName + ' προστέθηκε με επιτυχία!</div>',
+                //     type: 'success',
+                //     timer: 5000
+                // });
+                $('#cart-total-items').css('display', 'inline');
+                $('#cart-total-items').html(result.totalCartItems);
+                $("#sidebar-cart-wrapper").toggleClass("active");
+                $('#collapseCart').load(Routing.generate('load_top_cart'));
+                setTimeout(function () {
+                    $("#sidebar-cart-wrapper").toggleClass("active")
+                }, 3000);
+            } else if (result.success && result.exist === true) {
+                swal({
+                    title: 'Ουπς',
+                    html: '<div style="font-size:17px;">Το προϊόν ' + result.prName + ' υπάρχει ήδη στο καλάθι σας!</div>',
+                    type: 'info',
+                    timer: 5000
+                });
+            } else {
+                swal({
+                    title: 'Ουπς',
+                    html: '<div style="font-size:17px;">Κάποια σφάλμα παρουσιάστηκε!</div>',
+                    type: 'error',
+                    timer: 5000
+                });
+            }
+        });
+    });
 
     // FACEBOOK
     // FB.getLoginStatus(function (response) {
@@ -148,7 +195,25 @@ $(document).ready(function () {
     // $('body').startComponents();
 });
 
-
+function loadBestSeller(data) {
+    $.post(Routing.generate('home_best_seller'), data, function (html) {
+        $('#best-seller-products').empty().html(html);
+        $('.product-main-slider').show();
+        let owl = $('.ProductScrollTab');
+        owl.owlCarousel({
+            margin: 30,
+            nav: true,
+            loop: true,
+            responsive: {
+                0: {items: 1},
+                480: {items: 1},
+                768: {items: 1},
+                992: {items: 3},
+                1200: {items: 3}
+            }
+        })
+    });
+}
 // function generate(type, Message) {
 //     var n = noty({
 //         text: Message,

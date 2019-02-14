@@ -142,7 +142,7 @@ class ProductController extends MainController
         try {
 //            $getReferrer = $productService->getReferer($request->server->get('HTTP_REFERER'));
             $alsoViewed = new AlsoViewedProducts();
-            $product = $this->productService->getItems($id, 'null', 1);
+            $product = $this->productService->getItems($id, 'null', 10);
             dump($product);
             $productId = intval($product["id"]);
             $productView = $em->getRepository(ProductViews::class)->findOneBy(['product_id' => $productId]);

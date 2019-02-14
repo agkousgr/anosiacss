@@ -1,0 +1,59 @@
+{% extends 'layout.html.twig' %}
+
+{% block bodyId %}checkout{% endblock %}
+{% block title %} | Checkout{% endblock %}
+{% block slider %}{% endblock %}
+
+{% block breadcrumb %}
+
+{% endblock %}
+
+
+
+{% block body %}
+    {#{% include 'partials/sidebar_login.html.twig' %}#}
+    {#{% include 'partials/sidebar_cart.html.twig' %}#}
+    {% include 'partials/swipe_menu.html.twig' %}
+    {% include 'partials/site_header.html.twig' %}
+    <div class="page-header">
+        <div class="container">
+            <div class="row">
+                <div class="col-md-6"><h1>Ολοκλήρωση αγοράς</h1></div>
+            </div>
+        </div>
+    </div>
+    <div class="section" style="background-image:url({{ asset('images/bg-5.jpg') }});">
+        <div class="container">
+            {% for message in app.flashes('notice') %}
+                <div class="flash-notice">
+                    {{ message }}
+                </div>
+            {% endfor %}
+            {% for message in app.flashes('success') %}
+                <div class="flash-success">
+                    {{ message }}
+                </div>
+            {% endfor %}
+            <section id="main" style="text-align: center;">
+                <form action="{{ path('pireaus_iframe') }}" id="pireaus-post" target="pireaus_iframe" method="post">
+                    <input type="hidden" name="AcquirerId" value="{{ bankConfig.AcquirerId }}">
+                    <input type="hidden" name="MerchantId" value="{{ bankConfig.MerchantId }}">
+                    <input type="hidden" name="PosId" value="{{ bankConfig.PosId }}">
+                    <input type="hidden" name="User" value="{{ bankConfig.User }}">
+                    <input type="hidden" name="LanguageCode" value="{{ bankConfig.LanguageCode }}">
+                    <input type="hidden" name="MerchantReference" value="{{ checkout.orderNo }}">
+                    {#<input type="hidden" name="ParamBackLink" value="">#}
+                </form>
+                <iframe name="pireaus-iframe" width="800" height="455"
+                        src="https://paycenter.piraeusbank.gr/redirection/pay.aspx"></iframe>
+            </section>
+        </div>
+        {% include 'partials/footer.html.twig' %}
+    </div>
+{% endblock %}
+
+{% block javascripts %}
+    {{ parent() }}
+    <script src="{{ asset('build/js/pireaus.js') }}"></script>
+    <script src="{{ asset('build/js/hide-top-cart.js') }}"></script>
+{% endblock %}

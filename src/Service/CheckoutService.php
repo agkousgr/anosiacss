@@ -111,9 +111,9 @@ class CheckoutService
 //        $this->getAddress($checkout->getClientId(), $checkout);
         $this->getNewsletter($checkout);
         $checkout->setNextPage(1);
-        $checkout->setSeries('7021');
-        $checkout->setShippingType('1000');
-        $checkout->setPaymentType('1000');
+        $checkout->setSeries('7023');
+//        $checkout->setShippingType('1000');
+//        $checkout->setPaymentType('1000');
         $checkout->setComments('');
         $checkout->setAgreeTerms(false);
         return;
@@ -382,6 +382,8 @@ EOF;
     {
         $expenses = $this->initializeExpenses($checkout);
         $items = $this->initializeCartItems($cartItems);
+        if (!$checkout->getSeries())
+            $checkout->setSeries('7023');
         $series = $checkout->getSeries();
         $orderNo = $checkout->getOrderNo();
         $clientId = $checkout->getClientId();
@@ -392,6 +394,7 @@ EOF;
         $zip = $checkout->getZip();
         $district = $checkout->getDistrict();
         $city = $checkout->getCity();
+        $coupon = $checkout->getCouponId();
         $email = $checkout->getEmail();
 
         $checkout->setTotalOrderCost($this->cartItemsCost + $checkout->getShippingCost() + $checkout->getAntikatavoliCost());
@@ -422,9 +425,11 @@ EOF;
     <ShipDistrict>$district</ShipDistrict>
     <ShipCity>$city</ShipCity>
     <ShipCarrier>1</ShipCarrier>
+    <VoucherID>$coupon</VoucherID>
 </ClientSetOrderRequest>
 EOF;
         try {
+//            dump($message);
             $result = $this->client->SendMessage(['Message' => $message]);
             $orderResult = simplexml_load_string(str_replace("utf-16", "utf-8", $result->SendMessageResult));
             dump($message, $result);
@@ -478,13 +483,15 @@ EOF;
         foreach ($cartItems as $cartItem) {
             $id = $cartItem['id'];
             $quantity = $cartItem['quantity'];
-            $webPrice = floatval($cartItem['webPrice']);
+            $webPrice = floatval($cartItem['retailPrice']);
+            $discount = floatval($cartItem['discount']);
             $this->cartItemsCost += number_format(($quantity * $webPrice), 2, '.', ',');
             $items .= "        <ClientSetOrderItem>
             <Number>$count</Number>
             <ItemID>$id</ItemID>
             <Quantity>$quantity</Quantity>
             <Price>$webPrice</Price>
+            <Discount1Perc>$discount</Discount1Perc>          
         </ClientSetOrderItem>
 ";
             $count++;
@@ -499,14 +506,17 @@ EOF;
      * @throws \Twig_Error_Runtime
      * @throws \Twig_Error_Syntax
      */
-    public function sendOrderConfirmationEmail($checkout)
+    public function sendOrderConfirmationEmail($checkout, $cartItems)
     {
         $message = (new \Swift_Message('Anosiapharmacy - Νέα παραγγελία #' . $checkout->getOrderNo()))
             ->setFrom('demo@democloudon.cloud')
             ->setTo($checkout->getEmail())
             ->setBody(
                 $this->twig->render(
-                    'email_templates/order_completed.html.twig'
+                    'email_templates/order_completed.html.twig', [
+                        'checkout' => $checkout,
+                        'cartItems' => $cartItems
+                    ]
 //                    array('name' => $name)
                 ),
                 'text/html'
