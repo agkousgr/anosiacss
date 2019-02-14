@@ -103,11 +103,17 @@ class CheckoutController extends MainController
                 }
             }
             $this->session->set('curOrder', $checkout);
+            $bank_config['AcquirerId'] = 14;
+            $bank_config['MerchantId'] = 2137477493;
+            $bank_config['PosId'] = 2141384532;
+            $bank_config['User'] = 'AN895032';
+            $bank_config['LanguageCode'] = 'el-GR';
             return ($this->render('orders/checkout.html.twig', [
                 'categories' => $this->categories,
                 'popular' => $this->popular,
                 'featured' => $this->featured,
                 'cartItems' => $this->cartItems,
+                'bankConfig' => $bank_config,
                 'totalCartItems' => $this->totalCartItems,
                 'totalWishlistItems' => $this->totalWishlistItems,
                 'loggedUser' => $this->loggedUser,

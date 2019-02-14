@@ -112,8 +112,8 @@ class CheckoutService
         $this->getNewsletter($checkout);
         $checkout->setNextPage(1);
         $checkout->setSeries('7023');
-        $checkout->setShippingType('1000');
-        $checkout->setPaymentType('1000');
+//        $checkout->setShippingType('1000');
+//        $checkout->setPaymentType('1000');
         $checkout->setComments('');
         $checkout->setAgreeTerms(false);
         return;
@@ -382,6 +382,8 @@ EOF;
     {
         $expenses = $this->initializeExpenses($checkout);
         $items = $this->initializeCartItems($cartItems);
+        if (!$checkout->getSeries())
+            $checkout->setSeries('7023');
         $series = $checkout->getSeries();
         $orderNo = $checkout->getOrderNo();
         $clientId = $checkout->getClientId();

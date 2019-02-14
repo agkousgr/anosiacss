@@ -300,8 +300,9 @@ EOF;
     {
 
         $client = new \SoapClient('http://caron.cloudsystems.gr/FOeshopWS/ForeignOffice.FOeshop.API.FOeshopSvc.svc?singleWsdl', ['trace' => true, 'exceptions' => true,]);
+        dump($userData);
         if ($userData instanceof Checkout) {
-            if ($userData->getNewsletter() === false) {
+            if ($userData->isNewsletter() === false or null === $userData->isNewsletter()) {
                 return true;
             }
             $name = $userData->getFirstname() . ' ' . $userData->getLastname();

@@ -38,9 +38,9 @@ brand_products_list:
     path: /brand/{slug}/{page}
     controller: App\Controller\ProductController::listBrandProducts
     defaults: { page: 1 }
-    methods: [POST]
-    options:
-        expose: true
+#    methods: [POST]
+#    options:
+#        expose: true
     requirements:
         page: \d+
 brands_list:

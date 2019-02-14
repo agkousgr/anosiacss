@@ -98,7 +98,6 @@ $(document).ready(function () {
         },
         submitHandler: function () {
             let form = $('#checkout-personal-information-step').find('form');
-            console.log(form);
             let formData = form.serialize();
             $.post(Routing.generate('step1_submit'), formData, function (response) {
                 if (response.success == false) {
@@ -149,14 +148,22 @@ $(document).ready(function () {
         },
         submitHandler: function () {
             // $('form[name="checkout_step2"]').submit();
-            let form = $('form[name="checkout_step2"]');
-            let formData = form.serialize();
-            $.post(Routing.generate('checkout'), formData, function (result) {
-                if (result.success === true) {
-                    let url = Routing.generate('complete_checkout');
-                    window.location.assign(url);
-                }
-            });
+            if ($('#checkout_step2_paymentType_2').prop('checked') === true) {
+                console.log('pireaus');
+                $('#pireaus_container').show();
+                $('#pireaus-post').submit();
+            } else {
+                console.log('not pireaus');
+                let form = $('form[name="checkout_step2"]');
+                let formData = form.serialize();
+                $.post(Routing.generate('checkout'), formData, function (result) {
+                    if (result.success === true) {
+                        let url = Routing.generate('complete_checkout');
+                        window.location.assign(url);
+                    }
+                });
+            }
+
         }
     });
     // $('#confirm-addresses').on('click', function (e) {
@@ -302,7 +309,7 @@ $(document).ready(function () {
     }
 
     $('#use_same_address').on('click', function () {
-        if ($('#use_same_address').is(':checked') === false) {
+        if ($('#use_same_address').is(':checked') === true) {
             $('#ship-address').removeClass('hidden');
         } else {
             $('#ship-address').addClass('hidden');
