@@ -47,6 +47,9 @@ class ProductsRepository extends EntityRepository
         return $stmt->fetchAll();
     }
 
+    /**
+     * @return mixed
+     */
     public function getLatestOffers()
     {
         return $this->createQueryBuilder('p')

@@ -154,6 +154,12 @@ check_if_user_exists:
     methods: [GET,POST]
     options:
         expose: true
+get_pireaus_ticket:
+    path: /order/get-pireaus-ticket
+    controller: App\Controller\CheckoutController::getPireausTicket
+    methods: [POST]
+    options:
+        expose: true
 
 
 #guest_checkout: #Todo: to be deleted possible with get address

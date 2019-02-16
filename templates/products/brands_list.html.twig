@@ -79,18 +79,20 @@
                                         {#<img src="{{ brand.imageUrl }}" alt="">#}
                                         {#</a>#}
                                         <a href="{{ path('brand_products_list', {'slug': brand.slug}) }}">
-                                            <img style="border:1px #cccccc solid; width:auto; height:auto;"
-                                                 src="{{ brand.imageUrl }}"
-                                                 alt="{{ brand.name }}">
-                                        {{ brand.name }}
+                                            {% if brand.imageUrl is defined %}
+                                                <img style="border:1px #cccccc solid; width:auto; height:auto;"
+                                                     src="{{ brand.imageUrl }}"
+                                                     alt="{{ brand.name }}">
+                                            {% endif %}
+                                            {{ brand.name }}
                                         </a>
                                     </div>
                                 {% endfor %}
                             </div>
 
-                            <nav aria-label="Page navigation" style="text-align: center;">
-                                {{ knp_pagination_render(brands) }}
-                            </nav>
+                            {#<nav aria-label="Page navigation" style="text-align: center;">#}
+                                {#{{ knp_pagination_render(brands) }}#}
+                            {#</nav>#}
                         </div>
                     </div>
                     <div class="col-md-3 column">

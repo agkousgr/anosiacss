@@ -112,8 +112,8 @@ class CheckoutService
         $this->getNewsletter($checkout);
         $checkout->setNextPage(1);
         $checkout->setSeries('7023');
-        $checkout->setShippingType('1000');
-        $checkout->setPaymentType('1000');
+//        $checkout->setShippingType('1000');
+//        $checkout->setPaymentType('1000');
         $checkout->setComments('');
         $checkout->setAgreeTerms(false);
         return;
@@ -382,6 +382,8 @@ EOF;
     {
         $expenses = $this->initializeExpenses($checkout);
         $items = $this->initializeCartItems($cartItems);
+        if (!$checkout->getSeries())
+            $checkout->setSeries('7023');
         $series = $checkout->getSeries();
         $orderNo = $checkout->getOrderNo();
         $clientId = $checkout->getClientId();
@@ -428,6 +430,7 @@ EOF;
 EOF;
         try {
 //            dump($message);
+//            die();
             $result = $this->client->SendMessage(['Message' => $message]);
             $orderResult = simplexml_load_string(str_replace("utf-16", "utf-8", $result->SendMessageResult));
             dump($message, $result);
@@ -449,7 +452,7 @@ EOF;
     {
         // Todo: Set expenseId in user's general configuration
         $expenses = "<Expenses>\n";
-        if ($checkout->getShippingType() === '1000') {
+        if ($checkout->getShippingType() === '104') {
 //            $expenses .= Write code to get value from Soft1
             $expenses .= "        <ClientSetOrderExpense>
             <ExpenseID>104</ExpenseID>
@@ -457,7 +460,7 @@ EOF;
         </ClientSetOrderExpense>
 ";
         }
-        if ($checkout->getPaymentType() === '1003') {
+        if ($checkout->getPaymentType() === '1007') {
 //            $expenses .= Write code to get value from Soft1
             $expenses .= "        <ClientSetOrderExpense>
             <ExpenseID>105</ExpenseID>

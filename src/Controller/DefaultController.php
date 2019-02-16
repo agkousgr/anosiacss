@@ -28,7 +28,9 @@ class DefaultController extends MainController
 //            $bestSellers = $this->productService->getCategoryItems('1868', 0, 9, 'null', 'null', 'null', 1, 'null');
             $articles = $em->getRepository(Article::class)->findBy(['category' => 1], ['createdAt' => 'DESC'], 3);
             // Create a new instagram instance.
-            $slider = $this->em->getRepository(Slider::class)->findBy(['category' => null, 'isPublished' => true]);
+            $slider = $this->em->getRepository(Slider::class)->getSlider();
+            $promoCtgs = $this->em->getRepository(Slider::class)->findBy(['adminCategory' => 5]);
+
             $instagram = new Instagram('2209588506.1677ed0.361223b4d3a547eebd1ad92202375d17');
 
             //fb page token
@@ -58,7 +60,8 @@ class DefaultController extends MainController
                 'articles' => $articles,
                 'bestSellers' => $bestSellers,
                 'ourCorner' => $ourCorner,
-                'ourCornerProducts' => $ourCornerProducts
+                'ourCornerProducts' => $ourCornerProducts,
+                'promoCtgs' => $promoCtgs
             ]);
         } catch (\Exception $e) {
             $this->logger->error(__METHOD__ . ' -> {message}', ['message' => $e->getMessage()]);

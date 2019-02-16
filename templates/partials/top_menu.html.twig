@@ -73,8 +73,8 @@
                                                             <h5>{{ pr.name }}</h5>
                                                         </a>
                                                         <div class="item-price">
-                                                            <del>{{ pr.retailPrice }}€</del>
-                                                            {{ pr.webPrice }}€
+                                                            <del>{{ pr.retailPrice|number_format(2, ',', '.') }}€</del>
+                                                            {{ pr.webPrice|number_format(2, ',', '.') }}€
                                                         </div>
                                                         <a href="{{ path('product_view', {'id':pr.id}) }}"
                                                            class="details-btn">ΠΕΡΙΣΣΟΤΕΡΑ</a>

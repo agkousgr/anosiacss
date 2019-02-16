@@ -85,23 +85,23 @@ class CheckoutController extends MainController
 //            }
 
             if ($step2Form->isSubmitted() && $step2Form->isValid()) {
-                if (null === $this->loggedUser && 'Success' !== $createUserResult = $userAccountService->createUser($checkout)) {
-                    $curStep = 4;
-                    $this->addFlash(
-                        'notice',
-                        'Παρουσιάστηκε σφάλμα κατά την ολοκλήρωση της παραγγελίας σας. Κωδικός σφάλματος "' . $createUserResult . '"! Αν δεν είναι η πρώτη φορά που βλέπετε αυτό το σφάλμα παρακαλούμε επικοινωνείστε μαζί μας.'
-                    );
+//                if (null === $this->loggedUser && 'Success' !== $createUserResult = $userAccountService->createUser($checkout)) {
+//                    $curStep = 4;
+//                    $this->addFlash(
+//                        'notice',
+//                        'Παρουσιάστηκε σφάλμα κατά την ολοκλήρωση της παραγγελίας σας. Κωδικός σφάλματος "' . $createUserResult . '"! Αν δεν είναι η πρώτη φορά που βλέπετε αυτό το σφάλμα παρακαλούμε επικοινωνείστε μαζί μας.'
+//                    );
+//                } else {
+                $cartCost = $checkoutService->calculateCartCost($this->cartItems);
+                if ($step2Form->get('paymentType')->getData() === '1007' && $cartCost < 39) {
+                    $checkout->setAntikatavoliCost(1.50);
                 } else {
-                    $cartCost = $checkoutService->calculateCartCost($this->cartItems);
-                    if ($step2Form->get('paymentType')->getData() === '1003' && $cartCost < 39) {
-                        $checkout->setAntikatavoliCost(1.50);
-                    } else {
-                        $checkout->setAntikatavoliCost(0);
-                    }
-                    $curStep = 4;
-                    return $this->json(['success' => true]);
+                    $checkout->setAntikatavoliCost(0);
                 }
+                $curStep = 4;
+                return $this->json(['success' => true]);
             }
+//            }
             $this->session->set('curOrder', $checkout);
             $bank_config['AcquirerId'] = 14;
             $bank_config['MerchantId'] = 2137477493;
@@ -149,6 +149,7 @@ class CheckoutController extends MainController
             $checkout->setTotalOrderCost($cartCost + $checkout->getAntikatavoliCost() + $checkout->getShippingCost());
             $checkout->setInstallments(0);
             $pireausRedirection->submitOrderToPireaus($checkout);
+            die();
             if ($checkout->getPireausResultCode() !== "0") {
                 $this->addFlash(
                     'notice',
@@ -219,5 +220,24 @@ class CheckoutController extends MainController
         }
     }
 
+    public function getPireausTicket(CheckoutService $checkoutService, EntityManagerInterface $em, PireausRedirection $pireausRedirection)
+    {
+        $checkout = $this->session->get('curOrder');
+        $cartCost = $checkoutService->calculateCartCost($this->cartItems);
 
+        $orderWebId = $em->getRepository(OrdersWebId::class)->find(1);
+        $checkout->setOrderNo($orderWebId->getOrderNumber() + 1);
+        $checkout->setTotalOrderCost($cartCost + $checkout->getAntikatavoliCost() + $checkout->getShippingCost());
+        $checkout->setInstallments(0);
+        $checkout = $pireausRedirection->submitOrderToPireaus($checkout);
+        $this->session->set('curOrder', $checkout);
+        dump($checkout);
+        $bank_config['AcquirerId'] = 14;
+        $bank_config['MerchantId'] = 2137477493;
+        $bank_config['PosId'] = 2141384532;
+        $bank_config['User'] = 'AN895032';
+        $bank_config['LanguageCode'] = 'el-GR';
+
+        return $this->json(['success' => true, 'checkout' => $checkout, 'bank_config' => $bank_config]);
+    }
 }

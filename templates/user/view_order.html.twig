@@ -136,7 +136,15 @@
                                                     {% set expenses = expenses + expense.expenceCost %}
                                                 {% endfor %}
                                             {% endif %}
-                                            {% set orderTotal = orderSubTotal + expenses %}
+                                            {% if voucherDisc is defined %}
+                                                <tr>
+                                                    <td>Έκπτωση από κουπόνι</td>
+                                                    <td>-{{ voucherDisc|number_format(2, ',', '.') }}€</td>
+                                                </tr>
+                                            {% else %}
+                                                {% set voucherDisc = 0 %}
+                                            {% endif %}
+                                            {% set orderTotal = orderSubTotal + expenses - voucherDisc %}
                                             <tr class="font-weight-bold">
                                                 <td>
                                                     <span class="text-uppercase">ΣΥΝΟΛΟ</span>

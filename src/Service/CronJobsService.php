@@ -129,9 +129,9 @@ EOF;
 //            if ($this->counter < 150) {
 //                if ((int)$category->IsVisible === 1) {
             $subCtgs = $this->getSubCategories((int)$category->CategoryID, $authId, $category->ID, 1);
-                dump($subCtgs);
-                die();
             if ($this->counter === 2) {
+                dump($this->prCategories);
+                die();
             }
 //            continue;
             $this->prCategories[] = array(
@@ -182,7 +182,7 @@ EOF;
             $result = $this->client->SendMessage(['Message' => $message]);
             $resultXML = simplexml_load_string(str_replace("utf-16", "utf-8", $result->SendMessageResult));
             $this->counter++;
-            dump($message, $resultXML->GetDataRows->GetFullCategoriesTreeRow);
+            dump($message, $result);
             return $resultXML->GetDataRows->GetFullCategoriesTreeRow;
             if ($items->GetDataRows->GetFullCategoriesTreeRow !== false) {
 //                    $this->tmpArr = [];

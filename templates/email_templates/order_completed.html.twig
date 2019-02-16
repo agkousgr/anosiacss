@@ -78,13 +78,13 @@
                                 {% endif %}
                                 {% if checkout.paymentType == '1008' %}
                                     {% set paymentMethod = 'Πληρωμή στο κατάστημα' %}
-                                {% elseif order.paymentType == '1001' %}
+                                {% elseif checkout.paymentType == '1001' %}
                                     {% set paymentMethod = 'Πιστωτική' %}
-                                {% elseif order.paymentType == '1006' %}
+                                {% elseif checkout.paymentType == '1006' %}
                                     {% set paymentMethod = 'Paypal' %}
-                                {% elseif order.paymentType == '1007' %}
+                                {% elseif checkout.paymentType == '1007' %}
                                     {% set paymentMethod = 'Αντικαταβολή' %}
-                                {% elseif order.paymentType == '1009' %}
+                                {% elseif checkout.paymentType == '1009' %}
                                     {% set paymentMethod = 'Κατάθεση σε τράπεζα' %}
                                 {% endif %}
                                 <div id="order-details" class="col-md-6">

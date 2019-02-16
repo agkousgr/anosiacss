@@ -20,6 +20,8 @@
 //         }
 //     })
 // })
+import swal from 'sweetalert2';
+
 require('bootstrap');
 require('jquery-validation');
 
@@ -124,7 +126,7 @@ $(document).ready(function () {
         $.post(Routing.generate('check_if_user_exists'), data, function (response) {
             if (response.success == false) {
                 swal({
-                    title: 'Σφάλμα email',
+                    title: 'Σφάλμα',
                     html: '<div style="font-size:17px;">' + response.errorMsg + '</div>',
                     type: 'error',
                     timer: 5000
@@ -150,13 +152,29 @@ $(document).ready(function () {
             // $('form[name="checkout_step2"]').submit();
             if ($('#checkout_step2_paymentType_2').prop('checked') === true) {
                 console.log('pireaus');
-                $('#pireaus_container').show();
-                $('#pireaus-post').submit();
+
+                $.post(Routing.generate('get_pireaus_ticket'), function (result) {
+                    console.log(result);
+                    if (result.success === true) {
+                        if (result.checkout.pireausResultCode !== '0') {
+                            swal({
+                                title: 'Σφάλμα',
+                                html: '<div style="font-size:17px;">' + result.checkout.pireausResultDescription + '. ' + result.checkout.pireausResultAction + '</div>',
+                                type: 'error',
+                                timer: 5000
+                            });
+                        }else{
+                            $('#pireaus_container').show();
+                            $('#pireaus-post').submit();
+                        }
+                    }
+                });
             } else {
                 console.log('not pireaus');
                 let form = $('form[name="checkout_step2"]');
                 let formData = form.serialize();
                 $.post(Routing.generate('checkout'), formData, function (result) {
+                    console.log(result);
                     if (result.success === true) {
                         let url = Routing.generate('complete_checkout');
                         window.location.assign(url);
@@ -362,7 +380,7 @@ function calculateAntikatovoli() {
     } else {
         $('#cart-subtotal-pay-on-delivery').addClass('hidden');
     }
-    totalCost = $('#cart-cost').data('cost') + antikatavoliCost + shippingCost - couponDisc;
+    let totalCost = $('#cart-cost').data('cost') + antikatavoliCost + shippingCost - couponDisc;
     $('#total-cost').data('cost', totalCost.toFixed(2));
     let totalCostString = totalCost.toFixed(2);
     let newTotalCostString = totalCostString.replace('.', ',');
