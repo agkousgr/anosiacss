@@ -6544,16 +6544,16 @@
         },
         {
             "name": "vinkla/instagram",
-            "version": "9.1.0",
+            "version": "9.2.0",
             "source": {
                 "type": "git",
                 "url": "https://github.com/vinkla/instagram.git",
-                "reference": "f36058d319f65d8ef920e6f31c9916183371e937"
+                "reference": "2883db8b5658c316c1e7379c073c60c5185fa3ab"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/vinkla/instagram/zipball/f36058d319f65d8ef920e6f31c9916183371e937",
-                "reference": "f36058d319f65d8ef920e6f31c9916183371e937",
+                "url": "https://api.github.com/repos/vinkla/instagram/zipball/2883db8b5658c316c1e7379c073c60c5185fa3ab",
+                "reference": "2883db8b5658c316c1e7379c073c60c5185fa3ab",
                 "shasum": ""
             },
             "require": {
@@ -6567,12 +6567,12 @@
                 "php-http/guzzle6-adapter": "^1.1",
                 "php-http/message": "^1.7",
                 "php-http/mock-client": "^1.1",
-                "phpunit/phpunit": "^7.4"
+                "phpunit/phpunit": "^8.0"
             },
             "type": "library",
             "extra": {
                 "branch-alias": {
-                    "dev-develop": "9.1-dev"
+                    "dev-develop": "9.2-dev"
                 }
             },
             "autoload": {
@@ -6598,7 +6598,7 @@
                 "media",
                 "recent"
             ],
-            "time": "2018-10-31T11:58:31+00:00"
+            "time": "2019-02-17T09:45:21+00:00"
         },
         {
             "name": "webmozart/assert",
@@ -6912,16 +6912,16 @@
         },
         {
             "name": "nikic/php-parser",
-            "version": "v4.2.0",
+            "version": "v4.2.1",
             "source": {
                 "type": "git",
                 "url": "https://github.com/nikic/PHP-Parser.git",
-                "reference": "594bcae1fc0bccd3993d2f0d61a018e26ac2865a"
+                "reference": "5221f49a608808c1e4d436df32884cbc1b821ac0"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/nikic/PHP-Parser/zipball/594bcae1fc0bccd3993d2f0d61a018e26ac2865a",
-                "reference": "594bcae1fc0bccd3993d2f0d61a018e26ac2865a",
+                "url": "https://api.github.com/repos/nikic/PHP-Parser/zipball/5221f49a608808c1e4d436df32884cbc1b821ac0",
+                "reference": "5221f49a608808c1e4d436df32884cbc1b821ac0",
                 "shasum": ""
             },
             "require": {
@@ -6959,7 +6959,7 @@
                 "parser",
                 "php"
             ],
-            "time": "2019-01-12T16:31:37+00:00"
+            "time": "2019-02-16T20:54:15+00:00"
         },
         {
             "name": "symfony/browser-kit",
