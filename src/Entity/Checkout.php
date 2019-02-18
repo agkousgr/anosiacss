@@ -78,6 +78,11 @@ class Checkout extends WebUser
     /**
      * @var string|null
      */
+    private $recepientName;
+
+    /**
+     * @var string|null
+     */
     private $shipAddress;
 
     /**
@@ -310,6 +315,24 @@ class Checkout extends WebUser
     public function setInstallments(?int $installments): Checkout
     {
         $this->installments = $installments;
+        return $this;
+    }
+
+    /**
+     * @return string|null
+     */
+    public function getRecepientName(): ?string
+    {
+        return $this->recepientName;
+    }
+
+    /**
+     * @param string|null $recepientName
+     * @return Checkout
+     */
+    public function setRecepientName(?string $recepientName): Checkout
+    {
+        $this->recepientName = $recepientName;
         return $this;
     }
 
