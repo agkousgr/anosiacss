@@ -2,13 +2,13 @@
 <html>
 <head>
     <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Anosia Pharmacy{% block title %}{% endblock %}</title>
     {% block meta_og %}
         <meta property="og:locale" content="el_GR" />
-        <meta property="og:title"
-              content="Anosia Pharmacy "/>
-        <meta property="og:description"
-              content=''/>
+        <meta property="og:title" content="Anosia Pharmacy" />
+        <meta property="og:description" content='' />
         <meta property="og:site_name" content="Anosia Pharmacy" />
         <meta property="og:image" content="{{ app.request.uri ~ asset('images/logo.png') }}"/>
         <meta property="og:url" content="{{ path(app.request.attributes.get('_route'), app.request.attributes.get('_route_params')) }}" />
@@ -23,116 +23,73 @@
     </style>
 </head>
 <body id="{% block bodyId %}{% endblock %}" class="{% block bodyClass %}{% endblock %}">
+    <script>
+        window.fbAsyncInit = function() {
+            FB.init({
+                appId: '605092459847380',
+                autoLogAppEvents: true,
+                xfbml: true,
+                version: 'v3.2'
+            });
+            FB.CustomerChat.show();
+        };
 
-<div id="fb-root"></div>
+        (function(d, s, id){
+            var js, fjs = d.getElementsByTagName(s)[0];
+            if (d.getElementById(id)) {return;}
+            js = d.createElement(s); js.id = id;
+            js.src = "https://connect.facebook.net/el_GR/sdk/xfbml.customerchat.js";
+            fjs.parentNode.insertBefore(js, fjs);
+        }(document, 'script', 'facebook-jssdk'));
+    </script>
 
-<!-- Your customer chat code -->
-<div class="fb-customerchat"
-     attribution=setup_tool
-     page_id="292956054170320"
-     theme_color="#019A36"
-     logged_in_greeting="Γεια σας! Πώς μπορούμε να σας εξυπηρετήσουμε;"
-     logged_out_greeting="Γεια σας! Πώς μπορούμε να σας εξυπηρετήσουμε;">
-</div>
-<div class="fb-customerchat"
-     page_id="<PAGE_ID>">
-</div>
-<script>
-    // Customer CHAT. To be enabled
-    // window.fbAsyncInit = function () {
-    //     FB.init({
-    //         appId: '605092459847380',
-    //         autoLogAppEvents: true,
-    //         xfbml: true,
-    //         version: 'v3.0'
-    //     });
-    //     FB.CustomerChat.show();
-    // };
+    <div id="fb-root"></div>
+    <div class="fb-customerchat"
+         page_id="292956054170320"
+         theme_color="#019A36"
+         logged_in_greeting="Γεια σας! Πώς μπορούμε να σας εξυπηρετήσουμε;"
+         logged_out_greeting="Γεια σας! Πώς μπορούμε να σας εξυπηρετήσουμε;">
+    </div>
 
-    // (function (d, s, id) {
-    //     var js, fjs = d.getElementsByTagName(s)[0];
-    //     if (d.getElementById(id)) return;
-    //     js = d.createElement(s);
-    //     js.id = id;
-    //     // js.src = 'https://connect.facebook.net/el_GR/sdk.js#xfbml=1&version=v3.0&appId=605092459847380&autoLogAppEvents=1';
-    //     js.src = 'https://connect.facebook.net/el_GR/sdk/xfbml.customerchat.js#xfbml=1&version=v3.0&appId=605092459847380&autoLogAppEvents=1';
-    //     fjs.parentNode.insertBefore(js, fjs);
-    // }(document, 'script', 'facebook-jssdk'));
-
-    (function (d, s, id) {
-        var js, fjs = d.getElementsByTagName(s)[0];
-        if (d.getElementById(id)) return;
-        js = d.createElement(s);
-        js.id = id;
-        js.src = 'https://connect.facebook.net/el_GR/sdk/xfbml.customerchat.js#xfbml=1&version=v3.0&appId=605092459847380&autoLogAppEvents=1';
-        fjs.parentNode.insertBefore(js, fjs);
-    }(document, 'script', 'facebook-jssdk'));
-
-
-    // (function(d, s, id) {
-    //     var js, fjs = d.getElementsByTagName(s)[0];
-    //     if (d.getElementById(id)) return;
-    //     js = d.createElement(s); js.id = id;
-    //     js.src = "https://connect.facebook.net/en_US/sdk/xfbml.customerchat.js";
-    //     fjs.parentNode.insertBefore(js, fjs);
-    // }(document, 'script', 'facebook-jssdk'));
-
-</script>
 {% block body %}
     <div id="mainWrapper">
         {% include 'partials/sidebar_login.html.twig' %}
         {% include 'partials/sidebar_cart.html.twig' %}
-
         {% include 'partials/swipe_menu.html.twig' %}
-
         {% include 'partials/site_header.html.twig' %}
-
         {% include 'home_page_modules/slider.html.twig' %}
         {#{% include 'home_page_modules/00_promo_categories.html.twig' %}#}
-
         {% include 'home_page_modules/16_best_sellers.html.twig' %}
         {% include 'home_page_modules/search_for_anosia.twig' %}
         {% include 'home_page_modules/social01.html.twig' %}
         {#{% include 'home_page_modules/10_latest_offers.html.twig' %}#}
-
         {#{% include 'home_page_modules/latest_offers_new.html.twig' %}#}
-
         {% include 'home_page_modules/03_promo.html.twig' %}
         {#{% include 'home_page_modules/04_inside_slider.html.twig' %}#}
         {% include 'home_page_modules/05_new_products.html.twig' %}
         {#{% include 'home_page_modules/06_categories.html.twig' %}#}
         {#{% include 'home_page_modules/07_featured_products.html.twig' %}#}
-
         {% include 'home_page_modules/parallax_categories.html.twig' %}
-
         {% include 'home_page_modules/01_blog.html.twig' %}
-
         {% include 'home_page_modules/09_website_info.html.twig' %}
-
         {#{% include 'home_page_modules/11_pricing_table.html.twig' %}#}
-
         {#{% include 'home_page_modules/12_testimonials.htnl.twig' %}#}
-
         {#{% include 'home_page_modules/13_info.html.twig' %}#}
         {% include 'home_page_modules/social02.html.twig' %}
-
         {% include 'home_page_modules/14_newsletter.html.twig' %}
-
         {#{% include 'home_page_modules/15_social.html.twig' %}#}
-
         {% include 'partials/footer.html.twig' %}
-
     </div>
-
 {% endblock %}
-<a href="{{ path('products_list', {'slug': 'ΠΡΟΣΦΟΡΕΣ'}) }}" class="offers-bottom"><img style="width: 200px;" src="{{ asset('images/sales-badge-footer.png') }}"></a>
+<a href="{{ path('products_list', {'slug': 'ΠΡΟΣΦΟΡΕΣ'}) }}" class="offers-bottom">
+    <img style="width: 200px;" src="{{ asset('images/sales-badge-footer.png') }}" alt="ΠΡΟΣΦΟΡΕΣ" />
+</a>
 <a href="#0" class="cd-top js-cd-top">Top</a>
 {% block javascripts %}
     {% include 'partials/javascripts.html.twig' %}
     {% if homepage is defined %}
         <script src="{{ asset('build/js/home-page.js') }}"></script>
     {% endif %}
-
 {% endblock %}
 </body>
 </html>

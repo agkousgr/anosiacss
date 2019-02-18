@@ -17730,7 +17730,7 @@ option {
     -moz-appearance: none
 }
 
-#fb-root {
+/*#fb-root {
     display: none
 }
 
@@ -17743,7 +17743,7 @@ option {
 .fb-wrap {
     width: 100%;
     margin: 0 auto
-}
+}*/
 
 .fb-like-box,
 .fb-like-box span,
