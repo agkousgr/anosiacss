@@ -58,6 +58,7 @@ class AjaxCheckoutController extends AbstractController
                 $checkout->setAfm($request->request->get('checkout_step1')['afm']);
                 $checkout->setIrs($request->request->get('checkout_step1')['irs']);
                 if ($request->request->get('checkout_step1')['shipAddress']) {
+                    $checkout->setRecepientName($request->request->get('checkout_step1')['recepientName']);
                     $checkout->setShipAddress($request->request->get('checkout_step1')['shipAddress']);
                     $checkout->setShipZip($request->request->get('checkout_step1')['shipZip']);
                     $checkout->setShipCity($request->request->get('checkout_step1')['shipCity']);
@@ -70,10 +71,13 @@ class AjaxCheckoutController extends AbstractController
                 $checkout->setCity($request->request->get('checkout_step1')['city']);
                 $checkout->setDistrict($request->request->get('checkout_step1')['district']);
                 $checkout->setPhone01($request->request->get('checkout_step1')['phone01']);
-                $userAccountService->updateUserInfo($checkout);
+                $clientId = $userAccountService->updateUserInfo($checkout);
+                if (null === $session->get("anosiaUser"))
+                    $checkout->setClientId($clientId);
+                dump($clientId, $checkout);
                 $session->remove('addAddress');
 //                }
-                if ($request->request->get('checkout_step1')['shippingType'] === '1000') {
+                if ($request->request->get('checkout_step1')['shippingType'] === '104') {
                     $checkout->setShippingCost(2.00);
                 }
                 $checkout->setComments($request->request->get('checkout_step1')['comments']);

@@ -102,7 +102,7 @@ $(document).ready(function () {
             $.post(Routing.generate('step1_submit'), formData, function (response) {
                 if (response.success == false) {
                     swal({
-                        title: 'Είσοδος χρήστη',
+                        title: 'Σφάλμα',
                         html: '<div style="font-size:17px;">' + response.errorMsg + '</div>',
                         type: 'error',
                         timer: 5000

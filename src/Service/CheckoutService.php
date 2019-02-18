@@ -395,6 +395,8 @@ EOF;
         $district = $checkout->getDistrict();
         $city = $checkout->getCity();
         $coupon = $checkout->getCouponId();
+        $recepientName = $checkout->getRecepientName();
+        $shipKindId = ($shippingType === 104) ? 1005 : 1005;
         $email = $checkout->getEmail();
 
         $checkout->setTotalOrderCost($this->cartItemsCost + $checkout->getShippingCost() + $checkout->getAntikatavoliCost());
@@ -426,10 +428,13 @@ EOF;
     <ShipCity>$city</ShipCity>
     <ShipCarrier>1</ShipCarrier>
     <VoucherID>$coupon</VoucherID>
+    <VoucherRecepient>$recepientName</VoucherRecepient>
+    <ShipkindID>$shipKindId</ShipkindID>
 </ClientSetOrderRequest>
 EOF;
         try {
 //            dump($message);
+//            die();
             $result = $this->client->SendMessage(['Message' => $message]);
             $orderResult = simplexml_load_string(str_replace("utf-16", "utf-8", $result->SendMessageResult));
             dump($message, $result);
@@ -451,7 +456,7 @@ EOF;
     {
         // Todo: Set expenseId in user's general configuration
         $expenses = "<Expenses>\n";
-        if ($checkout->getShippingType() === '1000') {
+        if ($checkout->getShippingType() === '104') {
 //            $expenses .= Write code to get value from Soft1
             $expenses .= "        <ClientSetOrderExpense>
             <ExpenseID>104</ExpenseID>
@@ -459,7 +464,7 @@ EOF;
         </ClientSetOrderExpense>
 ";
         }
-        if ($checkout->getPaymentType() === '1003') {
+        if ($checkout->getPaymentType() === '1007') {
 //            $expenses .= Write code to get value from Soft1
             $expenses .= "        <ClientSetOrderExpense>
             <ExpenseID>105</ExpenseID>

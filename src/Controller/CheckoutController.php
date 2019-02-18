@@ -85,23 +85,23 @@ class CheckoutController extends MainController
 //            }
 
             if ($step2Form->isSubmitted() && $step2Form->isValid()) {
-                if (null === $this->loggedUser && 'Success' !== $createUserResult = $userAccountService->createUser($checkout)) {
-                    $curStep = 4;
-                    $this->addFlash(
-                        'notice',
-                        'Παρουσιάστηκε σφάλμα κατά την ολοκλήρωση της παραγγελίας σας. Κωδικός σφάλματος "' . $createUserResult . '"! Αν δεν είναι η πρώτη φορά που βλέπετε αυτό το σφάλμα παρακαλούμε επικοινωνείστε μαζί μας.'
-                    );
+//                if (null === $this->loggedUser && 'Success' !== $createUserResult = $userAccountService->createUser($checkout)) {
+//                    $curStep = 4;
+//                    $this->addFlash(
+//                        'notice',
+//                        'Παρουσιάστηκε σφάλμα κατά την ολοκλήρωση της παραγγελίας σας. Κωδικός σφάλματος "' . $createUserResult . '"! Αν δεν είναι η πρώτη φορά που βλέπετε αυτό το σφάλμα παρακαλούμε επικοινωνείστε μαζί μας.'
+//                    );
+//                } else {
+                $cartCost = $checkoutService->calculateCartCost($this->cartItems);
+                if ($step2Form->get('paymentType')->getData() === '1007' && $cartCost < 39) {
+                    $checkout->setAntikatavoliCost(1.50);
                 } else {
-                    $cartCost = $checkoutService->calculateCartCost($this->cartItems);
-                    if ($step2Form->get('paymentType')->getData() === '1003' && $cartCost < 39) {
-                        $checkout->setAntikatavoliCost(1.50);
-                    } else {
-                        $checkout->setAntikatavoliCost(0);
-                    }
-                    $curStep = 4;
-                    return $this->json(['success' => true]);
+                    $checkout->setAntikatavoliCost(0);
                 }
+                $curStep = 4;
+                return $this->json(['success' => true]);
             }
+//            }
             $this->session->set('curOrder', $checkout);
             $bank_config['AcquirerId'] = 14;
             $bank_config['MerchantId'] = 2137477493;

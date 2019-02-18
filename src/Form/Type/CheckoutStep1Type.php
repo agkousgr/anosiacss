@@ -57,6 +57,9 @@ class CheckoutStep1Type extends AbstractType
             ->add('irs', TextType::class, array(
                 'data' => 'No Invoice'
             ))
+            ->add('recepientName', TextType::class, [
+                'required' => false
+            ])
             ->add('shipAddress', TextType::class, [
                 'required' => false
             ])

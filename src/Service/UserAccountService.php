@@ -122,7 +122,7 @@ class UserAccountService
     <CompanyID>$this->companyId</CompanyID>
     <CODE>C*</CODE>
     <NAME>$name</NAME>
-    <BRANCH>1000</BRANCH>
+    <BRANCH>1001</BRANCH>
     <ADDRESS></ADDRESS>
     <ZIP></ZIP>
     <CITY></CITY>
@@ -166,6 +166,7 @@ EOF;
         $city = $user->getCity();
         $district = $user->getDistrict();
         $phone01 = $user->getPhone01();
+
         $message = <<<EOF
 <?xml version="1.0" encoding="utf-16"?>
 <ClientSetClientRequest>
@@ -178,7 +179,7 @@ EOF;
     <CompanyID>$this->companyId</CompanyID>
     <CODE>C*</CODE>
     <NAME>$name</NAME>
-    <BRANCH>1000</BRANCH>
+    <BRANCH>1001</BRANCH>
     <ADDRESS>$address</ADDRESS>
     <ZIP>$zip</ZIP>
     <CITY>$city</CITY>
@@ -719,10 +720,13 @@ EOF;
      */
     public function updateUserInfo($user)
     {
-        $this->updateClient($user);
+        $clientId = $this->updateClient($user);
+
         if ($user->isNewsletter() === true)
             $this->updateNewsletter($user);
 //        $userInfo = array_merge($userArr, $clientArr, $newsletterArr);
+        if ($user instanceof Checkout)
+            return $clientId;
         return;
     }
 
