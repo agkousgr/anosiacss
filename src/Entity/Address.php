@@ -12,27 +12,27 @@ class Address
     /**
      * @var int|null
      */
-    private $client;
+    protected $client;
 
     /**
      * @var string|null
      */
-    private $address;
+    protected $address;
 
     /**
      * $var string|null
      */
-    private $zip;
+    protected $zip;
 
     /**
      * $var string|null
      */
-    private $city;
+    protected $city;
 
     /**
      * $var string|null
      */
-    private $district;
+    protected $district;
 
     /**
      * @return int|null

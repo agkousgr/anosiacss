@@ -2,7 +2,6 @@
 
 namespace App\Entity;
 
-
 class Checkout extends WebUser
 {
     const PAYMENT_TYPES = [

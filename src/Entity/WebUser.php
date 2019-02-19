@@ -8,62 +8,62 @@ class WebUser extends Address
     /**
      * @var string|null
      */
-    private $clientId;
+    protected $clientId;
 
     /**
      * @var string|null
      */
-    private $newsletterId;
+    protected $newsletterId;
 
     /**
      * @var string|null
      */
-    private $username;
+    protected $username;
 
     /**
      * @var string|null
      */
-    private $password;
+    protected $password;
 
     /**
      * @var string|null
      */
-    private $email;
+    protected $email;
 
     /**
      * @var string|null
      */
-    private $firstname;
+    protected $firstname;
 
     /**
      * @var string|null
      */
-    private $lastname;
+    protected $lastname;
 
     /**
      * @var bool|null
      */
-    private $newsletter;
+    protected $newsletter;
 
     /**
      * @var string|null
      */
-    private $afm;
+    protected $afm;
 
     /**
      * @var string|null
      */
-    private $irs;
+    protected $irs;
 
     /**
      * $var string|null
      */
-    private $phone01;
+    protected $phone01;
 
     /**
      * $var string|null
      */
-    private $phone02;
+    protected $phone02;
 
     /**
      * @return null|string
