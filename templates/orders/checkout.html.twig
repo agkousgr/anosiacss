@@ -193,13 +193,22 @@
                                                             </div>
 
                                                             <div class="clearfix"></div>
-                                                            <div class="form-group row ">
+                                                            <div class="form-group row">
                                                                 <div class="col-md-12">
                                                                     {{ form_widget(step1Form.newsletter) }}
                                                                     {{ form_label(step1Form.newsletter, 'Εγγραφή στο newsletter. Μπορείτε να διαγραφείτε οποιαδήποτε στιγμή επιθυμείτε.') }}
                                                                 </div>
                                                             </div>
-
+                                                            <div id="newsletter-fields" class="hidden">
+                                                                <div class="form-group row">
+                                                                    <div class="col-md-6">
+                                                                        {{ form_widget(step1Form.newsLetterAge, {'attr': {'class': 'form-control', 'placeholder': 'Ηλικία'}}) }}
+                                                                    </div>
+                                                                    <div class="col-md-6">
+                                                                        {{ form_widget(step1Form.newsLetterGender, {'attr': {'class': 'form-control no-border'}}) }}
+                                                                    </div>
+                                                                </div>
+                                                            </div>
                                                         </section>
                                                         <section class="form-fields">
                                                             <h4>Στοιχεία τιμολόγησης</h4>

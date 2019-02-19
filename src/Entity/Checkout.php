@@ -116,6 +116,16 @@ class Checkout extends WebUser
     private $couponId;
 
     /**
+     * @var int|null
+     */
+    private $newsLetterAge;
+
+    /**
+     * @var string|null
+     */
+    private $newsLetterGender;
+
+    /**
      * @var string|null
      */
     private $pireausResultCode;
@@ -418,7 +428,7 @@ class Checkout extends WebUser
 
     /**
      * @param mixed $couponDisc
-     * @return Checkouts
+     * @return Checkout
      */
     public function setCouponDisc($couponDisc)
     {
@@ -459,6 +469,54 @@ class Checkout extends WebUser
     public function setCouponId($couponId)
     {
         $this->couponId = $couponId;
+        return $this;
+    }
+
+    /**
+     * Get newsLetterAge.
+     *
+     * @return int|null
+     */
+    public function getNewsLetterAge(): ?int
+    {
+        return $this->newsLetterAge;
+    }
+
+    /**
+     * Set newsLetterAge.
+     *
+     * @param int|null $newsLetterAge
+     *
+     * @return Checkout
+     */
+    public function setNewsLetterAge(?int $newsLetterAge): Checkout
+    {
+        $this->newsLetterAge = $newsLetterAge;
+
+        return $this;
+    }
+
+    /**
+     * Get newsLetterGender.
+     *
+     * @return string|null
+     */
+    public function getNewsLetterGender(): ?string
+    {
+        return $this->newsLetterGender;
+    }
+
+    /**
+     * Set newsLetterGender.
+     *
+     * @param string|null $newsLetterGender
+     *
+     * @return Checkout
+     */
+    public function setNewsLetterGender(?string $newsLetterGender): Checkout
+    {
+        $this->newsLetterGender = $newsLetterGender;
+
         return $this;
     }
 

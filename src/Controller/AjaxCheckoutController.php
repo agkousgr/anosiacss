@@ -50,7 +50,7 @@ class AjaxCheckoutController extends AbstractController
     {
         if ($request->isXmlHttpRequest()) {
             try {
-
+                /** @var \App\Entity\Checkout */
                 $checkout = $session->get('curOrder');
                 $checkout->setFirstname($request->request->get('checkout_step1')['firstname']);
                 $checkout->setLastname($request->request->get('checkout_step1')['lastname']);
@@ -63,6 +63,11 @@ class AjaxCheckoutController extends AbstractController
                     $checkout->setShipZip($request->request->get('checkout_step1')['shipZip']);
                     $checkout->setShipCity($request->request->get('checkout_step1')['shipCity']);
                     $checkout->setShipDistrict($request->request->get('checkout_step1')['shipDistrict']);
+                }
+                if (array_key_exists('newsletter', $request->request->get('checkout_step1'))) {
+                    $checkout->setNewsletter(true);
+                    $checkout->setNewsLetterAge($request->request->get('checkout_step1')['newsLetterAge']);
+                    $checkout->setNewsLetterGender($request->request->get('checkout_step1')['newsLetterGender']);
                 }
                 $checkout->setShippingType($request->request->get('checkout_step1')['shippingType']);
 //                if ($session->get("addAddress")) {

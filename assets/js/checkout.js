@@ -217,6 +217,14 @@ $(document).ready(function () {
         });
     });
 
+    $('input[name="checkout_step1[newsletter]"]').on('change', function () {
+        $('#newsletter-fields').toggleClass('hidden');
+        if (!$(this).is(':checked')) {
+            $('#checkout_step1_newsLetterAge').val('');
+            $('#checkout_step1_newsLetterGender').val(null);
+        }
+    });
+
     $('input[name="checkout_step1[series]"]').on('change', function () {
         $('#invoice-fields').toggleClass('hidden');
         if ($('#checkout_step1_series_0').is(':checked')) {
