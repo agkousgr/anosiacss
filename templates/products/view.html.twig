@@ -126,7 +126,7 @@
                                           itemtype="https://schema.org/Offer"
                                           class="availability">
                                         {#{% if (pr.remainNotReserved > "0" or pr.webFree == "true") and pr.outOfStock == "false" %}#}
-                                        {% if pr.outOfStock == "false" and (pr.remainNotReserved|number_format() > 0 or pr.webFree == "true") %}
+                                        {% if ((pr.outOfStock == "false" and pr.webFree == 'false' and (pr.remainNotReserved + pr.overAvailability) > 0) or pr.webFree == "true") %}
                                         <span class="available-now">
                                             <link itemprop="availability"
                                                   href="https://schema.org/InStock">
@@ -144,11 +144,15 @@
                                 <!-- end content availabity -->
 
                                 {% if (pr.maxByOrder > 0) %}
-                                    {% set maxItems = pr.maxByOrder|number_format() %}
+                                    {% set maxItems = pr.maxByOrder %}
                                 {% elseif (pr.webFree == 'true') %}
-                                    {% set maxItems = (pr.remainNotReserved + pr.overAvailability)|number_format() %}
+                                    {% set maxItems = '' %}
+                                {% elseif (pr.webFree == 'false' and (pr.remainNotReserved + pr.overAvailability) > 0) %}
+                                    {% set maxItems = pr.remainNotReserved + pr.overAvailability %}
+                                {#{% elseif pr.remainNotReserved > 0 %}#}
+                                    {#{% set maxItems = pr.remainNotReserved %}#}
                                 {% else %}
-                                    {% set maxItems = pr.remainNotReserved|number_format() %}
+                                    {% set maxItems = 0 %}
                                 {% endif %}
                                 <div class="variations_button">
                                     <div class="row">
@@ -177,7 +181,7 @@
                                     </div>
                                 </div>
 
-                                {% if pr.outOfStock == "false" and (pr.remainNotReserved|number_format() > 0 or pr.webFree == "true") %}
+                                {% if ((pr.outOfStock == "false" and pr.webFree == 'false' and (pr.remainNotReserved + pr.overAvailability) > 0) or pr.webFree == "true") %}
                                     <div class="option_button form-group">
                                         <div class="row">
                                             <div class="col-xs-12 col-sm-8 col-md-4">

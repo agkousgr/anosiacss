@@ -100,9 +100,13 @@
                                                         {% if (pr.maxByOrder > 0) %}
                                                             {% set maxItems = pr.maxByOrder %}
                                                         {% elseif (pr.webFree == 'true') %}
+                                                            {% set maxItems = '' %}
+                                                        {% elseif (pr.webFree == 'false' and (pr.remainNotReserved + pr.overAvailability) > 0) %}
                                                             {% set maxItems = pr.remainNotReserved + pr.overAvailability %}
+                                                            {#{% elseif pr.remainNotReserved > 0 %}#}
+                                                            {#{% set maxItems = pr.remainNotReserved %}#}
                                                         {% else %}
-                                                            {% set maxItems = pr.remainNotReserved %}
+                                                            {% set maxItems = 0 %}
                                                         {% endif %}
                                                         <div class="product-line-grid-right product-line-actions col-md-6 col-xs-12">
                                                             <div class="row">
