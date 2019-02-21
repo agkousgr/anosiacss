@@ -103,6 +103,8 @@ class CronJobsService
     <IsVisible>-1</IsVisible>
     <CategoryID>-1</CategoryID>
     <Slug>null</Slug>
+    <ParentId>-1</ParentId>
+    <ChildId>-1</ChildId>
 </ClientGetFullCategoriesTreeRequest>
 EOF;
 
@@ -175,6 +177,8 @@ EOF;
     <IsVisible>-1</IsVisible>
     <CategoryID>$ctgId</CategoryID>
     <Slug>null</Slug>
+    <ParentId>-1</ParentId>
+    <ChildId>-1</ChildId>
 </ClientGetFullCategoriesTreeRequest>
 EOF;
 
