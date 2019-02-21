@@ -22,5 +22,11 @@ $(document).ready(function () {
                 url: $(this).find('img').attr('data-zoom')
             });
     }
+
+    $('#add-quantity').on('blur', function () {
+        if ($(this).val() > $(this).attr('max')) {
+            $(this).val($(this).attr('max'));
+        }
+    })
     // $('.product-main-slider').find('.bx-loading').removeClass('bx-loading');
 })
