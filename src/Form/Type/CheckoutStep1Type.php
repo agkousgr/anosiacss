@@ -5,8 +5,11 @@ namespace App\Form\Type;
 use App\Entity\Checkout;
 use App\Form\Subscriber\CheckoutSubscriber;
 use Symfony\Component\Form\AbstractType;
-use Symfony\Component\Form\Extension\Core\Type\{CheckboxType, EmailType, HiddenType, TextType, ChoiceType, TextareaType};
 use Symfony\Component\Form\FormBuilderInterface;
+use Symfony\Component\Form\Extension\Core\Type\{
+    CheckboxType, EmailType, HiddenType, TextType,
+    ChoiceType, TextareaType, IntegerType
+};
 use Symfony\Component\HttpFoundation\Session\SessionInterface;
 use Symfony\Component\OptionsResolver\OptionsResolver;
 
@@ -43,6 +46,19 @@ class CheckoutStep1Type extends AbstractType
             ->add('newsletter', CheckboxType::class, array(
                 'required' => false,
             ))
+            ->add('newsLetterAge', IntegerType::class, [
+                'attr' => ['min' => 1, 'max' => 100],
+                'required' => false,
+            ])
+            ->add('newsLetterGender', ChoiceType::class, [
+                'choices' => [
+                    'Άνδρας' => 'man',
+                    'Γυναίκα' => 'woman'
+                ],
+                'expanded' => true,
+                'placeholder' => false,
+                'required' => false,
+            ])
             ->add('series', ChoiceType::class, array(
                 'choices' => array(
                     'Απόδειξη' => 7021,
@@ -57,6 +73,9 @@ class CheckoutStep1Type extends AbstractType
             ->add('irs', TextType::class, array(
                 'data' => 'No Invoice'
             ))
+            ->add('recepientName', TextType::class, [
+                'required' => false
+            ])
             ->add('shipAddress', TextType::class, [
                 'required' => false
             ])

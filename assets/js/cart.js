@@ -65,4 +65,10 @@ $(document).ready(function () {
             }
         });
     });
+
+    $('#add-quantity').on('blur', function () {
+        if ($(this).val() > $(this).attr('max')) {
+            $(this).val($(this).attr('max'));
+        }
+    })
 })

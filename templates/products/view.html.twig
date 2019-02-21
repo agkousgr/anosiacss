@@ -144,11 +144,11 @@
                                 <!-- end content availabity -->
 
                                 {% if (pr.maxByOrder > 0) %}
-                                    {% set maxItems = pr.maxByOrder %}
+                                    {% set maxItems = pr.maxByOrder|number_format() %}
                                 {% elseif (pr.webFree == 'true') %}
-                                    {% set maxItems = pr.remainNotReserved + pr.overAvailability %}
+                                    {% set maxItems = (pr.remainNotReserved + pr.overAvailability)|number_format() %}
                                 {% else %}
-                                    {% set maxItems = pr.remainNotReserved %}
+                                    {% set maxItems = pr.remainNotReserved|number_format() %}
                                 {% endif %}
                                 <div class="variations_button">
                                     <div class="row">
@@ -157,7 +157,7 @@
                                                 <input id="add-quantity"
                                                        class="form-control stepper" type="number"
                                                        value="1" min="1"
-                                                        {#max="{{ maxItems }}"#}
+                                                        max="{{ maxItems }}"
                                                 />
                                             </div>
                                         </div>

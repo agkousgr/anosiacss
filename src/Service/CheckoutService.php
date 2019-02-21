@@ -395,6 +395,8 @@ EOF;
         $district = $checkout->getDistrict();
         $city = $checkout->getCity();
         $coupon = $checkout->getCouponId();
+        $recepientName = $checkout->getRecepientName();
+        $shipKindId = ($shippingType === 104) ? 1005 : 1005;
         $email = $checkout->getEmail();
 
         $checkout->setTotalOrderCost($this->cartItemsCost + $checkout->getShippingCost() + $checkout->getAntikatavoliCost());
@@ -426,6 +428,8 @@ EOF;
     <ShipCity>$city</ShipCity>
     <ShipCarrier>1</ShipCarrier>
     <VoucherID>$coupon</VoucherID>
+    <VoucherRecepient>$recepientName</VoucherRecepient>
+    <ShipkindID>$shipKindId</ShipkindID>
 </ClientSetOrderRequest>
 EOF;
         try {

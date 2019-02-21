@@ -17730,7 +17730,7 @@ option {
     -moz-appearance: none
 }
 
-#fb-root {
+/*#fb-root {
     display: none
 }
 
@@ -17743,7 +17743,7 @@ option {
 .fb-wrap {
     width: 100%;
     margin: 0 auto
-}
+}*/
 
 .fb-like-box,
 .fb-like-box span,
@@ -18636,7 +18636,7 @@ figure.effect-apollo:hover figcaption::before {
 }
 
 .pre-header-right span.count-baloon {
-    left: 50%;
+    left: 42%;
     -webkit-transform: translateX(-50%);
     -ms-transform: translateX(-50%);
     transform: translateX(-50%);

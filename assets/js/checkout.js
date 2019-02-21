@@ -104,7 +104,7 @@ $(document).ready(function () {
             $.post(Routing.generate('step1_submit'), formData, function (response) {
                 if (response.success == false) {
                     swal({
-                        title: 'Είσοδος χρήστη',
+                        title: 'Σφάλμα',
                         html: '<div style="font-size:17px;">' + response.errorMsg + '</div>',
                         type: 'error',
                         timer: 5000
@@ -233,6 +233,14 @@ $(document).ready(function () {
                 })
             }
         });
+    });
+
+    $('input[name="checkout_step1[newsletter]"]').on('change', function () {
+        $('#newsletter-fields').toggleClass('hidden');
+        if (!$(this).is(':checked')) {
+            $('#checkout_step1_newsLetterAge').val('');
+            $('#checkout_step1_newsLetterGender').val(null);
+        }
     });
 
     $('input[name="checkout_step1[series]"]').on('change', function () {

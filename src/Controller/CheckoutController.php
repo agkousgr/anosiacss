@@ -2,7 +2,6 @@
 
 namespace App\Controller;
 
-
 use App\Entity\{Checkout, OrdersWebId};
 use App\Form\Type\{
     CheckoutStep1Type,
@@ -10,7 +9,7 @@ use App\Form\Type\{
     CheckoutStep3Type,
     CheckoutStep4Type
 };
-use App\Service\{CheckoutService, PireausRedirection, UserAccountService, PaypalService};
+use App\Service\{CheckoutService, PireausRedirection, UserAccountService, PaypalService, NewsletterService};
 use Doctrine\ORM\EntityManagerInterface;
 use Psr\Log\LoggerInterface;
 use Symfony\Component\HttpFoundation\Request;
@@ -133,9 +132,13 @@ class CheckoutController extends MainController
         }
     }
 
-    public function completeCheckout(Request $request, CheckoutService $checkoutService, UserAccountService $userAccountService, EntityManagerInterface $em, PaypalService $paypalService, PireausRedirection $pireausRedirection)
+    public function completeCheckout(
+        Request $request, CheckoutService $checkoutService, UserAccountService $userAccountService, EntityManagerInterface $em,
+        PaypalService $paypalService, PireausRedirection $pireausRedirection, NewsletterService $newsletterService
+    )
     {
         $onlinePaymentError = false;
+        /** @var \App\Entity\Checkout */
         $checkout = $this->session->get('curOrder');
         $cartCost = $checkoutService->calculateCartCost($this->cartItems);
         $orderWebId = $em->getRepository(OrdersWebId::class)->find(1);
@@ -182,6 +185,17 @@ class CheckoutController extends MainController
         if ($onlinePaymentError === false) {
             $orderResponse = $checkoutService->submitOrder($checkout, $this->cartItems);
             if ($orderResponse) {
+                if ($checkout->getNewsletter()) {
+                    $date = date('Y-m-d H:i:s');
+                    $referrer = 'USER AGENT: ' . $request->headers->get('User-Agent') . ' REFERRER: ' . $request->headers->get('referer') . ' DATE: ' . $date;
+                    $newsletterService->getNewsletter(
+                        $checkout->getFirstName() . ' ' . $checkout->getLastName(),
+                        $checkout->getEmail(),
+                        $referrer,
+                        $checkout->getNewsLetterGender(),
+                        $checkout->getNewsLetterAge()
+                    );
+                }
 
                 $this->addFlash(
                     'success',

@@ -2,7 +2,6 @@
 
 namespace App\Entity;
 
-
 class Checkout extends WebUser
 {
     const PAYMENT_TYPES = [
@@ -78,6 +77,11 @@ class Checkout extends WebUser
     /**
      * @var string|null
      */
+    private $recepientName;
+
+    /**
+     * @var string|null
+     */
     private $shipAddress;
 
     /**
@@ -109,6 +113,16 @@ class Checkout extends WebUser
      * $var int|null
      */
     private $couponId;
+
+    /**
+     * @var int|null
+     */
+    private $newsLetterAge;
+
+    /**
+     * @var string|null
+     */
+    private $newsLetterGender;
 
     /**
      * @var string|null
@@ -314,6 +328,24 @@ class Checkout extends WebUser
     }
 
     /**
+     * @return string|null
+     */
+    public function getRecepientName(): ?string
+    {
+        return $this->recepientName;
+    }
+
+    /**
+     * @param string|null $recepientName
+     * @return Checkout
+     */
+    public function setRecepientName(?string $recepientName): Checkout
+    {
+        $this->recepientName = $recepientName;
+        return $this;
+    }
+
+    /**
      * @return null|string
      */
     public function getShipAddress(): ?string
@@ -395,7 +427,7 @@ class Checkout extends WebUser
 
     /**
      * @param mixed $couponDisc
-     * @return Checkouts
+     * @return Checkout
      */
     public function setCouponDisc($couponDisc)
     {
@@ -436,6 +468,54 @@ class Checkout extends WebUser
     public function setCouponId($couponId)
     {
         $this->couponId = $couponId;
+        return $this;
+    }
+
+    /**
+     * Get newsLetterAge.
+     *
+     * @return int|null
+     */
+    public function getNewsLetterAge(): ?int
+    {
+        return $this->newsLetterAge;
+    }
+
+    /**
+     * Set newsLetterAge.
+     *
+     * @param int|null $newsLetterAge
+     *
+     * @return Checkout
+     */
+    public function setNewsLetterAge(?int $newsLetterAge): Checkout
+    {
+        $this->newsLetterAge = $newsLetterAge;
+
+        return $this;
+    }
+
+    /**
+     * Get newsLetterGender.
+     *
+     * @return string|null
+     */
+    public function getNewsLetterGender(): ?string
+    {
+        return $this->newsLetterGender;
+    }
+
+    /**
+     * Set newsLetterGender.
+     *
+     * @param string|null $newsLetterGender
+     *
+     * @return Checkout
+     */
+    public function setNewsLetterGender(?string $newsLetterGender): Checkout
+    {
+        $this->newsLetterGender = $newsLetterGender;
+
         return $this;
     }
 
