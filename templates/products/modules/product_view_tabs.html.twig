@@ -2,19 +2,29 @@
     <div class="col-sm-12">
         <!-- Nav tabs -->
         <ul class="nav nav-tabs" role="tablist">
-            <li role="presentation" class="active"><a href="#Description"
-                                                      aria-controls="Description" role="tab"
-                                                      data-toggle="tab"><i
-                            class="fas fa-info-circle"></i>Περιγραφη</a></li>
+            {% if pr.body|length > 0 %}
+                <li role="presentation" class="active">
+                    <a href="#Description" aria-controls="Description" role="tab" data-toggle="tab">
+                        <i class="fas fa-info-circle"></i>Περιγραφη</a>
+                </li>
+            {% endif %}
             {% if pr.instructions|length > 0 %}
-                <li role="presentation"><a href="#Instructions" aria-controls="Information"
-                                           role="tab" data-toggle="tab"><i
-                                class="fas fa-file-text"></i>Οδηγιες</a></li>
+                <li role="presentation">
+                    <a href="#Instructions" aria-controls="Information" role="tab" data-toggle="tab">
+                        <i class="fas fa-file-text"></i>Οδηγιες</a>
+                </li>
             {% endif %}
             {% if pr.ingredients|length > 0 %}
-                <li role="presentation"><a href="#Ingredients" aria-controls="Information"
-                                           role="tab" data-toggle="tab"><i
-                                class="fas fa-file-text"></i>Συστατικα</a></li>
+                <li role="presentation">
+                    <a href="#Ingredients" aria-controls="Ingredients" role="tab" data-toggle="tab">
+                        <i class="fas fa-file-text"></i>Συστατικα</a>
+                </li>
+            {% endif %}
+            {% if pr.ingredients|length > 0 %}
+                <li role="presentation">
+                    <a href="#DeliveryInfo" aria-controls="DeliveryInfo" role="tab" data-toggle="tab">
+                        <i class="fas fa-file-text"></i>Πληροφρίες παράδοσης</a>
+                </li>
             {% endif %}
             {#<li role="presentation"><a href="#Sizing" aria-controls="Sizing" role="tab" data-toggle="tab"><i class="fa fa-align-center"></i>Sizing Guide</a></li>#}
             {#<li role="presentation"><a href="#Reviews" aria-controls="Reviews" role="tab" data-toggle="tab"><i class="fa fa-comments"></i>Reviews (0)</a></li>#}
@@ -30,6 +40,9 @@
             </div>
             <div role="tabpanel" class="tab-pane" id="Ingredients">
                 {{ pr.ingredients|raw }}
+            </div>
+            <div role="tabpanel" class="tab-pane" id="DeliveryInfo">
+                {{ pr.deliveryInfo|raw }}
             </div>
             {#<div role="tabpanel" class="tab-pane" id="Sizing">Sizing Guide</div>#}
             {#<div role="tabpanel" class="tab-pane" id="Reviews">Reviews</div>#}
