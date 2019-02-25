@@ -24,7 +24,7 @@ $(document).ready(function () {
     }
 
     $('#add-quantity').on('blur', function () {
-        if ($(this).val() > $(this).attr('max')) {
+        if (parseInt($(this).val()) > parseInt($(this).attr('max'))) {
             $(this).val($(this).attr('max'));
         }
     })

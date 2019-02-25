@@ -146,7 +146,7 @@
                                 {% if (pr.maxByOrder > 0) %}
                                     {% set maxItems = pr.maxByOrder %}
                                 {% elseif (pr.webFree == 'true') %}
-                                    {% set maxItems = '' %}
+                                    {% set maxItems = 100 %}
                                 {% elseif (pr.webFree == 'false' and (pr.remainNotReserved + pr.overAvailability) > 0) %}
                                     {% set maxItems = pr.remainNotReserved + pr.overAvailability %}
                                 {#{% elseif pr.remainNotReserved > 0 %}#}

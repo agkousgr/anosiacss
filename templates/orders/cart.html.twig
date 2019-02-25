@@ -100,7 +100,7 @@
                                                         {% if (pr.maxByOrder > 0) %}
                                                             {% set maxItems = pr.maxByOrder %}
                                                         {% elseif (pr.webFree == 'true') %}
-                                                            {% set maxItems = '' %}
+                                                            {% set maxItems = 100 %}
                                                         {% elseif (pr.webFree == 'false' and (pr.remainNotReserved + pr.overAvailability) > 0) %}
                                                             {% set maxItems = pr.remainNotReserved + pr.overAvailability %}
                                                             {#{% elseif pr.remainNotReserved > 0 %}#}
@@ -115,13 +115,12 @@
                                                                     <div class="row">
                                                                         <div class="col-md-8 col-xs-6">
                                                                             <div class="form-group">
-                                                                                <input id="add-quantity"
-                                                                                       name="quantity[{{ pr.cartId }}]"
-                                                                                       class="form-control stepper"
+                                                                                <input name="quantity[{{ pr.cartId }}]"
+                                                                                       class="form-control stepper add-quantity"
                                                                                        type="number"
                                                                                        value="{{ pr.quantity }}"
                                                                                        min="1"
-                                                                                        max="{{ maxItems }}"
+                                                                                       max="{{ maxItems }}"
                                                                                 />
                                                                             </div>
                                                                         </div>
