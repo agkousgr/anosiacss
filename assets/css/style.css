@@ -24604,14 +24604,14 @@ ul.product_list .availability span.out-of-stock {
     .cd-top {
         height:60px;
         width:60px;
-        right:30px;
-        bottom:30px
+        right:160px;
+        bottom:24px
     }
     .offers-bottom {
         height:60px;
         width:60px;
         right:95px;
-        bottom:30px
+        bottom:24px
     }
 }
 .social-header img {
