@@ -51,8 +51,6 @@ class NewsletterService
     {
         $this->logger = $logger;
         $this->session = $session;
-        dump($session->get("authID"));
-        die();
         $this->authId = $session->get("authID");
         $this->kind = $s1Credentials['kind'];
         $this->domain = $s1Credentials['domain'];
@@ -98,7 +96,7 @@ EOF;
                     $exist = true;
                 }
             } else {
-                if ($this->setNewsletter($name, $email, '', '', $referrer, $gender, $age)) {
+                if ($this->setNewsletter($name, $email, '', 'true', $referrer, $gender, $age)) {
                     $success = true;
                 }
             }
@@ -147,7 +145,7 @@ EOF;
         try {
             $result = $client->SendMessage(['Message' => $message]);
             $newsletterData = simplexml_load_string(str_replace("utf-16", "utf-8", $result->SendMessageResult));
-//            dump($message, $result);
+            dump($message, $result);
             return ((string)$newsletterData->IsValid === 'true') ? true : false;
         } catch (\SoapFault $sf) {
             echo $sf->faultstring;

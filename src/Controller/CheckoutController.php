@@ -185,7 +185,7 @@ class CheckoutController extends MainController
         if ($onlinePaymentError === false) {
             $orderResponse = $checkoutService->submitOrder($checkout, $this->cartItems);
             if ($orderResponse) {
-                if ($checkout->getNewsletter()) {
+                if ($checkout->isNewsletter()) {
                     $date = date('Y-m-d H:i:s');
                     $referrer = 'USER AGENT: ' . $request->headers->get('User-Agent') . ' REFERRER: ' . $request->headers->get('referer') . ' DATE: ' . $date;
                     $newsletterService->getNewsletter(
