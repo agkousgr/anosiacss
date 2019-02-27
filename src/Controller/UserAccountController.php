@@ -1,10 +1,4 @@
 <?php
-/**
- * Created by PhpStorm.
- * User: john
- * Date: 2/6/2018
- * Time: 9:09 μμ
- */
 
 namespace App\Controller;
 
@@ -15,7 +9,7 @@ use App\Form\Type\{
     UserAddressType, UserGeneralInfoType, UserInfoType, UserNewAddressType, UserRegistrationType
 };
 use Doctrine\ORM\EntityManagerInterface;
-use Symfony\Component\HttpFoundation\Request;
+use Symfony\Component\HttpFoundation\{Request, Response};
 use Symfony\Component\Security\Core\Encoder\UserPasswordEncoderInterface;
 
 class UserAccountController extends MainController
@@ -304,6 +298,26 @@ class UserAccountController extends MainController
             $this->logger->error(__METHOD__ . ' -> {message}', ['message' => $e->getMessage()]);
             throw $e;
         }
+    }
+
+    public function forgotPassword()
+    {
+        return $this->render('user/forgot_password.html.twig', [
+            'categories' => $this->categories,
+            'popular' => $this->popular,
+            'featured' => $this->featured,
+            'cartItems' => $this->cartItems,
+            'totalCartItems' => $this->totalCartItems,
+            'totalWishlistItems' => $this->totalWishlistItems,
+            'loggedName' => $this->loggedName,
+            'loggedUser' => $this->loggedUser,
+            'loginUrl' => $this->loginUrl
+        ]);
+    }
+
+    public function sendPasswordEmail()
+    {
+        return new Response('<h3>Coming soon ...</h3>');
     }
 
     public function logout(EntityManagerInterface $em, CartService $cartService)

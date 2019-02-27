@@ -236,12 +236,15 @@ EOF;
     <Password>$password</Password>
     <ClientID>$userId</ClientID>
     <LastLoginDT>$lastLogin</LastLoginDT>
+    <ConfirmationToken>null</ConfirmationToken>
+    <PasswordRequestDT></PasswordRequestDT>
+    <PasswordRequestCounter></PasswordRequestCounter>
 </ClientSetUserRequest>
 EOF;
         try {
             $result = $client->SendMessage(['Message' => $message]);
             $userResult = simplexml_load_string(str_replace("utf-16", "utf-8", $result->SendMessageResult));
-//            dump($message, $result);
+            dump($message, $result);
             if ((string)$userResult->ErrorCode === 'None') {
                 if ($userData instanceof Checkout) {
                     $userData->setClientId($userResult->ID);
@@ -595,6 +598,7 @@ EOF;
             $result = $client->SendMessage(['Message' => $message]);
             $userData = simplexml_load_string(str_replace("utf-16", "utf-8", $result->SendMessageResult));
 //            dump($message, $result, strval($userData->GetDataRows->GetUsersRow->Password));
+//            die();
             if ((int)$userData->RowsCount === 0) {
                 return '';
 //            } else if ($password === 'null') {

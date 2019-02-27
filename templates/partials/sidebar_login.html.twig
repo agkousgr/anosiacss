@@ -52,134 +52,134 @@
             <li class="email">support@anosiapharmacy.gr<span>Επικοινωνείστε μαζί μας</span></li>
         </ul>
 
-        <div class="sidebar-product-list">
-            <h3>Best <span>Seller</span></h3>
-            <div id="carouselOneSidebar" class="carousel slide" data-ride="carousel">
-                <!-- Wrapper for slides -->
-                <div class="carousel-inner" role="listbox">
-                    <div class="item active">
-                        {% for pr in popular|slice(0,4) %}
-                            <div class="media">
-                                <div class="media-left">
-                                    <a href="{{ path('product_view', {'id':pr.id}) }}">
-                                        <img class="media-object" src="{{ pr.imageUrl }}"
-                                             alt="{{ pr.name }}">
-                                    </a>
-                                </div>
-                                <div class="media-body">
-                                    <h5>
-                                        <a href="{{ path('product_view', {'id':pr.id}) }}">{{ pr.name }}</a>
-                                    </h5>
+        {#<div class="sidebar-product-list">#}
+            {#<h3>Best <span>Seller</span></h3>#}
+            {#<div id="carouselOneSidebar" class="carousel slide" data-ride="carousel">#}
+                {#<!-- Wrapper for slides -->#}
+                {#<div class="carousel-inner" role="listbox">#}
+                    {#<div class="item active">#}
+                        {#{% for pr in popular|slice(0,4) %}#}
+                            {#<div class="media">#}
+                                {#<div class="media-left">#}
+                                    {#<a href="{{ path('product_view', {'id':pr.id}) }}">#}
+                                        {#<img class="media-object" src="{{ pr.imageUrl }}"#}
+                                             {#alt="{{ pr.name }}">#}
+                                    {#</a>#}
+                                {#</div>#}
+                                {#<div class="media-body">#}
+                                    {#<h5>#}
+                                        {#<a href="{{ path('product_view', {'id':pr.id}) }}">{{ pr.name }}</a>#}
+                                    {#</h5>#}
                                     {#<div class="star-rating"><i class="fa fa-star"></i><i class="fa fa-star"></i><i#}
                                     {#class="fa fa-star"></i><i class="fa fa-star"></i><i#}
                                     {#class="fa fa-star-o"></i></div>#}
-                                    <div class="price">{{ pr.webPrice }}€
-                                        <del>{{ pr.retailPrice }}€</del>
-                                    </div>
-                                    <button type="button" class="btn btn-primary btn-xs">ΚΑΛΑΘΙ
-                                    </button>
-                                </div>
-                            </div>
-                        {% endfor %}
-                    </div>
-                    <div class="item">
-                        {% for pr in popular|slice(0,4) %}
-                            <div class="media">
-                                <div class="media-left">
-                                    <a href="{{ path('product_view', {'id':pr.id}) }}">
-                                        <img class="media-object" src="{{ pr.imageUrl }}"
-                                             alt="{{ pr.name }}">
-                                    </a>
-                                </div>
-                                <div class="media-body">
-                                    <h5>
-                                        <a href="{{ path('product_view', {'id':pr.id}) }}">{{ pr.name }}</a>
-                                    </h5>
+                                    {#<div class="price">{{ pr.webPrice }}€#}
+                                        {#<del>{{ pr.retailPrice }}€</del>#}
+                                    {#</div>#}
+                                    {#<button type="button" class="btn btn-primary btn-xs">ΚΑΛΑΘΙ#}
+                                    {#</button>#}
+                                {#</div>#}
+                            {#</div>#}
+                        {#{% endfor %}#}
+                    {#</div>#}
+                    {#<div class="item">#}
+                        {#{% for pr in popular|slice(0,4) %}#}
+                            {#<div class="media">#}
+                                {#<div class="media-left">#}
+                                    {#<a href="{{ path('product_view', {'id':pr.id}) }}">#}
+                                        {#<img class="media-object" src="{{ pr.imageUrl }}"#}
+                                             {#alt="{{ pr.name }}">#}
+                                    {#</a>#}
+                                {#</div>#}
+                                {#<div class="media-body">#}
+                                    {#<h5>#}
+                                        {#<a href="{{ path('product_view', {'id':pr.id}) }}">{{ pr.name }}</a>#}
+                                    {#</h5>#}
                                     {#<div class="star-rating"><i class="fa fa-star"></i><i class="fa fa-star"></i><i#}
                                     {#class="fa fa-star"></i><i class="fa fa-star"></i><i#}
                                     {#class="fa fa-star-o"></i></div>#}
-                                    <div class="price">{{ pr.webPrice }}€
-                                        <del>{{ pr.retailPrice }}€</del>
-                                    </div>
-                                    <button type="button" class="btn btn-primary btn-xs">ΚΑΛΑΘΙ
-                                    </button>
-                                </div>
-                            </div>
-                        {% endfor %}
-                    </div>
-                    <div class="carousel-nav">
-                        <a class="left carousel-control" href="#carouselOneSidebar" role="button"
-                           data-slide="prev">Previous</a>
-                        <a class="right carousel-control" href="#carouselOneSidebar" role="button"
-                           data-slide="next">Next</a>
-                    </div>
-                </div>
-            </div>
-        </div>
+                                    {#<div class="price">{{ pr.webPrice }}€#}
+                                        {#<del>{{ pr.retailPrice }}€</del>#}
+                                    {#</div>#}
+                                    {#<button type="button" class="btn btn-primary btn-xs">ΚΑΛΑΘΙ#}
+                                    {#</button>#}
+                                {#</div>#}
+                            {#</div>#}
+                        {#{% endfor %}#}
+                    {#</div>#}
+                    {#<div class="carousel-nav">#}
+                        {#<a class="left carousel-control" href="#carouselOneSidebar" role="button"#}
+                           {#data-slide="prev">Previous</a>#}
+                        {#<a class="right carousel-control" href="#carouselOneSidebar" role="button"#}
+                           {#data-slide="next">Next</a>#}
+                    {#</div>#}
+                {#</div>#}
+            {#</div>#}
+        {#</div>#}
 
-        <div class="sidebar-product-list">
-            <h3>ΝΕΕΣ <span>ΑΦΙΞΕΙΣ</span></h3>
-            <div id="carouselTwoSidebar" class="carousel slide" data-ride="carousel">
-                <!-- Wrapper for slides -->
-                <div class="carousel-inner" role="listbox">
-                    <div class="item active">
-                        {% for pr in popular|slice(0,4) %}
-                            <div class="media">
-                                <div class="media-left">
-                                    <a href="{{ path('product_view', {'id':pr.id}) }}">
-                                        <img class="media-object" src="{{ pr.imageUrl }}"
-                                             alt="{{ pr.name }}">
-                                    </a>
-                                </div>
-                                <div class="media-body">
-                                    <h5>
-                                        <a href="{{ path('product_view', {'id':pr.id}) }}">{{ pr.name }}</a>
-                                    </h5>
+        {#<div class="sidebar-product-list">#}
+            {#<h3>ΝΕΕΣ <span>ΑΦΙΞΕΙΣ</span></h3>#}
+            {#<div id="carouselTwoSidebar" class="carousel slide" data-ride="carousel">#}
+                {#<!-- Wrapper for slides -->#}
+                {#<div class="carousel-inner" role="listbox">#}
+                    {#<div class="item active">#}
+                        {#{% for pr in popular|slice(0,4) %}#}
+                            {#<div class="media">#}
+                                {#<div class="media-left">#}
+                                    {#<a href="{{ path('product_view', {'id':pr.id}) }}">#}
+                                        {#<img class="media-object" src="{{ pr.imageUrl }}"#}
+                                             {#alt="{{ pr.name }}">#}
+                                    {#</a>#}
+                                {#</div>#}
+                                {#<div class="media-body">#}
+                                    {#<h5>#}
+                                        {#<a href="{{ path('product_view', {'id':pr.id}) }}">{{ pr.name }}</a>#}
+                                    {#</h5>#}
                                     {#<div class="star-rating"><i class="fa fa-star"></i><i class="fa fa-star"></i><i#}
                                     {#class="fa fa-star"></i><i class="fa fa-star"></i><i#}
                                     {#class="fa fa-star-o"></i></div>#}
-                                    <div class="price">{{ pr.webPrice }}€
-                                        <del>{{ pr.retailPrice }}€</del>
-                                    </div>
-                                    <button type="button" class="btn btn-primary btn-xs">ΚΑΛΑΘΙ
-                                    </button>
-                                </div>
-                            </div>
-                        {% endfor %}
-                    </div>
-                    <div class="item">
-                        {% for pr in popular|slice(0,4) %}
-                            <div class="media">
-                                <div class="media-left">
-                                    <a href="{{ path('product_view', {'id':pr.id}) }}">
-                                        <img class="media-object" src="{{ pr.imageUrl }}"
-                                             alt="{{ pr.name }}">
-                                    </a>
-                                </div>
-                                <div class="media-body">
-                                    <h5>
-                                        <a href="{{ path('product_view', {'id':pr.id}) }}">{{ pr.name }}</a>
-                                    </h5>
+                                    {#<div class="price">{{ pr.webPrice }}€#}
+                                        {#<del>{{ pr.retailPrice }}€</del>#}
+                                    {#</div>#}
+                                    {#<button type="button" class="btn btn-primary btn-xs">ΚΑΛΑΘΙ#}
+                                    {#</button>#}
+                                {#</div>#}
+                            {#</div>#}
+                        {#{% endfor %}#}
+                    {#</div>#}
+                    {#<div class="item">#}
+                        {#{% for pr in popular|slice(0,4) %}#}
+                            {#<div class="media">#}
+                                {#<div class="media-left">#}
+                                    {#<a href="{{ path('product_view', {'id':pr.id}) }}">#}
+                                        {#<img class="media-object" src="{{ pr.imageUrl }}"#}
+                                             {#alt="{{ pr.name }}">#}
+                                    {#</a>#}
+                                {#</div>#}
+                                {#<div class="media-body">#}
+                                    {#<h5>#}
+                                        {#<a href="{{ path('product_view', {'id':pr.id}) }}">{{ pr.name }}</a>#}
+                                    {#</h5>#}
                                     {#<div class="star-rating"><i class="fa fa-star"></i><i class="fa fa-star"></i><i#}
                                     {#class="fa fa-star"></i><i class="fa fa-star"></i><i#}
                                     {#class="fa fa-star-o"></i></div>#}
-                                    <div class="price">{{ pr.webPrice }}€
-                                        <del>{{ pr.retailPrice }}€</del>
-                                    </div>
-                                    <button type="button" class="btn btn-primary btn-xs">ΚΑΛΑΘΙ
-                                    </button>
-                                </div>
-                            </div>
-                        {% endfor %}
-                    </div>
-                    <div class="carousel-nav">
-                        <a class="left carousel-control" href="#carouselTwoSidebar" role="button"
-                           data-slide="prev">Previous</a>
-                        <a class="right carousel-control" href="#carouselTwoSidebar" role="button"
-                           data-slide="next">Next</a>
-                    </div>
-                </div>
-            </div>
-        </div>
+                                    {#<div class="price">{{ pr.webPrice }}€#}
+                                        {#<del>{{ pr.retailPrice }}€</del>#}
+                                    {#</div>#}
+                                    {#<button type="button" class="btn btn-primary btn-xs">ΚΑΛΑΘΙ#}
+                                    {#</button>#}
+                                {#</div>#}
+                            {#</div>#}
+                        {#{% endfor %}#}
+                    {#</div>#}
+                    {#<div class="carousel-nav">#}
+                        {#<a class="left carousel-control" href="#carouselTwoSidebar" role="button"#}
+                           {#data-slide="prev">Previous</a>#}
+                        {#<a class="right carousel-control" href="#carouselTwoSidebar" role="button"#}
+                           {#data-slide="next">Next</a>#}
+                    {#</div>#}
+                {#</div>#}
+            {#</div>#}
+        {#</div>#}
     </div>
 </div>

@@ -154,7 +154,6 @@ EOF;
                         'oldID' => $pr->OldItemID,
                         'summary' => $pr->SmallDescriptionHTML,
                         'body' => $pr->LargeDescriptionHTML,
-                        'deliveryInfo' => $pr->DeliveryHtml,
                         'extraInfo' => $pr->InstructionsHTML,
                         'isVisible' => $pr->WebVisible,
                         'retailPrice' => $pr->RetailPrice,

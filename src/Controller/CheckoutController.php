@@ -39,6 +39,7 @@ class CheckoutController extends MainController
             }
             if ($this->session->has('couponDisc') === true) {
                 $checkout->setCouponDisc($this->session->get('couponDisc'));
+                $checkout->setCouponDiscPerc($this->session->get('couponDiscPerc'));
                 $checkout->setCouponName($this->session->get('couponName'));
                 $checkout->setCouponId($this->session->get('couponId'));
             }
@@ -209,6 +210,7 @@ class CheckoutController extends MainController
                 // CLEAR curOrder SESSION
                 $this->session->remove('curOrder');
                 $this->session->remove('couponDisc');
+                $this->session->remove('couponDiscPerc');
                 $this->session->remove('couponName');
                 $this->session->remove('couponId');
 

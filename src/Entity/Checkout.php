@@ -107,6 +107,11 @@ class Checkout extends WebUser
     /**
      * $var string|null
      */
+    private $couponDiscPerc;
+
+    /**
+     * $var string|null
+     */
     private $couponName;
 
     /**
@@ -432,6 +437,24 @@ class Checkout extends WebUser
     public function setCouponDisc($couponDisc)
     {
         $this->couponDisc = $couponDisc;
+        return $this;
+    }
+
+    /**
+     * @return mixed
+     */
+    public function getCouponDiscPerc()
+    {
+        return $this->couponDiscPerc;
+    }
+
+    /**
+     * @param mixed $couponDiscPerc
+     * @return Checkout
+     */
+    public function setCouponDiscPerc($couponDiscPerc)
+    {
+        $this->couponDiscPerc = $couponDiscPerc;
         return $this;
     }
 

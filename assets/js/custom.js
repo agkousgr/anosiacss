@@ -12,9 +12,11 @@ $mainWrapper.on('show.bs.collapse', '.collapse', function () {
 $(document).ready(function () {
     $('#voucher-track-button').on('click', function (e) {
         e.preventDefault();
-        let url = Routing.generate('courier_tracker', {'voucher': $('#voucher-input').val()});
+        // let url = Routing.generate('courier_tracker', {'voucher': $('#voucher-input').val()});
+        let url = 'http://speedex.gr/isapohi.asp?voucher_code=' + $('#voucher-input').val();
         console.log(url);
-        window.location.assign(url);
+        // window.location.assign(url);
+        window.open(url, '_blank');
     });
 
     $("#keyword").autocomplete({

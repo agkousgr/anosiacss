@@ -24,8 +24,9 @@ class CartController extends MainController
                 $cartProposals = $productService->getRelevantItems(substr($excludeIds, 0 ,-1),39 - $totalCartPrice + 5);
             }
             $couponDiscount = (!empty($this->session->get('couponDisc'))) ? $this->session->get('couponDisc') : 0;
+            $couponDiscountPerc = (!empty($this->session->get('couponDiscPerc'))) ? $this->session->get('couponDiscPerc') : 0;
             $couponName = (!empty($this->session->get('couponName'))) ? $this->session->get('couponName') : '';
-            dump($couponDiscount);
+            dump($couponDiscount, $couponDiscountPerc);
             return ($this->render('orders/cart.html.twig', [
                 'categories' => $this->categories,
                 'cartItems' => $this->cartItems,
@@ -41,6 +42,7 @@ class CartController extends MainController
                 'totalCartPrice' => $totalCartPrice,
                 'cartProposals' => $cartProposals,
                 'couponDiscount' => $couponDiscount,
+                'couponDiscountPerc' => $couponDiscountPerc,
                 'couponName' => $couponName
             ]));
         } catch (\Exception $e) {

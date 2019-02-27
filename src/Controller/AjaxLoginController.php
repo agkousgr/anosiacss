@@ -53,6 +53,7 @@ class AjaxLoginController extends AbstractController
 
     public function fbCallback(Request $request, UserAccountService $userAccountService, SessionInterface $session)
     {
+        // Todo: Remove dump/echo and use logger
         $fb = new Facebook\Facebook([
             'app_id' => '605092459847380',
             'app_secret' => '09f4a59ad57726736664a92d7059025f',

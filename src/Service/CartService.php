@@ -185,14 +185,12 @@ EOF;
                     return false;
                 }
                 //Todo: put all coupon session in one variable
-                if (intval($items->GetDataRows->GetVoucherRow->Value) > 0) {
-                    $this->session->set('couponDisc', strval($items->GetDataRows->GetVoucherRow->Value));
+                if (intval($items->RowsCount) > 0) {
+                    $this->session->set('couponDisc', intval($items->GetDataRows->GetVoucherRow->Value));
+                    $this->session->set('couponDiscPerc', intval($items->GetDataRows->GetVoucherRow->Percentage));
                     $this->session->set('couponName', $voucherCode);
                     $this->session->set('couponId', intval($items->GetDataRows->GetVoucherRow->ID));
-                    return true;
-                } elseif (intval($items->GetDataRows->GetVoucherRow->Percentage) > 0) {
-                    $this->session->set('couponDisc', $items->GetDataRows->GetVoucherRow->Percentage . '%');
-                    $this->session->set('couponId', intval($items->GetDataRows->GetVoucherRow->ID));
+                    dump($this->session);
                     return true;
                 } else {
                     return false;
