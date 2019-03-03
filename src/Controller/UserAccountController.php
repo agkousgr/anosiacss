@@ -6,14 +6,22 @@ use App\Entity\{Address, User, WebUser};
 use App\Service\CartService;
 use App\Service\UserAccountService;
 use App\Form\Type\{
-    UserAddressType, UserGeneralInfoType, UserInfoType, UserNewAddressType, UserRegistrationType
+    UserAddressType, UserGeneralInfoType, UserNewAddressType, UserRegistrationType
 };
 use Doctrine\ORM\EntityManagerInterface;
-use Symfony\Component\HttpFoundation\{Request, Response};
+use Psr\Log\LoggerInterface;
+use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\Security\Core\Encoder\UserPasswordEncoderInterface;
+use App\Service\TokenGenerator;
+use Symfony\Component\Form\Extension\Core\Type\{PasswordType, RepeatedType};
 
 class UserAccountController extends MainController
 {
+    /**
+     * @var int Duration in seconds a password request will be active.
+     */
+    private static $timeToLive = 43200; // 12 hours
+
     public function userAccount(Request $request, UserAccountService $userAccountService)
     {
         try {
@@ -315,9 +323,156 @@ class UserAccountController extends MainController
         ]);
     }
 
-    public function sendPasswordEmail()
+    public function sendPasswordEmail(
+        Request $request, UserAccountService $accountService, TokenGenerator $tokenGenerator, \Swift_Mailer $mailer, LoggerInterface $logger
+    )
     {
-        return new Response('<h3>Coming soon ...</h3>');
+        if (!$this->isCsrfTokenValid('forgot_password', $request->request->get('_csrf_token')))
+            return $this->render('user/forgot_password.html.twig', [
+                'categories' => $this->categories,
+                'popular' => $this->popular,
+                'featured' => $this->featured,
+                'cartItems' => $this->cartItems,
+                'totalCartItems' => $this->totalCartItems,
+                'totalWishlistItems' => $this->totalWishlistItems,
+                'loggedName' => $this->loggedName,
+                'loggedUser' => $this->loggedUser,
+                'loginUrl' => $this->loginUrl,
+                'error_message' => 'Η διάρκεια της φόρμας έληξε. Προσπαθήστε ξανά.',
+            ]);
+
+        try {
+            $email = $request->request->get('email');
+            $user = $accountService->getUser($email);
+
+            if (false === $user) {
+                return $this->render('user/forgot_password.html.twig', [
+                    'categories' => $this->categories,
+                    'popular' => $this->popular,
+                    'featured' => $this->featured,
+                    'cartItems' => $this->cartItems,
+                    'totalCartItems' => $this->totalCartItems,
+                    'totalWishlistItems' => $this->totalWishlistItems,
+                    'loggedName' => $this->loggedName,
+                    'loggedUser' => $this->loggedUser,
+                    'loginUrl' => $this->loginUrl,
+                    'error_message' => 'Ο χρήστης δε βρέθηκε. Προαπαθήστε ξανά.',
+                ]);
+            }
+            if ($user->PasswordRequestCounter > 10) {
+                return $this->render('user/forgot_password.html.twig', [
+                    'categories' => $this->categories,
+                    'popular' => $this->popular,
+                    'featured' => $this->featured,
+                    'cartItems' => $this->cartItems,
+                    'totalCartItems' => $this->totalCartItems,
+                    'totalWishlistItems' => $this->totalWishlistItems,
+                    'loggedName' => $this->loggedName,
+                    'loggedUser' => $this->loggedUser,
+                    'loginUrl' => $this->loginUrl,
+                    'error_message' => 'Μεγάλος αριθμός αιτήσεων από τον ίδιο χρήστη. Επικοινωνήστε με το διαχειριστή του συστήματος.',
+                ]);
+            }
+
+            $userData = [];
+            $dt = new \DateTime();
+            $confirmationToken = $tokenGenerator->generateToken();
+            $userData['ConfirmationToken'] = $confirmationToken;
+            $userData['PasswordRequestedDT'] = $dt->format('Y-m-d') . 'T' . $dt->format('H:i:s');
+            if (!$user->PasswordRequestCounter)
+                $userData['PasswordRequestCounter'] = 1;
+            else
+                $userData['PasswordRequestCounter'] = intval($user->PasswordRequestCounter) + 1;
+
+            // User data in SoftOne database should be updated at this point
+
+            $message = (new \Swift_Message())
+                ->setSubject('Ανάκτηση Κωδικού')
+                ->setFrom('info@anosiapharmacy.gr')
+                ->setTo($email)
+                ->setBody($this->renderView('email/reset_password.txt.twig', [
+                    'token' => $confirmationToken,
+                ]));
+            $mailer->send($message);
+
+            return $this->render('user/forgot_password.html.twig', [
+                'success_message' => 'Σας έχει αποσταλεί ένα e-mail με οδηγίες για την ανάκτηση του κωδικού σας. Ελέγξετε τα εισερχόμενά σας.',
+            ]);
+        } catch (\Exception $e) {
+            $logger->error(__METHOD__ . ' -> {message}', ['message' => $e->getMessage()]);
+            throw $e;
+        }
+    }
+
+    public function resetPassword(Request $request, UserAccountService $accountService, LoggerInterface $logger)
+    {
+        try {
+            $token = $request->query->getAlnum('token');
+
+            // User came here by clicking a link in her email, so token is the only piece of information we know about her
+
+            $user = $accountService->getUser();
+
+            if (null === $token || false === $user) {
+                return $this->render('user/forgot_password.html.twig', [
+                    'categories' => $this->categories,
+                    'popular' => $this->popular,
+                    'featured' => $this->featured,
+                    'cartItems' => $this->cartItems,
+                    'totalCartItems' => $this->totalCartItems,
+                    'totalWishlistItems' => $this->totalWishlistItems,
+                    'loggedName' => $this->loggedName,
+                    'loggedUser' => $this->loggedUser,
+                    'loginUrl' => $this->loginUrl,
+                    'error_message' => 'Ο χρήστης δε βρέθηκε. Προαπαθήστε ξανά.',
+                ]);
+            }
+
+            $dt = \DateTime::createFromFormat('Y-m-dTH:i:s', $user->PasswordRequestDT);
+            if ($dt->getTimestamp() + self::$timeToLive < time()) {
+                return $this->render('user/forgot_password.html.twig', [
+                    'categories' => $this->categories,
+                    'popular' => $this->popular,
+                    'featured' => $this->featured,
+                    'cartItems' => $this->cartItems,
+                    'totalCartItems' => $this->totalCartItems,
+                    'totalWishlistItems' => $this->totalWishlistItems,
+                    'loggedName' => $this->loggedName,
+                    'loggedUser' => $this->loggedUser,
+                    'loginUrl' => $this->loginUrl,
+                    'error_message' => 'Το προηγούμενο αίτημά σας έληξε. Προαπαθήστε ξανά.',
+                ]);
+            }
+
+            $defaultData = [];
+            $form = $this->createFormBuilder($defaultData)
+                ->add('password', RepeatedType::class, [
+                    'type' => PasswordType::class,
+                    'first_options' => ['label' => 'Password'],
+                    'second_options' => ['label' => 'Επανάληψη Password'],
+                    'invalid_message' => 'Τα passwords δεν είναι ίδια!',
+                ])
+                ->getForm();
+            $form->handleRequest($request);
+            if ($form->isSubmitted() && $form->isValid()) {
+                $newPlainPass = $form->getData()['password'];
+                $userData = [];
+                $userData['Password'] = password_hash($newPlainPass, PASSWORD_DEFAULT);
+                $user['ConfirmationToken'] = null;
+                $user['PasswordRequestedDT'] = null;
+
+                // User data in SoftOne database should be updated at this point
+
+                return $this->redirectToRoute('index');
+            }
+
+            return $this->render('user/reset_password.html.twig', [
+                'form' => $form->createView(),
+            ]);
+        } catch (\Exception $e) {
+            $logger->error(__METHOD__ . ' -> {message}', ['message' => $e->getMessage()]);
+            throw $e;
+        }
     }
 
     public function logout(EntityManagerInterface $em, CartService $cartService)

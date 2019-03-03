@@ -258,6 +258,15 @@ user-order:
     controller: App\Controller\UserAccountController::viewOrder
     requirements:
         id: \d+
+user_forgot_password:
+    path: /user/forgot-password
+    controller: App\Controller\UserAccountController::forgotPassword
+user_send_password_email:
+    path: /user/password-email
+    controller: App\Controller\UserAccountController::sendPasswordEmail
+user_reset_password:
+    path: /user/reset-password
+    controller: App\Controller\UserAccountController::resetPassword
 
 # Courier voucher tracker
 courier_tracker:
