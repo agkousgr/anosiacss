@@ -18,7 +18,7 @@ class AjaxSearchController extends AbstractController
         if ($request->isXmlHttpRequest()) {
             try {
                 $resultArr = [];
-                $keyword = $request->query->get('term') . ' ' . $transliterate->transGreek($request->query->get('term'));
+                $keyword = $transliterate->transliterateToGreek($request->query->get('term'));
 //                dump($transliterate->transGreek($keyword));
 //                $result = $em->getRepository(AnosiaSearchKeywords::class)->getAnosiaSearchResult($keyword);
                 $result = $em->getRepository(Products::class)->search($keyword);
