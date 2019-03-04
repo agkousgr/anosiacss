@@ -3,11 +3,23 @@
 namespace App\Service;
 
 
+use App\Entity\Category;
+use Doctrine\ORM\EntityManagerInterface;
 use Psr\Log\LoggerInterface;
 use Symfony\Component\HttpFoundation\Session\SessionInterface;
 
 class SkroutzService
 {
+    /**
+     * @var LoggerInterface
+     */
+    private $logger;
+
+    /**
+     * @var EntityManagerInterface
+     */
+    private $em;
+
     /**
      * @var SessionInterface
      */
@@ -39,9 +51,10 @@ class SkroutzService
      */
     private $authId;
 
-    public function __construct(LoggerInterface $logger, SessionInterface $session, $s1Credentials)
+    public function __construct(LoggerInterface $logger, EntityManagerInterface $em, SessionInterface $session, $s1Credentials)
     {
         $this->logger = $logger;
+        $this->em = $em;
         $this->session = $session;
         $this->authId = $session->get("authID");
         $this->kind = $s1Credentials['kind'];
@@ -68,30 +81,30 @@ class SkroutzService
         $sizes = '';
         $color = '';
         $xml_output = '<?xml version="1.0" encoding="UTF-8"?>    
-        <anosiapharmacy>
+        <anosiapharmacy-' . count($products) . '>
             <created_at>' . date('Y-m-d H:i') . '</created_at>
                 <products>';
         foreach ($products as $product) {
-
+            $itemId = ($product['oldID']) ?: $product['id'];
+            $category = $this->getCategories($product['allCategories']);
             $xml_output .= '
     <product>
-        <id>' . $product['id'] . '</id>
-        <name><![CDATA[' . $title_category . ' ' . $product["name"] . $name_color . ']]></name>
-        <link><![CDATA[https://www.anosiapharmacy.gr/product/' . $product["slug"] . ']]></link>
+        <id>' . $itemId . '</id>
+        <mpn>' . $product["code"] . '</mpn>        
+        <name><![CDATA[' . $product["name"] . $name_color . ']]></name>
+        <link><![CDATA[https://www.anosiapharmacy.gr/product/' . $product["oldSlug"] . ']]></link>
         <image><![CDATA[' . $product["imageUrl"] . ']]></image>
         <category><![CDATA[' . $product_category . ']]></category>
         <price_with_vat>' . $product["webPrice"] . '</price_with_vat>
         <manufacturer><![CDATA[' . $product["brand"] . ']]></manufacturer>
-        <mpn>' . $product["mainBarcode"] . '</mpn>        
         <availability>' . $product["availability"] . '</availability>
-        <size>' . $sizes . '</size>
-        <color>' . $color . '</color>
       </product>';
         }
 
+//        <name><![CDATA[' . $title_category . ' ' . $product["name"] . $name_color . ']]></name>
 
         $xml_output .= '</products>
-</volleyplus>';
+</anosiapharmacy-' . count($products) . '>';
         return $xml_output;
     }
 
@@ -127,7 +140,7 @@ EOF;
         try {
             $result = $client->SendMessage(['Message' => $message]);
             $items = simplexml_load_string(str_replace("utf-16", "utf-8", $result->SendMessageResult));
-            dump($items);
+
             $itemsArr = $this->initializeProducts($items->GetDataRows->GetItemsRow);
 
             return $itemsArr;
@@ -149,8 +162,10 @@ EOF;
                 if ((string)$pr->WebVisible !== "false") {
                     $prArr[] = array(
                         'id' => $pr->ID,
+                        'code' => $pr->Code,
                         'name' => $pr->Name2,
                         'slug' => $this->slugify($pr->Name2),
+                        'oldSlug' => $pr->OldSlug,
                         'oldID' => $pr->OldItemID,
                         'summary' => $pr->SmallDescriptionHTML,
                         'body' => $pr->LargeDescriptionHTML,
@@ -159,10 +174,11 @@ EOF;
                         'isVisible' => $pr->WebVisible,
                         'retailPrice' => $pr->RetailPrice,
                         'discount' => $pr->Discount,
+                        'allCategories' => $pr->AllCategoryIDs,
                         'webDiscount' => $pr->WebDiscountPerc,
-                        'webPrice' => ($pr->Discount) ? round((floatval($pr->RetailPrice) * (100 - floatval($pr->Discount))/100), 2) : 0,
+                        'webPrice' => ($pr->Discount) ? round((floatval($pr->RetailPrice) * (100 - floatval($pr->Discount)) / 100), 2) : 0,
                         'outOfStock' => $pr->OutOfStock,
-                        'brand' => $pr->MakeName,
+                        'brand' => $pr->ManufactorName,
                         'mainBarcode' => $pr->MainBarcode,
                         'availability' => $this->getAvailability($pr->AvailIn1To3Days),
                         'hasMainImage' => $pr->HasMainPhoto,
@@ -178,9 +194,20 @@ EOF;
         }
     }
 
+    private function getCategories($categories)
+    {
+        list($categoryId) = explode(',', $categories);
+        $category = $this->em->getRepository(Category::class)->findOneBy(['s1id' => $categoryId]);
+        if ($category->getParent()) {
+            dump($category);
+            die();
+        }
+        return $category;
+    }
+
     private function getAvailability($availability)
     {
-        return ($availability === 'true') ? '1-3 days' : 'Pre Order';
+        return ($availability === 'true') ? '1-3 ημέρες' : 'Pre Order';
     }
 
     private function slugify($text)
