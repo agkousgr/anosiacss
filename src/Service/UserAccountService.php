@@ -236,12 +236,15 @@ EOF;
     <Password>$password</Password>
     <ClientID>$userId</ClientID>
     <LastLoginDT>$lastLogin</LastLoginDT>
+    <ConfirmationToken>null</ConfirmationToken>
+    <PasswordRequestDT></PasswordRequestDT>
+    <PasswordRequestCounter></PasswordRequestCounter>
 </ClientSetUserRequest>
 EOF;
         try {
             $result = $client->SendMessage(['Message' => $message]);
             $userResult = simplexml_load_string(str_replace("utf-16", "utf-8", $result->SendMessageResult));
-//            dump($message, $result);
+            dump($message, $result);
             if ((string)$userResult->ErrorCode === 'None') {
                 if ($userData instanceof Checkout) {
                     $userData->setClientId($userResult->ID);
@@ -595,6 +598,7 @@ EOF;
             $result = $client->SendMessage(['Message' => $message]);
             $userData = simplexml_load_string(str_replace("utf-16", "utf-8", $result->SendMessageResult));
 //            dump($message, $result, strval($userData->GetDataRows->GetUsersRow->Password));
+//            die();
             if ((int)$userData->RowsCount === 0) {
                 return '';
 //            } else if ($password === 'null') {
@@ -619,10 +623,10 @@ EOF;
 
     /**
      * @param string $username
-     * @param \App\Entity\WebUser
-     * @param \App\Entity\Address
+     * @param null   $user
+     * @param null   $address
      *
-     * @throws \Exception
+     * @return \SimpleXMLElement|bool
      */
     public function getUser($username = 'null', $user, $address = null) // remove nulls in production
     {
@@ -648,19 +652,20 @@ EOF;
             $result = $client->SendMessage(['Message' => $message]);
             $userResponse = simplexml_load_string(str_replace("utf-16", "utf-8", $result->SendMessageResult));
             if ($userResponse === false) {
-                return;
+                return false;
             }
             dump($message, $result);
             $userXML = $userResponse->GetDataRows->GetUsersRow;
             if (null !== $address) {
                 $address->setClient($userXML->ClientID);
             } else {
-                (null !== $userXML->Username) ? $user->setUsername($userXML->Username) : $user->setUsername('');
-                (null !== $userXML->Password) ? $user->setPassword($userXML->Password) : $user->setUsername('');
-                (null !== $userXML->ClientID) ? $user->setClientId($userXML->ClientID) : $user->setUsername('');
+                (null !== $userXML->Username && $user) ? $user->setUsername($userXML->Username) : $user->setUsername('');
+                (null !== $userXML->Password && $user) ? $user->setPassword($userXML->Password) : $user->setPassword('');
+                (null !== $userXML->ClientID && $user) ? $user->setClientId($userXML->ClientID) : $user->setClientId('');
 //                dump($user);
             }
-            return;
+
+            return $userXML;
         } catch (\SoapFault $sf) {
             echo $sf->faultstring;
         }

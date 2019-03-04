@@ -194,7 +194,7 @@ EOF;
                 return;
             }
             $this->session->remove('curOrder');
-            dump($result);
+            dump($message, $result);
             $userXML = $clientResponse->GetDataRows->GetClientsRow;
             list($firstname, $lastname) = explode(' ', $userXML->NAME . ' ');
             $checkout->setFirstname($firstname);
@@ -396,9 +396,10 @@ EOF;
         $city = $checkout->getCity();
         $coupon = $checkout->getCouponId();
         $recepientName = $checkout->getRecepientName();
-        $shipKindId = ($shippingType === 104) ? 1005 : 1005;
+        $shipKindId = ($shippingType === '104') ? 1005 : 1000;
         $email = $checkout->getEmail();
-
+        $couponDisc = ($checkout->getCouponDisc()) ?: 0;
+        $couponDiscPerc = ($checkout->getCouponDiscPerc()) ?: 0;
         $checkout->setTotalOrderCost($this->cartItemsCost + $checkout->getShippingCost() + $checkout->getAntikatavoliCost());
 
         $message = <<<EOF
@@ -429,12 +430,14 @@ EOF;
     <ShipCarrier>1</ShipCarrier>
     <VoucherID>$coupon</VoucherID>
     <VoucherRecepient>$recepientName</VoucherRecepient>
+    <Discount1Perc>$couponDiscPerc</Discount1Perc>
+    <Discount2Perc>0</Discount2Perc>
+    <Discount1Value>$couponDisc</Discount1Value>
     <ShipkindID>$shipKindId</ShipkindID>
 </ClientSetOrderRequest>
 EOF;
         try {
-//            dump($message);
-//            die();
+//            return true;
             $result = $this->client->SendMessage(['Message' => $message]);
             $orderResult = simplexml_load_string(str_replace("utf-16", "utf-8", $result->SendMessageResult));
             dump($message, $result);

@@ -20,10 +20,10 @@
                         <i class="fas fa-file-text"></i>Συστατικα</a>
                 </li>
             {% endif %}
-            {% if pr.ingredients|length > 0 %}
+            {% if pr.deliveryInfo|length > 0 %}
                 <li role="presentation">
                     <a href="#DeliveryInfo" aria-controls="DeliveryInfo" role="tab" data-toggle="tab">
-                        <i class="fas fa-file-text"></i>Πληροφρίες παράδοσης</a>
+                        <i class="fas fa-truck"></i>Πληροφρίες παράδοσης</a>
                 </li>
             {% endif %}
             {#<li role="presentation"><a href="#Sizing" aria-controls="Sizing" role="tab" data-toggle="tab"><i class="fa fa-align-center"></i>Sizing Guide</a></li>#}

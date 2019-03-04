@@ -563,9 +563,20 @@
                                                         €</span>
                                                 </div>
                                             {% endif %}
+                                            {% set discPerc = cartSubTotal * checkout.couponDiscPerc/100 %}
+                                            {% if checkout.couponDiscPerc > 0 %}
+                                                <div class="cart-summary-line" id="coupon-discount"
+                                                     data-discount="{{ discPerc|number_format(2, '.', ',') }}">
+                                                    <span class="label js-subtotal">
+                                                        Έκπτωση από κουπόνι ({{ checkout.couponDiscPerc }}%)
+                                                    </span>
+                                                    <span class="value">- {{ discPerc|number_format(2, ',', '.') }}
+                                                        €</span>
+                                                </div>
+                                            {% endif %}
                                         </div>
                                         <hr class="separator">
-                                        {% set cartTotal = cartSubTotal + cartShippingCost - checkout.couponDisc %}
+                                        {% set cartTotal = cartSubTotal + cartShippingCost - checkout.couponDisc - discPerc%}
                                         <div class="card-block cart-summary-totals">
                                             <div class="cart-summary-line cart-total">
                                                 <span class="label">Σύνολο (με ΦΠΑ)</span>

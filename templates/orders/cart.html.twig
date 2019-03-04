@@ -246,6 +246,24 @@
                                                 </a>
                                             </div>
                                         {% endif %}
+                                        {% set discPerc = cartSubTotal * couponDiscountPerc/100 %}
+                                        {% if couponDiscountPerc > 0 %}
+                                            <div class="cart-summary-line" id="cart-subtotal-products">
+                                                <span class="label js-subtotal">
+                                                    Έκπτωση από κουπόνι ({{ couponDiscountPerc }}%)
+                                                </span>
+                                                <span class="value">- {{ discPerc|number_format(2, ',', '.') }}
+                                                    €</span>
+                                            </div>
+                                            <div class="cart-summary-line" id="cart-subtotal-products">
+                                                <a href="" title="Διαγραφή κουπονιού" id="remove-coupon"
+                                                   rel="nofollow">
+                                                    <i style="vertical-align:middle"
+                                                       class="material-icons float-xs-left">delete</i>
+                                                    <span id="coupon-name">{{ couponName }}</span>
+                                                </a>
+                                            </div>
+                                        {% endif %}
                                         {#<div class="cart-summary-line" id="cart-subtotal-shipping">#}
                                         {#<span class="label">#}
                                         {#Μεταφορικά#}
@@ -258,7 +276,7 @@
                                     </div>
                                     <hr class="separator">
                                     <div class="card-block ">
-                                        {% set cartTotal = cartSubTotal + cartShippingCost - couponDiscount %}
+                                        {% set cartTotal = cartSubTotal + cartShippingCost - couponDiscount - discPerc %}
                                         <div class="cart-summary-line cart-total">
                                             <span class="label">Σύνολο (με ΦΠΑ)</span>
                                             <span class="value">{{ cartTotal|number_format(2, ',', '.') }}

@@ -92,7 +92,14 @@
                                                     <td>{{ checkout.couponDisc|number_format(2, ',', '.') }}€</td>
                                                 </tr>
                                             {% endif %}
-                                            {% set cartTotal = cartSubTotal + checkout.shippingCost + checkout.antikatavoliCost - checkout.couponDisc|number_format(2, '.', ',') %}
+                                            {% set discPerc = cartSubTotal * checkout.couponDiscPerc/100 %}
+                                            {% if checkout.couponDiscPerc > 0 %}
+                                                <tr>
+                                                    <td>Έκπτωση από κουπόνι ({{ checkout.couponDis }}%)</td>
+                                                    <td>{{ discPerc|number_format(2, ',', '.') }}€</td>
+                                                </tr>
+                                            {% endif %}
+                                            {% set cartTotal = cartSubTotal + checkout.shippingCost + checkout.antikatavoliCost - checkout.couponDisc|number_format(2, '.', ',') - discPerc %}
                                             <tr class="font-weight-bold">
                                                 <td><span class="text-uppercase">ΣΥΝΟΛΟ</span> (συμπ. ΦΠΑ)</td>
                                                 <td>{{ cartTotal|number_format(2, ',', '.') }}€</td>

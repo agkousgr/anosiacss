@@ -14,6 +14,7 @@ $(document).ready(function () {
         // console.log(coupon);
         $.post(Routing.generate('check_coupon'), data, function (result) {
             if (result.success === true) {
+                $('#discount-coupon').val('');
                 location.reload();
             } else {
                 swal({
