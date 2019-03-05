@@ -20,7 +20,7 @@ class SkroutzController extends AbstractController
             if ($fileSystem->exists($fileName)) {
                 $fileSystem->remove($fileName);
             }
-
+            dump($xml);
             $fileSystem->appendToFile($fileName, $xml);
 //            dump($xml);
 //            $textResponse = new Response($this->render('skroutz/xml.html.twig', [

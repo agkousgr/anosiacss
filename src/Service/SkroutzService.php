@@ -47,6 +47,11 @@ class SkroutzService
 
     /**
      * @var string
+     */
+    private $categoryName;
+
+    /**
+     * @var string
      * @param SessionInterface $session
      */
     private $authId;
@@ -77,7 +82,7 @@ class SkroutzService
 //        $xml_output = '';
         $name_color = '';
         $title_category = '';
-        $product_category = '';
+//        $product_category = '';
         $sizes = '';
         $color = '';
         $xml_output = '<?xml version="1.0" encoding="UTF-8"?>    
@@ -85,8 +90,11 @@ class SkroutzService
             <created_at>' . date('Y-m-d H:i') . '</created_at>
                 <products>';
         foreach ($products as $product) {
+            $this->categoryName = '';
             $itemId = ($product['oldID']) ?: $product['id'];
             $category = $this->getCategories($product['allCategories']);
+            if ($category === null)
+                continue;
             $xml_output .= '
     <product>
         <id>' . $itemId . '</id>
@@ -94,7 +102,7 @@ class SkroutzService
         <name><![CDATA[' . $product["name"] . $name_color . ']]></name>
         <link><![CDATA[https://www.anosiapharmacy.gr/product/' . $product["oldSlug"] . ']]></link>
         <image><![CDATA[' . $product["imageUrl"] . ']]></image>
-        <category><![CDATA[' . $product_category . ']]></category>
+        <category><![CDATA[' . $category->getDescription() . ']]></category>
         <price_with_vat>' . $product["webPrice"] . '</price_with_vat>
         <manufacturer><![CDATA[' . $product["brand"] . ']]></manufacturer>
         <availability>' . $product["availability"] . '</availability>
@@ -197,7 +205,9 @@ EOF;
     {
         list($categoryId) = explode(',', $categories);
         $category = $this->em->getRepository(Category::class)->findOneBy(['s1id' => $categoryId]);
+        $this->categoryName .= $category->getDescription();
         if ($category->getParent()) {
+//            getCategories
             dump($category);
             die();
         }
