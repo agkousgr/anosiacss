@@ -66,11 +66,11 @@ class AjaxLoginController extends AbstractController
         } catch (Facebook\Exceptions\FacebookResponseException $e) {
             // When Graph returns an error
             echo 'Graph returned an error: ' . $e->getMessage();
-            exit;
+//            exit;
         } catch (Facebook\Exceptions\FacebookSDKException $e) {
             // When validation fails or other local issues
             echo 'Facebook SDK returned an error: ' . $e->getMessage();
-            exit;
+//            exit;
         }
 
         if (!isset($accessToken)) {
@@ -84,7 +84,12 @@ class AjaxLoginController extends AbstractController
                 header('HTTP/1.0 400 Bad Request');
                 echo 'Bad request';
             }
-            exit;
+//            exit;
+            $this->addFlash(
+                'notice',
+                'Παρουσιάστηκε σφάλμα κατά τη σύνδεσή σας μέσω Facebook! Παρακαλούμε ελέγξτε ότι είστε συνδεδεμένοι σε κάποιο άλλο παράθυρο του browser σας.'
+            );
+            return $this->redirectToRoute('index');
         }
 
         // Logged in

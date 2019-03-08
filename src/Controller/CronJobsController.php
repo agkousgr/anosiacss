@@ -241,4 +241,15 @@ class CronJobsController extends AbstractController
             throw $e;
         }
     }
+
+    public function synchronizeCountries(CronJobsService $service)
+    {
+        try {
+            $service->getCountries();
+            return;
+        } catch (\Exception $e) {
+            $this->logger->error(__METHOD__ . ' -> {message}', ['message' => $e->getMessage()]);
+            throw $e;
+        }
+    }
 }

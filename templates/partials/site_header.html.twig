@@ -3,6 +3,11 @@
     {% include 'partials/top_header.html.twig' %}
 
     <div class="post-header" id="header">
+        {% for message in app.flashes('notice') %}
+            <div class="flash-notice">
+                {{ message }}
+            </div>
+        {% endfor %}
         <div class="container">
             <div class="post-header-wrap">
                 {#<a href="#" class="sidebar-toogle" id="menu-toggle">Sidebar Toogle</a>#}

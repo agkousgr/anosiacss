@@ -4,6 +4,7 @@
 namespace App\Service;
 
 
+use App\Entity\Country;
 use App\Entity\Parameters;
 use Doctrine\ORM\EntityManagerInterface;
 use Symfony\Component\HttpFoundation\Session\SessionInterface;
@@ -244,6 +245,9 @@ EOF;
 
     }
 
+    /**
+     * Synchronize parameters with S1
+     */
     public function getParams()
     {
 
@@ -264,14 +268,14 @@ EOF;
             $items = simplexml_load_string(str_replace("utf-16", "utf-8", $result->SendMessageResult));
 //            dump($message, $result);
             if ((int)$items->RowsCount > 0) {
-                foreach($items->GetDataRows->children() as $item){
+                foreach ($items->GetDataRows->children() as $item) {
                     $arr = get_object_vars($item);
-                    foreach($arr as $key=>$value){
+                    foreach ($arr as $key => $value) {
                         $param = $this->em->getRepository(Parameters::class)->findOneBy(['name' => $key]);
                         if ($param) {
                             $param->setS1Value($value);
                             $this->em->flush();
-                        }else{
+                        } else {
                             $param = new Parameters();
                             $param->setName($key);
                             $param->setS1Value($value);
@@ -289,4 +293,51 @@ EOF;
 
     }
 
+
+    /**
+     * Synchronize countries with S1
+     */
+    public function getCountries()
+    {
+
+        $message = <<<EOF
+<?xml version="1.0" encoding="utf-16"?>
+<ClientGetCountryRequest>
+    <Type>1075</Type>
+    <Kind>$this->kind</Kind>
+    <Domain>$this->domain</Domain>
+    <AuthID>$this->authId</AuthID>
+    <AppID>$this->appId</AppID>
+    <CompanyID>$this->companyId</CompanyID>
+</ClientGetCountryRequest>
+EOF;
+
+        try {
+            $result = $this->client->SendMessage(['Message' => $message]);
+            $items = simplexml_load_string(str_replace("utf-16", "utf-8", $result->SendMessageResult));
+            dump($message, $result);
+            if ((int)$items->RowsCount > 0) {
+                foreach ($items->GetDataRows->GetCountryRow as $value) {
+                    $country = $this->em->getRepository(Country::class)->findOneBy(['s1Id' => $value['CountryID']]);
+                    if ($country) {
+                        $country->setIntCode($value->InternationalCode);
+                        $country->setName($value->Name);
+                        $this->em->flush();
+                    } else {
+                        $country = new Country();
+                        $country->setName($value->Name);
+                        $country->setS1Id(intval($value->CountryID));
+                        $country->setIntCode($value->InternationalCode);
+                        $this->em->persist($country);
+                        $this->em->flush();
+                    }
+                }
+                return;
+            }
+            return;
+        } catch (\SoapFault $sf) {
+            echo $sf->faultstring;
+        }
+
+    }
 }
