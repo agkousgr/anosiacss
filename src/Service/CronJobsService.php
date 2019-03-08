@@ -4,10 +4,21 @@
 namespace App\Service;
 
 
+use App\Entity\Parameters;
 use Doctrine\ORM\EntityManagerInterface;
+use Symfony\Component\HttpFoundation\Session\SessionInterface;
 
 class CronJobsService
 {
+    /**
+     * @var \App\Service\SoftoneLogin
+     */
+    protected $softoneLogin;
+
+    /**
+     * @var string
+     */
+    private $authId;
 
     /**
      * @var int
@@ -49,9 +60,15 @@ class CronJobsService
      */
     private $productService;
 
-    public function __construct(EntityManagerInterface $em, $s1Credentials)
+    public function __construct(EntityManagerInterface $em, SoftoneLogin $softoneLogin, SessionInterface $session, $s1Credentials)
     {
+        if (session_status() !== PHP_SESSION_ACTIVE) {
+            session_start();
+        }
+
+        $this->softoneLogin = $softoneLogin;
         $this->em = $em;
+        $this->authId = $session->get("authID");
         $this->kind = $s1Credentials['kind'];
         $this->domain = $s1Credentials['domain'];
         $this->appId = $s1Credentials['appId'];
@@ -226,4 +243,50 @@ EOF;
         }
 
     }
+
+    public function getParams()
+    {
+
+        $message = <<<EOF
+<?xml version="1.0" encoding="utf-16"?>
+<ClientGetParamsRequest>
+    <Type>1064</Type>
+    <Kind>$this->kind</Kind>
+    <Domain>$this->domain</Domain>
+    <AuthID>$this->authId</AuthID>
+    <AppID>$this->appId</AppID>
+    <CompanyID>$this->companyId</CompanyID>
+</ClientGetParamsRequest>
+EOF;
+
+        try {
+            $result = $this->client->SendMessage(['Message' => $message]);
+            $items = simplexml_load_string(str_replace("utf-16", "utf-8", $result->SendMessageResult));
+//            dump($message, $result);
+            if ((int)$items->RowsCount > 0) {
+                foreach($items->GetDataRows->children() as $item){
+                    $arr = get_object_vars($item);
+                    foreach($arr as $key=>$value){
+                        $param = $this->em->getRepository(Parameters::class)->findOneBy(['name' => $key]);
+                        if ($param) {
+                            $param->setS1Value($value);
+                            $this->em->flush();
+                        }else{
+                            $param = new Parameters();
+                            $param->setName($key);
+                            $param->setS1Value($value);
+                            $this->em->persist($param);
+                            $this->em->flush();
+                        }
+                    }
+                }
+                return;
+            }
+            return;
+        } catch (\SoapFault $sf) {
+            echo $sf->faultstring;
+        }
+
+    }
+
 }

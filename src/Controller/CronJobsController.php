@@ -230,4 +230,15 @@ class CronJobsController extends AbstractController
         dump('xong');
         return;
     }
+
+    public function synchronizeParameters(CronJobsService $service)
+    {
+        try {
+            $service->getParams();
+            return;
+        } catch (\Exception $e) {
+            $this->logger->error(__METHOD__ . ' -> {message}', ['message' => $e->getMessage()]);
+            throw $e;
+        }
+    }
 }
