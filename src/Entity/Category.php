@@ -3,6 +3,7 @@
 namespace App\Entity;
 
 use App\Traits\BasicDbFieldsTrait;
+use Doctrine\Common\Collections\{Collection, ArrayCollection};
 
 /**
  * Class Category
@@ -13,9 +14,14 @@ class Category
     use BasicDbFieldsTrait;
 
     /**
-     * @var int
+     * @var int|null
      */
     private $s1id;
+
+    /**
+     * @var int|null
+     */
+    private $s1Level;
 
     /**
      * @var string|null
@@ -30,7 +36,7 @@ class Category
     /**
      * @var int|null
      */
-    private $itemsCount;
+    private $itemsCount = 0;
 
     /**
      * @var string|null
@@ -40,10 +46,10 @@ class Category
     /**
      * @var bool
      */
-    private $isVisible;
+    private $isVisible = true;
 
     /**
-     * @var int
+     * @var int|null
      */
     private $priority;
 
@@ -53,37 +59,17 @@ class Category
     private $alternativeCategories;
 
     /**
-     * @var \Doctrine\Common\Collections\Collection
+     * @var Collection
+     */
+    private $parents;
+
+    /**
+     * @var Collection
      */
     private $children;
-
+    
     /**
-     * @var \App\Entity\Category
-     */
-    private $parent;
-
-    /**
-     * @var int|null
-     */
-    private $lft;
-
-    /**
-     * @var int|null
-     */
-    private $lvl;
-
-    /**
-     * @var int|null
-     */
-    private $rgt;
-
-    /**
-     * @var \App\Entity\Category
-     */
-    private $root;
-
-    /**
-     * @var \Doctrine\Common\Collections\Collection
+     * @var Collection
      */
     private $slides;
 
@@ -92,188 +78,63 @@ class Category
      */
     public function __construct()
     {
-        $this->children = new \Doctrine\Common\Collections\ArrayCollection();
-        $this->slides = new \Doctrine\Common\Collections\ArrayCollection();
+        $this->parents = new ArrayCollection();
+        $this->children = new ArrayCollection();
+        $this->slides = new ArrayCollection();
     }
 
     /**
-     * @return int
+     * Get s1id.
+     *
+     * @return int|null
      */
-    public function getS1id(): int
+    public function getS1id(): ?int
     {
         return $this->s1id;
     }
 
     /**
-     * @param int $s1id
+     * Set s1id.
+     *
+     * @param int|null $s1id
+     *
+     * @return Category
      */
-    public function setS1id(int $s1id): void
+    public function setS1id(?int $s1id): Category
     {
         $this->s1id = $s1id;
-    }
-
-    /**
-     * Add child
-     *
-     * @param \App\Entity\Category $child
-     *
-     * @return Category
-     */
-    public function addChild(\App\Entity\Category $child)
-    {
-        $this->children[] = $child;
 
         return $this;
     }
 
     /**
-     * Remove child
+     * Get s1Level.
      *
-     * @param \App\Entity\Category $child
+     * @return int|null
      */
-    public function removeChild(\App\Entity\Category $child)
+    public function getS1Level(): ?int
     {
-        $this->children->removeElement($child);
+        return $this->s1Level;
     }
 
     /**
-     * Get children
+     * Set s1Level.
      *
-     * @return \Doctrine\Common\Collections\Collection
-     */
-    public function getChildren()
-    {
-        return $this->children;
-    }
-
-    /**
-     * Add slide
-     *
-     * @param \App\Entity\Category $slide
+     * @param int|null $s1Level
      *
      * @return Category
      */
-    public function addSlide(\App\Entity\Slider $slide)
+    public function setS1Level(?int $s1Level): Category
     {
-        $this->slides[] = $slide;
+        $this->s1Level = $s1Level;
 
         return $this;
     }
 
     /**
-     * Remove slide
+     * Get slug.
      *
-     * @param \App\Entity\Category $slide
-     */
-    public function removeSlide(\App\Entity\Category $slide)
-    {
-        $this->slides->removeElement($slide);
-    }
-
-    /**
-     * Get slides
-     *
-     * @return \Doctrine\Common\Collections\Collection
-     */
-    public function getSlides()
-    {
-        return $this->slides;
-    }
-
-    /**
-     * Set parent
-     *
-     * @param \App\Entity\Category $parent
-     *
-     * @return Category
-     */
-    public function setParent(?\App\Entity\Category $parent)
-    {
-        $this->parent = $parent;
-
-        return $this;
-    }
-
-    /**
-     * Get parent
-     *
-     * @return \App\Entity\Category
-     */
-    public function getParent()
-    {
-        return $this->parent;
-    }
-
-    /**
-     * @return int|null
-     */
-    public function getLft(): ?int
-    {
-        return $this->lft;
-    }
-
-    /**
-     * @param int|null $lft
-     */
-    public function setLft(?int $lft): void
-    {
-        $this->lft = $lft;
-    }
-
-    /**
-     * @return int|null
-     */
-    public function getLvl(): ?int
-    {
-        return $this->lvl;
-    }
-
-    /**
-     * @param int|null $lvl
-     */
-    public function setLvl(?int $lvl): void
-    {
-        $this->lvl = $lvl;
-    }
-
-    /**
-     * @return int|null
-     */
-    public function getRgt(): ?int
-    {
-        return $this->rgt;
-    }
-
-    /**
-     * @param int|null $rgt
-     */
-    public function setRgt(?int $rgt): void
-    {
-        $this->rgt = $rgt;
-    }
-
-    /**
-     * @return Category
-     */
-    public function getRoot(): Category
-    {
-        return $this->root;
-    }
-
-    /**
-     * Set root
-     *
-     * @param \App\Entity\Category $parent
-     *
-     * @return Category
-     */
-    public function setRoot(Category $root): void
-    {
-        $this->root = $root;
-    }
-
-    /**
-     * @return null|string
+     * @return string|null
      */
     public function getSlug(): ?string
     {
@@ -281,15 +142,23 @@ class Category
     }
 
     /**
-     * @param null|string $slug
+     * Set slug.
+     *
+     * @param string|null $slug
+     *
+     * @return Category
      */
-    public function setSlug(?string $slug): void
+    public function setSlug(?string $slug): Category
     {
         $this->slug = $slug;
+
+        return $this;
     }
 
     /**
-     * @return null|string
+     * Get description.
+     *
+     * @return string|null
      */
     public function getDescription(): ?string
     {
@@ -297,14 +166,22 @@ class Category
     }
 
     /**
-     * @param null|string $description
+     * Set description.
+     *
+     * @param string|null $description
+     *
+     * @return Category
      */
-    public function setDescription(?string $description): void
+    public function setDescription(?string $description): Category
     {
         $this->description = $description;
+
+        return $this;
     }
 
     /**
+     * Get itemsCount.
+     *
      * @return int|null
      */
     public function getItemsCount(): ?int
@@ -313,17 +190,23 @@ class Category
     }
 
     /**
+     * Set itemsCount.
+     *
      * @param int|null $itemsCount
+     *
      * @return Category
      */
     public function setItemsCount(?int $itemsCount): Category
     {
         $this->itemsCount = $itemsCount;
+
         return $this;
     }
 
     /**
-     * @return null|string
+     * Get imageUrl.
+     *
+     * @return string|null
      */
     public function getImageUrl(): ?string
     {
@@ -331,14 +214,22 @@ class Category
     }
 
     /**
-     * @param null|string $imageUrl
+     * Set imageUrl.
+     *
+     * @param string|null $imageUrl
+     *
+     * @return Category
      */
-    public function setImageUrl(?string $imageUrl): void
+    public function setImageUrl(?string $imageUrl): Category
     {
         $this->imageUrl = $imageUrl;
+
+        return $this;
     }
 
     /**
+     * Get isVisible.
+     *
      * @return bool
      */
     public function isVisible(): bool
@@ -347,30 +238,46 @@ class Category
     }
 
     /**
+     * Set isVisible.
+     *
      * @param bool $isVisible
+     *
+     * @return Category
      */
-    public function setIsVisible(bool $isVisible): void
+    public function setIsVisible(bool $isVisible): Category
     {
         $this->isVisible = $isVisible;
+
+        return $this;
     }
 
     /**
-     * @return int
+     * Get priority.
+     *
+     * @return int|null
      */
-    public function getPriority(): int
+    public function getPriority(): ?int
     {
         return $this->priority;
     }
 
     /**
-     * @param int $priority
+     * Set priority.
+     *
+     * @param int|null $priority
+     *
+     * @return Category
      */
-    public function setPriority(int $priority): void
+    public function setPriority(?int $priority): Category
     {
         $this->priority = $priority;
+
+        return $this;
     }
 
     /**
+     * Get alternativeCategories.
+     *
      * @return string|null
      */
     public function getAlternativeCategories(): ?string
@@ -379,13 +286,129 @@ class Category
     }
 
     /**
+     * Set alternativeCategories.
+     *
      * @param string|null $alternativeCategories
+     *
      * @return Category
      */
     public function setAlternativeCategories(?string $alternativeCategories): Category
     {
         $this->alternativeCategories = $alternativeCategories;
+
         return $this;
     }
 
+    /**
+     * Add parent.
+     *
+     * @param \App\Entity\Category $parent
+     *
+     * @return Category
+     */
+    public function addParent(Category $parent): Category
+    {
+        if (!$this->parents->contains($parent)) {
+            $parent->addChild($this);
+            $this->parents[] = $parent;
+        }
+
+        return $this;
+    }
+
+    /**
+     * Remove parent.
+     *
+     * @param \App\Entity\Category $parent
+     *
+     * @return bool
+     */
+    public function removeParent(Category $parent): bool
+    {
+        return $this->parents->removeElement($parent);
+    }
+
+    /**
+     * Get parents.
+     *
+     * @return Collection
+     */
+    public function getParents(): Collection
+    {
+        return $this->parents;
+    }
+    
+    /**
+     * Add child.
+     *
+     * @param \App\Entity\Category $child
+     *
+     * @return Category
+     */
+    public function addChild(Category $child): Category
+    {
+        if (!$this->children->contains($child)) {
+            $this->children[] = $child;
+        }
+
+        return $this;
+    }
+
+    /**
+     * Remove child.
+     *
+     * @param \App\Entity\Category $child
+     *
+     * @return bool
+     */
+    public function removeChild(Category $child): bool
+    {
+        return $this->children->removeElement($child);
+    }
+
+    /**
+     * Get children.
+     *
+     * @return Collection
+     */
+    public function getChildren(): Collection
+    {
+        return $this->children;
+    }
+    
+    /**
+     * Add slide.
+     *
+     * @param \App\Entity\Slider $slide
+     *
+     * @return Category
+     */
+    public function addSlide(Slider $slide): Category
+    {
+        $this->slides[] = $slide;
+
+        return $this;
+    }
+
+    /**
+     * Remove slide.
+     *
+     * @param \App\Entity\Category $slide
+     *
+     * @return bool
+     */
+    public function removeSlide(Category $slide): bool
+    {
+        return $this->slides->removeElement($slide);
+    }
+
+    /**
+     * Get slides.
+     *
+     * @return Collection
+     */
+    public function getSlides(): Collection
+    {
+        return $this->slides;
+    }
 }

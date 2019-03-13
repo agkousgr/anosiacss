@@ -28,11 +28,17 @@ trait BasicDbFieldsTrait
     }
 
     /**
+     * Set id.
+     *
      * @param int $id
+     *
+     * @return object
      */
-    public function setId(int $id): void
+    public function setId(int $id): object
     {
         $this->id = $id;
+
+        return $this;
     }
 
     /**
@@ -46,11 +52,16 @@ trait BasicDbFieldsTrait
     }
 
     /**
-     * @param null|string $name
+     * Set name.
+     *
+     * @param string|null $name
+     *
+     * @return object
      */
-    public function setName(?string $name): void
+    public function setName(?string $name): object
     {
         $this->name = $name;
-    }
 
+        return $this;
+    }
 }
