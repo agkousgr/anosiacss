@@ -2,31 +2,17 @@
 
 namespace App\Controller;
 
-use App\Entity\AvailabilityTypes;
-use App\Entity\Category;
-use App\Entity\Products;
-use App\Service\CategoryService;
-use App\Service\CronJobsService;
-use App\Service\ProductService;
-use App\Service\SoftoneLogin;
+use App\Entity\{AvailabilityTypes, Products};
+use App\Service\{
+    CronJobsService, ProductService, SoftoneLogin
+};
 use Doctrine\ORM\EntityManagerInterface;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Response;
-use Symfony\Component\HttpFoundation\Session\SessionInterface;
 use Psr\Log\LoggerInterface;
 
 class CronJobsController extends AbstractController
 {
-    /**
-     * @var CategoryService
-     */
-    private $categoryService;
-
-    /**
-     * @var ProductService
-     */
-    private $productService;
-
     /**
      * @var EntityManagerInterface
      */
@@ -37,27 +23,13 @@ class CronJobsController extends AbstractController
      */
     private $authId;
 
-    /**
-     * @var CronJobsService
-     */
-    private $cronJobsService;
-
-    /**
-     * @var Logger
-     */
-    private $logger;
-
-    public function __construct(CronJobsService $cronJobsService, ProductService $productService, CategoryService $categoryService, EntityManagerInterface $em, SoftoneLogin $softoneLogin, LoggerInterface $logger)
+    public function __construct(EntityManagerInterface $em, SoftoneLogin $softoneLogin)
     {
-        $this->categoryService = $categoryService;
-        $this->productService = $productService;
         $this->em = $em;
-        $this->cronJobsService = $cronJobsService;
-        $this->logger = $logger;
         $this->authId = $softoneLogin->login();
     }
 
-    public function synchronizeProducts()
+    public function synchronizeProducts(ProductService $productService, LoggerInterface $logger)
     {
 //        $cmd = $this->em->getClassMetadata($pr);
         $connection = $this->em->getConnection();
@@ -65,7 +37,7 @@ class CronJobsController extends AbstractController
         $prevName = '';
         $duplicates = [];
         try {
-            $s1products = $this->productService->getItems('null', 'null', 4000, 'NameDesc', -1, 'null', 'null', 'null', 1, 'null', 0);
+            $s1products = $productService->getItems('null', 'null', 4000, 'NameDesc', -1, 'null', 'null', 'null', 1, 'null', 0);
             if ($s1products) {
 //                $connection->query('SET FOREIGN_KEY_CHECKS=0');
 //                $connection->query('DELETE FROM products');
@@ -115,97 +87,29 @@ class CronJobsController extends AbstractController
             dump($duplicates);
             return;
         } catch (\Exception $e) {
-            $this->logger->error(__METHOD__ . ' -> {message}', ['message' => $e->getMessage()]);
-            throw $e;
+            $logger->error(__METHOD__ . ' -> {message}', ['message' => $e->getMessage()]);
             $connection->rollback();
+            throw $e;
         }
     }
 
-    public function synchronizeCategories()
+    public function synchronizeCategories(CronJobsService $service, LoggerInterface $logger)
     {
         try {
             // Todo: Check how to remove deleted category from S1
-            $categories = $this->cronJobsService->synchronizeCategories($this->authId);
-            foreach ($categories as $val) {
-                dump($val);
-//                continue;
-                $categoryExists = $this->em->getRepository(Category::class)->find($val["id"]);
-                if ($categoryExists) {
-                    $category = $categoryExists;
-                } else {
-                    $category = new Category();
-                }
-                $isVisible = ((string)$val["isVisible"] === '1') ? true : false;
-                $category->setId((int)$val["id"]);
-                $category->setName($val["name"]);
-                $category->setSlug($val["slug"]);
-                $category->setPriority($val["priority"]);
-                $category->setS1id((int)$val["id"]);
-                $category->setDescription($val["description"]);
-                $category->setImageUrl($val["imageUrl"]);
-                if ($val['parentId'] > 0) {
-                    $parent = $this->em->getRepository(Category::class)->find($val['parentId']);
-                    $category->setParent($parent);
-                }
-                $category->setIsVisible($isVisible);
-                $category->setItemsCount(0);
-                $this->em->persist($category);
-                $this->em->flush();
-                if (!empty($val["children"])) {
-                    $this->createChild($val["children"], (int)$val["id"]);
-                }
-            }
-//        dump($category);
-            return;
+            $service->synchronizeCategories($this->authId);
+
             return new Response('Categories synchronization completed');
         } catch (\Exception $e) {
-            $this->logger->error(__METHOD__ . ' -> {message}', ['message' => $e->getMessage()]);
+            $logger->error(__METHOD__ . ' -> {message}', ['message' => $e->getMessage()]);
             throw $e;
         }
     }
 
-    private function createChild($subCategories, $parentId)
+    public function synchronizeAvailabilityTypes(CronJobsService $service, LoggerInterface $logger)
     {
         try {
-            $subCtgsArr = explode(',', $subCategories);
-            foreach ($subCtgsArr as $val) {
-                dump($val);
-                $categoryExists = $this->em->getRepository(Category::class)->find((int)$val["id"]);
-                $parentCategory = $this->em->getRepository(Category::class)->find($parentId);
-                dump($categoryExists, $parentCategory);
-                if ($categoryExists) {
-                    $category = $categoryExists;
-                } else {
-                    $category = new Category();
-                }
-                $isVisible = ((string)$val["isVisible"] === '1') ? true : false;
-                $category->setId((int)$val["id"]);
-                $category->setName($val["name"]);
-                $category->setSlug($val["slug"]);
-                $category->setParent($parentCategory);
-                $category->setPriority($val["priority"]);
-                $category->setS1id((int)$val["id"]);
-                $category->setDescription($val["description"]);
-                $category->setImageUrl($val["imageUrl"]);
-                $category->setIsVisible($isVisible);
-                $category->setItemsCount(0);
-                $this->em->persist($category);
-                $this->em->flush();
-                if (!empty($val["children"])) {
-                    $this->createChild($val["children"], (int)$val["id"]);
-                }
-            }
-            return;
-        } catch (\Exception $e) {
-            $this->logger->error(__METHOD__ . ' -> {message}', ['message' => $e->getMessage()]);
-            throw $e;
-        }
-    }
-
-    public function synchronizeAvailabilityTypes()
-    {
-        try {
-            $avTypes = $this->cronJobsService->getAvailabilityTypes(-1, $this->authId);
+            $avTypes = $service->getAvailabilityTypes(-1, $this->authId);
             if ($avTypes) {
                 foreach ($avTypes as $avType) {
                     dump($avType);
@@ -215,40 +119,34 @@ class CronJobsController extends AbstractController
                     $at->setFromDays($avType->FromDays);
                     $at->setToDays($avType->ToDays);
                     $this->em->persist($at);
-                    $this->em->flush();
                 }
+                $this->em->flush();
             }
             return;
         } catch (\Exception $e) {
-            $this->logger->error(__METHOD__ . ' -> {message}', ['message' => $e->getMessage()]);
+            $logger->error(__METHOD__ . ' -> {message}', ['message' => $e->getMessage()]);
             throw $e;
         }
     }
 
-    public function test()
-    {
-        dump('xong');
-        return;
-    }
-
-    public function synchronizeParameters(CronJobsService $service)
+    public function synchronizeParameters(CronJobsService $service, LoggerInterface $logger)
     {
         try {
             $service->getParams();
             return;
         } catch (\Exception $e) {
-            $this->logger->error(__METHOD__ . ' -> {message}', ['message' => $e->getMessage()]);
+            $logger->error(__METHOD__ . ' -> {message}', ['message' => $e->getMessage()]);
             throw $e;
         }
     }
 
-    public function synchronizeCountries(CronJobsService $service)
+    public function synchronizeCountries(CronJobsService $service, LoggerInterface $logger)
     {
         try {
             $service->getCountries();
             return;
         } catch (\Exception $e) {
-            $this->logger->error(__METHOD__ . ' -> {message}', ['message' => $e->getMessage()]);
+            $logger->error(__METHOD__ . ' -> {message}', ['message' => $e->getMessage()]);
             throw $e;
         }
     }
