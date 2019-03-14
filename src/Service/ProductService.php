@@ -201,6 +201,7 @@ EOF;
                         'overAvailability' => $pr->OverAvailability,
                         'maxByOrder' => $pr->MaxByOrder,
                         'hasMainImage' => $pr->HasMainPhoto,
+                        'categories' => $pr->AllCategoryIDs,
                         'imageUrl' => (strval($pr->HasMainPhoto) !== 'false') ? 'https://caron.cloudsystems.gr/FOeshopAPIWeb/DF.aspx?' . str_replace('[Serial]', '01102472475217', str_replace('&amp;', '&', $pr->MainPhotoUrl)) : ''
                     );
                 }
@@ -268,8 +269,8 @@ EOF;
             $itemsArr = [];
             $result = $this->client->SendMessage(['Message' => $message]);
             $items = simplexml_load_string(str_replace("utf-16", "utf-8", $result->SendMessageResult), 'SimpleXMLElement', LIBXML_COMPACT | LIBXML_PARSEHUGE);
-            dump($message);
-            dump($result);
+//            dump($message);
+//            dump($result);
 //            die();
             if (intval($items->RowsCount) > 0) {
                 if ($items !== false && ($keyword !== 'null' || $makeId !== 'null' || $isSkroutz === '1' || ($id === 'null' && $itemCode === 'null'))) { // THIS IS FOR MIGRATING PRODUCTS
@@ -279,7 +280,7 @@ EOF;
                     $itemsArr = $this->initializeProduct($items->GetDataRows->GetItemsRow);
                 }
             }
-            dump($itemsArr);
+//            dump($itemsArr);
             return $itemsArr;
         } catch (\SoapFault $sf) {
             echo $sf->faultstring;

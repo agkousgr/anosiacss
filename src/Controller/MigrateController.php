@@ -56,7 +56,7 @@ class MigrateController extends MainController
         $nullMnf = '';
         $prevName = '';
         $duplicates = '';
-        $s1ProductData = $productService->getItems('null', $keyword = 'null', 1000, $sortBy = 'NameAsc', $isSkroutz = -1, $makeId = 'null', $priceRange = 'null', 'null', 1, 'null', 1);
+        $s1ProductData = $productService->getItems('null', $keyword = 'null', 4000, $sortBy = 'NameAsc', $isSkroutz = -1, $makeId = 'null', $priceRange = 'null', 'null', 1, 'null', 4);
         foreach ($s1ProductData as $s1pr) {
 //            dump($s1pr);
 //continue;
@@ -70,7 +70,8 @@ class MigrateController extends MainController
             }
 //            dump($s1pr);
 //            die();
-            $pr = $em->getRepository(MigrationProducts::class)->findOneBy(['s1id' => $s1pr['id']]);
+            $pr = $em->getRepository(MigrationProducts::class)->findOneBy(['sku' => $s1pr['prCode']]);
+//            $pr = $em->getRepository(MigrationProducts::class)->findOneBy(['s1id' => $s1pr['id']]);
 //            dump($pr->getWebPrice());
             if ($pr) {
                 if ($pr->getWebPrice() > 0) {
@@ -81,10 +82,12 @@ class MigrateController extends MainController
 //                    continue;
                 $manufacturerId = (intval($s1pr['manufacturerId']) > 0) ? intval($s1pr['manufacturerId']) : null;
                 if ($manufacturerId === null) {
-                    $nullMnf .= $pr->getS1id() . ',';
+                    $nullMnf .= $s1pr['id'] . ',';
                 }
+                $pr->setS1id(intval($s1pr['id']));
                 $pr->setWebVisible($webVisible);
                 $pr->setManufacturerId($manufacturerId);
+                $pr->setCategoryIds(strval($s1pr['categories']));
                 $pr->setRetailPrice(strval($s1pr['retailPrice']));
                 $pr->setWebPrice(strval($s1pr['webPrice']));
                 $pr->setBarcode(strval($s1pr['mainBarcode']));
@@ -187,7 +190,7 @@ class MigrateController extends MainController
                     dump($product);
 //                    $s1ProductData = $productService->getItems('null', $keyword = 'null', 1, $sortBy = 'PriceDesc', $isSkroutz = -1, $makeId = 'null', $priceRange = 'null', $product->getSku());
                     if ($product->getS1id()) {
-                        $imagesArr = explode('|', $product->getImages());
+                        $imagesArr = explode(',', $product->getImages());
 //                        dump($s1ProductData['id']);
                         $isMain = 'true';
                         $prImages = $productService->getItemPhotos($product->getS1id());

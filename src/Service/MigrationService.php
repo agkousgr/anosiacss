@@ -121,6 +121,9 @@ EOF;
     <ManufacturID>$manufacturerId</ManufacturID>
     <SmallDescription>$smallDescription</SmallDescription>
     <LargeDescription>$largeDescription</LargeDescription>
+    <WebVisible></WebVisible>
+    <OutOfStock></OutOfStock>
+    <Name2></Name2>
 </ClientSetItemSEORequest>
 EOF;
         try {

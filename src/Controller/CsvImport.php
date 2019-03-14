@@ -10,10 +10,11 @@ use App\Entity\User;
 use League\Csv\Reader;
 use League\Csv\Statement;
 use Doctrine\ORM\EntityManagerInterface;
+use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\DependencyInjection\ServiceLocator;
 use Symfony\Component\HttpKernel\Kernel;
 
-class CsvImport extends MainController
+class CsvImport extends AbstractController
 {
     public function importData(EntityManagerInterface $em)
     {
@@ -50,7 +51,6 @@ class CsvImport extends MainController
             $em->flush();
         }
         return;
-
     }
 
     public function importProductCategories(EntityManagerInterface $em)
@@ -174,30 +174,55 @@ class CsvImport extends MainController
         $csv->setDelimiter("\t");
         $csv->setHeaderOffset(0);
 
+
         $stmt = (new Statement())
-            ->offset(11963)
-            ->limit(5000);
+            ->offset(4201)
+            ->limit(8600);
 
         $records = $stmt->process($csv);
         foreach ($records as $record) {
-            dump($record);
+//            if (!$record['sku'])
+//                continue;
+//            dump($record);
             $pr = new MigrationProducts();
-            $pr->setS1id(intval($record['s1id']));
+//            $pr->setS1id(intval($record['s1id']));
+            $pr->setOldId(intval($record['id']));
             $pr->setName($record['name']);
             $pr->setSku($record['sku']);
             $pr->setSmallDescription($record['smallDescription']);
             $pr->setLargeDescription($record['largeDescription']);
             $pr->setIngredients($record['ingredients']);
             $pr->setInstructions($record['instructions']);
-//            $pr->setOldSlug($record['oldSlug']);
-            $pr->setSlug($record['Slug']);
+            $pr->setOldSlug($this->initSlug($record['slug']));
+            $pr->setSlug($this->initSlug($record['slug']));
+            $pr->setImages($record['images']);
+//            $pr->setImages($this->initImages($record['images']));
 //            $pr->setSeoTitle($record['seoTitle']);
 //            $pr->setSeoKeywords($record['seoKeywords']);
             $pr->setManufacturer($record['manufacturer']);
+            $pr->setAvailability($record['stock']);
+//            dump($pr);
             $em->persist($pr);
             $em->flush();
         }
         return;
+    }
+
+    private function initSlug($slug)
+    {
+        $slugArr = explode('/', $slug);
+        return $slugArr[count($slugArr)-2];
+    }
+
+    private function initImages($images)
+    {
+        $image = '';
+        $imagesArr = explode('|', $images);
+        foreach ($imagesArr as $item) {
+            $imageArr = explode('/', $item);
+            $image .= end($imageArr) . ',';
+        }
+        return rtrim($image, ',');
     }
 
     public function importSeo(EntityManagerInterface $em)

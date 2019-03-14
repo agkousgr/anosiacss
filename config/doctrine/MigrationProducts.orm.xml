@@ -16,8 +16,9 @@
         <field name="oldSlug" length="250" nullable="true" />
         <field name="barcode" length="50" nullable="true"/>
         <field name="slug" length="250" />
-        <field name="retailPrice" type="decimal" precision="7" scale="2"/>
-        <field name="webPrice" type="decimal" precision="7" scale="2"/>
+        <field name="availability" length="1" nullable="true" />
+        <field name="retailPrice" type="decimal" nullable="true" precision="7" scale="2"/>
+        <field name="webPrice" type="decimal" nullable="true" precision="7" scale="2"/>
         <field name="discount" type="integer" nullable="true"/>
         <field name="seoTitle" type="text" nullable="true" />
         <field name="seoKeywords" type="text" nullable="true" />
@@ -26,7 +27,7 @@
         <field name="images" type="text" nullable="true" />
         <field name="imageUpdateError" length="1" nullable="true" />
         <field name="webVisible" length="1" nullable="true" />
-        <field name="categoryIds" length="50"/>
+        <field name="categoryIds" length="50" nullable="true"/>
 
     </entity>
 

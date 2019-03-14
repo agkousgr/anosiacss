@@ -1,0 +1,9 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<doctrine-mapping xmlns="http://doctrine-project.org/schemas/orm/doctrine-mapping">
+
+    <entity name="App\Entity\Manufacturer">
+        <id name="id" type="integer"/>
+        <field name="code" type="integer"/>
+    </entity>
+
+</doctrine-mapping>

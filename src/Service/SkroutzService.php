@@ -104,6 +104,7 @@ class SkroutzService
         <image><![CDATA[' . $product["imageUrl"] . ']]></image>
         <category><![CDATA[' . $category->getDescription() . ']]></category>
         <price_with_vat>' . $product["webPrice"] . '</price_with_vat>
+        <instock></instock>
         <manufacturer><![CDATA[' . $product["brand"] . ']]></manufacturer>
         <availability>' . $product["availability"] . '</availability>
       </product>';
@@ -206,11 +207,11 @@ EOF;
         list($categoryId) = explode(',', $categories);
         $category = $this->em->getRepository(Category::class)->findOneBy(['s1id' => $categoryId]);
         $this->categoryName .= $category->getDescription();
-        if ($category->getParent()) {
+//        if ($category->getParent()) {
 //            getCategories
-            dump($category);
-            die();
-        }
+//            dump($category);
+//            die();
+//        }
         return $category;
     }
 

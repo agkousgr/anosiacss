@@ -64,6 +64,11 @@ class MigrationProducts
     /**
      * @var string|null
      */
+    private $availability;
+
+    /**
+     * @var string|null
+     */
     private $barcode;
 
     /**
@@ -306,6 +311,24 @@ class MigrationProducts
     public function setSlug(?string $slug): MigrationProducts
     {
         $this->slug = $slug;
+        return $this;
+    }
+
+    /**
+     * @return string|null
+     */
+    public function getAvailability(): ?string
+    {
+        return $this->availability;
+    }
+
+    /**
+     * @param string|null $availability
+     * @return MigrationProducts
+     */
+    public function setAvailability(?string $availability): MigrationProducts
+    {
+        $this->availability = $availability;
         return $this;
     }
 
