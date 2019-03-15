@@ -20,29 +20,23 @@ class ProductController extends MainController
             $sortBy = ($request->query->get('sortBy')) ?: 'NameAsc';
             $mnufacturerId = ($request->query->get('brands')) ? str_replace('-', ',', $request->query->get('brands')) : 'null';
             $priceRange = ($request->query->get('priceRange')) ?: 'null';
-            $ctgInfo = $this->em->getRepository(Category::class)->findOneBy(['slug' => $slug]);
-            dump($ctgInfo);
-            $brands = $brandsService->getCategoryManufacturers($ctgInfo->getS1id());
-            dump($ctgInfo->getChildren());
-//            $subCategories = $this->em->getRepository(Category::class)->findBy(['parent' => $ctgInfo->getS1id()], ['priority' => 'ASC']);
-            $subCategories = $this->categoryService->getSubCategories($ctgInfo->getS1id(), 1);
-            $slider = $this->em->getRepository(Slider::class)->findBy(['category' => $ctgInfo]);
-            dump($slider);
-//            die();
-            $productsCountArr = $this->productService->getCategoryItemsCount($ctgInfo->getS1id(), 'null', $priceRange, 1, $mnufacturerId);
-//            dump($productsCountArr);
+            $category = $this->em->getRepository(Category::class)->findOneBy(['slug' => $slug]);
+            $brands = $brandsService->getCategoryManufacturers($category->getS1id());
+            $subCategories = $category->getChildren();
+            $slider = $this->em->getRepository(Slider::class)->findBy(['category' => $category]);
+            $productsCountArr = $this->productService->getCategoryItemsCount($category->getS1id(), 'null', $priceRange, 1, $mnufacturerId);
             $productsCount = intval($productsCountArr->Count);
             $minPrice = intval($productsCountArr->MinPrice);
             $maxPrice = intval($productsCountArr->MaxPrice);
             if ($productsCount > $pagesize * $page) {
-                $products = $this->productService->getCategoryItems($ctgInfo->getS1id(), $page - 1, $pagesize, $sortBy, 'null', $priceRange, 1, $mnufacturerId);
+                $products = $this->productService->getCategoryItems($category->getS1id(), $page - 1, $pagesize, $sortBy, 'null', $priceRange, 1, $mnufacturerId);
             } else {
-                $products = $this->productService->getCategoryItems($ctgInfo->getS1id(), 0, $pagesize, $sortBy, 'null', $priceRange, 1, $mnufacturerId);
+                $products = $this->productService->getCategoryItems($category->getS1id(), 0, $pagesize, $sortBy, 'null', $priceRange, 1, $mnufacturerId);
             }
             dump($mnufacturerId, $products);
             return $this->render('products/list.html.twig', [
                 'products' => $products,
-                'ctgInfo' => $ctgInfo,
+                'ctgInfo' => $category,
                 'categories' => $this->categories,
                 'popular' => $this->popular,
                 'featured' => $this->featured,

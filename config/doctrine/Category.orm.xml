@@ -29,6 +29,9 @@
                     <join-column name="child_id" />
                 </inverse-join-columns>
             </join-table>
+            <order-by>
+                <order-by-field name="priority" />
+            </order-by>
         </many-to-many>
         <one-to-many target-entity="App\Entity\Slider" mapped-by="category" field="slides" />
 
