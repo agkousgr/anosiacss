@@ -6,7 +6,7 @@ use App\Entity\AdminCategory;
 use App\Entity\Article;
 use App\Entity\User;
 use App\Service\{
-    ProductService, SoftoneLogin, CategoryService
+    ProductService, SoftoneLogin
 };
 use Doctrine\ORM\EntityManagerInterface;
 use Symfony\Component\HttpFoundation\Session\SessionInterface;
