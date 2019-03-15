@@ -2,21 +2,20 @@
 
 namespace App\Repository;
 
-use Gedmo\Tree\Entity\Repository\NestedTreeRepository;
+use Doctrine\ORM\EntityRepository;
 
-class CategoryRepository extends NestedTreeRepository
+class CategoryRepository extends EntityRepository
 {
-
-    /*
-    public function findBySomething($value)
+    public function getTopLevelCategoriesAndDirectChildren(): array
     {
-        return $this->createQueryBuilder('c')
-            ->where('c.something = :value')->setParameter('value', $value)
-            ->orderBy('c.id', 'ASC')
-            ->setMaxResults(10)
-            ->getQuery()
-            ->getResult()
-        ;
+        $qb = $this->getEntityManager()->createQueryBuilder();
+        $qb->select('c, children')
+            ->from('App:Category', 'c')
+            ->join('c.children', 'children')
+            ->where('c.s1Level = :level')
+            ->orderBy('c.priority')
+            ->setParameter('level', 0);
+
+        return $qb->getQuery()->getResult();
     }
-    */
 }

@@ -9,12 +9,12 @@
             <ul id="blue-mobile-menu">
                 <li><a href="#">Home</a></li>
                 {% for ctg in categories %}
-                    {% if ctg.isVisible == "1" %}
+                    {% if ctg.isVisible %}
                         <li><a href="#">{{ ctg.name }}</a></li>
                         {% if ctg.children %}
                             <ul>
                                 {% for subctg in ctg.children %}
-                                    {% if subctg.isVisible == "1" %}
+                                    {% if subctg.isVisible %}
                                         <li>
                                             <a href="{{ path('products_list', {'slug':subctg.slug}) }}">{{ subctg.name }}</a>
                                         </li>

@@ -1,46 +1,44 @@
 <?xml version="1.0" encoding="UTF-8" ?>
 <doctrine-mapping xmlns="http://doctrine-project.org/schemas/orm/doctrine-mapping"
-                  xmlns:gedmo="http://gediminasm.org/schemas/orm/doctrine-extensions-mapping">
+                  xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+                  xsi:schemaLocation="http://doctrine-project.org/schemas/orm/doctrine-mapping https://www.doctrine-project.org/schemas/orm/doctrine-mapping.xsd">
 
     <entity name="App\Entity\Category" repository-class="App\Repository\CategoryRepository">
-        <id name="id" type="integer" />
-            <!--<generator strategy="AUTO" />-->
-        <!--</id>-->
-        <field name="s1id" type="integer"/>
+
+        <id name="id" type="integer">
+            <generator strategy="AUTO" />
+        </id>
+        <field name="s1id" type="integer" />
+        <field name="s1Level" type="integer" nullable="true" />
         <field name="name" length="50" />
         <field name="slug" length="50" />
-        <field name="imageUrl" type="text" />
-        <field name="description" type="text"/>
+        <field name="imageUrl" type="text" nullable="true" />
+        <field name="description" type="text" nullable="true" />
         <field name="itemsCount" type="integer" nullable="true" />
-        <field name="isVisible" type="boolean"/>
-        <field name="priority" type="decimal" precision="4"/>
-        <field name="alternativeCategories" length="50" nullable="true"/>
-        <field name="lft" type="integer">
-            <gedmo:tree-left/>
-        </field>
-        <field name="rgt" type="integer">
-            <gedmo:tree-right/>
-        </field>
-        <field name="lvl" type="integer">
-            <gedmo:tree-level/>
-        </field>
-        <many-to-one field="root" target-entity="Category">
-            <join-column name="tree_root" referenced-column-name="id" on-delete="CASCADE"/>
-            <gedmo:tree-root/>
-        </many-to-one>
-        <many-to-one field="parent" target-entity="Category" inversed-by="children">
-            <join-column name="parent_id" referenced-column-name="id" on-delete="CASCADE"/>
-            <gedmo:tree-parent/>
-        </many-to-one>
-        <one-to-many field="children" target-entity="Category" mapped-by="parent">
-            <order-by>
-                <order-by-field name="lft" direction="ASC" />
-            </order-by>
-        </one-to-many>
+        <field name="isVisible" type="boolean" />
+        <field name="priority" type="integer" />
+        <field name="alternativeCategories" length="50" nullable="true" />
 
+        <many-to-many field="parents" target-entity="Category" mapped-by="children" />
+        <many-to-many field="children" target-entity="Category" inversed-by="parents">
+            <join-table name="category_children">
+                <join-columns>
+                    <join-column name="parent_id" />
+                </join-columns>
+                <inverse-join-columns>
+                    <join-column name="child_id" />
+                </inverse-join-columns>
+            </join-table>
+            <order-by>
+                <order-by-field name="priority" />
+            </order-by>
+        </many-to-many>
         <one-to-many target-entity="App\Entity\Slider" mapped-by="category" field="slides" />
 
-        <gedmo:tree type="nested"/>
+        <indexes>
+            <index name="SoftOne_ID_Index" columns="s1id" />
+        </indexes>
+
     </entity>
 
 </doctrine-mapping>

@@ -1,11 +1,11 @@
 {% macro create_breadcrumb(ctg, bc) %}
     {% import _self as macros %}
-    {% if ctg.parent == null %}
+    {% if ctg.parents is empty %}
         <a style="color: #fff;"
            href="{{ path('products_list', {'slug':ctg.slug}) }}">{{ ctg.name }}</a> {{ bc|raw }}
     {% else %}
         {% set bc = ' / <a style="color: #fff;" href="' ~ path('products_list', {'slug':ctg.slug}) ~ '">' ~ ctg.name ~ '</a>' ~ bc %}
-        {{ macros.create_breadcrumb(ctg.parent, bc) }}
+        {{ macros.create_breadcrumb(ctg.parents|first, bc) }}
     {% endif %}
 {% endmacro %}
 {% import _self as func %}
