@@ -104,7 +104,6 @@ EOF;
         try {
             $result = $this->client->SendMessage(['Message' => $message]);
             $items = simplexml_load_string(str_replace("utf-16", "utf-8", $result->SendMessageResult));
-//            dump($message, $result);
             $itemsArr = $this->initializeProducts($items->GetDataRows->GetItemsRow, $cartArr);
 
             return $itemsArr;
@@ -175,7 +174,7 @@ EOF;
         try {
             $result = $this->client->SendMessage(['Message' => $message]);
             $items = simplexml_load_string(str_replace("utf-16", "utf-8", $result->SendMessageResult));
-            dump($message, $result);
+
             if ($items->GetDataRows->GetVoucherRow) {
                 $fromDt = new \DateTime($items->GetDataRows->GetVoucherRow->FromDT);
                 $toDt = new \DateTime($items->GetDataRows->GetVoucherRow->ToDT);
@@ -190,7 +189,7 @@ EOF;
                     $this->session->set('couponDiscPerc', intval($items->GetDataRows->GetVoucherRow->Percentage));
                     $this->session->set('couponName', $voucherCode);
                     $this->session->set('couponId', intval($items->GetDataRows->GetVoucherRow->ID));
-                    dump($this->session);
+
                     return true;
                 } else {
                     return false;
@@ -234,11 +233,9 @@ EOF;
             $cartItems = $em->getRepository(Cart::class)->getCartByUser($username);
             if ($cartItems) {
                 foreach ($cartItems as $item) {
-                    dump($item);
                     $item->setSessionId('');
                     $em->persist($item);
                     $em->flush();
-                    dump($item);
                 }
             }
 

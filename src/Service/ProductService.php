@@ -26,6 +26,7 @@ class ProductService
 
     /**
      * @var string
+     *
      * @param SessionInterface $session
      */
     private $authId;
@@ -74,6 +75,7 @@ class ProductService
      * @param $pagesize
      * @param $sortBy
      * @param $makeId
+     *
      * @return array
      * @throws \Exception
      */
@@ -109,13 +111,13 @@ class ProductService
 </ClientGetCategoryItemsRequest>
 EOF;
         try {
-            $itemsArr = array();
+            $itemsArr = [];
             $result = $this->client->SendMessage(['Message' => $message]);
             $items = simplexml_load_string(str_replace("utf-16", "utf-8", $result->SendMessageResult));
-            dump($message, $items);
             if ($items !== false) {
                 $itemsArr = $this->initializeProducts($items->GetDataRows->GetCategoryItemsRow);
             }
+
             return $itemsArr;
         } catch (\SoapFault $sf) {
             echo $sf->faultstring;
@@ -125,6 +127,7 @@ EOF;
     /**
      * @param $ctgId
      * @param $makeId
+     *
      * @return int
      */
     public function getCategoryItemsCount($ctgId, $makeId = 'null', $priceRange = 'null', $webVisible = 1, $manufacturerId = 'null')
@@ -160,7 +163,7 @@ EOF;
         try {
             $result = $this->client->SendMessage(['Message' => $message]);
             $items = simplexml_load_string(str_replace("utf-16", "utf-8", $result->SendMessageResult));
-            dump($message, $result);
+
             return $items->GetDataRows->GetCategoryItemsCountRow;
         } catch (\SoapFault $sf) {
             echo $sf->faultstring;
@@ -169,16 +172,17 @@ EOF;
 
     /**
      * @param $products
+     *
      * @return array
      * @throws \Exception
      */
     private function initializeProducts($products)
     {
         try {
-            $prArr = array();
+            $prArr = [];
             foreach ($products as $pr) {
                 if ((string)$pr->WebVisible !== "false") {
-                    $prArr[] = array(
+                    $prArr[] = [
                         'id' => $pr->ID,
                         'name' => $pr->Name2,
                         'slug' => $pr->Slug,
@@ -192,7 +196,7 @@ EOF;
                         'discount' => $pr->Discount,
                         'mainBarcode' => $pr->MainBarcode,
                         'webDiscount' => $pr->WebDiscountPerc,
-                        'webPrice' => ($pr->Discount) ? round((floatval($pr->RetailPrice) * (100 - floatval($pr->Discount))/100), 2) : 0,
+                        'webPrice' => ($pr->Discount) ? round((floatval($pr->RetailPrice) * (100 - floatval($pr->Discount)) / 100), 2) : 0,
                         'outOfStock' => $pr->OutOfStock,
                         'manufacturerId' => $pr->ManufacturID,
                         'remainNotReserved' => $pr->RemainNotReserved,
@@ -203,10 +207,10 @@ EOF;
                         'hasMainImage' => $pr->HasMainPhoto,
                         'categories' => $pr->AllCategoryIDs,
                         'imageUrl' => (strval($pr->HasMainPhoto) !== 'false') ? 'https://caron.cloudsystems.gr/FOeshopAPIWeb/DF.aspx?' . str_replace('[Serial]', '01102472475217', str_replace('&amp;', '&', $pr->MainPhotoUrl)) : ''
-                    );
+                    ];
                 }
             }
-//            dump($prArr);
+
             return $prArr;
         } catch (\Exception $e) {
             $this->logger->error(__METHOD__ . ' -> {message}', ['message' => $e->getMessage()]);
@@ -219,6 +223,7 @@ EOF;
         $prDateArr = explode('T', $insertDate);
         $prDate = new \DateTime($prDateArr[0]);
         $curDate = new \DateTime();
+
         return (date_diff($curDate, $prDate)->days < 20) ? 'new' : '';
     }
 
@@ -231,6 +236,7 @@ EOF;
      * @param $isSkroutz
      * @param $makeId
      * @param $priceRange
+     *
      * @return array
      * @throws \Exception
      */
@@ -269,9 +275,6 @@ EOF;
             $itemsArr = [];
             $result = $this->client->SendMessage(['Message' => $message]);
             $items = simplexml_load_string(str_replace("utf-16", "utf-8", $result->SendMessageResult), 'SimpleXMLElement', LIBXML_COMPACT | LIBXML_PARSEHUGE);
-//            dump($message);
-//            dump($result);
-//            die();
             if (intval($items->RowsCount) > 0) {
                 if ($items !== false && ($keyword !== 'null' || $makeId !== 'null' || $isSkroutz === '1' || ($id === 'null' && $itemCode === 'null'))) { // THIS IS FOR MIGRATING PRODUCTS
 //                if ($items !== false && ($keyword !== 'null' || $makeId !== 'null' || $isSkroutz === '1')) {
@@ -280,7 +283,7 @@ EOF;
                     $itemsArr = $this->initializeProduct($items->GetDataRows->GetItemsRow);
                 }
             }
-//            dump($itemsArr);
+
             return $itemsArr;
         } catch (\SoapFault $sf) {
             echo $sf->faultstring;
@@ -322,8 +325,8 @@ EOF;
 
         try {
             $result = $this->client->SendMessage(['Message' => $message]);
-            dump($message, $result);
             $items = simplexml_load_string(str_replace("utf-16", "utf-8", $result->SendMessageResult));
+
             return (int)$items->GetDataRows->GetItemsCountRow->Count;
         } catch (\SoapFault $sf) {
             echo $sf->faultstring;
@@ -333,6 +336,7 @@ EOF;
 
     /**
      * @param $pr
+     *
      * @return array
      * @throws \Exception
      */
@@ -342,7 +346,7 @@ EOF;
             $prArr = [];
             $imagesArr = [];
             if ((string)$pr->WebVisible !== 'false') {
-                $prArr = array(
+                $prArr = [
                     'id' => $pr->ID,
                     'name' => $pr->Name2,
                     'slug' => $pr->Slug,
@@ -358,7 +362,7 @@ EOF;
                     'mainBarcode' => $pr->MainBarcode,
                     'prCode' => $pr->Code,
                     'isVisible' => $pr->WebVisible,
-                    'webPrice' => ($pr->Discount) ? round((floatval($pr->RetailPrice) * (100 - floatval($pr->Discount))/100), 2) : 0,
+                    'webPrice' => ($pr->Discount) ? round((floatval($pr->RetailPrice) * (100 - floatval($pr->Discount)) / 100), 2) : 0,
                     'webDiscount' => $pr->WebDiscountPerc,
                     'isNew' => $this->checkIfProductIsNew($pr->InsertDT),
                     'outOfStock' => $pr->OutOfStock,
@@ -371,10 +375,9 @@ EOF;
                     'imageUrl' => (strval($pr->HasMainPhoto) !== 'false') ? 'https://caron.cloudsystems.gr/FOeshopAPIWeb/DF.aspx?' . str_replace('[Serial]', '01102472475217', str_replace('&amp;', '&', $pr->MainPhotoUrl)) : '',
                     'categories' => $this->getProductCategories($pr->AllCategoryIDs)
 //                    'categories' => $pr->AllCategoryIDs
-                );
+                ];
                 $imagesArr = $this->getItemPhotos($pr->ID);
             }
-//            dump($prArr);
 //            'manufacturer' => $pr->ManufactorName
 //            return new Response(dump(print_r($this->prCategories)));
             return array_merge($prArr, $imagesArr);
@@ -387,7 +390,7 @@ EOF;
     private function getProductCategories($ctgArr)
     {
         $categories = $this->em->getRepository(Category::class)->findBy(['s1id' => $ctgArr]);
-//        dump($categories);
+
         return $categories;
     }
 
@@ -410,13 +413,13 @@ EOF;
 </ClientGetItemPhotosRequest>
 EOF;
         try {
-            $imagesArr = array();
+            $imagesArr = [];
             $result = $this->client->SendMessage(['Message' => $message]);
             $items = simplexml_load_string(str_replace("utf-16", "utf-8", $result->SendMessageResult));
-//            dump($message, $result);
             if (intval($items->RowsCount) > 0) {
                 $imagesArr = $this->initializeImages($items->GetDataRows->GetItemPhotosRow);
             }
+
             return $imagesArr;
         } catch (\SoapFault $sf) {
             echo $sf->faultstring;
@@ -425,6 +428,7 @@ EOF;
 
     /**
      * @param $images
+     *
      * @return array
      * @throws \Exception
      */
@@ -433,13 +437,14 @@ EOF;
         try {
             $imagesArr = [];
             foreach ($images as $image) {
-                $imagesArr['extraImages'][] = array(
+                $imagesArr['extraImages'][] = [
                     'id' => $image->ID,
                     'name' => $image->PhotoFileName,
                     'isMain' => $image->IsMain,
                     'imageUrl' => 'https://caron.cloudsystems.gr/FOeshopAPIWeb/DF.aspx?' . str_replace('[Serial]', '01102472475217', str_replace('&amp;', '&', $image->PhotoUrl))
-                );
+                ];
             }
+
             return $imagesArr;
         } catch (\Exception $e) {
             $this->logger->error(__METHOD__ . ' -> {message}', ['message' => $e->getMessage()]);
@@ -474,9 +479,8 @@ EOF;
         try {
             $result = $this->client->SendMessage(['Message' => $message]);
             $items = simplexml_load_string(str_replace("utf-16", "utf-8", $result->SendMessageResult));
-//            dump($message, $result);
             $itemsArr = $this->initializeProposalProducts($items->GetDataRows->GetRelevantItemsRow);
-//            dump($itemsArr);
+
             return $itemsArr;
         } catch (\SoapFault $sf) {
             echo $sf->faultstring;
@@ -486,10 +490,10 @@ EOF;
     private function initializeProposalProducts($products)
     {
         try {
-            $prArr = array();
+            $prArr = [];
             $i = 0;
             foreach ($products as $pr) {
-                $prArr[] = array(
+                $prArr[] = [
                     'id' => $pr->ID,
                     'name' => $pr->Name2,
                     'summary' => strip_tags($pr->SmallDescriptionHTML),
@@ -498,7 +502,7 @@ EOF;
                     'retailPrice' => $pr->RetailPrice,
                     'discount' => $pr->Discount,
                     'webDiscount' => $pr->WebDiscountPerc,
-                    'webPrice' => ($pr->Discount) ? round((floatval($pr->RetailPrice) * (100 - floatval($pr->Discount))/100), 2) : 0,
+                    'webPrice' => ($pr->Discount) ? round((floatval($pr->RetailPrice) * (100 - floatval($pr->Discount)) / 100), 2) : 0,
                     'outOfStock' => $pr->OutOfStock,
                     'remainNotReserved' => $pr->RemainNotReserved,
                     'webFree' => $pr->WebFree,
@@ -506,7 +510,7 @@ EOF;
                     'maxByOrder' => $pr->MaxByOrder,
                     'hasMainImage' => $pr->HasMainPhoto,
                     'imageUrl' => ($pr->HasMainPhoto) ? 'https://caron.cloudsystems.gr/FOeshopAPIWeb/DF.aspx?' . str_replace('[Serial]', '01102472475217', str_replace('&amp;', '&', $pr->MainPhotoUrl)) : ''
-                );
+                ];
             }
 
             return $prArr;
@@ -515,36 +519,4 @@ EOF;
             throw $e;
         }
     }
-
-/*    public function getCategoryChildren($ctgId)
-    {
-        $message = <<<EOF
-<?xml version="1.0" encoding="utf-16"?>
-<ClientGetCategoryChildrenRequest>
-    <Type>1009</Type>
-    <Kind>$this->kind</Kind>
-    <Domain>$this->domain</Domain>
-    <AuthID>$this->authId</AuthID>
-    <AppID>$this->appId</AppID>
-    <CompanyID>$this->companyId</CompanyID>
-    <CategoryID>$ctgId</CategoryID>
-</ClientGetCategoryChildrenRequest>
-EOF;
-        try {
-            $result = $this->client->SendMessage(['Message' => $message]);
-            $items = simplexml_load_string(str_replace("utf-16", "utf-8", $result->SendMessageResult));
-            dump($message, $result);
-            return $items->GetDataRows->GetCategoryChildrenRow;
-        } catch (\SoapFault $sf) {
-            echo $sf->faultstring;
-        }
-    } */
-
-
-//    public function getReferer($httpReferer)
-//    {
-//        $refererArr = explode('/', $httpReferer);
-//        dump($refererArr);
-//        return $refererArr;
-//    }
 }

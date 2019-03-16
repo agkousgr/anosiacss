@@ -22,7 +22,7 @@ class DefaultController extends MainController
                   'products' => $this->productService->getRelevantItems(-1, -1, 1, 0, 1, $item->getCategory()->getS1id())
                 ];
             }
-            dump($ourCornerProducts);
+
             $bestSellers = $this->productService->getCategoryItems('1578', 0, 9, 'null', 'null', 'null', 1, 'null');
             $latest = $this->productService->getCategoryItems(-1, 0, 9, 'IssueDateAsc', 'null', 'null', 1, 'null');
 //            $bestSellers = $this->productService->getCategoryItems('1868', 0, 9, 'null', 'null', 'null', 1, 'null');

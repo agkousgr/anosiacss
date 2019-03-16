@@ -101,7 +101,6 @@ class UserAccountService
      */
     private function setClient($userData)
     {
-//        dump($userData);
         $client = new \SoapClient('http://caron.cloudsystems.gr/FOeshopWS/ForeignOffice.FOeshop.API.FOeshopSvc.svc?singleWsdl', ['trace' => true, 'exceptions' => true,]);
 
         if ($userData instanceof Checkout) {
@@ -133,12 +132,10 @@ class UserAccountService
 </ClientSetClientRequest>
 EOF;
 
-//        dump($message);
 //        return 0;
         try {
             $result = $client->SendMessage(['Message' => $message]);
             $userXML = simplexml_load_string(str_replace("utf-16", "utf-8", $result->SendMessageResult));
-//            dump($message, $result);
             if ((string)$userXML->IsValid === 'false') {
                 return 0;
             } else {
@@ -157,7 +154,6 @@ EOF;
     private function updateClient($user)
     {
         $client = new \SoapClient('http://caron.cloudsystems.gr/FOeshopWS/ForeignOffice.FOeshop.API.FOeshopSvc.svc?singleWsdl', ['trace' => true, 'exceptions' => true,]);
-//        dump($user);
         $name = $user->getFirstname() . ' ' . $user->getLastname();
         $clientId = $user->getClientId();
         $email = $user->getEmail();
@@ -193,7 +189,6 @@ EOF;
         try {
             $result = $client->SendMessage(['Message' => $message]);
             $userXML = simplexml_load_string(str_replace("utf-16", "utf-8", $result->SendMessageResult));
-            dump($message, $result);
             if ((string)$userXML->IsValid === 'false') {
                 return 0;
             } else {
@@ -244,7 +239,6 @@ EOF;
         try {
             $result = $client->SendMessage(['Message' => $message]);
             $userResult = simplexml_load_string(str_replace("utf-16", "utf-8", $result->SendMessageResult));
-            dump($message, $result);
             if ((string)$userResult->ErrorCode === 'None') {
                 if ($userData instanceof Checkout) {
                     $userData->setClientId($userResult->ID);
@@ -289,7 +283,7 @@ EOF;
         try {
             $result = $client->SendMessage(['Message' => $message]);
             $newsletterData = simplexml_load_string(str_replace("utf-16", "utf-8", $result->SendMessageResult));
-//            dump($message, $result);
+
             return ((string)$newsletterData->IsValid === 'true') ? true : false;
         } catch (\SoapFault $sf) {
             echo $sf->faultstring;
@@ -304,7 +298,6 @@ EOF;
     {
 
         $client = new \SoapClient('http://caron.cloudsystems.gr/FOeshopWS/ForeignOffice.FOeshop.API.FOeshopSvc.svc?singleWsdl', ['trace' => true, 'exceptions' => true,]);
-        dump($userData);
         if ($userData instanceof Checkout) {
             if ($userData->isNewsletter() === false or null === $userData->isNewsletter()) {
                 return true;
@@ -333,7 +326,7 @@ EOF;
         try {
             $result = $client->SendMessage(['Message' => $message]);
             $newsletterData = simplexml_load_string(str_replace("utf-16", "utf-8", $result->SendMessageResult));
-//            dump($message, $result);
+
             return ((string)$newsletterData->IsValid === 'true') ? true : false;
         } catch (\SoapFault $sf) {
             echo $sf->faultstring;
@@ -377,7 +370,6 @@ EOF;
                 $user->setNewsletter(false);
             }
             return;
-//            dump($result);
         } catch (\SoapFault $sf) {
             echo $sf->faultstring;
         }
@@ -410,12 +402,9 @@ EOF;
         try {
             $result = $client->SendMessage(['Message' => $message]);
             $addressData = simplexml_load_string(str_replace("utf-16", "utf-8", $result->SendMessageResult));
-//            dump($message);
             if ($addressData->RowsCount) {
                 $addressesArr = [];
-                dump($addressData->GetDataRows);
                 $addressXML = $addressData->GetDataRows->GetShipAddressRow;
-
 
                 $entity->setClient((int)$clientId);
                 (null !== $addressXML->ID) ? $entity->setId((int)$addressXML->ID) : $entity->setId(0);
@@ -425,11 +414,9 @@ EOF;
                 (null !== $addressXML->City) ? $entity->setCity((string)$addressXML->City) : $entity->setCity('');
                 (null !== $addressXML->District) ? $entity->setDistrict((string)$addressXML->District) : $entity->setDistrict('');
             }
-//            dump($addressesArr);
 
 //            return;
             return $addressesArr;
-//            dump($result);
         } catch (\SoapFault $sf) {
             echo $sf->faultstring;
         }
@@ -463,7 +450,6 @@ EOF;
             $result = $client->SendMessage(['Message' => $message]);
             $addressData = simplexml_load_string(str_replace("utf-16", "utf-8", $result->SendMessageResult));
             $addressesArr = [];
-//            dump($message, $addressData);
             if ($addressData->RowsCount) {
                 foreach ($addressData->GetDataRows->GetShipAddressRow as $getDataRow) {
                     $addressXML = $getDataRow;
@@ -523,14 +509,12 @@ EOF;
 EOF;
         try {
             $result = $client->SendMessage(['Message' => $message]);
-//            dump($message, $result);
             $addressData = simplexml_load_string(str_replace("utf-16", "utf-8", $result->SendMessageResult));
             if ((int)$addressData->ID > 0) {
                 return true;
             } else {
                 return false;
             }
-//            dump($result);
         } catch (\SoapFault $sf) {
             echo $sf->faultstring;
         }
@@ -558,7 +542,6 @@ EOF;
 EOF;
         try {
             $result = $client->SendMessage(['Message' => $message]);
-//            dump($message, $result);
             $addressData = simplexml_load_string(str_replace("utf-16", "utf-8", $result->SendMessageResult));
             if ((string)$addressData->IsValid === 'true') {
                 return true;
@@ -597,8 +580,6 @@ EOF;
         try {
             $result = $client->SendMessage(['Message' => $message]);
             $userData = simplexml_load_string(str_replace("utf-16", "utf-8", $result->SendMessageResult));
-//            dump($message, $result, strval($userData->GetDataRows->GetUsersRow->Password));
-//            die();
             if ((int)$userData->RowsCount === 0) {
                 return '';
 //            } else if ($password === 'null') {
@@ -611,8 +592,6 @@ EOF;
                     return '';
                 }
 //                $clientData = $this->getClient($username);
-//                dump($clientData["name"]);
-//                dump($userData->GetDataRows->GetUsersRow->ClientID);
 //                $this->session->set('anosiaName', $clientData["name"]);
             }
         } catch (\SoapFault $sf) {
@@ -654,7 +633,6 @@ EOF;
             if ($userResponse === false) {
                 return false;
             }
-            dump($message, $result);
             $userXML = $userResponse->GetDataRows->GetUsersRow;
             if (null !== $address) {
                 $address->setClient($userXML->ClientID);
@@ -662,7 +640,6 @@ EOF;
                 (null !== $userXML->Username && $user) ? $user->setUsername($userXML->Username) : $user->setUsername('');
                 (null !== $userXML->Password && $user) ? $user->setPassword($userXML->Password) : $user->setPassword('');
                 (null !== $userXML->ClientID && $user) ? $user->setClientId($userXML->ClientID) : $user->setClientId('');
-//                dump($user);
             }
 
             return $userXML;
@@ -767,7 +744,6 @@ EOF;
             if ($clientResponse === false) {
                 return;
             }
-            dump($message, $result);
             $userXML = $clientResponse->GetDataRows->GetClientsRow;
             list($firstname, $lastname) = explode(' ', $userXML->NAME);
             $user->setFirstname($firstname);
@@ -780,9 +756,8 @@ EOF;
             (null !== $userXML->PHONE01) ? $user->setPhone01((string)$userXML->PHONE01) : $user->setPhone01('');
             (null !== $userXML->AFM) ? $user->setAfm((string)$userXML->AFM) : $user->setAfm('');
             (null !== $userXML->IRS) ? $user->setIrs((string)$userXML->IRS) : $user->setIrs('');
-//            dump($user);
+
             return;
-//            dump($result);
 //            return $clientData = $this->initializeClient($userXML->GetDataRows->GetClientsRow);
         } catch (\SoapFault $sf) {
             echo $sf->faultstring;
@@ -819,7 +794,6 @@ EOF;
             if ($clientResponse === false) {
                 return;
             }
-//            dump($result);
             $userXML = $clientResponse->GetDataRows->GetClientsRow;
             (empty($userXML->ADDRESS)) ? $userMainAddress->setAddress((string)$userXML->ADDRESS) : $userMainAddress->setAddress('');
             (empty($userXML->ZIP)) ? $userMainAddress->setZip((string)$userXML->ZIP) : $userMainAddress->setZip('');
@@ -828,9 +802,7 @@ EOF;
             (null !== $userXML->PHONE01) ? $userMainAddress->setPhone01((string)$userXML->PHONE01) : $userMainAddress->setPhone01('');
 //            $user->setLastname($userName[1]);
 //            $user->setEmail($userXML->EMAIL);
-//            dump($userMainAddress);
             return;
-//            dump($result);
 //            return $clientData = $this->initializeClient($userXML->GetDataRows->GetClientsRow);
         } catch (\SoapFault $sf) {
             echo $sf->faultstring;
@@ -860,7 +832,6 @@ EOF;
         try {
             $result = $client->SendMessage(['Message' => $message]);
             $clientResponse = simplexml_load_string(str_replace("utf-16", "utf-8", $result->SendMessageResult));
-//            dump($result);
             if ($clientResponse->RowsCount > 0) {
                 return true;
             }
@@ -934,7 +905,6 @@ EOF;
         try {
             $result = $client->SendMessage(['Message' => $message]);
             $userData = simplexml_load_string(str_replace("utf-16", "utf-8", $result->SendMessageResult));
-//            dump($message, $userData->GetDataRows->GetUsersRow->ClientID);
             if ((int)$userData->RowsCount > 0) {
                 return $userData->GetDataRows->GetUsersRow->ClientID;
             } else {
@@ -967,7 +937,6 @@ EOF;
         try {
             $result = $client->SendMessage(['Message' => $message]);
             $newsletterData = simplexml_load_string(str_replace("utf-16", "utf-8", $result->SendMessageResult));
-//            dump($result);
         } catch (\SoapFault $sf) {
             echo $sf->faultstring;
         }
@@ -1000,7 +969,6 @@ EOF;
             $result = $client->SendMessage(['Message' => $message]);
             $ordersData = simplexml_load_string(str_replace("utf-16", "utf-8", $result->SendMessageResult));
 
-            dump($message, $result);
             if ((int)$ordersData->RowsCount > 0) {
                 return $ordersData->GetDataRows->GetOrdersRow;
             } else {
@@ -1034,14 +1002,13 @@ EOF;
             $result = $client->SendMessage(['Message' => $message]);
             $orderData = simplexml_load_string(str_replace("utf-16", "utf-8", $result->SendMessageResult));
 
-            dump($message, $result);
             if ((int)$orderData->RowsCount > 0) {
                 $expensesArr = $this->initializeExpenses($orderData->GetDataRows->GetOrderRow->Expenses);
                 $itemsArr = $this->initializeItems($orderData->GetDataRows->GetOrderRow->Items);
                 $orderArr = $this->initializeOrder($orderData->GetDataRows->GetOrderRow);
                 $orderArr['expenses'] = $expensesArr;
                 $orderArr['items'] = $itemsArr;
-                dump($orderArr);
+
                 return $orderArr;
             } else {
                 return 0;
@@ -1068,10 +1035,8 @@ EOF;
 </ClientGetVoucherRequest>
 EOF;
         try {
-            dump($message);
             $result = $this->client->SendMessage(['Message' => $message]);
             $items = simplexml_load_string(str_replace("utf-16", "utf-8", $result->SendMessageResult));
-            dump($message, $result);
             $couponDisc = 0;
             if ($items->GetDataRows->GetVoucherRow) {
                 //Todo: put all coupon session in one variable
@@ -1129,9 +1094,7 @@ EOF;
                         'itemPrice' => $item->ItemPrice
                     );
                     $itemData = $this->productService->getItems($item->ItemID, $keyword = 'null', 1, $sortBy = 'null', $isSkroutz = -1, $makeId = 'null', $priceRange = 'null');
-                    dump($itemsArr, $itemsOrder);
                     $itemsArr[] = array_merge($itemData, $itemsOrder);
-                    dump($itemsArr);
                 }
             }
             return $itemsArr;

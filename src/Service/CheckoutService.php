@@ -194,7 +194,6 @@ EOF;
                 return;
             }
             $this->session->remove('curOrder');
-            dump($message, $result);
             $userXML = $clientResponse->GetDataRows->GetClientsRow;
             list($firstname, $lastname) = explode(' ', $userXML->NAME . ' ');
             $checkout->setFirstname($firstname);
@@ -207,9 +206,8 @@ EOF;
             (null !== $userXML->PHONE01) ? $checkout->setPhone01((string)$userXML->PHONE01) : $checkout->setPhone01('');
             (null !== $userXML->AFM) ? $checkout->setAfm((string)$userXML->AFM) : $checkout->setAfm('');
             (null !== $userXML->IRS) ? $checkout->setIrs((string)$userXML->IRS) : $checkout->setIrs('');
-//            dump($user);
+
             return;
-//            dump($result);
 //            return $clientData = $this->initializeClient($userXML->GetDataRows->GetClientsRow);
         } catch (\SoapFault $sf) {
             echo $sf->faultstring;
@@ -251,7 +249,6 @@ EOF;
             (null !== $addressXML->City) ? $entity->setCity((string)$addressXML->City) : $entity->setCity('');
             (null !== $addressXML->District) ? $entity->setDistrict((string)$addressXML->District) : $entity->setDistrict('');
             return;
-//            dump($result);
         } catch (\SoapFault $sf) {
             echo $sf->faultstring;
         }
@@ -280,7 +277,6 @@ EOF;
         try {
             $result = $this->client->SendMessage(['Message' => $message]);
             $newsletterData = simplexml_load_string(str_replace("utf-16", "utf-8", $result->SendMessageResult));
-            dump($result);
             if ((int)$newsletterData->RowsCount > 0) {
                 if ((string)$newsletterData->GetDataRows->GetNewsletterRow->Allow === 'true') {
                     $checkout->setNewsletter(true);
@@ -440,7 +436,6 @@ EOF;
 //            return true;
             $result = $this->client->SendMessage(['Message' => $message]);
             $orderResult = simplexml_load_string(str_replace("utf-16", "utf-8", $result->SendMessageResult));
-            dump($message, $result);
             if ((string)$orderResult->IsValid === 'true') {
                 $checkout->setOrderNo($orderNo);
                 return true;

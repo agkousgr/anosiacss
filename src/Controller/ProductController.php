@@ -33,7 +33,7 @@ class ProductController extends MainController
             } else {
                 $products = $this->productService->getCategoryItems($category->getS1id(), 0, $pagesize, $sortBy, 'null', $priceRange, 1, $mnufacturerId);
             }
-            dump($mnufacturerId, $products);
+
             return $this->render('products/list.html.twig', [
                 'products' => $products,
                 'ctgInfo' => $category,
@@ -75,7 +75,7 @@ class ProductController extends MainController
         $paginatedBrands->setUsedRoute('products_list');
         $paginatedBrands->setTemplate('paginator_template/override_template.html.twig');
         $paginatedBrands->setSortableTemplate('paginator_template/override_sortable.html.twig');
-        dump($brands);
+
         return $this->render('products/brands_list.html.twig', [
             'categories' => $this->categories,
             'popular' => $this->popular,
@@ -96,7 +96,6 @@ class ProductController extends MainController
         try {
 //            $ctgInfo = $this->categoryService->getCategoryInfo($id);
             $brandInfo = $brands = $brandsService->getManufacturers($slug);
-            dump($brandInfo);
 //            $slider = $this->em->getRepository(Slider::class)->findBy(['category' => $id]);
             $products = $this->productService->getItems('null', 'null', 1000, 'null', '-1', $brandInfo[0]["id"]);
 
@@ -137,7 +136,6 @@ class ProductController extends MainController
 //            $getReferrer = $productService->getReferer($request->server->get('HTTP_REFERER'));
             $alsoViewed = new AlsoViewedProducts();
             $product = $this->productService->getItems($id, 'null', 10);
-            dump($product);
             $productId = intval($product["id"]);
             $productView = $em->getRepository(ProductViews::class)->findOneBy(['product_id' => $productId]);
             if (empty($productView)) {
@@ -175,7 +173,6 @@ class ProductController extends MainController
     public function searchResults(Request $request, int $page)
     {
         try {
-            dump($request);
             $keyword = strip_tags(trim($request->query->get('keyword')));
             $s1Keyword = preg_replace('!\s+!', ',', $keyword);
             
@@ -187,7 +184,6 @@ class ProductController extends MainController
 
 
             $productsCount = $this->productService->getItemsCount($s1Keyword, 'null', $priceRange, 1, 'null');
-//            dump($productsCountArr);
 //            $productsCount = intval($productsCountArr);
             if ($productsCount > $pagesize * $page) {
                 $products = $this->productService->getItems('null', $s1Keyword, $pagesize, $sortBy, '-1','null', $priceRange,'null', 1, 'null',  $page - 1);
@@ -223,7 +219,6 @@ class ProductController extends MainController
     public function searchAnosiaResults(Request $request, int $page, PaginatorInterface $paginator)
     {
         try {
-            dump($request);
             $keyword = strip_tags(trim($request->request->get('keyword')));
             $s1Keyword = preg_replace('!\s+!', ',', $keyword);
             $products = $this->productService->getItems('null', $s1Keyword, 1000);

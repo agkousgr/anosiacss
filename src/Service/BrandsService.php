@@ -75,7 +75,6 @@ EOF;
         try {
             $result = $this->client->SendMessage(['Message' => $message]);
             $resultXML = simplexml_load_string(str_replace("utf-16", "utf-8", $result->SendMessageResult));
-//            dump($message, $result);
             $brands = $this->initializeBrands($resultXML->GetDataRows->GetMakeRow);
             return $brands;
 
@@ -104,7 +103,7 @@ EOF;
                 );
 //            }
             }
-            dump($brandsArr);
+
             return $brandsArr;
         } catch (\Exception $e) {
             $this->logger->error(__METHOD__ . ' -> {message}', ['message' => $e->getMessage()]);
@@ -132,7 +131,6 @@ EOF;
         try {
             $result = $this->client->SendMessage(['Message' => $message]);
             $resultXML = simplexml_load_string(str_replace("utf-16", "utf-8", $result->SendMessageResult));
-            dump($message, $result);
             $brands = $this->initializeBrands($resultXML->GetDataRows->GetManufactorRow);
             return $brands;
 
@@ -159,10 +157,9 @@ EOF;
         try {
             $result = $this->client->SendMessage(['Message' => $message]);
             $resultXML = simplexml_load_string(str_replace("utf-16", "utf-8", $result->SendMessageResult));
-            dump($message, $result);
             $brands = $this->initializeManufacturers($resultXML->GetDataRows->GetCategoryManufacturRow);
-            return $brands;
 
+            return $brands;
         } catch (\SoapFault $sf) {
             throw $sf->faultstring;
         }
@@ -188,7 +185,7 @@ EOF;
                 );
 //            }
             }
-            dump($manufacturersArr);
+
             return $manufacturersArr;
         } catch (\Exception $e) {
             $this->logger->error(__METHOD__ . ' -> {message}', ['message' => $e->getMessage()]);
