@@ -2,18 +2,16 @@
 
 namespace App\Controller;
 
-
 use App\Service\PaypalClass;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
+use Symfony\Component\HttpFoundation\Request;
 
 class PaypalController extends AbstractController
 {
-    public function return(PaypalClass $paypal)
+    public function return(Request $request, PaypalClass $paypal)
     {
-        $url = explode('?', $_SERVER['REQUEST_URI']);
-        $url = explode('&', $url[1]);
-        $token = explode('=', $url[0]);
-        $PayerID = explode('=', $url[1]);
+        $token = $request->query->get('token');
+        $PayerID = $request->query->get('PayerID');
 
         define('PPL_MODE', 'live');
 
@@ -27,23 +25,10 @@ class PaypalController extends AbstractController
             define('PPL_API_SIGNATURE', 'AFcWxV21C7fd0v3bYYYRCpSSRl31AbaI5JFMgUI-FksBDLxc8vm4Gw-J');
         }
 
-
         define('PPL_LOGO_IMG', 'https://www.blk.gr/images/logo.png');
-
         define('PPL_RETURN_URL', 'https://www.blk.gr/index/paypal/result/checkout/');
         define('PPL_CANCEL_URL', 'https://www.blk.gr/index/paypal/result/cancel');
-
         define('PPL_CURRENCY_CODE', 'EUR');
-
-        $now = date("Y-m-d H:i:s");
-        if (!empty($_SERVER['HTTP_CLIENT_IP'])) {
-            $ip = $_SERVER['HTTP_CLIENT_IP'];
-        } elseif (!empty($_SERVER['HTTP_X_FORWARDED_FOR'])) {
-            $ip = $_SERVER['HTTP_X_FORWARDED_FOR'];
-        } else {
-            $ip = $_SERVER['REMOTE_ADDR'];
-        }
-
 
         if ($token && $PayerID) {
             //------------------DoExpressCheckoutPayment-------------------
@@ -51,8 +36,10 @@ class PaypalController extends AbstractController
             //we will be using these two variables to execute the "DoExpressCheckoutPayment"
             //Note: we haven't received any payment yet.
 
-            $paypal->DoExpressCheckoutPayment($token[1], $PayerID[1]);
-            $this->redirectToRoute('checkout');
+            $paypal->DoExpressCheckoutPayment($token, $PayerID);
+            return $this->redirectToRoute('checkout');
+        } else {
+            throw $this->createNotFoundException('Something went wrong. Checking ...');
         }
     }
 
