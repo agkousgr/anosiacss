@@ -1,24 +1,13 @@
 <?php
 
-
 namespace App\Repository;
-
 
 use Doctrine\ORM\EntityRepository;
 
 class ProductsRepository extends EntityRepository
 {
-    public function search($keyword)
+    public function search(string $keyword, string $transliterated): array
     {
-//        $result = $yourRepository->createQueryBuilder('p')
-//            ->addSelect("MATCH_AGAINST (p.fieldName1, p.fieldName2, p.fieldName3, :searchterm 'IN NATURAL MODE') as score")
-//            ->add('where', 'MATCH_AGAINST(p.fieldName1, p.fieldName2, p.fieldName3, :searchterm) > 0.8')
-//            ->setParameter('searchterm', "Test word")
-//            ->orderBy('score', 'desc')
-//            ->getQuery()
-//            ->getResult();
-
-
         $arr = explode(' ', $keyword);
         if (count($arr) > 1) {
             $sql = "
@@ -26,18 +15,24 @@ class ProductsRepository extends EntityRepository
                 FROM products
                 WHERE MATCH (product_name) AGAINST ('" . $keyword . "')
                 OR product_name LIKE '%" . $keyword . "%'
+                OR product_name LIKE '%" . $transliterated . "%'
                 OR pr_code LIKE '%" . $keyword . "%'
+                OR pr_code LIKE '%" . $transliterated . "%'
                 OR barcode LIKE '%" . $keyword . "%'
+                OR barcode LIKE '%" . $transliterated . "%'
                 ORDER BY relevance DESC
                 LIMIT 10
             ";
-        }else {
+        } else {
             $sql = "
                 SELECT *
                 FROM products
                 WHERE product_name LIKE '%" . $keyword . "%'
+                OR product_name LIKE '%" . $transliterated . "%'
                 OR pr_code LIKE '%" . $keyword . "%'
+                OR pr_code LIKE '%" . $transliterated . "%'
                 OR barcode LIKE '%" . $keyword . "%'
+                OR barcode LIKE '%" . $transliterated . "%'
                 LIMIT 10
             ";
         }

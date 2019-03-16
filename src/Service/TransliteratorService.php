@@ -3,9 +3,9 @@
 namespace App\Service;
 
 /**
- * Class TransliterateService
+ * Class TransliteratorService
  */
-class TransliterateService
+class TransliteratorService
 {
     public function transliterateToGreek(string $subject): string
     {
