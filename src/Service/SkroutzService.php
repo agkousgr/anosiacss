@@ -71,7 +71,7 @@ class SkroutzService
     public function initilizeSkroutzXml()
     {
         $products = $this->getItems('null', 'null', '10000', 'NameAsc', '1');
-        dump($products);
+//        dump($products);
         $xmlOutput = $this->createXml($products);
         return $xmlOutput;
     }
@@ -91,10 +91,17 @@ class SkroutzService
                 <products>';
         foreach ($products as $product) {
             $this->categoryName = '';
-            $itemId = ($product['oldID']) ?: $product['id'];
-            $category = $this->getCategories($product['allCategories']);
-            if ($category === null)
-                continue;
+            $itemId = $product['id'];
+//            $itemId = ($product['oldID']) ?: $product['id'];
+            $categories = explode(',', $product['allCategories']);
+
+            foreach ($categories as $ctg) {
+                $this->categoryName = '';
+                $category = $this->em->getRepository(Category::class)->findOneBy(['s1id' => $ctg]);
+                $categoryBreadcrumb = $this->getCategories($category);
+            }
+//            if ($category === null)
+//                continue;
             $xml_output .= '
     <product>
         <id>' . $itemId . '</id>
@@ -102,12 +109,14 @@ class SkroutzService
         <name><![CDATA[' . $product["name"] . $name_color . ']]></name>
         <link><![CDATA[https://www.anosiapharmacy.gr/product/' . $product["oldSlug"] . ']]></link>
         <image><![CDATA[' . $product["imageUrl"] . ']]></image>
-        <category><![CDATA[' . $category->getDescription() . ']]></category>
+        <category><![CDATA[' . $categoryBreadcrumb . ']]></category>
         <price_with_vat>' . $product["webPrice"] . '</price_with_vat>
         <instock></instock>
         <manufacturer><![CDATA[' . $product["brand"] . ']]></manufacturer>
         <availability>' . $product["availability"] . '</availability>
       </product>';
+        dump($xml_output);
+        die();
         }
 
 //        <name><![CDATA[' . $title_category . ' ' . $product["name"] . $name_color . ']]></name>
@@ -202,17 +211,26 @@ EOF;
         }
     }
 
-    private function getCategories($categories)
+    /**
+     * @param Category $category
+     *
+     * @return String
+     */
+    private function getCategories(Category $category): String
     {
-        list($categoryId) = explode(',', $categories);
-        $category = $this->em->getRepository(Category::class)->findOneBy(['s1id' => $categoryId]);
-        $this->categoryName .= $category->getDescription();
-//        if ($category->getParent()) {
+//        list($categoryId) = explode(',', $categories);
+        $this->categoryName = $category->getSlug() . ' > ' . $this->categoryName;
+
+        if (count($category->getParents())) {
 //            getCategories
-//            dump($category);
+            foreach ($category->getParents() as $ctg) {
+                dump($ctg);
+                $this->getCategories($ctg);
+            }
+//            dump($this->categoryName);
 //            die();
-//        }
-        return $category;
+        }
+        return rtrim($this->categoryName, ' > ');
     }
 
     private function getAvailability($availability)

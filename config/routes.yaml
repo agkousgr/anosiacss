@@ -184,13 +184,13 @@ pireus_post:
     path: /pireaus/post
     controller: App\Controller\PireausController::pireausPost
 pireaus_success:
-    path: /checkout/success
+    path: /pireaus/success
     controller: App\Controller\PireausController::success
 pireaus_cancel:
-    path: /checkout/cancel
+    path: /pireaus/cancel
     controller: App\Controller\PireausController::cancel
 pireaus_failure:
-    path: /checkout/failure
+    path: /pireaus/failure
     controller: App\Controller\PireausController::failure
 pireaus_iframe:
     path: /checkout/online-payment
