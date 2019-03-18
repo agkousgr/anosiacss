@@ -733,9 +733,9 @@ EOF;
     <CompanyID>$this->companyId</CompanyID>
     <pagesize>1</pagesize>
     <pagenumber>0</pagenumber>
-    <ClientID>-1</ClientID>
+    <ClientID>$clientId</ClientID>
     <Code>null</Code>
-    <Email>$username</Email>
+    <Email>null</Email>
 </ClientGetClientsRequest>
 EOF;
         try {
