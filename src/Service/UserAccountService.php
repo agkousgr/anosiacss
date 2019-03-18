@@ -733,7 +733,7 @@ EOF;
     <CompanyID>$this->companyId</CompanyID>
     <pagesize>1</pagesize>
     <pagenumber>0</pagenumber>
-    <ClientID>$clientId</ClientID>
+    <ClientID>-1</ClientID>
     <Code>null</Code>
     <Email>$username</Email>
 </ClientGetClientsRequest>
@@ -745,6 +745,7 @@ EOF;
                 return;
             }
             $userXML = $clientResponse->GetDataRows->GetClientsRow;
+            dump($message, $result);
             list($firstname, $lastname) = explode(' ', $userXML->NAME);
             $user->setFirstname($firstname);
             $user->setLastname($lastname);
