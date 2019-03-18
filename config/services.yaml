@@ -71,9 +71,6 @@ services:
     App\Service\CartService:
         arguments:
             $s1Credentials: '%s1_credentials%'
-    App\Service\CategoryService:
-        arguments:
-            $s1Credentials: '%s1_credentials%'
     App\Service\CheckoutService:
         arguments:
             $s1Credentials: '%s1_credentials%'

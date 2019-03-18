@@ -80,7 +80,7 @@ EOF;
         try {
             $result = $this->client->SendMessage(['Message' => $message]);
             $response = simplexml_load_string(str_replace("utf-16", "utf-8", $result->SendMessageResult));
-            dump($message, $result);
+//            dump($message, $result);
 //            return true;
             return ((string)$response->IsValid === 'true') ? true : false;
         } catch (\SoapFault $sf) {
@@ -88,7 +88,7 @@ EOF;
         }
     }
 
-    public function updateProducts($id, $oldId, $slug, $oldSlug, $seoTitle, $seoDescription, $seoKeywords, $ingredients, $instructions, $smallDescription, $largeDescription, $manufacturerId, $categoryIds = '')
+    public function updateProducts($id, $oldId, $slug, $oldSlug, $seoTitle, $seoDescription, $seoKeywords, $ingredients, $instructions, $smallDescription, $largeDescription, $manufacturerId, $categoryIds = '', $webVisible, $outOfStock, $name2)
     {
 
 //        $s1ProductData = $this->productService->getItems($id, $keyword = 'null', 1, $sortBy = 'null', $isSkroutz = -1, $makeId = 'null', $priceRange = 'null');
@@ -121,19 +121,19 @@ EOF;
     <ManufacturID>$manufacturerId</ManufacturID>
     <SmallDescription>$smallDescription</SmallDescription>
     <LargeDescription>$largeDescription</LargeDescription>
-    <WebVisible></WebVisible>
-    <OutOfStock></OutOfStock>
-    <Name2></Name2>
+    <WebVisible>$webVisible</WebVisible>
+    <OutOfStock>$outOfStock</OutOfStock>
+    <Name2>$name2</Name2>
 </ClientSetItemSEORequest>
 EOF;
         try {
-//            dump($message);
 //            die();
             $result = $this->client->SendMessage(['Message' => $message]);
-//            $items = simplexml_load_string(str_replace("utf-16", "utf-8", $result->SendMessageResult));
-//            dump($message, $result);
+            $response = simplexml_load_string(str_replace("utf-16", "utf-8", $result->SendMessageResult));
+//            dump($response);
+//            dump($response->IsValid);
 
-            return;
+            return $response->IsValid;
         } catch (\SoapFault $sf) {
             echo $sf->faultstring;
         }

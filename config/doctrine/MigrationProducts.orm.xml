@@ -28,6 +28,7 @@
         <field name="imageUpdateError" length="1" nullable="true" />
         <field name="webVisible" length="1" nullable="true" />
         <field name="categoryIds" length="50" nullable="true"/>
+        <field name="updated" length="1" nullable="true" />
 
     </entity>
 

@@ -127,6 +127,11 @@ class MigrationProducts
     private $categoryIds;
 
     /**
+     * @var string|null
+     */
+    private $updated;
+
+    /**
      * @return int
      */
     public function getId(): int
@@ -545,6 +550,24 @@ class MigrationProducts
     public function setCategoryIds(?string $categoryIds): MigrationProducts
     {
         $this->categoryIds = $categoryIds;
+        return $this;
+    }
+
+    /**
+     * @return string|null
+     */
+    public function getUpdated(): ?string
+    {
+        return $this->updated;
+    }
+
+    /**
+     * @param string|null $updated
+     * @return MigrationProducts
+     */
+    public function setUpdated(?string $updated): MigrationProducts
+    {
+        $this->updated = $updated;
         return $this;
     }
 

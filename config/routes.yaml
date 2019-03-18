@@ -547,6 +547,9 @@ get_images:
 update_s1:
     path: /update-s1
     controller: App\Controller\MigrateController::updateS1
+check_updated_poducts:
+    path: /check-updated-products
+    controller: App\Controller\MigrateController::checkS1UpdatedProducts
 updateFromTempImages:
     path: /migrate/temp-images
     controller: App\Controller\MigrateController::updateFromTempImages
@@ -565,6 +568,7 @@ updateAnosiaKeywordsSlug:
 updateProductsFromS1:
     path: /migrate/update-products-from-s1
     controller: App\Controller\MigrateController::updateProductsFromS1
+
 
 # Cron Jobs
 create_categories:

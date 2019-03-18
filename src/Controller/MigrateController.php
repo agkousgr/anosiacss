@@ -11,6 +11,7 @@ use App\Entity\TempImages;
 use App\Service\MigrationService;
 use App\Service\ProductService;
 use Doctrine\ORM\EntityManagerInterface;
+use Symfony\Component\HttpFoundation\Response;
 
 class MigrateController extends MainController
 {
@@ -29,76 +30,120 @@ class MigrateController extends MainController
         return;
     }
 
+    public function checkS1UpdatedProducts(EntityManagerInterface $em, ProductService $productService)
+    {
+        $s1ProductData = $productService->getItems('null', $keyword = 'null', 2000, $sortBy = 'NameAsc', $isSkroutz = -1, $makeId = 'null', $priceRange = 'null', 'null', 1, 'null', 0);
+        $unknownArr = [];
+        foreach ($s1ProductData as $pr) {
+//            dump($pr['id']);
+
+            $product = $em->getRepository(MigrationProducts::class)->findOneBy(['s1id' => $pr['id']]);
+            if ($product) {
+//                $product->setUpdated(1);
+//                $em->flush();
+            }else{
+                $unknownArr[] = intval($pr['id']);
+            }
+        }
+        dump($unknownArr);
+        return;
+    }
+
     public function updateS1(EntityManagerInterface $em, MigrationService $migrationService, ProductService $productService)
     {
-        $products = $em->getRepository(MigrationProducts::class)->findBy([], [], 3000, 4000);
+        $products = $em->getRepository(MigrationProducts::class)->findBy([], [], 5000, 4001);
 //        $products = $em->getRepository(MigrationProducts::class)->findBy(['sku' => '015124']);
 //        dump($products);
         foreach ($products as $pr) {
 //            $s1ProductData = $productService->getItems($pr->getS1id(), $keyword = 'null', 1, $sortBy = 'PriceDesc', $isSkroutz = -1, $makeId = 'null', $priceRange = 'null', 'null');
-            $s1ProductData = $productService->getItems('null', $keyword = 'null', 1, $sortBy = 'PriceDesc', $isSkroutz = -1, $makeId = 'null', $priceRange = 'null', $pr->getSku());
-            dump($s1ProductData);
+//            $s1ProductData = $productService->getItems($pr->getS1id(), $keyword = 'null', 1, $sortBy = 'NameAsc', $isSkroutz = -1, $makeId = 'null', $priceRange = 'null', 'null', -1, 'null', 0);
 
-            if ($s1ProductData) {
-                $migrationService->updateProducts($pr->getS1id(), $pr->getOldId(), $pr->getSlug(), $pr->getOldSlug(), $pr->getSeoTitle(), '', $pr->getSeoKeywords(), $pr->getIngredients(), $pr->getInstructions(), $pr->getSmallDescription(), $pr->getLargeDescription(), $s1ProductData['manufacturerId'], $pr->getCategoryIds());
-                $pr->setManufacturerId(intval($s1ProductData['manufacturerId']));
-                $webVisible = (strval($s1ProductData['isVisible']) === 'true') ? '1' : '0';
-                $pr->setWebVisible($webVisible);
-                $em->persist($pr);
-                $em->flush();
-            }
+            $outOfStock = ($pr->getAvailability() === 'Y') ? 0 : 1;
+
+
+//            if ($s1ProductData) {
+               $response = $migrationService->updateProducts($pr->getS1id(), $pr->getOldId(), $pr->getSlug(), $pr->getOldSlug(), $pr->getSeoTitle(), '', $pr->getSeoKeywords(), $pr->getIngredients(), $pr->getInstructions(), $pr->getSmallDescription(), $pr->getLargeDescription(), $pr->getManufacturerId(), $pr->getCategoryIds(), 1, $outOfStock, $pr->getName());
+               if (strval($response) !== 'true') {
+                   $pr->setUpdated('0');
+                   $em->flush();
+               }
+//                $pr->setManufacturerId(intval($s1ProductData['manufacturerId']));
+//                $webVisible = (strval($s1ProductData['isVisible']) === 'true') ? '1' : '0';
+//                $pr->setWebVisible($webVisible);
+//                $em->persist($pr);
+//                $em->flush();
+//            }
         }
         return;
     }
 
     public function updateProductsFromS1(EntityManagerInterface $em, MigrationService $migrationService, ProductService $productService)
     {
-        $nullMnf = '';
-        $prevName = '';
-        $duplicates = '';
-        $s1ProductData = $productService->getItems('null', $keyword = 'null', 4000, $sortBy = 'NameAsc', $isSkroutz = -1, $makeId = 'null', $priceRange = 'null', 'null', 1, 'null', 4);
-        foreach ($s1ProductData as $s1pr) {
+        try {
+            $nullMnf = '';
+            $prevName = '';
+            $duplicates = '';
+            $ids = '';
+            $products = $em->getRepository(MigrationProducts::class)->findBy(['s1id' => null]);
+            foreach ($products as $product) {
+                $ids .= $product->getSku() . ',';
+            }
+
+                $s1ProductData = $productService->getItems('null', $keyword = 'null', 100, $sortBy = 'NameDesc', $isSkroutz = -1, $makeId = 'null', $priceRange = 'null', rtrim($ids, ','), 0, 'null', 0);
+
+            foreach ($s1ProductData as $s1pr) {
+
+//                if (strval($s1pr['prCode']) === '63364') {
+//                    dump('found');
+//                    die();
+//                }
 //            dump($s1pr);
 //continue;
-            if ($prevName === strval($s1pr['name'])) {
-                $duplicates .= strval($s1pr['id']) . ',';
-//                dump($duplicates);
-//                die();
-                continue;
-            } else {
-                $prevName = strval($s1pr['name']);
-            }
+//            if ($prevName === strval($s1pr['name'])) {
+//                $duplicates .= strval($s1pr['id']) . ',';
+////                dump($duplicates);
+////                die();
+//                continue;
+//            } else {
+//                $prevName = strval($s1pr['name']);
+//            }
 //            dump($s1pr);
 //            die();
-            $pr = $em->getRepository(MigrationProducts::class)->findOneBy(['sku' => $s1pr['prCode']]);
+                $pr = $em->getRepository(MigrationProducts::class)->findOneBy(['sku' => $s1pr['prCode']]);
 //            $pr = $em->getRepository(MigrationProducts::class)->findOneBy(['s1id' => $s1pr['id']]);
 //            dump($pr->getWebPrice());
-            if ($pr) {
-                if ($pr->getWebPrice() > 0) {
-                    continue;
-                }
-                $webVisible = (strval($s1pr['isVisible']) === 'true') ? '1' : '0';
+                dump($pr);
+                if ($pr) {
+                    if ($pr->getS1id() !== null)
+                        continue;
+
+                    $webVisible = (strval($s1pr['isVisible']) === 'true') ? '1' : '0';
 //                if ($pr->getWebVisible() !== '1')
 //                    continue;
-                $manufacturerId = (intval($s1pr['manufacturerId']) > 0) ? intval($s1pr['manufacturerId']) : null;
-                if ($manufacturerId === null) {
-                    $nullMnf .= $s1pr['id'] . ',';
-                }
-                $pr->setS1id(intval($s1pr['id']));
-                $pr->setWebVisible($webVisible);
-                $pr->setManufacturerId($manufacturerId);
-                $pr->setCategoryIds(strval($s1pr['categories']));
-                $pr->setRetailPrice(strval($s1pr['retailPrice']));
-                $pr->setWebPrice(strval($s1pr['webPrice']));
-                $pr->setBarcode(strval($s1pr['mainBarcode']));
-                $pr->setDiscount(strval($s1pr['discount']));
-                $em->persist($pr);
-                $em->flush();
+                    $manufacturerId = (intval($s1pr['manufacturerId']) > 0) ? intval($s1pr['manufacturerId']) : null;
+                    if ($manufacturerId === null) {
+                        $nullMnf .= $s1pr['id'] . ',';
+                    }
+                    $pr->setS1id(intval($s1pr['id']));
+                    $pr->setWebVisible($webVisible);
+                    $pr->setManufacturerId($manufacturerId);
+                    $pr->setCategoryIds(strval($s1pr['categories']));
+                    $pr->setRetailPrice(strval($s1pr['retailPrice']));
+                    $pr->setWebPrice(strval($s1pr['webPrice']));
+                    $pr->setBarcode(strval($s1pr['mainBarcode']));
+                    $pr->setDiscount(strval($s1pr['discount']));
+//                $em->persist($pr);
+                    $em->flush();
 //                dump($pr);
+                }
             }
+
+            dump($nullMnf, $duplicates);
+            return;
+        } catch (\Exception $e) {
+            $this->logger->error(__METHOD__ . ' -> {message}', ['message' => $e->getMessage()]);
+            throw $e;
         }
-        dump($nullMnf, $duplicates);
-        return;
     }
 
     public function getProductsWithNoImage(EntityManagerInterface $em, MigrationService $migrationService, ProductService $productService)
@@ -181,21 +226,24 @@ class MigrateController extends MainController
             $damagedFiles = [];
             $imageCounter = 0;
             $counter = 0;
-            $products = $em->getRepository(MigrationProducts::class)->findBy(['imageUpdateError' => '1'], ['id' => 'ASC'], 1000, 0);
+            $products = $em->getRepository(MigrationProducts::class)->findBy([], ['id' => 'ASC'], 2000, 6870);
+//            $products = $em->getRepository(MigrationProducts::class)->findBy(['imageUpdateError' => '1'], ['id' => 'ASC'], 1000, 0);
 //            dump($products);
 //            die();
             foreach ($products as $product) {
                 if ($product->getImages()) {
                     $counter++;
-                    dump($product);
+//                    dump($product);
 //                    $s1ProductData = $productService->getItems('null', $keyword = 'null', 1, $sortBy = 'PriceDesc', $isSkroutz = -1, $makeId = 'null', $priceRange = 'null', $product->getSku());
                     if ($product->getS1id()) {
-                        $imagesArr = explode(',', $product->getImages());
+                        $imagesArr = explode('|', $product->getImages());
 //                        dump($s1ProductData['id']);
                         $isMain = 'true';
-                        $prImages = $productService->getItemPhotos($product->getS1id());
+                        //Use this for avoiding duplicates in CCCSHOPFILEDISK only in update
+//                        $prImages = $productService->getItemPhotos($product->getS1id());
+                        $prImages = '';
                         foreach ($imagesArr as $image) {
-                            $prId = (isset($s1ProductData['id'])) ? $product->getS1id() : 'error Id on productCode: ' . $product->getSku();
+                            $prId = ($product->getS1id()) ? $product->getS1id() : 'error Id on productCode: ' . $product->getSku();
 
 //                            dump($image);
                             $imageName = explode('/', $image);
