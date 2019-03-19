@@ -37,10 +37,23 @@ $(document).ready(function () {
     // $('form[name="checkout_step1"]').validate();
 
     // validate signup form on keyup and submit
+    let shippingType1 = $('#checkout_step1_shippingType_1');
     $('form[name="checkout_step1"]').validate({
         rules: {
-            'checkout_step1[firstname]': "required",
-            'checkout_step1[lastname]': "required",
+            'checkout_step1[firstname]': {
+                required: {
+                    depends: function(element) {
+                        return !shippingType1.is(":checked");
+                    }
+                }
+            },
+            'checkout_step1[lastname]': {
+                required: {
+                    depends: function(element) {
+                        return !shippingType1.is(":checked");
+                    }
+                }
+            },
             // username: {
             //     required: true,
             //     minlength: 2
@@ -55,16 +68,62 @@ $(document).ready(function () {
             //     equalTo: "#password"
             // },
             'checkout_step1[email]': {
-                required: true,
+                required: {
+                    depends: function(element) {
+                        return !shippingType1.is(":checked");
+                    }
+                },
                 email: true
             },
-            'checkout_step1[address]': 'required',
-            'checkout_step1[zip]': 'required',
-            'checkout_step1[city]': 'required',
-            'checkout_step1[district]': 'required',
-            'checkout_step1[phone01]': 'required',
-            'checkout_step1[afm]': 'required',
-            'checkout_step1[irs]': 'required',
+            'checkout_step1[address]': {
+                required: {
+                    depends: function(element) {
+                        return !shippingType1.is(":checked");
+                    }
+                }
+            },
+            'checkout_step1[zip]': {
+                required: {
+                    depends: function(element) {
+                        return !shippingType1.is(":checked");
+                    }
+                }
+            },
+            'checkout_step1[city]': {
+                required: {
+                    depends: function(element) {
+                        return !shippingType1.is(":checked");
+                    }
+                }
+            },
+            'checkout_step1[district]': {
+                required: {
+                    depends: function(element) {
+                        return !shippingType1.is(":checked");
+                    }
+                }
+            },
+            'checkout_step1[phone01]': {
+                required: {
+                    depends: function(element) {
+                        return !shippingType1.is(":checked");
+                    }
+                }
+            },
+            'checkout_step1[afm]': {
+                required: {
+                    depends: function(element) {
+                        return !shippingType1.is(":checked");
+                    }
+                }
+            },
+            'checkout_step1[irs]': {
+                required: {
+                    depends: function(element) {
+                        return !shippingType1.is(":checked");
+                    }
+                }
+            },
             // checkout_step1_newsletter: {
             //     required: "#newsletter:checked",
             //     minlength: 2
@@ -201,14 +260,14 @@ $(document).ready(function () {
     //     // });
     // });
 
-    $('#checkoutStep1').on('click', function (e) {
+    $('#checkoutStep1, #back-to-step-1').on('click', function (e) {
         e.preventDefault();
         $('#checkout-personal-information-step').removeClass('hidden');
         $('#checkout-payment-step').addClass('hidden');
         $('#checkoutStep2').addClass('disabled');
         // $("html, body").animate({scrollTop: 0}, 1000);
         // return false;
-    })
+    });
 
 
     $('[data-toggle="popover"]').popover();
