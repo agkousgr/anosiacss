@@ -24,6 +24,7 @@ import swal from 'sweetalert2';
 
 require('bootstrap');
 require('jquery-validation');
+require('../../node_modules/jquery-validation/dist/additional-methods');
 
 $(document).ready(function () {
 
@@ -38,6 +39,7 @@ $(document).ready(function () {
 
     // validate signup form on keyup and submit
     let shippingType1 = $('#checkout_step1_shippingType_1');
+    let useSameShippingAddress = $('#use_same_address');
     $('form[name="checkout_step1"]').validate({
         rules: {
             'checkout_step1[firstname]': {
@@ -54,19 +56,6 @@ $(document).ready(function () {
                     }
                 }
             },
-            // username: {
-            //     required: true,
-            //     minlength: 2
-            // },
-            // password: {
-            //     required: true,
-            //     minlength: 5
-            // },
-            // confirm_password: {
-            //     required: true,
-            //     minlength: 5,
-            //     equalTo: "#password"
-            // },
             'checkout_step1[email]': {
                 required: {
                     depends: function(element) {
@@ -124,6 +113,35 @@ $(document).ready(function () {
                     }
                 }
             },
+            'checkout_step1[shipAddress]': {
+                required: {
+                    depends: function(element) {
+                        return useSameShippingAddress.is(":checked");
+                    }
+                },
+                pattern: /^([^\x00-\x7F]|[a-zA-Z]|\s|\-)+\s+\d+(\-\d+)?$/ui,
+            },
+            'checkout_step1[shipZip]': {
+                required: {
+                    depends: function(element) {
+                        return useSameShippingAddress.is(":checked");
+                    }
+                }
+            },
+            'checkout_step1[shipCity]': {
+                required: {
+                    depends: function(element) {
+                        return useSameShippingAddress.is(":checked");
+                    }
+                }
+            },
+            'checkout_step1[shipDistrict]': {
+                required: {
+                    depends: function(element) {
+                        return useSameShippingAddress.is(":checked");
+                    }
+                }
+            },
             // checkout_step1_newsletter: {
             //     required: "#newsletter:checked",
             //     minlength: 2
@@ -133,19 +151,6 @@ $(document).ready(function () {
         messages: {
             'checkout_step1[firstname]': "Παρακαλώ συμπληρώστε το όνομά σας",
             'checkout_step1[lastname]': "Παρακαλώ συμπληρώστε το επώνυμό σας",
-            // username: {
-            //     required: "Please enter a username",
-            //     minlength: "Your username must consist of at least 2 characters"
-            // },
-            // password: {
-            //     required: "Please provide a password",
-            //     minlength: "Your password must be at least 5 characters long"
-            // },
-            // confirm_password: {
-            //     required: "Please provide a password",
-            //     minlength: "Your password must be at least 5 characters long",
-            //     equalTo: "Please enter the same password as above"
-            // },
             'checkout_step1[email]': "Παρακαλώ εισάγεται μια έγκυρη διεύθυνση email",
             'checkout_step1[address]': 'Παρακαλώ συμπληρώστε τη διεύθυνσή σας',
             'checkout_step1[zip]': 'Παρακαλώ συμπληρώστε τον ταχυδρομικό σας κώδικα',
@@ -154,6 +159,10 @@ $(document).ready(function () {
             'checkout_step1[phone01]': 'Παρακαλώ συμπληρώστε το τηλέφωνό σας',
             'checkout_step1[afm]': 'Παρακαλώ συμπληρώστε το ΑΦΜ σας',
             'checkout_step1[irs]': 'Παρακαλώ συμπληρώστε τη ΔΟΥ σας',
+            'checkout_step1[shipAddress]': 'Παρακαλώ συμπληρώστε μια έγκυρη διεύθυνση.',
+            'checkout_step1[shipZip]': 'Παρακαλώ συμπληρώστε τον ταχυδρομικό σας κώδικα.',
+            'checkout_step1[shipCity]': 'Παρακαλώ συμπληρώστε την πόλη σας.',
+            'checkout_step1[shipDistrict]': 'Παρακαλώ συμπληρώστε την περιοχή σας.',
             // agree: "Please accept our policy",
             // topic: "Please select at least 2 topics"
         },
