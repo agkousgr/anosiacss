@@ -359,9 +359,9 @@ $(document).ready(function () {
                 $('.checkout_step2_paymentType_' + i).addClass('hidden');
             }
             i = i + 1;
-        })
+        });
         let totalCost = 0;
-        let shippingCost = 0;
+        let shippingCost = parseFloat($('#shipping-cost').data('cost'));
         let couponDisc = 0;
         let antikatavoliCost = 0;
         if ($('#coupon-discount').length > 0) {
@@ -371,7 +371,6 @@ $(document).ready(function () {
             if ($('#cart-cost').data('cost') - couponDisc <= 39) {
                 $('#cart-subtotal-pay-on-delivery').removeClass('hidden');
                 antikatavoliCost = 1.5;
-                shippingCost = parseFloat($('#shipping-cost').data('cost'));
             }
             totalCost = $('#cart-cost').data('cost') + antikatavoliCost + shippingCost - couponDisc;
         } else {

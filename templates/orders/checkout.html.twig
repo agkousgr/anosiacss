@@ -545,8 +545,8 @@
                                                     <span id="shipping-cost" data-cost="0.00"
                                                           class="value">0,00</span>
                                                 {% else %}
-                                                    <span id="shipping-cost" data-cost="2.00"
-                                                          class="value">2,00</span>
+                                                    <span id="shipping-cost" data-cost="2.00" class="value">2,00</span>
+                                                    {% set cartShippingCost = cartShippingCost + 2 %}
                                                 {% endif %}
                                             </div>
                                             <div class="cart-summary-line cart-summary-subtotals hidden"
