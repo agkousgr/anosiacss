@@ -396,7 +396,8 @@ EOF;
         $email = $checkout->getEmail();
         $couponDisc = ($checkout->getCouponDisc()) ?: 0;
         $couponDiscPerc = ($checkout->getCouponDiscPerc()) ?: 0;
-        $checkout->setTotalOrderCost($this->cartItemsCost + $checkout->getShippingCost() + $checkout->getAntikatavoliCost());
+        // VAT percentage should come from a config value
+        $checkout->setTotalOrderCost($this->cartItemsCost + $checkout->getShippingCost() / 1.24 + $checkout->getAntikatavoliCost() / 1.24);
 
         $message = <<<EOF
 <?xml version="1.0" encoding="utf-16"?>
