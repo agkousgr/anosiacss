@@ -431,7 +431,7 @@ function initializePaymentInfos() {
     $('.checkout_step2_paymentType_0').html('Παρακαλούμε καταθέστε το ακριβές τελικό ποσό της παραγγελίας σε οποιοδήποτε από τους παρακάτω λογαριασμούς: <br>Εθνική Τράπεζα, GR1101101740000017440073280<br>Τράπεζα Πειραιώς, GR4201720850005085039845834<br>Eurobank, GR2302600100000480100400234.');
     $('.checkout_step2_paymentType_1').html('Η πληρωμή θα γίνει με μετρητά κατά την παραλαβή από το κατάστημα.');
     $('.checkout_step2_paymentType_2').html('Πληρώστε χρησιμοποιώντας την πιστωτική ή χρεωστική σας κάρτα');
-    $('.checkout_step2_paymentType_3').html('<img width="51" style="width: 51px;" src="https://anosia.democloudon.cloud/public/images/paypal.png" alt="Λογότυπο Αποδοχής PayPal"><br><a href="https://www.paypal.com/gr/webapps/mpp/paypal-popup" target="_blank">Τι είναι το PayPal;</a> <br>Πληρώστε με ασφάλεια μέσω PayPal.');
+    $('.checkout_step2_paymentType_3').html($('<img width="51" style="width: 51px;" src="https://anosia.democloudon.cloud/public/images/paypal.png" alt="Λογότυπο Αποδοχής PayPal"><br><a href="https://www.paypal.com/gr/webapps/mpp/paypal-popup" target="_blank">Τι είναι το PayPal;</a><br><p>Πληρώστε με ασφάλεια μέσω PayPal.</p>'));
     $('.checkout_step2_paymentType_4').html('Έξοδα αντικαταβολής (1,5€) χρεώνονται μόνο σε παραγγελίες μικρότερες των 39€.\n' +
         'Για παραγγελίες μεγαλύτερες των 39€ δεν χρεώνονται ούτε έξοδα αντικαταβολής, ούτε μεταφορικά.');
 }
