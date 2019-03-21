@@ -498,6 +498,7 @@ EOF;
                     'name' => $pr->Name2,
                     'summary' => strip_tags($pr->SmallDescriptionHTML),
                     'prCode' => $pr->Code,
+                    'slug' => $pr->Slug,
                     'isVisible' => $pr->WebVisible,
                     'retailPrice' => $pr->RetailPrice,
                     'discount' => $pr->Discount,
