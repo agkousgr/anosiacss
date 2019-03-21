@@ -110,6 +110,7 @@ class CheckoutController extends MainController
             $bank_config['LanguageCode'] = 'el-GR';
             return ($this->render('orders/checkout.html.twig', [
                 'categories' => $this->categories,
+                'topSellers' => $this->topSellers,
                 'popular' => $this->popular,
                 'featured' => $this->featured,
                 'cartItems' => $this->cartItems,
@@ -173,6 +174,7 @@ class CheckoutController extends MainController
                     'checkout' => $checkout,
                     'bankConfig' => $bank_config,
                     'categories' => $this->categories,
+                    'topSellers' => $this->topSellers,
                     'popular' => $this->popular,
                     'featured' => $this->featured,
                     'loggedUser' => $this->loggedUser,
@@ -216,6 +218,7 @@ class CheckoutController extends MainController
 
                 return ($this->render('orders/order_completed.html.twig', [
                     'categories' => $this->categories,
+                    'topSellers' => $this->topSellers,
                     'popular' => $this->popular,
                     'featured' => $this->featured,
                     'checkout' => $checkout,

@@ -74,6 +74,7 @@ class UserAccountController extends MainController
                 dump($userData);
                 return $this->render('user/account.html.twig', [
                     'categories' => $this->categories,
+                    'topSellers' => $this->topSellers,
                     'popular' => $this->popular,
                     'featured' => $this->featured,
                     'cartItems' => $this->cartItems,
@@ -102,6 +103,7 @@ class UserAccountController extends MainController
         dump($voucherDisc);
         return $this->render('user/view_order.html.twig', [
             'categories' => $this->categories,
+            'topSellers' => $this->topSellers,
             'popular' => $this->popular,
             'featured' => $this->featured,
             'cartItems' => $this->cartItems,
@@ -145,6 +147,7 @@ class UserAccountController extends MainController
                 }
                 return $this->render('user/createAddress.html.twig', [
                     'categories' => $this->categories,
+                    'topSellers' => $this->topSellers,
                     'popular' => $this->popular,
                     'featured' => $this->featured,
                     'cartItems' => $this->cartItems,
@@ -198,6 +201,7 @@ class UserAccountController extends MainController
                 }
                 return $this->render('user/createAddress.html.twig', [
                     'categories' => $this->categories,
+                    'topSellers' => $this->topSellers,
                     'popular' => $this->popular,
                     'featured' => $this->featured,
                     'cartItems' => $this->cartItems,
@@ -291,6 +295,7 @@ class UserAccountController extends MainController
 
             return $this->render('user/register.html.twig', [
                 'categories' => $this->categories,
+                'topSellers' => $this->topSellers,
                 'popular' => $this->popular,
                 'featured' => $this->featured,
                 'cartItems' => $this->cartItems,
@@ -312,6 +317,7 @@ class UserAccountController extends MainController
     {
         return $this->render('user/forgot_password.html.twig', [
             'categories' => $this->categories,
+            'topSellers' => $this->topSellers,
             'popular' => $this->popular,
             'featured' => $this->featured,
             'cartItems' => $this->cartItems,
@@ -330,6 +336,7 @@ class UserAccountController extends MainController
         if (!$this->isCsrfTokenValid('forgot_password', $request->request->get('_csrf_token')))
             return $this->render('user/forgot_password.html.twig', [
                 'categories' => $this->categories,
+                'topSellers' => $this->topSellers,
                 'popular' => $this->popular,
                 'featured' => $this->featured,
                 'cartItems' => $this->cartItems,
@@ -348,6 +355,7 @@ class UserAccountController extends MainController
             if (false === $user) {
                 return $this->render('user/forgot_password.html.twig', [
                     'categories' => $this->categories,
+                    'topSellers' => $this->topSellers,
                     'popular' => $this->popular,
                     'featured' => $this->featured,
                     'cartItems' => $this->cartItems,
@@ -362,6 +370,7 @@ class UserAccountController extends MainController
             if ($user->PasswordRequestCounter > 10) {
                 return $this->render('user/forgot_password.html.twig', [
                     'categories' => $this->categories,
+                    'topSellers' => $this->topSellers,
                     'popular' => $this->popular,
                     'featured' => $this->featured,
                     'cartItems' => $this->cartItems,
@@ -416,6 +425,7 @@ class UserAccountController extends MainController
             if (null === $token || false === $user) {
                 return $this->render('user/forgot_password.html.twig', [
                     'categories' => $this->categories,
+                    'topSellers' => $this->topSellers,
                     'popular' => $this->popular,
                     'featured' => $this->featured,
                     'cartItems' => $this->cartItems,
@@ -432,6 +442,7 @@ class UserAccountController extends MainController
             if ($dt->getTimestamp() + self::$timeToLive < time()) {
                 return $this->render('user/forgot_password.html.twig', [
                     'categories' => $this->categories,
+                    'topSellers' => $this->topSellers,
                     'popular' => $this->popular,
                     'featured' => $this->featured,
                     'cartItems' => $this->cartItems,

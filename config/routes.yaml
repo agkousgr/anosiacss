@@ -574,6 +574,9 @@ updateProductsFromS1:
 create_categories:
     path: /synchronize/categories
     controller: App\Controller\CronJobsController::synchronizeCategories
+sync_category_top_sellers:
+    path: /synchronize/category-top-sellers
+    controller: App\Controller\CronJobsController::syncCategoryTopSellers
 syncronize_products:
     path: /synchronize/products
     controller: App\Controller\CronJobsController::synchronizeProducts

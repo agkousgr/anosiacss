@@ -2,7 +2,7 @@
 
 namespace App\Controller;
 
-use App\Entity\{Cart, Category, Wishlist};
+use App\Entity\{Cart, Category, CategoryTopSeller, Wishlist};
 use Doctrine\ORM\EntityManagerInterface;
 use Psr\Log\LoggerInterface;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
@@ -53,6 +53,11 @@ class MainController extends AbstractController
      * @var array
      */
     protected $categories;
+
+    /**
+     * @var \App\Entity\CategoryTopSeller[]
+     */
+    protected $topSellers;
 
     /**
      * @var array
@@ -146,6 +151,7 @@ class MainController extends AbstractController
         $this->categories = $this->session->get('categories');
         $this->popular = $productService->getCategoryItems(1867, 0, 15, 'null', 'null');
         $this->featured = $productService->getCategoryItems(1867, 0, 15, 'null', 'null');
+        $this->topSellers = $this->em->getRepository(CategoryTopSeller::class)->findAll();
 //        $this->popular = [];
 //        $this->featured = [];
 //        $mainCategoriesArr = [];

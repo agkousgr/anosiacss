@@ -33,6 +33,7 @@ class WishlistController extends MainController
 
             return ($this->render('orders/wishlist.html.twig', [
                 'categories' => $this->categories,
+                'topSellers' => $this->topSellers,
                 'cartItems' => $this->cartItems,
                 'wishlistItems' => $wishlistItems,
                 'totalCartItems' => $this->totalCartItems,

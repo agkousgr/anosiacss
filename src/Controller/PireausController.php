@@ -67,6 +67,7 @@ class PireausController extends MainController
         // Todo: CLEAR curOrder SESSION
         return ($this->render('orders/order_completed.html.twig', [
             'categories' => $this->categories,
+            'topSellers' => $this->topSellers,
             'popular' => $this->popular,
             'featured' => $this->featured,
             'checkout' => $checkout,
@@ -108,6 +109,7 @@ class PireausController extends MainController
         try {
             return $this->render('orders/pireaus_iframe.html.twig', [
                 'categories' => $this->categories,
+                'topSellers' => $this->topSellers,
                 'popular' => $this->popular,
                 'featured' => $this->featured,
                 'checkout' => $this->session->get('curOrder'),

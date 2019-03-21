@@ -31,6 +31,7 @@ class BlogController extends MainController
                 4);
             return $this->render('blog/list.html.twig', [
                 'categories' => $this->categories,
+                'topSellers' => $this->topSellers,
                 'popular' => $this->popular,
                 'featured' => $this->featured,
                 'cartItems' => $this->cartItems,
@@ -64,6 +65,7 @@ class BlogController extends MainController
                 4);
             return $this->render('blog/view.html.twig', [
                 'categories' => $this->categories,
+                'topSellers' => $this->topSellers,
                 'popular' => $this->popular,
                 'featured' => $this->featured,
                 'cartItems' => $this->cartItems,

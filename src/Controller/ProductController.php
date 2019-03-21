@@ -38,6 +38,7 @@ class ProductController extends MainController
                 'products' => $products,
                 'ctgInfo' => $category,
                 'categories' => $this->categories,
+                'topSellers' => $this->topSellers,
                 'popular' => $this->popular,
                 'featured' => $this->featured,
                 'cartItems' => $this->cartItems,
@@ -78,6 +79,7 @@ class ProductController extends MainController
 
         return $this->render('products/brands_list.html.twig', [
             'categories' => $this->categories,
+            'topSellers' => $this->topSellers,
             'popular' => $this->popular,
             'featured' => $this->featured,
             'cartItems' => $this->cartItems,
@@ -113,6 +115,7 @@ class ProductController extends MainController
                 'products' => $paginatedProducts,
                 'brandInfo' => $brandInfo,
                 'categories' => $this->categories,
+                'topSellers' => $this->topSellers,
                 'popular' => $this->popular,
                 'featured' => $this->featured,
                 'cartItems' => $this->cartItems,
@@ -155,6 +158,7 @@ class ProductController extends MainController
             return $this->render('products/view.html.twig', [
                 'pr' => $product,
                 'categories' => $this->categories,
+                'topSellers' => $this->topSellers,
                 'popular' => $this->popular,
                 'featured' => $this->featured,
                 'cartItems' => $this->cartItems,
@@ -195,6 +199,7 @@ class ProductController extends MainController
             return $this->render('products/search.html.twig', [
                 'products' => $products,
                 'categories' => $this->categories,
+                'topSellers' => $this->topSellers,
                 'popular' => $this->popular,
                 'featured' => $this->featured,
                 'cartItems' => $this->cartItems,
@@ -233,6 +238,7 @@ class ProductController extends MainController
             return $this->render('products/search.html.twig', [
                 'products' => $paginatedProducts,
                 'categories' => $this->categories,
+                'topSellers' => $this->topSellers,
                 'popular' => $this->popular,
                 'featured' => $this->featured,
                 'cartItems' => $this->cartItems,

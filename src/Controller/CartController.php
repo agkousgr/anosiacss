@@ -29,6 +29,7 @@ class CartController extends MainController
             dump($couponDiscount, $couponDiscountPerc);
             return ($this->render('orders/cart.html.twig', [
                 'categories' => $this->categories,
+                'topSellers' => $this->topSellers,
                 'cartItems' => $this->cartItems,
                 'totalCartItems' => $this->totalCartItems,
                 'totalWishlistItems' => $this->totalWishlistItems,

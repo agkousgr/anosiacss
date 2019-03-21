@@ -59,27 +59,22 @@
 
                                     <div class="col-sm-8">
                                         <div class="menu-product-list">
-                                            {% for pr in featured|slice(0, 4) %}
-                                                <div class="media">
-                                                    <div class="media-left">
-                                                        <a href="{{ path('product_view', {'id':pr.id}) }}">
-                                                            <img class="media-object"
-                                                                 src="{{ asset(pr.imageUrl) }}"
-                                                                 alt="{{ pr.name }}">
-                                                        </a>
-                                                    </div>
-                                                    <div class="media-body">
-                                                        <a href="{{ path('product_view', {'id':pr.id}) }}">
-                                                            <h5>{{ pr.name }}</h5>
-                                                        </a>
-                                                        <div class="item-price">
-                                                            <del>{{ pr.retailPrice|number_format(2, ',', '.') }}€</del>
-                                                            {{ pr.webPrice|number_format(2, ',', '.') }}€
+                                            {% for pr in topSellers %}
+                                                {% if pr.category.id == ctg.id %}
+                                                    <div class="media">
+                                                        <div class="media-left">
+                                                            <a href="{{ path('product_view', {'id':pr.softOneId}) }}">
+                                                                <img class="media-object" src="{{ asset(pr.imageUrl) }}" alt="{{ pr.name }}" />
+                                                            </a>
                                                         </div>
-                                                        <a href="{{ path('product_view', {'id':pr.id}) }}"
-                                                           class="details-btn">ΠΕΡΙΣΣΟΤΕΡΑ</a>
+                                                        <div class="media-body">
+                                                            <a href="{{ path('product_view', {'id':pr.softOneId}) }}">
+                                                                <h5>{{ pr.name }}</h5>
+                                                            </a>
+                                                            <a href="{{ path('product_view', {'id':pr.softOneId}) }}" class="details-btn">ΠΕΡΙΣΣΟΤΕΡΑ</a>
+                                                        </div>
                                                     </div>
-                                                </div>
+                                                {% endif %}
                                             {% endfor %}
 
                                         </div>

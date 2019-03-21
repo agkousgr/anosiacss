@@ -27,6 +27,7 @@ class CourierTrackerController extends MainController
 //            }
             return $this->render('courier_tracker/view.html.twig', [
                 'categories' => $this->categories,
+                'topSellers' => $this->topSellers,
                 'popular' => $this->popular,
                 'featured' => $this->featured,
                 'cartItems' => $this->cartItems,

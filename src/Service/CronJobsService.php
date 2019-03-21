@@ -2,7 +2,7 @@
 
 namespace App\Service;
 
-use App\Entity\{Category, Country, Parameters};
+use App\Entity\{Category, CategoryTopSeller, Country, Parameters};
 use Doctrine\ORM\EntityManagerInterface;
 use Symfony\Component\HttpFoundation\Session\SessionInterface;
 
@@ -140,6 +140,66 @@ EOF;
             echo $sf->faultstring;
             throw $sf;
         }
+    }
+
+    public function syncCategoryTopSellers(): void
+    {
+        foreach ($this->em->getRepository(Category::class)->findBy(['s1Level' => 0]) as $category) {
+            $categoryId = $category->getS1id();
+            $message = <<<EOF
+<?xml version="1.0" encoding="utf-16"?>
+<ClientGetRelevantItemsRequest>
+    <Type>1056</Type>
+    <Kind>$this->kind</Kind>
+    <Domain>$this->domain</Domain>
+    <AuthID>$this->authId</AuthID>
+    <AppID>$this->appId</AppID>
+    <CompanyID>$this->companyId</CompanyID>
+    <CategoryID>$categoryId</CategoryID>
+    <ItemID>-1</ItemID>
+    <IncludeChildCategories>1</IncludeChildCategories>
+    <IsRandom>0</IsRandom>
+    <IsPopular>1</IsPopular>
+    <LowPrice>-1</LowPrice>
+    <HighPrice>-1</HighPrice>
+    <ExcludeItemID>null</ExcludeItemID>
+    <WebVisible>1</WebVisible>
+    <IsActive>1</IsActive>  
+</ClientGetRelevantItemsRequest>
+EOF;
+            try {
+                $result = $this->client->SendMessage(['Message' => $message]);
+                $items = simplexml_load_string(str_replace("utf-16", "utf-8", $result->SendMessageResult));
+                if (intval($items->RowsCount > 0)) {
+                    $oldEntries = $this->em->getRepository(CategoryTopSeller::class)->findByCategory($category);
+                    foreach ($oldEntries as $oldEntry) {
+                        $this->em->remove($oldEntry);
+                    }
+                    $this->em->flush();
+                    $internalCounter = 0;
+                    foreach ($items->GetDataRows->GetRelevantItemsRow as $item) {
+                        if ($internalCounter < 5) {
+                            $topSeller = new CategoryTopSeller();
+                            $topSeller->setSoftOneId(intval($item->ID))
+                                ->setName($item->Name)
+                                ->setSlug($item->Slug)
+                                ->setCategory($category)
+                                ->setImageUrl(
+                                    $item->HasMainPhoto ?
+                                        'https://caron.cloudsystems.gr/FOeshopAPIWeb/DF.aspx?' .
+                                        str_replace('[Serial]', '01102472475217', str_replace('&amp;', '&', $item->MainPhotoUrl)) :
+                                        null
+                                );
+                            $this->em->persist($topSeller);
+                            $internalCounter++;
+                        }
+                    }
+                }
+            } catch (\SoapFault $sf) {
+                echo $sf->faultstring;
+            }
+        }
+        $this->em->flush();
     }
 
     public function getAvailabilityTypes($typeId = -1, $authId)

@@ -45,6 +45,7 @@ class DefaultController extends MainController
 
             return $this->render('layout.html.twig', [
                 'categories' => $this->categories,
+                'topSellers' => $this->topSellers,
                 'popular' => $this->popular,
                 'featured' => $this->featured,
                 'cartItems' => $this->cartItems,

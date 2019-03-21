@@ -106,6 +106,18 @@ class CronJobsController extends AbstractController
         }
     }
 
+    public function syncCategoryTopSellers(CronJobsService $service, LoggerInterface $logger)
+    {
+        try {
+            $service->syncCategoryTopSellers();
+
+            return new Response('Category top sellers synchronization completed');
+        } catch (\Exception $e) {
+            $logger->error(__METHOD__ . ' -> {message}', ['message' => $e->getMessage()]);
+            throw $e;
+        }
+    }
+
     public function synchronizeAvailabilityTypes(CronJobsService $service, LoggerInterface $logger)
     {
         try {
