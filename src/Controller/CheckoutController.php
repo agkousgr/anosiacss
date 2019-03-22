@@ -143,6 +143,7 @@ class CheckoutController extends MainController
         /** @var \App\Entity\Checkout */
         $checkout = $this->session->get('curOrder');
         $cartCost = $checkoutService->calculateCartCost($this->cartItems);
+        $checkout->setTotalOrderCost($cartCost + $checkout->getAntikatavoliCost() + $checkout->getShippingCost());
         $orderWebId = $em->getRepository(OrdersWebId::class)->find(1);
         $checkout->setOrderNo($orderWebId->getOrderNumber() + 1);
         if ($checkout->getPaymentType() === '1006') {
@@ -151,7 +152,6 @@ class CheckoutController extends MainController
 //                        $onlinePaymentError = true;
 //                        die();
         } else if ($checkout->getPaymentType() === '1001') {
-            $checkout->setTotalOrderCost($cartCost + $checkout->getAntikatavoliCost() + $checkout->getShippingCost());
             $checkout->setInstallments(0);
             $pireausRedirection->submitOrderToPireaus($checkout);
             die();
