@@ -2,17 +2,14 @@
 
 namespace App\Controller;
 
-use App\Entity\{Checkout, OrdersWebId};
-use App\Form\Type\{
-    CheckoutStep1Type,
-    CheckoutStep2Type,
-    CheckoutStep3Type,
-    CheckoutStep4Type
-};
-use App\Service\{CheckoutService, PireausRedirection, UserAccountService, PaypalService, NewsletterService};
+use App\Entity\{Checkout, OrdersWebId, PaypalTransaction};
+use App\Form\Type\{CheckoutStep1Type, CheckoutStep2Type};
+use App\Service\{CheckoutService, PireausRedirection, UserAccountService, NewsletterService};
+use Beelab\PaypalBundle\Paypal\Service as PaypalService;
 use Doctrine\ORM\EntityManagerInterface;
 use Psr\Log\LoggerInterface;
 use Symfony\Component\HttpFoundation\Request;
+use Symfony\Component\HttpKernel\Exception\HttpException;
 
 class CheckoutController extends MainController
 {
@@ -147,10 +144,17 @@ class CheckoutController extends MainController
         $orderWebId = $em->getRepository(OrdersWebId::class)->find(1);
         $checkout->setOrderNo($orderWebId->getOrderNumber() + 1);
         if ($checkout->getPaymentType() === '1006') {
-            $paypalService->sendToPaypal($checkout);
+            $amount = $checkout->getTotalOrderCost();
+            $transaction = new PaypalTransaction($amount);
+            try {
+                $response = $paypalService->setTransaction($transaction)->start();
+                $em->persist($transaction);
+                $em->flush();
 
-//                        $onlinePaymentError = true;
-//                        die();
+                return $this->redirect($response->getRedirectUrl());
+            } catch (\Exception $e) {
+                throw new HttpException(503, 'Payment error', $e);
+            }
         } else if ($checkout->getPaymentType() === '1001') {
             $checkout->setInstallments(0);
             $pireausRedirection->submitOrderToPireaus($checkout);

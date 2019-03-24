@@ -1,0 +1,13 @@
+beelab_paypal:
+    # Sandbox
+    username: "john-facilitator_api1.3works.gr"
+    password: "F78U5M9P2RZD2QTQ"
+    signature: "A-X91d6dvj07IIDTUn5hM8p8w8LxAVYxiOpzxcPuC9RLCYmPR3rQ5U1q"
+    # Production
+    # username: "info_api1.blk.gr"
+    # password: "AJ6YLHGG7AZ99FPJ"
+    # signature: "AFcWxV21C7fd0v3bYYYRCpSSRl31AbaI5JFMgUI-FksBDLxc8vm4Gw-J"
+    return_route: paypal_result
+    cancel_route: paypal_cancel
+    currency: 'EUR'
+    test_mode: "%kernel.debug%"
