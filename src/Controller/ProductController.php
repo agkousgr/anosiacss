@@ -133,10 +133,9 @@ class ProductController extends MainController
         }
     }
 
-    public function viewProduct(Request $request, string $slug, EntityManagerInterface $em, ProductService $productService)
+    public function viewProduct(string $slug, EntityManagerInterface $em, ProductService $productService)
     {
         try {
-//            $getReferrer = $productService->getReferer($request->server->get('HTTP_REFERER'));
             $alsoViewed = new AlsoViewedProducts();
             $pr = $em->getRepository(MigrationProducts::class)->findOneBy(['slug' => $slug]);
 

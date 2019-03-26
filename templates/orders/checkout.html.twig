@@ -510,7 +510,7 @@
                                                     {% for pr in cartItems %}
                                                         <li class="media">
                                                             <div class="media-left">
-                                                                <a href="{{ path('product_view', {'id':pr.id}) }}"
+                                                                <a href="{{ path('product_view', {'slug': pr.slug}) }}"
                                                                    title="{{ pr.name }}">
                                                                     <img class="media-object"
                                                                          src="{{ pr.imageUrl }}"

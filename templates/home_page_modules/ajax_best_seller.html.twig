@@ -6,10 +6,10 @@
                     {#<div class="tag tag-green"><span>new</span></div>#}
                     <div class="product-img">
                         <div class="hover-img">
-                            <a href="{{ path('product_view', {'id':pr.id}) }}"><img
+                            <a href="{{ path('product_view', {'slug': pr.slug}) }}"><img
                                         src="{{ pr.imageUrl }}" alt="{{ pr.name }}"></a>
                         </div>
-                        <a href="{{ path('product_view', {'id':pr.id}) }}"><img
+                        <a href="{{ path('product_view', {'slug': pr.slug}) }}"><img
                                     src="{{ pr.imageUrl }}" alt="{{ pr.name }}"></a>
                     </div>
                     <div class="hover-info">
@@ -21,7 +21,7 @@
                                 {% else %}
                                     {% set hoverText = pr.name|title|truncate(100, true)|raw %}
                                 {% endif %}
-                                <a href="{{ path('product_view', {'id':pr.id}) }}">{{ hoverText }}</a>
+                                <a href="{{ path('product_view', {'slug': pr.slug}) }}">{{ hoverText }}</a>
                             </div>
                             <div class="product-price">
                                 <div class="product-price-span">
@@ -35,7 +35,7 @@
                     </div>
                     <div class="product-short-info">
                         <div class="product-name">
-                            <a href="{{ path('product_view', {'id':pr.id}) }}">{{ pr.name|title }}</a>
+                            <a href="{{ path('product_view', {'slug': pr.slug}) }}">{{ pr.name|title }}</a>
                         </div>
                         <div class="product-price">
                             <div class="product-price-span">{{ pr.webPrice|number_format(2, ',', '.') }}€

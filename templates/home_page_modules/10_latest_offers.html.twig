@@ -30,7 +30,7 @@
                                 <div class="col-sm-12">
                                     <img src="{{ pr.imageUrl }}"
                                          alt="{{ pr.name }}">
-                                    <div class="offer-name"><a href="{{ path('product_view', {'id': pr.id}) }}">{{ pr.name|title }}</a></div>
+                                    <div class="offer-name"><a href="{{ path('product_view', {'slug': pr.slug}) }}">{{ pr.name|title }}</a></div>
                                     {#<div class="star"><i class="fa fa-star"></i><i class="fa fa-star"></i><i#}
                                     {#class="fa fa-star"></i><i class="fa fa-star"></i><i#}
                                     {#class="fa fa-star"></i><i#}
