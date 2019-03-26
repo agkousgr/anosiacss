@@ -7,10 +7,10 @@
                     <div class="tag tag-green"><span>new</span></div>
                     <div class="product-img">
                         <div class="hover-img">
-                            <a href="{{ path('product_view', {'id':pr.id}) }}"><img src="{{ pr.imageUrl }}" alt=""></a>
+                            <a href="{{ path('product_view', {'slug':pr.slug}) }}"><img src="{{ pr.imageUrl }}" alt=""></a>
                         </div>
                         <a href="#">
-                            <a href="{{ path('product_view', {'id':pr.id}) }}"><img src="{{ pr.imageUrl }}" alt=""></a>
+                            <a href="{{ path('product_view', {'slug':pr.slug}) }}"><img src="{{ pr.imageUrl }}" alt=""></a>
                         </a>
                     </div>
                     <div class="hover-info">
@@ -22,7 +22,7 @@
                                 {% else %}
                                     {% set hoverText = pr.name|title|truncate(100, true)|raw %}
                                 {% endif %}
-                                <a href="{{ path('product_view', {'id':pr.id}) }}">{{ hoverText }}</a>
+                                <a href="{{ path('product_view', {'slug':pr.slug}) }}">{{ hoverText }}</a>
                             </div>
                             {#<div class="star"><i class="fa fa-star"></i><i#}
                             {#class="fa fa-star"></i><i#}
@@ -49,7 +49,7 @@
                         </div>
                     </div>
                     <div class="product-short-info">
-                        <div class="product-name"><a href="{{ path('product_view', {'id': pr.id}) }}">{{ pr.name|title|preplace("σ", "ς") }}</a>
+                        <div class="product-name"><a href="{{ path('product_view', {'slug':pr.slug}) }}">{{ pr.name|title|preplace("σ", "ς") }}</a>
                         </div>
                         {#<div class="star"><i class="fa fa-star"></i><i#}
                         {#class="fa fa-star"></i><i class="fa fa-star"></i><i#}

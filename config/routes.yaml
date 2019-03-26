@@ -50,10 +50,8 @@ brands_list:
     requirements:
         page: \d+
 product_view:
-    path: /product/{id}
+    path: /product/{slug}
     controller: App\Controller\ProductController::viewProduct
-    requirements:
-        id: \d+
     methods: [GET]
     options:
         expose: true

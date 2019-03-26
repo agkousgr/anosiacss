@@ -2,7 +2,7 @@
 
 namespace App\Controller;
 
-use App\Entity\{AlsoViewedProducts, Category, Products, Slider, ProductViews};
+use App\Entity\{AlsoViewedProducts, Category, MigrationProducts, Products, Slider, ProductViews};
 use App\Service\BrandsService;
 use App\Service\ProductService;
 use Doctrine\ORM\EntityManagerInterface;
@@ -33,7 +33,7 @@ class ProductController extends MainController
             } else {
                 $products = $this->productService->getCategoryItems($category->getS1id(), 0, $pagesize, $sortBy, 'null', $priceRange, 1, $mnufacturerId);
             }
-
+            dump($products);
             return $this->render('products/list.html.twig', [
                 'products' => $products,
                 'ctgInfo' => $category,
@@ -133,28 +133,30 @@ class ProductController extends MainController
         }
     }
 
-    public function viewProduct(Request $request, int $id, EntityManagerInterface $em, ProductService $productService)
+    public function viewProduct(Request $request, string $slug, EntityManagerInterface $em, ProductService $productService)
     {
         try {
 //            $getReferrer = $productService->getReferer($request->server->get('HTTP_REFERER'));
             $alsoViewed = new AlsoViewedProducts();
-            $product = $this->productService->getItems($id, 'null', 10);
+            $pr = $em->getRepository(MigrationProducts::class)->findOneBy(['slug' => $slug]);
+
+            $product = $this->productService->getItems($pr->getS1id(), 'null', 10);
             $productId = intval($product["id"]);
             $productView = $em->getRepository(ProductViews::class)->findOneBy(['product_id' => $productId]);
-            if (empty($productView)) {
-                $productView = new ProductViews();
-                $productView->setViews(1);
-                $productView->setProductId($productId);
-                $em->persist($productView);
-            } else {
-                $productView->setViews($productView->getViews() + 1);
-            }
-            $pr = $em->getRepository(Products::class)->find($product["id"]);
-            if ($pr) {
-                $pr->setViews($pr->getViews() + 1);
-                $em->persist($pr);
-            }
-            $em->flush();
+//            if (empty($productView)) {
+//                $productView = new ProductViews();
+//                $productView->setViews(1);
+//                $productView->setProductId($productId);
+//                $em->persist($productView);
+//            } else {
+//                $productView->setViews($productView->getViews() + 1);
+//            }
+//
+//            if ($pr) {
+//                $pr->setViews($pr->getViews() + 1);
+//                $em->persist($pr);
+//            }
+//            $em->flush();
             return $this->render('products/view.html.twig', [
                 'pr' => $product,
                 'categories' => $this->categories,

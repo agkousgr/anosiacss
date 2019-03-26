@@ -21,7 +21,7 @@ class AjaxSearchController extends AbstractController
                 $result = $em->getRepository(Products::class)->search($keyword, $transKeyword);
                 foreach ($result as $val) {
                     $resultArr[] = [
-                        'value' => $val['id'],
+                        'value' => $val['slug'],
                         'label' => $val['product_name'] . ' (Κωδ: ' . $val['pr_code'] .')'
                     ];
                 }

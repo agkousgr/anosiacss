@@ -185,7 +185,7 @@ EOF;
                     $prArr[] = [
                         'id' => $pr->ID,
                         'name' => $pr->Name2,
-                        'slug' => $pr->Slug,
+                        'slug' => $pr->OldSlug,
                         'summary' => $pr->SmallDescriptionHTML,
                         'body' => $pr->LargeDescriptionHTML,
                         'extraInfo' => $pr->InstructionsHTML,

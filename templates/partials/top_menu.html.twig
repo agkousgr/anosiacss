@@ -63,15 +63,15 @@
                                                 {% if pr.category.id == ctg.id %}
                                                     <div class="media">
                                                         <div class="media-left">
-                                                            <a href="{{ path('product_view', {'id':pr.softOneId}) }}">
+                                                            <a href="{{ path('product_view', {'slug':pr.slug}) }}">
                                                                 <img class="media-object" src="{{ asset(pr.imageUrl) }}" alt="{{ pr.name }}" />
                                                             </a>
                                                         </div>
                                                         <div class="media-body">
-                                                            <a href="{{ path('product_view', {'id':pr.softOneId}) }}">
+                                                            <a href="{{ path('product_view', {'slug':pr.slug}) }}">
                                                                 <h5>{{ pr.name }}</h5>
                                                             </a>
-                                                            <a href="{{ path('product_view', {'id':pr.softOneId}) }}" class="details-btn">ΠΕΡΙΣΣΟΤΕΡΑ</a>
+                                                            <a href="{{ path('product_view', {'slug':pr.slug}) }}" class="details-btn">ΠΕΡΙΣΣΟΤΕΡΑ</a>
                                                         </div>
                                                     </div>
                                                 {% endif %}
