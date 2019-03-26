@@ -2,7 +2,7 @@
 
 namespace App\Controller;
 
-use App\Entity\{AlsoViewedProducts, Category, MigrationProducts, Products, Slider, ProductViews};
+use App\Entity\{AlsoViewedProducts, Category, Products, Slider, ProductViews};
 use App\Service\BrandsService;
 use App\Service\ProductService;
 use Doctrine\ORM\EntityManagerInterface;
@@ -138,7 +138,7 @@ class ProductController extends MainController
         try {
 //            $getReferrer = $productService->getReferer($request->server->get('HTTP_REFERER'));
             $alsoViewed = new AlsoViewedProducts();
-            $pr = $em->getRepository(MigrationProducts::class)->findOneBy(['slug' => $slug]);
+            $pr = $em->getRepository(Products::class)->findOneBy(['slug' => $slug]);
 
             $product = $this->productService->getItems($pr->getS1id(), 'null', 10);
             $productId = intval($product["id"]);

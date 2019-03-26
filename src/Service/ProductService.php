@@ -107,7 +107,9 @@ class ProductService
     <HighPrice>$highPrice</HighPrice>
     <IsVisibleCategory>-1</IsVisibleCategory>
     <WebVisible>$webVisible</WebVisible>
-    <IsActive>-1</IsActive>    
+    <IsActive>1</IsActive>  
+    <IsSuggested>-1</IsSuggested>
+    <JoinedCategories>1</JoinedCategories>  
 </ClientGetCategoryItemsRequest>
 EOF;
         try {
@@ -158,6 +160,8 @@ EOF;
     <IsVisibleCategory>-1</IsVisibleCategory>
     <WebVisible>$webVisible</WebVisible>
     <IsActive>-1</IsActive>  
+    <IsSuggested>-1</IsSuggested>
+    <JoinedCategories>-1</JoinedCategories>
 </ClientGetCategoryItemsCountRequest>
 EOF;
         try {
@@ -319,14 +323,13 @@ EOF;
     <LowPrice>$lowPrice</LowPrice>
     <HighPrice>$highPrice</HighPrice>
     <WebVisible>$webVisible</WebVisible>
-    <IsActive>-1</IsActive>  
+    <IsActive>1</IsActive>  
 </ClientGetItemsCountRequest>
 EOF;
 
         try {
             $result = $this->client->SendMessage(['Message' => $message]);
             $items = simplexml_load_string(str_replace("utf-16", "utf-8", $result->SendMessageResult));
-
             return (int)$items->GetDataRows->GetItemsCountRow->Count;
         } catch (\SoapFault $sf) {
             echo $sf->faultstring;
