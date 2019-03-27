@@ -24,8 +24,8 @@ class AjaxCartController extends AbstractController
                 }
                 dump($session->getId());
                 if ($cartArr) {
-                    foreach ($cartArr as $key => $val) {
-                        $cartIds .= $val->getProductId() . ',';
+                    foreach ($cartArr as $item) {
+                        $cartIds .= $item->getProduct()->getId() . ',';
 //                        $totalCartItems += 1 * $val->getQuantity();
                         $totalCartItems += 1;
                     }
