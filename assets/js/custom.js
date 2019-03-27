@@ -24,7 +24,7 @@ $(document).ready(function () {
         select: function (event, ui) {
             event.preventDefault();
             $("#keyword").val(ui.item.label);
-            let url = Routing.generate('product_view', {'id': ui.item.value});
+            let url = Routing.generate('product_view', {'slug': ui.item.value});
             window.location.assign(url);
         },
         focus: function (event, ui) {
