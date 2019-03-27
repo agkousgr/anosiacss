@@ -20,6 +20,8 @@ class AjaxSearchController extends AbstractController
                 $transKeyword = $transliterator->transliterateToGreek($request->query->get('term'));
                 $result = $em->getRepository(Products::class)->search($keyword, $transKeyword);
                 foreach ($result as $val) {
+                    if (!$val['slug'])
+                        continue;
                     $resultArr[] = [
                         'value' => $val['slug'],
                         'label' => $val['product_name'] . ' (Κωδ: ' . $val['pr_code'] .')'

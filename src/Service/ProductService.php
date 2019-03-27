@@ -109,12 +109,13 @@ class ProductService
     <WebVisible>$webVisible</WebVisible>
     <IsActive>1</IsActive>  
     <IsSuggested>-1</IsSuggested>
-    <JoinedCategories>1</JoinedCategories>  
+    <JoinedCategories>0</JoinedCategories>  
 </ClientGetCategoryItemsRequest>
 EOF;
         try {
             $itemsArr = [];
             $result = $this->client->SendMessage(['Message' => $message]);
+            dump($message, $result);
             $items = simplexml_load_string(str_replace("utf-16", "utf-8", $result->SendMessageResult));
             if ($items !== false) {
                 $itemsArr = $this->initializeProducts($items->GetDataRows->GetCategoryItemsRow);

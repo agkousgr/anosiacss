@@ -140,7 +140,7 @@ class ProductController extends MainController
             $alsoViewed = new AlsoViewedProducts();
             $pr = $em->getRepository(Products::class)->findOneBy(['slug' => $slug]);
 
-            $product = $this->productService->getItems($pr->getS1id(), 'null', 10);
+            $product = $this->productService->getItems($pr->getId(), 'null', 10);
             $productId = intval($product["id"]);
             $productView = $em->getRepository(ProductViews::class)->findOneBy(['product_id' => $productId]);
 //            if (empty($productView)) {

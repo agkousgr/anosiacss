@@ -71,8 +71,6 @@ class CronJobsController extends AbstractController
                         $pr->setImage(strval($s1product['imageUrl']));
                         $this->em->flush();
                     } else {
-                        dump($pr);
-                        die();
                         if (strval($s1product['id']) !== '') {
                             $pr = new Products();
                             $pr->setId(intval($s1product['id']));
