@@ -4,7 +4,7 @@
 namespace App\Entity;
 
 
-class Products
+class Product
 {
     /**
      * @var int
@@ -76,9 +76,9 @@ class Products
 
     /**
      * @param int $id
-     * @return Products
+     * @return Product
      */
-    public function setId(int $id): Products
+    public function setId(int $id): Product
     {
         $this->id = $id;
         return $this;
@@ -94,9 +94,9 @@ class Products
 
     /**
      * @param string|null $slug
-     * @return Products
+     * @return Product
      */
-    public function setSlug(?string $slug): Products
+    public function setSlug(?string $slug): Product
     {
         $this->slug = $slug;
         return $this;
@@ -112,9 +112,9 @@ class Products
 
     /**
      * @param string|null $prCode
-     * @return Products
+     * @return Product
      */
-    public function setPrCode(?string $prCode): Products
+    public function setPrCode(?string $prCode): Product
     {
         $this->prCode = $prCode;
         return $this;
@@ -130,9 +130,9 @@ class Products
 
     /**
      * @param string|null $barcode
-     * @return Products
+     * @return Product
      */
-    public function setBarcode(?string $barcode): Products
+    public function setBarcode(?string $barcode): Product
     {
         $this->barcode = $barcode;
         return $this;
@@ -148,9 +148,9 @@ class Products
 
     /**
      * @param string|null $productName
-     * @return Products
+     * @return Product
      */
-    public function setProductName(?string $productName): Products
+    public function setProductName(?string $productName): Product
     {
         $this->productName = $productName;
         return $this;
@@ -166,9 +166,9 @@ class Products
 
     /**
      * @param int|null $views
-     * @return Products
+     * @return Product
      */
-    public function setViews(?int $views): Products
+    public function setViews(?int $views): Product
     {
         $this->views = $views;
         return $this;
@@ -184,9 +184,9 @@ class Products
 
     /**
      * @param int|null $menuId
-     * @return Products
+     * @return Product
      */
-    public function setMenuId(?int $menuId): Products
+    public function setMenuId(?int $menuId): Product
     {
         $this->menuId = $menuId;
         return $this;
@@ -202,9 +202,9 @@ class Products
 
     /**
      * @param string|null $image
-     * @return Products
+     * @return Product
      */
-    public function setImage(?string $image): Products
+    public function setImage(?string $image): Product
     {
         $this->image = $image;
         return $this;
@@ -220,9 +220,9 @@ class Products
 
     /**
      * @param string|null $retailPrice
-     * @return Products
+     * @return Product
      */
-    public function setRetailPrice(?string $retailPrice): Products
+    public function setRetailPrice(?string $retailPrice): Product
     {
         $this->retailPrice = $retailPrice;
         return $this;
@@ -238,9 +238,9 @@ class Products
 
     /**
      * @param string|null $webPrice
-     * @return Products
+     * @return Product
      */
-    public function setWebPrice(?string $webPrice): Products
+    public function setWebPrice(?string $webPrice): Product
     {
         $this->webPrice = $webPrice;
         return $this;
@@ -256,9 +256,9 @@ class Products
 
     /**
      * @param int|null $discount
-     * @return Products
+     * @return Product
      */
-    public function setDiscount(?int $discount): Products
+    public function setDiscount(?int $discount): Product
     {
         $this->discount = $discount;
         return $this;
@@ -274,9 +274,9 @@ class Products
 
     /**
      * @param \DateTime|null $latestOffer
-     * @return Products
+     * @return Product
      */
-    public function setLatestOffer(?\DateTime $latestOffer): Products
+    public function setLatestOffer(?\DateTime $latestOffer): Product
     {
         $this->latestOffer = $latestOffer;
         return $this;

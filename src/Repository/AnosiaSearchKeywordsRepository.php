@@ -12,7 +12,7 @@ class AnosiaSearchKeywordsRepository extends EntityRepository
 //->where('o.OrderEmail = :email')
 //->andWhere('o.Product LIKE :product')
 //->setParameter('email', 'some@mail.com')
-//->setParameter('product', 'My Products%')
+//->setParameter('product', 'My Product%')
 //->getQuery()
 //->getResult();
     public function getAnosiaSearchResult($keyword)

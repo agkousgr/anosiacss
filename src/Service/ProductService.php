@@ -493,6 +493,7 @@ EOF;
     private function initializeProposalProducts($products)
     {
         try {
+            // Todo: Replace OldSlug with Slug
             $prArr = [];
             $i = 0;
             foreach ($products as $pr) {
@@ -501,7 +502,7 @@ EOF;
                     'name' => $pr->Name2,
                     'summary' => strip_tags($pr->SmallDescriptionHTML),
                     'prCode' => $pr->Code,
-                    'slug' => $pr->Slug,
+                    'slug' => $pr->OldSlug,
                     'isVisible' => $pr->WebVisible,
                     'retailPrice' => $pr->RetailPrice,
                     'discount' => $pr->Discount,

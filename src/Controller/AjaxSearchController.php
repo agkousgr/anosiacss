@@ -3,7 +3,7 @@
 namespace App\Controller;
 
 use App\Entity\AnosiaSearchKeywords;
-use App\Entity\Products;
+use App\Entity\Product;
 use App\Service\TransliteratorService;
 use Doctrine\ORM\EntityManagerInterface;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
@@ -18,7 +18,7 @@ class AjaxSearchController extends AbstractController
                 $resultArr = [];
                 $keyword = $request->query->get('term');
                 $transKeyword = $transliterator->transliterateToGreek($request->query->get('term'));
-                $result = $em->getRepository(Products::class)->search($keyword, $transKeyword);
+                $result = $em->getRepository(Product::class)->search($keyword, $transKeyword);
                 foreach ($result as $val) {
                     if (!$val['slug'])
                         continue;

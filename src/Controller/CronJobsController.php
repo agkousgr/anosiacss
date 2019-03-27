@@ -2,7 +2,7 @@
 
 namespace App\Controller;
 
-use App\Entity\{AvailabilityTypes, Products};
+use App\Entity\{AvailabilityTypes, Product};
 use App\Service\{
     CronJobsService, ProductService, SoftoneLogin
 };
@@ -62,7 +62,7 @@ class CronJobsController extends AbstractController
 //                        dump($s1product);
 //                    }
 
-                    $pr = $this->em->getRepository(Products::class)->find(intval($s1product['id']));
+                    $pr = $this->em->getRepository(Product::class)->find(intval($s1product['id']));
                     if ($pr) {
                         $pr->setSlug(strval($s1product['slug']));
                         $pr->setPrCode(strval($s1product['prCode']));
@@ -72,7 +72,7 @@ class CronJobsController extends AbstractController
                         $this->em->flush();
                     } else {
                         if (strval($s1product['id']) !== '') {
-                            $pr = new Products();
+                            $pr = new Product();
                             $pr->setId(intval($s1product['id']));
                             $pr->setSlug(strval($s1product['slug']));
                             $pr->setPrCode(strval($s1product['prCode']));
