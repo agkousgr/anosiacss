@@ -155,37 +155,6 @@ class CheckoutController extends MainController
             } catch (\Exception $e) {
                 throw new HttpException(503, 'Payment error', $e);
             }
-        } else if ($checkout->getPaymentType() === '1001') {
-            $checkout->setInstallments(0);
-            $pireausRedirection->submitOrderToPireaus($checkout);
-
-            if ($checkout->getPireausResultCode() !== "0") {
-                $this->addFlash(
-                    'notice',
-                    $checkout->getPireausResultDescription() . ' ' . $checkout->getPireausResultAction()
-                );
-            } else {
-                $this->session->set('curOrder', $checkout);
-                $bank_config['AcquirerId'] = 14;
-                $bank_config['MerchantId'] = 2137477493;
-                $bank_config['PosId'] = 2141384532;
-                $bank_config['User'] = 'AN895032';
-                $bank_config['LanguageCode'] = 'el-GR';
-
-                return $this->render('orders/pireaus_iframe.html.twig', [
-                    'checkout' => $checkout,
-                    'bankConfig' => $bank_config,
-                    'categories' => $this->categories,
-                    'topSellers' => $this->topSellers,
-                    'popular' => $this->popular,
-                    'featured' => $this->featured,
-                    'loggedUser' => $this->loggedUser,
-                    'totalCartItems' => $this->totalCartItems,
-                    'totalWishlistItems' => $this->totalWishlistItems,
-                    'cartItems' => $this->cartItems,
-                    'loginUrl' => $this->loginUrl
-                ]);
-            }
         }
     }
 

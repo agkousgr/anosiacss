@@ -1,0 +1,22 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<doctrine-mapping xmlns="http://doctrine-project.org/schemas/orm/doctrine-mapping">
+
+    <entity name="App\Entity\PireausTransaction">
+        <id name="id" type="integer">
+            <generator strategy="AUTO" />
+        </id>
+        <field name="clientId" type="integer" />
+        <field name="supportReferenceId" type="integer" />
+        <field name="merchantReference" length="50" />
+        <field name="statusFlag" nullable="true" length="12" />
+        <field name="responseCode" nullable="true" length="2" />
+        <field name="responseDescription" nullable="true" type="text" />
+        <field name="resultCode" nullable="true" length="5" />
+        <field name="resultDescription" nullable="true" type="text" />
+        <field name="approvalCode" length="6" />
+        <field name="packageNo" nullable="true" type="integer" />
+        <field name="authStatus" nullable="true" length="2" />
+        <field name="createdAt" type="datetime" />
+    </entity>
+
+</doctrine-mapping>

@@ -12,27 +12,34 @@
             position: sticky;
             top: 160px;
         }
+
         .error {
             color: #ff0000;
         }
+
         #content h4 {
             padding-bottom: 15px;
         }
+
         #content h5 {
             float: left;
             padding-right: 20px;
         }
+
         .disabled {
             color: #c5c5c5;
         }
+
         .disabled a {
             color: #c5c5c5;
             cursor: default;
         }
+
         #checkout_step1_series label, #checkout_step1_shippingType label {
             padding-right: 10px;
             padding-left: 5px;
         }
+
         #checkout-personal-information-step h4 {
             padding-top: 15px;
             padding-bottom: 0;
@@ -73,21 +80,11 @@
                     <div class="columns_inner">
                         <section id="content">
                             <div class="row">
-                                <div id="pireaus_container" style="text-align: center; display:none;">
-                                    <form action="https://paycenter.piraeusbank.gr/redirection/pay.aspx" id="pireaus-post" target="pireaus-iframe" method="post">
-                                        <input type="hidden" name="AcquirerId" value="{{ bankConfig.AcquirerId }}">
-                                        <input type="hidden" name="MerchantId" value="{{ bankConfig.MerchantId }}">
-                                        <input type="hidden" name="PosId" value="{{ bankConfig.PosId }}">
-                                        <input type="hidden" name="User" value="{{ bankConfig.User }}">
-                                        <input type="hidden" name="LanguageCode" value="{{ bankConfig.LanguageCode }}">
-                                        <input type="hidden" name="MerchantReference" value="128">
-                                        {#<input type="hidden" name="ParamBackLink" value="">#}
-                                    </form>
-                                    <iframe id="pireaus_iframe" name="pireaus-iframe" width="800" height="455"></iframe>
-                                </div>
+
                                 <div class="col-md-8">
                                     <h5 id="checkoutStep1"><a href="">Στοιχεία πελάτη ></a></h5>
-                                    <h5 id="checkoutStep2" class="disabled"><a href="">Τρόπος πληρωμής</a></h5>
+                                    <h5 id="checkoutStep2" class="disabled"><a href="">Τρόπος
+                                            πληρωμής</a></h5>
                                     {#<h5 id="checkoutStep2" class="disabled"><a href="">Τρόπος πληρωμής ></a></h5>#}
                                     {#<h5 class="disabled">Επιβεβαίωση παραγγελίας</h5>#}
 
@@ -95,7 +92,8 @@
                                         {% if loggedUser is empty %}
                                             {#<ul class="nav nav-inline my-2" role="tablist">#}
                                             {#<li class="nav-item">#}
-                                            <section id="checkout-userdata-step" class="checkout-step">
+                                            <section id="checkout-userdata-step"
+                                                     class="checkout-step">
                                                 <div>
                                                     {#<a class="nav-link active" data-toggle="tab"#}
                                                     {#href="#checkout-guest-form" role="tab"#}
@@ -120,6 +118,34 @@
                                                 </div>
                                             </section>
                                         {% endif %}
+                                        <section id="pireaus_container" style="display: none;"
+                                                 class="checkout-step -reachable -current js-current-step">
+                                            <div class="content">
+                                                <div style="text-align: center;">
+                                                    <form action="https://paycenter.piraeusbank.gr/redirection/pay.aspx"
+                                                          id="pireaus-post" target="pireaus-iframe"
+                                                          method="post">
+                                                        <input type="hidden" name="AcquirerId"
+                                                               value="{{ bankConfig.AcquirerId }}">
+                                                        <input type="hidden" name="MerchantId"
+                                                               value="{{ bankConfig.MerchantId }}">
+                                                        <input type="hidden" name="PosId"
+                                                               value="{{ bankConfig.PosId }}">
+                                                        <input type="hidden" name="User"
+                                                               value="{{ bankConfig.User }}">
+                                                        <input type="hidden" name="LanguageCode"
+                                                               value="{{ bankConfig.LanguageCode }}">
+                                                        <input type="hidden"
+                                                               name="MerchantReference" value="128">
+                                                        {#<input type="hidden" name="ParamBackLink" value="">#}
+                                                    </form>
+                                                    <iframe id="pireaus_iframe"
+                                                            name="pireaus-iframe" width="700"
+                                                            height="455"></iframe>
+                                                </div>
+                                            </div>
+                                        </section>
+
                                         <section id="checkout-personal-information-step"
                                                  class="checkout-step -reachable -current js-current-step">
 
@@ -199,7 +225,8 @@
                                                                     {{ form_label(step1Form.newsletter, 'Εγγραφή στο newsletter. Μπορείτε να διαγραφείτε οποιαδήποτε στιγμή επιθυμείτε.') }}
                                                                 </div>
                                                             </div>
-                                                            <div id="newsletter-fields" class="hidden">
+                                                            <div id="newsletter-fields"
+                                                                 class="hidden">
                                                                 <div class="form-group row">
                                                                     <div class="col-md-6">
                                                                         {{ form_widget(step1Form.newsLetterAge, {'attr': {'class': 'form-control', 'placeholder': 'Ηλικία'}}) }}
@@ -212,80 +239,6 @@
                                                         </section>
                                                         <section class="form-fields">
                                                             <h4>Στοιχεία τιμολόγησης</h4>
-                                                            {% if loggedUser is not empty and checkout.address|length > 0 %}
-                                                                {#<article#}
-                                                                {#class="address-item selected"#}
-                                                                {#id="id-address-delivery-address-8">#}
-                                                                {#<header class="h4">#}
-                                                                {#<label class="radio-block">#}
-                                                                {#<div class="address">#}
-                                                                {#<span>{{ checkout.address }}</span>#}
-                                                                {#<br>{{ checkout.zip }}#}
-                                                                {#<br>{{ checkout.city }}#}
-                                                                {#<br>{{ checkout.district }}#}
-                                                                {#</div>#}
-                                                                {#</label>#}
-                                                                {#</header>#}
-                                                                {#</article>#}
-                                                            {% else %}
-                                                                {#<div class="form-group row "#}
-                                                                     {#style="background-color: #eee; padding-top:10px;">#}
-                                                                    {#<label class="col-md-3 form-control-label required control-label"#}
-                                                                           {#for="autocomplete-main-address">Συμπληρώστε#}
-                                                                        {#τη διεύθυσνή σας</label>#}
-                                                                    {#<div class="col-md-6">#}
-                                                                        {#<input id="autocomplete-main-address"#}
-                                                                               {#class="form-control form-control"#}
-                                                                               {#placeholder="Εισάγετε την διεύθυνσή σας"#}
-                                                                               {#type="text"/>#}
-                                                                    {#</div>#}
-                                                                {#</div>#}
-                                                                {#<div class="form-group row ">#}
-                                                                    {#{{ form_label(step1Form.address, 'Διεύθυνση', {'label_attr': {'class': 'col-md-3 form-control-label required'}}) }}#}
-                                                                    {#<div class="col-md-6">#}
-                                                                        {#{{ form_widget(step1Form.address, {'attr': {'class': 'form-control'}}) }}#}
-                                                                    {#</div>#}
-                                                                    {#<div class="col-md-3 form-control-comment">#}
-                                                                    {#</div>#}
-                                                                {#</div>#}
-
-
-                                                                {#<div class="form-group row ">#}
-                                                                    {#{{ form_label(step1Form.zip, 'Τ.Κ.', {'label_attr': {'class': 'col-md-3 form-control-label required'}}) }}#}
-                                                                    {#<div class="col-md-6">#}
-                                                                        {#{{ form_widget(step1Form.zip, {'attr': {'class': 'form-control'}}) }}#}
-                                                                    {#</div>#}
-                                                                    {#<div class="col-md-3 form-control-comment">#}
-                                                                    {#</div>#}
-                                                                {#</div>#}
-
-                                                                {#<div class="form-group row ">#}
-                                                                    {#{{ form_label(step1Form.city, 'Πόλη', {'label_attr': {'class': 'col-md-3 form-control-label required'}}) }}#}
-                                                                    {#<div class="col-md-6">#}
-                                                                        {#{{ form_widget(step1Form.city, {'attr': {'class': 'form-control'}}) }}#}
-                                                                    {#</div>#}
-                                                                    {#<div class="col-md-3 form-control-comment">#}
-                                                                    {#</div>#}
-                                                                {#</div>#}
-
-                                                                {#<div class="form-group row ">#}
-                                                                    {#{{ form_label(step1Form.district, 'Περιοχή', {'label_attr': {'class': 'col-md-3 form-control-label required'}}) }}#}
-                                                                    {#<div class="col-md-6">#}
-                                                                        {#{{ form_widget(step1Form.district, {'attr': {'class': 'form-control'}}) }}#}
-                                                                    {#</div>#}
-                                                                    {#<div class="col-md-3 form-control-comment">#}
-                                                                    {#</div>#}
-                                                                {#</div>#}
-
-                                                                {#<div class="form-group row ">#}
-                                                                    {#{{ form_label(step1Form.phone01, 'Τηλέφωνο', {'label_attr': {'class': 'col-md-3 form-control-label required'}}) }}#}
-                                                                    {#<div class="col-md-6 ">#}
-                                                                        {#{{ form_widget(step1Form.phone01, {'attr': {'class': 'form-control'}}) }}#}
-                                                                    {#</div>#}
-                                                                    {#<div class="col-md-3 form-control-comment">#}
-                                                                    {#</div>#}
-                                                                {#</div>#}
-                                                            {% endif %}
                                                             <div id="invoice-fields" class="hidden">
                                                                 <div class="form-group row ">
                                                                     <div class="col-md-6 ">
@@ -310,7 +263,8 @@
                                                                            id="use_same_address"
                                                                            value="1"
                                                                            type="checkbox">
-                                                                    <label>Αποστολή σε διαφορετικό παραλήπτη</label>
+                                                                    <label>Αποστολή σε διαφορετικό
+                                                                        παραλήπτη</label>
                                                                 </div>
                                                             </div>
                                                             <div id="ship-address" class="hidden">
@@ -347,19 +301,13 @@
                                                                 </div>
                                                                 <div class="form-group row "
                                                                      style="background-color: #eee; padding:10px 0;">
-                                                                    {#<label class="col-md-3 form-control-label required control-label"#}
-                                                                    {#for="autocomplete">Συμπληρώστε τη διεύθυσνή#}
-                                                                    {#σας</label>#}
                                                                     <div class="col-md-6">
                                                                         <input id="autocomplete-ship-address"
                                                                                class="form-control form-control"
                                                                                placeholder="Εισάγετε οδό και αριθμό παραλήπτη"
                                                                                type="text"/>
                                                                     </div>
-                                                                    {#<div class="col-md-3 form-control-comment">#}
-                                                                    {#</div>#}
                                                                 </div>
-
                                                                 <div class="form-group row ">
                                                                     <div class="col-md-6">
                                                                         {{ form_widget(step1Form.shipAddress, {'attr': {'class': 'form-control', 'placeholder': 'Διεύθυνση'}}) }}
@@ -368,7 +316,6 @@
                                                                         {{ form_widget(step1Form.shipZip, {'attr': {'class': 'form-control', 'placeholder': 'Τ.Κ.'}}) }}
                                                                     </div>
                                                                 </div>
-
                                                                 <div class="form-group row ">
                                                                     <div class="col-md-6">
                                                                         {{ form_widget(step1Form.shipCity, {'attr': {'class': 'form-control', 'placeholder': 'Πόλη'}}) }}
@@ -382,12 +329,9 @@
                                                         <section class="form-fields">
                                                             <h4>Τρόπος Αποστολής</h4>
                                                             <div class="form-group row ">
-                                                                {#{{ form_label(step1Form.shippingType, 'Τρόπος Αποστολής', {'label_attr': {'class': 'col-md-3 form-control-label required'}}) }}#}
                                                                 <div class="col-md-9">
                                                                     {{ form_widget(step1Form.shippingType, {'attr': {'class': 'form-control no-border'}}) }}
                                                                 </div>
-                                                                {#<div class="col-md-3 form-control-comment">#}
-                                                                {#</div>#}
                                                             </div>
                                                             <div class="form-group row ">
                                                                 {{ form_label(step1Form.comments, 'Παρατηρήσεις', {'label_attr': {'class': 'col-md-3 form-control-label required'}}) }}
@@ -396,12 +340,15 @@
                                                                 </div>
                                                             </div>
                                                         </section>
-                                                        <footer id="checkout-footer" class="form-footer clearfix">
+                                                        <footer id="checkout-footer"
+                                                                class="form-footer clearfix">
                                                             <input name="submitAddress" value="1"
                                                                    type="hidden">
-                                                            <button id="confirm-addresses" type="submit"
+                                                            <button id="confirm-addresses"
+                                                                    type="submit"
                                                                     class="continue btn btn-primary float-xs-right"
-                                                                    name="confirm-addresses" value="1">
+                                                                    name="confirm-addresses"
+                                                                    value="1">
                                                                 Επόμενο
                                                             </button>
                                                         </footer>
@@ -411,8 +358,9 @@
                                                 </div>
                                             </div>
                                         </section>
-                                        <section class="checkout-step -reachable -current js-current-step hidden"
-                                                 id="checkout-payment-step">
+                                        <section
+                                                class="checkout-step -reachable -current js-current-step hidden"
+                                                id="checkout-payment-step">
                                             <div class="content">
                                                 <div class="payment-options ">
                                                     {% form_theme step2Form 'form_template/bootstrap_3_step3_checkout.html.twig' %}
@@ -437,9 +385,12 @@
                                                             </section>
 
                                                             <footer class="form-footer clearfix">
-                                                                <input name="submitAddress" value="1"
+                                                                <input name="submitAddress"
+                                                                       value="1"
                                                                        type="hidden">
-                                                                <button id="back-to-step-1" class="btn btn-primary float-xs-right" type="button">
+                                                                <button id="back-to-step-1"
+                                                                        class="btn btn-primary float-xs-right"
+                                                                        type="button">
                                                                     Προηγούμενο Βήμα
                                                                 </button>
                                                                 <button id="confirm-checkout"
@@ -497,7 +448,8 @@
                                                 {% else %}
                                                     προϊόντα)
                                                 {% endif %}
-                                                <a title="Επιστροφή στο καλάθι" href="{{ path('cart_view') }}">
+                                                <a title="Επιστροφή στο καλάθι"
+                                                   href="{{ path('cart_view') }}">
                                                     <i class="fas fa-shopping-cart cart-link"
                                                        style="color:#333333; font-size: 20px; float:right;"></i>
                                                 </a>
@@ -545,7 +497,8 @@
                                                     <span id="shipping-cost" data-cost="0.00"
                                                           class="value">0,00</span>
                                                 {% else %}
-                                                    <span id="shipping-cost" data-cost="2.00" class="value">2,00</span>
+                                                    <span id="shipping-cost" data-cost="2.00"
+                                                          class="value">2,00</span>
                                                     {% set cartShippingCost = cartShippingCost + 2 %}
                                                 {% endif %}
                                             </div>
@@ -571,7 +524,8 @@
                                                 <div class="cart-summary-line" id="coupon-discount"
                                                      data-discount="{{ discPerc|number_format(2, '.', ',') }}">
                                                     <span class="label js-subtotal">
-                                                        Έκπτωση από κουπόνι ({{ checkout.couponDiscPerc }}%)
+                                                        Έκπτωση από κουπόνι
+                                                        ({{ checkout.couponDiscPerc }}%)
                                                     </span>
                                                     <span class="value">- {{ discPerc|number_format(2, ',', '.') }}
                                                         €</span>
@@ -579,7 +533,7 @@
                                             {% endif %}
                                         </div>
                                         <hr class="separator">
-                                        {% set cartTotal = cartSubTotal + cartShippingCost - checkout.couponDisc - discPerc%}
+                                        {% set cartTotal = cartSubTotal + cartShippingCost - checkout.couponDisc - discPerc %}
                                         <div class="card-block cart-summary-totals">
                                             <div class="cart-summary-line cart-total">
                                                 <span class="label">Σύνολο (με ΦΠΑ)</span>

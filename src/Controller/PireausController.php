@@ -5,103 +5,122 @@ namespace App\Controller;
 
 
 use App\Entity\Checkout;
-use App\Entity\PireausResults;
-use App\Service\CheckoutService;
-use App\Service\PireausRedirection;
+use App\Entity\PireausTransaction;
+use App\Service\CheckoutCompleted;
 use Doctrine\ORM\EntityManagerInterface;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Session\SessionInterface;
 
 class PireausController extends MainController
 {
-
-
-    public function success(Request $request, CheckoutService $checkoutService)
+    public function success(Request $request, EntityManagerInterface $em, CheckoutCompleted $checkoutCompleted, SessionInterface $session)
     {
-        $checkout = new Checkout();
+        try {
+            /** @var Checkout $checkout */
+            $checkout = $this->session->get('curOrder');// Todo: get post or get response and create Hash to validate response
+            // Page 26 Pireaus Manual
+            dump($request->request, $checkout);
+            $TransactionTicket = $checkout->getPireausTranTicket();
+            $PosId = 2141384532;
+            $AcquirerId = 14;
+            $MerchantReference = $checkout->getOrderNo();
+            $ApprovalCode = $request->request->get('ApprovalCode');
+            $Parameters = $request->request->get('Parameters');
+            $ResponseCode = $request->request->get('ResponseCode');
+            $SupportReferenceID = $request->request->get('SupportReferenceID');
+            $AuthStatus = $request->request->get('AuthStatus');
+            $PackageNo = intval($request->request->get('PackageNo'));
+            $StatusFlag = $request->request->get('StatusFlag');
+            $PireausHash = $request->request->get('HashKey');
+            $myHash = pack('H', hash('sha256', $TransactionTicket . $PosId . $AcquirerId . $MerchantReference . $ApprovalCode . $Parameters . $ResponseCode . $SupportReferenceID . $AuthStatus . $PackageNo . $StatusFlag));
+            if ($myHash === $PireausHash) {
+                $pireaus = new PireausTransaction();
+                $pireaus->setClientId($session->get('anosiaClientId'))
+                    ->setMerchantReference($MerchantReference)
+                    ->setStatusFlag($StatusFlag)
+                    ->setResultCode($request->request->get('ResultCode'))
+                    ->setSupportReferenceId($SupportReferenceID)
+                    ->setApprovalCode($ApprovalCode)
+                    ->setResponseCode($ResponseCode)
+                    ->setPackageNo($PackageNo)
+                    ->setAuthStatus($AuthStatus)
+                    ->setCreatedAt(new \DateTime())
+                    ->setResponseDescription($request->request->get('ResponseDescription'))
+                    ->setResultDescription($request->request->get('ResultDescription'));
+                $em->persist($pireaus);
+                $em->flush();
 
-        $checkout = $this->session->get('curOrder');
-        // Todo: get post or get response and create Hash to validate response
-        // Page 26 Pireaus Manual
-        dump($request->request, $checkout);
+                $cartItems = $this->cartItems;
+                $checkoutCompleted->handleSuccessfulPayment($this->cartItems);
+            } else {
+                $checkoutCompleted->handleFailedPayment();
+                $this->addFlash('notice', 'H πληρωμή σας μέσω πιστωτικής απέτυχε. Παρακαλώ δοκιμάστε ξανά ή αλλάξτε τρόπο πληρωμής');
+                return $this->redirectToRoute('checkout');
+            }
 
+            $this->addFlash('success', 'Η συναλλαγή ολοκληρώθηκε με επιτυχία! Ένα αντίγραφο έχει αποσταλεί στο email σας. Ευχαριστούμε για την προτίμησή σας!');
+            $checkout = $checkoutCompleted->handleSuccessfulPayment($cartItems);
 
-
-        $TransactionTicket = 'asfasdfa';
-//        $TransactionTicket = $checkout->getPireausTranTicket();
-        $PosId = 2141384532;
-        $AcquirerId = 14;
-        $MerchantReference = $checkout->getOrderNo();
-        $ApprovalCode = $request->request->get('ApprovalCode');
-        $Parameters = $request->request->get('Parameters');
-        $ResponseCode = $request->request->get('ResponseCode');
-        $SupportReferenceID = $request->request->get('SupportReferenceID');
-        $AuthStatus = $request->request->get('AuthStatus');
-        $PackageNo = $request->request->get('PackageNo');
-        $StatusFlag = $request->request->get('StatusFlag');
-
-        $myHash = pack('H', hash('sha256', $TransactionTicket . $PosId . $AcquirerId . $MerchantReference . $ApprovalCode . $Parameters . $ResponseCode . $SupportReferenceID . $AuthStatus . $PackageNo . $StatusFlag));
-
-        dump($myHash);
-
-
-        die();
-        $checkout = $session->get('curOrder');
-        $orderResponse = $checkoutService->submitOrder($checkout, $this->cartItems);
-        if ($orderResponse) {
-
-            $this->addFlash(
-                'success',
-                'Η παραγγελία σας ολοκληρώθηκε με επιτυχία. Ένα αντίγραφο έχει αποσταλεί στο email σας ' . $checkout->getEmail() . '. Ευχαριστούμε που μας προτιμήσατε για τις αγορές σας!'
-            );
-            $checkoutService->sendOrderConfirmationEmail($checkout);
-//                    $checkoutService->emptyCart($this->cartItems, $em);
-            $orderCompleted = true;
-        } else {
-            $this->addFlash(
-                'notice',
-                'Ένα σφάλμα παρουσιάστηκε κατά την διαδικασία της παραγγελίας σας. Η online πληρωμή έχει πραγματοποιηθεί. Παρακαλούμε επικοινωνήστε μαζί μας! Ο κωδικός της παραγγελίας σας είναι ' . $checkout->getOrderNo()
-            );
-
+            //Todo: Save checkout into eshopDB in case order failed to save in S1
+            return $this->render('orders/order_completed.html.twig', [
+                'categories' => $this->categories,
+                'popular' => $this->popular,
+                'featured' => $this->featured,
+                'topSellers' => $this->topSellers,
+                'checkout' => $checkout,
+                'loggedUser' => $this->loggedUser,
+                'totalCartItems' => $this->totalCartItems,
+                'totalWishlistItems' => $this->totalWishlistItems,
+                'cartItems' => $cartItems,
+                'orderCompleted' => true,
+                'loginUrl' => $this->loginUrl
+            ]);
+        } catch (\Exception $e) {
+            $this->logger->error(__METHOD__ . ' -> {message}', ['message' => $e->getMessage()]);
+            throw $e;
         }
-        // Todo: CLEAR curOrder SESSION
-        return ($this->render('orders/order_completed.html.twig', [
-            'categories' => $this->categories,
-            'topSellers' => $this->topSellers,
-            'popular' => $this->popular,
-            'featured' => $this->featured,
-            'checkout' => $checkout,
-            'loggedUser' => $this->loggedUser,
-            'totalCartItems' => $this->totalCartItems,
-            'totalWishlistItems' => $this->totalWishlistItems,
-            'cartItems' => $this->cartItems,
-            'orderCompleted' => $orderCompleted,
-            'loginUrl' => $this->loginUrl
-        ]));
     }
 
     public function cancel()
     {
         $this->addFlash(
             'notice',
-                'Η online πληρωμή ακυρώθηκε.'
+            'Η online πληρωμή ακυρώθηκε.'
         );
 
         return $this->redirectToRoute('checkout');
     }
 
-    public function failure(Request $request, EntityManagerInterface $em)
+    public function failure(Request $request, SessionInterface $session, EntityManagerInterface $em)
     {
-        $pireaus = new PireausResults();
-        $pireaus->setCliendId($request->request->get('clientId'));
-        $pireaus->setMerchantReference();
-//        dump($request);
-     die();
-        $this->addFlash(
-            'notice',
-            'Η συναλλαγή σας δεν ολοκληρώθηκε "Invalid Card number/Exp Month/Exp Year". Παρακαλούμε ελέγξτε τα στοιχεία της κάρτας σας και ξαναπροσπαθήστε.'
-        );
-        return $this->redirectToRoute('checkout');
+
+        try {
+            dump($request->request);
+            $pireaus = new PireausTransaction();
+            $pireaus->setClientId($session->get('anosiaClientId'))
+                ->setMerchantReference($session->get('curOrder')->getOrderNo())
+                ->setStatusFlag($request->request->get('StatusFlag'))
+                ->setResultCode($request->request->get('ResultCode'))
+                ->setSupportReferenceId($request->request->get('SupportReferenceID'))
+                ->setApprovalCode($request->request->get('ApprovalCode'))
+                ->setResponseCode($request->request->get('ResponseCode'))
+                ->setPackageNo(intval($request->request->get('PackageNo')))
+                ->setAuthStatus($request->request->get('AuthStatus'))
+                ->setCreatedAt(new \DateTime())
+                ->setResponseDescription($request->request->get('ResponseDescription'))
+                ->setResultDescription($request->request->get('ResultDescription'));
+            $em->persist($pireaus);
+            $em->flush();
+
+            $this->addFlash(
+                'notice',
+                'Η συναλλαγή σας δεν ολοκληρώθηκε "Invalid Card number/Exp Month/Exp Year". Παρακαλούμε ελέγξτε τα στοιχεία της κάρτας σας και ξαναπροσπαθήστε.'
+            );
+            return $this->redirectToRoute('checkout');
+        } catch (\Exception $e) {
+            $this->logger->error(__METHOD__ . ' -> {message}', ['message' => $e->getMessage()]);
+            throw $e;
+        }
     }
 
     public function pireausIframe(Request $request)

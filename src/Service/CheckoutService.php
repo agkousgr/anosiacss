@@ -452,6 +452,7 @@ EOF;
             $orderResult = simplexml_load_string(str_replace("utf-16", "utf-8", $result->SendMessageResult));
             if ((string)$orderResult->IsValid === 'true') {
                 $checkout->setOrderNo($orderNo);
+                $this->em->flush();
                 return true;
             }
             return false;

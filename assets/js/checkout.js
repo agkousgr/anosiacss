@@ -233,6 +233,7 @@ $(document).ready(function () {
                             });
                         }else{
                             $('#pireaus_container').show();
+                            $('#checkout-payment-step').hide();
                             $('#pireaus-post').submit();
                         }
                     }
