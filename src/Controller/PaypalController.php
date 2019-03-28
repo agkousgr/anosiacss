@@ -2,15 +2,15 @@
 
 namespace App\Controller;
 
-use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Request;
 use Doctrine\ORM\EntityManagerInterface;
 use App\Entity\PaypalTransaction;
 use Beelab\PaypalBundle\Paypal\Service as PaypalService;
+use App\Service\CheckoutCompleted;
 
-class PaypalController extends AbstractController
+class PaypalController extends MainController
 {
-    public function return(Request $request, EntityManagerInterface $em, PaypalService $paypalService)
+    public function return(Request $request, EntityManagerInterface $em, PaypalService $paypalService, CheckoutCompleted $checkoutCompleted)
     {
         $token = $request->query->get('token');
         $transaction = $em->getRepository(PaypalTransaction::class)->findOneByToken($token);
@@ -19,11 +19,17 @@ class PaypalController extends AbstractController
 
         $paypalService->setTransaction($transaction)->complete();
         $em->flush();
+
         if (!$transaction->isOk()) {
+            $checkoutCompleted->handleFailedPayment();
+
             return $this->redirectToRoute('checkout');
         }
 
-        return $this->redirectToRoute('checkout');
+        // TODO: Change return route, if SoftOne has not received data
+        return $checkoutCompleted->handleSuccessfulPayment($this->cartItems) ?
+            $this->redirectToRoute('checkout') :
+            $this->redirectToRoute('checkout');
     }
 
     public function cancel(Request $request, EntityManagerInterface $em)

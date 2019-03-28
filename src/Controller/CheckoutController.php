@@ -4,7 +4,7 @@ namespace App\Controller;
 
 use App\Entity\{Checkout, OrdersWebId, PaypalTransaction};
 use App\Form\Type\{CheckoutStep1Type, CheckoutStep2Type};
-use App\Service\{CheckoutService, PireausRedirection, UserAccountService, NewsletterService};
+use App\Service\{CheckoutService, PireausRedirection, UserAccountService};
 use Beelab\PaypalBundle\Paypal\Service as PaypalService;
 use Doctrine\ORM\EntityManagerInterface;
 use Psr\Log\LoggerInterface;
@@ -132,8 +132,7 @@ class CheckoutController extends MainController
     }
 
     public function completeCheckout(
-        Request $request, CheckoutService $checkoutService, UserAccountService $userAccountService, EntityManagerInterface $em,
-        PaypalService $paypalService, PireausRedirection $pireausRedirection, NewsletterService $newsletterService
+        CheckoutService $checkoutService, EntityManagerInterface $em, PaypalService $paypalService, PireausRedirection $pireausRedirection
     )
     {
         $onlinePaymentError = false;
@@ -143,6 +142,8 @@ class CheckoutController extends MainController
         $checkout->setTotalOrderCost($cartCost + $checkout->getAntikatavoliCost() + $checkout->getShippingCost());
         $orderWebId = $em->getRepository(OrdersWebId::class)->find(1);
         $checkout->setOrderNo($orderWebId->getOrderNumber() + 1);
+        // Check if necessary at this point
+        $em->flush();
         if ($checkout->getPaymentType() === '1006') {
             $amount = $checkout->getTotalOrderCost();
             $transaction = new PaypalTransaction($amount);
@@ -158,14 +159,12 @@ class CheckoutController extends MainController
         } else if ($checkout->getPaymentType() === '1001') {
             $checkout->setInstallments(0);
             $pireausRedirection->submitOrderToPireaus($checkout);
-            die();
+
             if ($checkout->getPireausResultCode() !== "0") {
                 $this->addFlash(
                     'notice',
                     $checkout->getPireausResultDescription() . ' ' . $checkout->getPireausResultAction()
                 );
-                $orderCompleted = false;
-                $onlinePaymentError = true;
             } else {
                 $this->session->set('curOrder', $checkout);
                 $bank_config['AcquirerId'] = 14;
@@ -187,58 +186,6 @@ class CheckoutController extends MainController
                     'cartItems' => $this->cartItems,
                     'loginUrl' => $this->loginUrl
                 ]);
-            }
-        }
-        if ($onlinePaymentError === false) {
-            $orderResponse = $checkoutService->submitOrder($checkout, $this->cartItems);
-            if ($orderResponse) {
-                if ($checkout->isNewsletter()) {
-                    $date = date('Y-m-d H:i:s');
-                    $referrer = 'USER AGENT: ' . $request->headers->get('User-Agent') . ' REFERRER: ' . $request->headers->get('referer') . ' DATE: ' . $date;
-                    $newsletterService->getNewsletter(
-                        $checkout->getFirstName() . ' ' . $checkout->getLastName(),
-                        $checkout->getEmail(),
-                        $referrer,
-                        $checkout->getNewsLetterGender(),
-                        $checkout->getNewsLetterAge()
-                    );
-                }
-
-                $this->addFlash(
-                    'success',
-                    'Η παραγγελία σας ολοκληρώθηκε με επιτυχία. Ένα αντίγραφο έχει αποσταλεί στο email σας ' . $checkout->getEmail() . '. Ευχαριστούμε που μας προτιμήσατε για τις αγορές σας!'
-                );
-//                $orderWebId->setOrderNumber($checkout->getOrderNo() + 1);
-                $em->flush();
-                $checkoutService->sendOrderConfirmationEmail($checkout, $this->cartItems);
-                $checkoutService->emptyCart($this->cartItems, $em);
-                $orderCompleted = true;
-                // CLEAR curOrder SESSION
-                $this->session->remove('curOrder');
-                $this->session->remove('couponDisc');
-                $this->session->remove('couponDiscPerc');
-                $this->session->remove('couponName');
-                $this->session->remove('couponId');
-
-                return ($this->render('orders/order_completed.html.twig', [
-                    'categories' => $this->categories,
-                    'topSellers' => $this->topSellers,
-                    'popular' => $this->popular,
-                    'featured' => $this->featured,
-                    'checkout' => $checkout,
-                    'loggedUser' => $this->loggedUser,
-                    'totalCartItems' => $this->totalCartItems,
-                    'totalWishlistItems' => $this->totalWishlistItems,
-                    'cartItems' => $this->cartItems,
-                    'orderCompleted' => $orderCompleted,
-                    'loginUrl' => $this->loginUrl
-                ]));
-            } else {
-                $this->addFlash(
-                    'notice',
-                    'Ένα σφάλμα παρουσιάστηκε κατά την διαδικασία της παραγγελίας σας. Παρακαλούμε προσπαθήστε ξανά. Αν το πρόβλημα παραμείνει επικοινωνήστε μαζί μας!'
-                );
-                $orderCompleted = false;
             }
         }
     }

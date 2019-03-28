@@ -6,7 +6,6 @@ use App\Entity\{Checkout, Cart};
 use Doctrine\ORM\EntityManagerInterface;
 use Psr\Log\LoggerInterface;
 use Symfony\Component\HttpFoundation\Session\SessionInterface;
-use Symfony\Component\Filesystem\Filesystem;
 use Twig\Environment;
 
 class CheckoutService
@@ -72,16 +71,29 @@ class CheckoutService
     private $twig;
 
     /**
+     * @var EntityManagerInterface
+     */
+    private $em;
+
+    /**
      * @var double
      */
     private $cartItemsCost;
 
     /**
-     * UserAccountService constructor.
-     * @param LoggerInterface $logger
-     * @param SessionInterface $session
+     * Constructor.
+     *
+     * @param \Psr\Log\LoggerInterface                                   $logger
+     * @param \Symfony\Component\HttpFoundation\Session\SessionInterface $session
+     * @param \Swift_Mailer                                              $mailer
+     * @param \Twig\Environment                                          $twig
+     * @param \Doctrine\ORM\EntityManagerInterface                       $manager
+     * @param                                                            $s1Credentials
+     *
      */
-    public function __construct(LoggerInterface $logger, SessionInterface $session, \Swift_Mailer $mailer, Environment $twig, $s1Credentials)
+    public function __construct(
+        LoggerInterface $logger, SessionInterface $session, \Swift_Mailer $mailer, Environment $twig, EntityManagerInterface $manager, $s1Credentials
+    )
     {
         $this->logger = $logger;
         $this->session = $session;
@@ -95,6 +107,7 @@ class CheckoutService
         $this->client = new \SoapClient('http://caron.cloudsystems.gr/FOeshopWS/ForeignOffice.FOeshop.API.FOeshopSvc.svc?singleWsdl', ['trace' => true, 'exceptions' => true,]);
         $this->mailer = $mailer;
         $this->twig = $twig;
+        $this->em = $manager;
         $this->cartItemsCost = 0;
     }
 
@@ -574,14 +587,13 @@ EOF;
 
     /**
      * @param $cartItems
-     * @param EntityManagerInterface
      */
-    public function emptyCart($cartItems, $em)
+    public function emptyCart($cartItems)
     {
         foreach ($cartItems as $item) {
-            $cartItem = $em->getRepository(Cart::class)->find($item["cartId"]);
-            $em->remove($cartItem);
-            $em->flush();
+            $cartItem = $this->em->getRepository(Cart::class)->find($item["cartId"]);
+            $this->em->remove($cartItem);
+            $this->em->flush();
         }
         return;
     }
