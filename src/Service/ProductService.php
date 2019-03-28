@@ -162,7 +162,7 @@ EOF;
     <WebVisible>$webVisible</WebVisible>
     <IsActive>-1</IsActive>  
     <IsSuggested>-1</IsSuggested>
-    <JoinedCategories>-1</JoinedCategories>
+    <JoinedCategories>0</JoinedCategories>
 </ClientGetCategoryItemsCountRequest>
 EOF;
         try {
