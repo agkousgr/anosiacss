@@ -3,6 +3,7 @@
 namespace App\Controller;
 
 use App\Entity\Cart;
+use App\Entity\Product;
 use App\Service\CartService;
 use Doctrine\ORM\EntityManagerInterface;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
@@ -52,14 +53,14 @@ class AjaxCartController extends AbstractController
             try {
                 $id = $request->request->get('id');
                 $productName = $request->request->get('name');
-                $quantity = $request->request->get('quantity');
-                $quantity = ($quantity) ?: 1;
+                $quantity = $request->request->get('quantity') ?: 1;
                 $itemInCart = (int)$em->getRepository(Cart::class)->checkIfProductExists($session->getId(), $session->get('anosiaUser'), $id);
-                dump($itemInCart);
+
                 if ($itemInCart === 0) {
+                    $product = $em->getRepository(Product::class)->find($id);
                     $cart = new Cart();
                     $cart->setQuantity($quantity);
-                    $cart->setProductId($id);
+                    $cart->setProduct($product);
                     $cart->setSessionId($session->getId());
                     if (null !== $session->get('anosiaUser')) {
                         $cart->setUsername($session->get('anosiaUser'));

@@ -53,15 +53,15 @@ class CartRepository extends EntityRepository
     {
         $qb = $this->createQueryBuilder('c');
         if (null !== $username) {
-            $qb->select('COUNT(c.product_id)')
-                ->where('c.username=:username')
-                ->andWhere('c.product_id=:prId')
+            $qb->select('COUNT(c.product)')
+                ->where('c.username = :username')
+                ->andWhere('IDENTITY(c.product) = :prId')
                 ->setParameters(array('username' => $username, 'prId' => $prId));
         } else {
-            $qb->where('c.session_id=:sessionId')
-                ->andWhere('c.product_id=:prId')
-                ->setParameters(array('sessionId' => $sessionId, 'prId' => $prId))
-                ->select('COUNT(c.product_id)');
+            $qb->select('COUNT(c.product)')
+                ->where('c.session_id = :sessionId')
+                ->andWhere('IDENTITY(c.product) = :prId')
+                ->setParameters(array('sessionId' => $sessionId, 'prId' => $prId));
         }
         return $qb->getQuery()->getSingleScalarResult();
     }
@@ -76,13 +76,13 @@ class CartRepository extends EntityRepository
     {
         $qb = $this->createQueryBuilder('c');
         if (null !== $username) {
-            $qb->select('COUNT(c.product_id)')
-                ->where('c.username=:username')
+            $qb->select('COUNT(c.product)')
+                ->where('c.username = :username')
                 ->setParameter('username', $username);
         } else {
-            $qb->where('c.session_id=:sessionId')
-                ->setParameter('sessionId', $sessionId)
-                ->select('COUNT(c.product_id)');
+            $qb->select('COUNT(c.product)')
+                ->where('c.session_id = :sessionId')
+                ->setParameter('sessionId', $sessionId);
         }
         return $qb->getQuery()->getSingleScalarResult();
     }
@@ -98,12 +98,12 @@ class CartRepository extends EntityRepository
     {
         $qb = $this->getEntityManager()->createQueryBuilder('c');
         if (null !== $username) {
-            $qb->andWhere('c.username=:username')
-                ->andWhere('c.product_id=:prId')
+            $qb->andWhere('c.username = :username')
+                ->andWhere('IDENTITY(c.product) = :prId')
                 ->setParameters(array('username' => $username, 'prId' => $prId));
         } else {
-            $qb->andWhere('c.session_id=:sessionId')
-                ->andWhere('c.product_id=:prId')
+            $qb->andWhere('c.session_id = :sessionId')
+                ->andWhere('IDENTITY(c.product) = :prId')
                 ->setParameters(array('sessionId' => $sessionId, 'prId' => $prId));
         }
         return $qb->getQuery()->getResult();
