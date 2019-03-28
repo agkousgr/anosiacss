@@ -19,6 +19,7 @@ class CartRepository extends EntityRepository
     public function getCartBySession($sessionId): array
     {
         $qb = $this->createQueryBuilder('c')
+            ->join('c.product', 'p')
             ->andWhere('c.session_id=:sessionId')
             ->setParameter('sessionId', $sessionId)
             ->getQuery();
@@ -33,6 +34,7 @@ class CartRepository extends EntityRepository
     public function getCartByUser($username): array
     {
         $qb = $this->createQueryBuilder('c')
+            ->join('c.product', 'p')
             ->andWhere('c.username=:username')
             ->setParameter('username', $username)
             ->getQuery();

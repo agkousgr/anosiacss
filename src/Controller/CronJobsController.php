@@ -2,7 +2,7 @@
 
 namespace App\Controller;
 
-use App\Entity\{AvailabilityTypes, Products};
+use App\Entity\{AvailabilityTypes, Product};
 use App\Service\{
     CronJobsService, ProductService, SoftoneLogin
 };
@@ -32,12 +32,15 @@ class CronJobsController extends AbstractController
     public function synchronizeProducts(ProductService $productService, LoggerInterface $logger)
     {
 //        $cmd = $this->em->getClassMetadata($pr);
-        $connection = $this->em->getConnection();
-        $connection->beginTransaction();
+//        $connection = $this->em->getConnection();
+//        $connection->beginTransaction();
         $prevName = '';
         $duplicates = [];
         try {
-            $s1products = $productService->getItems('null', 'null', 4000, 'NameDesc', -1, 'null', 'null', 'null', 1, 'null', 0);
+            $count = $productService->getItemsCount('null', 'null', 'null', 1, 'null');
+            echo($count);
+            die();
+            $s1products = $productService->getItems('null', 'null', 10000, 'NameAsc', -1, 'null', 'null', 'null', 1, 'null', 0);
             if ($s1products) {
 //                $connection->query('SET FOREIGN_KEY_CHECKS=0');
 //                $connection->query('DELETE FROM products');
@@ -46,12 +49,12 @@ class CronJobsController extends AbstractController
 //                $connection->query('SET FOREIGN_KEY_CHECKS=1');
 //                $connection->commit();
                 foreach ($s1products as $s1product) {
-                    if ($prevName === strval($s1product['name'])) {
-                        $duplicates[] = strval($s1product['name']);
-                        continue;
-                    } else {
-                        $prevName = strval($s1product['name']);
-                    }
+//                    if ($prevName === strval($s1product['name'])) {
+//                        $duplicates[] = strval($s1product['name']);
+//                        continue;
+//                    } else {
+//                        $prevName = strval($s1product['name']);
+//                    }
 
 
 //                    dump(strval($s1product['id']));
@@ -59,18 +62,17 @@ class CronJobsController extends AbstractController
 //                        dump($s1product);
 //                    }
 
-                    $pr = $this->em->getRepository(Products::class)->find(intval($s1product['id']));
+                    $pr = $this->em->getRepository(Product::class)->find(intval($s1product['id']));
                     if ($pr) {
                         $pr->setSlug(strval($s1product['slug']));
                         $pr->setPrCode(strval($s1product['prCode']));
                         $pr->setBarcode(strval($s1product['mainBarcode']));
                         $pr->setProductName(strval($s1product['name']));
                         $pr->setImage(strval($s1product['imageUrl']));
-                        $this->em->persist($pr);
                         $this->em->flush();
                     } else {
                         if (strval($s1product['id']) !== '') {
-                            $pr = new Products();
+                            $pr = new Product();
                             $pr->setId(intval($s1product['id']));
                             $pr->setSlug(strval($s1product['slug']));
                             $pr->setPrCode(strval($s1product['prCode']));
@@ -88,7 +90,7 @@ class CronJobsController extends AbstractController
             return;
         } catch (\Exception $e) {
             $logger->error(__METHOD__ . ' -> {message}', ['message' => $e->getMessage()]);
-            $connection->rollback();
+//            $connection->rollback();
             throw $e;
         }
     }

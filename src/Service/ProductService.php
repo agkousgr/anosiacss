@@ -107,7 +107,9 @@ class ProductService
     <HighPrice>$highPrice</HighPrice>
     <IsVisibleCategory>-1</IsVisibleCategory>
     <WebVisible>$webVisible</WebVisible>
-    <IsActive>-1</IsActive>    
+    <IsActive>1</IsActive>  
+    <IsSuggested>-1</IsSuggested>
+    <JoinedCategories>0</JoinedCategories>  
 </ClientGetCategoryItemsRequest>
 EOF;
         try {
@@ -158,12 +160,14 @@ EOF;
     <IsVisibleCategory>-1</IsVisibleCategory>
     <WebVisible>$webVisible</WebVisible>
     <IsActive>-1</IsActive>  
+    <IsSuggested>-1</IsSuggested>
+    <JoinedCategories>0</JoinedCategories>
 </ClientGetCategoryItemsCountRequest>
 EOF;
         try {
             $result = $this->client->SendMessage(['Message' => $message]);
             $items = simplexml_load_string(str_replace("utf-16", "utf-8", $result->SendMessageResult));
-
+            dump($message, $result);
             return $items->GetDataRows->GetCategoryItemsCountRow;
         } catch (\SoapFault $sf) {
             echo $sf->faultstring;
@@ -319,14 +323,13 @@ EOF;
     <LowPrice>$lowPrice</LowPrice>
     <HighPrice>$highPrice</HighPrice>
     <WebVisible>$webVisible</WebVisible>
-    <IsActive>-1</IsActive>  
+    <IsActive>1</IsActive>  
 </ClientGetItemsCountRequest>
 EOF;
 
         try {
             $result = $this->client->SendMessage(['Message' => $message]);
             $items = simplexml_load_string(str_replace("utf-16", "utf-8", $result->SendMessageResult));
-
             return (int)$items->GetDataRows->GetItemsCountRow->Count;
         } catch (\SoapFault $sf) {
             echo $sf->faultstring;
@@ -490,6 +493,7 @@ EOF;
     private function initializeProposalProducts($products)
     {
         try {
+            // Todo: Replace OldSlug with Slug
             $prArr = [];
             $i = 0;
             foreach ($products as $pr) {
@@ -498,7 +502,7 @@ EOF;
                     'name' => $pr->Name2,
                     'summary' => strip_tags($pr->SmallDescriptionHTML),
                     'prCode' => $pr->Code,
-                    'slug' => $pr->Slug,
+                    'slug' => $pr->OldSlug,
                     'isVisible' => $pr->WebVisible,
                     'retailPrice' => $pr->RetailPrice,
                     'discount' => $pr->Discount,

@@ -3,7 +3,7 @@
 
 namespace App\Form\Type;
 
-use App\Entity\Products;
+use App\Entity\Product;
 use Doctrine\ORM\EntityRepository;
 use Symfony\Bridge\Doctrine\Form\Type\EntityType;
 use Symfony\Component\Form\AbstractType;
@@ -51,7 +51,7 @@ class LatestOffersType extends AbstractType
     public function configureOptions(OptionsResolver $resolver)
     {
         $resolver->setDefaults(array(
-            'data_class' => Products::class,
+            'data_class' => Product::class,
         ));
     }
 }

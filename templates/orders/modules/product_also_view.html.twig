@@ -67,14 +67,12 @@
                                 {#{% if (pr.remainNotReserved > "0" or pr.webFree == "true") and pr.outOfStock == "false" %}#}
                                 {% if pr.outOfStock == "false" and (pr.remainNotReserved|number_format() > 0 or pr.webFree == "true") %}
                                     <span class="available-now">
-                                        <link itemprop="availability"
-                                              href="https://schema.org/InStock">
+                                        <link itemprop="availability" href="https://schema.org/InStock">
                                         Διαθέσιμο
                                     </span>
                                 {% else %}
                                     <span class="out-of-stock">
-                                        <link itemprop="availability"
-                                              href="https://schema.org/InStock">
+                                        <link itemprop="availability" href="https://schema.org/InStock">
                                         Μη διαθέσιμο
                                     </span>
                                 {% endif %}
@@ -84,7 +82,5 @@
                 </div>
             </div>
         {% endfor %}
-
-
     </div>
 </div>

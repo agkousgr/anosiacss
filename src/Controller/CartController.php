@@ -26,7 +26,7 @@ class CartController extends MainController
             $couponDiscount = (!empty($this->session->get('couponDisc'))) ? $this->session->get('couponDisc') : 0;
             $couponDiscountPerc = (!empty($this->session->get('couponDiscPerc'))) ? $this->session->get('couponDiscPerc') : 0;
             $couponName = (!empty($this->session->get('couponName'))) ? $this->session->get('couponName') : '';
-            dump($couponDiscount, $couponDiscountPerc);
+
             return ($this->render('orders/cart.html.twig', [
                 'categories' => $this->categories,
                 'topSellers' => $this->topSellers,

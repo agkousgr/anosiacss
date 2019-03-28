@@ -181,8 +181,9 @@ class MainController extends AbstractController
         }
 
         if ($cartArr) {
-            foreach ($cartArr as $key => $val) {
-                $cartIds .= $val->getProductId() . ',';
+            dump($cartArr);
+            foreach ($cartArr as $item) {
+                $cartIds .= $item->getProduct()->getId() . ',';
 //                $this->totalCartItems = $this->totalCartItems + 1*$val->getQuantity();
                 $this->totalCartItems = $this->totalCartItems + 1;
             }

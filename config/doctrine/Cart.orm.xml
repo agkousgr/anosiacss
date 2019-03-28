@@ -8,7 +8,9 @@
         </id>
         <field name="username" nullable="true" length="150" />
         <field name="session_id" nullable="true" length="150" />
-        <field name="product_id" type="integer" />
+        <many-to-one field="product" target-entity="App\Entity\Product">
+            <join-column name="product_id" nullable="false"/>
+        </many-to-one>
         <field name="quantity" type="integer" />
         <field name="createdAt" type="datetime">
             <gedmo:timestampable on="create" />

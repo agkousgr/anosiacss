@@ -23,7 +23,7 @@ search:
     options:
         expose: true
 
-# Products
+# Product
 products_list:
     path: /products/{slug}/{page}
     controller: App\Controller\ProductController::listProducts

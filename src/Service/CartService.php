@@ -76,7 +76,7 @@ class CartService
      */
     public function getCartItems($ids, $cartArr, $pagesize, $highPrice = -1)
     {
-        $pagesize = ($pagesize !== 1) ? $pagesize : 2 ;
+        $pagesize = ($pagesize !== 1) ? $pagesize : 2;
         $message = <<<EOF
 <?xml version="1.0" encoding="utf-16"?>
 <ClientGetItemsRequest>
@@ -105,7 +105,6 @@ EOF;
             $result = $this->client->SendMessage(['Message' => $message]);
             $items = simplexml_load_string(str_replace("utf-16", "utf-8", $result->SendMessageResult));
             $itemsArr = $this->initializeProducts($items->GetDataRows->GetItemsRow, $cartArr);
-
             return $itemsArr;
         } catch (\SoapFault $sf) {
             echo $sf->faultstring;
@@ -124,28 +123,32 @@ EOF;
             $prArr = array();
             $subTotal = 0;
             $i = 0;
+            // Todo: Replace OldSlug with Slug
             foreach ($products as $pr) {
-                $subTotal += $pr->WebPrice;
-                $prArr[] = array(
-                    'id' => $pr->ID,
-                    'name' => $pr->Name2,
-                    'isVisible' => $pr->WebVisible,
-                    'retailPrice' => $pr->RetailPrice,
-                    'discount' => $pr->Discount,
-                    'webDiscount' => $pr->WebDiscountPerc,
-                    'webPrice' => ($pr->Discount) ? round((floatval($pr->RetailPrice) * (100 - floatval($pr->Discount))/100), 2) : 0,
-                    'outOfStock' => $pr->OutOfStock,
-                    'remainNotReserved' => $pr->RemainNotReserved,
-                    'webFree' => $pr->WebFree,
-                    'overAvailability' => $pr->OverAvailability,
-                    'maxByOrder' => $pr->MaxByOrder,
-                    'hasMainImage' => $pr->HasMainPhoto,
-                    'imageUrl' => ($pr->HasMainPhoto) ? 'https://caron.cloudsystems.gr/FOeshopAPIWeb/DF.aspx?' . str_replace('[Serial]', '01102472475217', str_replace('&amp;', '&', $pr->MainPhotoUrl)) : '',
-                    'cartSubTotal' => $subTotal,
-                    'cartId' => $cartArr[$i]->getId(),
-                    'quantity' => $cartArr[$i]->getQuantity()
-                );
-                $i++;
+                if ($pr->WebVisible) {
+                    $subTotal += $pr->WebPrice;
+                    $prArr[] = array(
+                        'id' => $pr->ID,
+                        'name' => $pr->Name2,
+                        'isVisible' => $pr->WebVisible,
+                        'retailPrice' => $pr->RetailPrice,
+                        'slug' => $pr->OldSlug,
+                        'discount' => $pr->Discount,
+                        'webDiscount' => $pr->WebDiscountPerc,
+                        'webPrice' => ($pr->Discount) ? round((floatval($pr->RetailPrice) * (100 - floatval($pr->Discount)) / 100), 2) : 0,
+                        'outOfStock' => $pr->OutOfStock,
+                        'remainNotReserved' => $pr->RemainNotReserved,
+                        'webFree' => $pr->WebFree,
+                        'overAvailability' => $pr->OverAvailability,
+                        'maxByOrder' => $pr->MaxByOrder,
+                        'hasMainImage' => $pr->HasMainPhoto,
+                        'imageUrl' => ($pr->HasMainPhoto) ? 'https://caron.cloudsystems.gr/FOeshopAPIWeb/DF.aspx?' . str_replace('[Serial]', '01102472475217', str_replace('&amp;', '&', $pr->MainPhotoUrl)) : '',
+                        'cartSubTotal' => $subTotal,
+                        'cartId' => $cartArr[$i]->getId(),
+                        'quantity' => $cartArr[$i]->getQuantity()
+                    );
+                    $i++;
+                }
             }
 //            'manufacturer' => $pr->ManufactorName
 //            return new Response(dump(print_r($this->prCategories)));
