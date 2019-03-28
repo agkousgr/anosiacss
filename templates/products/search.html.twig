@@ -106,7 +106,7 @@
                                                                 {#src="{{ pr.imageUrl }}"#}
                                                                 {#alt="{{ pr.name }}">#}
                                                     {#</div>#}
-                                                    <a href="{{ path('product_view', {'id':pr.id}) }}"><img
+                                                    <a href="{{ path('product_view', {'slug': pr.slug}) }}"><img
                                                                 src="{{ pr.imageUrl }}"
                                                                 alt="{{ pr.name }}"></a>
                                                 </div>
@@ -119,7 +119,7 @@
                                                             {% else %}
                                                                 {% set hoverText = pr.name|title|truncate(90, true)|raw %}
                                                             {% endif %}
-                                                            <a href="{{ path('product_view', {'id':pr.id}) }}">{{ hoverText }}</a>
+                                                            <a href="{{ path('product_view', {'slug': pr.slug}) }}">{{ hoverText }}</a>
                                                         </div>
                                                         {#<div class="star"><i class="fa fa-star"></i><i#}
                                                         {#class="fa fa-star"></i><i#}
@@ -150,7 +150,7 @@
                                                 </div>
                                                 <div class="product-short-info">
                                                     <div class="product-name">
-                                                        <a href="{{ path('product_view', {'id':pr.id}) }}">{{ pr.name|title }}</a>
+                                                        <a href="{{ path('product_view', {'slug': pr.slug}) }}">{{ pr.name|title }}</a>
                                                     </div>
                                                     {#<div class="star"><i class="fa fa-star"></i><i class="fa fa-star"></i><i#}
                                                     {#class="fa fa-star"></i><i class="fa fa-star"></i><i#}

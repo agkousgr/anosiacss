@@ -5,7 +5,7 @@ namespace App\Controller\Admin;
 use App\Entity\AdminCategory;
 use App\Entity\HomePageModules;
 use App\Entity\HomePageOurCorner;
-use App\Entity\Products;
+use App\Entity\Product;
 use App\Entity\Slider;
 use App\Form\Type\OurCornerType;
 use App\Form\Type\SliderType;
@@ -72,7 +72,7 @@ class HomePageModulesController extends AbstractController
     public function latestOffers(EntityManagerInterface $em, LoggerInterface $logger)
     {
         try {
-            $offers = $em->getRepository(Products::class)->getLatestOffers();
+            $offers = $em->getRepository(Product::class)->getLatestOffers();
             return $this->render('Admin/homepage_modules/latest_offers/list.html.twig', [
                 'offers' => $offers
             ]);
@@ -88,7 +88,7 @@ class HomePageModulesController extends AbstractController
             $prId = $request->query->get('id');
 
             if ($prId) {
-                $pr = $em->getRepository(Products::class)->find($prId);
+                $pr = $em->getRepository(Product::class)->find($prId);
 
                 $pr->setLatestOffer();
                 $em->persist($pr);
@@ -109,7 +109,7 @@ class HomePageModulesController extends AbstractController
     public function latestOfferUpdate(EntityManagerInterface $em, LoggerInterface $logger)
     {
         try {
-            $offers = $em->getRepository(Products::class)->getLatestOffers();
+            $offers = $em->getRepository(Product::class)->getLatestOffers();
             return $this->render('Admin/homepage_modules/latest_offers/list.html.twig', [
                 'offers' => $offers
             ]);

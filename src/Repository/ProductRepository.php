@@ -4,7 +4,7 @@ namespace App\Repository;
 
 use Doctrine\ORM\EntityRepository;
 
-class ProductsRepository extends EntityRepository
+class ProductRepository extends EntityRepository
 {
     public function search(string $keyword, string $transliterated): array
     {

@@ -115,7 +115,6 @@ EOF;
         try {
             $itemsArr = [];
             $result = $this->client->SendMessage(['Message' => $message]);
-            dump($message, $result);
             $items = simplexml_load_string(str_replace("utf-16", "utf-8", $result->SendMessageResult));
             if ($items !== false) {
                 $itemsArr = $this->initializeProducts($items->GetDataRows->GetCategoryItemsRow);
@@ -168,7 +167,7 @@ EOF;
         try {
             $result = $this->client->SendMessage(['Message' => $message]);
             $items = simplexml_load_string(str_replace("utf-16", "utf-8", $result->SendMessageResult));
-
+            dump($message, $result);
             return $items->GetDataRows->GetCategoryItemsCountRow;
         } catch (\SoapFault $sf) {
             echo $sf->faultstring;
@@ -494,6 +493,7 @@ EOF;
     private function initializeProposalProducts($products)
     {
         try {
+            // Todo: Replace OldSlug with Slug
             $prArr = [];
             $i = 0;
             foreach ($products as $pr) {
@@ -502,7 +502,7 @@ EOF;
                     'name' => $pr->Name2,
                     'summary' => strip_tags($pr->SmallDescriptionHTML),
                     'prCode' => $pr->Code,
-                    'slug' => $pr->Slug,
+                    'slug' => $pr->OldSlug,
                     'isVisible' => $pr->WebVisible,
                     'retailPrice' => $pr->RetailPrice,
                     'discount' => $pr->Discount,

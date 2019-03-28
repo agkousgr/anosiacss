@@ -32,9 +32,9 @@ class Cart
     private $session_id;
 
     /**
-     * @var int
+     * @var \App\Entity\Product|null
      */
-    private $product_id;
+    private $product;
 
     /**
      * @var int
@@ -74,19 +74,21 @@ class Cart
     }
 
     /**
-     * @return int
+     * @return Product|null
      */
-    public function getProductId(): int
+    public function getProduct(): ?Product
     {
-        return $this->product_id;
+        return $this->product;
     }
 
     /**
-     * @param int $product_id
+     * @param Product|null $product
+     * @return Cart
      */
-    public function setProductId(int $product_id): void
+    public function setProduct(?Product $product): Cart
     {
-        $this->product_id = $product_id;
+        $this->product = $product;
+        return $this;
     }
 
     /**
@@ -112,6 +114,4 @@ class Cart
     {
         return $this->id;
     }
-
-
 }
