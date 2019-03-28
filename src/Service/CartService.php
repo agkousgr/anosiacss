@@ -123,7 +123,6 @@ EOF;
             $prArr = array();
             $subTotal = 0;
             $i = 0;
-            // Todo: Replace OldSlug with Slug
             foreach ($products as $pr) {
                 if ($pr->WebVisible) {
                     $subTotal += $pr->WebPrice;
@@ -132,7 +131,7 @@ EOF;
                         'name' => $pr->Name2,
                         'isVisible' => $pr->WebVisible,
                         'retailPrice' => $pr->RetailPrice,
-                        'slug' => $pr->OldSlug,
+                        'slug' => $pr->Slug,
                         'discount' => $pr->Discount,
                         'webDiscount' => $pr->WebDiscountPerc,
                         'webPrice' => ($pr->Discount) ? round((floatval($pr->RetailPrice) * (100 - floatval($pr->Discount)) / 100), 2) : 0,
