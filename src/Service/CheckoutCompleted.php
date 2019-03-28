@@ -34,10 +34,10 @@ class CheckoutCompleted
     /**
      * Constructor.
      *
-     * @param \App\Service\CheckoutService                               $checkoutService
-     * @param \App\Service\NewsletterService                             $newsletterService
+     * @param \App\Service\CheckoutService $checkoutService
+     * @param \App\Service\NewsletterService $newsletterService
      * @param \Symfony\Component\HttpFoundation\Session\SessionInterface $session
-     * @param \Symfony\Component\HttpFoundation\RequestStack             $requestStack
+     * @param \Symfony\Component\HttpFoundation\RequestStack $requestStack
      */
     public function __construct(
         CheckoutService $checkoutService, NewsletterService $newsletterService, SessionInterface $session, RequestStack $requestStack
@@ -49,7 +49,8 @@ class CheckoutCompleted
         $this->requestStack = $requestStack;
     }
 
-    public function handleSuccessfulPayment(array $cartItems): bool
+
+    public function handleSuccessfulPayment(array $cartItems): Checkout
     {
         $checkout = $this->session->get('curOrder');
         $orderResponse = $this->checkoutService->submitOrder($checkout, $cartItems);
@@ -64,10 +65,8 @@ class CheckoutCompleted
             $this->session->remove('couponName');
             $this->session->remove('couponId');
 
-            return true;
-        } else {
-            return false;
         }
+        return $checkout;
     }
 
     public function handleFailedPayment()

@@ -165,6 +165,7 @@ class MainController extends AbstractController
         $this->loggedClientId = ($this->session->get("anosiaClientId")) ?: null;
 
         $this->cartItems = $this->getCartItems();
+        dump($this->cartItems);
         $this->totalWishlistItems = $this->em->getRepository(Wishlist::class)->countWishlistItems($this->session->getId(), $this->loggedUser);
 
 

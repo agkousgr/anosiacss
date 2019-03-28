@@ -135,7 +135,6 @@ class CheckoutController extends MainController
         CheckoutService $checkoutService, EntityManagerInterface $em, PaypalService $paypalService, PireausRedirection $pireausRedirection
     )
     {
-        $onlinePaymentError = false;
         /** @var \App\Entity\Checkout */
         $checkout = $this->session->get('curOrder');
         $cartCost = $checkoutService->calculateCartCost($this->cartItems);
