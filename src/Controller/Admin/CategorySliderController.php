@@ -2,22 +2,20 @@
 
 namespace App\Controller\Admin;
 
-use App\Entity\Category;
-use App\Entity\Slider;
+use App\Entity\{Category, Slider};
 use App\Form\Type\CategorySliderType;
-use App\Service\FileUploader;
-use Doctrine\ORM\EntityManagerInterface;
-use Psr\Log\LoggerInterface;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Request;
+use Doctrine\ORM\EntityManagerInterface;
+use Psr\Log\LoggerInterface;
 
 class CategorySliderController extends AbstractController
 {
     public function list(EntityManagerInterface $em, LoggerInterface $logger)
     {
         try {
-            $categories = $em->getRepository(Category::class)->findBy(['isVisible' => true, 'parent' => null], ['priority' => 'ASC']);
-            dump($categories);
+            $categories = $em->getRepository(Category::class)->findBy(['isVisible' => true, 's1Level' => 0], ['priority' => 'ASC']);
+
             return $this->render('Admin/category_slider/list.html.twig', [
                 'categories' => $categories
             ]);
