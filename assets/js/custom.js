@@ -32,7 +32,12 @@ $(document).ready(function () {
             $("#keyword").val(ui.item.label);
         },
         minLength: 3
-    });
+    }).autocomplete('instance')._renderItem = function(ul, item) {
+        let innerHtml = '<img src="' + item.image + '" style="width: 80px; height: 80px;" />' + '<span>' + item.label + '</span>';
+        return $('<li>')
+            .append($('<div>' + innerHtml + '</div>'))
+            .appendTo(ul);
+    };
 
     $("#keyword").keypress(function (e) {
         if (e.which == 13) {

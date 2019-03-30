@@ -12,7 +12,7 @@ class ProductRepository extends EntityRepository
         if (count($arr) > 1) {
             $sql = "
                 SELECT *, MATCH (product_name) AGAINST ('" . $keyword . "') AS relevance
-                FROM products
+                FROM product
                 WHERE MATCH (product_name) AGAINST ('" . $keyword . "')
                 OR product_name LIKE '%" . $keyword . "%'
                 OR product_name LIKE '%" . $transliterated . "%'
@@ -26,7 +26,7 @@ class ProductRepository extends EntityRepository
         } else {
             $sql = "
                 SELECT *
-                FROM products
+                FROM product
                 WHERE product_name LIKE '%" . $keyword . "%'
                 OR product_name LIKE '%" . $transliterated . "%'
                 OR pr_code LIKE '%" . $keyword . "%'

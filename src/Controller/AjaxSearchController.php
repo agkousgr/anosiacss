@@ -24,7 +24,8 @@ class AjaxSearchController extends AbstractController
                         continue;
                     $resultArr[] = [
                         'value' => $val['slug'],
-                        'label' => $val['product_name'] . ' (Κωδ: ' . $val['pr_code'] .')'
+                        'label' => $val['product_name'] . ' (Κωδ: ' . $val['pr_code'] .')',
+                        'image' => $val['image']
                     ];
                 }
 
