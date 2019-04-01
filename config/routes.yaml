@@ -56,7 +56,7 @@ product_view:
     options:
         expose: true
 product_search:
-    path: /product/search/{page}
+    path: /search/results/{page}
     controller: App\Controller\ProductController::searchResults
     defaults: { page: 1 }
     requirements:
