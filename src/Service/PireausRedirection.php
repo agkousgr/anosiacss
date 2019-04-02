@@ -27,13 +27,15 @@ class PireausRedirection
 
     /**
      * @param $checkout
-     * @return SoapFault|\Exception
+     * @return SoapFault|\Exception|void
+     *
+     * @throws \SoapFault
      */
     public function submitOrderToPireaus($checkout)
     {
         $wsdl_uri = 'https://paycenter.piraeusbank.gr/services/tickets/issuer.asmx?WSDL';
         $arrContextOptions = array(
-            "ssl" => array(
+            "ssl"=>array(
                 "verify_peer" => false,
                 "verify_peer_name" => false,
                 "allow_self_signed" => true,
@@ -63,16 +65,16 @@ class PireausRedirection
             dump($params);
             $result = $ticket_issuer->IssueNewTicket(array('Request' => $params));
 
-            if (!$result) {
-                $checkout->setPireausResultCode(0);
-                return $checkout;
+            if ($result) {
+                $checkout->getPireausResultCode(0);
+                return;
             }
             dump($result);
             $checkout->setPireausResultCode($result->IssueNewTicketResult->ResultCode);
             $checkout->setPireausTranTicket($result->IssueNewTicketResult->TranTicket);
 
-            if (!$result->IssueNewTicketResult->ResultCode)
-                $this->initializeResultCode($checkout);
+
+            $this->initializeResultCode($checkout);
 
             return $checkout;
         } catch (SoapFault $sf) {

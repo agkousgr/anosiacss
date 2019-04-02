@@ -13,7 +13,7 @@ use Symfony\Component\HttpKernel\Exception\HttpException;
 
 class CheckoutController extends MainController
 {
-    public function checkout(Request $request, CheckoutService $checkoutService, UserAccountService $userAccountService, EntityManagerInterface $em, PaypalService $paypalService, PireausRedirection $pireausRedirection)
+    public function checkout(Request $request, CheckoutService $checkoutService, UserAccountService $userAccountService)
     {
         try {
             $addresses = array();
@@ -47,10 +47,6 @@ class CheckoutController extends MainController
             $step1Form->handleRequest($request);
             $step2Form = $this->createForm(CheckoutStep2Type::class, $checkout);
             $step2Form->handleRequest($request);
-//            $step3Form = $this->createForm(CheckoutStep3Type::class, $checkout);
-//            $step3Form->handleRequest($request);
-//            $step4Form = $this->createForm(CheckoutStep4Type::class, $checkout);
-//            $step4Form->handleRequest($request);
             if ($step1Form->isSubmitted() && $step1Form->isValid()) {
                 $curStep = 2;
                 if (null === $this->loggedUser) {
@@ -67,35 +63,15 @@ class CheckoutController extends MainController
                     $userAccountService->updateUserInfo($checkout);
                     $this->session->remove('addAddress');
                 }
-//            } elseif ($step2Form->isSubmitted() && $step2Form->isValid()) {
-//                if ($this->session->get("addAddress")) {
-//                    $userAccountService->updateUserInfo($checkout);
-//                    $this->session->remove('addAddress');
-//                }
-//                $curStep = 3;
             }
-//            elseif ($step3Form->isSubmitted() && $step3Form->isValid()) {
-//                if ($step3Form->get('shippingType')->getData() === '1000') {
-//                    $checkout->setShippingCost(2.00);
-//                }
-//                $curStep = 4;
-//            }
 
             if ($step2Form->isSubmitted() && $step2Form->isValid()) {
-//                if (null === $this->loggedUser && 'Success' !== $createUserResult = $userAccountService->createUser($checkout)) {
-//                    $curStep = 4;
-//                    $this->addFlash(
-//                        'notice',
-//                        'Παρουσιάστηκε σφάλμα κατά την ολοκλήρωση της παραγγελίας σας. Κωδικός σφάλματος "' . $createUserResult . '"! Αν δεν είναι η πρώτη φορά που βλέπετε αυτό το σφάλμα παρακαλούμε επικοινωνείστε μαζί μας.'
-//                    );
-//                } else {
                 $cartCost = $checkoutService->calculateCartCost($this->cartItems);
                 if ($step2Form->get('paymentType')->getData() === '1007' && $cartCost < 39) {
                     $checkout->setAntikatavoliCost(1.50);
                 } else {
                     $checkout->setAntikatavoliCost(0);
                 }
-                $curStep = 4;
                 return $this->json(['success' => true]);
             }
 //            }
@@ -120,8 +96,6 @@ class CheckoutController extends MainController
                 'checkout' => $checkout,
                 'step1Form' => $step1Form->createView(),
                 'step2Form' => $step2Form->createView(),
-//                'step3Form' => $step3Form->createView(),
-//                'step4Form' => $step4Form->createView(),
                 'curStep' => $curStep,
                 'loginUrl' => $this->loginUrl
             ]));
@@ -132,15 +106,14 @@ class CheckoutController extends MainController
     }
 
     public function completeCheckout(
-        CheckoutService $checkoutService, EntityManagerInterface $em, PaypalService $paypalService, PireausRedirection $pireausRedirection
-    )
+        CheckoutService $checkoutService, EntityManagerInterface $em, PaypalService $paypalService)
     {
         /** @var \App\Entity\Checkout */
         $checkout = $this->session->get('curOrder');
         $cartCost = $checkoutService->calculateCartCost($this->cartItems);
         $checkout->setTotalOrderCost($cartCost + $checkout->getAntikatavoliCost() + $checkout->getShippingCost());
-        $orderWebId = $em->getRepository(OrdersWebId::class)->find(1);
-        $checkout->setOrderNo($orderWebId->getOrderNumber() + 1);
+        $orderCode = $em->getRepository(OrdersWebId::class)->find(1);
+        $checkout->setOrderNo(intval(str_replace('ORDER', $orderCode->getOrderNumber())) + 1);
         // Check if necessary at this point
         $em->flush();
         if ($checkout->getPaymentType() === '1006') {
@@ -163,8 +136,8 @@ class CheckoutController extends MainController
         $checkout = $this->session->get('curOrder');
         $cartCost = $checkoutService->calculateCartCost($this->cartItems);
 
-        $orderWebId = $em->getRepository(OrdersWebId::class)->find(1);
-        $checkout->setOrderNo($orderWebId->getOrderNumber() + 1);
+        $orderCode = $em->getRepository(OrdersWebId::class)->find(1);
+        $checkout->setOrderNo(intval(str_replace('ORDER', $orderCode->getOrderNumber())) + 1);
         $checkout->setTotalOrderCost($cartCost + $checkout->getAntikatavoliCost() + $checkout->getShippingCost());
         $checkout->setInstallments(0);
         $checkout = $pireausRedirection->submitOrderToPireaus($checkout);

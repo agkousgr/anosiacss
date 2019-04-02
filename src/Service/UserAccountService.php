@@ -147,9 +147,10 @@ EOF;
     }
 
     /**
-     * @param \App\Entity\WebUser
-     *
+     * @param $user
      * @return int
+     *
+     * @throws \SoapFault
      */
     private function updateClient($user)
     {
@@ -555,7 +556,10 @@ EOF;
     /**
      * @param $username
      * @param $password
+     *
      * @return string
+     *
+     * @throws \SoapFault
      */
     public function login($username, $password)
     {
@@ -570,15 +574,17 @@ EOF;
     <AuthID>$this->authId</AuthID>
     <AppID>$this->appId</AppID>
     <CompanyID>$this->companyId</CompanyID>
-    <pagesize>1</pagesize>
+    <pagesize>10</pagesize>
     <pagenumber>0</pagenumber>
     <Username>$username</Username>
     <Password>null</Password>
     <Email>null</Email>
+    <ConfirmationToken>null</ConfirmationToken>
 </ClientGetUsersRequest>
 EOF;
         try {
             $result = $client->SendMessage(['Message' => $message]);
+            dump($message, $result);
             $userData = simplexml_load_string(str_replace("utf-16", "utf-8", $result->SendMessageResult));
             if ((int)$userData->RowsCount === 0) {
                 return '';

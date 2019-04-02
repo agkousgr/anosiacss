@@ -203,13 +203,21 @@ EOF;
         }
     }
 
+    /**
+     * Append session cart items to user's cart
+     *
+     * @param $em
+     * @param $username
+     *
+     * @throws \Exception
+     */
     public function assignSessionToUserCart($em, $username)
     {
         try {
             $cartItems = $em->getRepository(Cart::class)->getCartBySession($this->session->getId());
             if ($cartItems) {
                 foreach ($cartItems as $item) {
-                    $cartItem = $em->getRepository(Cart::class)->findOneBy(['product_id' => $item->getProductId(), 'username' => $username]);
+                    $cartItem = $em->getRepository(Cart::class)->findOneBy(['product' => $item->getProduct()->getId(), 'username' => $username]);
                     if ($cartItem) {
                         $cartItem->setQuantity($item->getQuantity());
                         $em->persist($cartItem);

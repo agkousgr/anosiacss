@@ -5,7 +5,7 @@
         <id name="id" type="integer">
             <generator strategy="AUTO"/>
         </id>
-        <field name="orderNumber" type="integer" />
+        <field name="orderCode" length="100" />
     </entity>
 
 </doctrine-mapping>
