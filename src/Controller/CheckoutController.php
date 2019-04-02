@@ -112,8 +112,8 @@ class CheckoutController extends MainController
         $checkout = $this->session->get('curOrder');
         $cartCost = $checkoutService->calculateCartCost($this->cartItems);
         $checkout->setTotalOrderCost($cartCost + $checkout->getAntikatavoliCost() + $checkout->getShippingCost());
-        $orderCode = $em->getRepository(OrdersWebId::class)->find(1);
-        $checkout->setOrderNo(intval(str_replace('ORDER', $orderCode->getOrderNumber())) + 1);
+//        $orderCode = $em->getRepository(OrdersWebId::class)->find(1);
+//        $checkout->setOrderNo(intval(str_replace('ORDER', $orderCode->getOrderNumber())) + 1);
         // Check if necessary at this point
         $em->flush();
         if ($checkout->getPaymentType() === '1006') {
@@ -131,15 +131,17 @@ class CheckoutController extends MainController
         }
     }
 
-    public function getPireausTicket(CheckoutService $checkoutService, EntityManagerInterface $em, PireausRedirection $pireausRedirection)
+    public function getPireausTicket(Request $request, CheckoutService $checkoutService, PireausRedirection $pireausRedirection)
     {
+        $installments = ($request->request->get('installments') && $request->request->get('installments') <= 6) ? $request->request->get('installments') : 0;
+        dump($installments);
         $checkout = $this->session->get('curOrder');
         $cartCost = $checkoutService->calculateCartCost($this->cartItems);
 
-        $orderCode = $em->getRepository(OrdersWebId::class)->find(1);
-        $checkout->setOrderNo(intval(str_replace('ORDER', $orderCode->getOrderNumber())) + 1);
+        $orderCode = ($this->loggedClientId) ? $this->loggedClientId . '-' . time() : random(100,999) . '-' . time();
+        $checkout->setOrderNo($orderCode);
         $checkout->setTotalOrderCost($cartCost + $checkout->getAntikatavoliCost() + $checkout->getShippingCost());
-        $checkout->setInstallments(0);
+        $checkout->setInstallments($installments);
         $checkout = $pireausRedirection->submitOrderToPireaus($checkout);
         $this->session->set('curOrder', $checkout);
         dump($checkout);
