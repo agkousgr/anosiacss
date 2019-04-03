@@ -147,10 +147,9 @@ EOF;
     }
 
     /**
-     * @param $user
-     * @return int
+     * @param \App\Entity\WebUser
      *
-     * @throws \SoapFault
+     * @return int
      */
     private function updateClient($user)
     {
@@ -248,6 +247,51 @@ EOF;
             } else {
                 return false;
             }
+        } catch (\SoapFault $sf) {
+            echo $sf->faultstring;
+        }
+    }
+
+    public function updateUserAfterForgotPassword(array $userData)
+    {
+        $client = new \SoapClient('http://caron.cloudsystems.gr/FOeshopWS/ForeignOffice.FOeshop.API.FOeshopSvc.svc?singleWsdl', ['trace' => true, 'exceptions' => true,]);
+        $id = $userData['ID'];
+        $username = $userData['Username'];
+        $password = $userData['Password'];
+        $clientId = $userData['ClientID'];
+        $lastLogin = $userData['LastLoginDT'];
+        $token = $userData['ConfirmationToken'];
+        $requestedAt = $userData['PasswordRequestedDT'];
+        $counter = $userData['PasswordRequestCounter'];
+        $isActive = $userData['IsActive'];
+
+        $message = <<<EOF
+<?xml version="1.0" encoding="utf-16"?>
+<ClientSetUserRequest>
+    <Type>1022</Type>
+    <Kind>$this->kind</Kind>
+    <Domain>$this->domain</Domain>
+    <Key>$id</Key>
+    <AuthID>$this->authId</AuthID>
+    <AppID>$this->appId</AppID>
+    <CompanyID>$this->companyId</CompanyID>
+    <Username>$username</Username>
+    <Password>$password</Password>
+    <ClientID>$clientId</ClientID>
+    <LastLoginDT>$lastLogin</LastLoginDT>
+    <ConfirmationToken>$token</ConfirmationToken>
+    <PasswordRequestDT>$requestedAt</PasswordRequestDT>
+    <PasswordRequestCounter>$counter</PasswordRequestCounter>
+    <ConfirmationRequestDT>$requestedAt</ConfirmationRequestDT>
+    <IsActive>$isActive</IsActive>
+</ClientSetUserRequest>
+EOF;
+
+        try {
+            $result = $client->SendMessage(['Message' => $message]);
+            $userResult = simplexml_load_string(str_replace("utf-16", "utf-8", $result->SendMessageResult));
+
+            return (string)$userResult->ErrorCode === 'None';
         } catch (\SoapFault $sf) {
             echo $sf->faultstring;
         }
@@ -556,10 +600,7 @@ EOF;
     /**
      * @param $username
      * @param $password
-     *
      * @return string
-     *
-     * @throws \SoapFault
      */
     public function login($username, $password)
     {
@@ -574,7 +615,7 @@ EOF;
     <AuthID>$this->authId</AuthID>
     <AppID>$this->appId</AppID>
     <CompanyID>$this->companyId</CompanyID>
-    <pagesize>10</pagesize>
+    <pagesize>1</pagesize>
     <pagenumber>0</pagenumber>
     <Username>$username</Username>
     <Password>null</Password>
@@ -584,7 +625,6 @@ EOF;
 EOF;
         try {
             $result = $client->SendMessage(['Message' => $message]);
-            dump($message, $result);
             $userData = simplexml_load_string(str_replace("utf-16", "utf-8", $result->SendMessageResult));
             if ((int)$userData->RowsCount === 0) {
                 return '';
@@ -613,7 +653,7 @@ EOF;
      *
      * @return \SimpleXMLElement|bool
      */
-    public function getUser($username = 'null', $user, $address = null) // remove nulls in production
+    public function getUser($username = 'null', $user = null, $address = null) // remove nulls in production
     {
         $client = new \SoapClient('http://caron.cloudsystems.gr/FOeshopWS/ForeignOffice.FOeshop.API.FOeshopSvc.svc?singleWsdl', ['trace' => true, 'exceptions' => true,]);
 
@@ -626,11 +666,12 @@ EOF;
     <AuthID>$this->authId</AuthID>
     <AppID>$this->appId</AppID>
     <CompanyID>$this->companyId</CompanyID>
-    <pagesize>20</pagesize>
+    <pagesize>1</pagesize>
     <pagenumber>0</pagenumber>
     <Username>$username</Username>
     <Password>null</Password>
     <Email>null</Email>
+    <ConfirmationToken>null</ConfirmationToken>
 </ClientGetUsersRequest>
 EOF;
         try {
@@ -643,10 +684,48 @@ EOF;
             if (null !== $address) {
                 $address->setClient($userXML->ClientID);
             } else {
-                (null !== $userXML->Username && $user) ? $user->setUsername($userXML->Username) : $user->setUsername('');
-                (null !== $userXML->Password && $user) ? $user->setPassword($userXML->Password) : $user->setPassword('');
-                (null !== $userXML->ClientID && $user) ? $user->setClientId($userXML->ClientID) : $user->setClientId('');
+                if (null !== $user) {
+                    (null !== $userXML->Username) ? $user->setUsername($userXML->Username) : $user->setUsername('');
+                    (null !== $userXML->Username) ? $user->setPassword($userXML->Password) : $user->setPassword('');
+                    (null !== $userXML->Username) ? $user->setClientId($userXML->ClientID) : $user->setClientId('');
+                }
+
             }
+
+            return $userXML;
+        } catch (\SoapFault $sf) {
+            echo $sf->faultstring;
+        }
+    }
+
+    public function getUserByToken(string $token)
+    {
+        $client = new \SoapClient('http://caron.cloudsystems.gr/FOeshopWS/ForeignOffice.FOeshop.API.FOeshopSvc.svc?singleWsdl', ['trace' => true, 'exceptions' => true,]);
+
+        $message = <<<EOF
+<?xml version="1.0" encoding="utf-16"?>
+<ClientGetUsersRequest>
+    <Type>1015</Type>
+    <Kind>$this->kind</Kind>
+    <Domain>$this->domain</Domain>
+    <AuthID>$this->authId</AuthID>
+    <AppID>$this->appId</AppID>
+    <CompanyID>$this->companyId</CompanyID>
+    <pagesize>1</pagesize>
+    <pagenumber>0</pagenumber>
+    <Username>null</Username>
+    <Password>null</Password>
+    <Email>null</Email>
+    <ConfirmationToken>$token</ConfirmationToken>
+</ClientGetUsersRequest>
+EOF;
+        try {
+            $result = $client->SendMessage(['Message' => $message]);
+            $userResponse = simplexml_load_string(str_replace("utf-16", "utf-8", $result->SendMessageResult));
+            if ($userResponse === false) {
+                return false;
+            }
+            $userXML = $userResponse->GetDataRows->GetUsersRow;
 
             return $userXML;
         } catch (\SoapFault $sf) {

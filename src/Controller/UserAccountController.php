@@ -384,15 +384,17 @@ class UserAccountController extends MainController
             }
 
             $userData = [];
-            $dt = new \DateTime();
+            $dt = new \DateTime('now', new \DateTimeZone('Europe/Athens'));
             $confirmationToken = $tokenGenerator->generateToken();
+            $userData['ID'] = $user->ID;
             $userData['ConfirmationToken'] = $confirmationToken;
             $userData['PasswordRequestedDT'] = $dt->format('Y-m-d') . 'T' . $dt->format('H:i:s');
             $userData['ClientID'] = $user->ClientID;
             $userData['LastLoginDT'] = $user->LastLoginDT;
             $userData['Username'] = $user->Username;
             $userData['Password'] = $user->Password;
-            if (!$user->PasswordRequestCounter)
+            $userData['IsActive'] = $user->IsActive;
+            if (!intval($user->PasswordRequestCounter))
                 $userData['PasswordRequestCounter'] = 1;
             else
                 $userData['PasswordRequestCounter'] = intval($user->PasswordRequestCounter) + 1;
@@ -447,7 +449,8 @@ class UserAccountController extends MainController
     {
         try {
             $token = $request->query->getAlnum('token');
-            $user = $accountService->getUser($token);
+            $user = $accountService->getUserByToken($token);
+            dump($user);
             if (null === $token || false === $user) {
                 return $this->render('user/forgot_password.html.twig', [
                     'categories' => $this->categories,
@@ -464,7 +467,7 @@ class UserAccountController extends MainController
                 ]);
             }
 
-            $dt = new \DateTime($user->PasswordRequestDT);
+            $dt = new \DateTime($user->PasswordRequestDT, new \DateTimeZone('Europe/Athens'));
             if ($dt->getTimestamp() + self::$timeToLive < time()) {
                 return $this->render('user/forgot_password.html.twig', [
                     'categories' => $this->categories,
@@ -494,11 +497,17 @@ class UserAccountController extends MainController
             if ($form->isSubmitted() && $form->isValid()) {
                 $newPlainPass = $form->getData()['password'];
                 $userData = [];
+                $userData['ID'] = $user->ID;
+                $userData['ClientID'] = $user->ClientID;
+                $userData['LastLoginDT'] = $user->LastLoginDT;
+                $userData['Username'] = $user->Username;
+                $userData['IsActive'] = $user->IsActive;
+                $userData['PasswordRequestCounter'] = $user->PasswordRequestCounter;
                 $userData['Password'] = password_hash($newPlainPass, PASSWORD_DEFAULT);
-                $user['ConfirmationToken'] = null;
-                $user['PasswordRequestedDT'] = null;
+                $userData['ConfirmationToken'] = 'null';
+                $userData['PasswordRequestedDT'] = 'null';
 
-                // User data in SoftOne database should be updated at this point
+                $accountService->updateUserAfterForgotPassword($userData);
 
                 return $this->redirectToRoute('index');
             }
