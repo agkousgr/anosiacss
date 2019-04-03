@@ -206,6 +206,7 @@ EOF;
             if ($clientResponse === false) {
                 return;
             }
+            dump($result);
             $this->session->remove('curOrder');
             $userXML = $clientResponse->GetDataRows->GetClientsRow;
             list($firstname, $lastname) = explode(' ', $userXML->NAME . ' ');
@@ -451,7 +452,6 @@ EOF;
             $result = $this->client->SendMessage(['Message' => $message]);
             $orderResult = simplexml_load_string(str_replace("utf-16", "utf-8", $result->SendMessageResult));
             if ((string)$orderResult->IsValid === 'true') {
-                $checkout->setOrderNo($orderNo);
                 $this->em->flush();
                 return true;
             }

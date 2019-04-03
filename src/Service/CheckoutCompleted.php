@@ -76,7 +76,7 @@ class CheckoutCompleted
 
     private function saveNewsletter(Checkout $checkout)
     {
-        if ($checkout->isNewsletter()) {
+        if ($checkout->isNewsletter() && $checkout->getNewsletterId() === '') {
             $request = $this->requestStack->getCurrentRequest();
             $date = (new \DateTime())->format('Y-m-d H:i:s');
             $referrer = 'USER AGENT: ' . $request->headers->get('User-Agent') . ' REFERRER: ' . $request->headers->get('referer') . ' DATE: ' . $date;

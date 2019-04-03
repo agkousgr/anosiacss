@@ -69,7 +69,8 @@ $(document).ready(function () {
                     depends: function(element) {
                         return !shippingType1.is(":checked");
                     }
-                }
+                },
+                pattern: /^([^\x00-\x7F]|[a-zA-Z]|\s|\-)+\s+\d+(\-\d+)?$/ui,
             },
             'checkout_step1[zip]': {
                 required: {
@@ -151,8 +152,8 @@ $(document).ready(function () {
         messages: {
             'checkout_step1[firstname]': "Παρακαλώ συμπληρώστε το όνομά σας",
             'checkout_step1[lastname]': "Παρακαλώ συμπληρώστε το επώνυμό σας",
-            'checkout_step1[email]': "Παρακαλώ εισάγεται μια έγκυρη διεύθυνση email",
-            'checkout_step1[address]': 'Παρακαλώ συμπληρώστε τη διεύθυνσή σας',
+            'checkout_step1[email]': "Παρακαλώ συμπληρώστε μια έγκυρη διεύθυνση email",
+            'checkout_step1[address]': 'Παρακαλώ συμπληρώστε μια έγκυρη διεύθυνση',
             'checkout_step1[zip]': 'Παρακαλώ συμπληρώστε τον ταχυδρομικό σας κώδικα',
             'checkout_step1[city]': 'Παρακαλώ συμπληρώστε την πόλη σας',
             'checkout_step1[district]': 'Παρακαλώ συμπληρώστε την περιοχή σας',
@@ -220,8 +221,10 @@ $(document).ready(function () {
             // $('form[name="checkout_step2"]').submit();
             if ($('#checkout_step2_paymentType_2').prop('checked') === true) {
                 console.log('pireaus');
-
-                $.post(Routing.generate('get_pireaus_ticket'), function (result) {
+                let data = {
+                    'installments' : $('#installments').val()
+                };
+                $.post(Routing.generate('get_pireaus_ticket'), data, function (result) {
                     console.log(result);
                     if (result.success === true) {
                         if (result.checkout.pireausResultCode !== '0') {
@@ -253,22 +256,7 @@ $(document).ready(function () {
 
         }
     });
-    // $('#confirm-addresses').on('click', function (e) {
-    //     // e.preventDefault();
-    //     $('#checkout-personal-information-step').addClass('hidden');
-    //     $('#checkout-payment-step').removeClass('hidden');
-    //     $('#checkoutStep2').removeClass('disabled');
-    //     $("html, body").animate({scrollTop: 0}, 1000);
-    //     // return false;
-    //     //
-    //     // // // $('#tab-2').trigger('click');
-    //     // //
-    //     // let form = $('#checkout-personal-information-step').find('form');
-    //     // let formData = form.serialize();
-    //     // $.post(Routing.generate('checkout'), formData, function(response) {
-    //     //
-    //     // });
-    // });
+
 
     $('#checkoutStep1, #back-to-step-1').on('click', function (e) {
         e.preventDefault();
@@ -413,16 +401,6 @@ $(document).ready(function () {
 });
 
 function initializePaymentInfos() {
-    // $('#checkout_step1_shippingType_1').html('Για να δεσμευτεί μια παραγγελία έτσι ώστε να είναι δυνατή η παραλαβή της από το Φαρμακείο απαιτεί χρόνο τριών εως πέντε ωρών.\n' +
-    //     'Μόλις η παραγγελία σας είναι διαθέσιμη στο κατάστημα, θα επικοινωνήσουμε μαζί σας τηλεφωνικά για να περάσετε να παραλάβετε.');
-    // $('#checkout_step2_paymentType').css({'padding-top': '0'});
-    // $('#checkout_step2_paymentType_0').removeClass('hidden');
-    // $('#checkout_step2_paymentType_0').html('Παρακαλούμε καταθέστε το ακριβές τελικό ποσό της παραγγελίας σας στην Εθνική Τράπεζα, GR 11 0110 1740 0000 1744 0073 280 (Αρ. Λογαριασμού: 1744 0073 280), ή στην Τράπεζα Πειραιώς, GR 42 0172 0850 0050 8503 9845 834 (Αρ. Λογαριασμού: 5085 039845 834), ή στη Eurobank, GR 23 0260 0100 0004 8010 0400 234 (Αρ. Λογαριασμού: 0026.0010.48.0100400234).');
-    // $('#checkout_step2_paymentType_1').html('Η πληρωμή θα γίνει με μετρητά κατά την παραλαβή από το κατάστημα.');
-    // $('.checkout_step1_paymentType_2').html('Πληρώστε χρησιμοποιώντας την πιστωτική ή χρεωστική σας κάρτα');
-    // $('.checkout_step1_paymentType_3').html('<img src="http://anosia.democloudon.cloud/public/images/paypal.png" alt="Λογότυπο Αποδοχής PayPal"><br><a href="https://www.paypal.com/gr/webapps/mpp/paypal-popup" target="_blank">Τι είναι το PayPal;</a> <br>Πληρώστε με ασφάλεια μέσω PayPal.');
-    // $('.checkout_step1_paymentType_4').html('Έξοδα αντικαταβολής (1,5€) χρεώνονται μόνο σε παραγγελίες μικρότερες των 39€.\n' +
-    //     'Για παραγγελίες μεγαλύτερες των 39€ δεν χρεώνονται ούτε έξοδα αντικαταβολής, ούτε μεταφορικά.');
     $('[for="checkout_step2_paymentType_1"]').addClass('hidden');
 
     $('.checkout_step1_shippingType_1').html('Για να δεσμευτεί μια παραγγελία έτσι ώστε να είναι δυνατή η παραλαβή της από το Φαρμακείο απαιτεί χρόνο τριών εως πέντε ωρών.\n' +
@@ -457,6 +435,9 @@ function calculateAntikatovoli() {
         $('#cart-subtotal-pay-on-delivery').addClass('hidden');
     }
     let totalCost = $('#cart-cost').data('cost') + antikatavoliCost + shippingCost - couponDisc;
+    if (totalCost > 60) {
+        $('.checkout_step2_paymentType_2').html('Πληρώστε χρησιμοποιώντας την πιστωτική σας κάρτα έως 6 άτοκες δόσεις ή χρησιμοποιώντας την χρεωστική σας κάρτα<br><label class="form-control-label">Αριθμός δόσεων</label><input name="installments" id="installments" class="form-control" type="number" min="0" max="6" value="0" />');
+    }
     $('#total-cost').data('cost', totalCost.toFixed(2));
     let totalCostString = totalCost.toFixed(2);
     let newTotalCostString = totalCostString.replace('.', ',');

@@ -65,11 +65,11 @@ class PireausRedirection
             dump($params);
             $result = $ticket_issuer->IssueNewTicket(array('Request' => $params));
 
-            if ($result) {
-                $checkout->getPireausResultCode(0);
-                return;
-            }
             dump($result);
+//            if ($result) {
+//                $checkout->setPireausResultCode(0);
+//                return $checkout;
+//            }
             $checkout->setPireausResultCode($result->IssueNewTicketResult->ResultCode);
             $checkout->setPireausTranTicket($result->IssueNewTicketResult->TranTicket);
 
@@ -90,6 +90,10 @@ class PireausRedirection
     private function initializeResultCode($checkout)
     {
         switch ($checkout->getPireausResultCode()) {
+            case '0':
+                $checkout->setPireausResultDescription('Σύνδεση επιτυχής.');
+                $checkout->setPireausResultAction('Σύνδεση επιτυχής.');
+                break;
             case '1':
                 $checkout->setPireausResultDescription('Υπάρχει πρόβλημα με το Paycenter της τράπεζας Πειραιώς.');
                 $checkout->setPireausResultAction('Παρακαλώ δοκιμάστε αργότερα ή επιλέξτε διαφορετικό τύπο πληρωμής.');

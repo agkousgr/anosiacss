@@ -44,7 +44,7 @@ class PireausController extends MainController
                     ->setResponseCode($ResponseCode)
                     ->setPackageNo($PackageNo)
                     ->setAuthStatus($AuthStatus)
-                    ->setCreatedAt(new \DateTime())
+                    ->setCreatedAt(new \DateTime('now', new \DateTimeZone('Europe/Athens')))
                     ->setResponseDescription($request->request->get('ResponseDescription'))
                     ->setResultDescription($request->request->get('ResultDescription'));
                 $em->persist($pireaus);
@@ -106,7 +106,7 @@ class PireausController extends MainController
                 ->setResponseCode($request->request->get('ResponseCode'))
                 ->setPackageNo(intval($request->request->get('PackageNo')))
                 ->setAuthStatus($request->request->get('AuthStatus'))
-                ->setCreatedAt(new \DateTime())
+                ->setCreatedAt(new \DateTime('now', new \DateTimeZone('Europe/Athens')))
                 ->setResponseDescription($request->request->get('ResponseDescription'))
                 ->setResultDescription($request->request->get('ResultDescription'));
             $em->persist($pireaus);
