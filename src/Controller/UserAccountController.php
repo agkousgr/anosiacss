@@ -351,7 +351,7 @@ class UserAccountController extends MainController
         try {
             $email = $request->request->get('email');
             $user = $accountService->getUser($email);
-dump($user);
+
             if (false === $user || !isset($user->ID)) {
                 return $this->render('user/forgot_password.html.twig', [
                     'categories' => $this->categories,
@@ -450,7 +450,7 @@ dump($user);
         try {
             $token = $request->query->getAlnum('token');
             $user = $accountService->getUserByToken($token);
-            dump($user);
+
             if (null === $token || false === $user) {
                 return $this->render('user/forgot_password.html.twig', [
                     'categories' => $this->categories,

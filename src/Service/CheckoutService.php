@@ -206,6 +206,7 @@ EOF;
             if ($clientResponse === false) {
                 return;
             }
+            dump($result);
             $this->session->remove('curOrder');
             $userXML = $clientResponse->GetDataRows->GetClientsRow;
             list($firstname, $lastname) = explode(' ', $userXML->NAME . ' ');
@@ -394,7 +395,7 @@ EOF;
         if (!$checkout->getSeries())
             $checkout->setSeries('7023');
         $series = $checkout->getSeries();
-        $orderNo = $checkout->getOrderNo();
+        $orderNo = ($checkout->getOrderNo()) ?: ($this->session->get("anosiaClientId")) ? $this->session->get("anosiaClientId") . '-' . time() : random(100, 999) . '-' . time();
         $clientId = $checkout->getClientId();
         $comments = $checkout->getComments();
         $paymentType = $checkout->getPaymentType();
@@ -449,9 +450,9 @@ EOF;
         try {
 //            return true;
             $result = $this->client->SendMessage(['Message' => $message]);
+            dump($message, $result);
             $orderResult = simplexml_load_string(str_replace("utf-16", "utf-8", $result->SendMessageResult));
             if ((string)$orderResult->IsValid === 'true') {
-                $checkout->setOrderNo($orderNo);
                 $this->em->flush();
                 return true;
             }

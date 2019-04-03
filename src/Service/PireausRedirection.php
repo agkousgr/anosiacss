@@ -27,13 +27,15 @@ class PireausRedirection
 
     /**
      * @param $checkout
-     * @return SoapFault|\Exception
+     * @return SoapFault|\Exception|void
+     *
+     * @throws \SoapFault
      */
     public function submitOrderToPireaus($checkout)
     {
         $wsdl_uri = 'https://paycenter.piraeusbank.gr/services/tickets/issuer.asmx?WSDL';
         $arrContextOptions = array(
-            "ssl" => array(
+            "ssl"=>array(
                 "verify_peer" => false,
                 "verify_peer_name" => false,
                 "allow_self_signed" => true,
@@ -63,16 +65,16 @@ class PireausRedirection
             dump($params);
             $result = $ticket_issuer->IssueNewTicket(array('Request' => $params));
 
-            if (!$result) {
-                $checkout->setPireausResultCode(0);
-                return $checkout;
-            }
             dump($result);
+//            if ($result) {
+//                $checkout->setPireausResultCode(0);
+//                return $checkout;
+//            }
             $checkout->setPireausResultCode($result->IssueNewTicketResult->ResultCode);
             $checkout->setPireausTranTicket($result->IssueNewTicketResult->TranTicket);
 
-            if (!$result->IssueNewTicketResult->ResultCode)
-                $this->initializeResultCode($checkout);
+
+            $this->initializeResultCode($checkout);
 
             return $checkout;
         } catch (SoapFault $sf) {
@@ -88,6 +90,10 @@ class PireausRedirection
     private function initializeResultCode($checkout)
     {
         switch ($checkout->getPireausResultCode()) {
+            case '0':
+                $checkout->setPireausResultDescription('Σύνδεση επιτυχής.');
+                $checkout->setPireausResultAction('Σύνδεση επιτυχής.');
+                break;
             case '1':
                 $checkout->setPireausResultDescription('Υπάρχει πρόβλημα με το Paycenter της τράπεζας Πειραιώς.');
                 $checkout->setPireausResultAction('Παρακαλώ δοκιμάστε αργότερα ή επιλέξτε διαφορετικό τύπο πληρωμής.');

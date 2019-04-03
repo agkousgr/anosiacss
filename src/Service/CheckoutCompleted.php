@@ -52,9 +52,11 @@ class CheckoutCompleted
 
     public function handleSuccessfulPayment(array $cartItems): Checkout
     {
+        /** @var Checkout $checkout */
         $checkout = $this->session->get('curOrder');
         $orderResponse = $this->checkoutService->submitOrder($checkout, $cartItems);
         if ($orderResponse) {
+            $checkout->setValid(true);
             $this->checkoutService->sendOrderConfirmationEmail($checkout, $cartItems);
             $this->checkoutService->emptyCart($cartItems);
             $this->saveNewsletter($checkout);
@@ -65,6 +67,8 @@ class CheckoutCompleted
             $this->session->remove('couponName');
             $this->session->remove('couponId');
 
+        }else{
+            $checkout->setValid(false);
         }
         return $checkout;
     }
@@ -76,7 +80,7 @@ class CheckoutCompleted
 
     private function saveNewsletter(Checkout $checkout)
     {
-        if ($checkout->isNewsletter()) {
+        if ($checkout->isNewsletter() && $checkout->getNewsletterId() === '') {
             $request = $this->requestStack->getCurrentRequest();
             $date = (new \DateTime())->format('Y-m-d H:i:s');
             $referrer = 'USER AGENT: ' . $request->headers->get('User-Agent') . ' REFERRER: ' . $request->headers->get('referer') . ' DATE: ' . $date;

@@ -136,7 +136,7 @@
                                                         <input type="hidden" name="LanguageCode"
                                                                value="{{ bankConfig.LanguageCode }}">
                                                         <input type="hidden"
-                                                               name="MerchantReference" value="128">
+                                                               name="MerchantReference" value="">
                                                         {#<input type="hidden" name="ParamBackLink" value="">#}
                                                     </form>
                                                     <iframe id="pireaus_iframe"
@@ -219,9 +219,20 @@
                                                             </div>
 
                                                             <div class="clearfix"></div>
-                                                            <div class="form-group row">
+                                                            {% set visible = '' %}
+                                                            {% set disabled = 'inline' %}
+                                                            {% if checkout.newsletterId != '' %}
+                                                                {% set visible = 'none' %}
+                                                                {% set disabled = 'disabled: "disabled"' %}
+                                                            {% endif %}
+                                                            <div class="form-group row" style="display:{{ visible }}">
                                                                 <div class="col-md-12">
-                                                                    {{ form_widget(step1Form.newsletter) }}
+                                                                    {% if checkout.newsletterId != '' %}
+                                                                    {{ form_widget(step1Form.newsletter, {'attr': { 'disabled': 'disabled' }}) }}
+                                                                    {% else %}
+                                                                        {{ form_widget(step1Form.newsletter) }}
+                                                                    {% endif %}
+
                                                                     {{ form_label(step1Form.newsletter, 'Εγγραφή στο newsletter. Μπορείτε να διαγραφείτε οποιαδήποτε στιγμή επιθυμείτε.') }}
                                                                 </div>
                                                             </div>

@@ -37,10 +37,10 @@ class CronJobsController extends AbstractController
         $prevName = '';
         $duplicates = [];
         try {
-            $count = $productService->getItemsCount('null', 'null', 'null', 1, 'null');
-            echo($count);
-            die();
-            $s1products = $productService->getItems('null', 'null', 10000, 'NameAsc', -1, 'null', 'null', 'null', 1, 'null', 0);
+//            $count = $productService->getItemsCount('null', 'null', 'null', 1, 'null');
+//            echo($count);
+//            die();
+            $s1products = $productService->getItems('null', 'null', 4000, 'NameAsc', -1, 'null', 'null', 'null', 1, 'null', 2);
             if ($s1products) {
 //                $connection->query('SET FOREIGN_KEY_CHECKS=0');
 //                $connection->query('DELETE FROM products');

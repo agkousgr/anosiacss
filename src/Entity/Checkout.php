@@ -154,6 +154,12 @@ class Checkout extends WebUser
      */
     private $pireausTranTicket;
 
+
+    /**
+     * @var bool|null
+     */
+    private $valid;
+
     /**
      * @return int|null
      */
@@ -631,4 +637,23 @@ class Checkout extends WebUser
         $this->pireausTranTicket = $pireausTranTicket;
         return $this;
     }
+
+    /**
+     * @return bool|null
+     */
+    public function isValid(): ?bool
+    {
+        return $this->valid;
+    }
+
+    /**
+     * @param bool|null $valid
+     * @return Checkout
+     */
+    public function setValid(?bool $valid): Checkout
+    {
+        $this->valid = $valid;
+        return $this;
+    }
+
 }

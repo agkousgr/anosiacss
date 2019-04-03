@@ -11,9 +11,9 @@ class OrdersWebId
     private $id;
 
     /**
-     * @var int
+     * @var string
      */
-    private $orderNumber;
+    private $orderCode;
 
     /**
      * @return int
@@ -24,20 +24,20 @@ class OrdersWebId
     }
 
     /**
-     * @return int
+     * @return string
      */
-    public function getOrderNumber(): int
+    public function getOrderCode(): string
     {
-        return $this->orderNumber;
+        return $this->orderCode;
     }
 
     /**
-     * @param int $orderNumber
+     * @param string $orderCode
      * @return OrdersWebId
      */
-    public function setOrderNumber(int $orderNumber): OrdersWebId
+    public function setOrderCode(int $orderCode): OrdersWebId
     {
-        $this->orderNumber = $orderNumber;
+        $this->orderCode = $orderCode;
         return $this;
     }
 }

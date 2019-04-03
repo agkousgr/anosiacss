@@ -754,28 +754,6 @@ EOF;
     }
 
     /**
-     * @param $userXML
-     * @return array
-     * @throws \Exception
-     */
-    private function initializeUser($userXML)
-    {
-        try {
-            $userArr = array(
-                'username' => $userXML->Username,
-                'password' => $userXML->Password,
-                'lastLoginDT' => $userXML->LastLoginDT,
-                'clientId' => $userXML->ClientID,
-                'userId' => $userXML->ID,
-            );
-            return $userArr;
-        } catch (\Exception $e) {
-            $this->logger->error(__METHOD__ . ' -> {message}', ['message' => $e->getMessage()]);
-            throw $e;
-        }
-    }
-
-    /**
      * @param $username
      * @param \App\Entity\WebUser
      * @return array
@@ -971,16 +949,7 @@ EOF;
                 'phone01' => $user->getPhone01(),
                 'email' => $user->getEmail(),
             );
-//            $addressArr = array(
-//                'addresses' => array(
-//                    'id' => $address->getId(),
-//                    'name' => $address->getName(),
-//                    'address' => $user->getAddress(),
-//                    'city' => $user->getCity(),
-//                    'zip' => $user->getZip(),
-//                    'district' => $user->getDistrict(),
-//                )
-//            );
+
             return array_merge($userArr, $addressArr);
         } catch (\Exception $e) {
             $this->logger->error(__METHOD__ . ' -> {message}', ['message' => $e->getMessage()]);
