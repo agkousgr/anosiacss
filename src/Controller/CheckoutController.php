@@ -4,7 +4,7 @@ namespace App\Controller;
 
 use App\Entity\{Checkout, OrdersWebId, PaypalTransaction};
 use App\Form\Type\{CheckoutStep1Type, CheckoutStep2Type};
-use App\Service\{CheckoutService, PireausRedirection, UserAccountService};
+use App\Service\{CheckoutCompleted, CheckoutService, PireausRedirection, UserAccountService};
 use Beelab\PaypalBundle\Paypal\Service as PaypalService;
 use Doctrine\ORM\EntityManagerInterface;
 use Psr\Log\LoggerInterface;
@@ -105,29 +105,48 @@ class CheckoutController extends MainController
         }
     }
 
-    public function completeCheckout(
-        CheckoutService $checkoutService, EntityManagerInterface $em, PaypalService $paypalService)
+    public function completeCheckout(CheckoutService $checkoutService, EntityManagerInterface $em, PaypalService $paypalService, CheckoutCompleted $checkoutCompleted)
     {
-        /** @var \App\Entity\Checkout */
-        $checkout = $this->session->get('curOrder');
-        $cartCost = $checkoutService->calculateCartCost($this->cartItems);
-        $checkout->setTotalOrderCost($cartCost + $checkout->getAntikatavoliCost() + $checkout->getShippingCost());
-//        $orderCode = $em->getRepository(OrdersWebId::class)->find(1);
-//        $checkout->setOrderNo(intval(str_replace('ORDER', $orderCode->getOrderNumber())) + 1);
-        // Check if necessary at this point
-        $em->flush();
-        if ($checkout->getPaymentType() === '1006') {
-            $amount = $checkout->getTotalOrderCost();
-            $transaction = new PaypalTransaction($amount);
-            try {
-                $response = $paypalService->setTransaction($transaction)->start();
-                $em->persist($transaction);
-                $em->flush();
+        try {
+            /** @var \App\Entity\Checkout */
+            $checkout = $this->session->get('curOrder');
+            $cartCost = $checkoutService->calculateCartCost($this->cartItems);
+            $checkout->setTotalOrderCost($cartCost + $checkout->getAntikatavoliCost() + $checkout->getShippingCost());//        $orderCode = $em->getRepository(OrdersWebId::class)->find(1);
+            //        $checkout->setOrderNo(intval(str_replace('ORDER', $orderCode->getOrderNumber())) + 1);
+            // Check if necessary at this point
+            $em->flush();
+            if ($checkout->getPaymentType() === '1006') {
+                $amount = $checkout->getTotalOrderCost();
+                $transaction = new PaypalTransaction($amount);
+                try {
+                    $response = $paypalService->setTransaction($transaction)->start();
+                    $em->persist($transaction);
+                    $em->flush();
 
-                return $this->redirect($response->getRedirectUrl());
-            } catch (\Exception $e) {
-                throw new HttpException(503, 'Payment error', $e);
+                    return $this->redirect($response->getRedirectUrl());
+                } catch (\Exception $e) {
+                    throw new HttpException(503, 'Payment error', $e);
+                }
+            }else{
+                $cartItems = $this->cartItems;
+                $checkoutCompleted->handleSuccessfulPayment($cartItems);
+                return $this->render('orders/order_completed.html.twig', [
+                    'categories' => $this->categories,
+                    'popular' => $this->popular,
+                    'featured' => $this->featured,
+                    'topSellers' => $this->topSellers,
+                    'checkout' => $checkout,
+                    'loggedUser' => $this->loggedUser,
+                    'totalCartItems' => $this->totalCartItems,
+                    'totalWishlistItems' => $this->totalWishlistItems,
+                    'cartItems' => $cartItems,
+                    'orderCompleted' => true,
+                    'loginUrl' => $this->loginUrl
+                ]);
             }
+        } catch (\Exception $e) {
+            $this->logger->error(__METHOD__ . ' -> {message}', ['message' => $e->getMessage()]);
+            throw $e;
         }
     }
 
@@ -138,7 +157,7 @@ class CheckoutController extends MainController
         $checkout = $this->session->get('curOrder');
         $cartCost = $checkoutService->calculateCartCost($this->cartItems);
 
-        $orderCode = ($this->loggedClientId) ? $this->loggedClientId . '-' . time() : random(100,999) . '-' . time();
+        $orderCode = ($this->loggedClientId) ? $this->loggedClientId . '-' . time() : random(100, 999) . '-' . time();
         $checkout->setOrderNo($orderCode);
         $checkout->setTotalOrderCost($cartCost + $checkout->getAntikatavoliCost() + $checkout->getShippingCost());
         $checkout->setInstallments($installments);

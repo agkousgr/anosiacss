@@ -165,7 +165,7 @@ class MainController extends AbstractController
         $this->loggedClientId = ($this->session->get("anosiaClientId")) ?: null;
 
         $this->cartItems = $this->getCartItems();
-        dump($this->cartItems);
+//        dump($this->cartItems);
         $this->totalWishlistItems = $this->em->getRepository(Wishlist::class)->countWishlistItems($this->session->getId(), $this->loggedUser);
 
 
@@ -182,7 +182,7 @@ class MainController extends AbstractController
         }
 
         if ($cartArr) {
-            dump($cartArr);
+//            dump($cartArr);
             foreach ($cartArr as $item) {
                 $cartIds .= $item->getProduct()->getId() . ',';
 //                $this->totalCartItems = $this->totalCartItems + 1*$val->getQuantity();

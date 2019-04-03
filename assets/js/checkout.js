@@ -69,7 +69,8 @@ $(document).ready(function () {
                     depends: function(element) {
                         return !shippingType1.is(":checked");
                     }
-                }
+                },
+                pattern: /^([^\x00-\x7F]|[a-zA-Z]|\s|\-)+\s+\d+(\-\d+)?$/ui,
             },
             'checkout_step1[zip]': {
                 required: {
@@ -151,8 +152,8 @@ $(document).ready(function () {
         messages: {
             'checkout_step1[firstname]': "Παρακαλώ συμπληρώστε το όνομά σας",
             'checkout_step1[lastname]': "Παρακαλώ συμπληρώστε το επώνυμό σας",
-            'checkout_step1[email]': "Παρακαλώ εισάγεται μια έγκυρη διεύθυνση email",
-            'checkout_step1[address]': 'Παρακαλώ συμπληρώστε τη διεύθυνσή σας',
+            'checkout_step1[email]': "Παρακαλώ συμπληρώστε μια έγκυρη διεύθυνση email",
+            'checkout_step1[address]': 'Παρακαλώ συμπληρώστε μια έγκυρη διεύθυνση',
             'checkout_step1[zip]': 'Παρακαλώ συμπληρώστε τον ταχυδρομικό σας κώδικα',
             'checkout_step1[city]': 'Παρακαλώ συμπληρώστε την πόλη σας',
             'checkout_step1[district]': 'Παρακαλώ συμπληρώστε την περιοχή σας',
