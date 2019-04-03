@@ -491,6 +491,9 @@ $('.add-to-cart').on('click', function (e) {
     let quantity = 1;
     if ($('#add-quantity').val()) {
         quantity = $('#add-quantity').val();
+    } else if ($(this).hasClass('product-list')) {
+        console.log('has class');
+        quantity = $(this).closest('div.quantity-container').find('input').val();
     } else {
         quantity = 1;
     }

@@ -11,23 +11,29 @@
                     </div>
                     <div class="media-body">
                         <h5>{{ pr.name }}</h5>
-                        {#<div class="star-rating">#}
-                        {#<i class="fa fa-star"></i>#}
-                        {#<i class="fa fa-star"></i><i class="fa fa-star"></i>#}
-                        {#<i class="fa fa-star"></i><i class="fa fa-star-o"></i>#}
-                        {#</div>#}
                         {% if (pr.maxByOrder > 0) %}
                             {% set maxItems = pr.maxByOrder %}
                         {% elseif (pr.webFree == 'true') %}
+                            {% set maxItems = 100 %}
+                        {% elseif (pr.webFree == 'false' and (pr.remainNotReserved + pr.overAvailability) > 0) %}
                             {% set maxItems = pr.remainNotReserved + pr.overAvailability %}
+                            {#{% elseif pr.remainNotReserved > 0 %}#}
+                            {#{% set maxItems = pr.remainNotReserved %}#}
                         {% else %}
-                            {% set maxItems = pr.remainNotReserved %}
+                            {% set maxItems = 0 %}
                         {% endif %}
                         <div class="clearfix">
                             <div class="qty-box">
                                 x {{ pr.quantity }}
-                                {#<input class="form-control stepper" type="number"#}
-                                       {#value="{{ pr.quantity }}" min="1" max="{{ maxItems }}"/>#}
+{#                                <div class="form-group">#}
+{#                                    <input name="quantity[{{ pr.cartId }}]"#}
+{#                                           class="form-control stepper add-quantity"#}
+{#                                           type="number"#}
+{#                                           value="{{ pr.quantity }}"#}
+{#                                           min="1"#}
+{#                                           max="{{ maxItems }}"#}
+{#                                    />#}
+{#                                </div>#}
                             </div>
                             <div class="cart-item-price">{{ pr.webPrice|number_format(2, ',', '.') }}€
                             </div>

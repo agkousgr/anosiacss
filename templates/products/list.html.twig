@@ -145,7 +145,8 @@
                                                         <span>new</span>
                                                     </div>
                                                 {% endif %}
-                                                <div class="tag tag-red"><span>-{{ pr.discount }}%</span></div>
+                                                <div class="tag tag-red"><span>-{{ pr.discount }}
+                                                        %</span></div>
                                                 <div class="product-img">
                                                     {#<div class="hover-img"><a href="{{ path('product_view', {'slug':pr.slug}) }}"><img#}
                                                     {#src="{{ pr.imageUrl }}"#}
@@ -183,12 +184,36 @@
                                                             {#</div>#}
                                                         </div>
                                                         {% if pr.outOfStock == "false" and (pr.remainNotReserved|number_format() > 0 or pr.webFree == "true") %}
-                                                            <button type="button"
-                                                                    class="add-to-cart"
-                                                                    data-id="{{ pr.id }}"
-                                                                    data-name="{{ pr.name }}">
-                                                                <i class="fas fa-cart-plus"></i><span>στο καλαθι</span>
-                                                            </button>
+                                                            {% if (pr.maxByOrder > 0) %}
+                                                                {% set maxItems = pr.maxByOrder %}
+                                                            {% elseif (pr.webFree == 'true') %}
+                                                                {% set maxItems = 100 %}
+                                                            {% elseif (pr.webFree == 'false' and (pr.remainNotReserved + pr.overAvailability) > 0) %}
+                                                                {% set maxItems = pr.remainNotReserved + pr.overAvailability %}
+                                                                {#{% elseif pr.remainNotReserved > 0 %}#}
+                                                                {#{% set maxItems = pr.remainNotReserved %}#}
+                                                            {% else %}
+                                                                {% set maxItems = 0 %}
+                                                            {% endif %}
+                                                            <div class="quantity-container" style="padding-top: 5px;">
+                                                                <button type="button"
+                                                                        style="float: left;"
+                                                                        class="add-to-cart product-list"
+                                                                        data-id="{{ pr.id }}"
+                                                                        data-name="{{ pr.name }}">
+                                                                    <i class="fas fa-cart-plus"></i><span>στο
+                                                                        καλαθι</span>
+                                                                </button>
+                                                                <input name="quantity[{{ pr.id }}]"
+                                                                       class="form-control stepper add-quantity"
+                                                                       style="width: 60px; vertical-align: middle; margin: 15px 0 0 -6px; height: 45px;"
+                                                                       type="number"
+                                                                       value="1"
+                                                                       min="1"
+                                                                       max="{{ maxItems }}">
+                                                            </div>
+
+
                                                         {% endif %}
                                                     </div>
                                                 </div>
@@ -228,8 +253,8 @@
                                                         </span>
                                                     </div>
                                                     {#<button type="button">#}
-                                                        {#<i class="fa fa-cart-plus"></i>#}
-                                                        {#<span>Add to Cart</span>#}
+                                                    {#<i class="fa fa-cart-plus"></i>#}
+                                                    {#<span>Add to Cart</span>#}
                                                     {#</button>#}
                                                 </div>
                                             </div>
@@ -245,8 +270,10 @@
                                 <input type="hidden" name="minPrice" value="{{ minPrice|round }}">
                                 <input type="hidden" name="maxPrice" value="{{ maxPrice|round }}">
                                 {% if priceRange == 'null' %}
-                                    <input type="hidden" name="lowPrice" value="{{ minPrice|round }}">
-                                    <input type="hidden" name="highPrice" value="{{ maxPrice|round }}">
+                                    <input type="hidden" name="lowPrice"
+                                           value="{{ minPrice|round }}">
+                                    <input type="hidden" name="highPrice"
+                                           value="{{ maxPrice|round }}">
                                 {% else %}
                                     {% set priceRangeArr = priceRange|split('-') %}
                                     <input type="hidden" name="lowPrice"
