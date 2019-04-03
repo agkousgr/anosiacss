@@ -154,6 +154,7 @@ class CheckoutController extends MainController
     {
         $installments = ($request->request->get('installments') && $request->request->get('installments') <= 6) ? $request->request->get('installments') : 0;
         dump($installments);
+        /** @var Checkout $checkout */
         $checkout = $this->session->get('curOrder');
         $cartCost = $checkoutService->calculateCartCost($this->cartItems);
 
@@ -169,6 +170,7 @@ class CheckoutController extends MainController
         $bank_config['PosId'] = 2141384532;
         $bank_config['User'] = 'AN895032';
         $bank_config['LanguageCode'] = 'el-GR';
+        $bank_config['MerchantReference'] = $checkout->getOrderNo();
 
         return $this->json(['success' => true, 'checkout' => $checkout, 'bank_config' => $bank_config]);
     }

@@ -830,7 +830,7 @@ EOF;
                 return;
             }
             $userXML = $clientResponse->GetDataRows->GetClientsRow;
-            dump($message, $result);
+//            dump($message, $result);
             list($firstname, $lastname) = explode(' ', $userXML->NAME);
             $user->setFirstname($firstname);
             $user->setLastname($lastname);

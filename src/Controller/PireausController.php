@@ -19,7 +19,6 @@ class PireausController extends MainController
             /** @var Checkout $checkout */
             $checkout = $this->session->get('curOrder');// Todo: get post or get response and create Hash to validate response
             // Page 26 Pireaus Manual
-            dump($request->request, $checkout);
             $TransactionTicket = $checkout->getPireausTranTicket();
             $PosId = 2141384532;
             $AcquirerId = 14;
@@ -32,28 +31,32 @@ class PireausController extends MainController
             $PackageNo = intval($request->request->get('PackageNo'));
             $StatusFlag = $request->request->get('StatusFlag');
             $PireausHash = $request->request->get('HashKey');
-            $myHash = pack('H', hash('sha256', $TransactionTicket . $PosId . $AcquirerId . $MerchantReference . $ApprovalCode . $Parameters . $ResponseCode . $SupportReferenceID . $AuthStatus . $PackageNo . $StatusFlag));
-            if ($myHash === $PireausHash) {
-                $pireaus = new PireausTransaction();
-                $pireaus->setClientId($session->get('anosiaClientId'))
-                    ->setMerchantReference($MerchantReference)
-                    ->setStatusFlag($StatusFlag)
-                    ->setResultCode($request->request->get('ResultCode'))
-                    ->setSupportReferenceId($SupportReferenceID)
-                    ->setApprovalCode($ApprovalCode)
-                    ->setResponseCode($ResponseCode)
-                    ->setPackageNo($PackageNo)
-                    ->setAuthStatus($AuthStatus)
-                    ->setCreatedAt(new \DateTime('now', new \DateTimeZone('Europe/Athens')))
-                    ->setResponseDescription($request->request->get('ResponseDescription'))
-                    ->setResultDescription($request->request->get('ResultDescription'));
-                $em->persist($pireaus);
-                $em->flush();
 
+            $myHash = strtoupper(hash_hmac('sha256', $TransactionTicket . ';' . $PosId . ';' . $AcquirerId . ';' . $MerchantReference . ';' . $ApprovalCode . ';' . $Parameters . ';' . $ResponseCode . ';' . $SupportReferenceID . ';' . $AuthStatus . ';' . $PackageNo . ';' . $StatusFlag, $TransactionTicket));
+
+            $pireaus = new PireausTransaction();
+            $pireaus->setClientId($session->get('anosiaClientId'))
+                ->setMerchantReference($MerchantReference)
+                ->setStatusFlag($StatusFlag)
+                ->setResultCode($request->request->get('ResultCode'))
+                ->setSupportReferenceId($SupportReferenceID)
+                ->setApprovalCode($ApprovalCode)
+                ->setResponseCode($ResponseCode)
+                ->setPackageNo($PackageNo)
+                ->setAuthStatus($AuthStatus)
+                ->setCreatedAt(new \DateTime('now', new \DateTimeZone('Europe/Athens')))
+                ->setResponseDescription($request->request->get('ResponseDescription'))
+                ->setResultDescription($request->request->get('ResultDescription'));
+            $em->persist($pireaus);
+            $em->flush();
+
+            dump($myHash, $PireausHash);
+
+
+            if ($myHash === $PireausHash) {
                 $cartItems = $this->cartItems;
-                $checkoutCompleted->handleSuccessfulPayment($this->cartItems);
             } else {
-                $checkoutCompleted->handleFailedPayment();
+//                $checkoutCompleted->handleFailedPayment();
                 $this->addFlash('notice', 'H πληρωμή σας μέσω πιστωτικής απέτυχε. Παρακαλώ δοκιμάστε ξανά ή αλλάξτε τρόπο πληρωμής');
                 return $this->redirectToRoute('checkout');
             }
@@ -61,20 +64,26 @@ class PireausController extends MainController
             $this->addFlash('success', 'Η συναλλαγή ολοκληρώθηκε με επιτυχία! Ένα αντίγραφο έχει αποσταλεί στο email σας. Ευχαριστούμε για την προτίμησή σας!');
             $checkout = $checkoutCompleted->handleSuccessfulPayment($cartItems);
 
-            //Todo: Save checkout into eshopDB in case order failed to save in S1
-            return $this->render('orders/order_completed.html.twig', [
-                'categories' => $this->categories,
-                'popular' => $this->popular,
-                'featured' => $this->featured,
-                'topSellers' => $this->topSellers,
-                'checkout' => $checkout,
-                'loggedUser' => $this->loggedUser,
-                'totalCartItems' => $this->totalCartItems,
-                'totalWishlistItems' => $this->totalWishlistItems,
-                'cartItems' => $cartItems,
-                'orderCompleted' => true,
-                'loginUrl' => $this->loginUrl
-            ]);
+            if ($checkout->isValid()) {
+                $this->addFlash('success', 'Η συναλλαγή ολοκληρώθηκε με επιτυχία! Ένα αντίγραφο έχει αποσταλεί στο email σας. Ευχαριστούμε για την προτίμησή σας!');
+                //Todo: Save checkout into eshopDB in case order failed to save in S1
+                return $this->render('orders/order_completed.html.twig', [
+                    'categories' => $this->categories,
+                    'popular' => $this->popular,
+                    'featured' => $this->featured,
+                    'topSellers' => $this->topSellers,
+                    'checkout' => $checkout,
+                    'loggedUser' => $this->loggedUser,
+                    'totalCartItems' => $this->totalCartItems,
+                    'totalWishlistItems' => $this->totalWishlistItems,
+                    'cartItems' => $cartItems,
+                    'orderCompleted' => true,
+                    'loginUrl' => $this->loginUrl
+                ]);
+            }else{
+                $this->addFlash('notice', 'Η παραγγελία σας δεν καταχωρήθηκε. Παρακαλώ δοκιμάστε ξανά ή επικοινωνήστε με το κατάστημά μας χρησιμοποιώντας τον κωδικό παραγγελίας.');
+                return $this->redirectToRoute('checkout');
+            }
         } catch (\Exception $e) {
             $this->logger->error(__METHOD__ . ' -> {message}', ['message' => $e->getMessage()]);
             throw $e;

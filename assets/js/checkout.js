@@ -235,6 +235,7 @@ $(document).ready(function () {
                                 timer: 5000
                             });
                         }else{
+                            $('input[name="MerchantReference"]').val(result.checkout.orderNo);
                             $('#pireaus_container').show();
                             $('#checkout-payment-step').hide();
                             $('#pireaus-post').submit();
