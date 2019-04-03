@@ -7,7 +7,7 @@
     </div>
 
     <div class="sidebar-login">
-        {% if (loggedUser is not empty) %}
+        {% if (loggedUser is defined and loggedUser is not empty) %}
             <ul>
                 <li class="user">Καλώς ήρθες <a href="{{ path('user_account') }}">{{ loggedUser }}</a></li>
                 <li class="logout"><a href="{{ path('logout') }}">Αποσύνδεση</a></li>

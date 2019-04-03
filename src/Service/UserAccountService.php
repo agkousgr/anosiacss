@@ -252,6 +252,71 @@ EOF;
         }
     }
 
+    public function updateUserAfterForgotPassword(array $userData, bool $hasNulls = false)
+    {
+        $client = new \SoapClient('http://caron.cloudsystems.gr/FOeshopWS/ForeignOffice.FOeshop.API.FOeshopSvc.svc?singleWsdl', ['trace' => true, 'exceptions' => true,]);
+        $id = $userData['ID'];
+        $username = $userData['Username'];
+        $password = $userData['Password'];
+        $clientId = $userData['ClientID'];
+        $lastLogin = $userData['LastLoginDT'];
+        $counter = $userData['PasswordRequestCounter'];
+        $isActive = $userData['IsActive'];
+        if ($hasNulls) {
+            $message = <<<EOF
+<?xml version="1.0" encoding="utf-16"?>
+<ClientSetUserRequest>
+    <Type>1022</Type>
+    <Kind>$this->kind</Kind>
+    <Domain>$this->domain</Domain>
+    <Key>$id</Key>
+    <AuthID>$this->authId</AuthID>
+    <AppID>$this->appId</AppID>
+    <CompanyID>$this->companyId</CompanyID>
+    <Username>$username</Username>
+    <Password>$password</Password>
+    <ClientID>$clientId</ClientID>
+    <LastLoginDT>$lastLogin</LastLoginDT>
+    <PasswordRequestCounter>$counter</PasswordRequestCounter>
+    <IsActive>$isActive</IsActive>
+</ClientSetUserRequest>
+EOF;
+        } else {
+            $token = $userData['ConfirmationToken'];
+            $requestedAt = $userData['PasswordRequestDT'];
+            $message = <<<EOF
+<?xml version="1.0" encoding="utf-16"?>
+<ClientSetUserRequest>
+    <Type>1022</Type>
+    <Kind>$this->kind</Kind>
+    <Domain>$this->domain</Domain>
+    <Key>$id</Key>
+    <AuthID>$this->authId</AuthID>
+    <AppID>$this->appId</AppID>
+    <CompanyID>$this->companyId</CompanyID>
+    <Username>$username</Username>
+    <Password>$password</Password>
+    <ClientID>$clientId</ClientID>
+    <LastLoginDT>$lastLogin</LastLoginDT>
+    <PasswordRequestCounter>$counter</PasswordRequestCounter>
+    <IsActive>$isActive</IsActive>
+    <ConfirmationToken>$token</ConfirmationToken>
+    <PasswordRequestDT>$requestedAt</PasswordRequestDT>
+    <ConfirmationRequestDT>$requestedAt</ConfirmationRequestDT>
+</ClientSetUserRequest>
+EOF;
+        }
+
+        try {
+            $result = $client->SendMessage(['Message' => $message]);
+            $userResult = simplexml_load_string(str_replace("utf-16", "utf-8", $result->SendMessageResult));
+
+            return (string)$userResult->ErrorCode === 'None';
+        } catch (\SoapFault $sf) {
+            echo $sf->faultstring;
+        }
+    }
+
     /**
      * @param \App\Entity\WebUser
      * @return true|false
@@ -575,6 +640,7 @@ EOF;
     <Username>$username</Username>
     <Password>null</Password>
     <Email>null</Email>
+    <ConfirmationToken>null</ConfirmationToken>
 </ClientGetUsersRequest>
 EOF;
         try {
@@ -607,7 +673,7 @@ EOF;
      *
      * @return \SimpleXMLElement|bool
      */
-    public function getUser($username = 'null', $user, $address = null) // remove nulls in production
+    public function getUser($username = 'null', $user = null, $address = null) // remove nulls in production
     {
         $client = new \SoapClient('http://caron.cloudsystems.gr/FOeshopWS/ForeignOffice.FOeshop.API.FOeshopSvc.svc?singleWsdl', ['trace' => true, 'exceptions' => true,]);
 
@@ -625,6 +691,7 @@ EOF;
     <Username>$username</Username>
     <Password>null</Password>
     <Email>null</Email>
+    <ConfirmationToken>null</ConfirmationToken>
 </ClientGetUsersRequest>
 EOF;
         try {
@@ -637,10 +704,48 @@ EOF;
             if (null !== $address) {
                 $address->setClient($userXML->ClientID);
             } else {
-                (null !== $userXML->Username && $user) ? $user->setUsername($userXML->Username) : $user->setUsername('');
-                (null !== $userXML->Password && $user) ? $user->setPassword($userXML->Password) : $user->setPassword('');
-                (null !== $userXML->ClientID && $user) ? $user->setClientId($userXML->ClientID) : $user->setClientId('');
+                if (null !== $user) {
+                    (null !== $userXML->Username) ? $user->setUsername($userXML->Username) : $user->setUsername('');
+                    (null !== $userXML->Username) ? $user->setPassword($userXML->Password) : $user->setPassword('');
+                    (null !== $userXML->Username) ? $user->setClientId($userXML->ClientID) : $user->setClientId('');
+                }
+
             }
+
+            return $userXML;
+        } catch (\SoapFault $sf) {
+            echo $sf->faultstring;
+        }
+    }
+
+    public function getUserByToken(string $token)
+    {
+        $client = new \SoapClient('http://caron.cloudsystems.gr/FOeshopWS/ForeignOffice.FOeshop.API.FOeshopSvc.svc?singleWsdl', ['trace' => true, 'exceptions' => true,]);
+
+        $message = <<<EOF
+<?xml version="1.0" encoding="utf-16"?>
+<ClientGetUsersRequest>
+    <Type>1015</Type>
+    <Kind>$this->kind</Kind>
+    <Domain>$this->domain</Domain>
+    <AuthID>$this->authId</AuthID>
+    <AppID>$this->appId</AppID>
+    <CompanyID>$this->companyId</CompanyID>
+    <pagesize>1</pagesize>
+    <pagenumber>0</pagenumber>
+    <Username>null</Username>
+    <Password>null</Password>
+    <Email>null</Email>
+    <ConfirmationToken>$token</ConfirmationToken>
+</ClientGetUsersRequest>
+EOF;
+        try {
+            $result = $client->SendMessage(['Message' => $message]);
+            $userResponse = simplexml_load_string(str_replace("utf-16", "utf-8", $result->SendMessageResult));
+            if ($userResponse === false) {
+                return false;
+            }
+            $userXML = $userResponse->GetDataRows->GetUsersRow;
 
             return $userXML;
         } catch (\SoapFault $sf) {
