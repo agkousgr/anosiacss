@@ -32,7 +32,7 @@ class WebserviceUserProvider implements UserProviderInterface
         // make a call to your webservice here
         $userData = $this->userAccountService->getUser($username);
         // pretend it returns an array on success, false if there is no user
-        dump($userData);
+
         if ($userData) {
             $salt = null;
             $roles = array();

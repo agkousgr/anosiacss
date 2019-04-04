@@ -60,7 +60,7 @@ class WishlistController extends MainController
                 $quantity = $request->request->get('quantity');
                 $quantity = ($quantity) ?: 1;
                 $itemInWishlist = (int)$em->getRepository(Wishlist::class)->checkIfProductExists($session->getId(), $session->get('anosiaUser'), $id);
-                dump($itemInWishlist);
+
                 if ($itemInWishlist === 0) {
                     $wishlist = new Wishlist();
                     $wishlist->setProductId($id);
@@ -68,7 +68,7 @@ class WishlistController extends MainController
                     if (null !== $session->get('anosiaUser')) {
                         $wishlist->setUsername($session->get('anosiaUser'));
                     }
-                    dump($wishlist);
+
                     if (null !== $id) {
                         $em->persist($wishlist);
                         $em->flush();

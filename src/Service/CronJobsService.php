@@ -220,7 +220,7 @@ EOF;
         try {
             $result = $this->client->SendMessage(['Message' => $message]);
             $items = simplexml_load_string(str_replace("utf-16", "utf-8", $result->SendMessageResult));
-            dump($message, $result, $items->GetDataRows->GetAvailabilityTypeRow);
+
             if ((int)$items->RowsCount > 0) {
                 return $items->GetDataRows->GetAvailabilityTypeRow;
             }
@@ -301,7 +301,7 @@ EOF;
         try {
             $result = $this->client->SendMessage(['Message' => $message]);
             $items = simplexml_load_string(str_replace("utf-16", "utf-8", $result->SendMessageResult));
-            dump($message, $result);
+
             if ((int)$items->RowsCount > 0) {
                 foreach ($items->GetDataRows->GetCountryRow as $value) {
                     $country = $this->em->getRepository(Country::class)->findOneBy(['s1Id' => $value['CountryID']]);

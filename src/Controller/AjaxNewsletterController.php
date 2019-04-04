@@ -26,7 +26,7 @@ class AjaxNewsletterController extends AbstractController
                     $date = date('Y-m-d H:i:s');
                     $referrer = 'USER AGENT: ' . $request->headers->get('User-Agent') . ' REFERRER: ' . $request->headers->get('referer') . ' DATE: ' . $date;
                     $userIsRegistered = $newsletterService->getNewsletter($name, $email, $referrer);
-                    dump($userIsRegistered);
+
                     return $this->json([
                         'success' => $userIsRegistered["success"],
                         'exist' => $userIsRegistered["exist"]

@@ -46,7 +46,7 @@ class CsvImportCommand extends Command
 
         $records = $stmt->process($csv);
         foreach ($records as $record) {
-            dump($record);
+
         }
 
         $ip->success('Import completed succesfully');

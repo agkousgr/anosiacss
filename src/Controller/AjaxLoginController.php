@@ -126,7 +126,6 @@ class AjaxLoginController extends AbstractController
 //        $_SESSION['fb_access_token'] = (string) $accessToken;
         $res = $fb->get('/me?fields=name,email', $accessToken);
 
-        dump($res->getDecodedBody());
         // Todo: If button call is via ajax change return code
         if ($userAccountService->login($res->getDecodedBody()['email'], $res->getDecodedBody()['id']) === $res->getDecodedBody()['email']) {
             $session->set("anosiaUser", $res->getDecodedBody()['email']);

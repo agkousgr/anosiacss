@@ -42,8 +42,6 @@ class CheckoutSubscriber implements EventSubscriberInterface
 
     public function onPreSet(FormEvent $event)
     {
-
-        dump($event->getData());
         if (!$this->session->get("anosiaClientId") && $event->getData()->getNextPage() === 2) {
 
         }

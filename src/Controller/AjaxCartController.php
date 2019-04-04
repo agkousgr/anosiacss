@@ -23,7 +23,7 @@ class AjaxCartController extends AbstractController
                 } else {
                     $cartArr = $em->getRepository(Cart::class)->getCartBySession($session->getId());
                 }
-                dump($session->getId());
+
                 if ($cartArr) {
                     foreach ($cartArr as $item) {
                         $cartIds .= $item->getProduct()->getId() . ',';
@@ -65,7 +65,7 @@ class AjaxCartController extends AbstractController
                     if (null !== $session->get('anosiaUser')) {
                         $cart->setUsername($session->get('anosiaUser'));
                     }
-                    dump($cart);
+
                     if (null !== $id) {
                         $em->persist($cart);
                         $em->flush();

@@ -31,14 +31,14 @@ class CsvImport extends AbstractController
             $article->setName($record['name']);
             $article->setDescription($record['description']);
             $category = $em->getRepository(AdminCategory::class)->find(1);
-            dump($category);
+
             $article->setCategory($category);
             $article->setSlug($record['slug']);
             $article->setSummary($record['summary']);
             $article->setCreatedAt(new \DateTime($record['created_at']));
             $article->setUpdatedAt(new \DateTime($record['created_at']));
             $user = $em->getRepository(User::class)->find(1);
-            dump($user);
+
             $article->setCreatedBy($user);
             $article->setUpdatedBy($user);
 //            $imageArr = explode('/', $record['image']);
@@ -46,7 +46,7 @@ class CsvImport extends AbstractController
             $article->setImage($record['image']);
             $isPublished = ($record['is_published'] === 'publish') ? true : false;
             $article->setIsPublished($isPublished);
-            dump($article);
+
             $em->persist($article);
             $em->flush();
         }
@@ -101,11 +101,11 @@ class CsvImport extends AbstractController
                     $errors[] = $record;
                 }
             }
-            dump($errors);
+
             return;
         } catch (\Exception $e) {
             if ($record) {
-                dump($record);
+
             }
             $this->logger->error(__METHOD__ . ' -> {message}', ['message' => $e->getMessage()]);
             throw $e;
@@ -127,7 +127,6 @@ class CsvImport extends AbstractController
             $altCategory = '';
             $category = $em->getRepository(Category::class)->findOneBy(['s1id' => $record[1]]);
             if (!$category) {
-                dump($record[1]);
                 die();
             }
             if ($category->getAlternativeCategories()) {

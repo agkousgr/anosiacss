@@ -62,10 +62,8 @@ class PireausRedirection
                 'Bnpl' => 0x00,
                 'Parameters' => 'Anosia'
             );
-            dump($params);
-            $result = $ticket_issuer->IssueNewTicket(array('Request' => $params));
 
-            dump($result);
+            $result = $ticket_issuer->IssueNewTicket(array('Request' => $params));
 //            if ($result) {
 //                $checkout->setPireausResultCode(0);
 //                return $checkout;

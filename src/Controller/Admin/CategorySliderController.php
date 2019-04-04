@@ -89,7 +89,6 @@ class CategorySliderController extends AbstractController
     {
         try {
             $slider = $em->getRepository(Slider::class)->find($id);
-            dump($id);
             $prevImage = $slider->getImage();
             $form = $this->createForm(CategorySliderType::class, $slider, [
                 'action' => $this->generateUrl('category_slider_update', ['id' => $id]),

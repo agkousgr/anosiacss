@@ -33,7 +33,7 @@ class ProductController extends MainController
             } else {
                 $products = $this->productService->getCategoryItems($category->getS1id(), 0, $pagesize, $sortBy, 'null', $priceRange, 1, $mnufacturerId);
             }
-            dump($products);
+
             return $this->render('products/list.html.twig', [
                 'products' => $products,
                 'ctgInfo' => $category,

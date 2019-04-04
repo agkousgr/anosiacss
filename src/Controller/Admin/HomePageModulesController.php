@@ -40,7 +40,7 @@ class HomePageModulesController extends AbstractController
             $form = $this->createForm(OurCornerType::class, $category, [
                 'action' => $this->generateUrl('our_corner_update', ['id' => $id]),
             ]);
-            dump($category);
+
             $form->handleRequest($request);
 
             if ($form->isSubmitted() && $form->isValid()) {
@@ -151,7 +151,7 @@ class HomePageModulesController extends AbstractController
     {
         try {
             $slides = $em->getRepository(Slider::class)->findBy(['adminCategory' => 5], ['priority' => 'ASC']);
-            dump($slides);
+
             return $this->render('Admin/promo_categories/list.html.twig', [
                 'slides' => $slides
             ]);
@@ -168,7 +168,7 @@ class HomePageModulesController extends AbstractController
             $form = $this->createForm(SliderType::class, $slider, [
                 'action' => $this->generateUrl('promo_categories_add'),
             ]);
-                dump($slider);
+
             $form->handleRequest($request);
             if ($form->isSubmitted() && $form->isValid()) {
                 $ctg = $em->getRepository(AdminCategory::class)->find(5);
@@ -205,7 +205,7 @@ class HomePageModulesController extends AbstractController
             $form = $this->createForm(SliderType::class, $slider, [
                 'action' => $this->generateUrl('promo_categories_update', ['id' => $id]),
             ]);
-            dump($slider);
+
             $form->handleRequest($request);
 
             if ($form->isSubmitted() && $form->isValid()) {
@@ -219,7 +219,7 @@ class HomePageModulesController extends AbstractController
                 );
                 return $this->redirectToRoute('promo_categories');
             }
-            dump('wtf');
+
             return $this->render('Admin/promo_categories/form.html.twig', [
                 'form' => $form->createView()
             ]);

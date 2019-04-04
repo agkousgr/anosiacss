@@ -25,13 +25,11 @@ class UserAccountController extends MainController
     public function userAccount(Request $request, UserAccountService $userAccountService)
     {
         try {
-            dump($request);
             if (null !== $this->loggedUser) {
                 $user = new WebUser();
                 $address = new Address();
                 $userData = $userAccountService->getUserInfo($this->loggedUser, $user, $address);
                 $userOrders = $userAccountService->getOrders($this->loggedClientId);
-                dump($userOrders);
 //            $user = new WebserviceUser(
 //                $userData["clientId"],
 //                $userData["username"],
@@ -71,7 +69,7 @@ class UserAccountController extends MainController
                         'Τα στοιχεία της διεύθυνσής σας ενημερώθηκαν με επιτυχία.'
                     );
                 }
-                dump($userData);
+
                 return $this->render('user/account.html.twig', [
                     'categories' => $this->categories,
                     'topSellers' => $this->topSellers,
@@ -100,7 +98,7 @@ class UserAccountController extends MainController
     {
         $userOrder = $userAccountService->getOrder($this->loggedClientId, $id);
         $voucherDisc = $userAccountService->getCoupon($userOrder['voucherId']);
-        dump($voucherDisc);
+
         return $this->render('user/view_order.html.twig', [
             'categories' => $this->categories,
             'topSellers' => $this->topSellers,

@@ -206,7 +206,7 @@ EOF;
             if ($clientResponse === false) {
                 return;
             }
-            dump($result);
+
             $this->session->remove('curOrder');
             $userXML = $clientResponse->GetDataRows->GetClientsRow;
             list($firstname, $lastname) = explode(' ', $userXML->NAME . ' ');
@@ -417,7 +417,7 @@ EOF;
         try {
 //            return true;
             $result = $this->client->SendMessage(['Message' => $message]);
-            dump($message, $result);
+
             $orderResult = simplexml_load_string(str_replace("utf-16", "utf-8", $result->SendMessageResult));
             if ((string)$orderResult->IsValid === 'true') {
                 $this->em->flush();

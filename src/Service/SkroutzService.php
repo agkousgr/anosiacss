@@ -115,7 +115,6 @@ class SkroutzService
         <manufacturer><![CDATA[' . $product["brand"] . ']]></manufacturer>
         <availability>' . $product["availability"] . '</availability>
       </product>';
-        dump($xml_output);
         die();
         }
 
@@ -224,7 +223,6 @@ EOF;
         if (count($category->getParents())) {
 //            getCategories
             foreach ($category->getParents() as $ctg) {
-                dump($ctg);
                 $this->getCategories($ctg);
             }
 //            dump($this->categoryName);

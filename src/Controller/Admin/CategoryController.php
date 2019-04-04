@@ -15,7 +15,7 @@ class CategoryController extends AbstractController
     {
 //        $category = new BlogCategory();
         $categories = $em->getRepository(AdminCategory::class)->findBy(['parent' => null], ['priority' => 'ASC']);
-        dump($categories);
+
         return $this->render('Admin/categories/list.html.twig', [
             'categories' => $categories
         ]);
@@ -55,7 +55,7 @@ class CategoryController extends AbstractController
     {
         try {
             $category = $em->getRepository(AdminCategory::class)->find($id);
-            dump($category);
+
             $form = $this->createForm(AdminCategoryType::class, $category, [
                 'action' => $this->generateUrl('category_update', ['id' => $id]),
             ]);

@@ -50,8 +50,6 @@ class PireausController extends MainController
             $em->persist($pireaus);
             $em->flush();
 
-            dump($myHash, $PireausHash);
-
 
             if ($myHash === $PireausHash) {
                 $cartItems = $this->cartItems;
@@ -104,7 +102,6 @@ class PireausController extends MainController
     {
 
         try {
-            dump($request->request);
             $pireaus = new PireausTransaction();
             $pireaus->setClientId($session->get('anosiaClientId'))
                 ->setMerchantReference($session->get('curOrder')->getOrderNo())

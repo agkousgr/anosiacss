@@ -86,7 +86,7 @@ class CronJobsController extends AbstractController
                     }
                 }
             }
-            dump($duplicates);
+
             return;
         } catch (\Exception $e) {
             $logger->error(__METHOD__ . ' -> {message}', ['message' => $e->getMessage()]);
@@ -126,7 +126,6 @@ class CronJobsController extends AbstractController
             $avTypes = $service->getAvailabilityTypes(-1, $this->authId);
             if ($avTypes) {
                 foreach ($avTypes as $avType) {
-                    dump($avType);
                     $at = new AvailabilityTypes();
                     $at->setS1id(intval($avType->ID));
                     $at->setName($avType->Name);

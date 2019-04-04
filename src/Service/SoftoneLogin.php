@@ -91,7 +91,7 @@ EOF;
         try {
             $result = $client->SendMessage(['Message' => $message]);
             $s1result = simplexml_load_string(str_replace("utf-16", "utf-8", $result->SendMessageResult));
-            dump($message, $result);
+
             return (string)$s1result->AuthID;
         } catch (\SoapFault $sf) {
             echo $sf->faultstring;

@@ -45,7 +45,7 @@ class MigrateController extends MainController
                 $unknownArr[] = intval($pr['id']);
             }
         }
-        dump($unknownArr);
+
         return;
     }
 
@@ -112,7 +112,6 @@ class MigrateController extends MainController
                 $pr = $em->getRepository(MigrationProducts::class)->findOneBy(['sku' => $s1pr['prCode']]);
 //            $pr = $em->getRepository(MigrationProducts::class)->findOneBy(['s1id' => $s1pr['id']]);
 //            dump($pr->getWebPrice());
-                dump($pr);
                 if ($pr) {
                     if ($pr->getS1id() !== null)
                         continue;
@@ -138,7 +137,6 @@ class MigrateController extends MainController
                 }
             }
 
-            dump($nullMnf, $duplicates);
             return;
         } catch (\Exception $e) {
             $this->logger->error(__METHOD__ . ' -> {message}', ['message' => $e->getMessage()]);
@@ -180,7 +178,6 @@ class MigrateController extends MainController
                 }
             }
             if ($counter === 6001) {
-                dump($noExistingProducts);
                 return;
             }
         }
@@ -199,7 +196,6 @@ class MigrateController extends MainController
                 $pr->setImageUpdateError(1);
                 $em->persist($pr);
                 $em->flush();
-                dump($item);
             }
         }
 //        dump($products);
@@ -318,7 +314,6 @@ class MigrateController extends MainController
                             'prName' => $product->getName(),
                             'prCode' => $product->getSku()
                         ];
-                        dump($errorData);
                     }
                 } else {
                     $data[] = [

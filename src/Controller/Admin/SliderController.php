@@ -62,7 +62,6 @@ class SliderController extends AbstractController
             $form = $this->createForm(SliderType::class, $slider, [
                 'action' => $this->generateUrl('slider_update', ['id' => $id]),
             ]);
-            dump($slider);
             $form->handleRequest($request);
 
             if ($form->isSubmitted() && $form->isValid()) {
@@ -76,7 +75,7 @@ class SliderController extends AbstractController
                 );
                 return $this->redirectToRoute('slider_list');
             }
-            dump('wtf');
+
             return $this->render('Admin/slider/slider_form.html.twig', [
                 'form' => $form->createView()
             ]);

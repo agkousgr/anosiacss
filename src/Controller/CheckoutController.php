@@ -75,7 +75,7 @@ class CheckoutController extends MainController
                 }
                 return $this->json(['success' => true]);
             }
-            dump($checkout);
+
 
             $this->session->set('curOrder', $checkout);
             $bank_config['AcquirerId'] = 14;
@@ -156,7 +156,7 @@ class CheckoutController extends MainController
     public function getPireausTicket(Request $request, CheckoutService $checkoutService, PireausRedirection $pireausRedirection)
     {
         $installments = ($request->request->get('installments') && $request->request->get('installments') <= 6) ? $request->request->get('installments') : 0;
-        dump($installments);
+
         /** @var Checkout $checkout */
         $checkout = $this->session->get('curOrder');
         $cartCost = $checkoutService->calculateCartCost($this->cartItems);
@@ -167,7 +167,7 @@ class CheckoutController extends MainController
         $checkout->setInstallments($installments);
         $checkout = $pireausRedirection->submitOrderToPireaus($checkout);
         $this->session->set('curOrder', $checkout);
-        dump($checkout);
+
         $bank_config['AcquirerId'] = 14;
         $bank_config['MerchantId'] = 2137477493;
         $bank_config['PosId'] = 2141384532;

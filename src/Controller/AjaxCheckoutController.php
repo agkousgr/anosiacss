@@ -85,7 +85,7 @@ class AjaxCheckoutController extends AbstractController
 
                 $checkout->setComments($request->request->get('checkout_step1')['comments']);
                 $session->set('curOrder', $checkout);
-                dump($request, $session->get('curOrder'), $request->request->get('checkout_step1'));
+
                 return $this->json(['success' => true]);
             } catch (\Exception $e) {
                 $logger->error(__METHOD__ . ' -> {message}', ['message' => $e->getMessage()]);
