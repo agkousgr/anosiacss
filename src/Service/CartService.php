@@ -137,6 +137,7 @@ EOF;
                         'webPrice' => ($pr->Discount) ? round((floatval($pr->RetailPrice) * (100 - floatval($pr->Discount)) / 100), 2) : 0,
                         'outOfStock' => $pr->OutOfStock,
                         'remainNotReserved' => $pr->RemainNotReserved,
+                        'volumeWeight' => $pr->VolumeWeight,
                         'webFree' => $pr->WebFree,
                         'overAvailability' => $pr->OverAvailability,
                         'maxByOrder' => $pr->MaxByOrder,

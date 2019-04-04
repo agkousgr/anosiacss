@@ -40,7 +40,6 @@ class CheckoutController extends MainController
                 $checkout->setCouponName($this->session->get('couponName'));
                 $checkout->setCouponId($this->session->get('couponId'));
             }
-            dump($checkout);
             $step1Form = $this->createForm(CheckoutStep1Type::class, $checkout, [
                 'loggedUser' => $this->loggedUser
             ]);
@@ -63,7 +62,9 @@ class CheckoutController extends MainController
                     $userAccountService->updateUserInfo($checkout);
                     $this->session->remove('addAddress');
                 }
+
             }
+            $checkout->setShippingCost($checkoutService->calculateShippingCost($this->cartItems));
 
             if ($step2Form->isSubmitted() && $step2Form->isValid()) {
                 $cartCost = $checkoutService->calculateCartCost($this->cartItems);
@@ -74,7 +75,8 @@ class CheckoutController extends MainController
                 }
                 return $this->json(['success' => true]);
             }
-//            }
+            dump($checkout);
+
             $this->session->set('curOrder', $checkout);
             $bank_config['AcquirerId'] = 14;
             $bank_config['MerchantId'] = 2137477493;
@@ -90,6 +92,7 @@ class CheckoutController extends MainController
                 'bankConfig' => $bank_config,
                 'totalCartItems' => $this->totalCartItems,
                 'totalWishlistItems' => $this->totalWishlistItems,
+                'totalVolumeWeightCost' => $checkoutService->calculateShippingCost($this->cartItems),
                 'loggedUser' => $this->loggedUser,
                 'userExist' => $userExist,
                 'addresses' => $addresses,
@@ -127,7 +130,7 @@ class CheckoutController extends MainController
                 } catch (\Exception $e) {
                     throw new HttpException(503, 'Payment error', $e);
                 }
-            }else{
+            } else {
                 $cartItems = $this->cartItems;
                 $checkoutCompleted->handleSuccessfulPayment($cartItems);
                 return $this->render('orders/order_completed.html.twig', [

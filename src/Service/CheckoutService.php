@@ -349,39 +349,6 @@ EOF;
         }
     }
 
-  /*  public function getClientId($username) // to be deleted in production
-    {
-        $message = <<<EOF
-<?xml version="1.0" encoding="utf-16"?>
-<ClientGetUsersRequest>
-    <Type>1015</Type>
-    <Kind>$this->kind</Kind>
-    <Domain>$this->domain</Domain>
-    <AuthID>$this->authId</AuthID>
-    <AppID>$this->appId</AppID>
-    <CompanyID>$this->companyId</CompanyID>
-    <pagesize>1</pagesize>
-    <pagenumber>0</pagenumber>
-    <Username>$username</Username>
-    <Password>null</Password>
-    <Email>null</Email>
-</ClientGetUsersRequest>
-EOF;
-        try {
-            $result = $this->client->SendMessage(['Message' => $message]);
-            $userData = simplexml_load_string(str_replace("utf-16", "utf-8", $result->SendMessageResult));
-//            dump($message, $userData->GetDataRows->GetUsersRow->ClientID);
-            if ((int)$userData->RowsCount > 0) {
-                return $userData->GetDataRows->GetUsersRow->ClientID;
-            } else {
-                return 0;
-            }
-        } catch (\SoapFault $sf) {
-            echo $sf->faultstring;
-        }
-
-    }
-  */
 
     /**
      * @param $checkout
@@ -555,37 +522,7 @@ EOF;
         return;
     }
 
- /*   public function getOrders($clientId)
-    {
-        $message = <<<EOF
-<?xml version="1.0" encoding="utf-16"?>
-<ClientGetUsersRequest>
-    <Type>1048</Type>
-    <Kind>$this->kind</Kind>
-    <Domain>$this->domain</Domain>
-    <AuthID>$this->authId</AuthID>
-    <AppID>$this->appId</AppID>
-    <CompanyID>$this->companyId</CompanyID>
-    <CustomerID>$clientId</CustomerID>
-    <OrderID>null</OrderID>
-    <Number>null</Number>
-    <EshopNumber>null</EshopNumber>
-</ClientGetUsersRequest>
-EOF;
-        try {
-            $result = $this->client->SendMessage(['Message' => $message]);
-            $userData = simplexml_load_string(str_replace("utf-16", "utf-8", $result->SendMessageResult));
-//            dump($message, $userData->GetDataRows->GetUsersRow->ClientID);
-            if ((int)$userData->RowsCount > 0) {
-                return $userData->GetDataRows->GetUsersRow->ClientID;
-            } else {
-                return 0;
-            }
-        } catch (\SoapFault $sf) {
-            echo $sf->faultstring;
-        }
 
-    } */
 
     /**
      * @param $cartItems
@@ -600,6 +537,32 @@ EOF;
         return;
     }
 
+    /**
+     * @param $cartItems
+     *
+     * @return int|string
+     */
+    public function calculateShippingCost($cartItems)
+    {
+        $totalVolumeWeight = 0;
+        foreach ($cartItems as $cartItem) {
+            $quantity = $cartItem['quantity'];
+            $volumeWeight = floatval($cartItem['volumeWeight']);
+            $totalVolumeWeight += number_format(($quantity * $volumeWeight), 2, '.', ',');
+        }
+        $overWeight = $totalVolumeWeight - 2;
+        if ($overWeight <= 0)
+            return 2;
+        else {
+            return round($overWeight * 0.7) + 2;
+        }
+    }
+
+    /**
+     * @param $cartItems
+     *
+     * @return int|string
+     */
     public function calculateCartCost($cartItems)
     {
         $cartTotal = 0;

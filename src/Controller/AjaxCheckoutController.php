@@ -70,26 +70,21 @@ class AjaxCheckoutController extends AbstractController
                     $checkout->setNewsLetterGender($request->request->get('checkout_step1')['newsLetterGender']);
                 }
                 $checkout->setShippingType($request->request->get('checkout_step1')['shippingType']);
-//                if ($session->get("addAddress")) {
                 $checkout->setAddress($request->request->get('checkout_step1')['address']);
                 $checkout->setZip($request->request->get('checkout_step1')['zip']);
                 $checkout->setCity($request->request->get('checkout_step1')['city']);
                 $checkout->setDistrict($request->request->get('checkout_step1')['district']);
                 $checkout->setPhone01($request->request->get('checkout_step1')['phone01']);
                 $clientId = $userAccountService->updateUserInfo($checkout);
-                if (null === $session->get("anosiaUser"))
+                if (null !== $session->get("anosiaClientId"))
                     $checkout->setClientId($clientId);
-                dump($clientId, $checkout, $request->request->get('checkout_step1')['shippingType']);
+
                 $session->remove('addAddress');
-//                }
-                if ($request->request->get('checkout_step1')['shippingType'] === '104') {
-                    $checkout->setShippingCost(2.00);
-                }else{
+                if ($request->request->get('checkout_step1')['shippingType'] !== '104')
                     $checkout->setShippingCost(0);
-                }
+
                 $checkout->setComments($request->request->get('checkout_step1')['comments']);
                 $session->set('curOrder', $checkout);
-//                $id = $request->request->getInt('id');
                 dump($request, $session->get('curOrder'), $request->request->get('checkout_step1'));
                 return $this->json(['success' => true]);
             } catch (\Exception $e) {

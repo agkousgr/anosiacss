@@ -686,7 +686,7 @@ EOF;
     <AuthID>$this->authId</AuthID>
     <AppID>$this->appId</AppID>
     <CompanyID>$this->companyId</CompanyID>
-    <pagesize>20</pagesize>
+    <pagesize>1</pagesize>
     <pagenumber>0</pagenumber>
     <Username>$username</Username>
     <Password>null</Password>
@@ -718,6 +718,13 @@ EOF;
         }
     }
 
+    /**
+     * @param string $token
+     *
+     * @return bool|\SimpleXMLElement
+     *
+     * @throws \SoapFault
+     */
     public function getUserByToken(string $token)
     {
         $client = new \SoapClient('http://caron.cloudsystems.gr/FOeshopWS/ForeignOffice.FOeshop.API.FOeshopSvc.svc?singleWsdl', ['trace' => true, 'exceptions' => true,]);
