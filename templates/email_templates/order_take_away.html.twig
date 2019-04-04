@@ -1,0 +1,59 @@
+{% extends 'email_templates/base.html.twig' %}
+
+{% block content %}
+    <p class="m-1">
+        <strong>Γειά σας!</strong><br />
+        Πήρατε αυτό το email, γιατί μόλις ολοκληρώσατε την αγορά σας στο anosiapharmacy.gr!<br />
+        Η δική σας δουλειά τελείωσε και τώρα αρχίζει η δική μας …
+    </p>
+    <div>
+        <p><strong>Η παραγγελία σας είναι:</strong></p>
+        <table class="table">
+            <tbody>
+                {% for item in order.items %}
+                    <tr>
+                        <td>{{ loop.index }}</td>
+                        <td>{{ item.name }}</td>
+                        <td>{{ item.price }}</td>
+                        <td>{{ item.quantity }}</td>
+                        <td>{{ item.total }}</td>
+                    </tr>
+                {% endfor %}
+            </tbody>
+        </table>
+        <p class="m-1">
+            Όταν αυτή είναι έτοιμη, θα σας στείλουμε ένα sms, που θα σας καλεί να έρθετε να την παραλάβετε από το κατάστημά μας.
+        </p>
+    </div>
+    <p class="m-1">
+        <strong>Προσέξτε! (Οδηγίες προς ναυτιλομένους...)</strong><br />
+        Το ωράριό μας είναι:<br />
+        <u>Δευτέρα έως Παρασκευή:</u> 8:00 το πρωί με 14:00 το μεσημέρι.<br />
+        <u>Τρίτη, Πέμπτη & Παρασκευή:</u> 17:00 το απόγευμα με 20:00 το βράδυ.<br />
+        Tο φαρμακείο μας βρίσκεται:<br />
+        <u>Αμφίσσης 21 στον Άγιο Δημήτριο.</u><br />
+        <a href="https://www.google.com/maps/place/www.anosiapharmacy.gr/@37.9299921,23.7194125,17z/data=!4m5!3m4!1s0x14a1bdcc7d1cc8cb:0x7e2cf91074d4869e!8m2!3d37.930026!4d23.718801">
+            <img src="{{ absolute_url(asset('images/map.png')) }}" alt="Χάρτης" />
+        </a>
+    </p>
+    <div>
+        <p><strong>Μήπως χρειάζεστε κάτι ακόμα;</strong></p>
+        <table class="table">
+            <tbody>
+                {% for product in proposedProducts %}
+                    <tr>
+                        <td><a href="{{ url('product_view', {'slug': product.slug}) }}">{{ product.name }}</a></td>
+                    </tr>
+                {% endfor %}
+            </tbody>
+        </table>
+    </div>
+    <p class="m-1">
+        Αν θέλετε να προσθέσετε, να αφαιρέσετε, να αλλάξετε κάποιο προϊόν ή απλά να ρωτήσετε κάτι, μην διστάσετε…<br />
+        Στείλτε μας email στο <a href="mailto:info@anosiapharmacy.gr">info@anosiapharmacy.gr</a>, γράψτε μας μήνυμα στο live chat ή απλά τηλεφωνήστε μας στο 210-9402027.<br />
+        Τα κορίτσια μας είναι πάντα πρόθυμα να σας εξυπηρετήσουν!<br />
+        <strong>Φιλική συμβουλή…</strong>
+        <a href="{{ url('index') }}#newsletter-section">Γραφτείτε στο newsletter μας.</a>
+        Δεν θα χάσετε τίποτα! Θα ενημερώνεστε για τις προσφορές μας και θα διαβάζετε ό,τι καινούργιο και ενδιαφέρον δημοσιεύουμε!
+    </p>
+{% endblock %}

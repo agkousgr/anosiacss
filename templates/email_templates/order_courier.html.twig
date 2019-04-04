@@ -1,0 +1,54 @@
+{% extends 'email_templates/base.html.twig' %}
+
+{% block content %}
+    <p class="m-1">
+    <strong>Γειά σας!</strong><br />
+    Πήρατε αυτό το email, γιατί μόλις ολοκληρώσατε την αγορά σας στο anosiapharmacy.gr!<br />
+    Η δική σας δουλειά τελείωσε και τώρα αρχίζει η δική μας …
+</p>
+    <div>
+        <p><strong>Η παραγγελία σας είναι:</strong></p>
+        <table class="table">
+            <tbody>
+                {% for item in order.items %}
+                    <tr>
+                        <td>{{ loop.index }}</td>
+                        <td>{{ item.name }}</td>
+                        <td>{{ item.price }}</td>
+                        <td>{{ item.quantity }}</td>
+                        <td>{{ item.total }}</td>
+                    </tr>
+                {% endfor %}
+            </tbody>
+        </table>
+        <p>
+            <strong>και θα αποσταλεί στη διεύθυνση:</strong><br />
+            {{ order.shippingAddress }}
+        </p>
+    </div>
+    <p class="m-1">
+        Εμείς θα αρχίσουμε όσο πιο άμεσα γίνεται. Με πολύ προσοχή θα την ετοιμάσουμε, ώστε να φτάσει γρήγορα και με ασφάλεια σε σας.
+        Θα σας στείλουμε ένα νέο email, μόλις το πακέτο σας αναχωρήσει από την αποθήκη μας. Εκεί θα βρείτε έναν αριθμό με τον οποίο
+        θα μπορείτε να παρακολουθείτε τη διαδρομή που θα κάνει.
+    </p>
+    <div>
+        <p><strong>Μήπως χρειάζεστε κάτι ακόμα;</strong></p>
+        <table class="table">
+            <tbody>
+                {% for product in proposedProducts %}
+                    <tr>
+                        <td><a href="{{ url('product_view', {'slug': product.slug}) }}">{{ product.name }}</a></td>
+                    </tr>
+                {% endfor %}
+            </tbody>
+        </table>
+    </div>
+    <p class="m-1">
+        Αν θέλετε να προσθέσετε, να αφαιρέσετε, να αλλάξετε κάποιο προϊόν ή απλά να ρωτήσετε κάτι, μην διστάσετε…<br />
+        Στείλτε μας email στο <a href="mailto:info@anosiapharmacy.gr">info@anosiapharmacy.gr</a>, γράψτε μας μήνυμα στο live chat ή απλά τηλεφωνήστε μας στο 210-9402027.<br />
+        Τα κορίτσια μας είναι πάντα πρόθυμα να σας εξυπηρετήσουν!<br />
+        <strong>Φιλική συμβουλή…</strong>
+        <a href="{{ url('index') }}#newsletter-section">Γραφτείτε στο newsletter μας.</a>
+        Δεν θα χάσετε τίποτα! Θα ενημερώνεστε για τις προσφορές μας και θα διαβάζετε ό,τι καινούργιο και ενδιαφέρον δημοσιεύουμε!
+    </p>
+{% endblock %}

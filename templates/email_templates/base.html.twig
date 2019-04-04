@@ -1,0 +1,38 @@
+<html>
+    <head>
+        <link rel="stylesheet"
+              href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css"
+              integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T"
+              crossorigin="anonymous" />
+    </head>
+    <body>
+        <div class="text-center">
+            <img src="{{ absolute_url(asset('images/logo.png')) }}" class="rounded" alt="Λογότυπο">
+        </div>
+        <div class="table-responsive m-2">
+            <table class="table">
+                <tbody>
+                    <tr>
+                        {% for category in categories %}
+                            <td><a href="{{ url('products_list', {slug: category.slug}) }}">{{ category.name }}</a></td>
+                        {% endfor %}
+                    </tr>
+                </tbody>
+            </table>
+        </div>
+        {% block content %}{% endblock %}
+        <p class="text-center m-1">
+            <em>Η δουλειά μας είναι να σας εξυπηρετούμε. Είμαστε χαρούμενοι όταν τα καταφέρνουμε!</em>
+        </p>
+        <p class="text-right">Σας ευχαριστούμε!</p>
+        <div class="text-center">
+            <p>Η ομάδα μας</p>
+            <div class="d-flex justify-content-center">
+                <img src="{{ absolute_url(asset('images/icon-1.png')) }}" class="m-1" alt="" />
+                <img src="{{ absolute_url(asset('images/icon-2.png')) }}" class="m-1" alt="" />
+                <img src="{{ absolute_url(asset('images/icon-3.png')) }}" class="m-1" alt="" />
+                <img src="{{ absolute_url(asset('images/icon-4.png')) }}" class="m-1" alt="" />
+            </div>
+        </div>
+    </body>
+</html>

@@ -1,0 +1,29 @@
+{% extends 'email_templates/base.html.twig' %}
+
+{% block content %}
+    <p class="m-1">
+        <strong>Γειά σας!</strong><br />
+        Δεν σας ξεχάσαμε! Παραλάβατε την παραγγελία σας; Ήταν όλα όπως έπρεπε;<br />
+        Αν υπήρξε κάποιο πρόβλημα, επικοινωνήστε μαζί μας. Η γνώμη σας έχει μεγάλη σημασία. Μας βοηθάει να γίνουμε καλύτεροι!<br />
+        Το mail μας είναι <a href="mailto:info@anosiapharmacy.gr">info@anosiapharmacy.gr</a> και το τηλέφωνό μας 210-9402027.
+        Εναλλακτικά, γράψτε μας στο Livechat στην αρχική μας σελίδα.<br />
+        Άν όλα ήταν όπως τα περιμένατε, ένα like στα Social Media θα φέρει χαμόγελα και στα δικά μας πρόσωπα!<br />
+        <a class="m-2" href="https://www.facebook.com/AnosiaPharmacy">Facebook</a>
+        <a class="m-2" href="https://www.instagram.com/anosiapharmacy.gr/">Instagram</a>
+    </p>
+    <div class="m-1">
+        <p>
+            <strong>Και επειδή οι ανάγκες δεν σταματούν ποτέ...</strong><br />
+            Pίξτε αν θέλετε μια ματιά στις τελευταίες προσφορές μας!
+        </p>
+        <table class="table">
+            <tbody>
+                {% for product in offers %}
+                    <tr>
+                        <td><a href="{{ url('product_view', {'slug': product.slug}) }}">{{ product.name }}</a></td>
+                    </tr>
+                {% endfor %}
+            </tbody>
+        </table>
+    </div>
+{% endblock %}
