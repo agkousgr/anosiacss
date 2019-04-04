@@ -37,7 +37,7 @@
             <tbody>
                 {% for product in proposedProducts %}
                     <tr>
-                        <td><a href="{{ url('product_view', {slug: product.slug}) }}">{{ product.name }}</a></td>
+                        <td><a href="{{ url('product_view', {'slug': product.slug}) }}">{{ product.name }}</a></td>
                     </tr>
                 {% endfor %}
             </tbody>

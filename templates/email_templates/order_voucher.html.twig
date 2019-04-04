@@ -7,7 +7,7 @@
         Βρίσκεται στα χέρια της Speedex και ο αριθμός της είναι:<br />
         #αριθμός voucher#<br />
         Μπορείτε να παρακολουθήσετε την πορεία της, κάνοντας κλικ εδώ:<br />
-        #link για την αναζήτηση speedex με αριθμό voucher ήδη εισηγμένο#<br />
+        <a href="{{ url('courier_tracker', {'voucher': voucher}) }}"></a><br />
         Tip: Η Speedex θα σας στείλει sms για να σας ενημερώσει πότε θα παραλάβετε.<br />
         Αν παρόλα αυτά κάτι πάει στραβά (άνθρωποι είμαστε...), μη διστάσετε να επικοινωνήσετε μαζί μας.
         Στείλτε μας email στο <a href="mailto:info@anosiapharmacy.gr">info@anosiapharmacy.gr</a>,
@@ -19,7 +19,7 @@
             <tbody>
                 {% for product in offers %}
                     <tr>
-                        <td><a href="{{ url('product_view', {slug: product.slug}) }}">{{ product.name }}</a></td>
+                        <td><a href="{{ url('product_view', {'slug': product.slug}) }}">{{ product.name }}</a></td>
                     </tr>
                 {% endfor %}
             </tbody>
