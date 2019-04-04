@@ -185,6 +185,7 @@ EOF;
         try {
             $prArr = [];
             foreach ($products as $pr) {
+                dump($pr->MainPhotoUrl);
                 if ((string)$pr->WebVisible !== "false") {
                     $prArr[] = [
                         'id' => $pr->ID,
@@ -212,6 +213,7 @@ EOF;
                         'hasMainImage' => $pr->HasMainPhoto,
                         'categories' => $pr->AllCategoryIDs,
                         'imageUrl' => (strval($pr->HasMainPhoto) !== 'false') ? 'https://caron.cloudsystems.gr/FOeshopAPIWeb/DF.aspx?' . str_replace('[Serial]', '01102472475217', str_replace('&amp;', '&', $pr->MainPhotoUrl)) : ''
+//                        'imageUrl' => (strval($pr->HasMainPhoto) !== 'false') ? 'https://caron.cloudsystems.gr/FOeshopAPIWeb/DF.aspx?' . str_replace('[Serial]', '01102472475217', str_replace('&amp;', '&', $pr->MainPhotoUrl)) : ''
                     ];
                 }
             }
