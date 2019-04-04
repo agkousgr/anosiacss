@@ -185,8 +185,8 @@ EOF;
         try {
             $prArr = [];
             foreach ($products as $pr) {
-                dump($pr->MainPhotoUrl);
                 if ((string)$pr->WebVisible !== "false") {
+                    $mainPhoto = (strval($pr->HasMainPhoto) !== 'false') ? explode('=', $pr->MainPhotoUrl) : [];
                     $prArr[] = [
                         'id' => $pr->ID,
                         'name' => $pr->Name2,
@@ -212,7 +212,7 @@ EOF;
                         'maxByOrder' => $pr->MaxByOrder,
                         'hasMainImage' => $pr->HasMainPhoto,
                         'categories' => $pr->AllCategoryIDs,
-                        'imageUrl' => (strval($pr->HasMainPhoto) !== 'false') ? 'https://caron.cloudsystems.gr/FOeshopAPIWeb/DF.aspx?' . str_replace('[Serial]', '01102472475217', str_replace('&amp;', '&', $pr->MainPhotoUrl)) : ''
+                        'imageUrl' => (empty($mainPhoto)) ? '' : 'FOSO/01102459200217/1001/mtrl/51/-/' . end($mainPhoto)
 //                        'imageUrl' => (strval($pr->HasMainPhoto) !== 'false') ? 'https://caron.cloudsystems.gr/FOeshopAPIWeb/DF.aspx?' . str_replace('[Serial]', '01102472475217', str_replace('&amp;', '&', $pr->MainPhotoUrl)) : ''
                     ];
                 }
@@ -352,6 +352,7 @@ EOF;
             $prArr = [];
             $imagesArr = [];
             if ((string)$pr->WebVisible !== 'false') {
+                $mainPhoto = (strval($pr->HasMainPhoto) !== 'false') ? explode('=', $pr->MainPhotoUrl) : [];
                 $prArr = [
                     'id' => $pr->ID,
                     'name' => $pr->Name2,
@@ -379,7 +380,7 @@ EOF;
                     'overAvailability' => $pr->OverAvailability,
                     'maxByOrder' => $pr->MaxByOrder,
                     'hasMainImage' => $pr->HasMainPhoto,
-                    'imageUrl' => (strval($pr->HasMainPhoto) !== 'false') ? 'https://caron.cloudsystems.gr/FOeshopAPIWeb/DF.aspx?' . str_replace('[Serial]', '01102472475217', str_replace('&amp;', '&', $pr->MainPhotoUrl)) : '',
+                    'imageUrl' => (empty($mainPhoto)) ? '' : 'FOSO/01102459200217/1001/mtrl/51/-/' . end($mainPhoto),
                     'categories' => $this->getProductCategories($pr->AllCategoryIDs)
 //                    'categories' => $pr->AllCategoryIDs
                 ];
@@ -444,11 +445,12 @@ EOF;
         try {
             $imagesArr = [];
             foreach ($images as $image) {
+                $mainPhoto = (strval($image->PhotoUrl) !== 'false') ? explode('=', $image->PhotoUrl) : [];
                 $imagesArr['extraImages'][] = [
                     'id' => $image->ID,
                     'name' => $image->PhotoFileName,
                     'isMain' => $image->IsMain,
-                    'imageUrl' => 'https://caron.cloudsystems.gr/FOeshopAPIWeb/DF.aspx?' . str_replace('[Serial]', '01102472475217', str_replace('&amp;', '&', $image->PhotoUrl))
+                    'imageUrl' => (empty($mainPhoto)) ? '' : 'FOSO/01102459200217/1001/mtrl/51/-/' . end($mainPhoto)
                 ];
             }
 
@@ -500,6 +502,7 @@ EOF;
             $prArr = [];
             $i = 0;
             foreach ($products as $pr) {
+                $mainPhoto = (strval($pr->HasMainPhoto) !== 'false') ? explode('=', $pr->MainPhotoUrl) : [];
                 $prArr[] = [
                     'id' => $pr->ID,
                     'name' => $pr->Name2,
@@ -517,7 +520,7 @@ EOF;
                     'overAvailability' => $pr->OverAvailability,
                     'maxByOrder' => $pr->MaxByOrder,
                     'hasMainImage' => $pr->HasMainPhoto,
-                    'imageUrl' => ($pr->HasMainPhoto) ? 'https://caron.cloudsystems.gr/FOeshopAPIWeb/DF.aspx?' . str_replace('[Serial]', '01102472475217', str_replace('&amp;', '&', $pr->MainPhotoUrl)) : ''
+                    'imageUrl' => (empty($mainPhoto)) ? '' : 'FOSO/01102459200217/1001/mtrl/51/-/' . end($mainPhoto)
                 ];
             }
 

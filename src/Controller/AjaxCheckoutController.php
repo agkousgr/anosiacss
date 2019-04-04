@@ -75,10 +75,13 @@ class AjaxCheckoutController extends AbstractController
                 $checkout->setCity($request->request->get('checkout_step1')['city']);
                 $checkout->setDistrict($request->request->get('checkout_step1')['district']);
                 $checkout->setPhone01($request->request->get('checkout_step1')['phone01']);
-                $clientId = $userAccountService->updateUserInfo($checkout);
                 if (null !== $session->get("anosiaClientId"))
+                    $checkout->setClientId($session->get("anosiaClientId"));
+                else {
+                    $clientId = $userAccountService->updateUserInfo($checkout);
                     $checkout->setClientId($clientId);
 
+                }
                 $session->remove('addAddress');
                 if ($request->request->get('checkout_step1')['shippingType'] !== '104')
                     $checkout->setShippingCost(0);
