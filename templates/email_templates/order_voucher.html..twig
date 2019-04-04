@@ -1,0 +1,33 @@
+{% extends 'email_templates/base.html.twig' %}
+
+{% block content %}
+    <p class="m-1">
+        <strong>Γειά σας και πάλι!</strong><br />
+        Η παραγγελία σας έφυγε από εμάς και σε μία-δύο μέρες θα την παραλάβετε!<br />
+        Βρίσκεται στα χέρια της Speedex και ο αριθμός της είναι:<br />
+        #αριθμός voucher#<br />
+        Μπορείτε να παρακολουθήσετε την πορεία της, κάνοντας κλικ εδώ:<br />
+        #link για την αναζήτηση speedex με αριθμό voucher ήδη εισηγμένο#<br />
+        Tip: Η Speedex θα σας στείλει sms για να σας ενημερώσει πότε θα παραλάβετε.<br />
+        Αν παρόλα αυτά κάτι πάει στραβά (άνθρωποι είμαστε...), μη διστάσετε να επικοινωνήσετε μαζί μας.
+        Στείλτε μας email στο <a href="mailto:info@anosiapharmacy.gr">info@anosiapharmacy.gr</a>,
+        γράψτε μας μήνυμα στο live chat ή απλά τηλεφωνήστε μας στο 210-9402027. Με λίγη καλή διάθεση, όλα λύνονται!
+    </p>
+    <div class="m-1">
+        <p><strong>Δείτε τις τελευταίες προσφορές μας!</strong></p>
+        <table class="table">
+            <tbody>
+                {% for product in offers %}
+                    <tr>
+                        <td><a href="{{ url('product_view', {slug: product.slug}) }}">{{ product.name }}</a></td>
+                    </tr>
+                {% endfor %}
+            </tbody>
+        </table>
+        <p>
+            <strong>Κάνατε εγγραφή στο newsletter μας;</strong><br />
+            <a href="{{ url('index') }}#newsletter-section">Γραφτείτε στο newsletter μας.</a>
+            Δεν κοστίζει τίποτα και μπορείτε πάντα να διαγραφείτε αν το μετανιώσετε!
+        </p>
+    </div>
+{% endblock %}
