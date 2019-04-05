@@ -212,7 +212,7 @@ EOF;
                         'maxByOrder' => $pr->MaxByOrder,
                         'hasMainImage' => $pr->HasMainPhoto,
                         'categories' => $pr->AllCategoryIDs,
-                        'imageUrl' => (empty($mainPhoto)) ? '' : 'FOSO/01102459200217/1001/mtrl/51/-/' . $pr->ID . '/' . end($mainPhoto)
+                        'imageUrl' => (empty($mainPhoto)) ? '' : 'images/products/FOSO/01102459200217/1001/mtrl/51/-/' . $pr->ID . '/' . end($mainPhoto)
 //                        'imageUrl' => (strval($pr->HasMainPhoto) !== 'false') ? 'https://caron.cloudsystems.gr/FOeshopAPIWeb/DF.aspx?' . str_replace('[Serial]', '01102472475217', str_replace('&amp;', '&', $pr->MainPhotoUrl)) : ''
                     ];
                 }
@@ -382,7 +382,7 @@ EOF;
                     'overAvailability' => $pr->OverAvailability,
                     'maxByOrder' => $pr->MaxByOrder,
                     'hasMainImage' => $pr->HasMainPhoto,
-                    'imageUrl' => (empty($mainPhoto)) ? '' : 'FOSO/01102459200217/1001/mtrl/51/-/' . $pr->ID . '/' . end($mainPhoto),
+                    'imageUrl' => (empty($mainPhoto)) ? '' : 'images/products/FOSO/01102459200217/1001/mtrl/51/-/' . $pr->ID . '/' . end($mainPhoto),
                     'categories' => $this->getProductCategories($pr->AllCategoryIDs)
 //                    'categories' => $pr->AllCategoryIDs
                 ];
@@ -452,7 +452,7 @@ EOF;
                     'id' => $image->ID,
                     'name' => $image->PhotoFileName,
                     'isMain' => $image->IsMain,
-                    'imageUrl' => (empty($mainPhoto)) ? '' : 'FOSO/01102459200217/1001/mtrl/51/-/' . $image->ID . '/' . end($mainPhoto)
+                    'imageUrl' => (empty($mainPhoto)) ? '' : 'images/products/FOSO/01102459200217/1001/mtrl/51/-/' . $image->ID . '/' . end($mainPhoto)
                 ];
             }
 
@@ -531,7 +531,7 @@ EOF;
                         'maxByOrder' => $pr->MaxByOrder,
                         'hasMainImage' => $pr->HasMainPhoto,
                         'categories' => $pr->AllCategoryIDs,
-                        'imageUrl' => (empty($mainPhoto)) ? '' : 'FOSO/01102459200217/1001/mtrl/51/-/' . $pr->ID . '/' . end($mainPhoto)
+                        'imageUrl' => (empty($mainPhoto)) ? '' : 'images/products/FOSO/01102459200217/1001/mtrl/51/-/' . $pr->ID . '/' . end($mainPhoto)
 //                        'imageUrl' => (strval($pr->HasMainPhoto) !== 'false') ? 'https://caron.cloudsystems.gr/FOeshopAPIWeb/DF.aspx?' . str_replace('[Serial]', '01102472475217', str_replace('&amp;', '&', $pr->MainPhotoUrl)) : ''
                     ];
                 }

@@ -206,7 +206,7 @@ class MigrateController extends MainController
 
     public function migrateImages(EntityManagerInterface $em, MigrationService $migrationService, ProductService $productService)
     {
-//       Save Path: FOSO/[Serial]/[CompanyID]/[TableName]/[sodtype]/[sosource]/[TableID]
+//       Save Path: images/products/FOSO/[Serial]/[CompanyID]/[TableName]/[sodtype]/[sosource]/[TableID]
 //      [Serial] ο αριθμός της εγκατάστασης του SoftOne
 //      [CompanyID] το ID της εταιρίας στο οποίο έχουμε κάνει login
 //      [TableName] το όνομα του πίνακα (για τα είδη ‘mtrl’)
