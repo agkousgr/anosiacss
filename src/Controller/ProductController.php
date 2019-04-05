@@ -142,26 +142,26 @@ class ProductController extends MainController
             $product = $this->productService->getItems($pr->getId(), 'null', 10);
             $productId = intval($product["id"]);
             $productView = $em->getRepository(ProductViews::class)->findOneBy(['product_id' => $productId]);
-//            if (empty($productView)) {
-//                $productView = new ProductViews();
-//                $productView->setViews(1);
-//                $productView->setProductId($productId);
-//                $em->persist($productView);
-//            } else {
-//                $productView->setViews($productView->getViews() + 1);
-//            }
-//
+           $relativeProducts = $productService->getRelevantItems('null',-1, 1, 1, 0, $product['categories'][0]->getS1id());
+            if (empty($productView)) {
+                $productView = new ProductViews();
+                $productView->setViews(1);
+                $productView->setProductId($productId);
+                $em->persist($productView);
+            } else {
+                $productView->setViews($productView->getViews() + 1);
+            }
+            $em->flush();
+
 //            if ($pr) {
 //                $pr->setViews($pr->getViews() + 1);
 //                $em->persist($pr);
 //            }
-//            $em->flush();
             return $this->render('products/view.html.twig', [
                 'pr' => $product,
                 'categories' => $this->categories,
                 'topSellers' => $this->topSellers,
-                'popular' => $this->popular,
-                'featured' => $this->featured,
+                'relativeProducts' => $relativeProducts,
                 'cartItems' => $this->cartItems,
                 'totalCartItems' => $this->totalCartItems,
                 'totalWishlistItems' => $this->totalWishlistItems,

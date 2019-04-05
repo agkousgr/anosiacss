@@ -187,7 +187,7 @@ EOF;
                                 ->setCategory($category)
                                 ->setImageUrl(
                                     $item->HasMainPhoto ?
-                                        'FOSO/01102459200217/1001/mtrl/51/-/' . end($mainPhoto) :
+                                        'FOSO/01102459200217/1001/mtrl/51/-/' . $item->ID . '/' . end($mainPhoto) :
                                         null
                                 );
                             $this->em->persist($topSeller);

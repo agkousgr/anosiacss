@@ -1,88 +1,93 @@
 <div class="related-product">
     <h2 style="text-transform: none;">Σχετικά προϊόντα</h2>
     <div class="owl-carousel owl-theme ProductRelatedScroll product-main-slider">
-        {% for pr in popular %}
-            <div class="item">
-                <div class="product-case">
-                    <div class="tag tag-green"><span>new</span></div>
-                    <div class="product-img">
-                        <div class="hover-img">
-                            <a href="{{ path('product_view', {'slug':pr.slug}) }}"><img src="{{ pr.imageUrl }}" alt=""></a>
+        {% for pr in relativeProducts %}
+            {% if pr.outOfStock == "false" and (pr.remainNotReserved|number_format() > 0 or pr.webFree == "true") %}
+                <div class="item">
+                    <div class="product-case">
+                        <div class="tag tag-green"><span>new</span></div>
+                        <div class="product-img">
+                            <div class="hover-img">
+                                <a href="{{ path('product_view', {'slug':pr.slug}) }}"><img
+                                            src="{{ asset(pr.imageUrl) }}" alt=""></a>
+                            </div>
+                            <a href="#">
+                                <a href="{{ path('product_view', {'slug':pr.slug}) }}"><img
+                                            src="{{ asset(pr.imageUrl) }}" alt=""></a>
+                            </a>
                         </div>
-                        <a href="#">
-                            <a href="{{ path('product_view', {'slug':pr.slug}) }}"><img src="{{ pr.imageUrl }}" alt=""></a>
-                        </a>
-                    </div>
-                    <div class="hover-info">
+                        <div class="hover-info">
+                            <div class="product-short-info">
+                                <div class="product-name">
+                                    {% if pr.summary|length > 0 %}
+                                        {#{% set text = pr.summary|render %}#}
+                                        {% set hoverText = pr.summary|truncate(110, true)|raw %}
+                                    {% else %}
+                                        {% set hoverText = pr.name|title|truncate(100, true)|raw %}
+                                    {% endif %}
+                                    <a href="{{ path('product_view', {'slug':pr.slug}) }}">{{ hoverText }}</a>
+                                </div>
+                                {#<div class="star"><i class="fa fa-star"></i><i#}
+                                {#class="fa fa-star"></i><i#}
+                                {#class="fa fa-star"></i><i#}
+                                {#class="fa fa-star"></i><i#}
+                                {#class="fa fa-star"></i><i#}
+                                {#class="fa fa-star-o"></i></div>#}
+                                <div class="product-price">
+                                    <div class="product-price-span">
+                                        Κωδ. {{ pr.prCode }}
+                                    </div>
+                                    {#<div class="product-price-span">{{ pr.webPrice }}#}
+                                    {#€#}
+                                    {#<del>{{ pr.retailPrice }}€</del>#}
+                                    {#</div>#}
+                                </div>
+                                <button href="#"
+                                        class="add-to-cart"
+                                        data-id="{{ pr.id }}"
+                                        data-name="{{ pr.name }}"
+                                        type="button">
+                                    <i class="fa fa-cart-plus"></i><span>στο καλαθι</span>
+                                </button>
+                            </div>
+                        </div>
                         <div class="product-short-info">
-                            <div class="product-name">
-                                {% if pr.summary|length > 0 %}
-                                    {#{% set text = pr.summary|render %}#}
-                                    {% set hoverText = pr.summary|truncate(110, true)|raw %}
-                                {% else %}
-                                    {% set hoverText = pr.name|title|truncate(100, true)|raw %}
-                                {% endif %}
-                                <a href="{{ path('product_view', {'slug':pr.slug}) }}">{{ hoverText }}</a>
+                            <div class="product-name"><a
+                                        href="{{ path('product_view', {'slug':pr.slug}) }}">{{ pr.name|title|preplace("σ", "ς") }}</a>
                             </div>
                             {#<div class="star"><i class="fa fa-star"></i><i#}
-                            {#class="fa fa-star"></i><i#}
-                            {#class="fa fa-star"></i><i#}
-                            {#class="fa fa-star"></i><i#}
-                            {#class="fa fa-star"></i><i#}
+                            {#class="fa fa-star"></i><i class="fa fa-star"></i><i#}
+                            {#class="fa fa-star"></i><i class="fa fa-star"></i><i#}
                             {#class="fa fa-star-o"></i></div>#}
                             <div class="product-price">
-                                <div class="product-price-span">
-                                    Κωδ. {{ pr.prCode }}
+                                <div class="product-price-span">{{ pr.webPrice }}€
+                                    <del>{{ pr.retailPrice }}€</del>
                                 </div>
-                                {#<div class="product-price-span">{{ pr.webPrice }}#}
-                                {#€#}
-                                {#<del>{{ pr.retailPrice }}€</del>#}
-                                {#</div>#}
                             </div>
-                            <button href="#"
-                                    class="add-to-cart"
-                                    data-id="{{ pr.id }}"
-                                    data-name="{{ pr.name }}"
-                                    type="button">
-                                <i class="fa fa-cart-plus"></i><span>στο καλαθι</span>
-                            </button>
-                        </div>
-                    </div>
-                    <div class="product-short-info">
-                        <div class="product-name"><a href="{{ path('product_view', {'slug':pr.slug}) }}">{{ pr.name|title|preplace("σ", "ς") }}</a>
-                        </div>
-                        {#<div class="star"><i class="fa fa-star"></i><i#}
-                        {#class="fa fa-star"></i><i class="fa fa-star"></i><i#}
-                        {#class="fa fa-star"></i><i class="fa fa-star"></i><i#}
-                        {#class="fa fa-star-o"></i></div>#}
-                        <div class="product-price">
-                            <div class="product-price-span">{{ pr.webPrice }}€
-                                <del>{{ pr.retailPrice }}€</del>
+                            <div>
+                                <span itemprop="offers" itemscope=""
+                                      itemtype="https://schema.org/Offer"
+                                      class="availability">
+                                    {#{% if (pr.remainNotReserved > "0" or pr.webFree == "true") and pr.outOfStock == "false" %}#}
+                                    {% if pr.outOfStock == "false" and (pr.remainNotReserved|number_format() > 0 or pr.webFree == "true") %}
+                                        <span class="available-now">
+                                            <link itemprop="availability"
+                                                  href="https://schema.org/InStock">
+                                            Διαθέσιμο
+                                        </span>
+                                    {% else %}
+                                        <span class="out-of-stock">
+                                            <link itemprop="availability"
+                                                  href="https://schema.org/InStock">
+                                            Out of Stock
+                                        </span>
+                                    {% endif %}
+                                </span>
                             </div>
-                        </div>
-                        <div>
-                            <span itemprop="offers" itemscope=""
-                                  itemtype="https://schema.org/Offer"
-                                  class="availability">
-                                {#{% if (pr.remainNotReserved > "0" or pr.webFree == "true") and pr.outOfStock == "false" %}#}
-                                {% if pr.outOfStock == "false" and (pr.remainNotReserved|number_format() > 0 or pr.webFree == "true") %}
-                                    <span class="available-now">
-                                        <link itemprop="availability"
-                                              href="https://schema.org/InStock">
-                                        Διαθέσιμο
-                                    </span>
-                                {% else %}
-                                    <span class="out-of-stock">
-                                        <link itemprop="availability"
-                                              href="https://schema.org/InStock">
-                                        Out of Stock
-                                    </span>
-                                {% endif %}
-                            </span>
                         </div>
                     </div>
                 </div>
-            </div>
+            {% endif %}
         {% endfor %}
 
 
