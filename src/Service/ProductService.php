@@ -247,7 +247,7 @@ EOF;
      * @return array
      * @throws \Exception
      */
-    public function getItems($id = 'null', $keyword = 'null', $pagesize, $sortBy = 'NameAsc', $isSkroutz = -1, $makeId = 'null', $priceRange = 'null', $itemCode = 'null', $webVisible = 1, $manufacturerId = 'null', $page = 0)
+    public function getItems($id = 'null', $keyword = 'null', $pagesize, $sortBy = 'NameAsc', $isSkroutz = -1, $makeId = 'null', $priceRange = 'null', $itemCode = 'null', $webVisible = 1, $manufacturerId = 'null', $page = 0, $updatedDate = '2000-01-01T00:00:00')
     {
 
         $priceRangeArr = ($priceRange != 'null') ? explode('-', $priceRange) : -1;
@@ -276,12 +276,13 @@ EOF;
     <HighPrice>$highPrice</HighPrice>
     <WebVisible>$webVisible</WebVisible>
     <IsActive>-1</IsActive>
-    <UpdateDT>null</UpdateDT>
+    <UpdateDT>$updatedDate</UpdateDT>
 </ClientGetItemsRequest>
 EOF;
         try {
             $itemsArr = [];
             $result = $this->client->SendMessage(['Message' => $message]);
+            dump($message, $result);
             $items = simplexml_load_string(str_replace("utf-16", "utf-8", $result->SendMessageResult), 'SimpleXMLElement', LIBXML_COMPACT | LIBXML_PARSEHUGE);
             if (intval($items->RowsCount) > 0) {
                 if ($items !== false && ($keyword !== 'null' || $makeId !== 'null' || $isSkroutz === '1' || ($id === 'null' && $itemCode === 'null'))) { // THIS IS FOR MIGRATING PRODUCTS

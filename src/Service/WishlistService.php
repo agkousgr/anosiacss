@@ -99,7 +99,7 @@ class WishlistService
     <HighPrice>-1</HighPrice>
     <WebVisible>-1</WebVisible>
     <IsActive>-1</IsActive>
-    <UpdateDT>null</UpdateDT>
+    <UpdateDT>2000-01-01T00:00:00</UpdateDT>
 </ClientGetItemsRequest>
 EOF;
         try {
