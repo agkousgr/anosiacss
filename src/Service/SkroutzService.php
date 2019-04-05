@@ -152,6 +152,7 @@ class SkroutzService
     <HighPrice>-1</HighPrice>
     <WebVisible>-1</WebVisible>
     <IsActive>-1</IsActive>
+    <UpdateDT>null</UpdateDT>
 </ClientGetItemsRequest>
 EOF;
         try {

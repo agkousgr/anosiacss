@@ -276,6 +276,7 @@ EOF;
     <HighPrice>$highPrice</HighPrice>
     <WebVisible>$webVisible</WebVisible>
     <IsActive>-1</IsActive>
+    <UpdateDT>null</UpdateDT>
 </ClientGetItemsRequest>
 EOF;
         try {
