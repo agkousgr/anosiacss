@@ -165,7 +165,7 @@ class UserAccountController extends MainController
         }
     }
 
-    public function updateAddress(int $id, Request $request, EntityManagerInterface $em, UserAccountService $userAccountService)
+    public function updateAddress(int $id, Request $request, UserAccountService $userAccountService)
     {
         try {
             if (null !== $this->loggedUser) {
@@ -276,7 +276,7 @@ class UserAccountController extends MainController
                             ->setTo($username)
                             ->setBody($this->renderView('email/register.html.twig', [
                                 'token' => $token,
-                            ]));
+                            ]), 'text/html');
                         $mailer->send($message);
                         $this->addFlash(
                             'success',
