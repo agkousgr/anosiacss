@@ -643,6 +643,7 @@ EOF;
     <Password>null</Password>
     <Email>null</Email>
     <ConfirmationToken>null</ConfirmationToken>
+    <VerificationToken>null</VerificationToken>
 </ClientGetUsersRequest>
 EOF;
         try {
@@ -694,6 +695,7 @@ EOF;
     <Password>null</Password>
     <Email>$email</Email>
     <ConfirmationToken>null</ConfirmationToken>
+    <VerificationToken>null</VerificationToken>
 </ClientGetUsersRequest>
 EOF;
         try {
@@ -746,6 +748,7 @@ EOF;
     <Password>null</Password>
     <Email>null</Email>
     <ConfirmationToken>$token</ConfirmationToken>
+    <VerificationToken>null</VerificationToken>
 </ClientGetUsersRequest>
 EOF;
         try {
@@ -787,10 +790,11 @@ EOF;
     <Username>null</Username>
     <Password>null</Password>
     <Email>null</Email>
+    <ConfirmationToken>null</ConfirmationToken>
     <VerificationToken>$token</VerificationToken>
 </ClientGetUsersRequest>
 EOF;
-        dump($message);
+
         try {
             $result = $client->SendMessage(['Message' => $message]);
             $userResponse = simplexml_load_string(str_replace("utf-16", "utf-8", $result->SendMessageResult));
@@ -829,10 +833,9 @@ EOF;
     <ClientID>$clientId</ClientID>
     <LastLoginDT>$lastLogin</LastLoginDT>
     <IsActive>1</IsActive>
-    <PasswordRequestCounter>0</PasswordRequestCounter>
 </ClientSetUserRequest>
 EOF;
-        dump($message);
+
         try {
             $result = $client->SendMessage(['Message' => $message]);
             $userResult = simplexml_load_string(str_replace("utf-16", "utf-8", $result->SendMessageResult));
@@ -1001,6 +1004,8 @@ EOF;
     <Username>$username</Username>
     <Password>null</Password>
     <Email>null</Email>
+    <ConfirmationToken>null</ConfirmationToken>
+    <VerificationToken>null</VerificationToken>
 </ClientGetUsersRequest>
 EOF;
         try {
@@ -1065,6 +1070,8 @@ EOF;
     <Username>$username</Username>
     <Password>null</Password>
     <Email>null</Email>
+    <ConfirmationToken>null</ConfirmationToken>
+    <VerificationToken>null</VerificationToken>
 </ClientGetUsersRequest>
 EOF;
         try {

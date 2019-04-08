@@ -47,7 +47,6 @@ class UserAccountController extends MainController
                     $user->setFirstname($formUser->get('firstname')->getData());
                     $user->setLastname($formUser->get('lastname')->getData());
                     $user->setNewsletter($formUser->get('newsletter')->getData());
-//                    dump($user);
                     $userAccountService->updateUserInfo($user);
                     $userData = $userAccountService->getUserInfo($this->loggedUser, $user, $address);
                     $this->addFlash(
@@ -319,7 +318,7 @@ class UserAccountController extends MainController
             $form = $this->createForm(UserRegistrationType::class);
             $token = $request->query->getAlnum('token');
             $user = $accountService->getUserByVerificationToken($token);
-            dump($user);
+
             if (null === $token || false === $user) {
                 $this->addFlash('notice', 'Ο χρήστης δε βρέθηκε.');
             } else {
