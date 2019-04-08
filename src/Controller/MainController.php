@@ -121,8 +121,6 @@ class MainController extends AbstractController
     {
         if (session_status() !== PHP_SESSION_ACTIVE) {
             session_start();
-////            session_cache_expire(180);
-////            $session->set('cache_expire', session_cache_expire());
         }
 
         $this->softoneLogin = $softoneLogin;
@@ -140,20 +138,21 @@ class MainController extends AbstractController
             'default_graph_version' => 'v3.0',
             'default_access_token' => 'EAAImVBEgHtQBAFhb99ycIu6WWZAOdOO3lb0M4M9q4aFOoSCZA4G2fd7W9LpsBZAoCELeykpMST4ZAOmVhygKT13rGRoMd4RXL1lqXGbzds0U1ZB3LTqhuRBMkb3r1pG6lLsaSAwHdMTXTmZB8u0KiKldQmo30Vy3VlJooKKK9agViGBc8zMi8nLW0KKZA9zXCpbfZCcV9sCVgeP7XpZCyZABrC', // optional
         ]);
-        $helper = $this->fb->getRedirectLoginHelper();
-        $permissions = ['email']; // Optional permissions
-        $this->loginUrl = $helper->getLoginUrl('https://new.anosiapharmacy.gr/public/fb-callback', $permissions);
+//        $helper = $this->fb->getRedirectLoginHelper();
+//        $permissions = ['email']; // Optional permissions
+//        $this->loginUrl = $helper->getLoginUrl('https://new.anosiapharmacy.gr/public/fb-callback', $permissions);
 
         if (!$this->session->get('categories')) {
             $this->categories = $this->em->getRepository(Category::class)->getTopLevelCategoriesAndDirectChildren();
             $this->session->set('categories', $this->categories);
         }
         $this->categories = $this->session->get('categories');
-        $this->popular = $productService->getCategoryItems(1867, 0, 15, 'null', 'null');
-        $this->featured = $productService->getCategoryItems(1867, 0, 15, 'null', 'null');
+//        $this->popular = $productService->getCategoryItems(1867, 0, 15, 'null', 'null');
+//        $this->featured = $productService->getCategoryItems(1867, 0, 15, 'null', 'null');
         $this->topSellers = $this->em->getRepository(CategoryTopSeller::class)->findAll();
-//        $this->popular = [];
-//        $this->featured = [];
+//        $this->topSellers = [];
+        $this->popular = [];
+        $this->featured = [];
 //        $mainCategoriesArr = [];
 //        foreach ($this->categories as $category) {
 //            $mainCategories[$category['s1id']][] = $this->productService->getRelevantItems(-1, 300, 1, 1, 1, 1922);

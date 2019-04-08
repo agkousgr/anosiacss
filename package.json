@@ -21,6 +21,7 @@
     "bootstrap-daterangepicker": "^3.0.3",
     "bootstrap-datetimepicker-npm": "^4.17.37-npm",
     "bxslider": "^4.2.14",
+    "core-js": "^3.0.0",
     "datatables.net": "^1.10.19",
     "datatables.net-bs4": "^1.10.19",
     "datatables.net-dt": "^1.10.19",

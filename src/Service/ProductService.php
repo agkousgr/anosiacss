@@ -185,7 +185,8 @@ EOF;
         try {
             $prArr = [];
             foreach ($products as $pr) {
-                if ((string)$pr->WebVisible !== "false") {
+                if (strval($pr->WebVisible) !== "false" && strval($pr->Slug) !== '') {
+                    $mainPhoto = (strval($pr->HasMainPhoto) !== 'false') ? explode('=', $pr->MainPhotoUrl) : [];
                     $prArr[] = [
                         'id' => $pr->ID,
                         'name' => $pr->Name2,
@@ -211,7 +212,8 @@ EOF;
                         'maxByOrder' => $pr->MaxByOrder,
                         'hasMainImage' => $pr->HasMainPhoto,
                         'categories' => $pr->AllCategoryIDs,
-                        'imageUrl' => (strval($pr->HasMainPhoto) !== 'false') ? 'https://caron.cloudsystems.gr/FOeshopAPIWeb/DF.aspx?' . str_replace('[Serial]', '01102472475217', str_replace('&amp;', '&', $pr->MainPhotoUrl)) : ''
+                        'imageUrl' => (empty($mainPhoto)) ? '' : 'images/products/FOSO/01102459200217/1001/mtrl/51/-/' . $pr->ID . '/' . end($mainPhoto)
+//                        'imageUrl' => (strval($pr->HasMainPhoto) !== 'false') ? 'https://caron.cloudsystems.gr/FOeshopAPIWeb/DF.aspx?' . str_replace('[Serial]', '01102472475217', str_replace('&amp;', '&', $pr->MainPhotoUrl)) : ''
                     ];
                 }
             }
@@ -245,7 +247,7 @@ EOF;
      * @return array
      * @throws \Exception
      */
-    public function getItems($id = 'null', $keyword = 'null', $pagesize, $sortBy = 'NameAsc', $isSkroutz = -1, $makeId = 'null', $priceRange = 'null', $itemCode = 'null', $webVisible = 1, $manufacturerId = 'null', $page = 0)
+    public function getItems($id = 'null', $keyword = 'null', $pagesize, $sortBy = 'NameAsc', $isSkroutz = -1, $makeId = 'null', $priceRange = 'null', $itemCode = 'null', $webVisible = 1, $manufacturerId = 'null', $page = 0, $updatedDate = '2000-01-01T00:00:00')
     {
 
         $priceRangeArr = ($priceRange != 'null') ? explode('-', $priceRange) : -1;
@@ -274,11 +276,13 @@ EOF;
     <HighPrice>$highPrice</HighPrice>
     <WebVisible>$webVisible</WebVisible>
     <IsActive>-1</IsActive>
+    <UpdateDT>$updatedDate</UpdateDT>
 </ClientGetItemsRequest>
 EOF;
         try {
             $itemsArr = [];
             $result = $this->client->SendMessage(['Message' => $message]);
+            dump($message, $result);
             $items = simplexml_load_string(str_replace("utf-16", "utf-8", $result->SendMessageResult), 'SimpleXMLElement', LIBXML_COMPACT | LIBXML_PARSEHUGE);
             if (intval($items->RowsCount) > 0) {
                 if ($items !== false && ($keyword !== 'null' || $makeId !== 'null' || $isSkroutz === '1' || ($id === 'null' && $itemCode === 'null'))) { // THIS IS FOR MIGRATING PRODUCTS
@@ -350,6 +354,7 @@ EOF;
             $prArr = [];
             $imagesArr = [];
             if ((string)$pr->WebVisible !== 'false') {
+                $mainPhoto = (strval($pr->HasMainPhoto) !== 'false') ? explode('=', $pr->MainPhotoUrl) : [];
                 $prArr = [
                     'id' => $pr->ID,
                     'name' => $pr->Name2,
@@ -377,7 +382,7 @@ EOF;
                     'overAvailability' => $pr->OverAvailability,
                     'maxByOrder' => $pr->MaxByOrder,
                     'hasMainImage' => $pr->HasMainPhoto,
-                    'imageUrl' => (strval($pr->HasMainPhoto) !== 'false') ? 'https://caron.cloudsystems.gr/FOeshopAPIWeb/DF.aspx?' . str_replace('[Serial]', '01102472475217', str_replace('&amp;', '&', $pr->MainPhotoUrl)) : '',
+                    'imageUrl' => (empty($mainPhoto)) ? '' : 'images/products/FOSO/01102459200217/1001/mtrl/51/-/' . $pr->ID . '/' . end($mainPhoto),
                     'categories' => $this->getProductCategories($pr->AllCategoryIDs)
 //                    'categories' => $pr->AllCategoryIDs
                 ];
@@ -442,11 +447,12 @@ EOF;
         try {
             $imagesArr = [];
             foreach ($images as $image) {
+                $mainPhoto = (strval($image->PhotoUrl) !== 'false') ? explode('=', $image->PhotoUrl) : [];
                 $imagesArr['extraImages'][] = [
                     'id' => $image->ID,
                     'name' => $image->PhotoFileName,
                     'isMain' => $image->IsMain,
-                    'imageUrl' => 'https://caron.cloudsystems.gr/FOeshopAPIWeb/DF.aspx?' . str_replace('[Serial]', '01102472475217', str_replace('&amp;', '&', $image->PhotoUrl))
+                    'imageUrl' => (empty($mainPhoto)) ? '' : 'images/products/FOSO/01102459200217/1001/mtrl/51/-/' . $image->ID . '/' . end($mainPhoto)
                 ];
             }
 
@@ -478,7 +484,7 @@ EOF;
     <HighPrice>$highPrice</HighPrice>
     <ExcludeItemID>$excludeIds</ExcludeItemID>
     <WebVisible>$webVisible</WebVisible>
-    <IsActive>-1</IsActive>  
+    <IsActive>1</IsActive>  
 </ClientGetRelevantItemsRequest>
 EOF;
         try {
@@ -498,25 +504,37 @@ EOF;
             $prArr = [];
             $i = 0;
             foreach ($products as $pr) {
-                $prArr[] = [
-                    'id' => $pr->ID,
-                    'name' => $pr->Name2,
-                    'summary' => strip_tags($pr->SmallDescriptionHTML),
-                    'prCode' => $pr->Code,
-                    'slug' => $pr->Slug,
-                    'isVisible' => $pr->WebVisible,
-                    'retailPrice' => $pr->RetailPrice,
-                    'discount' => $pr->Discount,
-                    'webDiscount' => $pr->WebDiscountPerc,
-                    'webPrice' => ($pr->Discount) ? round((floatval($pr->RetailPrice) * (100 - floatval($pr->Discount)) / 100), 2) : 0,
-                    'outOfStock' => $pr->OutOfStock,
-                    'remainNotReserved' => $pr->RemainNotReserved,
-                    'webFree' => $pr->WebFree,
-                    'overAvailability' => $pr->OverAvailability,
-                    'maxByOrder' => $pr->MaxByOrder,
-                    'hasMainImage' => $pr->HasMainPhoto,
-                    'imageUrl' => ($pr->HasMainPhoto) ? 'https://caron.cloudsystems.gr/FOeshopAPIWeb/DF.aspx?' . str_replace('[Serial]', '01102472475217', str_replace('&amp;', '&', $pr->MainPhotoUrl)) : ''
-                ];
+                if (strval($pr->WebVisible) !== "false" && strval($pr->Slug) !== '') {
+                    $mainPhoto = (strval($pr->HasMainPhoto) !== 'false') ? explode('=', $pr->MainPhotoUrl) : [];
+                    $prArr[] = [
+                        'id' => $pr->ID,
+                        'name' => $pr->Name2,
+                        'slug' => $pr->Slug,
+                        'summary' => $pr->SmallDescriptionHTML,
+                        'body' => $pr->LargeDescriptionHTML,
+                        'extraInfo' => $pr->InstructionsHTML,
+                        'deliveryInfo' => $pr->DeliveryHTML,
+                        'isVisible' => $pr->WebVisible,
+                        'prCode' => $pr->Code,
+                        'retailPrice' => $pr->RetailPrice,
+                        'discount' => $pr->Discount,
+                        'mainBarcode' => $pr->MainBarcode,
+                        'webDiscount' => $pr->WebDiscountPerc,
+                        'webPrice' => ($pr->Discount) ? round((floatval($pr->RetailPrice) * (100 - floatval($pr->Discount)) / 100), 2) : 0,
+                        'outOfStock' => $pr->OutOfStock,
+                        'volumeWeight' => $pr->VolumeWeight,
+                        'manufacturerId' => $pr->ManufacturID,
+                        'remainNotReserved' => $pr->RemainNotReserved,
+                        'isNew' => $this->checkIfProductIsNew($pr->InsertDT),
+                        'webFree' => $pr->WebFree,
+                        'overAvailability' => $pr->OverAvailability,
+                        'maxByOrder' => $pr->MaxByOrder,
+                        'hasMainImage' => $pr->HasMainPhoto,
+                        'categories' => $pr->AllCategoryIDs,
+                        'imageUrl' => (empty($mainPhoto)) ? '' : 'images/products/FOSO/01102459200217/1001/mtrl/51/-/' . $pr->ID . '/' . end($mainPhoto)
+//                        'imageUrl' => (strval($pr->HasMainPhoto) !== 'false') ? 'https://caron.cloudsystems.gr/FOeshopAPIWeb/DF.aspx?' . str_replace('[Serial]', '01102472475217', str_replace('&amp;', '&', $pr->MainPhotoUrl)) : ''
+                    ];
+                }
             }
 
             return $prArr;

@@ -179,6 +179,7 @@ EOF;
                     $internalCounter = 0;
                     foreach ($items->GetDataRows->GetRelevantItemsRow as $item) {
                         if ($internalCounter < 5) {
+                            $mainPhoto = (strval($item->MainPhotoUrl) !== 'false') ? explode('=', $item->MainPhotoUrl) : [];
                             $topSeller = new CategoryTopSeller();
                             $topSeller->setSoftOneId(intval($item->ID))
                                 ->setName($item->Name)
@@ -186,8 +187,7 @@ EOF;
                                 ->setCategory($category)
                                 ->setImageUrl(
                                     $item->HasMainPhoto ?
-                                        'https://caron.cloudsystems.gr/FOeshopAPIWeb/DF.aspx?' .
-                                        str_replace('[Serial]', '01102472475217', str_replace('&amp;', '&', $item->MainPhotoUrl)) :
+                                        'images/products/FOSO/01102459200217/1001/mtrl/51/-/' . $item->ID . '/' . end($mainPhoto) :
                                         null
                                 );
                             $this->em->persist($topSeller);

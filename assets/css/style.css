@@ -11342,11 +11342,11 @@ img {
     height: auto
 }
 
-#instagram .thumbnail a>img,
-.thumbnail>img,
-img {
-    width: 100%;
-}
+/*#instagram .thumbnail a>img,*/
+/*.thumbnail>img,*/
+/*img {*/
+/*    width: 100%;*/
+/*}*/
 
 .bottom-buttons img { width: 80%;  }
 

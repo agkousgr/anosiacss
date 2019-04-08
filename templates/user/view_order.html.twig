@@ -136,7 +136,7 @@
                                                     {% set expenses = expenses + expense.expenceCost %}
                                                 {% endfor %}
                                             {% endif %}
-                                            {% if voucherDisc is defined %}
+                                            {% if voucherDisc is defined and voucherDisc > 0 %}
                                                 <tr>
                                                     <td>Έκπτωση από κουπόνι</td>
                                                     <td>-{{ voucherDisc|number_format(2, ',', '.') }}€</td>
