@@ -93,16 +93,16 @@ class AjaxLoginController extends AbstractController
         }
 
         // Logged in
-        echo '<h3>Access Token</h3>';
-        var_dump($accessToken->getValue());
+//        echo '<h3>Access Token</h3>';
+//        var_dump($accessToken->getValue());
 
         // The OAuth 2.0 client handler helps us manage access tokens
         $oAuth2Client = $fb->getOAuth2Client();
 
         // Get the access token metadata from /debug_token
         $tokenMetadata = $oAuth2Client->debugToken($accessToken);
-        echo '<h3>Metadata</h3>';
-        var_dump($tokenMetadata);
+//        echo '<h3>Metadata</h3>';
+//        var_dump($tokenMetadata);
 
         // Validation (these will throw FacebookSDKException's when they fail)
         $tokenMetadata->validateAppId('605092459847380');
@@ -119,8 +119,8 @@ class AjaxLoginController extends AbstractController
                 exit;
             }
 
-            echo '<h3>Long-lived</h3>';
-            var_dump($accessToken->getValue());
+//            echo '<h3>Long-lived</h3>';
+//            var_dump($accessToken->getValue());
         }
 
 //        $_SESSION['fb_access_token'] = (string) $accessToken;

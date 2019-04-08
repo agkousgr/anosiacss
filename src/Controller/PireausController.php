@@ -32,10 +32,14 @@ class PireausController extends MainController
             $StatusFlag = $request->request->get('StatusFlag');
             $PireausHash = $request->request->get('HashKey');
 
+            dump($TransactionTicket . ';' . $PosId . ';' . $AcquirerId . ';' . $MerchantReference . ';' . $ApprovalCode . ';' . $Parameters . ';' . $ResponseCode . ';' . $SupportReferenceID . ';' . $AuthStatus . ';' . $PackageNo . ';' . $StatusFlag);
+
             $myHash = strtoupper(hash_hmac('sha256', $TransactionTicket . ';' . $PosId . ';' . $AcquirerId . ';' . $MerchantReference . ';' . $ApprovalCode . ';' . $Parameters . ';' . $ResponseCode . ';' . $SupportReferenceID . ';' . $AuthStatus . ';' . $PackageNo . ';' . $StatusFlag, $TransactionTicket));
 
+            #Todo: getClientId for not registerd clients
+            $clientId = ($session->get('anosiaClientId')) ?: '111';
             $pireaus = new PireausTransaction();
-            $pireaus->setClientId($session->get('anosiaClientId'))
+            $pireaus->setClientId($clientId)
                 ->setMerchantReference($MerchantReference)
                 ->setStatusFlag($StatusFlag)
                 ->setResultCode($request->request->get('ResultCode'))
@@ -50,8 +54,10 @@ class PireausController extends MainController
             $em->persist($pireaus);
             $em->flush();
 
-
-            if ($myHash === $PireausHash) {
+            dump($myHash, $PireausHash);
+            if ($StatusFlag === 'Failure')
+                return $checkout;
+            elseif ($myHash === $PireausHash) {
                 $cartItems = $this->cartItems;
             } else {
 //                $checkoutCompleted->handleFailedPayment();
@@ -78,7 +84,7 @@ class PireausController extends MainController
                     'orderCompleted' => true,
                     'loginUrl' => $this->loginUrl
                 ]);
-            }else{
+            } else {
                 $this->addFlash('notice', 'Η παραγγελία σας δεν καταχωρήθηκε. Παρακαλώ δοκιμάστε ξανά ή επικοινωνήστε με το κατάστημά μας χρησιμοποιώντας τον κωδικό παραγγελίας.');
                 return $this->redirectToRoute('checkout');
             }
@@ -88,7 +94,8 @@ class PireausController extends MainController
         }
     }
 
-    public function cancel()
+    public
+    function cancel()
     {
         $this->addFlash(
             'notice',
@@ -98,7 +105,8 @@ class PireausController extends MainController
         return $this->redirectToRoute('checkout');
     }
 
-    public function failure(Request $request, SessionInterface $session, EntityManagerInterface $em)
+    public
+    function failure(Request $request, SessionInterface $session, EntityManagerInterface $em)
     {
 
         try {
@@ -129,7 +137,8 @@ class PireausController extends MainController
         }
     }
 
-    public function pireausIframe(Request $request)
+    public
+    function pireausIframe(Request $request)
     {
         try {
             return $this->render('orders/pireaus_iframe.html.twig', [

@@ -7,8 +7,13 @@ use App\Form\Subscriber\CheckoutSubscriber;
 use Symfony\Component\Form\AbstractType;
 use Symfony\Component\Form\FormBuilderInterface;
 use Symfony\Component\Form\Extension\Core\Type\{
-    CheckboxType, EmailType, HiddenType, TextType,
-    ChoiceType, TextareaType, IntegerType
+    CheckboxType,
+    EmailType,
+    HiddenType,
+    TextType,
+    ChoiceType,
+    TextareaType,
+    IntegerType
 };
 use Symfony\Component\HttpFoundation\Session\SessionInterface;
 use Symfony\Component\OptionsResolver\OptionsResolver;
@@ -64,8 +69,8 @@ class CheckoutStep1Type extends AbstractType
                     'Απόδειξη' => 7021,
                     'Τιμολόγιο' => 7023,
                 ),
-                'multiple'=>false,
-                'expanded'=>true
+                'multiple' => false,
+                'expanded' => true
             ))
             ->add('afm', TextType::class, array(
                 'data' => 'No Invoice'
@@ -90,13 +95,15 @@ class CheckoutStep1Type extends AbstractType
             ])
             ->add('shippingType', ChoiceType::class, array(
                 'choices' => Checkout::SHIPPING_TYPES,
-                'multiple'=>false,
-                'expanded'=>true
+                'multiple' => false,
+                'expanded' => true
             ))
-            ->add('comments', TextareaType::class, array(
-                'required' => false
-            ))
-        ;
+            ->add('voucherComments', TextareaType::class, array(
+                'required' => false,
+                'attr' => [
+                    'placeholder' => 'Π.χ. 1ος όροφος'
+                ]
+            ));
 
 //        $builder->addEventSubscriber(new CheckoutSubscriber($options, $this->session));
 //        $builder->addEventSubscriber(new CheckoutSubscriber($options, $this->session));

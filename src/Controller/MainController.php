@@ -138,9 +138,9 @@ class MainController extends AbstractController
             'default_graph_version' => 'v3.0',
             'default_access_token' => 'EAAImVBEgHtQBAFhb99ycIu6WWZAOdOO3lb0M4M9q4aFOoSCZA4G2fd7W9LpsBZAoCELeykpMST4ZAOmVhygKT13rGRoMd4RXL1lqXGbzds0U1ZB3LTqhuRBMkb3r1pG6lLsaSAwHdMTXTmZB8u0KiKldQmo30Vy3VlJooKKK9agViGBc8zMi8nLW0KKZA9zXCpbfZCcV9sCVgeP7XpZCyZABrC', // optional
         ]);
-//        $helper = $this->fb->getRedirectLoginHelper();
-//        $permissions = ['email']; // Optional permissions
-//        $this->loginUrl = $helper->getLoginUrl('https://new.anosiapharmacy.gr/public/fb-callback', $permissions);
+        $helper = $this->fb->getRedirectLoginHelper();
+        $permissions = ['email']; // Optional permissions
+        $this->loginUrl = $helper->getLoginUrl('https://new.anosiapharmacy.gr/public/fb-callback', $permissions);
 
         if (!$this->session->get('categories')) {
             $this->categories = $this->em->getRepository(Category::class)->getTopLevelCategoriesAndDirectChildren();

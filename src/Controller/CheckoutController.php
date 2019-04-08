@@ -73,6 +73,8 @@ class CheckoutController extends MainController
                 } else {
                     $checkout->setAntikatavoliCost(0);
                 }
+                $checkout->setComments($request->request->get('checkout_step2')['comments']);
+                dump($checkout);
                 return $this->json(['success' => true]);
             }
 
@@ -112,9 +114,12 @@ class CheckoutController extends MainController
     {
         try {
             /** @var \App\Entity\Checkout */
-            $checkout = $this->session->get('curOrder');
+            if (null === $checkout = $this->session->get('curOrder'))
+                return $this->redirectToRoute('index');
+
             $cartCost = $checkoutService->calculateCartCost($this->cartItems);
-            $checkout->setTotalOrderCost($cartCost + $checkout->getAntikatavoliCost() + $checkout->getShippingCost());//        $orderCode = $em->getRepository(OrdersWebId::class)->find(1);
+            $checkout->setTotalOrderCost($cartCost + $checkout->getAntikatavoliCost() + $checkout->getShippingCost());
+            //        $orderCode = $em->getRepository(OrdersWebId::class)->find(1);
             //        $checkout->setOrderNo(intval(str_replace('ORDER', $orderCode->getOrderNumber())) + 1);
             // Check if necessary at this point
             $em->flush();
@@ -160,8 +165,9 @@ class CheckoutController extends MainController
         /** @var Checkout $checkout */
         $checkout = $this->session->get('curOrder');
         $cartCost = $checkoutService->calculateCartCost($this->cartItems);
+        $checkout->setComments($request->request->get('comments'));
 
-        $orderCode = ($this->loggedClientId) ? $this->loggedClientId . '-' . time() : random(100, 999) . '-' . time();
+        $orderCode = ($this->loggedClientId) ? $this->loggedClientId . '-' . time() : random_int(100, 999) . '-' . time();
         $checkout->setOrderNo($orderCode);
         $checkout->setTotalOrderCost($cartCost + $checkout->getAntikatavoliCost() + $checkout->getShippingCost());
         $checkout->setInstallments($installments);
