@@ -19,7 +19,7 @@
     <div class="page-header">
         <div class="container">
             <div class="row">
-                <div class="col-md-6"><h1>Εγγραφη χρηστη</h1></div>
+                <div class="col-md-6"><h1>Εγγραφή χρήστη</h1></div>
             </div>
         </div>
     </div>
@@ -39,132 +39,87 @@
             </div>
             <section id="main">
                 <section id="content" class="page-content card card-block">
-                    {% if (registerOk == 'true') %}
-                        <div><h4>Κάντε κλικ <a href="#" class="toggle-sidebar">εδώ</a> να συνδεθείτε
-                            </h4></div>
-                    {% else %}
-                        <section class="register-form">
-                            {{ form_start(form) }}
-                            <section>
-                                <input name="id_customer" value="" type="hidden">
-                                <div class="form-group row ">
-                                    {{ form_label(form.firstname, 'Όνομα', {'label_attr': {'class': 'col-md-3 form-control-label required'}}) }}
-                                    <div class="col-md-6">
-                                        {{ form_widget(form.firstname, {'attr': {'class': 'form-control'}}) }}
-                                    </div>
-                                    <div class="col-md-3 form-control-comment">
-                                    </div>
+                    <section class="register-form">
+                        {{ form_start(form) }}
+                        <section>
+                            <input name="id_customer" value="" type="hidden">
+                            <div class="form-group row ">
+                                {{ form_label(form.firstname, 'Όνομα', {'label_attr': {'class': 'col-md-3 form-control-label required'}}) }}
+                                <div class="col-md-6">
+                                    {{ form_widget(form.firstname, {'attr': {'class': 'form-control'}}) }}
                                 </div>
-
-                                <div class="form-group row ">
-                                    {{ form_label(form.lastname, 'Επώνυμο', {'label_attr': {'class': 'col-md-3 form-control-label required'}}) }}
-                                    <div class="col-md-6">
-                                        {{ form_widget(form.lastname, {'attr': {'class': 'form-control'}}) }}
-                                    </div>
-                                    <div class="col-md-3 form-control-comment">
-                                    </div>
+                                <div class="col-md-3 form-control-comment"></div>
+                            </div>
+                            <div class="form-group row ">
+                                {{ form_label(form.lastname, 'Επώνυμο', {'label_attr': {'class': 'col-md-3 form-control-label required'}}) }}
+                                <div class="col-md-6">
+                                    {{ form_widget(form.lastname, {'attr': {'class': 'form-control'}}) }}
                                 </div>
-
-                                <div class="form-group row ">
-                                    {{ form_label(form.username, 'E-mail', {'label_attr': {'class': 'col-md-3 form-control-label required'}}) }}
-                                    <div class="col-md-6">
-                                        {{ form_widget(form.username, {'attr': {'class': 'form-control'}}) }}
-                                    </div>
-                                    <div class="col-md-3 form-control-comment">
-                                    </div>
+                                <div class="col-md-3 form-control-comment"></div>
+                            </div>
+                            <div class="form-group row ">
+                                {{ form_label(form.username, 'E-mail', {'label_attr': {'class': 'col-md-3 form-control-label required'}}) }}
+                                <div class="col-md-6">
+                                    {{ form_widget(form.username, {'attr': {'class': 'form-control'}}) }}
                                 </div>
-
-                                <div class="form-group row ">
-                                    {{ form_label(form.password.first, 'Κωδικός', {'label_attr': {'class': 'col-md-3 form-control-label required'}}) }}
-                                    <div class="col-md-6">
-                                        <div class="input-group js-parent-focus">
-                                            {{ form_widget(form.password.first, {'attr': {'class': 'form-control'}}) }}
-                                            <span class="input-group-btn">
-                                                <button class="btn show-password"
-                                                        type="button">
-                                                    Εμφάνιση
-                                                </button>
-                                                <button style="display: none;"
-                                                        class="btn hide-password"
-                                                        type="button">
-                                                    Απόκρυψη
-                                                </button>
-                                            </span>
-                                        </div>
-                                    </div>
-
-                                    <div class="col-md-3 form-control-comment">
-                                    </div>
-                                </div>
-
-                                <div class="form-group row ">
-                                    {{ form_label(form.password.second, 'Επαλήθευση κωδικού', {'label_attr': {'class': 'col-md-3 form-control-label required'}}) }}
-                                    <div class="col-md-6">
-                                        {{ form_widget(form.password.second, {'attr': {'class': 'form-control'}}) }}
-                                    </div>
-
-                                    <div class="col-md-3 form-control-comment">
-                                    </div>
-                                </div>
-
-                                {#<div class="form-group row ">#}
-                                {#<label class="col-md-3 form-control-label">#}
-                                {#</label>#}
-                                {#<div class="col-md-6">#}
-                                {#<span class="custom-checkbox">#}
-                                {#{{ form_widget(form.special_offers) }}#}
-                                {#<span><i class="material-icons rtl-no-flip checkbox-checked"></i></span>#}
-                                {#<label>Να λαμβάνω προσφορές από το κατάστημα</label>#}
-                                {#</span>#}
-                                {#</div>#}
-                                {#<div class="col-md-3 form-control-comment">#}
-                                {#</div>#}
-                                {#</div>#}
-
-                                <div class="form-group row ">
-                                    <label class="col-md-3 form-control-label">
-                                    </label>
-                                    <div class="col-md-6">
-                                        <span class="custom-checkbox">
-                                            {{ form_widget(form.newsletter) }}
-                                            {#<span><i class="material-icons rtl-no-flip checkbox-checked"></i></span>#}
-                                            <label>Εγγραφή στο newsletter<br>
-                                                <em>Μπορείτε να διαγραφείτε οποιαδήποτε στιγμή
-                                                    επιθυμείτε.</em>
-                                            </label>
+                                <div class="col-md-3 form-control-comment"></div>
+                            </div>
+                            <div class="form-group row ">
+                                {{ form_label(form.password.first, 'Κωδικός', {'label_attr': {'class': 'col-md-3 form-control-label required'}}) }}
+                                <div class="col-md-6">
+                                    <div class="input-group js-parent-focus">
+                                        {{ form_widget(form.password.first, {'attr': {'class': 'form-control'}}) }}
+                                        <span class="input-group-btn">
+                                            <button class="btn show-password" type="button">
+                                                Εμφάνιση
+                                            </button>
+                                            <button style="display: none;" class="btn hide-password" type="button">
+                                                Απόκρυψη
+                                            </button>
                                         </span>
                                     </div>
-
-                                    <div class="col-md-3 form-control-comment">
-                                    </div>
                                 </div>
-                            </section>
-
-                            <footer class="form-footer clearfix">
-                                <button class="btn btn-primary form-control-submit float-xs-right"
-                                        data-link-action="save-customer" type="submit">
-                                    Εγγραφή
-                                </button>
-                                <div class="pull-right">
-                                    <a href="#">
-                                        Ξεχάσατε τον κωδικό σας?
-                                    </a>
+                                <div class="col-md-3 form-control-comment"></div>
+                            </div>
+                            <div class="form-group row ">
+                                {{ form_label(form.password.second, 'Επαλήθευση κωδικού', {'label_attr': {'class': 'col-md-3 form-control-label required'}}) }}
+                                <div class="col-md-6">
+                                    {{ form_widget(form.password.second, {'attr': {'class': 'form-control'}}) }}
                                 </div>
-                            </footer>
-                            <input type="hidden" name="_csrf_token"
-                                   value="{{ csrf_token('register') }}">
-                            {#{{ form_row(form._token) }}#}
-                            {{ form_end(form) }}
+                                <div class="col-md-3 form-control-comment"></div>
+                            </div>
+                            <div class="form-group row ">
+                                <label class="col-md-3 form-control-label">
+                                </label>
+                                <div class="col-md-6">
+                                    <span class="custom-checkbox">
+                                        {{ form_widget(form.newsletter) }}
+                                        <label>Εγγραφή στο newsletter<br>
+                                            <em>Μπορείτε να διαγραφείτε οποιαδήποτε στιγμή επιθυμείτε.</em>
+                                        </label>
+                                    </span>
+                                </div>
+                                <div class="col-md-3 form-control-comment"></div>
+                            </div>
                         </section>
-                    {% endif %}
+                        <footer class="form-footer clearfix">
+                            <button class="btn btn-primary form-control-submit float-xs-right"
+                                    data-link-action="save-customer" type="submit">
+                                Εγγραφή
+                            </button>
+                            <div class="pull-right">
+                                <a href="{{ path('user_forgot_password') }}">Ξεχάσατε τον κωδικό σας;</a>
+                            </div>
+                        </footer>
+                        <input type="hidden" name="_csrf_token" value="{{ csrf_token('register') }}">
+                        {{ form_end(form) }}
+                    </section>
                 </section>
             </section>
         </div>
     </div>
     {% include 'home_page_modules/14_newsletter.html.twig' %}
-    {#{% include 'home_page_modules/15_social.html.twig' %}#}
     {% include 'partials/footer.html.twig' %}
-
 {% endblock %}
 
 {% block javascripts %}

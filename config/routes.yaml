@@ -229,6 +229,9 @@ user_account:
 user_registration:
     path: /user-registration
     controller: App\Controller\UserAccountController::register
+user_verify_registration:
+    path: /user-verify-registration
+    controller: App\Controller\UserAccountController::verifyRegistration
 get_users:
     path: /get-users
     controller: App\Controller\UserAccountController::getUsers

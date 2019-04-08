@@ -10,4 +10,4 @@ $(document).ready(function () {
             $(this).parent().find(".show-password").show();
         }
     });
-})
+});
