@@ -57,6 +57,11 @@ class Checkout extends WebUser
     /**
      * @var string|null
      */
+    private $voucherComments;
+
+    /**
+     * @var string|null
+     */
     private $shippingType;
 
     /**
@@ -122,6 +127,11 @@ class Checkout extends WebUser
     /**
      * @var int|null
      */
+    private $loyaltyCartId;
+
+    /**
+     * @var int|null
+     */
     private $newsLetterAge;
 
     /**
@@ -153,7 +163,6 @@ class Checkout extends WebUser
      * @var string|null
      */
     private $pireausTranTicket;
-
 
     /**
      * @var bool|null
@@ -206,6 +215,24 @@ class Checkout extends WebUser
     public function setComments(?string $comments): void
     {
         $this->comments = $comments;
+    }
+
+    /**
+     * @return string|null
+     */
+    public function getVoucherComments(): ?string
+    {
+        return $this->voucherComments;
+    }
+
+    /**
+     * @param string|null $voucherComments
+     * @return Checkout
+     */
+    public function setVoucherComments(?string $voucherComments): Checkout
+    {
+        $this->voucherComments = $voucherComments;
+        return $this;
     }
 
     /**
@@ -497,6 +524,24 @@ class Checkout extends WebUser
     public function setCouponId($couponId)
     {
         $this->couponId = $couponId;
+        return $this;
+    }
+
+    /**
+     * @return int|null
+     */
+    public function getLoyaltyCartId(): ?int
+    {
+        return $this->loyaltyCartId;
+    }
+
+    /**
+     * @param int|null $loyaltyCartId
+     * @return Checkout
+     */
+    public function setLoyaltyCartId(?int $loyaltyCartId): Checkout
+    {
+        $this->loyaltyCartId = $loyaltyCartId;
         return $this;
     }
 

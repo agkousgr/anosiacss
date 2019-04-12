@@ -1,7 +1,13 @@
-<div class="section" style="background-image:url( {{ asset('images/bg-2.jpg') }} );">
+<div class="section">
     <div class="container">
-        <div class="row section-top">
-            {% set count = 0 %}
+        <div class="section-heading row wow flipInX" data-wow-delay="0.4s">
+            <div class="col-sm-8 col-sm-offset-2 fb-section-header">
+                <h1>BLOG</h1>
+            </div>
+        </div>
+
+        <div class="row section-top row d-flex justify-content-center">
+            <!--{% set count = 0 %}
             {% for article in articles|slice(0,1) %}
                 <div class="col-md-6 text-content wow fadeIn" data-wow-delay="0.4s">
                     <a href="{{ path('blog_view', {'slug': article.slug}) }}">
@@ -11,15 +17,26 @@
                     {#<a href="{{ path('blog_view', {'slug': article.slug}) }}"#}
                        {#class="btn btn-primary btn-md">Λεπτομέρειες</a>#}
                 </div>
-            {% endfor %}
-            <div class="col-md-6 text-content wow zoomIn" data-wow-delay="0.4s">
+            {% endfor %}-->
+            {% for article in articles|slice(1,4) %}
+            <div class="card col-sm-12 col-md-6 card-posts text-content wow zoomIn" data-wow-delay="0.4s">
                 <div id="carouselContentTop" class="carousel slide" data-ride="carousel">
                     <div class="carousel-inner" role="listbox">
-                        {% for article in articles|slice(1,3) %}
-                            {% if loop.index is odd %}
+                        
+                            <!--{% if loop.index is odd %}
                                 {#{{ dump(loop.index) }}#}
                                 <div class="item  active {% if loop.index == 1 %}{% endif %}">
-                            {% endif %}
+                            {% endif %}-->
+                            <img class="card-img-top"
+                                         src="{{ asset('uploads/articles/' ~ article.image) }}"
+                                         alt="...">
+                            <div class="img-overlay"><a href="{{ path('blog_view', {'slug': article.slug}) }}" class="overlay-text">Διαβαστε Περισσοτερα</a> </div>
+                            <div class="card-body text-center">
+                                <p class="card-title text-uppercase">{{ article.name }}</p>
+                                <!--<p class="card-text">{{ article.summary|raw }}</p>-->
+                              </div>
+
+                            <!--
                             <div class="media">
                                 <div class="media-right">
                                     <img class="media-object"
@@ -33,11 +50,12 @@
                                     <p>{{ article.summary|raw }}</p>
                                     {#<a href="{{ path('blog_view', {'slug': article.slug}) }}" class="btn btn-primary">Λεπτομέρειες</a>#}
                                 </div>
-                            </div>
-                            {% if loop.index is even %}
+                            </div>-->
+                        </div>
+                            <!--{% if loop.index is even %}
                                 </div>
-                            {% endif %}
-                        {% endfor %}
+                            {% endif %}-->
+                        
 
                     </div>
                     <!-- Controls -->
@@ -47,12 +65,16 @@
                     {#<li data-target="#carouselContentTop" data-slide-to="2"></li>#}
                     {#</ol>#}
                 </div>
+                {% endfor %}
+
+                <div class="col-sm-12 col-md-12 more">
+                    <a href="{{ path('blog_list', {'id': 1}) }}" class="btn btn-black">ΠΕΡΙΣΣΟΤΕΡΑ</a>
+                </div>
 
             </div>
         </div>
         <div class="row">
-            <a href="{{ path('blog_list', {'id': 1}) }}" class="btn btn-primary">ΔΕΙΤΕ
-                ΠΕΡΙΣΣΟΤΕΡΑ</a>
+            
         </div>
     </div>
 </div>

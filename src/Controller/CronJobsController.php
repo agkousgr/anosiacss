@@ -31,23 +31,15 @@ class CronJobsController extends AbstractController
 
     public function synchronizeProducts(ProductService $productService, LoggerInterface $logger)
     {
-//        $cmd = $this->em->getClassMetadata($pr);
-//        $connection = $this->em->getConnection();
-//        $connection->beginTransaction();
         $prevName = '';
         $duplicates = [];
+        $sub = new \DateInterval("PT5M"); // Interval of 5 mins
+        $curDate = new \DateTime('now', new \DateTimeZone('Europe/Athens'));
+        $curDate->sub($sub);
+        $formattedDate = $curDate->format('Y-m-d\TH:i:s');
         try {
-//            $count = $productService->getItemsCount('null', 'null', 'null', 1, 'null');
-//            echo($count);
-//            die();
-            $s1products = $productService->getItems('null', 'null', 4000, 'NameAsc', -1, 'null', 'null', 'null', 1, 'null', 0);
+            $s1products = $productService->getItems('null', 'null', 100, 'NameAsc', -1, 'null', 'null', 'null', -1, 'null', 0, $formattedDate);
             if ($s1products) {
-//                $connection->query('SET FOREIGN_KEY_CHECKS=0');
-//                $connection->query('DELETE FROM products');
-//                // Beware of ALTER TABLE here--it's another DDL statement and will cause
-//                // an implicit commit.
-//                $connection->query('SET FOREIGN_KEY_CHECKS=1');
-//                $connection->commit();
                 foreach ($s1products as $s1product) {
 //                    if ($prevName === strval($s1product['name'])) {
 //                        $duplicates[] = strval($s1product['name']);
@@ -55,20 +47,21 @@ class CronJobsController extends AbstractController
 //                    } else {
 //                        $prevName = strval($s1product['name']);
 //                    }
-
-
-//                    dump(strval($s1product['id']));
-//                    if (intval($s1product['id']) === 14953) {
-//                        dump($s1product);
-//                    }
-
+                    $webVisible = (strval($s1product['webVisible']) === 'true') ? true : false;
+                    $active = (strval($s1product['active']) === 'true') ? true : false;
                     $pr = $this->em->getRepository(Product::class)->find(intval($s1product['id']));
+                    $webPrice = round(floatval($s1product['retailPrice']) * (100 - floatval($s1product['webDiscount'])) / 100, 2);
                     if ($pr) {
                         $pr->setSlug(strval($s1product['slug']));
                         $pr->setPrCode(strval($s1product['prCode']));
                         $pr->setBarcode(strval($s1product['mainBarcode']));
                         $pr->setProductName(strval($s1product['name']));
                         $pr->setImage(strval($s1product['imageUrl']));
+                        $pr->setRetailPrice(floatval($s1product['retailPrice']));
+                        $pr->setDiscount(floatval($s1product['webDiscount']));
+                        $pr->setWebPrice(floatval($webPrice));
+                        $pr->setWebVisible($webVisible);
+                        $pr->setActive($active);
                         $this->em->flush();
                     } else {
                         if (strval($s1product['id']) !== '') {
@@ -79,18 +72,21 @@ class CronJobsController extends AbstractController
                             $pr->setBarcode(strval($s1product['mainBarcode']));
                             $pr->setProductName(strval($s1product['name']));
                             $pr->setImage(strval($s1product['imageUrl']));
+                            $pr->setRetailPrice(strval($s1product['retailPrice']));
+                            $pr->setDiscount(strval($s1product['webDiscount']));
+                            $pr->setWebPrice(floatval($webPrice));
+                            $pr->setWebVisible($webVisible);
+                            $pr->setActive($active);
                             $this->em->persist($pr);
                             $this->em->flush();
-//                    dump($pr);
                         }
                     }
                 }
             }
 
-            return;
+            return new Response('Products synchronization completed');
         } catch (\Exception $e) {
             $logger->error(__METHOD__ . ' -> {message}', ['message' => $e->getMessage()]);
-//            $connection->rollback();
             throw $e;
         }
     }

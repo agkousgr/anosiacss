@@ -69,6 +69,7 @@ class AjaxCheckoutController extends AbstractController
                     $checkout->setNewsLetterAge($request->request->get('checkout_step1')['newsLetterAge']);
                     $checkout->setNewsLetterGender($request->request->get('checkout_step1')['newsLetterGender']);
                 }
+                $checkout->setVoucherComments($request->request->get('checkout_step1')['voucherComments']);
                 $checkout->setShippingType($request->request->get('checkout_step1')['shippingType']);
                 $checkout->setAddress($request->request->get('checkout_step1')['address']);
                 $checkout->setZip($request->request->get('checkout_step1')['zip']);
@@ -85,8 +86,6 @@ class AjaxCheckoutController extends AbstractController
                 $session->remove('addAddress');
                 if ($request->request->get('checkout_step1')['shippingType'] !== '104')
                     $checkout->setShippingCost(0);
-
-                $checkout->setComments($request->request->get('checkout_step1')['comments']);
                 $session->set('curOrder', $checkout);
 
                 return $this->json(['success' => true]);

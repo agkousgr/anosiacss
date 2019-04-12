@@ -351,20 +351,24 @@ EOF;
 
 
     /**
-     * @param $checkout
+     * Send order
+     *
+     * @param Checkout $checkout
      * @param $cartItems
+     *
      * @return bool
      */
-    public function submitOrder($checkout, $cartItems)
+    public function submitOrder(Checkout $checkout, $cartItems)
     {
         $expenses = $this->initializeExpenses($checkout);
         $items = $this->initializeCartItems($cartItems);
         if (!$checkout->getSeries())
             $checkout->setSeries('7023');
         $series = $checkout->getSeries();
-        $orderNo = ($checkout->getOrderNo()) ?: ($this->session->get("anosiaClientId")) ? $this->session->get("anosiaClientId") . '-' . time() : random(100, 999) . '-' . time();
+        $orderNo = $checkout->getOrderNo();
         $clientId = $checkout->getClientId();
         $comments = $checkout->getComments();
+        $voucherComments = $checkout->getVoucherComments();
         $paymentType = $checkout->getPaymentType();
         $shippingType = $checkout->getShippingType();
         $address = $checkout->getAddress();
@@ -397,9 +401,7 @@ EOF;
     <EshopNumber>$orderNo</EshopNumber>
     <Status>100</Status>
     <CustomerID>$clientId</CustomerID>
-    <Remarks>$comments</Remarks>
     <PayTypeID>$paymentType</PayTypeID>
-    <Comments>$comments</Comments>
     <ShipmentTypeID>$shippingType</ShipmentTypeID>
     <ShipAddress>$address</ShipAddress>
     <ShipZip>$zip</ShipZip>
@@ -408,16 +410,19 @@ EOF;
     <ShipCarrier>1</ShipCarrier>
     <VoucherID>$coupon</VoucherID>
     <VoucherRecepient>$recepientName</VoucherRecepient>
+    <ShipkindID>$shipKindId</ShipkindID>
     <Discount1Perc>$couponDiscPerc</Discount1Perc>
     <Discount2Perc>0</Discount2Perc>
     <Discount1Value>$couponDisc</Discount1Value>
-    <ShipkindID>$shipKindId</ShipkindID>
+    <Discount2Value>0</Discount2Value>
+    <VoucherComments>$voucherComments</VoucherComments>
+    <OrderComments>$comments</OrderComments>
+    <LoyaltyCardID>null</LoyaltyCardID>
 </ClientSetOrderRequest>
 EOF;
         try {
 //            return true;
             $result = $this->client->SendMessage(['Message' => $message]);
-
             $orderResult = simplexml_load_string(str_replace("utf-16", "utf-8", $result->SendMessageResult));
             if ((string)$orderResult->IsValid === 'true') {
                 $this->em->flush();

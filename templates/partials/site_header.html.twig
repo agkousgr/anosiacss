@@ -22,7 +22,7 @@
                             </a>
                         </div>
                     </div>
-                    <div class="col-md-8 top-search visible-lg visible-md visible-xs visible-sm pull-right">
+                    <div class="col-md-4 top-search visible-lg visible-md visible-xs visible-sm">
                         <div class="search-wrap" style="margin-bottom: 15px; margin-top: 15px;">
                             {#<a data-toggle="collapse" href="#collapseSearch" aria-expanded="false"#}
                             {#aria-controls="collapseSearch"#}
@@ -55,13 +55,142 @@
                             {#</div>#}
                         </div>
                     </div>
+
+                    <div class="col-md-4 pull-right menu-set-items">
+                        
+                        {% if loggedUser == null %}
+                            {#{% set accountUrl = '#' %}#}
+                            {#{% set sideClass = 'toogle-sidebar' %}#}
+                            <a href="#" class="account-link toggle-sidebar navbar-brand"
+                               style="margin-top: 8px; padding: 0;"
+                               title=" Ο λογαριασμός μου">
+                                <i class="far fa-user"></i>
+                            </a>
+                            {% else %}
+                            {#{% set accountUrl = 'user_account' %}#}
+                            {#{% set sideClass = '' %}#}
+                            <a class="account-link navbar-brand"
+                               data-toggle="collapse" href="#collapseUser" aria-expanded="false"
+                               aria-controls="collapseUser"
+                               style="margin-top: 8px; padding: 0 5px 0 15px;"
+                               title=" Ο λογαριασμός μου">
+                                <i class="far fa-user"></i>
+                            </a>
+                            {% endif %}
+
+                            <a href="{{ path('wishlist_view') }}" class="wishlist-link navbar-brand"
+                               style="margin-top: 8px; padding: 0 5px 0 5px;" title=" Wishlist">
+                                <i class="far fa-heart"></i>
+                                {% if (totalWishlistItems > 0) %}
+                                    {% set display = 'inline' %}
+                                {% else %}
+                                    {% set display = 'none' %}
+                                {% endif %}
+                                <span id="wishlist-total-items" class="count-baloon"
+                                      style="display:{{ display }};">
+                                    {{ totalWishlistItems }}
+                                </span>
+                            </a>
+                            <a href="#" style="margin-top: 8px; padding: 0 5px 0 5px;"
+                               class="cart-link toggle-cart-sidebar navbar-brand"
+                               title="Καλάθι">
+                                <i class="fas fa-shopping-bag"></i>
+                                {% if (totalCartItems > 0) %}
+                                    {% set display = 'inline' %}
+                                {% else %}
+                                    {% set display = 'none' %}
+                                {% endif %}
+                                <span id="cart-total-items" class="count-baloon"
+                                      style="display:{{ display }};">
+                                    {{ totalCartItems }}
+                                </span>
+                            </a>
+                       
+
+
+<!--
+                        <ul>
+                        <li style="padding-right: 0;">
+                        {% if loggedUser == null %}
+                            {#{% set accountUrl = '#' %}#}
+                            {#{% set sideClass = 'toogle-sidebar' %}#}
+                            <a href="#" class="account-link toggle-sidebar"
+                               style="margin-top: 8px; padding: 0;"
+                               title=" Ο λογαριασμός μου">
+                                {#<i style="color:#ffffff" class="fas fa-user account-link"></i>#}
+                                <img style="width:50px;" src="{{ asset('images/icons/anosia-icons-account.png') }}">
+                                <span class="link-text" style="visibility:hidden">.</span>
+                            </a>
+                        {% else %}
+                            {#{% set accountUrl = 'user_account' %}#}
+                            {#{% set sideClass = '' %}#}
+                            <a class="account-link"
+                               data-toggle="collapse" href="#collapseUser" aria-expanded="false"
+                               aria-controls="collapseUser"
+                               style="margin-top: 8px; padding: 0 5px 0 15px;"
+                               title=" Ο λογαριασμός μου">
+                                <i style="color:#ffffff" class="fas fa-user-lock"></i>
+                                <span class="link-text" style="visibility:hidden">.</span>
+                            </a>
+                        {% endif %}
+                    </li>
+                    <li style="padding: 0;">
+                        <a href="{{ path('wishlist_view') }}" class="wishlist-link"
+                           style="margin-top: 8px; padding: 0 5px 0 5px;" title=" Wishlist">
+                            {#<i style="color:#ffffff" class="fas fa-heart wishlist-link"></i>#}
+                            <img style="width:40px;" src="{{ asset('images/icons/anosia-icons-heart.png') }}">
+                            <span class="link-text" style="visibility:hidden">.</span>
+                            {% if (totalWishlistItems > 0) %}
+                                {% set display = 'inline' %}
+                            {% else %}
+                                {% set display = 'none' %}
+                            {% endif %}
+                            <span id="wishlist-total-items" class="count-baloon"
+                                  style="display:{{ display }};">
+                                {{ totalWishlistItems }}
+                            </span>
+                        </a>
+                    </li>
+                    <li style="padding: 0;">
+                        <a data-toggle="collapse" href="#collapseVoucher" aria-expanded="false"
+                           aria-controls="collapseVoucher"
+                           style="margin-top: 8px; padding: 0 5px 0 5px;"
+                           class="cart-link"
+                           title=" Παρακολούθηση Παραγγελίας">
+                            {#<i style="color:#ffffff" class="fas fa-truck-moving trucking-link"></i>#}
+                            <img style="width:40px;" src="{{ asset('images/icons/anosia-icons-track.png') }}">
+                            <span class="link-text" style="visibility:hidden">.</span>
+                        </a>
+                    </li>
+                    <li style="padding: 0;" id="top-cart">
+                        {#<a data-toggle="collapse" href="#collapseCart" aria-expanded="false"#}
+                        <a href="#" style="margin-top: 8px; padding: 0 5px 0 5px;"
+                           class="cart-link toggle-cart-sidebar"
+                           title="Καλάθι">
+                            {#<i style="color:#ffffff" class="fas fa-shopping-cart cart-link"></i>#}
+                            <img style="width:40px;" src="{{ asset('images/icons/anosia-icons-cart.png') }}">
+                            <span class="link-text" style="visibility:hidden">.</span>
+                            {% if (totalCartItems > 0) %}
+                                {% set display = 'inline' %}
+                            {% else %}
+                                {% set display = 'none' %}
+                            {% endif %}
+                            <span id="cart-total-items" class="count-baloon"
+                                  style="display:{{ display }};">
+                                {{ totalCartItems }}
+                            </span>
+                        </a>
+                    </li>
+                    </ul>-->
+                    </div>
                 </div>
             </div>
         </div>
         <div class="container">
-            <div class="post-header-wrap col-xs-12 col-md-8" style="padding: 0;">
+            <div class="post-header-wrap col-xs-12 col-md-12" style="padding: 0;">
                 {% include 'partials/top_menu.html.twig' %}
             </div>
+            <!--
             <div class="col-xs-12 col-md-4 hidden-xs social-header" style="vertical-align: middle; text-align: right; padding-left: 0;">
                 {#<a href="https://plus.google.com/u/0/118177816495130950018" target="_blank">#}
                     {#<i class="fab fa-google-plus-square social-top"></i>#}
@@ -82,7 +211,7 @@
                     <img src="{{ asset('images/icons/fb-green.png') }}" />
                     {#<i class="fab fa-facebook-square social-top"></i>#}
                 </a>
-            </div>
+            </div>-->
         </div>
     </div>
 </header>

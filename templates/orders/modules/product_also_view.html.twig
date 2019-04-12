@@ -7,10 +7,10 @@
                     <div class="tag tag-green"><span>new</span></div>
                     <div class="product-img">
                         <div class="hover-img">
-                            <a href="{{ path('product_view', {'slug': pr.slug}) }}"><img src="{{ pr.imageUrl }}" alt=""></a>
+                            <a href="{{ path('product_view', {'slug': pr.slug}) }}"><img src="{{ asset(pr.imageUrl) }}" alt=""></a>
                         </div>
                         <a href="#">
-                            <a href="{{ path('product_view', {'slug': pr.slug}) }}"><img src="{{ pr.imageUrl }}" alt=""></a>
+                            <a href="{{ path('product_view', {'slug': pr.slug}) }}"><img src="{{ asset(pr.imageUrl) }}" alt=""></a>
                         </a>
                     </div>
                     <div class="hover-info">

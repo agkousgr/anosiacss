@@ -11,15 +11,13 @@ use Symfony\Component\HttpFoundation\Request;
 
 class ProductController extends MainController
 {
-
-    public function listProducts(Request $request, int $page, string $slug, BrandsService $brandsService)
+    public function listProducts(Request $request, int $page, string $slug, BrandsService $brandsService, PaginatorInterface $paginator)
     {
         try {
-
-            $pagesize = ($request->query->get('pagesize')) ? preg_replace('/[^A-Za-z0-9\-]/', '', $request->query->get('pagesize')) : 12;
-            $sortBy = ($request->query->get('sortBy')) ?: 'NameAsc';
-            $mnufacturerId = ($request->query->get('brands')) ? str_replace('-', ',', $request->query->get('brands')) : 'null';
-            $priceRange = ($request->query->get('priceRange')) ?: 'null';
+            $pagesize = $request->query->getInt('pagesize') ?: 12;
+            $sortBy = $request->query->get('sortBy') ?: 'NameAsc';
+            $mnufacturerId = $request->query->get('brands') ? str_replace('-', ',', $request->query->get('brands')) : 'null';
+            $priceRange = $request->query->get('priceRange') ?: 'null';
             $category = $this->em->getRepository(Category::class)->findOneBy(['slug' => $slug]);
             $brands = $brandsService->getCategoryManufacturers($category->getS1id());
             $subCategories = $category->getChildren();
@@ -28,14 +26,10 @@ class ProductController extends MainController
             $productsCount = intval($productsCountArr->Count);
             $minPrice = intval($productsCountArr->MinPrice);
             $maxPrice = intval($productsCountArr->MaxPrice);
-            if ($productsCount > $pagesize * $page) {
-                $products = $this->productService->getCategoryItems($category->getS1id(), $page - 1, $pagesize, $sortBy, 'null', $priceRange, 1, $mnufacturerId);
-            } else {
-                $products = $this->productService->getCategoryItems($category->getS1id(), 0, $pagesize, $sortBy, 'null', $priceRange, 1, $mnufacturerId);
-            }
+            $products = $this->productService->getCategoryItems($category->getS1id(), 0, 10000, $sortBy, 'null', $priceRange, 1, $mnufacturerId);
+            $pagination = $paginator->paginate($products, $page, $pagesize);
 
             return $this->render('products/list.html.twig', [
-                'products' => $products,
                 'ctgInfo' => $category,
                 'categories' => $this->categories,
                 'topSellers' => $this->topSellers,
@@ -51,13 +45,13 @@ class ProductController extends MainController
                 'minPrice' => $minPrice,
                 'maxPrice' => $maxPrice,
                 'brands' => $brands,
-                'page' => $page,
                 'pagesize' => $pagesize,
                 'sortBy' => $sortBy,
                 'brand' => $mnufacturerId,
                 'priceRange' => $priceRange,
                 'loginUrl' => $this->loginUrl,
-                'subCategories' => $subCategories
+                'subCategories' => $subCategories,
+                'pagination' => $pagination
             ]);
         } catch (\Exception $e) {
             $this->logger->error(__METHOD__ . ' -> {message}', ['message' => $e->getMessage()]);
@@ -136,27 +130,14 @@ class ProductController extends MainController
     public function viewProduct(string $slug, EntityManagerInterface $em, ProductService $productService)
     {
         try {
-            $alsoViewed = new AlsoViewedProducts();
+//            $alsoViewed = new AlsoViewedProducts();
             $pr = $em->getRepository(Product::class)->findOneBy(['slug' => $slug]);
 
             $product = $this->productService->getItems($pr->getId(), 'null', 10);
-            $productId = intval($product["id"]);
-            $productView = $em->getRepository(ProductViews::class)->findOneBy(['product_id' => $productId]);
-           $relativeProducts = $productService->getRelevantItems('null',-1, 1, 1, 0, $product['categories'][0]->getS1id());
-            if (empty($productView)) {
-                $productView = new ProductViews();
-                $productView->setViews(1);
-                $productView->setProductId($productId);
-                $em->persist($productView);
-            } else {
-                $productView->setViews($productView->getViews() + 1);
-            }
-            $em->flush();
+            $relativeProducts = $productService->getRelevantItems('null', -1, 1, 1, 0, $product['categories'][0]->getS1id());
 
-//            if ($pr) {
-//                $pr->setViews($pr->getViews() + 1);
-//                $em->persist($pr);
-//            }
+            $pr->setViews($pr->getViews() + 1);
+            $em->flush();
             return $this->render('products/view.html.twig', [
                 'pr' => $product,
                 'categories' => $this->categories,
@@ -175,30 +156,21 @@ class ProductController extends MainController
         }
     }
 
-    public function searchResults(Request $request, int $page)
+    public function searchResults(Request $request, int $page, PaginatorInterface $paginator)
     {
         try {
             $keyword = strip_tags(trim($request->query->get('keyword')));
             $s1Keyword = preg_replace('!\s+!', ',', $keyword);
-            
-            $pagesize = ($request->query->get('pagesize')) ? preg_replace('/[^A-Za-z0-9\-]/', '', $request->query->get('pagesize')) : 12;
-            $sortBy = ($request->query->get('sortBy')) ?: 'NameAsc';
-            $mnufacturerId = ($request->query->get('brands')) ? str_replace('-', ',', $request->query->get('brands')) : 'null';
+            $pagesize = $request->query->get('pagesize') ?: 12;
+            $sortBy = $request->query->get('sortBy') ?: 'NameAsc';
             $priceRange = ($request->query->get('priceRange')) ?: 'null';
-//            $ctgInfo = $this->em->getRepository(Category::class)->findOneBy(['slug' => $slug]);
-
-
             $productsCount = $this->productService->getItemsCount($s1Keyword, 'null', $priceRange, 1, 'null');
-//            $productsCount = intval($productsCountArr);
-            if ($productsCount > $pagesize * $page) {
-                $products = $this->productService->getItems('null', $s1Keyword, $pagesize, $sortBy, '-1','null', $priceRange,'null', 1, 'null',  $page - 1);
-            } else {
-                $products = $this->productService->getItems('null', $s1Keyword, $pagesize, $sortBy, '-1', 'null', $priceRange,'null', 1, 'null',  0);
-            }
-
+            $products = $this->productService->getItems(
+                'null', $s1Keyword, 10000, $sortBy, '-1', 'null', $priceRange, 'null', 1, 'null', 0
+            );
+            $pagination = $paginator->paginate($products, $page, $pagesize);
 
             return $this->render('products/search.html.twig', [
-                'products' => $products,
                 'categories' => $this->categories,
                 'topSellers' => $this->topSellers,
                 'popular' => $this->popular,
@@ -215,6 +187,7 @@ class ProductController extends MainController
                 'pagesize' => $pagesize,
                 'sortBy' => $sortBy,
                 'priceRange' => $priceRange,
+                'pagination' => $pagination,
             ]);
         } catch (\Exception $e) {
             $this->logger->error(__METHOD__ . ' -> {message}', ['message' => $e->getMessage()]);

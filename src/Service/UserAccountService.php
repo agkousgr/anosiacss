@@ -671,10 +671,13 @@ EOF;
 
     /**
      * @param string $username
-     * @param null   $user
-     * @param null   $address
+     * @param string $email
+     * @param null $user
+     * @param null $address
      *
-     * @return \SimpleXMLElement|bool
+     * @return bool|\SimpleXMLElement
+     *
+     * @throws \SoapFault
      */
     public function getUser($username = 'null', $email = 'null', $user = null, $address = null) // remove nulls in production
     {
@@ -852,9 +855,9 @@ EOF;
      * @return array
      * @throws \Exception
      */
-    public function getUserInfo($username, $user, $address = null)
+    public function getUserInfo($username, $user)
     {
-        $this->getUser($username, $user);
+        $this->getUser($username, 'null', $user);
         $this->getClient($username, $user);
         $addressesArr = $this->getAddresses($user->getClientId());
         $this->getNewsletter($username, $user);
@@ -1151,7 +1154,17 @@ EOF;
         }
     }
 
-    public function getOrder($clientId, $orderId)
+    /**
+     * Get order details
+     *
+     * @param $clientId
+     * @param $orderId
+     *
+     * @return array
+     *
+     * @throws \SoapFault
+     */
+    public function getOrder($clientId, $orderId): array
     {
         $client = new \SoapClient('http://caron.cloudsystems.gr/FOeshopWS/ForeignOffice.FOeshop.API.FOeshopSvc.svc?singleWsdl', ['trace' => true, 'exceptions' => true,]);
 
@@ -1183,7 +1196,7 @@ EOF;
 
                 return $orderArr;
             } else {
-                return 0;
+                return [];
             }
         } catch (\SoapFault $sf) {
             echo $sf->faultstring;

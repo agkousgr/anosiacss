@@ -27,12 +27,13 @@
         font-size: 18px;
     }
 </style>
-<div class="section" style="background:#fff;">
+<div class="section features-icons bg-light text-center fb-section">
     <div class="container">
         <div class="section-heading row wow flipInX" data-wow-delay="0.4s">
-            <div class="col-sm-8 col-sm-offset-2">
+            <div class="col-sm-8 col-sm-offset-2 fb-section-header">
                 {#<h3>SOCIAL MEDIA</h3>#}
-                <h2>Τα σχόλιά σας στο Facebook</h2>
+                <h2>Τα Σχόλια σας στο</h2>
+                <h1>Facebook</h1>
                 {#<p>Ακολουθήστε μας στα Social Media για να ενημερώνεστε για τα τελευταία νέα μας, τις καθημερινές προσφορές μας, να συμμετέχετε σε διαγωνισμούς και να μαθαίνετε συμβουλές για καλύτερη υγεία. Γίνετε μέλος της μεγάλης παρέας μας.</p>#}
             </div>
         </div>
@@ -48,10 +49,14 @@
 
         <div class="col-lg-3 wow zoomIn animated" data-wow-delay="0.4s" style="animation-delay: 0.4s; animation-name: zoomIn;">
             <div class="col-sm-12">
-                <div class="offer-box" style="text-align: center;">
-                    <div class="fb-rating">4.9</div>
-                    <div style="padding-top: 10px;"><strong>4.9 με άριστα το 5</strong></div>
-                    <div>Βασισμένη στην βαθμολογία που μας έδωσαν XXX επισκέπτες</div>
+                <div class="card">
+                    <div class="card-body">
+                        <div class="offer-box circle" style="text-align: center;">
+                            <p class="fb-rating d-inline-flex p-2">4.9</p>
+                            <h5 class="card-title"><strong>...με άριστα το 5</strong></h5>
+                            <span class="card-text">Βασισμένη στην βαθμολογία που μας έδωσαν οι επισκέπτες</span>
+                        </div>
+                    </div>
                 </div>
             </div>
         </div>
@@ -81,7 +86,7 @@
                                 </div>
                             </div>
                         </div>
-                        <div class="shadow-sm"></div>
+                        <!--<div class="shadow-sm"></div>-->
                     </div>
                 {% endfor %}
             </div>

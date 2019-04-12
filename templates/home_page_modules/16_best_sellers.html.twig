@@ -1,21 +1,33 @@
-<div class="section" style="background-image:url({{ asset('images/bg-5.jpg') }});">
+<div class="section">
     <div class="container">
         <div class="row other-products">
-            <div class="col-md-4 col-lg-3">
+            <div class="container">
+                <div class="section-heading row wow flipInX" data-wow-delay="0.4s">
+                    <div class="col-sm-8 col-sm-offset-2 fb-section-header">
+                        <h2>BEST</h2>
+                        <h1>SELLERS</h1>
+                    </div>
+                </div>
+            </div>
+
+<!--
+            
                 <div class="product-media-scroll">
                     <h3>Best <span>Sellers</span></h3>
                     {% for ctg in categories %}
                         {% if ctg.slug != 'ΠΡΟΣΦΟΡΕΣ' %}
                             <h5>
-                                <a href="#" data-id="{{ ctg.id }}" data-firstchild="{{ ctg.children[0].id }}" class="best-sellers-category">{{ ctg.name }}</a>
+                                <a href="#" data-id="{{ ctg.s1id }}" data-firstchild="{{ ctg.children[0].s1id }}" class="best-sellers-category">{{ ctg.name }}</a>
                             </h5>
                         {% endif %}
                     {% endfor %}
                 </div>
-            </div>
-
-
-            <div id="best-sellers-container" class="col-md-8 col-lg-9">
+            
+-->
+        </div>
+    </div>
+ <div class="row bg-light">
+            <div id="best-sellers-container" class="col-md-12 col-lg-12">
                 <div class="ProductTab">
                     <ul class="resp-tabs-list hor_1" data-id="1728">
                         {% for ctg in categories|slice(0,1) %}
@@ -26,7 +38,7 @@
                                     {% else %}
                                         {% set activeLi = "" %}
                                     {% endif %}
-                                    <li class=" {{ activeLi}}"><span class="best-sellers-tab" data-id="{{ subCtg.id }}">{{ subCtg.name }}</span></li>
+                                    <li class=" {{ activeLi}}"><span class="best-sellers-tab" data-id="{{ subCtg.s1id }}">{{ subCtg.name }}</span></li>
                                 {% endif %}
                             {% endfor %}
                         {% endfor %}
@@ -40,7 +52,7 @@
                                     {% else %}
                                         {% set activeLi = "" %}
                                     {% endif %}
-                                    <li class=" {{ activeLi}}"><span class="best-sellers-tab" data-id="{{ subCtg.id }}">{{ subCtg.name }}</span></li>
+                                    <li class=" {{ activeLi}}"><span class="best-sellers-tab" data-id="{{ subCtg.s1id }}">{{ subCtg.name }}</span></li>
                                 {% endif %}
                             {% endfor %}
                         {% endfor %}
@@ -54,7 +66,7 @@
                                     {% else %}
                                         {% set activeLi = "" %}
                                     {% endif %}
-                                    <li class=" {{ activeLi}}"><span class="best-sellers-tab" data-id="{{ subCtg.id }}">{{ subCtg.name }}</span></li>
+                                    <li class=" {{ activeLi}}"><span class="best-sellers-tab" data-id="{{ subCtg.s1id }}">{{ subCtg.name }}</span></li>
                                 {% endif %}
                             {% endfor %}
                         {% endfor %}
@@ -68,7 +80,7 @@
                                     {% else %}
                                         {% set activeLi = "" %}
                                     {% endif %}
-                                    <li class=" {{ activeLi}}"><span class="best-sellers-tab" data-id="{{ subCtg.id }}">{{ subCtg.name }}</span></li>
+                                    <li class=" {{ activeLi}}"><span class="best-sellers-tab" data-id="{{ subCtg.s1id }}">{{ subCtg.name }}</span></li>
                                 {% endif %}
                             {% endfor %}
                         {% endfor %}
@@ -77,6 +89,7 @@
                         {#{% include 'home_page_modules/ajax_best_seller.html.twig' %}#}
                     </div>
                 </div>
+            </div>
             </div>
         </div>
     </div>

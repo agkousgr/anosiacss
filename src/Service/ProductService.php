@@ -185,7 +185,7 @@ EOF;
         try {
             $prArr = [];
             foreach ($products as $pr) {
-                if (strval($pr->WebVisible) !== "false" && strval($pr->Slug) !== '') {
+//                if (strval($pr->WebVisible) !== "false" && strval($pr->Slug) !== '') {
                     $mainPhoto = (strval($pr->HasMainPhoto) !== 'false') ? explode('=', $pr->MainPhotoUrl) : [];
                     $prArr[] = [
                         'id' => $pr->ID,
@@ -208,6 +208,8 @@ EOF;
                         'remainNotReserved' => $pr->RemainNotReserved,
                         'isNew' => $this->checkIfProductIsNew($pr->InsertDT),
                         'webFree' => $pr->WebFree,
+                        'webVisible' => $pr->WebVisible,
+                        'active' => $pr->IsActive,
                         'overAvailability' => $pr->OverAvailability,
                         'maxByOrder' => $pr->MaxByOrder,
                         'hasMainImage' => $pr->HasMainPhoto,
@@ -215,7 +217,7 @@ EOF;
                         'imageUrl' => (empty($mainPhoto)) ? '' : 'images/products/FOSO/01102459200217/1001/mtrl/51/-/' . $pr->ID . '/' . end($mainPhoto)
 //                        'imageUrl' => (strval($pr->HasMainPhoto) !== 'false') ? 'https://caron.cloudsystems.gr/FOeshopAPIWeb/DF.aspx?' . str_replace('[Serial]', '01102472475217', str_replace('&amp;', '&', $pr->MainPhotoUrl)) : ''
                     ];
-                }
+//                }
             }
 
             return $prArr;
@@ -275,14 +277,13 @@ EOF;
     <LowPrice>$lowPrice</LowPrice>
     <HighPrice>$highPrice</HighPrice>
     <WebVisible>$webVisible</WebVisible>
-    <IsActive>-1</IsActive>
+    <IsActive>1</IsActive>
     <UpdateDT>$updatedDate</UpdateDT>
 </ClientGetItemsRequest>
 EOF;
         try {
             $itemsArr = [];
             $result = $this->client->SendMessage(['Message' => $message]);
-            dump($message, $result);
             $items = simplexml_load_string(str_replace("utf-16", "utf-8", $result->SendMessageResult), 'SimpleXMLElement', LIBXML_COMPACT | LIBXML_PARSEHUGE);
             if (intval($items->RowsCount) > 0) {
                 if ($items !== false && ($keyword !== 'null' || $makeId !== 'null' || $isSkroutz === '1' || ($id === 'null' && $itemCode === 'null'))) { // THIS IS FOR MIGRATING PRODUCTS

@@ -2,7 +2,7 @@
 
 namespace App\Controller;
 
-use App\Entity\{Address, WebUser};
+use App\Entity\{Address, Finstates, WebUser};
 use App\Service\CartService;
 use App\Service\UserAccountService;
 use App\Form\Type\{
@@ -26,19 +26,9 @@ class UserAccountController extends MainController
         try {
             if (null !== $this->loggedUser) {
                 $user = new WebUser();
-                $address = new Address();
-                $userData = $userAccountService->getUserInfo($this->loggedUser, $user, $address);
+                $userData = $userAccountService->getUserInfo($this->loggedUser, $user);
                 $userOrders = $userAccountService->getOrders($this->loggedClientId);
-//            $user = new WebserviceUser(
-//                $userData["clientId"],
-//                $userData["username"],
-//                $userData["password"],
-//                $userData["name"],
-//                $userData["name"],
-//                $userData["newsletter"],
-//                '',
-//                []
-//            );
+
                 $formUser = $this->createForm(UserGeneralInfoType::class, $user);
                 $formUser->handleRequest($request);
                 $formMainAddress = $this->createForm(UserAddressType::class, $user);
@@ -48,7 +38,7 @@ class UserAccountController extends MainController
                     $user->setLastname($formUser->get('lastname')->getData());
                     $user->setNewsletter($formUser->get('newsletter')->getData());
                     $userAccountService->updateUserInfo($user);
-                    $userData = $userAccountService->getUserInfo($this->loggedUser, $user, $address);
+                    $userData = $userAccountService->getUserInfo($this->loggedUser, $user);
                     $this->addFlash(
                         'success',
                         'Τα στοιχεία σας ενημερώθηκαν με επιτυχία.'
@@ -61,7 +51,7 @@ class UserAccountController extends MainController
                     $user->setDistrict($formMainAddress->get('district')->getData());
                     $user->setPhone01($formMainAddress->get('phone01')->getData());
                     $userAccountService->updateUserInfo($user);
-                    $userData = $userAccountService->getUserInfo($this->loggedUser, $user, $address);
+                    $userData = $userAccountService->getUserInfo($this->loggedUser, $user);
                     $this->addFlash(
                         'success',
                         'Τα στοιχεία της διεύθυνσής σας ενημερώθηκαν με επιτυχία.'
@@ -96,6 +86,7 @@ class UserAccountController extends MainController
     {
         $userOrder = $userAccountService->getOrder($this->loggedClientId, $id);
         $voucherDisc = $userAccountService->getCoupon($userOrder['voucherId']);
+        $orderStatus = $this->em->getRepository(Finstates::class)->find($userOrder['status']);
 
         return $this->render('user/view_order.html.twig', [
             'categories' => $this->categories,
@@ -108,6 +99,7 @@ class UserAccountController extends MainController
             'loggedName' => $this->loggedName,
             'loggedUser' => $this->loggedUser,
             'order' => $userOrder,
+            'orderStatus' => $orderStatus->getName(),
             'voucherDisc' => $voucherDisc
         ]);
     }

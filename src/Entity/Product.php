@@ -67,6 +67,16 @@ class Product
     private $latestOffer;
 
     /**
+     * @var bool|null
+     */
+    private $webVisible;
+
+    /**
+     * @var bool|null
+     */
+    private $active;
+
+    /**
      * @return int
      */
     public function getId(): int
@@ -279,6 +289,42 @@ class Product
     public function setLatestOffer(?\DateTime $latestOffer): Product
     {
         $this->latestOffer = $latestOffer;
+        return $this;
+    }
+
+    /**
+     * @return bool|null
+     */
+    public function isWebVisible(): ?bool
+    {
+        return $this->webVisible;
+    }
+
+    /**
+     * @param bool|null $webVisible
+     * @return Product
+     */
+    public function setWebVisible(?bool $webVisible): Product
+    {
+        $this->webVisible = $webVisible;
+        return $this;
+    }
+
+    /**
+     * @return bool|null
+     */
+    public function isActive(): ?bool
+    {
+        return $this->active;
+    }
+
+    /**
+     * @param bool|null $active
+     * @return Product
+     */
+    public function setActive(?bool $active): Product
+    {
+        $this->active = $active;
         return $this;
     }
 

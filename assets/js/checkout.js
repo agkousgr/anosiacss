@@ -1,25 +1,3 @@
-// $('.step-edit').on('click', function (e) {
-//     let data = {}
-//     data['currentStep'] = $(this).attr('id'),
-//     $.post(Routing.generate('checkout'), data, function (result) {
-//         if (result.success) {
-//             swal({
-//                 title: 'Είσοδος χρήστη',
-//                 html: '<div style="font-size:17px;">Συνδεθήκατε με επιτυχία!</div>',
-//                 type: 'success',
-//                 timer: 10000
-//             });
-//             location.reload();
-//         } else {
-//             swal({
-//                 title: 'Είσοδος χρήστη',
-//                 html: '<div style="font-size:17px;">' + result.errorMsg + '</div>',
-//                 type: 'error',
-//                 timer: 10000
-//             });
-//         }
-//     })
-// })
 import swal from 'sweetalert2';
 
 require('bootstrap');
@@ -35,6 +13,9 @@ $(document).ready(function () {
 
     $('#checkout_step2_paymentType_0').prop('checked', true);
     $('#checkout_step1_shippingType_0').prop('checked', true);
+    if ($('#checkout_step1_shippingType_0').prop('checked') === false) {
+        $('#voucher-comments').addClass('hidden');
+    }
     // $('form[name="checkout_step1"]').validate();
 
     // validate signup form on keyup and submit
@@ -43,30 +24,20 @@ $(document).ready(function () {
     $('form[name="checkout_step1"]').validate({
         rules: {
             'checkout_step1[firstname]': {
-                required: {
-                    depends: function(element) {
-                        return !shippingType1.is(":checked");
-                    }
-                }
+                required: true
             },
             'checkout_step1[lastname]': {
-                required: {
-                    depends: function(element) {
-                        return !shippingType1.is(":checked");
-                    }
-                }
+                required: true
             },
             'checkout_step1[email]': {
-                required: {
-                    depends: function(element) {
-                        return !shippingType1.is(":checked");
-                    }
-                },
-                email: true
+                required: true
+            },
+            'checkout_step1[phone01]': {
+                required: true
             },
             'checkout_step1[address]': {
                 required: {
-                    depends: function(element) {
+                    depends: function (element) {
                         return !shippingType1.is(":checked");
                     }
                 },
@@ -74,49 +45,42 @@ $(document).ready(function () {
             },
             'checkout_step1[zip]': {
                 required: {
-                    depends: function(element) {
+                    depends: function (element) {
                         return !shippingType1.is(":checked");
                     }
                 }
             },
             'checkout_step1[city]': {
                 required: {
-                    depends: function(element) {
+                    depends: function (element) {
                         return !shippingType1.is(":checked");
                     }
                 }
             },
             'checkout_step1[district]': {
                 required: {
-                    depends: function(element) {
-                        return !shippingType1.is(":checked");
-                    }
-                }
-            },
-            'checkout_step1[phone01]': {
-                required: {
-                    depends: function(element) {
+                    depends: function (element) {
                         return !shippingType1.is(":checked");
                     }
                 }
             },
             'checkout_step1[afm]': {
                 required: {
-                    depends: function(element) {
+                    depends: function (element) {
                         return !shippingType1.is(":checked");
                     }
                 }
             },
             'checkout_step1[irs]': {
                 required: {
-                    depends: function(element) {
+                    depends: function (element) {
                         return !shippingType1.is(":checked");
                     }
                 }
             },
             'checkout_step1[shipAddress]': {
                 required: {
-                    depends: function(element) {
+                    depends: function (element) {
                         return useSameShippingAddress.is(":checked");
                     }
                 },
@@ -124,21 +88,21 @@ $(document).ready(function () {
             },
             'checkout_step1[shipZip]': {
                 required: {
-                    depends: function(element) {
+                    depends: function (element) {
                         return useSameShippingAddress.is(":checked");
                     }
                 }
             },
             'checkout_step1[shipCity]': {
                 required: {
-                    depends: function(element) {
+                    depends: function (element) {
                         return useSameShippingAddress.is(":checked");
                     }
                 }
             },
             'checkout_step1[shipDistrict]': {
                 required: {
-                    depends: function(element) {
+                    depends: function (element) {
                         return useSameShippingAddress.is(":checked");
                     }
                 }
@@ -220,9 +184,9 @@ $(document).ready(function () {
         submitHandler: function () {
             // $('form[name="checkout_step2"]').submit();
             if ($('#checkout_step2_paymentType_2').prop('checked') === true) {
-                console.log('pireaus');
                 let data = {
-                    'installments' : $('#installments').val()
+                    'installments': $('#installments').val(),
+                    'comments': $('#checkout_step2_comments').val()
                 };
                 $.post(Routing.generate('get_pireaus_ticket'), data, function (result) {
                     console.log(result);
@@ -234,7 +198,7 @@ $(document).ready(function () {
                                 type: 'error',
                                 timer: 5000
                             });
-                        }else{
+                        } else {
                             $('input[name="MerchantReference"]').val(result.checkout.orderNo);
                             $('#pireaus_container').show();
                             $('#checkout-payment-step').hide();
@@ -243,7 +207,6 @@ $(document).ready(function () {
                     }
                 });
             } else {
-                console.log('not pireaus');
                 let form = $('form[name="checkout_step2"]');
                 let formData = form.serialize();
                 $.post(Routing.generate('checkout'), formData, function (result) {
@@ -318,6 +281,7 @@ $(document).ready(function () {
         if ($('#coupon-discount').length > 0) {
             couponDisc = $('#coupon-discount').data('discount');
         }
+        $('#voucher-comments').toggleClass('hidden');
         if ($('#checkout_step1_shippingType_0').is(':checked')) {
             if ($('#cart-cost').data('cost') - couponDisc <= 39) {
                 $('#shipping-cost').data('cost', 2.00);

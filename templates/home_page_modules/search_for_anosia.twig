@@ -1,19 +1,19 @@
-<div class="section" style="background-color: #000000;">
+<header class="masthead2 text-white text-center">
     <div class="container">
-        <div class="row">
-            <div class="four-column-wrap banners-services">
-                <div class="col-xs-12 col-md-4" style="color: #ffffff; font-weight: bold; font-size: 22px; text-align: right;">
-                    <i class="fas fa-search" style="font-size: 35px; padding-right: 5px;"></i>
-                    Θέλω ανοσία σε...
+      <div class="row">
+        <div class="col-sm-8 col-md-8 mx-auto home-slider">
+          <h2>ΘΕΛΩ</h2>
+          <h1>ANOSIA ΣΕ:</h1>
+          <div class="row">
+            <div class="col-sm-8  input-group mb-3 anosiase-input">
+              <div class="search">
+                    <div class="textbox">
+                        <input id="anosia-keyword" name="anosia-keyword" required="" class="form-control" type="text"
+                            placeholder="π.χ. πονοκέφαλο, αλλεργία, κρυολόγημα" style="width: 100%;background: #f3f3f3;">
+                     </div>
+                    {#<button id="search-for-anosia" type="button"><i class="fas fa-search"></i></button>#}
                 </div>
-                <div class="col-xs-12 col-md-8">
-                    <div class="search">
-                            <div class="textbox">
-                                <input id="anosia-keyword" name="anosia-keyword" required="" class="form-control" type="text"
-                                       placeholder="π.χ. πονοκέφαλο, αλλεργία, κρυολόγημα"
-                                       style="width: 100%;background: #f3f3f3;">
-                            </div>
-                            {#<button id="search-for-anosia" type="button"><i class="fas fa-search"></i></button>#}
+                              {#<button id="search-for-anosia" type="button"><i class="fas fa-search"></i></button>#}
                     </div>
                 </div>
                 {#<ul>#}
@@ -61,7 +61,84 @@
                 {#<h5>Δωρεάν Μεταφορικά</h5> <h4>- Άτοκες Δόσεις</h4>#}
                 {#</li>#}
                 {#</ul>#}
+              </div>
+              <div class="col-md-4 d-none d-md-block d-lg-block">
+                  <p style="padding-top: 12%;">Lorem ipsum dolor sit amet, consectetuer adipiscing elit, sed diam nonummy nibh euismod tincidunt ut
+                    laoreet dolore magna aliquam erat volutpat. Ut wisi enim ad minim veniam, quis nostrud exerci tation
+                    ullamcorper suscipit lobortis nisl ut aliquip ex ea commodo consequat.</p>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+    
+  </header>
+
+<!--<div class="section" style="background-color: #000000;">
+    <div class="container">
+        <div class="row">
+            <div class="four-column-wrap banners-services">
+                <div class="col-xs-12 col-md-4" style="color: #ffffff; font-weight: bold; font-size: 22px; text-align: right;">
+                    <i class="fas fa-search" style="font-size: 35px; padding-right: 5px;"></i>
+                    Θέλω ανοσία σε...
+                </div>
+                <div class="col-xs-12 col-md-8">
+                    <div class="search">
+                            <div class="textbox">
+                                <input id="anosia-keyword" name="anosia-keyword" required="" class="form-control" type="text"
+                                       placeholder="π.χ. πονοκέφαλο, αλλεργία, κρυολόγημα"
+                                       style="width: 100%;background: #f3f3f3;">
+                            </div>
+                            {#<button id="search-for-anosia" type="button"><i class="fas fa-search"></i></button>#}
+                    </div>
+                </div>
+                {#<ul>#}
+                {#<li class="wow bounceIn" data-wow-delay="0.4s">#}
+                {#<div class="hover-div">#}
+                {#<div class="icon"><!--<img src="{{ asset('images/icon-7.png') }}" alt="">--><!--#}
+                                   {#<i class="fa fa-comments" style="font-size: 132px;"></i>#}
+                {#</div>#}
+                {#<h5>Κάντε κλικ εδώ</h5> <h4>για το chat μας</h4>#}
+                {#</div>#}
+                {#<div class="icon"><i class="fa fa-comments" style="font-size: 132px;"></i><!--<img src="{{ asset('images/icon-7.png') }}" alt="">--><!--</div>#}
+                {#<h5>Μιλήστε</h5> <h4>άμεσα μαζί μας</h4>#}
+                {#</li>#}
+                {#<li class="wow bounceIn" data-wow-delay="0.4s">#}
+                {#<div class="hover-div">#}
+                {#<div class="icon"><!--<img src="{{ asset('images/icon-8.png') }}" alt="">--><!--#}
+                {#<i class="fa fa-truck" style="font-size: 132px;"></i>#}
+                {#</div>#}
+                {#<h5>Κάντε κλικ εδώ</h5> <h4>για να δείτε την παραγγελία σας</h4></div>#}
+                {#<div class="icon"><!--<img src="{{ asset('images/icon-8.png') }}" alt="">--><!--#}
+                {#<i class="fa fa-truck" style="font-size: 132px;"></i>#}
+                {#</div>#}
+                {#<h5>Παρακολουθήστε </h5> <h4>την παραγγελία σας</h4>#}
+                {#</li>#}
+                {#<li class="wow bounceIn" data-wow-delay="0.4s">#}
+                {#<div class="hover-div">#}
+                {#<div class="icon"><!--<img src="{{ asset('images/icon-9.png') }}" alt="">--><!--#}
+                {#<i class="fa fa-search" style="font-size: 132px;"></i>#}
+                {#</div>#}
+                {#<h5>Αναζητήστε το</h5> <h4>σύμπτωμα σας</h4></div>#}
+                {#<div class="icon"><!--<img src="{{ asset('images/icon-9.png') }}" alt="">--><!--#}
+                {#<i class="fa fa-search" style="font-size: 132px;"></i>#}
+                {#</div>#}
+                {#<h5>Θέλω </h5> <h4>Ανοσία σε...</h4>#}
+                {#</li>#}
+                {#<li class="wow bounceIn" data-wow-delay="0.4s">#}
+                {#<div class="hover-div">#}
+                {#<div class="icon"><!--<img src="{{ asset('images/icon-10.png') }}" alt="">--><!--#}
+                {#<i class="fa fa-credit-card" style="font-size: 132px;"></i>#}
+                {#</div>#}
+                {#<h5>Είμαστε εδώ για εσάς</h5> <h4>με τις καλύτερες υπηρεσίες</h4></div>#}
+                {#<div class="icon"><!--<img src="{{ asset('images/icon-10.png') }}" alt="">--><!--#}
+                {#<i class="fa fa-credit-card" style="font-size: 132px;"></i>#}
+                {#</div>#}
+                {#<h5>Δωρεάν Μεταφορικά</h5> <h4>- Άτοκες Δόσεις</h4>#}
+                {#</li>#}
+                {#</ul>#}
             </div>
         </div>
     </div>
-</div>
+</div>-->

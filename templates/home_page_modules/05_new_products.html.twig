@@ -1,10 +1,10 @@
-<div class="section" style="background-color: #4fa56e;">
+<div class="section" style="background-color: #e6e6e6;">
     <div class="container">
         <div class="section-heading row wow flipInX" data-wow-delay="0.4s">
-            <div class="col-sm-8 col-sm-offset-2">
+            <div class="col-sm-8 col-sm-offset-2 fb-section-header">
                 {#<h3>Get ready for our</h3>#}
-                <h2>Νέες αφίξεις</h2>
-                <p>Δείτε τα νέα μας προϊόντα. </p>
+                <h2>ΝΕΕΣ</h2>
+                <h1>ΑΦΙΞΕΙΣ</h1>
             </div>
         </div>
 
@@ -15,10 +15,10 @@
                         <div class="tag tag-green"><span>new</span></div>
                         <div class="product-img">
                             <div class="hover-img">
-                                <a href="{{ path('product_view', {'slug': pr.slug}) }}"><img src="{{ pr.imageUrl }}" alt=""></a>
+                                <a href="{{ path('product_view', {'slug': pr.slug}) }}"><img src="{{ asset(pr.imageUrl) }}" alt=""></a>
                             </div>
                             <a href="#">
-                                <a href="{{ path('product_view', {'slug': pr.slug}) }}"><img src="{{ pr.imageUrl }}" alt=""></a>
+                                <a href="{{ path('product_view', {'slug': pr.slug}) }}"><img src="{{ asset(pr.imageUrl) }}" alt=""></a>
                             </a>
                         </div>
                         <div class="hover-info">

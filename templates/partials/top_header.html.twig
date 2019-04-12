@@ -4,50 +4,41 @@
 
             <div class="pre-header-left hidden-xs">
                 <ul>
-                    <li style="max-width: 90px;">
-                        <a data-toggle="collapse" href="#collapseTimetable"
-                           aria-expanded="false"
-                           aria-controls="collapseTimetable"
-                           style="margin-top: 8px; padding: 0 5px 0 15px;"
-                           class="cart-link"
-                           title="Ωράριο Λειτουργίας">
-                            <img src="{{ asset('images/icons/anosia-icons-clock.png') }}">
-                            {#<i style="color:#ffffff" class="far fa-clock"></i>#}
-                        </a>
-                    </li>
-                    <li>
-                        <a style="color:#ffffff; font-weight: bold;" class="phone-link" href="javascript:void(0)">
+                    <li style="margin-top: 8px; padding: 0 5px 0 15px; color:#ffffff; font-weight: bold;"><i class="fas fa-phone fa-2x"></i>2109402027
+                        <!--<a style="color:#ffffff; font-weight: bold;" class="phone-link" href="javascript:void(0)">
                             {#<i style="color:#ffffff" class="fas fa-phone"></i>#}
                             <img style="width:50px;" src="{{ asset('images/icons/anosia-icons-phone.png') }}">
-                            210 94 02 027</a>
+                            210 94 02 027</a>-->
                     </li>
-                    <li>
+                    <li style="left: 80%;">
                         <div style="padding-top: 8px; text-align: center; color: #ffffff; font-weight: bold;">
-                            {#<i class="fas fa-truck"></i> #} ΔΩΡΕΑΝ ΜΕΤΑΦΟΡΙΚΑ ΓΙΑ ΠΑΡΑΓΓΕΛΙΕΣ ΑΝΩ
+                            <i class="fas fa-truck fa-2x"></i> ΔΩΡΕΑΝ ΜΕΤΑΦΟΡΙΚΑ ΓΙΑ ΠΑΡΑΓΓΕΛΙΕΣ ΑΝΩ
                             ΤΩΝ 39€
                         </div>
                     </li>
                 </ul>
-                <div class="timetable-dropdown collapse" id="collapseTimetable"
-                     style="padding: 10px;">
-                    <h4>ΩΡΑΡΙΟ ΛΕΙΤΟΥΡΓΙΑΣ</h4>
-                    <div>Δε & Τε: 08:00 - 14:30</div>
-                    <div>Τρ-Πε-Πα: 08:00 - 14:00</div>
-                    <div>17:00 - 20:00</div>
-                </div>
+                
             </div>
             <div class="pre-header-left visible-xs"
                  style="background-color: #4fa56e; padding-top: 10px; color:#ffffff;">
                 {#<ul>#}
                 <div class="col-12" style="text-align: center; padding-bottom: 10px;">
-                    <h4>ΩΡΑΡΙΟ ΛΕΙΤΟΥΡΓΙΑΣ</h4>
+                    <!--<h4>ΩΡΑΡΙΟ ΛΕΙΤΟΥΡΓΙΑΣ</h4>
                     <div style="font-weight: bold;">Δε & Τε: 08:00 - 14:30<br>Τρ-Πε-Πα: 08:00 - 14:00 & 17:00 - 20:00
                     </div>
+                    <div class="timetable-dropdown collapse" id="collapseTimetable"
+                     style="padding: 10px;">
+                    <h4>ΩΡΑΡΙΟ ΛΕΙΤΟΥΡΓΙΑΣ</h4>
+                    <div>Δε & Τε: 08:00 - 14:30</div>
+                    <div>Τρ-Πε-Πα: 08:00 - 14:00</div>
+                    <div>17:00 - 20:00</div>
+                </div>-->
                     <div style="font-weight: bold;">
-                        <a href="tel:2109402027" style="color:#ffffff;">
+                        <span style="margin-top: 8px; padding: 0 5px 0 15px; color:#ffffff; font-weight: bold;"><i class="fas fa-phone fa-2x"></i>2109402027</span>
+                        <!--<a href="tel:2109402027" style="color:#ffffff;">
                             {#<i class="fas fa-phone" style="color:#ffffff;"></i>#}
                             <img style="width:50px;" src="{{ asset('images/icons/anosia-icons-phone.png') }}">
-                            210 94 02 027</a>
+                            210 94 02 027</a>-->
                     </div>
                 </div>
                 <div class="row mobile-social-container"
@@ -73,14 +64,41 @@
                     </a>
                 </div>
                 <div class="col-12" style="padding: 10px; text-align: center; color: #ffffff; font-weight: bold;">
-                    {#<i class="fa fa-truck"></i>#}
-                    ΔΩΡΕΑΝ ΜΕΤΑΦΟΡΙΚΑ ΓΙΑ ΠΑΡΑΓΓΕΛΙΕΣ ΑΝΩ ΤΩΝ 39€
+                    <i class="fas fa-truck fa-2x"></i> ΔΩΡΕΑΝ ΜΕΤΑΦΟΡΙΚΑ ΓΙΑ ΠΑΡΑΓΓΕΛΙΕΣ ΑΝΩ ΤΩΝ 39€
                 </div>
                 {#</ul>#}
             </div>
 
             <div class="pre-header-right">
                 <ul>
+                    <li style="max-width: 90px;">
+                        <div class="col-sm-3 p-0 last-icons">
+                       <a data-toggle="collapse" href="#collapseVoucher" aria-expanded="false"
+                           aria-controls="collapseVoucher"
+                           style="margin-top: 8px; padding: 0 5px 0 5px;"
+                           class="cart-link"
+                           title=" Παρακολούθηση Παραγγελίας">
+                            <i class="fas fa-truck"></i>
+                            <!--<img style="width:40px;" src="{{ asset('images/icons/anosia-icons-track.png') }}">-->
+                            <span class="link-text" style="visibility:hidden">.</span>
+                        </a>
+                        </div>
+                    </li>
+                    <li style="max-width: 90px;">
+                        <div class="col-sm-3 p-0 last-icons">
+                        <a data-toggle="collapse" href="#collapseTimetable"
+                           aria-expanded="false"
+                           aria-controls="collapseTimetable"
+                           style="margin-top: 8px; padding: 0 5px 0 15px;"
+                           class="cart-link"
+                           title="Ωράριο Λειτουργίας">
+                            <!--<img src="{{ asset('images/icons/anosia-icons-clock.png') }}">
+                            {#<i style="color:#ffffff" class="far fa-clock"></i>#}-->
+                            <i class="fas fa-clock"></i>
+                        </a>
+                    </div>
+                    </li>
+                    <!--
                     <li style="padding-right: 0;">
                         {% if loggedUser == null %}
                             {#{% set accountUrl = '#' %}#}
@@ -151,9 +169,9 @@
                                 {{ totalCartItems }}
                             </span>
                         </a>
-                    </li>
+                    </li>-->
                 </ul>
-
+<!--
                 <div class="cart-dropdown collapse" id="collapseVoucher">
                     <div class="well" style="padding: 10px;">
                         Εισάγετε τον κωδικό voucher για να δείτε που βρίσκεται η παραγγελία σας.
@@ -182,7 +200,7 @@
                             </a>
                         </div>
                     </div>
-                </div>
+                </div>-->
             </div>
         </div>
     </div>

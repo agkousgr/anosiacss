@@ -34,8 +34,10 @@ class PireausController extends MainController
 
             $myHash = strtoupper(hash_hmac('sha256', $TransactionTicket . ';' . $PosId . ';' . $AcquirerId . ';' . $MerchantReference . ';' . $ApprovalCode . ';' . $Parameters . ';' . $ResponseCode . ';' . $SupportReferenceID . ';' . $AuthStatus . ';' . $PackageNo . ';' . $StatusFlag, $TransactionTicket));
 
+            #Todo: getClientId for not registerd clients
+            $clientId = ($session->get('anosiaClientId')) ?: '111';
             $pireaus = new PireausTransaction();
-            $pireaus->setClientId($session->get('anosiaClientId'))
+            $pireaus->setClientId($clientId)
                 ->setMerchantReference($MerchantReference)
                 ->setStatusFlag($StatusFlag)
                 ->setResultCode($request->request->get('ResultCode'))
@@ -50,8 +52,9 @@ class PireausController extends MainController
             $em->persist($pireaus);
             $em->flush();
 
-
-            if ($myHash === $PireausHash) {
+            if ($StatusFlag === 'Failure')
+                return $checkout;
+            elseif ($myHash === $PireausHash) {
                 $cartItems = $this->cartItems;
             } else {
 //                $checkoutCompleted->handleFailedPayment();
@@ -78,7 +81,7 @@ class PireausController extends MainController
                     'orderCompleted' => true,
                     'loginUrl' => $this->loginUrl
                 ]);
-            }else{
+            } else {
                 $this->addFlash('notice', 'Η παραγγελία σας δεν καταχωρήθηκε. Παρακαλώ δοκιμάστε ξανά ή επικοινωνήστε με το κατάστημά μας χρησιμοποιώντας τον κωδικό παραγγελίας.');
                 return $this->redirectToRoute('checkout');
             }

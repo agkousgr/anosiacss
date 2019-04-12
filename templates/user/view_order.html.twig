@@ -68,7 +68,7 @@
                                     <div>Κωδικός παραγγελίας: {{ order.orderNo }}</div>
                                     <div>Τρόπος αποστολής: {{ shippingMethod }}</div>
                                     <div>Τρόπος πληρωμής: {{ paymentMethod }}</div>
-                                    <div>Κατάσταση: {{ order.status }}</div>
+                                    <div>Κατάσταση: {{ orderStatus }}</div>
                                     <div>Διεύθυνση: {{ order.shipAddress }}</div>
                                     <div>Πόλη: {{ order.shipCity }}</div>
                                     <div>Περιοχή: {{ order.shipDistrict }}</div>
@@ -87,7 +87,7 @@
                                             <div class="order-line row">
                                                 <div class="col-sm-1 col-xs-3">
                                                     <span class="image">
-                                                        <img src="{{ pr.imageUrl }}">
+                                                        <img src="{{ asset(pr.imageUrl) }}">
                                                     </span>
                                                 </div>
                                                 <div class="col-sm-7 col-xs-9 details">
@@ -99,7 +99,8 @@
                                                             €
                                                         </div>
                                                         <div class="col-xs-2">{{ pr.quantity }}</div>
-                                                        <div class="col-xs-5 text-xs-right bold">{{ (pr.itemPrice|number_format(2, '.', ','))*pr.quantity }}
+                                                        {% set cartTotal = (pr.itemPrice|number_format(2, '.', ','))*pr.quantity %}
+                                                        <div class="col-xs-5 text-xs-right bold">{{ cartTotal|number_format(2, ',', '.') }}
                                                             €
                                                         </div>
                                                     </div>
@@ -112,7 +113,7 @@
                                             <tbody>
                                             <tr>
                                                 <td>Μερικό σύνολο</td>
-                                                <td>{{ orderSubTotal }}€</td>
+                                                <td>{{ orderSubTotal|number_format(2, ',', '.') }}€</td>
                                             </tr>
                                             {% if order.expenses is defined %}
                                                 {% set expenses = 0 %}

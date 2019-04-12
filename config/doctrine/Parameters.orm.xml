@@ -7,7 +7,7 @@
         </id>
         <field name="name" type="text" length="80"/>
         <field name="s1Value" type="text" length="10"/>
-
+        <field name="description" type="text"/>
     </entity>
 
 </doctrine-mapping>

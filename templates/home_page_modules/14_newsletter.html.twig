@@ -1,23 +1,24 @@
-<div id="newsletter-section" class="section"
-     style="/*background-image:url({{ asset('images/newsletter-bg.jpg') }});*/background: #009836;">
+<header class="masthead5 text-white text-center banner-newsletter">
+<div id="newsletter-section" class="section">
     <div class="container">
         <div class="row">
-            <div class="col-sm-12">
-                <!--<div class="section-heading section-heading-white row wow flipInX" data-wow-delay="0.4s">-->
-                <div class="col-sm-6 wow flipInX animated" data-wow-delay="0.4s" style="visibility: visible; animation-delay: 0.4s; animation-name: flipInX;">
-                    <h2>Εγγραφείτε στο Newsletter μας</h2>
-                    <p class="newsletter-p">
-                        {#<i class="fas fa-circle-o-notch fa-spin"></i>#}
-                        Oι προσφορές και τα νέα μας στο email σας. Γίνετε μέλος της παρέας μας και
-                        ενημερωθείτε πρώτοι για τα νέα και τις προσφορές μας, κερδίστε ειδικά
-                        εκπτωτικά κουπόνια μόνο για εσάς!<br><br>
-                        Πείτε μας το φύλο και την ηλικία σας για να λαμβάνετε νέα & προσφορές που ταιριάζουν αποκλειστικά σε εσάς!
-                    </p>
-                    {#<p class="newsletter-p nlsdescr"><i class="fa fa-circle-o-notch fa-spin"></i>* Συμπληρώστε την ηλικία και το φύλο σας για να σας αποστέλλουμε μόνο προσφορές και νέα που απευθύνονται σε εσάς!</p>#}
-                </div>
-                <!-- </div>-->
 
-                <div class="col-sm-6 form-circle">
+                <div class="col-sm-12 col-md-12 col-lg-7 mx-auto home-slider">
+                  <h2>ΕΓΓΡΑΦΕΙΤΕ στο</h2>
+                  <h1>NEWSLETTER</h1>
+                  <p>Oι προσφορές και τα νέα μας στο email σας. Γίνετε μέλος της παρέας μας και ενημερωθείτε πρώτοι για τα νέα
+                    και τις προσφορές μας, κερδίστε ειδικά εκπτωτικά κουπόνια μόνο για εσάς!</p>
+                  <p>Πείτε μας το φύλο και την ηλικία σας για να λαμβάνετε νέα &amp; προσφορές που ταιριάζουν αποκλειστικά σε εσάς!
+                  </p>
+                  <div class="col-sm-12 social-icons">
+                    <a href="https://www.facebook.com/AnosiaPharmacy" target="_blank"><i class="fab fa-facebook-f fb-icon m-2"></i></a>
+                    <a href="https://www.instagram.com/anosiapharmacy.gr/" target="_blank"><i class="fab fa-instagram m-2"></i></a>
+                    <a href="https://twitter.com/AnosiaPharmacy" target="_blank"><i class="fab fa-twitter m-2"></i></a>
+                    <a href="mailto:info@anosiapharmacy.gr" target="_blank"><i class="far fa-envelope m-2"></i></a>
+                  </div>
+                </div>
+
+                <div class="col-sm-5 newsletter-form">
                     <form action="#" method="post">
                         <div class="col-md-12 form-groupwow flipInY" data-wow-delay="0.4s">
                             <input
@@ -36,18 +37,18 @@
                                     placeholder="Email">
                         </div>
                         <br/><br/>
-                        <div class="col-sm-6 col-md-12 form-groupwow flipInY" data-wow-delay="0.4s">
-                            <select id="nl-gender" name="gender" class="form-control input-lg-newsletter">
-                                <option value="question">Επιλέξτε Φύλο</option>
-                                <option value="man">Άνδρας</option>
-                                <option value="woman">Γυναίκα</option>
-                            </select>
-                        </div>
-                        <br/>
-                        <div id="nl-age" class="col-sm-6 col-md-12 form-groupwow flipInY" data-wow-delay="0.4s"><input
-                                    type="text"
-                                    class="form-control input-lg-newsletter"
-                                    placeholder="Ηλικία  ">
+                        <div class="form-row">
+                            <div class="col-sm-6 col-md-6 form-groupwow flipInY" data-wow-delay="0.4s">
+                                <select id="nl-gender" name="gender" class="form-control input-lg-newsletter">
+                                    <option value="1">Άνδρας</option>
+                                    <option value="2">Γυναίκα</option>
+                                </select>
+                            </div>
+                            <div id="nl-age" class="col-sm-6 col-md-6 form-groupwow flipInY" data-wow-delay="0.4s"><input
+                                        type="text"
+                                        class="form-control input-lg-newsletter"
+                                        placeholder="Ηλικία  ">
+                            </div>
                         </div>
                         <br/><br/>
                         <div class="gy-gdpr-consents">
@@ -57,7 +58,7 @@
                             </label>
                         </div>
                         <br/><br/>
-                        <div class="col-sm-8 col-sm-offset-2 col-md-6 col-md-offset-0 form-group wow flipInY"
+                        <div class="col-sm-12 col-sm-offset-2 col-md-6 col-md-offset-0 form-group wow flipInY btn btn-default btn-black text-uppercase btn-lg btn-block"
                              data-wow-delay="0.4s">
                             <input id="newsletter-btn" type="button" disabled="" value="ΕΓΓΡΑΦΗ"
                                    class="btn btn-primary btn-block btn-lg">
@@ -68,3 +69,4 @@
         </div>
     </div>
 </div>
+</header>

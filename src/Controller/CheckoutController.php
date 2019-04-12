@@ -4,7 +4,11 @@ namespace App\Controller;
 
 use App\Entity\{Checkout, OrdersWebId, PaypalTransaction};
 use App\Form\Type\{CheckoutStep1Type, CheckoutStep2Type};
-use App\Service\{CheckoutCompleted, CheckoutService, PireausRedirection, UserAccountService};
+use App\Service\{CheckoutCompleted,
+    CheckoutService,
+    PireausRedirection,
+    TokenGenerator,
+    UserAccountService};
 use Beelab\PaypalBundle\Paypal\Service as PaypalService;
 use Doctrine\ORM\EntityManagerInterface;
 use Psr\Log\LoggerInterface;
@@ -13,7 +17,7 @@ use Symfony\Component\HttpKernel\Exception\HttpException;
 
 class CheckoutController extends MainController
 {
-    public function checkout(Request $request, CheckoutService $checkoutService, UserAccountService $userAccountService)
+    public function checkout(Request $request, CheckoutService $checkoutService, UserAccountService $userAccountService, TokenGenerator $tokenGenerator)
     {
         try {
             $addresses = array();
@@ -24,6 +28,8 @@ class CheckoutController extends MainController
             $curStep = ($request->request->get('currentStep')) ?: 1;
             if ($this->session->has('curOrder') === false) {
                 $checkout = new Checkout();
+                $checkout->setOrderNo(substr($tokenGenerator->generateToken(), 0, 10));
+
                 if (null !== $this->loggedUser) {
                     $checkoutService->getUserInfo($checkout);
                 }
@@ -73,6 +79,9 @@ class CheckoutController extends MainController
                 } else {
                     $checkout->setAntikatavoliCost(0);
                 }
+//                $checkout->setPaymentType($step2Form->get('paymentType')->getData());
+                $checkout->setComments($request->request->get('checkout_step2')['comments']);
+                dump($checkout);
                 return $this->json(['success' => true]);
             }
 
@@ -112,9 +121,12 @@ class CheckoutController extends MainController
     {
         try {
             /** @var \App\Entity\Checkout */
-            $checkout = $this->session->get('curOrder');
+            if (null === $checkout = $this->session->get('curOrder'))
+                return $this->redirectToRoute('index');
+
             $cartCost = $checkoutService->calculateCartCost($this->cartItems);
-            $checkout->setTotalOrderCost($cartCost + $checkout->getAntikatavoliCost() + $checkout->getShippingCost());//        $orderCode = $em->getRepository(OrdersWebId::class)->find(1);
+            $checkout->setTotalOrderCost($cartCost + $checkout->getAntikatavoliCost() + $checkout->getShippingCost());
+            //        $orderCode = $em->getRepository(OrdersWebId::class)->find(1);
             //        $checkout->setOrderNo(intval(str_replace('ORDER', $orderCode->getOrderNumber())) + 1);
             // Check if necessary at this point
             $em->flush();
@@ -155,19 +167,19 @@ class CheckoutController extends MainController
 
     public function getPireausTicket(Request $request, CheckoutService $checkoutService, PireausRedirection $pireausRedirection)
     {
-        $installments = ($request->request->get('installments') && $request->request->get('installments') <= 6) ? $request->request->get('installments') : 0;
 
         /** @var Checkout $checkout */
         $checkout = $this->session->get('curOrder');
         $cartCost = $checkoutService->calculateCartCost($this->cartItems);
+        $checkout->setComments($request->request->get('comments'));
+        $checkout->setPaymentType('1001');
 
-        $orderCode = ($this->loggedClientId) ? $this->loggedClientId . '-' . time() : random(100, 999) . '-' . time();
-        $checkout->setOrderNo($orderCode);
         $checkout->setTotalOrderCost($cartCost + $checkout->getAntikatavoliCost() + $checkout->getShippingCost());
+        $installments = ($request->request->get('installments') && $request->request->get('installments') <= 6) ? $request->request->get('installments') : 0;
         $checkout->setInstallments($installments);
         $checkout = $pireausRedirection->submitOrderToPireaus($checkout);
         $this->session->set('curOrder', $checkout);
-
+        dump($this->session->get('curOrder'));
         $bank_config['AcquirerId'] = 14;
         $bank_config['MerchantId'] = 2137477493;
         $bank_config['PosId'] = 2141384532;

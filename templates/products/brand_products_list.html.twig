@@ -85,11 +85,11 @@
                                         <div class="product-case">
                                             <div class="tag tag-green"><span>new</span></div>
                                             <div class="product-img">
-                                                <div class="hover-img"><img src="{{ pr.imageUrl }}"
+                                                <div class="hover-img"><img src="{{ asset(pr.imageUrl) }}"
                                                                             alt="{{ pr.name }}">
                                                 </div>
                                                 <a href="{{ path('product_view', {'slug': pr.slug}) }}"><img
-                                                            src="{{ pr.imageUrl }}"
+                                                            src="{{ asset(pr.imageUrl) }}"
                                                             alt="{{ pr.name }}"></a>
                                             </div>
                                             <div class="hover-info">

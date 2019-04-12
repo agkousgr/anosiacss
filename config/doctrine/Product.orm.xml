@@ -14,10 +14,12 @@
         <field name="webPrice" type="decimal" precision="7" scale="2"/>
         <field name="discount" type="integer" nullable="true"/>
         <field name="latestOffer" type="datetime" nullable="true"/>
+        <field name="webVisible" type="boolean" nullable="true"/>
+        <field name="active" type="boolean" nullable="true"/>
         <indexes>
-            <index name="nameIdx" columns="product_name" flags="fulltext"></index>
-            <index name="codeIdx" columns="pr_code" flags="fulltext"></index>
-            <index name="barcodeIdx" columns="barcode" flags="fulltext"></index>
+            <index name="nameIdx" columns="product_name" flags="fulltext"/>
+            <index name="codeIdx" columns="pr_code" flags="fulltext"/>
+            <index name="barcodeIdx" columns="barcode" flags="fulltext"/>
         </indexes>
     </entity>
 
